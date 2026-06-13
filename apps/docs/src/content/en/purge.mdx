@@ -46,6 +46,24 @@ export default defineConfig({
 It hooks into `astro:build:done`, scans HTML / JS under `dist/`, and rewrites the CSS files in place.
 
 
+## Pairing with full.css
+
+`lism-css/full.css` is an **everything-included build** that covers every property class, token, and breakpoint (extended up to `lg`, including the `xs` classes). It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
+
+```js
+// Load full.css instead of main.css
+import 'lism-css/full.css';
+```
+
+The default set of known classes (`known`) used by purge is derived from `full.css`. Since `full.css` is a superset of the selectors in `main.css`, unused classes are removed correctly whether you load `main.css` or `full.css`.
+
+Once purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used on each page**.
+
+:::warning
+Loading `full.css` without purge ships a large CSS that still contains every unused class. Always pair `full.css` with purge.
+:::
+
+
 ## Options
 
 Both plugins accept the same `LismPurgeOptions`.
@@ -54,7 +72,7 @@ Both plugins accept the same `LismPurgeOptions`.
 |---|---|---|
 | `safelist` | `(string \| RegExp \| ((className: string) => boolean))[]` | Keep classes that static analysis cannot detect |
 | `report` | `boolean` | Log the file size before and after purging |
-| `known` | `KnownSelectorSet` | Customize the set of known Lism classes (rarely needed) |
+| `known` | `KnownSelectorSet \| (() => KnownSelectorSet \| undefined)` | Customize the set of known Lism classes. Pass a function to resolve it lazily at build time. Defaults to the set derived from `full.css` (rarely needed) |
 
 
 ### safelist

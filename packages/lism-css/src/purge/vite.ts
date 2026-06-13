@@ -3,7 +3,7 @@ import { basename, dirname } from 'node:path/posix';
 import type { Plugin } from 'vite';
 import { extractLismClasses } from './extract';
 import { purgeLismCss } from './core';
-import { LISM_CSS_SIGNATURE, formatReport, loadDefaultKnownSelectors } from './shared';
+import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors } from './shared';
 import type { LismPurgeOptions } from './options';
 
 export type { LismPurgeOptions } from './options';
@@ -55,13 +55,13 @@ function replaceRenamedReferences(content: string, renames: RenameInfo[]): strin
 }
 
 export function lismPurge(options: LismPurgeOptions = {}): Plugin {
-  const known = options.known ?? loadDefaultKnownSelectors();
-
   return {
     name: 'lism-css:purge',
     apply: 'build',
     enforce: 'post',
     generateBundle(_outputOptions, bundle) {
+      // known は build 実行時に解決する（関数形式の遅延解決にも対応）。
+      const known = resolveKnownSelectors(options.known);
       const used = new Set<string>();
       const cssTargets: string[] = [];
 

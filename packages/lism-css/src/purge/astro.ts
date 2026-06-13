@@ -4,9 +4,9 @@ import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 import { extractLismClasses } from './extract';
-import { purgeLismCss, type SafelistEntry } from './core';
+import { purgeLismCss, type KnownSelectorSet, type SafelistEntry } from './core';
 import type { LismPurgeOptions } from './options';
-import { LISM_CSS_SIGNATURE, formatReport, loadDefaultKnownSelectors } from './shared';
+import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors } from './shared';
 
 export type { LismPurgeOptions } from './options';
 
@@ -49,7 +49,7 @@ async function purgeCssFiles(
   cssFiles: string[],
   used: Set<string>,
   safelist: SafelistEntry[] | undefined,
-  known: ReturnType<typeof loadDefaultKnownSelectors>
+  known: KnownSelectorSet | undefined
 ): Promise<{ renames: RenameInfo[]; beforeBytes: number; afterBytes: number }> {
   const renames: RenameInfo[] = [];
   let beforeBytes = 0;
@@ -105,7 +105,6 @@ async function updateReferences(distPath: string, renames: RenameInfo[]): Promis
 
 export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegration {
   const safelist: SafelistEntry[] | undefined = options.safelist;
-  const known = options.known ?? loadDefaultKnownSelectors();
   const report = options.report ?? false;
 
   return {
@@ -115,6 +114,8 @@ export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegration
       // 最終 HTML のクラスを拾えない。`astro:build:done` で dist を直接走査し、
       // CSS を purge した上で内容ベースの hash を再計算して参照側も同期更新する。
       'astro:build:done': async ({ dir, logger }) => {
+        // known は build 実行時に解決する（関数形式の遅延解決にも対応）。
+        const known = resolveKnownSelectors(options.known);
         const distPath = fileURLToPath(dir);
         const used = new Set<string>();
         const cssFiles: string[] = [];

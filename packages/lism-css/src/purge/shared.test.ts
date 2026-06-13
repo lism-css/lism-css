@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { LISM_CSS_SIGNATURE } from './shared';
+import { LISM_CSS_SIGNATURE, resolveKnownSelectors } from './shared';
 
 describe('LISM_CSS_SIGNATURE', () => {
   test('Lism の Property Class (.-x) にマッチする', () => {
@@ -28,5 +28,27 @@ describe('LISM_CSS_SIGNATURE', () => {
     expect(LISM_CSS_SIGNATURE.test('body{margin:0}')).toBe(false);
     expect(LISM_CSS_SIGNATURE.test('.foo{color:red}')).toBe(false);
     expect(LISM_CSS_SIGNATURE.test(':root{--x:1}')).toBe(false);
+  });
+});
+
+describe('resolveKnownSelectors', () => {
+  const sample = { classes: new Set(['l--stack']), attrs: new Set<string>() };
+
+  test('値形式はそのまま返す', () => {
+    expect(resolveKnownSelectors(sample)).toBe(sample);
+  });
+
+  test('関数形式は build 時に遅延評価し、その結果を返す', () => {
+    let called = false;
+    const result = resolveKnownSelectors(() => {
+      called = true;
+      return sample;
+    });
+    expect(called).toBe(true);
+    expect(result).toBe(sample);
+  });
+
+  test('関数が undefined を返す場合はそのまま undefined', () => {
+    expect(resolveKnownSelectors(() => undefined)).toBeUndefined();
   });
 });
