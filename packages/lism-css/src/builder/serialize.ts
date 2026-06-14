@@ -1,47 +1,65 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-// CLI実行時にsrcからとると見つかれないので dist からとる
-import getMaybeTokenValue from '../dist/lib/getMaybeTokenValue.js';
+/**
+ * props 設定を SCSS の `$props` マップ文字列へ直列化する純粋関数群。
+ *
+ * 旧 `bin/build-config.js` のロジックを移植し、ファイル書き出し（副作用）を分離した。
+ * 返り値は `@use 'lism:prop-config'` 経由で sass importer がそのまま注入できる SCSS 文字列。
+ * bin CLI（ファイル出力）と Vite プラグイン（メモリ注入）の双方がこの直列化結果を共有する。
+ */
+import getMaybeTokenValue from '../lib/getMaybeTokenValue';
 
-// ES modules用の__dirname取得
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+type TokenValue = string | number;
+type Tokens = Record<string, unknown>;
+
+export interface PropConfig {
+  prop?: string;
+  bp?: number | string[];
+  isVar?: number;
+  alwaysVar?: number;
+  important?: number;
+  utils?: Record<string, TokenValue>;
+  presets?: TokenValue[];
+  token?: string;
+  tokenClass?: number;
+  exUtility?: Record<string, Record<string, string>>;
+}
+
+export interface BuildConfig {
+  tokens: Tokens;
+  props: Record<string, PropConfig>;
+}
 
 /**
- * ユーティリティ値を生成
- * @param {Object} propConfig - プロパティ設定
- * @returns {Object} ユーティリティ値のオブジェクト
+ * ユーティリティ値を生成する。
  */
-function generateUtilities(propConfig, TOKENS) {
+function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<string, string> {
   const { utils = {}, presets: basePresets = [], token = '', tokenClass = 0 } = propConfig;
 
   // config 側の配列はマージ後も参照共有されているため、複製してから使う。
   // （直接 push すると、同一プロセスで複数回ビルドした時に presets が重複する）
   const presets = [...basePresets];
-  const utilities = {};
+  const utilities: Record<string, string> = {};
 
-  // tokenをクラス化するのであれば presetsへ追加
+  // token をクラス化するのであれば presets へ追加
   if (token && tokenClass === 1) {
     const tokenValues = TOKENS[token];
-    if (tokenValues && Array.isArray(tokenValues)) {
-      presets.push(...tokenValues);
+    if (Array.isArray(tokenValues)) {
+      presets.push(...(tokenValues as TokenValue[]));
     } else if (tokenValues && typeof tokenValues === 'object') {
-      presets.push(...(tokenValues.values || []));
+      presets.push(...((tokenValues as { values?: TokenValue[] }).values || []));
     }
   }
 
-  // presetsが定義されている場合
+  // presets が定義されている場合
   if (presets.length > 0) {
     presets.forEach((preset) => {
-      utilities[preset] = getMaybeTokenValue(token, preset, TOKENS);
+      utilities[preset] = getMaybeTokenValue(token, preset, TOKENS as Parameters<typeof getMaybeTokenValue>[2]);
     });
   }
 
-  // utilsが定義されている場合
+  // utils が定義されている場合
   if (utils) {
     Object.entries(utils).forEach(([key, value]) => {
-      utilities[key] = value;
+      utilities[key] = String(value);
     });
   }
 
@@ -49,21 +67,15 @@ function generateUtilities(propConfig, TOKENS) {
 }
 
 /**
- * プロパティ設定をSCSS形式に変換
- * @param {string} propKey - プロパティに対応する省略型のキー名
- * @param {Object} propConfig - プロパティ設定
- * @returns {string} SCSS形式の文字列
+ * 1つのプロパティ設定を SCSS のマップエントリ文字列へ変換する。
  */
-function generatePropScss(propKey, propConfig, TOKENS) {
+function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Tokens): string {
   const { prop = '', bp, isVar, alwaysVar, important } = propConfig;
 
-  // styleが定義されている場合はそれを使用、なければpropKeyをそのまま使用
   const utilities = generateUtilities(propConfig, TOKENS);
-
-  // ユーティリティが存在するかどうか
   const hasUtilities = Object.keys(utilities).length > 0;
 
-  // 出力するCSSがない場合
+  // 出力する CSS がない場合
   if (!hasUtilities && !bp) {
     return '';
   }
@@ -138,32 +150,27 @@ function generatePropScss(propKey, propConfig, TOKENS) {
 }
 
 /**
- * メイン処理
+ * CONFIG（マージ済み・Set 化前）から `$props: ( ... );` の SCSS 文字列を生成する。
+ * 旧 `buildConfig()` の純粋部分（ファイル書き出しを除いたもの）。
  */
-export default async function buildConfig(CONFIG, outputFileName = '_prop-config.scss') {
+export function serializePropConfig(CONFIG: BuildConfig): string {
   const { tokens: TOKENS, props: PROPS } = CONFIG;
-  console.log(`${outputFileName}を生成中...`);
 
-  let scssContent = '';
+  let scssContent = '$props: (\n';
 
-  scssContent += '$props: (\n';
-  // 各プロパティをSCSS形式に変換
-  Object.entries(PROPS).forEach(([propKey, propConfig], index, array) => {
+  const entries = Object.entries(PROPS);
+  entries.forEach(([propKey, propConfig], index) => {
     const propContent = generatePropScss(propKey, propConfig, TOKENS);
     if (!propContent) return;
     scssContent += propContent;
 
     // 最後の要素でない場合は改行を追加
-    if (index < array.length - 1) {
+    if (index < entries.length - 1) {
       scssContent += '\n';
     }
   });
 
   scssContent += '\n);\n';
 
-  // ファイルに出力
-  const outputPath = path.join(__dirname, '../src/scss', outputFileName);
-  await fs.promises.writeFile(outputPath, scssContent, 'utf8');
-
-  console.log(`✅ ${outputFileName}を生成しました: ${outputPath}`);
+  return scssContent;
 }

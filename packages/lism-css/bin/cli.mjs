@@ -2,11 +2,13 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
-import buildConfig from './build-config.js';
-import buildCSS from './build-css.js';
+import { buildCssToDir } from '../dist/builder/index.js';
 import { objDeepMerge } from '../dist/config/helper.js';
 
-// NOTE: build-config.js を実行するための簡易CLIエントリ
+// NOTE: lism-css build の簡易CLIエントリ。
+// 共有コア（dist/builder）経由で CSS をビルドする。
+// buildCssToDir は src/scss を一時ディレクトリへ複製して prop-config を差し替えるため、
+// node_modules 内 src/scss へのインプレース書き換えは行わない（出力は dist/css）。
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -71,16 +73,14 @@ async function main() {
     // コンポーネント側（config/index.ts）が full 設定でクラスを出力するため、ビルド済みCSSと一致させる必要がある。
     const isFullMode = !!userConfig.isFullMode;
 
-    // 動的インポートで同ディレクトリのスクリプトを実行
-    await buildConfig(isFullMode ? CONFIG_FULL : CONFIG); // SCSSの設定ファイルを出力
-
     // full 系の生成・コンパイルは --full 指定時のみ行う。
-    // （_prop-config-full.scss の生成だけスキップすると、パッケージ同梱のストック版 partial で
-    //   ユーザー設定を反映しない full.css が生成されてしまうため、コンパイル側も合わせて制御する）
-    if (withFull) {
-      await buildConfig(CONFIG_FULL, '_prop-config-full.scss');
-    }
-    await buildCSS({ ignore: withFull ? [] : ['full.scss', 'full_no_layer.scss'] });
+    await buildCssToDir({
+      scssDir: path.resolve(__dirname, '../src/scss'),
+      distDir: path.resolve(__dirname, '../dist/css'),
+      mainConfig: isFullMode ? CONFIG_FULL : CONFIG,
+      fullConfig: CONFIG_FULL,
+      ignore: withFull ? [] : ['full.scss', 'full_no_layer.scss'],
+    });
     return;
   }
 
