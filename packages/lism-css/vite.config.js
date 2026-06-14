@@ -44,6 +44,9 @@ const entries = {
 
   // 動的 CSS ビルド Vite プラグイン（P2）。consumer の Vite/Astro で利用する。
   'builder/vite-css': resolve(__dirname, 'src/builder/vite-css.ts'),
+
+  // 傘エントリ（P3）: lismCss() / lismCssAstro()。config alias + CSS ビルド + 任意 purge を統合。
+  'builder/vite': resolve(__dirname, 'src/builder/vite.ts'),
   // 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 
   // ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
