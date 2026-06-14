@@ -1,0 +1,113 @@
+---
+title: 'CSS Purge'
+description: 'Set up the purge plugin to strip unused Lism CSS classes at build time and ship a leaner production CSS.'
+---
+
+`lism-css/purge/vite` (Vite plugin) and `lism-css/purge/astro` (Astro Integration) scan your build output and **keep only the Lism CSS classes you actually use**. They ship with the `lism-css` package, so no extra install is required.
+
+
+## How it works
+
+At build time, the plugin scans the generated HTML / JS for class names that follow Lism CSS conventions (the `c--` / `a--` / `l--` / `is--` / `has--` / `set--` / `u--` prefixes, plus `-prop:value` style property classes). It then parses the CSS files and keeps only the rules whose selectors reference the collected classes.
+
+- Only targets CSS produced by Lism CSS (detected via a file-header signature)
+- Does not touch your own classes or styles from other libraries
+- Classes inside `:not()` / `:has()` are excluded from the keep test, since they describe negation / descendant conditions
+- Attribute selectors such as `[class*="-p:"]` are matched against used classes and the safelist so nothing is dropped by mistake
+
+
+## Vite
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite';
+import { lismPurge } from 'lism-css/purge/vite';
+
+export default defineConfig({
+  plugins: [lismPurge({ report: true })],
+});
+```
+
+The plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens during `vite dev`. Unused selectors are stripped only when you run `vite build`.
+
+
+## Astro
+
+```js
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import { lismPurgeAstro } from 'lism-css/purge/astro';
+
+export default defineConfig({
+  integrations: [lismPurgeAstro({ report: true })],
+});
+```
+
+It hooks into `astro:build:done`, scans HTML / JS under `dist/`, and rewrites the CSS files in place.
+
+
+## Pairing with full.css
+
+`lism-css/full.css` is an **everything-included build** that covers every property class, token, and breakpoint (extended up to `lg`, including the `xs` classes). It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
+
+```js
+// Load full.css instead of main.css
+import 'lism-css/full.css';
+```
+
+The default set of known classes (`known`) used by purge is derived from `full.css`. Since `full.css` is a superset of the selectors in `main.css`, unused classes are removed correctly whether you load `main.css` or `full.css`.
+
+Once purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used across the whole site**.
+
+:::warning
+Loading `full.css` without purge ships a large CSS that still contains every unused class. Always pair `full.css` with purge.
+:::
+
+
+## Options
+
+Both plugins accept the same `LismPurgeOptions`.
+
+| Option | Type | Description |
+|---|---|---|
+| `safelist` | `(string \| RegExp \| ((className: string) => boolean))[]` | Keep classes that static analysis cannot detect |
+| `report` | `boolean` | Log the file size before and after purging |
+| `known` | `KnownSelectorSet \| (() => KnownSelectorSet \| undefined)` | Customize the set of known Lism classes. Pass a function to resolve it lazily at build time. Defaults to the set derived from `full.css` (rarely needed) |
+
+
+### safelist
+
+Class names that are assembled dynamically in JS — i.e. names that never appear as a literal string in the build output — cannot be detected by static analysis. Add them to `safelist` to prevent accidental removal.
+
+```js
+lismPurge({
+  safelist: [
+    // Exact string match
+    '-p:30',
+    // Regex match
+    /^-bgc:/,
+    // Custom predicate
+    (className) => className.startsWith('-fz:'),
+  ],
+});
+```
+
+`string` entries are also used when matching attribute selectors (`[class*="..."]` etc.). `RegExp` and function entries cannot enumerate concrete class names, so attribute selectors are kept conservatively.
+
+
+### report
+
+When `true`, the total byte count before / after purging and the reduction ratio are printed to the build log.
+
+```
+CSS: 28100 → 13200 bytes (-14900 / -53.0%)
+```
+
+
+## Caveats
+
+- When you build class names dynamically, either keep them as a complete literal (`` `-p:${size}` `` and similar partial strings are not enough) or add them to `safelist`.
+- Purge keeps the **union of classes used across the entire build output** (not per page). A class is retained as long as it is used on any page, even if it is unused on a given page. This is intentional so that a single CSS shared across multiple pages is never broken.
+- Only CSS emitted by Lism CSS is purged. Your own CSS and styles from other libraries are left untouched.
+- The plugin runs independently of other framework purgers such as Tailwind CSS.
+- CSS sourcemaps are not supported. Purge removes rules, so an existing sourcemap no longer lines up. To avoid stale mappings, purge strips `sourceMappingURL` comments from processed CSS and removes old `.css.map` files. Disable purge if you need CSS sourcemaps.

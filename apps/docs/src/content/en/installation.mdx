@@ -201,6 +201,33 @@ npx lism-cli ui add --all
 Name resolution is case-insensitive and ignores hyphens and underscores, so `NavMenu` / `navmenu` / `nav-menu` / `nav_menu` all resolve to the same component.
 
 
+## Strip unused CSS (purge)
+
+A purge plugin that removes unused Lism CSS classes from your production build is bundled with the `lism-css` package. Import `lismPurgeAstro` from `lism-css/purge/astro` for Astro, or `lismPurge` from `lism-css/purge/vite` for Vite-based projects.
+
+```js
+// astro.config.mjs example
+import { defineConfig } from 'astro/config';
+import { lismPurgeAstro } from 'lism-css/purge/astro';
+
+export default defineConfig({
+  integrations: [lismPurgeAstro({ report: true })],
+});
+```
+
+```js
+// vite.config.js example
+import { defineConfig } from 'vite';
+import { lismPurge } from 'lism-css/purge/vite';
+
+export default defineConfig({
+  plugins: [lismPurge({ report: true })],
+});
+```
+
+See [CSS Purge](/en/docs/purge/) for the full setup, options, and safelist usage.
+
+
 ## AI Tool Integration
 
 Set up AI coding tools (Claude Code, Cursor, Codex, etc.) to work effectively with Lism CSS.

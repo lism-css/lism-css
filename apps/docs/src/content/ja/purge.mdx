@@ -1,0 +1,113 @@
+---
+title: 'CSS Purge'
+description: 'ビルド時に未使用の Lism CSS クラスを削除し、本番 CSS を軽量化するパージプラグインのセットアップと使い方。'
+---
+
+`lism-css/purge/vite`（Vite 用プラグイン）と `lism-css/purge/astro`（Astro 用 Integration）は、ビルド成果物をスキャンして**実際に使われている Lism CSS クラスだけを残す**パージ機能です。`lism-css` パッケージに同梱されているため、追加インストールは不要です。
+
+
+## 仕組み
+
+ビルド時に出力された HTML / JS から、Lism CSS の命名規則（`c--` / `a--` / `l--` / `is--` / `has--` / `set--` / `u--` プレフィックス、および `-prop:value` 形式のプロパティクラス）にマッチするクラス名を収集します。その後、CSS ファイルをパースして、使用されているクラスに紐づくセレクタのみを残します。
+
+- 対象は Lism CSS が出力した CSS のみ（先頭シグネチャで判定）
+- ユーザー定義のクラスや他ライブラリの CSS には触れない
+- `:not()` / `:has()` 内のクラスは除外条件・子孫条件なので保持判定の対象外
+- `[class*="-p:"]` のような属性セレクタも、使用クラスや safelist との照合で過不足なく保持
+
+
+## Vite プロジェクト
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite';
+import { lismPurge } from 'lism-css/purge/vite';
+
+export default defineConfig({
+  plugins: [lismPurge({ report: true })],
+});
+```
+
+`apply: 'build'` / `enforce: 'post'` で動作するため、開発サーバー (`vite dev`) では何も実行されません。`vite build` 実行時のみ、生成された CSS から未使用セレクタが削除されます。
+
+
+## Astro プロジェクト
+
+```js
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import { lismPurgeAstro } from 'lism-css/purge/astro';
+
+export default defineConfig({
+  integrations: [lismPurgeAstro({ report: true })],
+});
+```
+
+`astro:build:done` フックで、`dist/` 配下の HTML / JS をスキャンし、CSS ファイルを書き換えます。
+
+
+## full.css と組み合わせる
+
+`lism-css/full.css` は、すべてのプロパティクラス・トークン・ブレイクポイント（`lg` まで拡張、`xs` クラスも含む）を網羅した**全部入りビルド**です。素のまま読み込むとサイズが大きいため、**purge との併用を前提**にした配布物です。
+
+```js
+// main.css の代わりに full.css を読み込む
+import 'lism-css/full.css';
+```
+
+purge のデフォルトの既知クラス集合（`known`）は `full.css` 由来になっています。`full.css` は `main.css` のセレクタのスーパーセットなので、`main.css` / `full.css` のどちらを読み込んでいても、未使用クラスを取りこぼさず正しく削除できます。
+
+purge を有効にしたうえで `full.css` に切り替えると、`main.css` には含まれないトークンクラスや拡張ブレイクポイントが使えるようになり、かつ最終的な CSS は**サイト全体で実際に使われているクラスだけ**に絞り込まれます。
+
+:::warning
+purge を使わずに `full.css` を読み込むと、未使用クラスを含む大きな CSS がそのまま配信されます。`full.css` は必ず purge と併用してください。
+:::
+
+
+## オプション
+
+両プラグインとも、共通の `LismPurgeOptions` を受け取ります。
+
+| オプション | 型 | 説明 |
+|---|---|---|
+| `safelist` | `(string \| RegExp \| ((className: string) => boolean))[]` | 静的解析で検出されないクラスを保持リストに追加 |
+| `report` | `boolean` | ビルドログにパージ前後のファイルサイズを出力 |
+| `known` | `KnownSelectorSet \| (() => KnownSelectorSet \| undefined)` | 既知の Lism クラス集合をカスタマイズ。関数を渡すとビルド時に遅延評価される。未指定時は `full.css` 由来の集合を使う（通常は指定不要） |
+
+
+### safelist
+
+JS で動的に組み立てるクラス名など、ビルド成果物に**文字列として現れないクラス**は静的解析で検出できません。誤って削除されるのを防ぐには `safelist` に追加します。
+
+```js
+lismPurge({
+  safelist: [
+    // 文字列で完全一致
+    '-p:30',
+    // 正規表現でマッチ
+    /^-bgc:/,
+    // 関数で判定
+    (className) => className.startsWith('-fz:'),
+  ],
+});
+```
+
+`string` エントリは属性セレクタ（`[class*="..."]` など）の照合にも使われます。`RegExp` / 関数は具体的なクラス名を列挙できないため、属性セレクタは保守的に残されます。
+
+
+### report
+
+`true` にすると、パージ前後の合計バイト数と削減率がビルドログに出力されます。
+
+```
+CSS: 28100 → 13200 bytes (-14900 / -53.0%)
+```
+
+
+## 注意事項
+
+- 動的にクラスを組み立てる場合は、必ず完全なクラス名（`` `-p:${size}` `` など部分文字列にしない）を残すか、`safelist` に追加してください。
+- パージは**ビルド出力全体で使われているクラスの和集合**を残します（ページ単位ではありません）。あるページで使っていなくても、サイト内のどこかのページで使われていれば保持されます。これは複数ページで共有される CSS を壊さないための挙動です。
+- パージ対象は Lism CSS が出力した CSS に限定されます。自前で書いた CSS や他ライブラリの CSS は変更されません。
+- Tailwind CSS など、別のフレームワークの purge 機能とは独立して動作します。
+- CSSのsourcemapには対応していません。パージはルールを削除するため、既存のsourcemapとは行がずれます。誤ったsourcemapを参照しないよう、purge後のCSSから`sourceMappingURL`コメントを削除し、古い`.css.map`も削除します。CSSのsourcemapが必要な場合はパージを無効にしてください。
