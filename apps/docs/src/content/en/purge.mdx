@@ -57,7 +57,7 @@ import 'lism-css/full.css';
 
 The default set of known classes (`known`) used by purge is derived from `full.css`. Since `full.css` is a superset of the selectors in `main.css`, unused classes are removed correctly whether you load `main.css` or `full.css`.
 
-Once purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used on each page**.
+Once purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used across the whole site**.
 
 :::warning
 Loading `full.css` without purge ships a large CSS that still contains every unused class. Always pair `full.css` with purge.
@@ -107,6 +107,7 @@ CSS: 28100 → 13200 bytes (-14900 / -53.0%)
 ## Caveats
 
 - When you build class names dynamically, either keep them as a complete literal (`` `-p:${size}` `` and similar partial strings are not enough) or add them to `safelist`.
+- Purge keeps the **union of classes used across the entire build output** (not per page). A class is retained as long as it is used on any page, even if it is unused on a given page. This is intentional so that a single CSS shared across multiple pages is never broken.
 - Only CSS emitted by Lism CSS is purged. Your own CSS and styles from other libraries are left untouched.
 - The plugin runs independently of other framework purgers such as Tailwind CSS.
 - CSS sourcemaps are not supported. Purge removes rules, so an existing sourcemap no longer lines up. To avoid stale mappings, purge strips `sourceMappingURL` comments from processed CSS and removes old `.css.map` files. Disable purge if you need CSS sourcemaps.
