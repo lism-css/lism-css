@@ -28,9 +28,15 @@ export function resolveKnownSelectors(known: KnownOption | undefined): KnownSele
 }
 
 const CSS_SOURCE_MAPPING_URL_RE = /\/\*[#@]\s*sourceMappingURL=.*?\*\//gs;
+// 判定用は non-global にする。global な test() は lastIndex が前進して結果が呼び出し順に依存するため。
+const HAS_CSS_SOURCE_MAPPING_URL_RE = /\/\*[#@]\s*sourceMappingURL=.*?\*\//s;
 
 export function stripCssSourceMappingUrl(css: string): string {
   return css.replace(CSS_SOURCE_MAPPING_URL_RE, '').trimEnd();
+}
+
+export function hasCssSourceMappingUrl(css: string): boolean {
+  return HAS_CSS_SOURCE_MAPPING_URL_RE.test(css);
 }
 
 export function formatReport(beforeBytes: number, afterBytes: number): string {

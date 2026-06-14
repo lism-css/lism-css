@@ -208,4 +208,29 @@ describe('lismPurge (Vite)', () => {
       await rm(dirM, { recursive: true, force: true });
     }
   });
+
+  test('purge 削除も sourcemap も無い場合は素通しし、末尾空白差分でリネームしない', async () => {
+    const plugin = lismPurge({ known });
+    // 末尾に改行を持つが、全クラスが used に含まれ purge 対象が無く、sourcemap も無い
+    const original = '.-p\\:20{padding:var(--s20)}.-m\\:10{margin:var(--s10)}\n';
+    const bundle: Record<string, unknown> = {
+      'assets/main-AAAA1111.css': {
+        type: 'asset',
+        fileName: 'assets/main-AAAA1111.css',
+        source: original,
+      },
+      'assets/app.js': {
+        type: 'chunk',
+        fileName: 'assets/app.js',
+        code: 'const cls = "-p:20 -m:10";',
+      },
+    };
+    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
+
+    // リネームされず、内容も trimEnd されず原文のまま
+    const cssKeys = Object.keys(bundle).filter((key) => key.endsWith('.css'));
+    expect(cssKeys).toEqual(['assets/main-AAAA1111.css']);
+    expect((bundle['assets/main-AAAA1111.css'] as { source: string }).source).toBe(original);
+  });
 });

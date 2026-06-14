@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { LISM_CSS_SIGNATURE, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
+import { LISM_CSS_SIGNATURE, hasCssSourceMappingUrl, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
 
 describe('LISM_CSS_SIGNATURE', () => {
   test('Lism の Property Class (.-x) にマッチする', () => {
@@ -62,5 +62,23 @@ describe('stripCssSourceMappingUrl', () => {
   test('sourceMappingURL がなければ末尾以外は変えない', () => {
     const css = '/*! lism-css */\n.-p\\:20{padding:20px}';
     expect(stripCssSourceMappingUrl(css)).toBe(css);
+  });
+});
+
+describe('hasCssSourceMappingUrl', () => {
+  test('sourceMappingURL コメントがあれば true', () => {
+    expect(hasCssSourceMappingUrl('.-p\\:20{padding:20px}\n/*# sourceMappingURL=main.css.map */')).toBe(true);
+    expect(hasCssSourceMappingUrl('.-p\\:20{padding:20px}/*@ sourceMappingURL=x.map */')).toBe(true);
+  });
+
+  test('sourceMappingURL コメントがなければ false', () => {
+    expect(hasCssSourceMappingUrl('.-p\\:20{padding:20px}')).toBe(false);
+    expect(hasCssSourceMappingUrl('/*! lism-css banner */\n.-p\\:20{padding:20px}')).toBe(false);
+  });
+
+  test('連続呼び出しでも結果が安定する（lastIndex 非依存）', () => {
+    const css = '.-p\\:20{padding:20px}\n/*# sourceMappingURL=main.css.map */';
+    expect(hasCssSourceMappingUrl(css)).toBe(true);
+    expect(hasCssSourceMappingUrl(css)).toBe(true);
   });
 });

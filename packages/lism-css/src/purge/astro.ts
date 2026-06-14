@@ -6,9 +6,10 @@ import type { AstroIntegration } from 'astro';
 import { extractLismClasses } from './extract';
 import { purgeLismCss, type KnownSelectorSet, type SafelistEntry } from './core';
 import type { LismPurgeOptions } from './options';
-import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
+import { LISM_CSS_SIGNATURE, formatReport, hasCssSourceMappingUrl, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
 
 export type { LismPurgeOptions } from './options';
+export type { KnownSelectorSet } from './core';
 
 const SCAN_EXT = /\.(html?|js|mjs|cjs)$/;
 const CSS_EXT = /\.css$/;
@@ -70,30 +71,33 @@ async function purgeCssFiles(
   for (const file of cssFiles) {
     const source = await readFile(file, 'utf8');
     if (!LISM_CSS_SIGNATURE.test(source)) continue;
-    const purged = stripCssSourceMappingUrl(purgeLismCss(source, { used, safelist, known }));
-    if (purged === source) continue;
+    const purged = purgeLismCss(source, { used, safelist, known });
+    // purge による削除も sourcemap 参照も無ければ素通しする。
+    // stripCssSourceMappingUrl の trimEnd による末尾空白差分だけで不要なリネーム / hash 再計算が走るのを防ぐ。
+    if (purged === source && !hasCssSourceMappingUrl(source)) continue;
+    const output = stripCssSourceMappingUrl(purged);
 
     beforeBytes += source.length;
-    afterBytes += purged.length;
+    afterBytes += output.length;
 
     const oldBase = basename(file);
     const match = HASHED_CSS_NAME.exec(oldBase);
     if (match) {
       // 内容ベースのハッシュ部を新内容で再計算し、ファイル名を更新する。
       // 参照側 (HTML/JS/manifest) も後段で同期して書き換えるためキャッシュ整合が保たれる。
-      const newHash = shortContentHash(purged);
+      const newHash = shortContentHash(output);
       const newBase = `${match[1]}.${newHash}.css`;
       if (newBase !== oldBase) {
         const newPath = join(dirname(file), newBase);
-        await writeFile(newPath, purged, 'utf8');
+        await writeFile(newPath, output, 'utf8');
         await unlink(file);
         renames.push({ oldBase, newBase });
       } else {
-        await writeFile(file, purged, 'utf8');
+        await writeFile(file, output, 'utf8');
       }
     } else {
       // ハッシュ無しの CSS は in-place 上書き
-      await writeFile(file, purged, 'utf8');
+      await writeFile(file, output, 'utf8');
     }
     await deleteStaleCssMap(file);
   }

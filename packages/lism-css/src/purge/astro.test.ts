@@ -185,4 +185,31 @@ describe('lismPurgeAstro (Astro)', () => {
       await rm(dir, { recursive: true, force: true });
     }
   });
+
+  test('purge 削除も sourcemap も無い場合は素通しし、末尾改行を保持する', async () => {
+    // 末尾に改行を持つが、全クラスが used に含まれ purge 対象が無く、sourcemap も無い
+    const original = `.l--stack{display:flex}\n`;
+    const dir = await setupDist({
+      'main.css': original,
+      'index.html': `<div class="l--stack"></div>`,
+    });
+    try {
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack']), attrs: new Set() },
+      });
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+      // 素通しされ、in-place 上書き（trimEnd）も走らないため末尾改行が原文のまま残る
+      const after = await readFile(join(dir, 'main.css'), 'utf8');
+      expect(after).toBe(original);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
 });

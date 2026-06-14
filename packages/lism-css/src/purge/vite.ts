@@ -3,10 +3,11 @@ import { basename, dirname } from 'node:path/posix';
 import type { Plugin } from 'vite';
 import { extractLismClasses } from './extract';
 import { purgeLismCss } from './core';
-import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
+import { LISM_CSS_SIGNATURE, formatReport, hasCssSourceMappingUrl, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
 import type { LismPurgeOptions } from './options';
 
 export type { LismPurgeOptions } from './options';
+export type { KnownSelectorSet } from './core';
 
 function decodeAssetSource(source: string | Uint8Array): string {
   return typeof source === 'string' ? source : new TextDecoder().decode(source);
@@ -102,11 +103,14 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
         if (asset.type !== 'asset') continue;
         const source = decodeAssetSource(asset.source);
         if (!LISM_CSS_SIGNATURE.test(source)) continue;
-        const purged = stripCssSourceMappingUrl(purgeLismCss(source, { used, safelist: options.safelist, known }));
-        if (purged === source) continue;
-        asset.source = purged;
+        const purged = purgeLismCss(source, { used, safelist: options.safelist, known });
+        // purge による削除も sourcemap 参照も無ければ素通しする。
+        // stripCssSourceMappingUrl の trimEnd による末尾空白差分だけで不要なリネーム / hash 再計算が走るのを防ぐ。
+        if (purged === source && !hasCssSourceMappingUrl(source)) continue;
+        const output = stripCssSourceMappingUrl(purged);
+        asset.source = output;
         staleCssMaps.add(`${asset.fileName}.map`);
-        const rename = getRenamedCssFileName(asset.fileName, purged);
+        const rename = getRenamedCssFileName(asset.fileName, output);
         if (rename) {
           asset.fileName = rename.newName;
           delete bundle[key];
@@ -114,7 +118,7 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
           renames.push(rename);
         }
         beforeBytes += source.length;
-        afterBytes += purged.length;
+        afterBytes += output.length;
       }
 
       if (staleCssMaps.size > 0) {
