@@ -37,6 +37,13 @@ const entries = {
   'config/presets/props-full': resolve(__dirname, 'config/presets/props-full.ts'),
   'purge/vite': resolve(__dirname, 'src/purge/vite.ts'),
   'purge/astro': resolve(__dirname, 'src/purge/astro.ts'),
+
+  // config → CSS 共有コア（bin CLI と Vite プラグインが共有）。sass/postcss を使うため node 専用。
+  // ※ ディレクトリ名は src/build だと .gitignore の `build/` に無視されるため src/builder とする。
+  'builder/index': resolve(__dirname, 'src/builder/index.ts'),
+
+  // 傘エントリ（P3）: lismCss() / lismCssAstro()。config alias + CSS ビルド + 任意 purge を統合。
+  'builder/vite': resolve(__dirname, 'src/builder/vite.ts'),
   // 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 
   // ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
@@ -87,7 +94,19 @@ export default defineConfig({
     },
     rollupOptions: {
       plugins: [],
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js', /^node:/],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'lism-css/config.js',
+        /^node:/,
+        'sass',
+        'postcss',
+        'autoprefixer',
+        'cssnano',
+        'glob',
+        'vite',
+      ],
       output: {
         dir: 'dist',
         // exports: 'named',

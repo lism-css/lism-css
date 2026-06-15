@@ -5,7 +5,7 @@ import expressiveCode from 'astro-expressive-code';
 import remarkDirective from 'remark-directive';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import { lismPurgeAstro } from 'lism-css/purge/astro';
+import { lismCssAstro } from 'lism-css/vite';
 import { remarkDirectiveHandler } from './src/lib/remark-directive.mjs';
 import { remarkLinkCard } from './src/lib/remark-link-card.mjs';
 import { remarkWikiLink } from './src/lib/remark-wiki-link.mjs';
@@ -44,7 +44,7 @@ export default defineConfig({
         return item;
       },
     }),
-    lismPurgeAstro({ report: true }),
+    lismCssAstro({ purge: { report: true } }),
   ],
   markdown: {
     // :::note などの directive 記法を <Callout> に変換

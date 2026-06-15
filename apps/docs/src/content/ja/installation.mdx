@@ -203,27 +203,33 @@ npx lism-cli ui add --all
 
 ## 未使用CSSの削除（パージ）
 
-本番ビルド時に未使用の Lism CSS クラスを取り除き、CSS ファイルを軽量化するパージプラグインを `lism-css` パッケージに同梱しています。Astro なら `lism-css/purge/astro` の `lismPurgeAstro`、Vite なら `lism-css/purge/vite` の `lismPurge` を import して組み込みます。
+本番ビルド時に未使用の Lism CSS クラスを取り除き、CSS ファイルを軽量化するパージ機能を `lism-css` パッケージに同梱しています。`lism-css/vite` の統合プラグイン（`lismCss()` / `lismCssAstro()`）を使っている場合は、`purge: true` オプションを渡すだけで有効化できます。
 
 ```js
 // astro.config.mjs の例
 import { defineConfig } from 'astro/config';
-import { lismPurgeAstro } from 'lism-css/purge/astro';
+import { lismCssAstro } from 'lism-css/vite';
 
 export default defineConfig({
-  integrations: [lismPurgeAstro({ report: true })],
+  integrations: [lismCssAstro({ purge: true })],
 });
 ```
 
 ```js
 // vite.config.js の例
 import { defineConfig } from 'vite';
-import { lismPurge } from 'lism-css/purge/vite';
+import { lismCss } from 'lism-css/vite';
 
 export default defineConfig({
-  plugins: [lismPurge({ report: true })],
+  plugins: [lismCss({ purge: true })],
 });
 ```
+
+`purge: { report: true }` のようにオブジェクトで渡すと、purge プラグインの各オプションも指定できます。
+
+:::info
+単体プラグイン（`lism-css/purge/astro` の `lismPurgeAstro` / `lism-css/purge/vite` の `lismPurge`）も後方互換で引き続き利用できます。
+:::
 
 詳しいセットアップ・オプション・safelist の指定方法は [CSS Purge](/docs/purge/) を参照してください。
 

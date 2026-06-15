@@ -15,8 +15,8 @@ function getDiagnosticsText(diagnostics: readonly ts.Diagnostic[]): string {
   });
 }
 
-describe('BreakpointRegistry module augmentation fixture', () => {
-  it('lism-css root module への augmentation が PropValueTypes に反映される', () => {
+describe('lism-css module augmentation fixture', () => {
+  it('lism-css root module への augmentation が内部型に反映される', () => {
     const configPath = resolve(packageRoot, 'tsconfig.json');
     const configFile = ts.readConfigFile(configPath, (fileName) => ts.sys.readFile(fileName));
     if (configFile.error) {
@@ -39,6 +39,7 @@ describe('BreakpointRegistry module augmentation fixture', () => {
       incremental: false,
       noEmit: true,
       rootDir: packageRoot,
+      types: ['node', 'react'],
     };
     const program = ts.createProgram({
       rootNames: [fixturePath],

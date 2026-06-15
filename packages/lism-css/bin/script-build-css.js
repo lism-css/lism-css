@@ -1,10 +1,31 @@
-import buildCSS from './build-css.js';
-import buildConfig from './build-config.js';
+// パッケージ自身の CSS ビルド（tsx 実行）。
+// 同梱デフォルトの prop-config を更新しつつ src/scss → dist/css をコンパイルする。
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { writePropConfigFiles, compileCssTree, computeBuildConfigs } from '../src/builder/index.ts';
 import { CONFIG } from '../config/index.ts';
 import { objDeepMerge } from '../config/helper.ts';
 import propsFull from '../config/presets/props-full.ts';
 
-await buildConfig(CONFIG);
-// full.css 用（isVar系を除く全propsのBPをlgまで拡張）
-await buildConfig(objDeepMerge(CONFIG, { props: propsFull }), '_prop-config-full.scss');
-await buildCSS();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const scssDir = path.resolve(__dirname, '../src/scss');
+const distDir = path.resolve(__dirname, '../dist/css');
+
+const { mainConfig, fullConfig } = computeBuildConfigs({
+  defaultConfig: CONFIG,
+  propsFull,
+  userConfig: {},
+  objDeepMerge,
+});
+
+// 同梱デフォルトの _prop-config.scss / _prop-config-full.scss を更新する。
+// これらは素の sass 利用（@use 'lism-css/scss/setting' 等）が `@use './prop-config'` で読む実ファイル。
+// main/full のマージ順は CLI/Vite と同じ computeBuildConfigs に揃える。
+writePropConfigFiles({
+  scssDir,
+  mainConfig,
+  fullConfig,
+});
+
+// src/scss を直接コンパイル（prop-config はディスク実ファイルを参照）。
+await compileCssTree({ scssDir, distDir });

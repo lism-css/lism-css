@@ -147,34 +147,50 @@ The list form is for cases where you want to restrict a specific prop to certain
 
 ### Enabling xs / xl breakpoints
 
-The default `$breakpoints` map includes `xs` and `xl` keys alongside `sm`, `md`, and `lg`, but their size is `0` (disabled), so they produce no output. To use `xs` or `xl`, define its size in `$breakpoints`:
+The default breakpoints are `xs: 0` (disabled) / `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0` (disabled). A value of `0` means "disabled — no CSS query is output".
 
-```scss
-@use '../path-to/node_modules/lism-css/scss/setting' with (
-  $breakpoints: (
-    'xs': '360px', // Enable xs
-    'xl': '1440px', // Enable xl
-  )
-);
+The easiest way to enable `xs` or `xl` is to **specify the sizes in the `breakpoints` key of `lism.config.js`**:
 
-@use '../path-to/node_modules/lism-css/scss/main';
+```js
+// lism.config.js
+export default {
+  breakpoints: {
+    xs: '360px', // Enable xs
+    xl: '1400px', // Enable xl
+  },
+};
 ```
 
-Any breakpoint with a size in `$breakpoints` becomes active: all Property Classes with responsive support (`bp: 1`) will automatically start outputting responsive classes for that breakpoint (such as `-p_xs` / `-p_xl`) — no per-prop configuration is needed.
+This is all it takes. Every Property Class that supports responsive output (`bp: 1`) will then also emit responsive classes for `xs` / `xl` (e.g., `-p_xs` / `-p_xl`) — no per-prop configuration is needed. When you are using the `lism-css/vite` integrated plugin, these changes are automatically reflected in the dev server and production build CSS.
 
-This also allows you to specify `xs` / `xl` in object notation on the component side (to also show them in type completion, you need to extend `BreakpointRegistry` as described on the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion)).
+This also lets you use `xs` / `xl` in object notation on the component side:
 
 ```jsx
 <Box p={{ base: 20, xs: 10, sm: 30 }} />
 ```
+
+To have `xs` / `xl` appear in type completion as well, see the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion). If you are using the integrated plugin (`lism-css/vite`), `lism-env.d.ts` is generated automatically and no hand-written type extension is needed.
 
 :::info
 [`full.css`](#full-buildfullcss) already includes classes with `xs` enabled (using a provisional value of 360px).
 :::
 
 :::warning
-Enabling `xs` / `xl` and other breakpoints adds a block for each active breakpoint to every Property Class that uses `bp: 1`, which increases the CSS size. **This feature is designed to be used together with CSS purge.** If you are not using purge, consider using the list form of `bp` (e.g., `bp: ('sm', 'md')`) to restrict which breakpoints are output on a per-prop basis.
+Enabling `xs` / `xl` adds a block for each active breakpoint to every Property Class that uses `bp: 1`, which increases the CSS size. **This feature is designed to be used together with CSS purge.** If you are not using purge, consider using the list form of `bp` (e.g., `bp: ('sm', 'md')`) to restrict which breakpoints are output on a per-prop basis.
 :::
+
+When using SCSS directly, you can still enable `xs` / `xl` via the `$breakpoints` SCSS variable override:
+
+```scss
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+  $breakpoints: (
+    'xs': '360px',
+    'xl': '1440px',
+  )
+);
+
+@use '../path-to/node_modules/lism-css/scss/main';
+```
 
 
 ### Notes on SCSS compilation
@@ -187,30 +203,42 @@ When importing SCSS files directly, note that compilation order relative to othe
 By placing a `lism.config.js` (or `lism.config.mjs`) file in the root of your project, you can customize component behavior (rather than styles).
 
 
-### Registering the Vite plugin (required)
+### Registering the Vite / Astro plugin (required)
 
 :::warning
-To make `lism.config.js` take effect, you must register `lism-css/vite-plugin` in your Vite (or Astro) config file. Without registration, the file is ignored and default settings are used.
+To make `lism.config.js` take effect, you must register the plugin in your Vite (or Astro) config file. Without registration, the file is ignored and default settings are used.
 :::
 
-<PreviewTitle>Registration example in astro.config.mjs</PreviewTitle>
+Use the integrated plugin provided by `lism-css/vite`. A single registration enables **config alias (so the JS runtime reads `lism.config.js`), dynamic CSS build (changes are automatically reflected in dev/build CSS), and automatic type generation (`lism-env.d.ts`)** all at once.
+
+<Preview>
+<PreviewCode slot="tab" label="astro.config.mjs">
 ```js
 import { defineConfig } from 'astro/config';
-import lismCss from 'lism-css/vite-plugin';
+import { lismCssAstro } from 'lism-css/vite';
 
 export default defineConfig({
-  vite: {
-    plugins: [lismCss()],
-  },
+  integrations: [lismCssAstro()],
 });
 ```
+</PreviewCode>
+<PreviewCode slot="tab" label="vite.config.js">
+```js
+import { defineConfig } from 'vite';
+import { lismCss } from 'lism-css/vite';
+
+export default defineConfig({
+  plugins: [lismCss()],
+});
+```
+</PreviewCode>
+</Preview>
 
 The plugin auto-detects `lism.config.js` then `lism.config.mjs` from the project root. To use a file at a different location, specify the path via the `configPath` option:
 
 ```js
-plugins: [lismCss({ configPath: './config/lism.config.js' })],
+integrations: [lismCssAstro({ configPath: './config/lism.config.js' })],
 ```
-
 
 ### Format
 
@@ -298,6 +326,12 @@ With the above customization, the following behavior is added to Lism components
   </PreviewCode>
 </Preview>
 
+:::note[Added props / traits are also unlocked for types]
+When you use the integrated plugin (with type generation enabled), props / traits added in `lism.config.js` are also automatically unlocked on the type side via `lism-env.d.ts` (emitted as `CustomPropRegistry` / `CustomTraitRegistry` augmentations). So new props / traits like `<Box filter="blur" ... isHoge>` above do not raise type errors in your editor or `astro check`. No hand-written type extension is needed (commit `lism-env.d.ts` to git).
+
+Note that adding values to existing props (such as `ta="justify"`) never causes a type error to begin with, since those accept arbitrary strings (they just won't appear in completion candidates).
+:::
+
 
 :::warning
 Note that customizations via `lism.config.js` only affect the HTML output from components.
@@ -308,6 +342,13 @@ The styles for any added utility classes are not automatically loaded.
 ## How to load additional styles
 
 Adding props in `lism.config.js` alone does not produce styles for the corresponding utility classes. Use one of the following approaches to add the styles.
+
+
+### Automatic reflection when using the Vite / Astro plugin
+
+If you have registered the `lism-css/vite` integrated plugin (`lismCss()` / `lismCssAstro()`), any additions or changes to `props` / `tokens` in `lism.config.js` are **automatically reflected in the CSS, both in the dev server and in production builds**. No manual CLI build is needed.
+
+When the dev server is running, editing `lism.config.js` triggers HMR to regenerate the CSS.
 
 
 ### Hand-write styles for small additions
@@ -337,7 +378,11 @@ Switch to the CLI / SCSS routes below only when you want to extend tokens system
 
 ### Build CSS using the lism-css CLI command
 
-Running `npx lism-css build` will trigger a style build inside the lism-css package with some of your `lism.config.js` customizations applied.
+For projects that do not use Vite or Astro (plain SCSS setups, other bundlers, etc.), run `npx lism-css build` to reflect `lism.config.js` into the CSS. This is not a legacy-only path — it is the **primary route** for that type of setup.
+
+```bash frame="none"
+npx lism-css build
+```
 
 In this example, the following styles would be automatically generated into `lism-css/main.css` by this command:
 

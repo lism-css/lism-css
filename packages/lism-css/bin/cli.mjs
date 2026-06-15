@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-import fs from 'fs';
 import path from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
-import buildConfig from './build-config.js';
-import buildCSS from './build-css.js';
-import { objDeepMerge } from '../dist/config/helper.js';
+import { fileURLToPath } from 'url';
+import { buildCssToDir, loadBuildConfigs } from '../dist/builder/index.js';
 
-// NOTE: build-config.js を実行するための簡易CLIエントリ
+// NOTE: lism-css build の簡易CLIエントリ。
+// 共有コア（dist/builder）経由で config を読み、CSS をビルドする。
+// buildCssToDir は src/scss を一時ディレクトリへ複製して prop-config を差し替えるため、
+// node_modules 内 src/scss へのインプレース書き換えは行わない（出力は dist/css）。
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -15,21 +15,7 @@ const projectRoot = process.cwd();
 
 console.log('🤖 projectRoot:', projectRoot);
 
-// 設定ファイルのパス
-const defaultConfigPath = path.resolve(__dirname, '../dist/config/default-config.js');
-
-// ユーザー設定ファイルを検索（優先順: .js → .mjs）
-const CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'];
-function findUserConfigPath() {
-  for (const name of CONFIG_SEARCH) {
-    const abs = path.resolve(projectRoot, name);
-    if (fs.existsSync(abs)) return abs;
-  }
-  return null;
-}
-const userConfigPath = findUserConfigPath();
-
-// コマンドライン引数の先頭をサブコマンドとして解釈（デフォルトは build-config）
+// コマンドライン引数の先頭をサブコマンドとして解釈
 const args = process.argv.slice(2);
 const command = args[0] || '';
 
@@ -38,49 +24,27 @@ const command = args[0] || '';
 const withFull = args.includes('--full');
 
 async function main() {
-  // 指定がない場合、build-config を実行
   if (command === 'build') {
-    // default-config を常に読み込む（ESM default export を取得）
-    const defaultConfigModule = await import(pathToFileURL(defaultConfigPath).href);
-    const defaultConfig = defaultConfigModule?.default || {};
+    // config 読み込み（defaults → full preset → lism.config）。
+    // mainConfig は isFullMode 時に full preset 適用済み（loadBuildConfigs が解決）。
+    const { mainConfig, fullConfig, userConfigPath } = await loadBuildConfigs(projectRoot, {
+      distDir: path.resolve(__dirname, '../dist'),
+    });
 
-    // user の lism.config.{js,mjs} は存在する時のみ読み込む
-    let userConfig = {};
     if (userConfigPath) {
-      const userConfigModule = await import(pathToFileURL(userConfigPath).href);
-      userConfig = userConfigModule?.default || {};
-
       console.log('===== 📁 userConfig =====');
-      console.log(userConfig);
+      console.log(userConfigPath);
       console.log('==========');
     }
 
-    // 設定をディープマージ
-    const CONFIG = objDeepMerge(defaultConfig, userConfig);
-
-    // full.css 用 preset を反映した設定。(later wins): defaults → full preset → user config
-    const propsFullPath = path.resolve(__dirname, '../dist/config/presets/props-full.js');
-    const propsFullModule = await import(pathToFileURL(propsFullPath).href);
-    if (!propsFullModule.default) {
-      // 空のまま進めると「full ではない full.css」が黙って生成されるため、明示的にエラーにする
-      throw new Error(`props-full preset の読み込みに失敗しました: ${propsFullPath}`);
-    }
-    const CONFIG_FULL = objDeepMerge(objDeepMerge(defaultConfig, { props: propsFullModule.default }), userConfig);
-
-    // isFullMode 時は main.css 側のビルドにも full preset を適用する。
-    // コンポーネント側（config/index.ts）が full 設定でクラスを出力するため、ビルド済みCSSと一致させる必要がある。
-    const isFullMode = !!userConfig.isFullMode;
-
-    // 動的インポートで同ディレクトリのスクリプトを実行
-    await buildConfig(isFullMode ? CONFIG_FULL : CONFIG); // SCSSの設定ファイルを出力
-
     // full 系の生成・コンパイルは --full 指定時のみ行う。
-    // （_prop-config-full.scss の生成だけスキップすると、パッケージ同梱のストック版 partial で
-    //   ユーザー設定を反映しない full.css が生成されてしまうため、コンパイル側も合わせて制御する）
-    if (withFull) {
-      await buildConfig(CONFIG_FULL, '_prop-config-full.scss');
-    }
-    await buildCSS({ ignore: withFull ? [] : ['full.scss', 'full_no_layer.scss'] });
+    await buildCssToDir({
+      scssDir: path.resolve(__dirname, '../src/scss'),
+      distDir: path.resolve(__dirname, '../dist/css'),
+      mainConfig,
+      fullConfig,
+      ignore: withFull ? [] : ['full.scss', 'full_no_layer.scss'],
+    });
     return;
   }
 

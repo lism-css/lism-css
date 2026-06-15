@@ -116,7 +116,7 @@ export default {
 
 `lism.config.mjs` も同様に読み込まれます。旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。
 
-> **Note:** TypeScript の `lism.config.ts` は現在未対応です。`lism-css` 本体の SCSS ビルド（`vite-plugin-lism-css` / `lism-css build`）も `.ts` を読み込まない設計のため、設定ファイルは `.js` / `.mjs` で記述してください。
+> **Note:** TypeScript の `lism.config.ts` は現在未対応です。`lism-css` 本体の設定読込（`lism-css/vite` / `lism-css build`）も `.ts` を読み込まない設計のため、設定ファイルは `.js` / `.mjs` で記述してください。
 
 ## パッケージが見つからないエラーが出る場合
 

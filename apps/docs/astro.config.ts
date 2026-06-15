@@ -11,7 +11,9 @@ import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 import { loadLastmodMap } from './src/lib/sitemap-lastmod';
 import docsMd from './src/integrations/docs-md';
 import { astroRedirects } from './src/config/redirects';
-// import lismCss from 'lism-css/vite-plugin';
+// 統合プラグイン（#427 P3）: 動的 CSS ビルド + config alias + 型生成（lism-env.d.ts）を束ねる。
+// lism.config.js を JS/CSS の単一情報源にし、無ければデフォルト（= 同梱 main.css 相当）を出力する。
+import { lismCssAstro } from 'lism-css/vite';
 
 // ビルド時のみ lastmod-map.json を読み込む（dev では不要）
 const isBuild = process.argv.includes('build');
@@ -50,10 +52,9 @@ export default defineConfig({
         allow: [new URL('../../', import.meta.url).pathname],
       },
     },
-    // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
     plugins: [
-      // lismCss(),
       {
+        // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
         name: 'ignore-underscore-prefix',
         resolveId(id, importer) {
           // __ で始まるディレクトリのファイルをexternalとして扱う
@@ -65,6 +66,8 @@ export default defineConfig({
     ],
   },
   integrations: [
+    // lism.config.js を JS/CSS の単一情報源にする統合プラグイン（config alias + 動的 CSS + 型生成）
+    lismCssAstro(),
     expressiveCode(expressiveCodeOptions),
     react(),
     mdx({
