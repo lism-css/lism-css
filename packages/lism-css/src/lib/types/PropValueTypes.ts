@@ -22,9 +22,9 @@ type TokensConfig = typeof TOKENS;
 // ============================================================
 
 /**
- * TOKENS のキーから対応する値の型を取得
- * - 配列形式: TOKENS[K] が配列の場合、その要素の型
- * - オブジェクト形式: TOKENS[K].values が配列の場合、その要素の型
+ * TOKENS のキーから対応する値の型（= トークンのキー集合）を取得
+ * - 配列 / Set 形式: その要素の型
+ * - 値付きフラットマップ（{ key: value }）: その keyof（トークンのキー集合）
  *
  * @example
  * ```ts
@@ -37,7 +37,9 @@ type TokensConfig = typeof TOKENS;
  */
 type TokenConfigValues<K extends keyof TokensConfig> = TokensConfig[K] extends readonly unknown[]
   ? ArrayElement<TokensConfig[K]>
-  : ExtractArrayValues<TokensConfig[K], 'values'>;
+  : TokensConfig[K] extends object
+    ? keyof TokensConfig[K] & string
+    : never;
 
 /**
  * token プロパティから対応する TOKENS の値を抽出

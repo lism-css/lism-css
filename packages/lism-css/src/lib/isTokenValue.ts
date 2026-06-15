@@ -20,15 +20,9 @@ export default function isTokenValue(tokenKey: string, value: unknown): boolean 
     return tokenValues.has(stringValue);
   } else if (Array.isArray(tokenValues)) {
     return tokenValues.includes(stringValue);
-  } else if ('values' in tokenValues) {
-    // { pre?: string, values: Set | Array } 形式のオブジェクト
-    // ブラケット記法を使用して、Set/Map の values() メソッドとの名前衝突を回避
-    const values = tokenValues['values'];
-    if (values instanceof Set) {
-      return values.has(stringValue);
-    } else if (Array.isArray(values)) {
-      return values.includes(stringValue);
-    }
+  } else if (typeof tokenValues === 'object' && tokenValues !== null) {
+    // 値付きフラットマップ（{ key: value }）はキーの有無で判定する。
+    return Object.hasOwn(tokenValues, stringValue);
   }
   return false;
 }

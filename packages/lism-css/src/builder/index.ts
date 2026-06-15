@@ -7,7 +7,7 @@
  * - load-config: defaults / full preset / lism.config をマージして main / full の BuildConfig を作る。
  * - compile-entry: 単一エントリ → CSS 文字列のオンザフライ・コンパイラ（Vite プラグイン用）。
  */
-export { serializePropConfig, serializeTokenValues, type BuildConfig, type PropConfig } from './serialize';
+export { serializePropConfig, serializeTokens, type BuildConfig, type PropConfig } from './serialize';
 export {
   writePropConfigFiles,
   compileCssTree,

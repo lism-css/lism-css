@@ -1,12 +1,12 @@
 /**
  * 「config → CSS」変換の共有コア。
  *
- * 方針: 同梱の SCSS（`_setting.scss` 等）は `@use './prop-config'` のまま **ディスク実ファイル**を参照する。
+ * 方針: 同梱の SCSS（`_setting.scss` 等）は `@use './prop-config.gen'` のまま **ディスク実ファイル**を参照する。
  * これにより素の sass / docs の `@use 'lism-css/scss/setting' with (...)` 等のスタンドアロン利用が維持される。
  *
  * ユーザー設定を反映した CSS を作る時は、**node_modules を書き換えず**に、src/scss を一時ディレクトリへ
- * 複製してそこの `_prop-config*.scss` だけ差し替えてコンパイルする（インプレース書き換えの廃止）。
- * パッケージ自身のビルドは、同梱デフォルトの `_prop-config*.scss` を更新しつつ src/scss を直接コンパイルする。
+ * 複製してそこの `_prop-config*.gen.scss` / `_tokens.gen.scss` だけ差し替えてコンパイルする（インプレース書き換えの廃止）。
+ * パッケージ自身のビルドは、同梱デフォルトの生成 SCSS を更新しつつ src/scss を直接コンパイルする。
  */
 import path from 'node:path';
 import fs from 'node:fs';
@@ -16,17 +16,18 @@ import postcss, { type AcceptedPlugin } from 'postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
-import { serializeConfigScss, serializeTokenValues, type BuildConfig } from './serialize';
+import { serializeConfigScss, serializeTokens, type BuildConfig } from './serialize';
 
 export type { BuildConfig } from './serialize';
 
-const MAIN_PROP_CONFIG = '_prop-config.scss';
-const FULL_PROP_CONFIG = '_prop-config-full.scss';
-// トークン値（#431）の生成 partial。base/tokens/*.scss の後に @forward され、追加 + 上書きの両立を担う。
-const TOKEN_VALUES_PARTIAL = 'base/tokens/_token-values.scss';
+const MAIN_PROP_CONFIG = '_prop-config.gen.scss';
+const FULL_PROP_CONFIG = '_prop-config-full.gen.scss';
+// トークン値の生成 partial。base/tokens/*.scss の後に @forward され、インライン値の出力と
+// lism.config.js による上書き・追加の両立を担う。
+const TOKENS_GEN_PARTIAL = 'base/tokens/_tokens.gen.scss';
 // 生成物であることを明示するヘッダ。値が空でもこのヘッダは常に書き出され、同梱デフォルトと一致させる。
-const TOKEN_VALUES_HEADER =
-  '// このファイルは lism.config.js の tokenValues から自動生成されます。直接編集しないでください（次回ビルド時に上書きされます）。\n';
+const TOKENS_GEN_HEADER =
+  '// このファイルは lism.config.js の tokens から自動生成されます。直接編集しないでください（次回ビルド時に上書きされます）。\n';
 
 function resolvePostcssPlugins(minify: boolean): AcceptedPlugin[] {
   // minify=true: 従来どおり autoprefixer + cssnano（dist/css 出力相当）。
@@ -52,9 +53,9 @@ export function writePropConfigFiles({ scssDir, mainConfig, fullConfig }: WriteP
   if (fullConfig) {
     fs.writeFileSync(path.join(scssDir, FULL_PROP_CONFIG), serializeConfigScss(fullConfig), 'utf8');
   }
-  // tokenValues は userConfig 由来で main/full 共通のため、main 系から 1 ファイルだけ生成する。
+  // tokens のインライン値は main/full 共通のため、main 系から 1 ファイルだけ生成する。
   // base/tokens から @forward され、main.css / full.css / no_layer 系のいずれにも同じ値が乗る。
-  fs.writeFileSync(path.join(scssDir, TOKEN_VALUES_PARTIAL), TOKEN_VALUES_HEADER + serializeTokenValues(mainConfig), 'utf8');
+  fs.writeFileSync(path.join(scssDir, TOKENS_GEN_PARTIAL), TOKENS_GEN_HEADER + serializeTokens(mainConfig), 'utf8');
 }
 
 export interface CompileTreeOptions {
@@ -72,7 +73,7 @@ export interface CompileTreeOptions {
 
 /**
  * scssDir 配下の全エントリ（`_*.scss` を除く）をコンパイルして distDir へ書き出す。
- * prop-config は scssDir に存在する実ファイルを `@use './prop-config'` 経由で読む。
+ * prop-config は scssDir に存在する実ファイルを `@use './prop-config.gen'` 経由で読む。
  */
 export async function compileCssTree({ scssDir, distDir, ignore = [], minify = true, log = console.log }: CompileTreeOptions): Promise<string[]> {
   // glob は CJS 互換だが ESM からも利用可能。動的 import で external 化に追従。

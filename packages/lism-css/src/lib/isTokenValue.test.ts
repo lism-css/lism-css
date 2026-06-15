@@ -36,10 +36,10 @@ describe('isTokenValue', () => {
       expect(isTokenValue('space', 'xs')).toBe(false);
     });
 
-    test('c トークン（オブジェクト形式）に存在する値で true を返す', () => {
-      expect(isTokenValue('c', 'base')).toBe(true);
-      expect(isTokenValue('c', 'text')).toBe(true);
-      expect(isTokenValue('c', 'link')).toBe(true);
+    test('color トークン（意味的カラー ∪ palette）に存在する値で true を返す', () => {
+      expect(isTokenValue('color', 'base')).toBe(true);
+      expect(isTokenValue('color', 'text')).toBe(true);
+      expect(isTokenValue('color', 'link')).toBe(true);
     });
 
     test('palette トークンに存在する値で true を返す', () => {
@@ -99,16 +99,16 @@ describe('isTokenValue', () => {
     });
 
     test('カラーのバリデーション', () => {
-      // c トークンの値
-      expect(isTokenValue('c', 'base')).toBe(true);
-      expect(isTokenValue('c', 'text')).toBe(true);
+      // color トークンの値
+      expect(isTokenValue('color', 'base')).toBe(true);
+      expect(isTokenValue('color', 'text')).toBe(true);
 
       // palette トークンの値
       expect(isTokenValue('palette', 'red')).toBe(true);
       expect(isTokenValue('palette', 'blue')).toBe(true);
 
       // 無効な値
-      expect(isTokenValue('c', '#ff0000')).toBe(false);
+      expect(isTokenValue('color', '#ff0000')).toBe(false);
       expect(isTokenValue('palette', 'custom')).toBe(false);
     });
 

@@ -2,12 +2,11 @@
  * props 設定を SCSS の `$props` マップ文字列へ直列化する純粋関数群。
  *
  * 旧 `bin/build-config.js` のロジックを移植し、ファイル書き出し（副作用）を分離した。
- * 返り値は `@use 'lism:prop-config'` 経由で sass importer がそのまま注入できる SCSS 文字列。
- * bin CLI（ファイル出力）と Vite プラグイン（メモリ注入）の双方がこの直列化結果を共有する。
+ * 返り値は生成 SCSS（`_prop-config.gen.scss` 等）として書き出され、`@use './prop-config.gen'` で読まれる SCSS 文字列。
+ * パッケージ自身のビルドと Vite プラグイン（一時ディレクトリ複製）の双方がこの直列化結果を共有する。
  */
 import getMaybeTokenValue from '../lib/getMaybeTokenValue';
-import getTokenVarName, { type TokensConfig } from '../lib/getTokenVarName';
-import { foldTokenValues } from '../../config/helper';
+import getTokenVarName from '../lib/getTokenVarName';
 
 type TokenValue = string | number;
 type Tokens = Record<string, unknown>;
@@ -38,13 +37,6 @@ export interface BuildConfig {
    * 型生成で「追加 trait の広告」に参照する。
    */
   traits?: Record<string, string>;
-  /**
-   * トークン値の値チャンネル（#431 / Option B）。token 名 → { キー: CSS値 } のマップ。
-   * 例: `{ lts: { '2xl': '.5em' } }` は `:root { --lts--2xl: .5em }`（serializeTokenValues）を出力しつつ、
-   * キー `2xl` を tokens カタログへ畳み込んで（foldTokenValues）ユーティリティ生成とランタイム TOKENS にも登録する。
-   * これで「値定義 + ユーティリティ生成 + props 受理」を1か所の記述でまかなう。
-   */
-  tokenValues?: Record<string, Record<string, TokenValue>>;
 }
 
 /**
@@ -60,11 +52,13 @@ function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<strin
 
   // token をクラス化するのであれば presets へ追加
   if (token && tokenClass === 1) {
-    const tokenValues = TOKENS[token];
-    if (Array.isArray(tokenValues)) {
-      presets.push(...(tokenValues as TokenValue[]));
-    } else if (tokenValues && typeof tokenValues === 'object') {
-      presets.push(...((tokenValues as { values?: TokenValue[] }).values || []));
+    const tokenCatalog = TOKENS[token];
+    if (Array.isArray(tokenCatalog)) {
+      presets.push(...(tokenCatalog as TokenValue[]));
+    } else if (tokenCatalog && typeof tokenCatalog === 'object') {
+      // フラット値マップ（{ key: value }）はキー一覧を presets 化する。
+      // '-' センチネルのキーもカタログ上は有効なので含める（例: -fz:root → var(--fz--root)）。
+      presets.push(...Object.keys(tokenCatalog));
     }
   }
 
@@ -174,8 +168,8 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
  */
 export function serializePropConfig(CONFIG: BuildConfig): string {
   const { props: PROPS } = CONFIG;
-  // tokenValues チャンネルのキーを tokens カタログへ畳み込み、tokenClass:1 のユーティリティ生成に新キーを乗せる。
-  const TOKENS = foldTokenValues(CONFIG.tokens, CONFIG.tokenValues) as Tokens;
+  // tokens は値付きフラットマップ。tokenClass:1 のユーティリティ生成はこのキー集合から導出する。
+  const TOKENS = CONFIG.tokens;
 
   let scssContent = '$props: (\n';
 
@@ -217,32 +211,36 @@ export function serializeBreakpoints(CONFIG: BuildConfig): string {
 }
 
 /**
- * `_prop-config.scss` に書き出す完全な SCSS（`$props` + `$breakpoints`）を生成する。
- * `_setting.scss` が両方を `@use './prop-config'` 経由で読み、config を CSS 出力の単一情報源にする。
+ * `_prop-config.gen.scss` に書き出す完全な SCSS（`$props` + `$breakpoints`）を生成する。
+ * `_setting.scss` が両方を `@use './prop-config.gen'` 経由で読み、config を CSS 出力の単一情報源にする。
  */
 export function serializeConfigScss(CONFIG: BuildConfig): string {
   return `${serializePropConfig(CONFIG)}\n${serializeBreakpoints(CONFIG)}`;
 }
 
 /**
- * CONFIG.tokenValues（#431 の値チャンネル）を `:root { ... }` の CSS 宣言文字列へ直列化する。
+ * CONFIG.tokens（値付きフラットマップ）を `:root { ... }` の CSS 宣言文字列へ直列化する。
  *
- * 変数名は getTokenVarName でトークン形式に整合させる（配列 → `--{t}--{k}` / `{pre,values}` → `{pre}{k}`）。
- * 生成結果は `base/tokens/_token-values.scss` として既定トークン（`base/tokens/*.scss`）の **後** に
- * `@layer lism-base` 内で読み込むことで、新規キーの **追加** と既定値の **上書き** の両方を実現する。
- * tokenValues が無い場合は空文字を返す（partial はヘッダのみになり CSS を出力しない）。
+ * - 変数名は getTokenVarName でトークン形式に整合させる（既定 `--{t}--{k}` / space `--s{k}` / color・palette `--{k}`）。
+ * - 値が `'-'`（センチネル）または空のキーは **出力しない**（カタログ登録のみ・実値は手書き SCSS 側）。
+ * - 生成結果は `base/tokens/_tokens.gen.scss` として既定の手書きトークン（`base/tokens/*.scss`）の **後** に
+ *   `@layer lism-base` 内で読み込むことで、インライン値の出力と lism.config.js による上書き・追加を両立する。
+ *
+ * 出力する宣言が無くても `:root {}` を返し、同梱デフォルトと生成物の体裁を一致させる。
  */
-export function serializeTokenValues(CONFIG: BuildConfig): string {
-  const { tokenValues, tokens = {} } = CONFIG;
-  if (!tokenValues) return '';
+export function serializeTokens(CONFIG: BuildConfig): string {
+  const { tokens = {} } = CONFIG;
 
   const decls: string[] = [];
-  for (const [tokenKey, valueMap] of Object.entries(tokenValues)) {
-    for (const [key, value] of Object.entries(valueMap)) {
-      decls.push(`  ${getTokenVarName(tokenKey, key, tokens as TokensConfig)}: ${value};`);
+  for (const [tokenKey, valueMap] of Object.entries(tokens)) {
+    if (!valueMap || typeof valueMap !== 'object' || Array.isArray(valueMap)) continue;
+    for (const [key, value] of Object.entries(valueMap as Record<string, TokenValue>)) {
+      // '-' センチネル（手書き SCSS に実値を置くキー）は :root 宣言を出力しない。
+      if (value === '-' || value === '' || value == null) continue;
+      decls.push(`  ${getTokenVarName(tokenKey, key)}: ${value};`);
     }
   }
-  if (decls.length === 0) return '';
+  if (decls.length === 0) return ':root {\n}\n';
 
   return `:root {\n${decls.join('\n')}\n}\n`;
 }

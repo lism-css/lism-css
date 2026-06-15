@@ -62,35 +62,39 @@ describe('isFullMode', () => {
   });
 });
 
-describe('tokenValues（#431）', () => {
-  test('値チャンネルのキーがランタイム TOKENS（Set）へ登録される', async () => {
-    const { TOKENS } = await importConfig({ tokenValues: { lts: { '2xl': '.5em' } } });
-    const tokens = TOKENS as unknown as Record<string, Set<string>>;
-    expect(tokens.lts.has('2xl')).toBe(true);
-    // 既定キーは保持される
-    expect(tokens.lts.has('base')).toBe(true);
+describe('tokens（値付き単一情報源）', () => {
+  test('lism.config.js の tokens で新規キーを追加するとランタイム TOKENS に登録される', async () => {
+    const { TOKENS } = await importConfig({ tokens: { lts: { '2xl': '.5em' } } });
+    const tokens = TOKENS as unknown as Record<string, Record<string, unknown>>;
+    expect(Object.hasOwn(tokens.lts, '2xl')).toBe(true);
+    // 既定キーは deep-merge で保持される
+    expect(Object.hasOwn(tokens.lts, 'base')).toBe(true);
   });
 
-  test('c の値チャンネルキーは color 合成にも反映される', async () => {
-    const { TOKENS } = await importConfig({ tokenValues: { c: { success: 'green' } } });
-    // c はオブジェクト形式のため TOKENS.c は { pre, values:Set }、color は合成された Set。
-    const tokens = TOKENS as unknown as { c: { values: Set<string> }; color: Set<string> };
-    expect(tokens.c.values.has('success')).toBe(true);
-    expect(tokens.color.has('success')).toBe(true);
+  test('tokens.color へ追加したキーは color 合成（color ∪ palette）にも反映される', async () => {
+    const { TOKENS } = await importConfig({ tokens: { color: { success: '#0a0' } } });
+    const tokens = TOKENS as unknown as { color: Record<string, unknown> };
+    expect(Object.hasOwn(tokens.color, 'success')).toBe(true);
+  });
+
+  test('既定値の上書きができる（同名キー）', async () => {
+    const { TOKENS } = await importConfig({ tokens: { fz: { base: '1.1rem' } } });
+    const tokens = TOKENS as unknown as { fz: Record<string, unknown> };
+    expect(tokens.fz.base).toBe('1.1rem');
   });
 
   test('登録キーをコンポーネントが props として受理しトークンクラスを出力する（lts="2xl" → -lts:2xl）', async () => {
     // tokenClass:1 の prop は登録済みトークンならインライン style ではなく `.-lts:2xl` クラスを出力する。
-    // 値チャンネルが対応する `.-lts\:2xl { letter-spacing: var(--lts--2xl) }` を生成するため、これで噛み合う。
+    // tokens に値を書くことで対応する `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`（+ :root の値）が生成され噛み合う。
     vi.resetModules();
-    vi.doMock('lism-css/config.js', () => ({ default: { tokenValues: { lts: { '2xl': '.5em' } } } }));
+    vi.doMock('lism-css/config.js', () => ({ default: { tokens: { lts: { '2xl': '.5em' } } } }));
     const { default: getLismProps } = await import('../src/lib/getLismProps');
     const result = getLismProps({ lts: '2xl' });
     expect(result.className).toContain('-lts:2xl');
   });
 
   test('未登録のキーはトークンクラス化されない（登録の効果を確認）', async () => {
-    // 値チャンネルを与えなければ '2xl' は TOKENS に無く、トークンクラス（-lts:2xl）は出力されない。
+    // tokens に '2xl' を与えなければ TOKENS に無く、トークンクラス（-lts:2xl）は出力されない。
     vi.resetModules();
     const { default: getLismProps } = await import('../src/lib/getLismProps');
     const result = getLismProps({ lts: '2xl' });

@@ -3,8 +3,9 @@
 @forward './tokens/space';
 @forward './tokens/shadow';
 
-// lism.config.js の tokenValues 由来の値（#431）。既定トークンの後に読み込み、追加 + 上書きを両立させる。
-@forward './tokens/token-values';
+// tokens.ts のインライン値から自動生成（base/tokens/_tokens.gen.scss）。
+// 手書きトークンの後に読み込み、インライン値の出力と lism.config.js による追加・上書きを両立させる。
+@forward './tokens/tokens.gen';
 
 // 各html要素のベーススタイル
 @forward './html';

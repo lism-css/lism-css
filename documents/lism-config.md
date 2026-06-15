@@ -11,8 +11,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI
 | キー | 役割 |
 |------|------|
 | `props` | `p`/`ta`/`filter`など、Lism propsが出力するクラス・CSSプロパティ・utility値を追加/上書きする |
-| `tokens` | `space`/`lts`など、propsが参照するトークン名のカタログ（キー）を追加/上書きする |
-| `tokenValues` | `lts`/`space`/`c`など、トークンの値（CSS変数）を定義/上書きする。キー登録も兼ねる（→ `tokens`への追記が不要になる） |
+| `tokens` | `space`/`lts`/`color`など、トークンを`{ key: value }`の値マップで定義/上書きする。CSS変数の値出力・ユーティリティ生成・props受理を1か所でまかなう |
 | `traits` | `isHoge`→`is--hoge`のような真偽値class propを追加する |
 | `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
 | `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
@@ -22,7 +21,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI
 // lism.config.js
 import DEFAULT_CONFIG from 'lism-css/default-config';
 
-const { props, tokens } = DEFAULT_CONFIG;
+const { props } = DEFAULT_CONFIG;
 
 export default {
   breakpoints: {
@@ -45,16 +44,12 @@ export default {
     },
   },
 
+  // トークンは { key: value } の値マップで定義する。
+  // :root への値出力 + ユーティリティ生成 + props 受理を1か所でまかなう。
   tokens: {
-    lts: [...tokens.lts, '2xl'],
-  },
-
-  // トークンの値（CSS変数）を定義。:root への出力 + ユーティリティ生成 + props 受理を1か所でまかなう。
-  // キー登録を兼ねるため、値を定義するだけなら上の tokens への追記は不要。
-  tokenValues: {
     lts: { '2xl': '.5em' }, // → :root { --lts--2xl: .5em } + .-lts:2xl
-    space: { '90': '6rem' }, // → --s90（pre: --s を尊重）
-    c: { success: 'oklch(0.6 0.15 150)' }, // → --success（pre: -- を尊重）
+    space: { '90': '6rem' }, // → --s90
+    color: { success: 'oklch(0.6 0.15 150)' }, // → --success
   },
 
   traits: {
@@ -138,7 +133,7 @@ pnpm exec lism-css build
    マージ順は`defaultConfig`→`lism.config.js`。`full.css`用は`defaultConfig`→`full preset`→`lism.config.js`。
 4. `isFullMode:true`の場合、`main.css`系で使う設定もfull preset適用済みに寄せる。
 5. `import 'lism-css/main.css'`などのCSS importをViteプラグインが捕捉し、設定反映済みCSSをその場でコンパイルして返す。
-   `node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して`_prop-config.scss`だけ差し替える。
+   `node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して生成SCSS（`_prop-config.gen.scss`/`_tokens.gen.scss`）だけ差し替える。
 6. `breakpoints`で`xs`/`xl`などが有効なら、`lism-env.d.ts`を自動生成して型側にも反映する。
    生成対象は主にbreakpointsで、props/tokens全体の型拡張までは追従しない。
 7. `purge:true`時は、設定反映済みの`full.css`からknown selectorを作る。
@@ -147,13 +142,12 @@ pnpm exec lism-css build
 
 ## 注意点
 
-- `props`や`tokens`内のオブジェクトはdeep mergeされるが、配列は置き換えになる。
-  既存値に足す場合は`lism-css/default-config`をimportしてspreadする。
-- `tokens`はクラス生成に使うトークン名（キー）の追加であり、CSS変数の実値までは自動定義しない。
-  例: `tokens: { lts: ['2xl'] }`だけでは`--lts--2xl`の値は未定義（別途CSSで定義が必要）。
-- 値も定義したい場合は`tokenValues`を使う。`tokenValues: { lts: { '2xl': '.5em' } }`で
-  `:root { --lts--2xl: .5em }`の出力・ユーティリティ生成・ランタイムTOKENS登録（props受理）がまとめて反映される（既定値の上書きも可能）。
-  変数名はトークン形式に従う（配列形式→`--{token}--{key}` / `space`等のpre付き→`{pre}{key}`）。
+- `props`や`tokens`内のオブジェクトはdeep mergeされる。`tokens`の各トークンは`{ key: value }`の値マップなので、既存キーを残したまま個別キーを追加/上書きできる。
+  既定キーを丸ごと別オブジェクトへ差し替えたい場合のみ`lism-css/default-config`をimportしてspreadする（例: `tokens: { lts: { ...tokens.lts, '2xl': '.5em' } }`）。
+- `tokens`は単一の情報源。`tokens: { lts: { '2xl': '.5em' } }`と書くだけで、
+  `:root { --lts--2xl: .5em }`の出力・ユーティリティ生成（`-lts:2xl`）・ランタイムTOKENS登録（props受理）がまとめて反映される（既定値の上書きも可能）。
+  変数名はトークン形式に従う（既定→`--{token}--{key}` / `space`→`--s{key}` / `color`・`palette`→`--{key}`）。
+- 値に`'-'`を指定したキーはカタログ登録のみで`:root`宣言を出力しない（実値は手書きSCSS側。主に`color`/`palette`で使う）。`'-'`以外の値を与えれば、その値が`:root`へ出力される。
 - `traits`はclass出力の追加であり、対応するスタイルは別途必要。
 - `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。
 - 統合入口は`lism-css/vite`の`lismCss()`/`lismCssAstro()`。

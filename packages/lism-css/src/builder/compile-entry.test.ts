@@ -74,10 +74,10 @@ describe('createCssCompiler', () => {
     expect(customCss).not.toBe(defaultCss);
   });
 
-  test('tokenValues が CSS に注入され、値だけの変更でもキャッシュが更新される', async () => {
+  test('tokens のインライン値が CSS に注入され、値だけの変更でもキャッシュが更新される', async () => {
     const c = makeCompiler();
-    const first = configs({ tokenValues: { lts: { '2xl': '.5em' }, space: { '90': '6rem' } } });
-    const updated = configs({ tokenValues: { lts: { '2xl': '.75em' }, space: { '90': '7rem' } } });
+    const first = configs({ tokens: { lts: { '2xl': '.5em' }, space: { '90': '6rem' } } });
+    const updated = configs({ tokens: { lts: { '2xl': '.75em' }, space: { '90': '7rem' } } });
 
     const firstCss = await c.compile('main', first.mainConfig, first.fullConfig);
     const updatedCss = await c.compile('main', updated.mainConfig, updated.fullConfig);

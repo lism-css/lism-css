@@ -1,7 +1,7 @@
 import defaultConfig from './default-config';
 import propsFull from './presets/props-full';
 import userConfig from 'lism-css/config.js'; // ユーザーが上書きできる
-import { objDeepMerge, arrayConvertToSet, foldTokenValues } from './helper';
+import { objDeepMerge, arrayConvertToSet } from './helper';
 
 interface Window {
   _LISM_CSS_CONFIG_: Partial<typeof defaultConfig>;
@@ -25,19 +25,17 @@ export const CONFIG = mergedConfig;
 
 const { tokens, props, traits } = CONFIG;
 
-// tokenValues チャンネル（#431）のキーをランタイム TOKENS にも登録し、`lts="2xl"` 等の props 受理を可能にする。
-// CONFIG の静的型には tokenValues が無いため、参照のみキャストする（実体は userConfig 由来）。
-const foldedTokens = foldTokenValues(
-  tokens,
-  (CONFIG as { tokenValues?: Record<string, Record<string, string | number>> }).tokenValues
-) as typeof tokens;
-
+// color プロップの受理セットは「意味的カラー（color）∪ 生カラー（palette）」。
+// ...tokens を先に展開し、その後 color を両者のキーをマージしたフラットマップで上書きする
+// （raw な color マップに勝たせる）。これで `-bgc:brand`（color）も `-bgc:red`（palette）も同じ
+// color カタログで受理でき、変数名はどちらも TOKEN_VAR_PREFIX の `--{key}` に揃う。
 const tokensWithColor = {
-  color: [...foldedTokens.c.values, ...foldedTokens.palette.values],
-  ...foldedTokens,
+  ...tokens,
+  color: { ...tokens.color, ...tokens.palette },
 } as const;
 
-// 配列を Set化.
+// tokens はフラット値マップ（{ key: value }）。arrayConvertToSet は配列のみ Set 化するため、
+// トークンは実質ディープクローンされ、membership は `key in map`・型導出は `keyof` で行う。
 export const TOKENS = arrayConvertToSet(structuredClone(tokensWithColor));
 export const PROPS = arrayConvertToSet(structuredClone(props));
 
