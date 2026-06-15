@@ -28,8 +28,13 @@ export interface LoadedBuildConfigs {
   userConfigPath: string | null;
 }
 
-/** projectRoot 直下の lism.config.{js,mjs} を探す。 */
-export function findUserConfigPath(projectRoot: string): string | null {
+/** 明示パス、または projectRoot 直下の lism.config.{js,mjs} を探す。 */
+export function findUserConfigPath(projectRoot: string, configPath?: string): string | null {
+  if (configPath) {
+    const abs = path.resolve(projectRoot, configPath);
+    return fs.existsSync(abs) ? abs : null;
+  }
+
   for (const name of USER_CONFIG_SEARCH) {
     const abs = path.resolve(projectRoot, name);
     if (fs.existsSync(abs)) return abs;
@@ -71,6 +76,8 @@ export function computeBuildConfigs({ defaultConfig, propsFull, userConfig, objD
 export interface LoadBuildConfigsOptions {
   /** dist 成果物のルート（既定: 本ファイルの 1 つ上 = dist/）。tsx/vitest など source 実行では明示する。 */
   distDir?: string;
+  /** lism.config の明示パス。未指定時は projectRoot から探索する。 */
+  configPath?: string;
 }
 
 /**
@@ -95,7 +102,7 @@ export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfi
     throw new Error(`[lism-css] config 成果物の読み込みに失敗しました（dist: ${distDir}）。lism-css のビルドが必要です。`);
   }
 
-  const userConfigPath = findUserConfigPath(projectRoot);
+  const userConfigPath = findUserConfigPath(projectRoot, opts.configPath);
   let userConfig: Record<string, unknown> = {};
   if (userConfigPath) {
     // mtime をクエリに付けて ESM モジュールキャッシュをバストする（dev で lism.config.js 変更を拾うため）。

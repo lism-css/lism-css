@@ -80,4 +80,14 @@ describe('writeBreakpointDts', () => {
     writeBreakpointDts(root, null);
     expect(fs.existsSync(file)).toBe(true);
   });
+
+  test('自動生成マーカーの無い手書きファイルは上書きしない', () => {
+    const root = tmpDir();
+    const file = path.join(root, TYPES_FILENAME);
+    fs.writeFileSync(file, '// 手書きの型定義\n', 'utf8');
+
+    writeBreakpointDts(root, generateBreakpointDts({ xs: '360px' }));
+
+    expect(fs.readFileSync(file, 'utf8')).toBe('// 手書きの型定義\n');
+  });
 });

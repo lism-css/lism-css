@@ -1,6 +1,9 @@
-import { describe, expect, test } from 'vitest';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { afterAll, describe, expect, test } from 'vitest';
 import { objDeepMerge } from '../../config/helper';
-import { computeBuildConfigs } from './load-config';
+import { computeBuildConfigs, findUserConfigPath } from './load-config';
 import type { BuildConfig } from './serialize';
 
 const objMerge = objDeepMerge as (a: Record<string, unknown>, b: Record<string, unknown>) => Record<string, unknown>;
@@ -50,5 +53,31 @@ describe('computeBuildConfigs', () => {
   test('user 設定が無い場合 mainConfig は defaults と等価', () => {
     const { mainConfig } = computeBuildConfigs({ defaultConfig, propsFull, userConfig: {}, objDeepMerge: objMerge });
     expect(mainConfig.props.p).toEqual(defaultConfig.props.p);
+  });
+});
+
+describe('findUserConfigPath', () => {
+  const dirs: string[] = [];
+  function tmpDir(): string {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-config-'));
+    dirs.push(dir);
+    return dir;
+  }
+  afterAll(() => dirs.forEach((d) => fs.rmSync(d, { recursive: true, force: true })));
+
+  test('configPath が指定されていれば projectRoot からの相対パスを優先する', () => {
+    const root = tmpDir();
+    fs.mkdirSync(path.join(root, 'configs'));
+    fs.writeFileSync(path.join(root, 'lism.config.js'), 'export default { name: "root" };\n');
+    fs.writeFileSync(path.join(root, 'configs/lism.custom.mjs'), 'export default { name: "custom" };\n');
+
+    expect(findUserConfigPath(root, 'configs/lism.custom.mjs')).toBe(path.join(root, 'configs/lism.custom.mjs'));
+  });
+
+  test('存在しない configPath が指定されていれば root 直下の config へフォールバックしない', () => {
+    const root = tmpDir();
+    fs.writeFileSync(path.join(root, 'lism.config.js'), 'export default {};\n');
+
+    expect(findUserConfigPath(root, 'missing.config.js')).toBeNull();
   });
 });

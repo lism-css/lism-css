@@ -10,10 +10,11 @@
  * NOTE: 本プラグインは P2 の CSS ビルド単体。config alias（`vite-plugin.mjs`）や purge との統合
  * （傘エントリ `lismCss()` / `lism-css/vite`）は P3 で行う。
  */
-import { normalizePath, type Plugin } from 'vite';
+import type { Plugin } from 'vite';
 
 import { createCssCompiler, type CssCompiler } from './compile-entry';
 import { loadBuildConfigs, type LoadedBuildConfigs } from './load-config';
+import { normalizePath } from './normalize-path';
 import { scssDir, cssDistDir as cssDistDirRaw } from './paths';
 
 export interface LismCssViteOptions {
@@ -27,7 +28,7 @@ const cssDistDir = normalizePath(cssDistDirRaw);
 // `lism-css/<entry>.css`（bare specifier）を捕捉する。<entry> は base/set のようなスラッシュ入りも許す。
 const BARE_CSS_RE = /^lism-css\/(.+)\.css$/;
 
-export function lismCssVite(_options: LismCssViteOptions = {}): Plugin {
+export function lismCssVite(options: LismCssViteOptions = {}): Plugin {
   let root = '';
   let configs: LoadedBuildConfigs | null = null;
   let compiler: CssCompiler | null = null;
@@ -38,7 +39,7 @@ export function lismCssVite(_options: LismCssViteOptions = {}): Plugin {
   }
 
   async function getConfigs(): Promise<LoadedBuildConfigs> {
-    if (!configs) configs = await loadBuildConfigs(root || process.cwd());
+    if (!configs) configs = await loadBuildConfigs(root || process.cwd(), { configPath: options.configPath });
     return configs;
   }
 

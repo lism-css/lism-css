@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import type { Plugin } from 'vite';
 import { lismCss, lismCssAstro } from './vite';
 import { lismConfigAlias } from './vite-config-alias';
@@ -64,6 +64,33 @@ describe('lismConfigAlias', () => {
       expect(cfg.optimizeDeps.exclude).toContain('lism-css/config.js');
       expect(cfg.resolve).toBeUndefined();
     } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  test('configPath が指定されていれば明示ファイルを alias する', () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-alias-'));
+    fs.mkdirSync(path.join(tmp, 'configs'));
+    fs.writeFileSync(path.join(tmp, 'lism.config.js'), 'export default { name: "root" };\n');
+    fs.writeFileSync(path.join(tmp, 'configs/lism.custom.mjs'), 'export default { name: "custom" };\n');
+    try {
+      const cfg = callConfigHook(lismConfigAlias({ configPath: 'configs/lism.custom.mjs' }), tmp);
+      expect(cfg.resolve?.alias['lism-css/config.js']).toMatch(/configs\/lism\.custom\.mjs$/);
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  test('存在しない configPath 指定時は root 直下の config へフォールバックしない', () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-alias-'));
+    fs.writeFileSync(path.join(tmp, 'lism.config.js'), 'export default {};\n');
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      const cfg = callConfigHook(lismConfigAlias({ configPath: 'missing.config.js' }), tmp);
+      expect(cfg.resolve).toBeUndefined();
+      expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('missing.config.js'));
+    } finally {
+      errorSpy.mockRestore();
       fs.rmSync(tmp, { recursive: true, force: true });
     }
   });

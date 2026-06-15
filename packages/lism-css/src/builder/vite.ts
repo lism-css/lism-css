@@ -35,10 +35,10 @@ export interface LismCssOptions extends LismCssViteOptions {
 }
 
 /** config 反映済みの full.css をコンパイルして known セレクタ集合を作る（build 時に一度だけ実行）。 */
-async function buildConfigAwareKnown(root: string): Promise<KnownSelectorSet | undefined> {
+async function buildConfigAwareKnown(root: string, configPath?: string): Promise<KnownSelectorSet | undefined> {
   const compiler = createCssCompiler({ scssDir });
   try {
-    const { mainConfig, fullConfig } = await loadBuildConfigs(root || process.cwd());
+    const { mainConfig, fullConfig } = await loadBuildConfigs(root || process.cwd(), { configPath });
     const css = await compiler.compile('full', mainConfig, fullConfig);
     return extractKnownLismSelectors(css);
   } catch {
@@ -61,7 +61,11 @@ function resolvePurge(purge: LismCssOptions['purge']): { enabled: boolean; opts:
  */
 export function lismCss(options: LismCssOptions = {}): Plugin[] {
   const { purge, typegen, ...viteOpts } = options;
-  const plugins: Plugin[] = [lismConfigAlias(viteOpts), lismTypegen({ disabled: typegen === false }), lismCssVite(viteOpts)];
+  const plugins: Plugin[] = [
+    lismConfigAlias(viteOpts),
+    lismTypegen({ disabled: typegen === false, configPath: viteOpts.configPath }),
+    lismCssVite(viteOpts),
+  ];
 
   const { enabled, opts, useGeneratedKnown } = resolvePurge(purge);
   if (!enabled) return plugins;
@@ -78,7 +82,7 @@ export function lismCss(options: LismCssOptions = {}): Plugin[] {
         root = c.root;
       },
       async buildStart() {
-        knownRef.value = await buildConfigAwareKnown(root);
+        knownRef.value = await buildConfigAwareKnown(root, viteOpts.configPath);
       },
     });
   }
@@ -108,10 +112,18 @@ export function lismCssAstro(options: LismCssOptions = {}): AstroIntegration[] {
     hooks: {
       'astro:config:setup': ({ config, updateConfig }) => {
         root = fileURLToPath(config.root);
-        updateConfig({ vite: { plugins: [lismConfigAlias(viteOpts), lismTypegen({ disabled: typegen === false }), lismCssVite(viteOpts)] } });
+        updateConfig({
+          vite: {
+            plugins: [
+              lismConfigAlias(viteOpts),
+              lismTypegen({ disabled: typegen === false, configPath: viteOpts.configPath }),
+              lismCssVite(viteOpts),
+            ],
+          },
+        });
       },
       'astro:build:start': async () => {
-        if (useGeneratedKnown) knownRef.value = await buildConfigAwareKnown(root);
+        if (useGeneratedKnown) knownRef.value = await buildConfigAwareKnown(root, viteOpts.configPath);
       },
     },
   };

@@ -5,12 +5,13 @@
  * 後方互換の単体エクスポート `vite-plugin.mjs` の TS 版で、傘エントリ `lismCss()` がこれを束ねる。
  * （`vite-plugin.mjs` は従来利用者向けにそのまま残置する）
  */
-import fs from 'node:fs';
 import path from 'node:path';
-import { normalizePath, type Plugin } from 'vite';
+import type { Plugin } from 'vite';
+
+import { findUserConfigPath } from './load-config';
+import { normalizePath } from './normalize-path';
 
 const TARGET_ID = 'lism-css/config.js';
-const SEARCH = ['lism.config.js', 'lism.config.mjs'];
 
 export interface LismConfigAliasOptions {
   /** lism.config の明示パス。未指定時は Vite root（無ければ cwd）から探索する。 */
@@ -21,14 +22,11 @@ export function lismConfigAlias(opts: LismConfigAliasOptions = {}): Plugin {
   let userPath: string | null = null;
 
   const resolveUserConfig = (base: string): string | null => {
+    const userConfigPath = findUserConfigPath(base, opts.configPath);
+    if (userConfigPath) return normalizePath(userConfigPath);
+
     if (opts.configPath) {
-      const abs = path.resolve(base, opts.configPath);
-      if (fs.existsSync(abs)) return normalizePath(abs);
-      console.error(`[lism-css] 指定された設定ファイルが存在しません: ${abs}`);
-    }
-    for (const cand of SEARCH) {
-      const abs = path.resolve(base, cand);
-      if (fs.existsSync(abs)) return normalizePath(abs);
+      console.error(`[lism-css] 指定された設定ファイルが存在しません: ${path.resolve(base, opts.configPath)}`);
     }
     return null;
   };
