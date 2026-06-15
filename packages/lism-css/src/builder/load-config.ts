@@ -29,6 +29,8 @@ export interface LoadedBuildConfigs {
   fullConfig: BuildConfig;
   /** default-config に最初から含まれる prop キー。typegen で追加 prop との差分抽出に使う。 */
   defaultPropKeys: string[];
+  /** default-config に最初から含まれる trait キー。typegen で追加 trait との差分抽出に使う。 */
+  defaultTraitKeys: string[];
   /** lism.config.js の isFullMode フラグ。 */
   isFullMode: boolean;
   /** 見つかった user 設定ファイルの絶対パス（無ければ null）。watch 対象に使う。 */
@@ -119,5 +121,12 @@ export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfi
   }
 
   const { mainConfig, fullConfig, isFullMode } = computeBuildConfigs({ defaultConfig, propsFull, userConfig, objDeepMerge });
-  return { mainConfig, fullConfig, defaultPropKeys: Object.keys(defaultConfig.props), isFullMode, userConfigPath };
+  return {
+    mainConfig,
+    fullConfig,
+    defaultPropKeys: Object.keys(defaultConfig.props),
+    defaultTraitKeys: Object.keys(defaultConfig.traits ?? {}),
+    isFullMode,
+    userConfigPath,
+  };
 }

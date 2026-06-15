@@ -3,10 +3,11 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, test, afterAll } from 'vitest';
-import { extraAdvertisedBpKeys, extraCustomPropKeys, generateLismEnvDts } from './gen-types';
+import { extraAdvertisedBpKeys, extraCustomPropKeys, extraCustomTraitKeys, generateLismEnvDts } from './gen-types';
 import { writeLismEnvDts, TYPES_FILENAME } from './vite-typegen';
 
 const DEFAULT_PROP_KEYS = ['p', 'bg', 'fz'];
+const DEFAULT_TRAIT_KEYS = ['isContainer', 'hasGutter'];
 
 describe('extraAdvertisedBpKeys', () => {
   test('有効化された xs/xl のみを追加解禁キーとして返す', () => {
@@ -31,6 +32,17 @@ describe('extraCustomPropKeys', () => {
   test('props が無い場合や既定 prop だけの場合は空配列を返す', () => {
     expect(extraCustomPropKeys({ p: { prop: 'padding' }, bg: { prop: 'background' } }, DEFAULT_PROP_KEYS)).toEqual([]);
     expect(extraCustomPropKeys(undefined, DEFAULT_PROP_KEYS)).toEqual([]);
+  });
+});
+
+describe('extraCustomTraitKeys', () => {
+  test('default-config に無い trait のみを追加解禁キーとして返す', () => {
+    expect(extraCustomTraitKeys({ isContainer: 'is--container', isHoge: 'is--hoge' }, DEFAULT_TRAIT_KEYS)).toEqual(['isHoge']);
+  });
+
+  test('traits が無い場合や既定 trait だけの場合は空配列を返す', () => {
+    expect(extraCustomTraitKeys({ isContainer: 'is--container', hasGutter: 'has--gutter' }, DEFAULT_TRAIT_KEYS)).toEqual([]);
+    expect(extraCustomTraitKeys(undefined, DEFAULT_TRAIT_KEYS)).toEqual([]);
   });
 });
 
@@ -69,9 +81,40 @@ describe('generateLismEnvDts', () => {
     expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
   });
 
-  test('追加 breakpoints / props がどちらも無ければ null（ファイル不要）', () => {
+  test('追加 trait があれば CustomTraitRegistry 拡張の .d.ts を生成する', () => {
+    const dts = generateLismEnvDts(
+      { breakpoints: {}, props: {}, traits: { isContainer: 'is--container', isHoge: 'is--hoge' } },
+      DEFAULT_PROP_KEYS,
+      DEFAULT_TRAIT_KEYS
+    );
+    expect(dts).not.toBeNull();
+    expect(dts).toContain("import type { CustomTraitValue } from 'lism-css';");
+    expect(dts).toContain('interface CustomTraitRegistry');
+    expect(dts).toContain('isHoge?: CustomTraitValue;');
+    expect(dts).not.toContain('isContainer?: CustomTraitValue;');
+  });
+
+  test('breakpoints / props / traits を同じ declare module に並べ、型 import をまとめる', () => {
+    const dts = generateLismEnvDts(
+      { breakpoints: { xs: '360px' }, props: { filter: { prop: 'filter' } }, traits: { isHoge: 'is--hoge' } },
+      DEFAULT_PROP_KEYS,
+      DEFAULT_TRAIT_KEYS
+    );
+    expect(dts).not.toBeNull();
+    expect(dts).toContain('interface BreakpointRegistry');
+    expect(dts).toContain('interface CustomPropRegistry');
+    expect(dts).toContain('interface CustomTraitRegistry');
+    expect(dts).toContain("import type { CustomPropValue, CustomTraitValue } from 'lism-css';");
+    expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
+  });
+
+  test('追加 breakpoints / props / traits がどれも無ければ null（ファイル不要）', () => {
     expect(
-      generateLismEnvDts({ breakpoints: { sm: '480px', md: '800px', lg: '1120px' }, props: { p: { prop: 'padding' } } }, DEFAULT_PROP_KEYS)
+      generateLismEnvDts(
+        { breakpoints: { sm: '480px', md: '800px', lg: '1120px' }, props: { p: { prop: 'padding' } }, traits: { isContainer: 'is--container' } },
+        DEFAULT_PROP_KEYS,
+        DEFAULT_TRAIT_KEYS
+      )
     ).toBeNull();
     expect(generateLismEnvDts({ breakpoints: undefined, props: {} }, DEFAULT_PROP_KEYS)).toBeNull();
   });

@@ -17,6 +17,7 @@ import { type StyleWithCustomProps } from './types';
 import { type TraitProps, type SetPropValue, type UtilPropValue } from './types/TraitProps';
 import { type PropValueTypes } from './types/PropValueTypes';
 import { type CustomPropRegistry } from './types/CustomPropRegistry';
+import { type CustomTraitRegistry } from './types/CustomTraitRegistry';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
 import { type AtomicType, type AtomicProps } from './types/AtomicProps';
 export { type LayoutType, type AtomicType };
@@ -44,7 +45,7 @@ interface PropConfig {
 }
 
 // LismPropsData が受け取る型（layout / atomic 処理済み）
-export interface LismPropsBase extends TraitProps, PropValueTypes, CustomPropRegistry {
+export interface LismPropsBase extends TraitProps, PropValueTypes, CustomPropRegistry, CustomTraitRegistry {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   forwardedRef?: React.Ref<any>;
   class?: string | null;

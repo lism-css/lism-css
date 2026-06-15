@@ -31,6 +31,11 @@ export interface BuildConfig {
    * lism.config.js で差分上書きでき、xs/xl はサイズを与えるだけで有効化できる。
    */
   breakpoints?: Record<string, string | number>;
+  /**
+   * trait（is--* / has--*）定義。prop 名 → クラス名。CSS 出力（SCSS 直列化）には使わず、
+   * 型生成で「追加 trait の広告」に参照する。
+   */
+  traits?: Record<string, string>;
 }
 
 /**

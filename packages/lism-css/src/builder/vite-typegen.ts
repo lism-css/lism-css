@@ -1,8 +1,8 @@
 /**
  * 型 `.d.ts` 自動生成 Vite プラグイン（#427 / P4-P5）。
  *
- * lism.config.js の breakpoints / props から module augmentation の `.d.ts` を
- * プロジェクト直下へ生成し、xs/xl や追加 prop を config だけで型側にも解禁する。
+ * lism.config.js の breakpoints / props / traits から module augmentation の `.d.ts` を
+ * プロジェクト直下へ生成し、xs/xl や追加 prop / 追加 trait を config だけで型側にも解禁する。
  *
  * 生成物は **コミット対象**（next-env.d.ts 方式）。Astro の `astro check`（型チェック）は本プラグインを
  * 動かさないため、コミット済みファイルが型チェックの拠り所になる。dev / build 起動時に内容が変わった
@@ -56,11 +56,14 @@ export function writeLismEnvDts(projectRoot: string, content: string | null, log
 }
 
 /**
- * projectRoot の lism.config を読み、breakpoints / props から `.d.ts` を生成 / 更新 / 削除する。
+ * projectRoot の lism.config を読み、breakpoints / props / traits から `.d.ts` を生成 / 更新 / 削除する。
  */
 export async function syncLismEnvDts(projectRoot: string, opts: SyncTypesOptions = {}): Promise<void> {
-  const { mainConfig, defaultPropKeys } = await loadBuildConfigs(projectRoot, { distDir: opts.distDir, configPath: opts.configPath });
-  writeLismEnvDts(projectRoot, generateLismEnvDts(mainConfig, defaultPropKeys), opts.log);
+  const { mainConfig, defaultPropKeys, defaultTraitKeys } = await loadBuildConfigs(projectRoot, {
+    distDir: opts.distDir,
+    configPath: opts.configPath,
+  });
+  writeLismEnvDts(projectRoot, generateLismEnvDts(mainConfig, defaultPropKeys, defaultTraitKeys), opts.log);
 }
 
 export interface LismTypegenOptions {
@@ -88,7 +91,7 @@ export function lismTypegen(options: LismTypegenOptions = {}): Plugin {
       userConfigPath = findUserConfigPath(root || process.cwd(), options.configPath);
       await syncLismEnvDts(root || process.cwd(), { configPath: options.configPath });
     },
-    // dev 中に lism.config.js の breakpoints / props を変更したら .d.ts を再生成する。
+    // dev 中に lism.config.js の breakpoints / props / traits を変更したら .d.ts を再生成する。
     // dynamic-css / config-alias は full-reload を送るが、型生成は副作用として別途追従させる必要がある。
     // （writeLismEnvDts は内容不変なら書き込まないため、生成物自身の変更で HMR ループにはならない）
     async handleHotUpdate(ctx) {
