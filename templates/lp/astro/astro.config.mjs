@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config';
-import { lismPurgeAstro } from 'lism-css/purge/astro';
+import { lismCssAstro } from 'lism-css/vite';
 
 export default defineConfig({
-  integrations: [lismPurgeAstro({ report: true })],
+  integrations: [lismCssAstro({ purge: { report: true } })],
   vite: {
     resolve: {
       alias: {

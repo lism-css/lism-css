@@ -158,7 +158,9 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 
 TypeScript の型・補完がデフォルトで提示・許可するブレイクポイントキーは `base` / `sm` / `md` / `lg` です（配列記法も最大4要素）。`xl` / `xs` は、デフォルトでは CSS が出力されないため型でも提示しません。
 
-`xl` / `xs` を有効化したうえで型でも使いたい場合は、プロジェクト側の型定義ファイルで `BreakpointRegistry` を拡張してください。
+`xl` / `xs` を有効化したうえで型でも使いたい場合、`lism-css/vite` の統合プラグイン（`lismCss()` / `lismCssAstro()`）を使っているプロジェクトでは、`lism.config.js` の `breakpoints` に値を設定するだけで **`lism-env.d.ts` が自動生成**され、型補完にも有効化した BP キーが反映されます。手書き拡張は不要です。
+
+プラグインを使わない構成（SCSS 直接利用・他バンドラ等）では、プロジェクト側の型定義ファイルで `BreakpointRegistry` を手書き拡張してください。
 
 ```ts
 // 例: src/lism.d.ts
@@ -173,7 +175,7 @@ declare module 'lism-css' {
 ```
 
 :::info
-これは型・補完の提示範囲を広げるだけです。実際に CSS を出力するには、別途 `$breakpoints` での `xs` / `xl` のサイズ定義（[Customize](/docs/customize/)）が必要です。
+これは型・補完の提示範囲を広げるだけです。実際に CSS を出力するには、別途 `lism.config.js` の `breakpoints` でのサイズ定義（[Customize](/docs/customize/)）が必要です。
 :::
 
 
