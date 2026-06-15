@@ -27,6 +27,8 @@ export interface LoadedBuildConfigs {
   mainConfig: BuildConfig;
   /** full 系（full.css / full_no_layer.css）が読む prop-config の元 CONFIG。 */
   fullConfig: BuildConfig;
+  /** default-config に最初から含まれる prop キー。typegen で追加 prop との差分抽出に使う。 */
+  defaultPropKeys: string[];
   /** lism.config.js の isFullMode フラグ。 */
   isFullMode: boolean;
   /** 見つかった user 設定ファイルの絶対パス（無ければ null）。watch 対象に使う。 */
@@ -117,5 +119,5 @@ export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfi
   }
 
   const { mainConfig, fullConfig, isFullMode } = computeBuildConfigs({ defaultConfig, propsFull, userConfig, objDeepMerge });
-  return { mainConfig, fullConfig, isFullMode, userConfigPath };
+  return { mainConfig, fullConfig, defaultPropKeys: Object.keys(defaultConfig.props), isFullMode, userConfigPath };
 }
