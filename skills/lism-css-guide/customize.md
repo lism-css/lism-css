@@ -128,7 +128,7 @@ export default defineConfig({
 
 - **config alias**: コンポーネント（JS ランタイム）が `lism.config.js` を読み込めるようになる
 - **動的CSSビルド**: `import 'lism-css/main.css'` 等を捕捉し、`lism.config.js` を反映済みの CSS をその場で生成する（props / tokens を追加すると CSS に自動反映される）
-- **型の自動生成**: 有効化したブレイクポイント等を反映した `lism-env.d.ts` を起動時に自動生成する
+- **型の自動生成**: 有効化したブレイクポイント・追加した props / traits を反映した `lism-env.d.ts` を起動時に自動生成する
 
 `lism.config.js` はプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所に置く場合は `configPath` で指定できます。
 
@@ -224,6 +224,12 @@ export default {
 <Box p="box" ta="justify" filter="blur" lts="2xl" isHoge>Box</Box>
 // → <div class="l--box is--hoge -p:box -ta:justify -filter:blur -lts:2xl">Box</div>
 ```
+
+### 追加した prop / trait の型解禁
+
+統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した **prop / trait も `lism-env.d.ts` 経由で型側に自動解禁**されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
+
+なお、既存 prop への値追加（`ta="justify"` 等）はもともと任意の文字列を受け付けるため、型エラーにはなりません（ただし補完候補には出ません）。
 
 
 ## 追加スタイルを読み込ませる方法

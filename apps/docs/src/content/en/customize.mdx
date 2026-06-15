@@ -326,6 +326,12 @@ With the above customization, the following behavior is added to Lism components
   </PreviewCode>
 </Preview>
 
+:::note[Added props / traits are also unlocked for types]
+When you use the integrated plugin (with type generation enabled), props / traits added in `lism.config.js` are also automatically unlocked on the type side via `lism-env.d.ts` (emitted as `CustomPropRegistry` / `CustomTraitRegistry` augmentations). So new props / traits like `<Box filter="blur" ... isHoge>` above do not raise type errors in your editor or `astro check`. No hand-written type extension is needed (commit `lism-env.d.ts` to git).
+
+Note that adding values to existing props (such as `ta="justify"`) never causes a type error to begin with, since those accept arbitrary strings (they just won't appear in completion candidates).
+:::
+
 
 :::warning
 Note that customizations via `lism.config.js` only affect the HTML output from components.

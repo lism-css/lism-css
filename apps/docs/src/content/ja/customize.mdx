@@ -326,6 +326,12 @@ export default {
   </PreviewCode>
 </Preview>
 
+:::note[追加した prop / trait は型も自動解禁されます]
+統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した prop / trait は `lism-env.d.ts` 経由で型側にも自動で解禁されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
+
+なお、既存 prop への値追加（`ta="justify"` など）はもともと任意の文字列を受け付けるため、型エラーにはなりません（補完候補には出ません）。
+:::
+
 
 :::warning
 ただし、`lism.config.js` でのカスタマイズは、コンポーネントからのHTML出力が変わるだけです。  
