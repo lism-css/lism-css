@@ -1,7 +1,7 @@
 /**
  * 「config 読み込み」の共有ロジック。bin CLI と Vite プラグインが共有する。
  *
- * - `computeBuildConfigs`: defaults / full preset / userConfig をマージして main / full の BuildConfig を作る純粋関数。
+ * - `computeBuildConfigs`: defaults / full preset / full CSS defaults / userConfig をマージして main / full の BuildConfig を作る純粋関数。
  *   マージ順（later wins）は `config/index.ts`・`bin/cli.mjs` と一致させる（JS ランタイムと CSS 出力の乖離防止）。
  * - `loadBuildConfigs`: default-config / props-full preset / helper を **ビルド済み dist 成果物**から dynamic import し、
  *   projectRoot の `lism.config.{js,mjs}` を読み込んでマージする。consumer 環境（インストール済みパッケージ）で実行される前提。
@@ -16,6 +16,11 @@ import type { BuildConfig, PropConfig } from './serialize';
 export type ObjDeepMerge = (origin: Record<string, unknown>, source: Record<string, unknown>) => Record<string, unknown>;
 
 const USER_CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'];
+const FULL_CSS_DEFAULTS = {
+  // full.css は purge 併用前提のスーパーセットとして xs を有効化する。
+  // userConfig はこの後にマージするため、lism.config.js の breakpoints.xs が最後に勝つ。
+  breakpoints: { xs: '360px' },
+} satisfies Record<string, unknown>;
 
 export interface LoadedBuildConfigs {
   /** main 系（main.css / 個別レイヤ）が読む prop-config の元 CONFIG。isFullMode 時は fullConfig と同一。 */
@@ -53,7 +58,7 @@ export interface ComputeBuildConfigsInput {
  * defaults / full preset / userConfig から main / full の BuildConfig を作る純粋関数。
  *
  * マージ順（later wins）:
- *   - fullConfig: defaults → full preset → userConfig
+ *   - fullConfig: defaults → full preset → full CSS defaults → userConfig
  *   - mainConfig: isFullMode 時は fullConfig と同一、それ以外は defaults → userConfig
  *
  * これは `config/index.ts`（コンポーネント側）・`bin/cli.mjs`（CLI）と同じ順序。
@@ -66,7 +71,7 @@ export function computeBuildConfigs({ defaultConfig, propsFull, userConfig, objD
   const isFullMode = !!(userConfig as { isFullMode?: boolean }).isFullMode;
 
   const base = defaultConfig as unknown as Record<string, unknown>;
-  const fullBase = objDeepMerge(base, { props: propsFull });
+  const fullBase = objDeepMerge(objDeepMerge(base, { props: propsFull }), FULL_CSS_DEFAULTS);
   const fullConfig = objDeepMerge(fullBase, userConfig) as unknown as BuildConfig;
   const mainConfig = isFullMode ? fullConfig : (objDeepMerge(base, userConfig) as unknown as BuildConfig);
 

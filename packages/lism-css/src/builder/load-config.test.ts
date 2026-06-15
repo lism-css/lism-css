@@ -13,6 +13,7 @@ const defaultConfig: BuildConfig = {
   props: {
     p: { prop: 'padding', bp: 0, token: 'space' },
   },
+  breakpoints: { xs: 0, sm: '480px', md: '800px', lg: '1120px', xl: 0 },
 };
 
 // full preset は defaults への差分のみ（ここでは p の bp を 1 へ拡張）。
@@ -48,6 +49,20 @@ describe('computeBuildConfigs', () => {
     const userConfig = { props: { p: { bp: 0 } } };
     const { fullConfig } = computeBuildConfigs({ defaultConfig, propsFull, userConfig, objDeepMerge: objMerge });
     expect(fullConfig.props.p.bp).toBe(0);
+  });
+
+  test('fullConfig は xs を既定有効化し、user 設定があればそちらを優先する', () => {
+    const base = computeBuildConfigs({ defaultConfig, propsFull, userConfig: {}, objDeepMerge: objMerge });
+    expect(base.mainConfig.breakpoints?.xs).toBe(0);
+    expect(base.fullConfig.breakpoints?.xs).toBe('360px');
+
+    const customized = computeBuildConfigs({
+      defaultConfig,
+      propsFull,
+      userConfig: { breakpoints: { xs: '420px' } },
+      objDeepMerge: objMerge,
+    });
+    expect(customized.fullConfig.breakpoints?.xs).toBe('420px');
   });
 
   test('user 設定が無い場合 mainConfig は defaults と等価', () => {

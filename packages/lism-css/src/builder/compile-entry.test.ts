@@ -90,6 +90,16 @@ describe('createCssCompiler', () => {
     expect(xsCss).not.toBe(defaultCss);
   });
 
+  test('full エントリの xs は user 設定が既定値より優先される', async () => {
+    const c = makeCompiler();
+    const withXs = configs({ breakpoints: { xs: '420px' } });
+
+    const fullCss = await c.compile('full', withXs.mainConfig, withXs.fullConfig);
+
+    expect(fullCss).toContain('420px');
+    expect(fullCss).not.toContain('360px');
+  });
+
   test('同一 config・同一エントリはキャッシュされ同一結果を返す', async () => {
     const c = makeCompiler();
     const { mainConfig, fullConfig } = configs({});
