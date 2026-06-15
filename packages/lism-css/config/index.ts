@@ -1,7 +1,7 @@
 import defaultConfig from './default-config';
 import propsFull from './presets/props-full';
 import userConfig from 'lism-css/config.js'; // ユーザーが上書きできる
-import { objDeepMerge, arrayConvertToSet } from './helper';
+import { objDeepMerge, arrayConvertToSet, foldTokenValues } from './helper';
 
 interface Window {
   _LISM_CSS_CONFIG_: Partial<typeof defaultConfig>;
@@ -25,9 +25,16 @@ export const CONFIG = mergedConfig;
 
 const { tokens, props, traits } = CONFIG;
 
+// tokenValues チャンネル（#431）のキーをランタイム TOKENS にも登録し、`lts="2xl"` 等の props 受理を可能にする。
+// CONFIG の静的型には tokenValues が無いため、参照のみキャストする（実体は userConfig 由来）。
+const foldedTokens = foldTokenValues(
+  tokens,
+  (CONFIG as { tokenValues?: Record<string, Record<string, string | number>> }).tokenValues
+) as typeof tokens;
+
 const tokensWithColor = {
-  color: [...tokens.c.values, ...tokens.palette.values],
-  ...tokens,
+  color: [...foldedTokens.c.values, ...foldedTokens.palette.values],
+  ...foldedTokens,
 } as const;
 
 // 配列を Set化.

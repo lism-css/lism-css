@@ -11,7 +11,8 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI
 | キー | 役割 |
 |------|------|
 | `props` | `p`/`ta`/`filter`など、Lism propsが出力するクラス・CSSプロパティ・utility値を追加/上書きする |
-| `tokens` | `space`/`lts`など、propsが参照するトークン名のカタログを追加/上書きする |
+| `tokens` | `space`/`lts`など、propsが参照するトークン名のカタログ（キー）を追加/上書きする |
+| `tokenValues` | `lts`/`space`/`c`など、トークンの値（CSS変数）を定義/上書きする。キー登録も兼ねる（→ `tokens`への追記が不要になる） |
 | `traits` | `isHoge`→`is--hoge`のような真偽値class propを追加する |
 | `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
 | `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
@@ -46,6 +47,14 @@ export default {
 
   tokens: {
     lts: [...tokens.lts, '2xl'],
+  },
+
+  // トークンの値（CSS変数）を定義。:root への出力 + ユーティリティ生成 + props 受理を1か所でまかなう。
+  // キー登録を兼ねるため、値を定義するだけなら上の tokens への追記は不要。
+  tokenValues: {
+    lts: { '2xl': '.5em' }, // → :root { --lts--2xl: .5em } + .-lts:2xl
+    space: { '90': '6rem' }, // → --s90（pre: --s を尊重）
+    c: { success: 'oklch(0.6 0.15 150)' }, // → --success（pre: -- を尊重）
   },
 
   traits: {
@@ -140,8 +149,11 @@ pnpm exec lism-css build
 
 - `props`や`tokens`内のオブジェクトはdeep mergeされるが、配列は置き換えになる。
   既存値に足す場合は`lism-css/default-config`をimportしてspreadする。
-- `tokens`はクラス生成に使うトークン名の追加であり、CSS変数の実値までは自動定義しない。
-  例: `lts: ['2xl']`を追加しても`--lts--2xl`の値は別途CSSで定義する。
+- `tokens`はクラス生成に使うトークン名（キー）の追加であり、CSS変数の実値までは自動定義しない。
+  例: `tokens: { lts: ['2xl'] }`だけでは`--lts--2xl`の値は未定義（別途CSSで定義が必要）。
+- 値も定義したい場合は`tokenValues`を使う。`tokenValues: { lts: { '2xl': '.5em' } }`で
+  `:root { --lts--2xl: .5em }`の出力・ユーティリティ生成・ランタイムTOKENS登録（props受理）がまとめて反映される（既定値の上書きも可能）。
+  変数名はトークン形式に従う（配列形式→`--{token}--{key}` / `space`等のpre付き→`{pre}{key}`）。
 - `traits`はclass出力の追加であり、対応するスタイルは別途必要。
 - `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。
 - 統合入口は`lism-css/vite`の`lismCss()`/`lismCssAstro()`。

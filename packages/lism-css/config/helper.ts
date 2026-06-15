@@ -44,6 +44,47 @@ export function objDeepMerge<T extends Record<string, unknown>, U extends Record
   return result as DeepMergeResult<T, U>;
 }
 
+type TokenValueMap = Record<string, string | number>;
+type TokenValuesChannel = Record<string, TokenValueMap>;
+
+/**
+ * tokenValues チャンネル（#431 / Option B）のキーを tokens カタログへ畳み込む。
+ *
+ * 値（CSS変数の定義）の出力は serializeTokenValues / SCSS 側が担い、ここではキーだけを既存カタログへ
+ * 登録する。これにより同じキーが「ユーティリティ生成（tokenClass:1）」と「ランタイム TOKENS（prop 受理）」の
+ * 双方に乗り、`lts="2xl"` のように値を1か所書くだけで利用できるようになる。
+ *
+ * - 配列形式トークン（lts/fz 等）: 配列末尾へ未登録キーを追加。
+ * - オブジェクト形式トークン（space/c/palette の { pre, values }）: values へ追加し pre は保持。
+ * - 既定に無い新規トークン: 配列形式として新設。
+ *
+ * 入力 tokens は破壊せず、変更があったトークンだけ複製した新オブジェクトを返す。
+ */
+export function foldTokenValues(tokens: PlainObject | undefined, tokenValues: TokenValuesChannel | undefined): PlainObject {
+  const result: PlainObject = { ...(tokens ?? {}) };
+  if (!tokenValues) return result;
+
+  for (const [tokenKey, valueMap] of Object.entries(tokenValues)) {
+    const keys = Object.keys(valueMap ?? {});
+    if (keys.length === 0) continue;
+
+    const existing = result[tokenKey];
+    if (isObj(existing) && ('pre' in existing || 'values' in existing)) {
+      // オブジェクト形式（{ pre, values }）: values へ追加し pre は保持する。
+      const values: unknown[] = Array.isArray(existing.values) ? [...(existing.values as unknown[])] : [];
+      for (const key of keys) if (!values.includes(key)) values.push(key);
+      result[tokenKey] = { ...existing, values };
+    } else {
+      // 配列形式 or 新規トークン。
+      const values: unknown[] = Array.isArray(existing) ? [...(existing as unknown[])] : [];
+      for (const key of keys) if (!values.includes(key)) values.push(key);
+      result[tokenKey] = values;
+    }
+  }
+
+  return result;
+}
+
 type DeepArrayToSet<T> = T extends unknown[] ? Set<T[number]> : T extends PlainObject ? { [K in keyof T]: DeepArrayToSet<T[K]> } : T;
 
 /**

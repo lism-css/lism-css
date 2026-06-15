@@ -17,7 +17,7 @@ import postcss, { type AcceptedPlugin } from 'postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
-import { serializeConfigScss, type BuildConfig } from './serialize';
+import { serializeConfigScss, serializeTokenValues, type BuildConfig } from './serialize';
 import { writePropConfigFiles } from './compile';
 
 /**
@@ -41,9 +41,11 @@ export async function listCssEntries(scssDir: string): Promise<Map<string, strin
 function configSignature(mainConfig: BuildConfig, fullConfig?: BuildConfig): string {
   // serializeConfigScss は $props に加えて $breakpoints も含むため、breakpoints 変更でも
   // 署名が変わり作業ディレクトリのキャッシュが正しく作り直される。
+  // tokenValues（#431）は serializeConfigScss に含まれないため、別途署名へ加えてキャッシュ無効化に乗せる。
   const main = serializeConfigScss(mainConfig);
   const full = fullConfig ? serializeConfigScss(fullConfig) : '';
-  return createHash('sha256').update(main).update('\0').update(full).digest('hex');
+  const tokenValues = serializeTokenValues(mainConfig);
+  return createHash('sha256').update(main).update('\0').update(full).update('\0').update(tokenValues).digest('hex');
 }
 
 export interface CssCompilerOptions {

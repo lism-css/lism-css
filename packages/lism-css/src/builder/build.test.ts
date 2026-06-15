@@ -1,6 +1,6 @@
 import * as sass from 'sass';
 import { describe, expect, test } from 'vitest';
-import { serializePropConfig, serializeBreakpoints, serializeConfigScss, type BuildConfig } from './serialize';
+import { serializePropConfig, serializeBreakpoints, serializeConfigScss, serializeTokenValues, type BuildConfig } from './serialize';
 
 const baseConfig: BuildConfig = {
   tokens: { space: ['10', '20', '30'] },
@@ -38,6 +38,73 @@ describe('serializePropConfig', () => {
       props: { g: { prop: 'gap', bp: ['sm'] } },
     });
     expect(scss).toContain("bp: ('sm',)");
+  });
+});
+
+describe('tokenValues のユーティリティ畳み込み（#431）', () => {
+  test('tokenValues のキーが tokenClass:1 のユーティリティへ追加される', () => {
+    const scss = serializePropConfig({
+      tokens: { lts: ['base', 's'] },
+      props: { lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1, bp: 0 } },
+      tokenValues: { lts: { '2xl': '.5em' } },
+    });
+    // 既定キーに加えて、tokenValues で追加した 2xl も token 解決された var() で出力される
+    expect(scss).toContain("'base': 'var(--lts--base)'");
+    expect(scss).toContain("'2xl': 'var(--lts--2xl)'");
+  });
+
+  test('オブジェクト形式トークン（pre）でも値チャンネルのキーを畳み込む', () => {
+    const scss = serializePropConfig({
+      tokens: { space: { pre: '--s', values: ['10', '20'] } },
+      props: { p: { prop: 'padding', token: 'space', tokenClass: 1, bp: 1 } },
+      tokenValues: { space: { '90': '6rem' } },
+    });
+    expect(scss).toContain("'90': 'var(--s90)'");
+  });
+});
+
+describe('serializeTokenValues', () => {
+  test('tokenValues 未定義なら空文字を返す', () => {
+    expect(serializeTokenValues({ tokens: {}, props: {} })).toBe('');
+  });
+
+  test('配列形式トークンは --{t}--{k} の :root 宣言を出力する', () => {
+    const scss = serializeTokenValues({
+      tokens: { lts: ['base', 's', 'l', 'xl'] },
+      props: {},
+      tokenValues: { lts: { '2xl': '.5em' } },
+    });
+    expect(scss).toContain('--lts--2xl: .5em;');
+    expect(scss.startsWith(':root {')).toBe(true);
+  });
+
+  test('オブジェクト形式トークンは pre を尊重した変数名を出力する', () => {
+    const scss = serializeTokenValues({
+      tokens: { space: { pre: '--s', values: ['10'] }, c: { pre: '--', values: ['base'] } },
+      props: {},
+      tokenValues: { space: { '90': '6rem' }, c: { success: 'green' } },
+    });
+    expect(scss).toContain('--s90: 6rem;');
+    expect(scss).toContain('--success: green;');
+  });
+
+  test('既定値の上書き（同名キー）も宣言として出力する', () => {
+    const scss = serializeTokenValues({
+      tokens: { lts: ['base', 's', 'l', 'xl'] },
+      props: {},
+      tokenValues: { lts: { base: '0.01em' } },
+    });
+    expect(scss).toContain('--lts--base: 0.01em;');
+  });
+
+  test('生成した :root 宣言が有効な SCSS として読める', () => {
+    const scss = serializeTokenValues({
+      tokens: { lts: ['base'] },
+      props: {},
+      tokenValues: { lts: { '2xl': '.5em' } },
+    });
+    const css = sass.compileString(scss).css;
+    expect(css).toContain('--lts--2xl: .5em');
   });
 });
 

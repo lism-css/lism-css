@@ -6,6 +6,8 @@
  * bin CLI（ファイル出力）と Vite プラグイン（メモリ注入）の双方がこの直列化結果を共有する。
  */
 import getMaybeTokenValue from '../lib/getMaybeTokenValue';
+import getTokenVarName, { type TokensConfig } from '../lib/getTokenVarName';
+import { foldTokenValues } from '../../config/helper';
 
 type TokenValue = string | number;
 type Tokens = Record<string, unknown>;
@@ -36,6 +38,13 @@ export interface BuildConfig {
    * 型生成で「追加 trait の広告」に参照する。
    */
   traits?: Record<string, string>;
+  /**
+   * トークン値の値チャンネル（#431 / Option B）。token 名 → { キー: CSS値 } のマップ。
+   * 例: `{ lts: { '2xl': '.5em' } }` は `:root { --lts--2xl: .5em }`（serializeTokenValues）を出力しつつ、
+   * キー `2xl` を tokens カタログへ畳み込んで（foldTokenValues）ユーティリティ生成とランタイム TOKENS にも登録する。
+   * これで「値定義 + ユーティリティ生成 + props 受理」を1か所の記述でまかなう。
+   */
+  tokenValues?: Record<string, Record<string, TokenValue>>;
 }
 
 /**
@@ -164,7 +173,9 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
  * 旧 `buildConfig()` の純粋部分（ファイル書き出しを除いたもの）。
  */
 export function serializePropConfig(CONFIG: BuildConfig): string {
-  const { tokens: TOKENS, props: PROPS } = CONFIG;
+  const { props: PROPS } = CONFIG;
+  // tokenValues チャンネルのキーを tokens カタログへ畳み込み、tokenClass:1 のユーティリティ生成に新キーを乗せる。
+  const TOKENS = foldTokenValues(CONFIG.tokens, CONFIG.tokenValues) as Tokens;
 
   let scssContent = '$props: (\n';
 
@@ -211,4 +222,27 @@ export function serializeBreakpoints(CONFIG: BuildConfig): string {
  */
 export function serializeConfigScss(CONFIG: BuildConfig): string {
   return `${serializePropConfig(CONFIG)}\n${serializeBreakpoints(CONFIG)}`;
+}
+
+/**
+ * CONFIG.tokenValues（#431 の値チャンネル）を `:root { ... }` の CSS 宣言文字列へ直列化する。
+ *
+ * 変数名は getTokenVarName でトークン形式に整合させる（配列 → `--{t}--{k}` / `{pre,values}` → `{pre}{k}`）。
+ * 生成結果は `base/tokens/_token-values.scss` として既定トークン（`base/tokens/*.scss`）の **後** に
+ * `@layer lism-base` 内で読み込むことで、新規キーの **追加** と既定値の **上書き** の両方を実現する。
+ * tokenValues が無い場合は空文字を返す（partial はヘッダのみになり CSS を出力しない）。
+ */
+export function serializeTokenValues(CONFIG: BuildConfig): string {
+  const { tokenValues, tokens = {} } = CONFIG;
+  if (!tokenValues) return '';
+
+  const decls: string[] = [];
+  for (const [tokenKey, valueMap] of Object.entries(tokenValues)) {
+    for (const [key, value] of Object.entries(valueMap)) {
+      decls.push(`  ${getTokenVarName(tokenKey, key, tokens as TokensConfig)}: ${value};`);
+    }
+  }
+  if (decls.length === 0) return '';
+
+  return `:root {\n${decls.join('\n')}\n}\n`;
 }

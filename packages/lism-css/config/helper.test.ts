@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { objDeepMerge, arrayConvertToSet } from './helper.js';
+import { objDeepMerge, arrayConvertToSet, foldTokenValues } from './helper.js';
 
 describe('objDeepMerge', () => {
   test('基本的なマージが正しく動作する', () => {
@@ -234,5 +234,42 @@ describe('arrayConvertToSet', () => {
     expect(result.sizes.large).toEqual(new Set([10, 20, 30]));
     expect(result.config.enabled).toBe(true);
     expect(result.config.tags).toEqual(new Set(['tag1', 'tag2']));
+  });
+});
+
+describe('foldTokenValues', () => {
+  test('配列形式トークンへキーを末尾追加する', () => {
+    const tokens = { lts: ['base', 's', 'l', 'xl'] };
+    const result = foldTokenValues(tokens, { lts: { '2xl': '.5em' } });
+    expect(result.lts).toEqual(['base', 's', 'l', 'xl', '2xl']);
+  });
+
+  test('オブジェクト形式トークンは values へ追加し pre を保持する', () => {
+    const tokens = { space: { pre: '--s', values: ['10', '20'] } };
+    const result = foldTokenValues(tokens, { space: { '90': '6rem' } });
+    expect(result.space).toEqual({ pre: '--s', values: ['10', '20', '90'] });
+  });
+
+  test('既定に無い新規トークンは配列形式で新設する', () => {
+    const result = foldTokenValues({}, { lts: { '2xl': '.5em' } });
+    expect(result.lts).toEqual(['2xl']);
+  });
+
+  test('既存キーは重複登録しない', () => {
+    const tokens = { lts: ['base', '2xl'] };
+    const result = foldTokenValues(tokens, { lts: { '2xl': '.5em', '3xl': '1em' } });
+    expect(result.lts).toEqual(['base', '2xl', '3xl']);
+  });
+
+  test('入力 tokens を破壊しない', () => {
+    const tokens = { lts: ['base'], space: { pre: '--s', values: ['10'] } };
+    foldTokenValues(tokens, { lts: { '2xl': '.5em' }, space: { '90': '6rem' } });
+    expect(tokens.lts).toEqual(['base']);
+    expect(tokens.space.values).toEqual(['10']);
+  });
+
+  test('tokenValues が無ければ tokens の浅いコピーを返す', () => {
+    const tokens = { lts: ['base'] };
+    expect(foldTokenValues(tokens, undefined)).toEqual({ lts: ['base'] });
   });
 });
