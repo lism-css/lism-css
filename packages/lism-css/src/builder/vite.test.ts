@@ -19,17 +19,28 @@ function callConfigHook(plugin: Plugin, root: string): ConfigReturn {
 }
 
 describe('lismCss (umbrella / vite)', () => {
-  test('purge なし: config alias + CSS ビルドの2プラグイン', () => {
-    expect(lismCss().map((p) => p.name)).toEqual(['lism-css:config-alias', 'lism-css:css']);
+  test('purge なし: config alias + typegen + CSS ビルドの3プラグイン', () => {
+    expect(lismCss().map((p) => p.name)).toEqual(['lism-css:config-alias', 'lism-css:typegen', 'lism-css:css']);
   });
 
   test('purge:true: known 構築 + purge を追加する', () => {
-    expect(lismCss({ purge: true }).map((p) => p.name)).toEqual(['lism-css:config-alias', 'lism-css:css', 'lism-css:known', 'lism-css:purge']);
+    expect(lismCss({ purge: true }).map((p) => p.name)).toEqual([
+      'lism-css:config-alias',
+      'lism-css:typegen',
+      'lism-css:css',
+      'lism-css:known',
+      'lism-css:purge',
+    ]);
   });
 
   test('purge で known を明示した場合は known 構築プラグインを足さない', () => {
     const plugins = lismCss({ purge: { known: { classes: new Set(), attrs: new Set() } } });
-    expect(plugins.map((p) => p.name)).toEqual(['lism-css:config-alias', 'lism-css:css', 'lism-css:purge']);
+    expect(plugins.map((p) => p.name)).toEqual(['lism-css:config-alias', 'lism-css:typegen', 'lism-css:css', 'lism-css:purge']);
+  });
+
+  test('typegen:false でも typegen プラグイン自体は構成に残る（buildStart で no-op）', () => {
+    // プラグインの有無ではなく disabled フラグで制御するため、名前一覧は変わらない。
+    expect(lismCss({ typegen: false }).map((p) => p.name)).toEqual(['lism-css:config-alias', 'lism-css:typegen', 'lism-css:css']);
   });
 });
 

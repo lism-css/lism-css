@@ -74,6 +74,22 @@ describe('createCssCompiler', () => {
     expect(customCss).not.toBe(defaultCss);
   });
 
+  test('lism.config の breakpoints だけで xs を有効化できる（config 単一情報源）', async () => {
+    const c = makeCompiler();
+    const base = configs({});
+    // 差分上書き: xs にサイズを与えるだけで有効化（デフォルトは xs:0=無効）。
+    const withXs = configs({ breakpoints: { xs: '360px' } });
+
+    const defaultCss = await c.compile('props', base.mainConfig, base.fullConfig);
+    const xsCss = await c.compile('props', withXs.mainConfig, withXs.fullConfig);
+
+    // デフォルトでは xs クエリ（360px）は出力されない
+    expect(defaultCss).not.toContain('360px');
+    // config で xs を有効化すると 360px のクエリが出力される
+    expect(xsCss).toContain('360px');
+    expect(xsCss).not.toBe(defaultCss);
+  });
+
   test('同一 config・同一エントリはキャッシュされ同一結果を返す', async () => {
     const c = makeCompiler();
     const { mainConfig, fullConfig } = configs({});

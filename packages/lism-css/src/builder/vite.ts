@@ -18,6 +18,7 @@ import type { AstroIntegration } from 'astro';
 
 import { lismCssVite, type LismCssViteOptions } from './vite-css';
 import { lismConfigAlias } from './vite-config-alias';
+import { lismTypegen } from './vite-typegen';
 import { loadBuildConfigs } from './load-config';
 import { createCssCompiler } from './compile-entry';
 import { scssDir } from './paths';
@@ -29,6 +30,8 @@ import { loadDefaultKnownSelectors } from '../purge/shared';
 export interface LismCssOptions extends LismCssViteOptions {
   /** purge を有効化する。`true` で既定設定、オブジェクトで `lismPurge` のオプションを指定。 */
   purge?: boolean | LismPurgeOptions;
+  /** 型 `.d.ts` 自動生成（lism-env.d.ts）を無効化する（既定: 有効）。 */
+  typegen?: boolean;
 }
 
 /** config 反映済みの full.css をコンパイルして known セレクタ集合を作る（build 時に一度だけ実行）。 */
@@ -57,8 +60,8 @@ function resolvePurge(purge: LismCssOptions['purge']): { enabled: boolean; opts:
  * Vite 用の統合プラグイン配列を返す。
  */
 export function lismCss(options: LismCssOptions = {}): Plugin[] {
-  const { purge, ...viteOpts } = options;
-  const plugins: Plugin[] = [lismConfigAlias(viteOpts), lismCssVite(viteOpts)];
+  const { purge, typegen, ...viteOpts } = options;
+  const plugins: Plugin[] = [lismConfigAlias(viteOpts), lismTypegen({ disabled: typegen === false }), lismCssVite(viteOpts)];
 
   const { enabled, opts, useGeneratedKnown } = resolvePurge(purge);
   if (!enabled) return plugins;
@@ -94,7 +97,7 @@ export function lismCss(options: LismCssOptions = {}): Plugin[] {
  * Astro 用の統合（integration 配列）を返す。`integrations` 直下に置く。
  */
 export function lismCssAstro(options: LismCssOptions = {}): AstroIntegration[] {
-  const { purge, ...viteOpts } = options;
+  const { purge, typegen, ...viteOpts } = options;
   const { enabled, opts, useGeneratedKnown } = resolvePurge(purge);
 
   const knownRef: { value: KnownSelectorSet | undefined } = { value: undefined };
@@ -105,7 +108,7 @@ export function lismCssAstro(options: LismCssOptions = {}): AstroIntegration[] {
     hooks: {
       'astro:config:setup': ({ config, updateConfig }) => {
         root = fileURLToPath(config.root);
-        updateConfig({ vite: { plugins: [lismConfigAlias(viteOpts), lismCssVite(viteOpts)] } });
+        updateConfig({ vite: { plugins: [lismConfigAlias(viteOpts), lismTypegen({ disabled: typegen === false }), lismCssVite(viteOpts)] } });
       },
       'astro:build:start': async () => {
         if (useGeneratedKnown) knownRef.value = await buildConfigAwareKnown(root);

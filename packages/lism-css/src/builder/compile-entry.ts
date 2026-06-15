@@ -17,7 +17,7 @@ import postcss, { type AcceptedPlugin } from 'postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
-import { serializePropConfig, type BuildConfig } from './serialize';
+import { serializeConfigScss, type BuildConfig } from './serialize';
 import { writePropConfigFiles } from './compile';
 
 /**
@@ -39,8 +39,10 @@ export async function listCssEntries(scssDir: string): Promise<Map<string, strin
 
 /** main / full の prop-config 直列化結果から作業ディレクトリの一意な署名を作る。 */
 function configSignature(mainConfig: BuildConfig, fullConfig?: BuildConfig): string {
-  const main = serializePropConfig(mainConfig);
-  const full = fullConfig ? serializePropConfig(fullConfig) : '';
+  // serializeConfigScss は $props に加えて $breakpoints も含むため、breakpoints 変更でも
+  // 署名が変わり作業ディレクトリのキャッシュが正しく作り直される。
+  const main = serializeConfigScss(mainConfig);
+  const full = fullConfig ? serializeConfigScss(fullConfig) : '';
   return createHash('sha256').update(main).update('\0').update(full).digest('hex');
 }
 

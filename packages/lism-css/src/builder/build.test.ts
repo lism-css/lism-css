@@ -1,6 +1,6 @@
 import * as sass from 'sass';
 import { describe, expect, test } from 'vitest';
-import { serializePropConfig, type BuildConfig } from './serialize';
+import { serializePropConfig, serializeBreakpoints, serializeConfigScss, type BuildConfig } from './serialize';
 
 const baseConfig: BuildConfig = {
   tokens: { space: ['10', '20', '30'] },
@@ -38,6 +38,36 @@ describe('serializePropConfig', () => {
       props: { g: { prop: 'gap', bp: ['sm'] } },
     });
     expect(scss).toContain("bp: ('sm',)");
+  });
+});
+
+describe('serializeBreakpoints', () => {
+  test('サイズ文字列はクォート、0（無効）は数値で直列化する', () => {
+    const scss = serializeBreakpoints({
+      tokens: {},
+      props: {},
+      breakpoints: { xs: 0, sm: '480px', xl: '1400px' },
+    });
+    expect(scss).toContain("'xs': 0,");
+    expect(scss).toContain("'sm': '480px',");
+    expect(scss).toContain("'xl': '1400px',");
+    expect(scss.startsWith('$breakpoints: (')).toBe(true);
+  });
+
+  test('breakpoints 未定義でも $breakpoints: (); を出力する（props.$breakpoints 参照の保証）', () => {
+    expect(serializeBreakpoints({ tokens: {}, props: {} })).toBe('$breakpoints: ();\n');
+  });
+});
+
+describe('serializeConfigScss', () => {
+  test('$props と $breakpoints を両方含む', () => {
+    const scss = serializeConfigScss({
+      tokens: {},
+      props: { g: { prop: 'gap', bp: 1 } },
+      breakpoints: { xs: '360px' },
+    });
+    expect(scss).toContain('$props: (');
+    expect(scss).toContain("$breakpoints: (\n  'xs': '360px',");
   });
 });
 

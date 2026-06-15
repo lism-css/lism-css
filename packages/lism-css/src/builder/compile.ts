@@ -16,7 +16,7 @@ import postcss, { type AcceptedPlugin } from 'postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
-import { serializePropConfig, type BuildConfig } from './serialize';
+import { serializeConfigScss, type BuildConfig } from './serialize';
 
 export type { BuildConfig } from './serialize';
 
@@ -43,9 +43,9 @@ export interface WritePropConfigOptions {
  * パッケージ自身のビルドで同梱デフォルトを更新する用途と、一時ディレクトリへの注入の双方で使う。
  */
 export function writePropConfigFiles({ scssDir, mainConfig, fullConfig }: WritePropConfigOptions): void {
-  fs.writeFileSync(path.join(scssDir, MAIN_PROP_CONFIG), serializePropConfig(mainConfig), 'utf8');
+  fs.writeFileSync(path.join(scssDir, MAIN_PROP_CONFIG), serializeConfigScss(mainConfig), 'utf8');
   if (fullConfig) {
-    fs.writeFileSync(path.join(scssDir, FULL_PROP_CONFIG), serializePropConfig(fullConfig), 'utf8');
+    fs.writeFileSync(path.join(scssDir, FULL_PROP_CONFIG), serializeConfigScss(fullConfig), 'utf8');
   }
 }
 

@@ -26,6 +26,11 @@ export interface PropConfig {
 export interface BuildConfig {
   tokens: Tokens;
   props: Record<string, PropConfig>;
+  /**
+   * ブレイクポイント定義（CSS 出力の単一情報源）。`'480px'` 等のサイズ文字列、または 0（無効）。
+   * lism.config.js で差分上書きでき、xs/xl はサイズを与えるだけで有効化できる。
+   */
+  breakpoints?: Record<string, string | number>;
 }
 
 /**
@@ -173,4 +178,32 @@ export function serializePropConfig(CONFIG: BuildConfig): string {
   scssContent += '\n);\n';
 
   return scssContent;
+}
+
+/**
+ * CONFIG の breakpoints を SCSS の `$breakpoints: ( ... );` 文字列へ直列化する。
+ *
+ * サイズ文字列（`'480px'` 等）はクォートし、0（無効）は数値のまま出力する。
+ * breakpoints 未定義時も `$breakpoints: ();` を出力し、`_setting.scss` の `props.$breakpoints`
+ * 参照が常に解決できるようにする（未定義メンバ参照による sass エラーの防止）。
+ */
+export function serializeBreakpoints(CONFIG: BuildConfig): string {
+  const entries = CONFIG.breakpoints ? Object.entries(CONFIG.breakpoints) : [];
+  if (entries.length === 0) return '$breakpoints: ();\n';
+
+  let scss = '$breakpoints: (\n';
+  entries.forEach(([key, value]) => {
+    const serialized = typeof value === 'number' ? value : `'${value}'`;
+    scss += `  '${key}': ${serialized},\n`;
+  });
+  scss += ');\n';
+  return scss;
+}
+
+/**
+ * `_prop-config.scss` に書き出す完全な SCSS（`$props` + `$breakpoints`）を生成する。
+ * `_setting.scss` が両方を `@use './prop-config'` 経由で読み、config を CSS 出力の単一情報源にする。
+ */
+export function serializeConfigScss(CONFIG: BuildConfig): string {
+  return `${serializePropConfig(CONFIG)}\n${serializeBreakpoints(CONFIG)}`;
 }
