@@ -64,11 +64,20 @@ describe('writeBreakpointDts', () => {
     expect(fs.statSync(file).mtimeMs).toBe(mtime1);
   });
 
-  test('content が null なら既存の生成物を削除する', () => {
+  test('content が null なら既存の「生成物」を削除する', () => {
     const root = tmpDir();
     const file = path.join(root, TYPES_FILENAME);
-    fs.writeFileSync(file, '// stale', 'utf8');
+    // 自動生成された .d.ts（マーカー付き）を置いておく
+    fs.writeFileSync(file, generateBreakpointDts({ xs: '360px' })!, 'utf8');
     writeBreakpointDts(root, generateBreakpointDts({ sm: '480px' })); // null
     expect(fs.existsSync(file)).toBe(false);
+  });
+
+  test('content が null でも、自動生成マーカーの無い手書きファイルは削除しない', () => {
+    const root = tmpDir();
+    const file = path.join(root, TYPES_FILENAME);
+    fs.writeFileSync(file, '// 手書きの型定義\n', 'utf8');
+    writeBreakpointDts(root, null);
+    expect(fs.existsSync(file)).toBe(true);
   });
 });

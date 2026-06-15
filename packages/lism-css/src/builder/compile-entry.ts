@@ -91,9 +91,9 @@ export function createCssCompiler({ scssDir, minify = false, log }: CssCompilerO
     cssCache.clear();
   }
 
-  function ensureWorkspace(mainConfig: BuildConfig, fullConfig?: BuildConfig): string {
+  function ensureWorkspace(mainConfig: BuildConfig, fullConfig?: BuildConfig): { dir: string; sig: string } {
     const sig = configSignature(mainConfig, fullConfig);
-    if (workspace && workspace.sig === sig) return workspace.dir;
+    if (workspace && workspace.sig === sig) return workspace;
     // config が変わった（または初回）: 旧作業ディレクトリとキャッシュを捨てて作り直す。
     disposeWorkspace();
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-css-css-'));
@@ -101,7 +101,7 @@ export function createCssCompiler({ scssDir, minify = false, log }: CssCompilerO
     writePropConfigFiles({ scssDir: dir, mainConfig, fullConfig });
     workspace = { dir, sig };
     log?.(`▶️ [lism-css] css workspace prepared (${sig.slice(0, 8)})`);
-    return dir;
+    return workspace;
   }
 
   return {
@@ -114,12 +114,16 @@ export function createCssCompiler({ scssDir, minify = false, log }: CssCompilerO
     async compile(entry, mainConfig, fullConfig) {
       const rel = (await getEntryMap()).get(entry);
       if (!rel) throw new Error(`[lism-css] unknown CSS entry: "${entry}"`);
-      const dir = ensureWorkspace(mainConfig, fullConfig);
-      const cached = cssCache.get(entry);
+      const { dir, sig } = ensureWorkspace(mainConfig, fullConfig);
+      // キャッシュキーに config 署名を含める。compile 中（await postcss）に別 config の
+      // ビルドが割り込んで workspace を作り直しても、署名違いのキーには書き込まれないため、
+      // 旧 config の結果を現行 config のキャッシュとして取り違えることがない。
+      const cacheKey = `${sig}:${entry}`;
+      const cached = cssCache.get(cacheKey);
       if (cached !== undefined) return cached;
       const compiled = sass.compile(path.join(dir, rel), { style: 'expanded' });
       const processed = await postcss(plugins).process(compiled.css, { from: undefined });
-      cssCache.set(entry, processed.css);
+      cssCache.set(cacheKey, processed.css);
       return processed.css;
     },
     dispose() {

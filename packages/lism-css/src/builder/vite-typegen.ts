@@ -10,10 +10,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Plugin } from 'vite';
+import { normalizePath, type Plugin } from 'vite';
 
-import { loadBuildConfigs } from './load-config';
-import { generateBreakpointDts } from './gen-types';
+import { loadBuildConfigs, findUserConfigPath } from './load-config';
+import { generateBreakpointDts, GENERATED_MARKER } from './gen-types';
 
 /** 生成する `.d.ts` のファイル名（vite-env.d.ts / next-env.d.ts に倣ったプロジェクト直下配置）。 */
 export const TYPES_FILENAME = 'lism-env.d.ts';
@@ -34,7 +34,8 @@ export function writeBreakpointDts(projectRoot: string, content: string | null, 
   const filePath = path.join(projectRoot, TYPES_FILENAME);
 
   if (content === null) {
-    if (fs.existsSync(filePath)) {
+    // 自動生成マーカーを含むファイルだけ削除する（手書きの同名ファイルを巻き込まない）。
+    if (fs.existsSync(filePath) && fs.readFileSync(filePath, 'utf8').includes(GENERATED_MARKER)) {
       fs.rmSync(filePath);
       log?.(`🧹 [lism-css] removed ${TYPES_FILENAME} (no extra breakpoints)`);
     }
@@ -61,10 +62,12 @@ export interface LismTypegenOptions {
 }
 
 /**
- * 型 `.d.ts` を dev / build 起動時に同期する Vite プラグイン。
+ * 型 `.d.ts` を dev / build 起動時に同期し、dev 中の lism.config.js 変更にも追従する Vite プラグイン。
  */
 export function lismTypegen(options: LismTypegenOptions = {}): Plugin {
   let root = '';
+  // handleHotUpdate で「変更ファイルが lism.config か」を判定するために控える。
+  let userConfigPath: string | null = null;
   return {
     name: 'lism-css:typegen',
     enforce: 'pre',
@@ -73,6 +76,15 @@ export function lismTypegen(options: LismTypegenOptions = {}): Plugin {
     },
     async buildStart() {
       if (options.disabled) return;
+      userConfigPath = findUserConfigPath(root || process.cwd());
+      await syncBreakpointDts(root || process.cwd());
+    },
+    // dev 中に lism.config.js の breakpoints を変更したら .d.ts を再生成する。
+    // vite-css / config-alias は full-reload を送るが、型生成は副作用として別途追従させる必要がある。
+    // （writeBreakpointDts は内容不変なら書き込まないため、生成物自身の変更で HMR ループにはならない）
+    async handleHotUpdate(ctx) {
+      if (options.disabled || !userConfigPath) return;
+      if (normalizePath(ctx.file) !== normalizePath(userConfigPath)) return;
       await syncBreakpointDts(root || process.cwd());
     },
   };

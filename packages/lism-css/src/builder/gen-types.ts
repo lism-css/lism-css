@@ -15,7 +15,10 @@ const DEFAULT_ADVERTISED = ['sm', 'md', 'lg'];
 /** ランタイムが解釈できる BP キーの全集合（`config/index.ts` の `BREAK_POINTS_OBJ` から base を除いたもの）。 */
 const KNOWN_BP_KEYS = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-const HEADER = `// このファイルは lism-css が lism.config.js の breakpoints から自動生成します。
+/** 自動生成物であることを示す識別マーカー。HEADER に埋め込み、削除時の安全判定にも使う。 */
+export const GENERATED_MARKER = 'このファイルは lism-css が';
+
+const HEADER = `// ${GENERATED_MARKER} lism.config.js の breakpoints から自動生成します。
 // 編集しないでください（次回の dev / build 時に上書きされます）。`;
 
 /** breakpoints のサイズが「有効」か（0 / 未定義 / 空文字 / '0' は無効）。 */
