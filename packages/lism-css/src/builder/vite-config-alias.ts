@@ -2,8 +2,7 @@
  * `lism-css/config.js` を user の lism.config へ alias する Vite プラグイン。
  *
  * これにより JS ランタイム（`config/index.ts` が import する `lism-css/config.js`）が user 設定を読む。
- * 後方互換の単体エクスポート `vite-plugin.mjs` の TS 版で、傘エントリ `lismCss()` がこれを束ねる。
- * （`vite-plugin.mjs` は従来利用者向けにそのまま残置する）
+ * ユーザー向けには `lism-css/vite` の統合APIから利用する。
  */
 import path from 'node:path';
 import type { Plugin } from 'vite';

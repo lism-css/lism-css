@@ -10,13 +10,13 @@
  * known に含まれないクラスは「unknown（=user 由来かもしれない）」として温存されるため、user が lism.config.js で
  * 追加した prop/トークン由来のクラスも known に入れておくことで、その未使用分まで正しく purge できる。
  *
- * NOTE: `purge/vite`・`purge/astro` 単体エクスポートと、config alias 単体の `vite-plugin.mjs` は後方互換で維持する。
+ * NOTE: `purge/vite`・`purge/astro` 単体エクスポートは後方互換で維持する。
  */
 import { fileURLToPath } from 'node:url';
 import type { Plugin } from 'vite';
 import type { AstroIntegration } from 'astro';
 
-import { lismCssVite, type LismCssViteOptions } from './vite-css';
+import { lismDynamicCss, type LismDynamicCssOptions } from './dynamic-css';
 import { lismConfigAlias } from './vite-config-alias';
 import { lismTypegen } from './vite-typegen';
 import { loadBuildConfigs } from './load-config';
@@ -27,7 +27,7 @@ import { lismPurgeAstro } from '../purge/astro';
 import { extractKnownLismSelectors, type KnownSelectorSet } from '../purge/core';
 import { loadDefaultKnownSelectors } from '../purge/shared';
 
-export interface LismCssOptions extends LismCssViteOptions {
+export interface LismCssOptions extends LismDynamicCssOptions {
   /** purge を有効化する。`true` で既定設定、オブジェクトで `lismPurge` のオプションを指定。 */
   purge?: boolean | LismPurgeOptions;
   /** 型 `.d.ts` 自動生成（lism-env.d.ts）を無効化する（既定: 有効）。 */
@@ -64,7 +64,7 @@ export function lismCss(options: LismCssOptions = {}): Plugin[] {
   const plugins: Plugin[] = [
     lismConfigAlias(viteOpts),
     lismTypegen({ disabled: typegen === false, configPath: viteOpts.configPath }),
-    lismCssVite(viteOpts),
+    lismDynamicCss(viteOpts),
   ];
 
   const { enabled, opts, useGeneratedKnown } = resolvePurge(purge);
@@ -117,7 +117,7 @@ export function lismCssAstro(options: LismCssOptions = {}): AstroIntegration[] {
             plugins: [
               lismConfigAlias(viteOpts),
               lismTypegen({ disabled: typegen === false, configPath: viteOpts.configPath }),
-              lismCssVite(viteOpts),
+              lismDynamicCss(viteOpts),
             ],
           },
         });

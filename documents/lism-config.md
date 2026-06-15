@@ -1,0 +1,147 @@
+# lism.config.js メモ
+
+`lism.config.js`は、Lism CSSのユーザー設定をまとめるプロジェクトルートの設定ファイル。
+CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI設定を同じファイルに同居できる。
+
+
+## できること
+
+主なトップレベルキー:
+
+| キー | 役割 |
+|------|------|
+| `props` | `p`/`ta`/`filter`など、Lism propsが出力するクラス・CSSプロパティ・utility値を追加/上書きする |
+| `tokens` | `space`/`lts`など、propsが参照するトークン名のカタログを追加/上書きする |
+| `traits` | `isHoge`→`is--hoge`のような真偽値class propを追加する |
+| `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
+| `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
+| `cli` | `lism ui add`などの出力先設定。旧`lism-ui.json`の後継 |
+
+```js
+// lism.config.js
+import DEFAULT_CONFIG from 'lism-css/default-config';
+
+const { props, tokens } = DEFAULT_CONFIG;
+
+export default {
+  breakpoints: {
+    xs: '360px',
+    xl: '1440px',
+  },
+
+  props: {
+    // 既存propへutilityを追加
+    p: { utils: { box: '2em' } },
+
+    // 配列はマージではなく置き換えなので、既存値を残すならspreadする
+    ta: { presets: [...props.ta.presets, 'justify'] },
+
+    // 新規propを追加
+    filter: {
+      prop: 'filter',
+      utils: { blur: 'blur(3px)' },
+      bp: ['md', 'lg'],
+    },
+  },
+
+  tokens: {
+    lts: [...tokens.lts, '2xl'],
+  },
+
+  traits: {
+    isHoge: 'is--hoge',
+  },
+
+  cli: {
+    framework: 'react',
+    componentsDir: 'src/components/ui',
+    helperDir: 'src/components/ui/_helper',
+  },
+};
+```
+
+`.js`/`.mjs`が対象。現状`lism.config.ts`は未対応。
+
+
+## プラグインは必要か
+
+結論:
+
+- `props`/`tokens`/`traits`の上書きをReact/Astroコンポーネント側に効かせたいなら必要。
+- Vite/AstroのCSS importで、`lism.config.js`反映済みCSSをその場で出したい場合も必要。
+- `lism-css build`などでCSSを事前生成するだけなら、Vite/Astroプラグインは不要。
+
+理由は、コンポーネント側の設定読込が`lism-css/config.js`をimportする構造になっていて、ユーザープロジェクトの`lism.config.js`へ差し替えるにはaliasプラグインが必要なため。
+また、通常の`import 'lism-css/main.css'`だけではパッケージ同梱のCSSを読むので、Vite/Astro中でconfig反映済みCSSへ差し替える場合も動的CSSビルドプラグインが必要になる。
+
+推奨入口:
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite';
+import { lismCss } from 'lism-css/vite';
+
+export default defineConfig({
+  plugins: [...lismCss()],
+});
+```
+
+```js
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import { lismCssAstro } from 'lism-css/vite';
+
+export default defineConfig({
+  integrations: [...lismCssAstro()],
+});
+```
+
+purgeを使わない場合は`lismCss()`/`lismCssAstro()`を引数なしで使えばよい。`purge:true`は未使用Lismクラスの削除まで行いたいときだけ指定する。
+
+```js
+lismCss(); // config反映、型生成、動的CSSビルド
+lismCss({ purge: true }); // 上記 + purge
+```
+
+
+## `lism-css build`
+
+`lism-css build`は`packages/lism-css`が提供するbinコマンド。
+`packages/lism-css/package.json`の`bin`で`lism-css`→`./bin/cli.mjs`に紐づいている。
+
+```bash
+npx lism-css build
+pnpm exec lism-css build
+```
+
+このコマンドはプロジェクトルートの`lism.config.js`を直接読み、config反映済みCSSを生成する。
+そのため、CSSを事前生成するだけならVite/Astroプラグインは不要。
+`--full`を付けると`full.css`/`full_no_layer.css`も生成対象になる。
+
+
+## 処理フロー
+
+1. Vite/Astro起動時に、プロジェクトルートから`lism.config.js`→`lism.config.mjs`の順で探す。
+   `configPath`指定時はそのファイルだけを見る。
+2. `lism-css/config.js`をユーザーの`lism.config.js`へaliasする。
+   これでReact/Astroコンポーネント側の`CONFIG`もユーザー設定を読む。
+3. CSSビルド側も同じ設定を読む。
+   マージ順は`defaultConfig`→`lism.config.js`。`full.css`用は`defaultConfig`→`full preset`→`lism.config.js`。
+4. `isFullMode:true`の場合、`main.css`系で使う設定もfull preset適用済みに寄せる。
+5. `import 'lism-css/main.css'`などのCSS importをViteプラグインが捕捉し、設定反映済みCSSをその場でコンパイルして返す。
+   `node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して`_prop-config.scss`だけ差し替える。
+6. `breakpoints`で`xs`/`xl`などが有効なら、`lism-env.d.ts`を自動生成して型側にも反映する。
+   生成対象は主にbreakpointsで、props/tokens全体の型拡張までは追従しない。
+7. `purge:true`時は、設定反映済みの`full.css`からknown selectorを作る。
+   configで追加したクラスもpurge対象として扱える。
+
+
+## 注意点
+
+- `props`や`tokens`内のオブジェクトはdeep mergeされるが、配列は置き換えになる。
+  既存値に足す場合は`lism-css/default-config`をimportしてspreadする。
+- `tokens`はクラス生成に使うトークン名の追加であり、CSS変数の実値までは自動定義しない。
+  例: `lts: ['2xl']`を追加しても`--lts--2xl`の値は別途CSSで定義する。
+- `traits`はclass出力の追加であり、対応するスタイルは別途必要。
+- `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。
+- 統合入口は`lism-css/vite`の`lismCss()`/`lismCssAstro()`。

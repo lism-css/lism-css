@@ -89,7 +89,7 @@ export function lismTypegen(options: LismTypegenOptions = {}): Plugin {
       await syncBreakpointDts(root || process.cwd(), { configPath: options.configPath });
     },
     // dev 中に lism.config.js の breakpoints を変更したら .d.ts を再生成する。
-    // vite-css / config-alias は full-reload を送るが、型生成は副作用として別途追従させる必要がある。
+    // dynamic-css / config-alias は full-reload を送るが、型生成は副作用として別途追従させる必要がある。
     // （writeBreakpointDts は内容不変なら書き込まないため、生成物自身の変更で HMR ループにはならない）
     async handleHotUpdate(ctx) {
       if (options.disabled || !userConfigPath) return;

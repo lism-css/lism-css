@@ -7,8 +7,8 @@
  *
  * dev では `lism.config.js` の変更を検知して再コンパイル + フルリロードする。
  *
- * NOTE: 本プラグインは P2 の CSS ビルド単体。config alias（`vite-plugin.mjs`）や purge との統合
- * （傘エントリ `lismCss()` / `lism-css/vite`）は P3 で行う。
+ * NOTE: 本プラグインは `lismCss()` / `lismCssAstro()` が内部で使う低レベル部品。
+ * ユーザー向けの公開入口は `lism-css/vite` の統合APIに寄せる。
  */
 import type { Plugin } from 'vite';
 
@@ -17,8 +17,8 @@ import { loadBuildConfigs, type LoadedBuildConfigs } from './load-config';
 import { normalizePath } from './normalize-path';
 import { scssDir, cssDistDir as cssDistDirRaw } from './paths';
 
-export interface LismCssViteOptions {
-  /** lism.config の明示パス。未指定時は Vite root から探索する（将来 P3 で利用）。 */
+export interface LismDynamicCssOptions {
+  /** lism.config の明示パス。未指定時は Vite root から探索する。 */
   configPath?: string;
 }
 
@@ -28,7 +28,7 @@ const cssDistDir = normalizePath(cssDistDirRaw);
 // `lism-css/<entry>.css`（bare specifier）を捕捉する。<entry> は base/set のようなスラッシュ入りも許す。
 const BARE_CSS_RE = /^lism-css\/(.+)\.css$/;
 
-export function lismCssVite(options: LismCssViteOptions = {}): Plugin {
+export function lismDynamicCss(options: LismDynamicCssOptions = {}): Plugin {
   let root = '';
   let configs: LoadedBuildConfigs | null = null;
   let compiler: CssCompiler | null = null;
@@ -110,4 +110,4 @@ export function lismCssVite(options: LismCssViteOptions = {}): Plugin {
   };
 }
 
-export default lismCssVite;
+export default lismDynamicCss;

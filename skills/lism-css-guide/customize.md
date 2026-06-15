@@ -139,8 +139,6 @@ plugins: [lismCss({ configPath: './config/lism.config.js' })],
 integrations: [lismCssAstro({ configPath: './config/lism.config.js' })],
 ```
 
-> **後方互換**: 旧 `lism-css/vite-plugin`（default export・config alias のみ）も引き続き利用できますが、統合プラグイン `lism-css/vite` が上位互換のため、新規プロジェクトは統合プラグインを推奨します。
-
 ### ブレイクポイントの有効化（xs / xl）
 
 デフォルトのブレイクポイントは **`xs: 0`（無効） / `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0`（無効）** です。値 `0` は「無効＝CSSクエリを出力しない」を表します。
