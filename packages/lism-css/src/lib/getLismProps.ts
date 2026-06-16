@@ -26,12 +26,14 @@ export { type LayoutType, type AtomicType };
 interface PropConfig {
   prop?: string;
   token?: string | null | undefined | false;
-  tokenClass?: 0 | 1 | 2;
+  tokenClass?: 0 | 1;
   presets?: Set<string> | string[] | readonly string[];
   presetClass?: string;
   utils?: Record<string, string>;
   shorthands?: Record<string, string>;
   isVar?: number;
+  // utility / BP クラスの SCSS 出力先変数のエイリアス（serialize 専用。component 解析では未使用）。
+  varName?: string;
   // 0 / 1（有効BPすべて）/ ['sm','md'] 等（出力する BP の明示リスト）
   bp?: 0 | 1 | readonly ('xs' | 'sm' | 'md' | 'lg' | 'xl')[];
   alwaysVar?: number;

@@ -6,7 +6,6 @@
  *
  * ↓コンポーネント処理で使用される
  * tokenClass: 1 → 対応するトークン値がそのまま全てユーティリティクラス化されるもの。
- *             2 → ユーティリティクラスされ、内容は別途ファイルで記述するもの。
  * shorthands: → コンポーネント側で短く書くための設定
  *
  * ↓SCSS出力で使用される
@@ -33,11 +32,12 @@ export default {
   ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
   fs: { prop: 'fontStyle', presets: ['italic'], shorthands: { i: 'italic' } },
   lh: {
-    prop: 'lineHeight',
-    presets: ['1'],
+    prop: 'lineHeight', // 任意値（lh="1.7" 等）はインライン line-height で出力
+    varName: 'hl', // utility / BP クラスの出力先を --hl にエイリアス（line-height は --hl から算出）
     token: 'hl',
-    tokenClass: 2,
-    exUtility: { 1: '' },
+    tokenClass: 1,
+    presets: ['1'], // lh="1" を utility クラス化する判定用（値は utils で 0px に上書き）
+    utils: { '1': '0px' },
   },
   hl: {
     isVar: 1,

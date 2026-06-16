@@ -16,6 +16,8 @@ export interface PropConfig {
   prop?: string;
   bp?: number | string[];
   isVar?: number;
+  /** utility / BP クラスの出力先 CSS 変数を別名へエイリアスする（例: lh → 'hl' で --hl を出力）。 */
+  varName?: string;
   alwaysVar?: number;
   important?: number;
   utils?: Record<string, TokenValue>;
@@ -81,7 +83,7 @@ function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<strin
  * 1つのプロパティ設定を SCSS のマップエントリ文字列へ変換する。
  */
 function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Tokens): string {
-  const { prop = '', bp, isVar, alwaysVar, important } = propConfig;
+  const { prop = '', bp, isVar, alwaysVar, important, varName } = propConfig;
 
   const utilities = generateUtilities(propConfig, TOKENS);
   const hasUtilities = Object.keys(utilities).length > 0;
@@ -91,7 +93,11 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
   }
 
   let scss = `  '${propKey}': (\n`;
-  if (isVar) {
+  if (varName) {
+    // varName: utility / BP クラスの出力先を別の CSS 変数へエイリアスする（例: lh prop → --hl）。
+    // gen 上だけ isVar 相当（--{varName} を出力）にし、ソースの prop は component の任意値処理に残す。
+    scss += `    prop: '--${varName}',\n`;
+  } else if (isVar) {
     scss += `    prop: '--${propKey}',\n`;
   } else {
     // propName を prop-name に変換（キャメルケースをケバブケースに変換）
@@ -143,7 +149,10 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
       throw new TypeError(`[lism-css] prop "${propKey}": bp must be 0, 1, or an array of breakpoint names. Received ${JSON.stringify(bp)}.`);
     }
   }
-  if (isVar !== undefined) {
+  if (varName) {
+    // varName 指定時は gen 上 isVar 扱い（auto_output が --{varName} へ出力する）
+    scss += `    isVar: 1,\n`;
+  } else if (isVar !== undefined) {
     scss += `    isVar: ${isVar},\n`;
   }
   if (alwaysVar !== undefined) {
