@@ -1,6 +1,6 @@
 import * as sass from 'sass';
 import { describe, expect, test } from 'vitest';
-import { serializePropConfig, serializeBreakpoints, serializeConfigScss, type BuildConfig } from './serialize';
+import { serializePropConfig, serializeBreakpoints, serializeConfigScss, serializeTokens, type BuildConfig } from './serialize';
 
 const baseConfig: BuildConfig = {
   tokens: { space: ['10', '20', '30'] },
@@ -17,7 +17,8 @@ describe('serializePropConfig', () => {
     expect(scss).toContain("'p': (");
     expect(scss).toContain("prop: 'padding'");
     // tokenClass:1 の token 値が utilities へ展開され、token 解決された var() になる
-    expect(scss).toContain("'10': 'var(--space--10)'");
+    // （space は TOKEN_VAR_PREFIX 登録トークンなので --s 命名）
+    expect(scss).toContain("'10': 'var(--s10)'");
     // bp: 1 はそのまま数値で直列化
     expect(scss).toContain('bp: 1');
     // キャメルケースの prop はケバブケースへ
@@ -38,6 +39,111 @@ describe('serializePropConfig', () => {
       props: { g: { prop: 'gap', bp: ['sm'] } },
     });
     expect(scss).toContain("bp: ('sm',)");
+  });
+
+  test('isVar は prop 指定があればその custom property を使う', () => {
+    const scss = serializePropConfig({
+      tokens: {},
+      props: { lh: { prop: '--hl', isVar: 1, utils: { '1': '0px' } } },
+    });
+    expect(scss).toContain("prop: '--hl'");
+    expect(scss).toContain('isVar: 1');
+    expect(scss).toContain("'1': '0px'");
+  });
+});
+
+describe('tokens フラットマップのユーティリティ生成', () => {
+  test('tokenClass:1 のトークンキーが token 解決された var() の utilities へ展開される', () => {
+    const scss = serializePropConfig({
+      tokens: { lts: { base: 'normal', '2xl': '.5em' } },
+      props: { lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1, bp: 0 } },
+    });
+    expect(scss).toContain("'base': 'var(--lts--base)'");
+    expect(scss).toContain("'2xl': 'var(--lts--2xl)'");
+  });
+
+  test('space は TOKEN_VAR_PREFIX により --s 命名で展開される', () => {
+    const scss = serializePropConfig({
+      tokens: { space: { '10': '-', '20': '-', '90': '6rem' } },
+      props: { p: { prop: 'padding', token: 'space', tokenClass: 1, bp: 1 } },
+    });
+    expect(scss).toContain("'90': 'var(--s90)'");
+  });
+
+  test("'-' センチネルのキーも utilities に含まれる（var 解決される）", () => {
+    const scss = serializePropConfig({
+      tokens: { bdrs: { '10': '0.25rem', inner: '-' } },
+      props: { bdrs: { prop: 'borderRadius', token: 'bdrs', tokenClass: 1 } },
+    });
+    expect(scss).toContain("'inner': 'var(--bdrs--inner)'");
+  });
+});
+
+describe('serializeTokens', () => {
+  test('インライン値を :root 宣言として出力する', () => {
+    const scss = serializeTokens({
+      tokens: { lts: { base: 'normal', '2xl': '.5em' } },
+      props: {},
+    });
+    expect(scss.startsWith(':root {')).toBe(true);
+    expect(scss).toContain('--lts--base: normal;');
+    expect(scss).toContain('--lts--2xl: .5em;');
+  });
+
+  test("'-' センチネルのキーは :root 宣言を出力しない", () => {
+    const scss = serializeTokens({
+      tokens: { color: { brand: '-', accent: '-' }, lts: { '2xl': '.5em' } },
+      props: {},
+    });
+    expect(scss).not.toContain('--brand');
+    expect(scss).toContain('--lts--2xl: .5em;');
+  });
+
+  test('TOKEN_VAR_PREFIX を尊重した変数名で出力する（space → --s, palette → --）', () => {
+    const scss = serializeTokens({
+      tokens: { space: { '90': '6rem' }, palette: { white: '#fff' } },
+      props: {},
+    });
+    expect(scss).toContain('--s90: 6rem;');
+    expect(scss).toContain('--white: #fff;');
+  });
+
+  test('TOKEN_SCOPE 登録トークン（space / bxsh）は :root, .set--* ブロックへ出力する', () => {
+    const scss = serializeTokens({
+      tokens: {
+        lts: { base: 'normal' },
+        space: { '10': 'var(--s-unit)' },
+        bxsh: { '10': 'var(--shsz--10) var(--shc)' },
+      },
+      props: {},
+    });
+    // 非スコープトークンは :root のまま。
+    expect(scss).toContain(':root {\n  --lts--base: normal;\n}\n');
+    // スコープトークンは再宣言セレクタ付きブロックへ。
+    expect(scss).toContain(':root,\n.set--s {\n  --s10: var(--s-unit);\n}\n');
+    expect(scss).toContain(':root,\n.set--bxsh {\n  --bxsh--10: var(--shsz--10) var(--shc);\n}\n');
+  });
+
+  test('既定値の上書き（同名キー）も宣言として出力する', () => {
+    const scss = serializeTokens({
+      tokens: { lts: { base: '0.01em' } },
+      props: {},
+    });
+    expect(scss).toContain('--lts--base: 0.01em;');
+  });
+
+  test('出力する宣言が無くても :root {} を返す', () => {
+    expect(serializeTokens({ tokens: { color: { brand: '-' } }, props: {} })).toBe(':root {\n}\n');
+    expect(serializeTokens({ tokens: {}, props: {} })).toBe(':root {\n}\n');
+  });
+
+  test('生成した :root 宣言が有効な SCSS として読める', () => {
+    const scss = serializeTokens({
+      tokens: { lts: { '2xl': '.5em' } },
+      props: {},
+    });
+    const css = sass.compileString(scss).css;
+    expect(css).toContain('--lts--2xl: .5em');
   });
 });
 

@@ -11,9 +11,7 @@ describe('PropValueTypes', () => {
     // token: 'fz' → TOKENS.fz の値
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['fz']>().toEqualTypeOf<
-      Responsive<
-        'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined
-      >
+      Responsive<'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined>
     >();
   });
 
@@ -225,7 +223,7 @@ describe('ResponsivePropValueTypes', () => {
     // fz は bp: 1 なので ResponsivePropValueTypes に含まれる
     // ResponsivePropValueTypes 自体は単一値のみを受け付ける
     expectTypeOf<FzProp>().toEqualTypeOf<
-      'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined
+      'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined
     >();
   });
 

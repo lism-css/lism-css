@@ -170,7 +170,7 @@ export default {
     // Property Class の出力をカスタマイズ
   },
   tokens: {
-    // トークン値を追加
+    // トークンを { key: value } の値マップで定義（CSS変数の値出力・ユーティリティ生成・props受理を一括）
   },
   traits: {
     // Trait（is--* / has--*）用の props を追加
@@ -189,7 +189,7 @@ export default {
 ```js
 // lism.config.js
 import DEFAULT_CONFIG from 'lism-css/default-config';
-const { props, tokens } = DEFAULT_CONFIG;
+const { props } = DEFAULT_CONFIG;
 
 export default {
   props: {
@@ -201,8 +201,12 @@ export default {
     filter: { utils: { blur: 'blur(3px)' } },
   },
   tokens: {
-    // tokenClass:1 のpropは、tokens を追加するだけで自動でユーティリティ化される
-    lts: [...(tokens.lts || []), '2xl'],
+    // トークンは { key: value } の値マップで定義（既定に deep-merge される）
+    // → :root { --lts--2xl: .5em } を出力し、tokenClass:1 の lts は -lts:2xl も自動生成される
+    lts: { '2xl': '.5em' },
+    // space は --s{key}、color は --{key} の変数名で出力される
+    space: { '90': '6rem' }, // → --s90: 6rem
+    color: { success: 'oklch(0.6 0.15 150)' }, // → --success: ...
   },
   traits: {
     isHoge: 'is--hoge',
@@ -240,16 +244,18 @@ export default {
 
 `lism-css/vite` の統合プラグインを登録している場合、`lism.config.js` に props / tokens を追加すると、**dev サーバ / ビルドの CSS に自動反映されます**。追加クラス分の CSS を手動で追記したり `npx lism-css build` を回したりする必要はありません。dev 中に `lism.config.js` を変更すると HMR で CSS が再生成され、型 `.d.ts` も追従します。
 
-ただし、参照先の **CSS 変数の値そのもの**（`:root { --lts--2xl: 0.15em }` のような定義）と `is--*` クラスのスタイルは自動生成されないため、これらは手動で追加してください。
+参照先の **CSS 変数の値そのもの**（`:root { --lts--2xl: .5em }` のような定義）も、`tokens` に値を書けば自動生成されます。値の定義・ユーティリティ生成・props 受理がまとめて反映されるため、`global.css` への手書きは不要です（既定値の上書きも可能）。
 
-```css
-/* global.css — トークンの値そのものは手書きで定義 */
-@layer lism-base {
-  :root {
-    --lts--2xl: 0.15em;
-  }
-}
+```js
+// lism.config.js — 値そのものも config に集約できる
+export default {
+  tokens: {
+    lts: { '2xl': '.5em' }, // :root { --lts--2xl: .5em } + .-lts:2xl を自動生成
+  },
+};
 ```
+
+> `is--*` クラスのスタイルは `traits` ではクラス名のみを追加するため、対応するスタイルは別途必要です（後述の手動追記 / SCSS を参照）。
 
 軽微な追加であれば、props を増やさず Lism Props の `:value` 記法（→ [property-class.md](./property-class.md)）と `global.css` への手書きだけで済ませることもできます。
 
@@ -283,7 +289,8 @@ npx lism-css build --full   # full.css / full_no_layer.css も生成
 ```
 
 > **注意**:
-> - 生成されるのはあくまで `var(--lts--2xl)` を参照する **ユーティリティクラスまで**。参照先の CSS 変数（`:root { --lts--2xl: ... }` のような **値そのもの** の定義）と `is--*` クラスのスタイルは自動生成されないため、手動で追加してください。
+> - `tokens` に値を書けば、`-lts:2xl` の **ユーティリティクラス**と、参照先の CSS 変数（`:root { --lts--2xl: .5em }` のような **値そのもの**）の両方が CLI ビルドでも出力されます。値が `'-'` のキーはカタログ登録のみで `:root` 宣言を出力しません（実値は手書きSCSS側）。
+> - `is--*` クラスのスタイルは自動生成されないため、手動で追加してください。
 > - `lism-css` パッケージ自体を上書きする処理のため、**パッケージ更新ごとに再実行**が必要です。
 
 ### 手動で CSS を追記

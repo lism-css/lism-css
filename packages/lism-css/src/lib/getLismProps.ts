@@ -26,7 +26,7 @@ export { type LayoutType, type AtomicType };
 interface PropConfig {
   prop?: string;
   token?: string | null | undefined | false;
-  tokenClass?: 0 | 1 | 2;
+  tokenClass?: 0 | 1;
   presets?: Set<string> | string[] | readonly string[];
   presetClass?: string;
   utils?: Record<string, string>;
@@ -265,11 +265,13 @@ export class LismPropsData {
   setAttrs(propKey: string, val: unknown, propConfig: PropConfig = {}, bpKey: string = ''): void {
     if (null == val || '' === val || false === val) return;
 
-    let styleName = `--${propKey}`;
+    const baseStyleName =
+      propConfig.isVar && typeof propConfig.prop === 'string' && propConfig.prop.startsWith('--') ? propConfig.prop : `--${propKey}`;
+    let styleName = baseStyleName;
     let utilName = `-${String(propConfig.utilKey || propKey)}`;
 
     if (bpKey) {
-      styleName = `--${propKey}_${bpKey}`;
+      styleName = `${baseStyleName}_${bpKey}`;
       utilName += `_${bpKey}`;
     }
 
@@ -310,6 +312,14 @@ export class LismPropsData {
       }
     }
 
+    // lh は hl の互換エイリアスだが、任意値だけは従来どおり CSS line-height として扱う。
+    if (propKey === 'lh' && !bpKey) {
+      if (typeof val === 'string' || typeof val === 'number') {
+        this.addStyle('lineHeight', val);
+        return;
+      }
+    }
+
     // .-prop: だけ出力するケース
     if (true === val) {
       this.addProp(utilName);
@@ -333,7 +343,7 @@ export class LismPropsData {
     // baseスタイルの追加処理
     if (!bpKey) {
       if (isVar) {
-        this.addStyle(`--${propKey}`, finalVal);
+        this.addStyle(baseStyleName, finalVal);
         return;
       } else if (!bp && !alwaysVar) {
         // インラインでスタイル出力するだけ

@@ -25,12 +25,15 @@ export const CONFIG = mergedConfig;
 
 const { tokens, props, traits } = CONFIG;
 
+// color プロップは color（セマンティック）∪ palette（パレット）を受理する。
+// 両者をマージしたフラットマップで color を上書きし、`-bgc:brand` も `-bgc:red` も同じカタログで受理する。
 const tokensWithColor = {
-  color: [...tokens.c.values, ...tokens.palette.values],
   ...tokens,
+  color: { ...tokens.color, ...tokens.palette },
 } as const;
 
-// 配列を Set化.
+// tokens はフラット値マップ（{ key: value }）。arrayConvertToSet は配列のみ Set 化するため、
+// トークンは実質ディープクローンされ、membership は `key in map`・型導出は `keyof` で行う。
 export const TOKENS = arrayConvertToSet(structuredClone(tokensWithColor));
 export const PROPS = arrayConvertToSet(structuredClone(props));
 

@@ -16,20 +16,20 @@ type TokensConfig = typeof TOKENS;
 // 例:
 //   fs: { presets: ['italic'] } → fs?: 'italic' | (string & {})
 //   mx: { presets: ['auto', '0'], token: 'space' } → mx?: 'auto' | '0' | '5' | '10' | ... | (string & {})
-//   fz: { token: 'fz' } → fz?: 'root' | 'base' | '5xl' | ... | (string & {})
+//   fz: { token: 'fz' } → fz?: 'base' | '5xl' | ... | (string & {})
 //   bg: { prop: 'background', bp: 1 } → bg?: string | number  (フォールバック)
 //
 // ============================================================
 
 /**
- * TOKENS のキーから対応する値の型を取得
- * - 配列形式: TOKENS[K] が配列の場合、その要素の型
- * - オブジェクト形式: TOKENS[K].values が配列の場合、その要素の型
+ * TOKENS のキーから対応する値の型（= トークンのキー集合）を取得
+ * - 配列 / Set 形式: その要素の型
+ * - 値付きフラットマップ（{ key: value }）: その keyof（トークンのキー集合）
  *
  * @example
  * ```ts
  * type FzValues = TokenConfigValues<'fz'>;
- * // 結果: 'root' | 'base' | '5xl' | ...
+ * // 結果: 'base' | '5xl' | ...
  *
  * type SpaceValues = TokenConfigValues<'space'>;
  * // 結果: '5' | '10' | '15' | ...
@@ -37,7 +37,9 @@ type TokensConfig = typeof TOKENS;
  */
 type TokenConfigValues<K extends keyof TokensConfig> = TokensConfig[K] extends readonly unknown[]
   ? ArrayElement<TokensConfig[K]>
-  : ExtractArrayValues<TokensConfig[K], 'values'>;
+  : TokensConfig[K] extends object
+    ? keyof TokensConfig[K] & string
+    : never;
 
 /**
  * token プロパティから対応する TOKENS の値を抽出
@@ -122,7 +124,7 @@ export type NonResponsivePropValueTypes = {
  * @example
  * ```ts
  * // bp が有効なプロパティ（fz など）
- * fz?: 'root' | 'base' | ... | ['root', 'base'] | { base: 'root', md: 'base' }
+ * fz?: 'base' | 'l' | ... | ['base', 'l'] | { base: 'base', md: 'l' }
  *
  * // bp なしのプロパティ（fw など）
  * fw?: 'thin' | 'light' | 'normal' | ...

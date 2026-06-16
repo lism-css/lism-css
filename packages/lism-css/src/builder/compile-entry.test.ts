@@ -74,7 +74,25 @@ describe('createCssCompiler', () => {
     expect(customCss).not.toBe(defaultCss);
   });
 
-  test('lism.config の breakpoints だけで xs を有効化できる（config 単一情報源）', async () => {
+  test('tokens のインライン値が CSS に注入され、値だけの変更でもキャッシュが更新される', async () => {
+    const c = makeCompiler();
+    const first = configs({ tokens: { lts: { '2xl': '.5em' }, space: { '90': '6rem' } } });
+    const updated = configs({ tokens: { lts: { '2xl': '.75em' }, space: { '90': '7rem' } } });
+
+    const firstCss = await c.compile('main', first.mainConfig, first.fullConfig);
+    const updatedCss = await c.compile('main', updated.mainConfig, updated.fullConfig);
+
+    expect(firstCss).toContain('--lts--2xl: .5em');
+    expect(firstCss).toContain('--s90: 6rem');
+    expect(firstCss).toContain('.-lts\\:2xl');
+    expect(firstCss).toContain('.-p\\:90');
+    expect(updatedCss).toContain('--lts--2xl: .75em');
+    expect(updatedCss).toContain('--s90: 7rem');
+    expect(updatedCss).not.toContain('--lts--2xl: .5em');
+    expect(updatedCss).not.toContain('--s90: 6rem');
+  });
+
+  test('lism.config の breakpoints だけで xs を有効化できる', async () => {
     const c = makeCompiler();
     const base = configs({});
     // 差分上書き: xs にサイズを与えるだけで有効化（デフォルトは xs:0=無効）。

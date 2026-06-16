@@ -2,8 +2,8 @@
  * 単一 SCSS エントリ → CSS 文字列のオンザフライ・コンパイラ。Vite プラグイン（P2）が使う。
  *
  * 方針は P1 の `buildCssToDir` と同じ「一時ディレクトリ複製」方式:
- * src/scss をまるごと作業ディレクトリへ複製し、そこの `_prop-config*.scss` だけを user 設定由来で差し替える。
- * `@use './prop-config'` の相対参照を維持したまま node_modules を書き換えないため、素の sass 利用も壊さない。
+ * src/scss をまるごと作業ディレクトリへ複製し、そこの生成 SCSS（`_prop-config*.gen.scss` / `_tokens.gen.scss`）だけを user 設定由来で差し替える。
+ * `@use './prop-config.gen'` 等の相対参照を維持したまま node_modules を書き換えないため、素の sass 利用も壊さない。
  *
  * 差分は「ツリー一括 → ディスク出力」ではなく「単一エントリ → 文字列」を返す点と、
  * 作業ディレクトリ・コンパイル結果を config 署名でキャッシュして dev の再要求に応える点。
@@ -17,7 +17,7 @@ import postcss, { type AcceptedPlugin } from 'postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
-import { serializeConfigScss, type BuildConfig } from './serialize';
+import { serializeConfigScss, serializeTokens, type BuildConfig } from './serialize';
 import { writePropConfigFiles } from './compile';
 
 /**
@@ -41,9 +41,12 @@ export async function listCssEntries(scssDir: string): Promise<Map<string, strin
 function configSignature(mainConfig: BuildConfig, fullConfig?: BuildConfig): string {
   // serializeConfigScss は $props に加えて $breakpoints も含むため、breakpoints 変更でも
   // 署名が変わり作業ディレクトリのキャッシュが正しく作り直される。
+  // tokens のインライン値は serializeConfigScss に含まれない（$props は変数名のみ参照）ため、
+  // 値だけの変更でもキャッシュが無効化されるよう、別途 serializeTokens を署名へ加える。
   const main = serializeConfigScss(mainConfig);
   const full = fullConfig ? serializeConfigScss(fullConfig) : '';
-  return createHash('sha256').update(main).update('\0').update(full).digest('hex');
+  const tokensGen = serializeTokens(mainConfig);
+  return createHash('sha256').update(main).update('\0').update(full).update('\0').update(tokensGen).digest('hex');
 }
 
 export interface CssCompilerOptions {

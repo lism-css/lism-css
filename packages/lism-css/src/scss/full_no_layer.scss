@@ -5,7 +5,7 @@
   ※ @use ... with は対象モジュールの初回ロード前に行う必要があるため、
   setting → mixin の順で設定すること（mixin は内部で setting をロードする）。
 */
-@use './prop-config-full' as full;
+@use './prop-config-full.gen' as full;
 @use './setting' with (
   $props: full.$props
 );

@@ -6,7 +6,6 @@
  *
  * ↓コンポーネント処理で使用される
  * tokenClass: 1 → 対応するトークン値がそのまま全てユーティリティクラス化されるもの。
- *             2 → ユーティリティクラスされ、内容は別途ファイルで記述するもの。
  * shorthands: → コンポーネント側で短く書くための設定
  *
  * ↓SCSS出力で使用される
@@ -33,17 +32,18 @@ export default {
   ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
   fs: { prop: 'fontStyle', presets: ['italic'], shorthands: { i: 'italic' } },
   lh: {
-    prop: 'lineHeight',
-    presets: ['1'],
-    token: 'hl',
-    tokenClass: 2,
-    exUtility: { 1: '' },
-  },
-  hl: {
+    prop: '--hl',
     isVar: 1,
     token: 'hl',
-    tokenClass: 0,
-    bp: 0,
+    tokenClass: 1,
+    utils: { '1': '0px' },
+  },
+  hl: {
+    prop: '--hl',
+    isVar: 1,
+    token: 'hl',
+    tokenClass: 1,
+    bp: 1,
   },
   lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1, bp: 0 },
   ta: { prop: 'textAlign', presets: ['center', 'left', 'right'] },

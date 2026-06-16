@@ -77,7 +77,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
 | `f` | `font` | `-f:inherit` | — |
-| `fz` | `font-size` | `-fz:root`, `-fz:base`, `-fz:5xl`〜`-fz:2xs` | ✔ |
+| `fz` | `font-size` | `-fz:base`, `-fz:5xl`〜`-fz:2xs` | ✔ |
 | `fw` | `font-weight` | `-fw:light`, `-fw:normal`, `-fw:bold`, `-fw:100`〜`-fw:900` | — |
 | `ff` | `font-family` | `-ff:base`, `-ff:accent`, `-ff:mono` | — |
 | `fs` | `font-style` | `-fs:italic` | — |
