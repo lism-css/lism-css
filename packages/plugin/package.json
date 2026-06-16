@@ -7,6 +7,9 @@
     "url": "https://github.com/ddryo"
   },
   "license": "MIT",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "keywords": [
     "css-framework",
     "vite-plugin",
@@ -33,7 +36,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
     "./vite": {
       "types": "./dist/builder/vite.d.ts",
@@ -45,7 +49,8 @@
     },
     "./builder": {
       "types": "./dist/builder/index.d.ts",
-      "import": "./dist/builder/index.js"
+      "import": "./dist/builder/index.js",
+      "require": "./dist/builder/index.js"
     },
     "./purge/vite": {
       "types": "./dist/purge/vite.d.ts",

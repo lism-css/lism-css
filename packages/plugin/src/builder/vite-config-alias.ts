@@ -1,16 +1,15 @@
 /**
  * `lism-css/config.js` を user の lism.config へ alias する Vite プラグイン。
  *
- * これにより JS ランタイム（`config/index.ts` が import する `lism-css/config.js`）が user 設定を読む。
+ * 対象 id と差し替え先解決は bundler 非依存の `./config-alias`（`CONFIG_TARGET_ID` / `resolveConfigAliasPath`）へ
+ * 集約済み。本ファイルはそれを Vite の `config` フック・HMR へ橋渡しする薄いラッパー。
  * ユーザー向けには `@lism-css/plugin` の統合APIから利用する。
  */
 import path from 'node:path';
 import type { Plugin } from 'vite';
 
-import { findUserConfigPath } from './load-config';
+import { CONFIG_TARGET_ID, resolveConfigAliasPath } from './config-alias';
 import { normalizePath } from './normalize-path';
-
-const TARGET_ID = 'lism-css/config.js';
 
 export interface LismConfigAliasOptions {
   /** lism.config の明示パス。未指定時は Vite root（無ければ cwd）から探索する。 */
@@ -20,16 +19,6 @@ export interface LismConfigAliasOptions {
 export function lismConfigAlias(opts: LismConfigAliasOptions = {}): Plugin {
   let userPath: string | null = null;
 
-  const resolveUserConfig = (base: string): string | null => {
-    const userConfigPath = findUserConfigPath(base, opts.configPath);
-    if (userConfigPath) return normalizePath(userConfigPath);
-
-    if (opts.configPath) {
-      console.error(`[lism-css] 指定された設定ファイルが存在しません: ${path.resolve(base, opts.configPath)}`);
-    }
-    return null;
-  };
-
   return {
     name: 'lism-css:config-alias',
     enforce: 'pre',
@@ -38,14 +27,14 @@ export function lismConfigAlias(opts: LismConfigAliasOptions = {}): Plugin {
     // この時点では configResolved 前のため root は user config（無ければ cwd）から取る。
     config(config) {
       const base = config.root ? path.resolve(config.root) : process.cwd();
-      userPath = resolveUserConfig(base);
+      userPath = resolveConfigAliasPath(base, opts.configPath);
 
       // lism-css/config.js を deps バンドル対象から外す（user 設定変更がキャッシュで隠れないように）。
       const cfg: { optimizeDeps: { exclude: string[] }; resolve?: { alias: Record<string, string> } } = {
-        optimizeDeps: { exclude: [TARGET_ID] },
+        optimizeDeps: { exclude: [CONFIG_TARGET_ID] },
       };
       if (userPath) {
-        cfg.resolve = { alias: { [TARGET_ID]: userPath } };
+        cfg.resolve = { alias: { [CONFIG_TARGET_ID]: userPath } };
       }
       return cfg;
     },
