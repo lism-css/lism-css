@@ -1,6 +1,6 @@
 /**
  * isVar: 1 → クラス出力はせずstyle属性での変数出力のみ (--bdw, --keycolor など)
- * bp: 0 → Prop-valユーティリティクラス化されなければ、style属性で出力するだけ。
+ * bp: 0（= bp 省略時のデフォルト）→ Prop-valユーティリティクラス化されなければ、style属性で出力するだけ。
  * bp: 1 → .-prop と --prop の セットがベースにあり、.-prop_bp と .--prop_bp で ブレイクポイント指定できる。
  *       .-prop{property:var(--prop)} が基本で、ユーティリティクラスは .-prop:val{property:value} となる。
  *
@@ -45,7 +45,7 @@ export default {
     tokenClass: 1,
     bp: 1,
   },
-  lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1, bp: 0 },
+  lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
   ta: { prop: 'textAlign', presets: ['center', 'left', 'right'] },
   td: { prop: 'textDecoration', utils: { none: 'none' } },
   tt: { prop: 'textTransform', utils: { upper: 'uppercase', lower: 'lowercase' } },
@@ -97,7 +97,7 @@ export default {
   'max-bsz': { prop: 'maxBlockSize', token: 'sz' },
 
   // bg
-  bg: { prop: 'background', bp: 0 },
+  bg: { prop: 'background' },
   bgi: { prop: 'backgroundImage' },
   bgr: { prop: 'backgroundRepeat', presets: ['no-repeat'] },
   bgp: { prop: 'backgroundPosition', presets: ['center'] },
@@ -202,10 +202,10 @@ export default {
   pe: { prop: 'paddingInlineEnd', token: 'space', bp: 1 },
   pbs: { prop: 'paddingBlockStart', token: 'space', bp: 1 },
   pbe: { prop: 'paddingBlockEnd', token: 'space', bp: 1 },
-  pl: { prop: 'paddingLeft', token: 'space', bp: 0 },
-  pr: { prop: 'paddingRight', token: 'space', bp: 0 },
-  pt: { prop: 'paddingTop', token: 'space', bp: 0 },
-  pb: { prop: 'paddingBottom', token: 'space', bp: 0 },
+  pl: { prop: 'paddingLeft', token: 'space' },
+  pr: { prop: 'paddingRight', token: 'space' },
+  pt: { prop: 'paddingTop', token: 'space' },
+  pb: { prop: 'paddingBottom', token: 'space' },
   m: {
     prop: 'margin',
     presets: ['auto', '0'],
@@ -220,10 +220,10 @@ export default {
   me: { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', bp: 1 },
   mbs: { prop: 'marginBlockStart', token: 'space', bp: 1, presets: ['auto', '0'], tokenClass: 1 },
   mbe: { prop: 'marginBlockEnd', presets: ['auto'], token: 'space', bp: 1 },
-  ml: { prop: 'marginLeft', token: 'space', bp: 0 },
-  mr: { prop: 'marginRight', token: 'space', bp: 0 },
-  mt: { prop: 'marginTop', token: 'space', bp: 0 },
-  mb: { prop: 'marginBottom', token: 'space', bp: 0 },
+  ml: { prop: 'marginLeft', token: 'space' },
+  mr: { prop: 'marginRight', token: 'space' },
+  mt: { prop: 'marginTop', token: 'space' },
+  mb: { prop: 'marginBottom', token: 'space' },
 
   g: {
     prop: 'gap',
@@ -233,8 +233,8 @@ export default {
     tokenClass: 1,
     bp: 1,
   },
-  cg: { prop: 'columnGap', token: 'space', bp: 0 },
-  rg: { prop: 'rowGap', token: 'space', bp: 0 },
+  cg: { prop: 'columnGap', token: 'space' },
+  rg: { prop: 'rowGap', token: 'space' },
   cols: { isVar: 1, bp: 1 },
   rows: { isVar: 1, bp: 1 },
 

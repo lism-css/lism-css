@@ -19,7 +19,8 @@ describe('isFullMode', () => {
   test('デフォルトでは full preset は適用されない', async () => {
     const { PROPS } = await importConfig();
     const props = PROPS as unknown as LoosePropConfig;
-    expect(props.pl.bp).toBe(0);
+    // bp 省略 = 非レスポンシブ（bp:0 のデフォルト）。full preset 未適用を確認する
+    expect(props.pl.bp).toBeUndefined();
     expect(props.pl.tokenClass).toBeUndefined();
   });
 
