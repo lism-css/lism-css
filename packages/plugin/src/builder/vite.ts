@@ -1,7 +1,7 @@
 /**
  * 傘エントリ（#427 / #424 進行順序 4 の P3）。
  *
- * `lism-css/vite` から公開する統合エントリ:
+ * `@lism-css/plugin` から公開する統合エントリ:
  * - `lismCss(options)`        … Vite 用。config alias + 動的 CSS ビルド（P2）+ 任意で purge をまとめた `Plugin[]`。
  * - `lismCssAstro(options)`   … Astro 用。`astro:config:setup` で上記 Vite プラグインを注入し、任意で purge integration を足す。
  *
@@ -10,7 +10,7 @@
  * known に含まれないクラスは「unknown（=user 由来かもしれない）」として温存されるため、user が lism.config.js で
  * 追加した prop/トークン由来のクラスも known に入れておくことで、その未使用分まで正しく purge できる。
  *
- * NOTE: `purge/vite`・`purge/astro` 単体エクスポートは後方互換で維持する。
+ * NOTE: `purge/vite`・`purge/astro` 単体エクスポートも plugin パッケージ側で維持する。
  */
 import { fileURLToPath } from 'node:url';
 import type { Plugin } from 'vite';

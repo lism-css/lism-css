@@ -5,9 +5,9 @@
  * 返り値は生成 SCSS（`_prop-config.gen.scss` 等）として書き出され、`@use './prop-config.gen'` で読まれる SCSS 文字列。
  * パッケージ自身のビルドと Vite プラグイン（一時ディレクトリ複製）の双方がこの直列化結果を共有する。
  */
-import getMaybeTokenValue from '../lib/getMaybeTokenValue';
-import getTokenVarName from '../lib/getTokenVarName';
-import { TOKEN_SCOPE } from '../../config/defaults/token-scope';
+import getMaybeTokenValue from 'lism-css/lib/getMaybeTokenValue';
+import getTokenVarName from 'lism-css/lib/getTokenVarName';
+import { TOKEN_SCOPE } from 'lism-css/config/defaults/token-scope';
 
 type TokenValue = string | number;
 type Tokens = Record<string, unknown>;

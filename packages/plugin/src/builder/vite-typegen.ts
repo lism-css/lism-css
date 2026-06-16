@@ -20,8 +20,6 @@ import { normalizePath } from './normalize-path';
 export const TYPES_FILENAME = 'lism-env.d.ts';
 
 export interface SyncTypesOptions {
-  /** dist 成果物のルート（テスト等で source 実行する際に明示）。 */
-  distDir?: string;
   /** lism.config の明示パス。未指定時は projectRoot から探索する。 */
   configPath?: string;
   log?: (message: string) => void;
@@ -60,7 +58,6 @@ export function writeLismEnvDts(projectRoot: string, content: string | null, log
  */
 export async function syncLismEnvDts(projectRoot: string, opts: SyncTypesOptions = {}): Promise<void> {
   const { mainConfig, defaultPropKeys, defaultTraitKeys, isFullMode } = await loadBuildConfigs(projectRoot, {
-    distDir: opts.distDir,
     configPath: opts.configPath,
   });
   writeLismEnvDts(projectRoot, generateLismEnvDts(mainConfig, defaultPropKeys, defaultTraitKeys, isFullMode), opts.log);

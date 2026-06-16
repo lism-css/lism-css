@@ -3,14 +3,16 @@
  *
  * - `computeBuildConfigs`: defaults / full preset / full CSS defaults / userConfig をマージして main / full の BuildConfig を作る純粋関数。
  *   マージ順（later wins）は `config/index.ts`・`bin/cli.mjs` と一致させる（JS ランタイムと CSS 出力の乖離防止）。
- * - `loadBuildConfigs`: default-config / props-full preset / helper を **ビルド済み dist 成果物**から dynamic import し、
+ * - `loadBuildConfigs`: lism-css の default-config / props-full preset / helper と
  *   projectRoot の `lism.config.{js,mjs}` を読み込んでマージする。consumer 環境（インストール済みパッケージ）で実行される前提。
  *   user 設定は mtime をクエリに付けて import し、dev での `lism.config.js` 変更を ESM モジュールキャッシュ越しに拾えるようにする。
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { distDir as packageDistDir } from './paths';
+import defaultConfig from 'lism-css/default-config';
+import propsFull from 'lism-css/config/presets/props-full';
+import { objDeepMerge } from 'lism-css/config/helper';
 import type { BuildConfig, PropConfig } from './serialize';
 
 export type ObjDeepMerge = (origin: Record<string, unknown>, source: Record<string, unknown>) => Record<string, unknown>;
@@ -83,8 +85,6 @@ export function computeBuildConfigs({ defaultConfig, propsFull, userConfig, objD
 }
 
 export interface LoadBuildConfigsOptions {
-  /** dist 成果物のルート（既定: 本ファイルの 1 つ上 = dist/）。tsx/vitest など source 実行では明示する。 */
-  distDir?: string;
   /** lism.config の明示パス。未指定時は projectRoot から探索する。 */
   configPath?: string;
 }
@@ -93,24 +93,6 @@ export interface LoadBuildConfigsOptions {
  * projectRoot の lism.config を反映した main / full の BuildConfig を読み込む。
  */
 export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfigsOptions = {}): Promise<LoadedBuildConfigs> {
-  const distDir = opts.distDir ?? packageDistDir;
-  // dynamic import の戻り値は any のため、ここで明示的に unknown へ落として型安全に扱う。
-  const importDist = (rel: string): Promise<unknown> => import(pathToFileURL(path.join(distDir, rel)).href);
-
-  const [defaultMod, propsFullMod, helperMod] = (await Promise.all([
-    importDist('config/default-config.js'),
-    importDist('config/presets/props-full.js'),
-    importDist('config/helper.js'),
-  ])) as [{ default?: BuildConfig }, { default?: Record<string, PropConfig> }, { objDeepMerge?: ObjDeepMerge }];
-
-  const defaultConfig = defaultMod.default;
-  const propsFull = propsFullMod.default;
-  const objDeepMerge = helperMod.objDeepMerge;
-  if (!defaultConfig || !propsFull || !objDeepMerge) {
-    // 空のまま進めると「full ではない full.css」が黙って生成されるため、明示的にエラーにする。
-    throw new Error(`[lism-css] config 成果物の読み込みに失敗しました（dist: ${distDir}）。lism-css のビルドが必要です。`);
-  }
-
   const userConfigPath = findUserConfigPath(projectRoot, opts.configPath);
   let userConfig: Record<string, unknown> = {};
   if (userConfigPath) {
@@ -120,7 +102,12 @@ export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfi
     userConfig = userMod.default ?? {};
   }
 
-  const { mainConfig, fullConfig, isFullMode } = computeBuildConfigs({ defaultConfig, propsFull, userConfig, objDeepMerge });
+  const { mainConfig, fullConfig, isFullMode } = computeBuildConfigs({
+    defaultConfig: defaultConfig as unknown as BuildConfig,
+    propsFull: propsFull as Record<string, PropConfig>,
+    userConfig,
+    objDeepMerge,
+  });
   return {
     mainConfig,
     fullConfig,

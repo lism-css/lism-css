@@ -5,7 +5,7 @@ import expressiveCode from 'astro-expressive-code';
 import remarkDirective from 'remark-directive';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCssAstro } from '@lism-css/plugin';
 import { remarkDirectiveHandler } from './src/lib/remark-directive.mjs';
 import { remarkLinkCard } from './src/lib/remark-link-card.mjs';
 import { remarkWikiLink } from './src/lib/remark-wiki-link.mjs';

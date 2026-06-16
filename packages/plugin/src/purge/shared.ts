@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { extractKnownLismSelectors, type KnownSelectorSet } from './core';
 import type { KnownOption } from './options';
 
@@ -12,7 +13,7 @@ export const LISM_CSS_SIGNATURE = /\.(?:-[a-z]|(?:l|c|a|is|has|set|u)--)/;
 // ユーザーが main.css / full.css のどちらを読み込んでいても未使用クラスを取りこぼさず purge 対象にできる。
 export function loadDefaultKnownSelectors(): KnownSelectorSet | undefined {
   try {
-    const css = readFileSync(new URL(/* @vite-ignore */ '../css/full.css', import.meta.url), 'utf8');
+    const css = readFileSync(fileURLToPath(import.meta.resolve('lism-css/full.css')), 'utf8');
     return extractKnownLismSelectors(css);
   } catch {
     return undefined;

@@ -203,12 +203,16 @@ Name resolution is case-insensitive and ignores hyphens and underscores, so `Nav
 
 ## Strip unused CSS (purge)
 
-A purge plugin that removes unused Lism CSS classes from your production build is bundled with the `lism-css` package. If you are using the `lism-css/vite` integrated plugin (`lismCss()` / `lismCssAstro()`), just pass the `purge: true` option to enable it.
+The purge feature that removes unused Lism CSS classes from your production build is provided by `@lism-css/plugin`. For Vite / Astro projects, install `@lism-css/plugin` and pass `purge: true` to the integrated plugin (`lismCss()` / `lismCssAstro()`).
+
+```bash frame="none"
+pnpm add -D @lism-css/plugin
+```
 
 ```js
 // astro.config.mjs example
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCssAstro } from '@lism-css/plugin';
 
 export default defineConfig({
   integrations: [lismCssAstro({ purge: true })],
@@ -218,7 +222,7 @@ export default defineConfig({
 ```js
 // vite.config.js example
 import { defineConfig } from 'vite';
-import { lismCss } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin';
 
 export default defineConfig({
   plugins: [lismCss({ purge: true })],
@@ -228,7 +232,7 @@ export default defineConfig({
 You can also pass an object like `purge: { report: true }` to configure additional purge plugin options.
 
 :::info
-The standalone plugins (`lismPurgeAstro` from `lism-css/purge/astro` / `lismPurge` from `lism-css/purge/vite`) are still available for backward compatibility.
+The standalone plugins (`lismPurgeAstro` from `@lism-css/plugin/purge/astro` / `lismPurge` from `@lism-css/plugin/purge/vite`) are also available when you want to register purge directly.
 :::
 
 See [CSS Purge](/en/docs/purge/) for the full setup, options, and safelist usage.

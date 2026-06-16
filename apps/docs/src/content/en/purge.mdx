@@ -3,17 +3,21 @@ title: 'CSS Purge'
 description: 'Set up the purge plugin to strip unused Lism CSS classes at build time and ship a leaner production CSS.'
 ---
 
-The Lism CSS purge feature scans your build output and **keeps only the Lism CSS classes you actually use**. It ships with the `lism-css` package, so no extra install is required.
+The Lism CSS purge feature scans your build output and **keeps only the Lism CSS classes you actually use**. Build integrations are provided by the `@lism-css/plugin` package.
+
+```bash frame="none"
+pnpm add -D @lism-css/plugin
+```
 
 
 ## Recommended setup (via the integrated plugin)
 
-If you are using the `lism-css/vite` integrated plugin, just pass `purge: true` to enable it.
+If you are using the `@lism-css/plugin` integrated plugin, just pass `purge: true` to enable it.
 
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCssAstro } from '@lism-css/plugin';
 
 export default defineConfig({
   integrations: [lismCssAstro({ purge: true })],
@@ -23,7 +27,7 @@ export default defineConfig({
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismCss } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin';
 
 export default defineConfig({
   plugins: [lismCss({ purge: true })],
@@ -39,7 +43,7 @@ lismCssAstro({ purge: { report: true } })
 When `known` (the catalog of Lism selectors that purge may remove) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that value is respected.
 
 :::info
-You can also use the standalone plugins directly: `lismPurge` from `lism-css/purge/vite` and `lismPurgeAstro` from `lism-css/purge/astro`.
+You can also use the standalone plugins directly: `lismPurge` from `@lism-css/plugin/purge/vite` and `lismPurgeAstro` from `@lism-css/plugin/purge/astro`.
 :::
 
 
@@ -61,7 +65,7 @@ You can also register the standalone plugin directly without the integrated plug
 <PreviewCode slot="tab" label="vite.config.js">
 ```js
 import { defineConfig } from 'vite';
-import { lismPurge } from 'lism-css/purge/vite';
+import { lismPurge } from '@lism-css/plugin/purge/vite';
 
 export default defineConfig({
   plugins: [lismPurge({ report: true })],
@@ -71,7 +75,7 @@ export default defineConfig({
 <PreviewCode slot="tab" label="astro.config.mjs">
 ```js
 import { defineConfig } from 'astro/config';
-import { lismPurgeAstro } from 'lism-css/purge/astro';
+import { lismPurgeAstro } from '@lism-css/plugin/purge/astro';
 
 export default defineConfig({
   integrations: [lismPurgeAstro({ report: true })],

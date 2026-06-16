@@ -2,7 +2,7 @@
  * `lism-css/config.js` を user の lism.config へ alias する Vite プラグイン。
  *
  * これにより JS ランタイム（`config/index.ts` が import する `lism-css/config.js`）が user 設定を読む。
- * ユーザー向けには `lism-css/vite` の統合APIから利用する。
+ * ユーザー向けには `@lism-css/plugin` の統合APIから利用する。
  */
 import path from 'node:path';
 import type { Plugin } from 'vite';

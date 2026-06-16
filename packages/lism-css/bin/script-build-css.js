@@ -2,7 +2,7 @@
 // 同梱デフォルトの prop-config を更新しつつ src/scss → dist/css をコンパイルする。
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { writePropConfigFiles, compileCssTree, computeBuildConfigs } from '../src/builder/index.ts';
+import { writePropConfigFiles, compileCssTree, computeBuildConfigs } from '../../plugin/src/builder/index.ts';
 import { CONFIG } from '../config/index.ts';
 import { objDeepMerge } from '../config/helper.ts';
 import propsFull from '../config/presets/props-full.ts';
