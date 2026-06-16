@@ -32,18 +32,18 @@ export default {
   ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
   fs: { prop: 'fontStyle', presets: ['italic'], shorthands: { i: 'italic' } },
   lh: {
-    prop: 'lineHeight', // 任意値（lh="1.7" 等）はインライン line-height で出力
-    varName: 'hl', // utility / BP クラスの出力先を --hl にエイリアス（line-height は --hl から算出）
+    prop: '--hl',
+    isVar: 1,
     token: 'hl',
     tokenClass: 1,
-    presets: ['1'], // lh="1" を utility クラス化する判定用（値は utils で 0px に上書き）
     utils: { '1': '0px' },
   },
   hl: {
+    prop: '--hl',
     isVar: 1,
     token: 'hl',
-    tokenClass: 0,
-    bp: 0,
+    tokenClass: 1,
+    bp: 1,
   },
   lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1, bp: 0 },
   ta: { prop: 'textAlign', presets: ['center', 'left', 'right'] },

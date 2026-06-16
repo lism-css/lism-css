@@ -32,8 +32,6 @@ interface PropConfig {
   utils?: Record<string, string>;
   shorthands?: Record<string, string>;
   isVar?: number;
-  // utility / BP クラスの SCSS 出力先変数のエイリアス（serialize 専用。component 解析では未使用）。
-  varName?: string;
   // 0 / 1（有効BPすべて）/ ['sm','md'] 等（出力する BP の明示リスト）
   bp?: 0 | 1 | readonly ('xs' | 'sm' | 'md' | 'lg' | 'xl')[];
   alwaysVar?: number;
@@ -267,11 +265,13 @@ export class LismPropsData {
   setAttrs(propKey: string, val: unknown, propConfig: PropConfig = {}, bpKey: string = ''): void {
     if (null == val || '' === val || false === val) return;
 
-    let styleName = `--${propKey}`;
+    const baseStyleName =
+      propConfig.isVar && typeof propConfig.prop === 'string' && propConfig.prop.startsWith('--') ? propConfig.prop : `--${propKey}`;
+    let styleName = baseStyleName;
     let utilName = `-${String(propConfig.utilKey || propKey)}`;
 
     if (bpKey) {
-      styleName = `--${propKey}_${bpKey}`;
+      styleName = `${baseStyleName}_${bpKey}`;
       utilName += `_${bpKey}`;
     }
 
@@ -312,6 +312,14 @@ export class LismPropsData {
       }
     }
 
+    // lh は hl の互換エイリアスだが、任意値だけは従来どおり CSS line-height として扱う。
+    if (propKey === 'lh' && !bpKey) {
+      if (typeof val === 'string' || typeof val === 'number') {
+        this.addStyle('lineHeight', val);
+        return;
+      }
+    }
+
     // .-prop: だけ出力するケース
     if (true === val) {
       this.addProp(utilName);
@@ -335,7 +343,7 @@ export class LismPropsData {
     // baseスタイルの追加処理
     if (!bpKey) {
       if (isVar) {
-        this.addStyle(`--${propKey}`, finalVal);
+        this.addStyle(baseStyleName, finalVal);
         return;
       } else if (!bp && !alwaysVar) {
         // インラインでスタイル出力するだけ

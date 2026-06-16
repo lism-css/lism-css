@@ -191,6 +191,39 @@ describe('getLismProps', () => {
       const result = getLismProps({ fz: 'l' });
       expect(result.className).toContain('-fz:l');
     });
+
+    test('hl: トークン値は half-leading のユーティリティクラスになる', () => {
+      const result = getLismProps({ hl: 's' });
+      expect(result.className).toContain('-hl:s');
+      expect(result.style?.['--hl']).toBeUndefined();
+    });
+
+    test('hl: ブレイクポイント指定は --hl_{bp} 変数へ出力される', () => {
+      const result = getLismProps({ hl: { sm: 's' } });
+      expect(result.className).toContain('-hl_sm');
+      expect(result.style?.['--hl_sm']).toBe('var(--hl--s)');
+    });
+
+    test('lh: トークン値は half-leading の互換ユーティリティクラスになる', () => {
+      const result = getLismProps({ lh: 's' });
+      expect(result.className).toContain('-lh:s');
+      expect(result.style?.['--hl']).toBeUndefined();
+      expect(result.style?.lineHeight).toBeUndefined();
+    });
+
+    test('lh: 1 は half-leading なしの互換ユーティリティクラスになる', () => {
+      const result = getLismProps({ lh: '1' });
+      expect(result.className).toContain('-lh:1');
+      expect(result.style?.['--hl']).toBeUndefined();
+      expect(result.style?.lineHeight).toBeUndefined();
+    });
+
+    test('lh: 任意値は従来互換で line-height へ直接出力される', () => {
+      const result = getLismProps({ lh: '1.7' });
+      expect(result.className ?? '').not.toContain('-lh');
+      expect(result.style?.lineHeight).toBe('1.7');
+      expect(result.style?.['--hl']).toBeUndefined();
+    });
   });
 
   describe('Lism Props処理 - : プレフィックス', () => {

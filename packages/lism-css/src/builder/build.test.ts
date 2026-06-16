@@ -40,6 +40,16 @@ describe('serializePropConfig', () => {
     });
     expect(scss).toContain("bp: ('sm',)");
   });
+
+  test('isVar は prop 指定があればその custom property を使う', () => {
+    const scss = serializePropConfig({
+      tokens: {},
+      props: { lh: { prop: '--hl', isVar: 1, utils: { '1': '0px' } } },
+    });
+    expect(scss).toContain("prop: '--hl'");
+    expect(scss).toContain('isVar: 1');
+    expect(scss).toContain("'1': '0px'");
+  });
 });
 
 describe('tokens フラットマップのユーティリティ生成', () => {
