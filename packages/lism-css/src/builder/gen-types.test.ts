@@ -118,6 +118,39 @@ describe('generateLismEnvDts', () => {
     ).toBeNull();
     expect(generateLismEnvDts({ breakpoints: undefined, props: {} }, DEFAULT_PROP_KEYS)).toBeNull();
   });
+
+  test('isFullMode: true なら FullModeRegistry 拡張を生成する（追加キーが他に無くても null にしない）', () => {
+    const dts = generateLismEnvDts(
+      { breakpoints: { sm: '480px', md: '800px', lg: '1120px' }, props: {} },
+      DEFAULT_PROP_KEYS,
+      DEFAULT_TRAIT_KEYS,
+      true
+    );
+    expect(dts).not.toBeNull();
+    expect(dts).toContain('interface FullModeRegistry');
+    expect(dts).toContain('enabled: true;');
+    expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
+  });
+
+  test('isFullMode: false（既定）では FullModeRegistry 拡張を含めない', () => {
+    const dts = generateLismEnvDts({ breakpoints: { xs: '360px' }, props: {} }, DEFAULT_PROP_KEYS);
+    expect(dts).not.toBeNull();
+    expect(dts).not.toContain('FullModeRegistry');
+  });
+
+  test('isFullMode と追加 breakpoints / props を同じ declare module に並べて生成する', () => {
+    const dts = generateLismEnvDts(
+      { breakpoints: { xs: '360px' }, props: { filter: { prop: 'filter' } } },
+      DEFAULT_PROP_KEYS,
+      DEFAULT_TRAIT_KEYS,
+      true
+    );
+    expect(dts).not.toBeNull();
+    expect(dts).toContain('interface BreakpointRegistry');
+    expect(dts).toContain('interface CustomPropRegistry');
+    expect(dts).toContain('interface FullModeRegistry');
+    expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
+  });
 });
 
 describe('writeLismEnvDts', () => {
