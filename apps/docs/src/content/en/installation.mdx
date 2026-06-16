@@ -203,7 +203,7 @@ Name resolution is case-insensitive and ignores hyphens and underscores, so `Nav
 
 ## Strip unused CSS (purge)
 
-The purge feature that removes unused Lism CSS classes from your production build is provided by `@lism-css/plugin`. For Vite / Astro projects, install `@lism-css/plugin` and pass `purge: true` to the integrated plugin (`lismCss()` / `lismCssAstro()`).
+The purge feature that removes unused Lism CSS classes from your production build is provided by `@lism-css/plugin`. For Vite / Astro projects, install `@lism-css/plugin` and pass `purge: true` to `lismCss()` from the matching entry (`@lism-css/plugin/vite` or `@lism-css/plugin/astro`).
 
 ```bash frame="none"
 pnpm add -D @lism-css/plugin
@@ -212,17 +212,17 @@ pnpm add -D @lism-css/plugin
 ```js
 // astro.config.mjs example
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro({ purge: true })],
+  integrations: [lismCss({ purge: true })],
 });
 ```
 
 ```js
 // vite.config.js example
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss({ purge: true })],

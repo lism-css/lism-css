@@ -233,17 +233,17 @@ pnpm add -D @lism-css/plugin
 <PreviewCode slot="tab" label="astro.config.mjs">
 ```js
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro()],
+  integrations: [lismCss()],
 });
 ```
 </PreviewCode>
 <PreviewCode slot="tab" label="vite.config.js">
 ```js
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss()],
@@ -255,7 +255,7 @@ export default defineConfig({
 The plugin auto-detects `lism.config.js` then `lism.config.mjs` from the project root. To use a file at a different location, specify the path via the `configPath` option:
 
 ```js
-integrations: [lismCssAstro({ configPath: './config/lism.config.js' })],
+integrations: [lismCss({ configPath: './config/lism.config.js' })],
 ```
 
 ### Format
@@ -365,7 +365,7 @@ Adding props in `lism.config.js` alone does not produce styles for the correspon
 
 ### Automatic reflection when using the Vite / Astro plugin
 
-If you have registered the `@lism-css/plugin` integrated plugin (`lismCss()` / `lismCssAstro()`), any additions or changes to `props` / `tokens` in `lism.config.js` are **automatically reflected in the CSS, both in the dev server and in production builds**. No manual CLI build is needed.
+If you have registered the `@lism-css/plugin` integrated plugin (`lismCss()` from `@lism-css/plugin/vite` or `@lism-css/plugin/astro`), any additions or changes to `props` / `tokens` in `lism.config.js` are **automatically reflected in the CSS, both in the dev server and in production builds**. No manual CLI build is needed.
 
 When the dev server is running, editing `lism.config.js` triggers HMR to regenerate the CSS.
 

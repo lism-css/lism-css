@@ -233,17 +233,17 @@ pnpm add -D @lism-css/plugin
 <PreviewCode slot="tab" label="astro.config.mjs">
 ```js
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro()],
+  integrations: [lismCss()],
 });
 ```
 </PreviewCode>
 <PreviewCode slot="tab" label="vite.config.js">
 ```js
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss()],
@@ -255,7 +255,7 @@ export default defineConfig({
 プラグインはプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所のファイルを使う場合は `configPath` オプションでパスを指定できます。
 
 ```js
-integrations: [lismCssAstro({ configPath: './config/lism.config.js' })],
+integrations: [lismCss({ configPath: './config/lism.config.js' })],
 ```
 
 ### フォーマット
@@ -365,7 +365,7 @@ export default {
 
 ### Vite / Astro プラグイン使用時は自動反映される
 
-`@lism-css/plugin` の統合プラグイン（`lismCss()` / `lismCssAstro()`）を登録している場合、`lism.config.js` の `props` / `tokens` の追加・変更は **dev サーバー・ビルドの両方で CSS に自動反映**されます。手動での CLI ビルドは不要です。
+`@lism-css/plugin/vite` / `@lism-css/plugin/astro` の統合プラグイン（各エントリの `lismCss()`）を登録している場合、`lism.config.js` の `props` / `tokens` の追加・変更は **dev サーバー・ビルドの両方で CSS に自動反映**されます。手動での CLI ビルドは不要です。
 
 dev サーバー起動中に `lism.config.js` を変更すると HMR で CSS が再生成されます。
 

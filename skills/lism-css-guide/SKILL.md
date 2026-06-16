@@ -52,7 +52,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ### CSS Purge（未使用CSSの削除）
 
-本番ビルド時に未使用の Lism CSS クラスを取り除いて出力 CSS を軽量化できます。`@lism-css/plugin` の統合プラグインを使っている場合は `lismCss({ purge: true })` / `lismCssAstro({ purge: true })` で有効化するのが簡単です。統合プラグインを使わない場合は単体プラグイン `@lism-css/plugin/purge/vite`（Vite）/ `@lism-css/plugin/purge/astro`（Astro）も利用できます。詳細は https://lism-css.com/docs/purge/ を参照。
+本番ビルド時に未使用の Lism CSS クラスを取り除いて出力 CSS を軽量化できます。`@lism-css/plugin/vite` / `@lism-css/plugin/astro` の統合プラグインを使っている場合は、各エントリの `lismCss({ purge: true })` で有効化するのが簡単です。統合プラグインを使わない場合は単体プラグイン `@lism-css/plugin/purge/vite`（Vite）/ `@lism-css/plugin/purge/astro`（Astro）も利用できます。詳細は https://lism-css.com/docs/purge/ を参照。
 
 
 ## 実装ルール

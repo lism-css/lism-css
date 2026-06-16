@@ -203,7 +203,7 @@ npx lism-cli ui add --all
 
 ## 未使用CSSの削除（パージ）
 
-本番ビルド時に未使用の Lism CSS クラスを取り除き、CSS ファイルを軽量化するパージ機能は `@lism-css/plugin` で提供しています。Vite / Astro で使う場合は `@lism-css/plugin` を追加し、統合プラグイン（`lismCss()` / `lismCssAstro()`）に `purge: true` オプションを渡します。
+本番ビルド時に未使用の Lism CSS クラスを取り除き、CSS ファイルを軽量化するパージ機能は `@lism-css/plugin` で提供しています。Vite / Astro で使う場合は `@lism-css/plugin` を追加し、対象エントリ（`@lism-css/plugin/vite` または `@lism-css/plugin/astro`）の `lismCss()` に `purge: true` オプションを渡します。
 
 ```bash frame="none"
 pnpm add -D @lism-css/plugin
@@ -212,17 +212,17 @@ pnpm add -D @lism-css/plugin
 ```js
 // astro.config.mjs の例
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro({ purge: true })],
+  integrations: [lismCss({ purge: true })],
 });
 ```
 
 ```js
 // vite.config.js の例
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss({ purge: true })],

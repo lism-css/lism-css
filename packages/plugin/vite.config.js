@@ -6,6 +6,7 @@ const entries = {
   index: resolve(__dirname, 'src/index.ts'),
   'builder/index': resolve(__dirname, 'src/builder/index.ts'),
   'builder/vite': resolve(__dirname, 'src/builder/vite.ts'),
+  'builder/astro': resolve(__dirname, 'src/builder/astro.ts'),
   'purge/vite': resolve(__dirname, 'src/purge/vite.ts'),
   'purge/astro': resolve(__dirname, 'src/purge/astro.ts'),
 };
@@ -31,18 +32,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: [
-        /^node:/,
-        'lism-css',
-        /^lism-css\//,
-        'sass',
-        'postcss',
-        'autoprefixer',
-        'cssnano',
-        'glob',
-        'vite',
-        'astro',
-      ],
+      external: [/^node:/, 'lism-css', /^lism-css\//, 'sass', 'postcss', 'autoprefixer', 'cssnano', 'glob', 'vite', 'astro'],
       output: {
         dir: 'dist',
         preserveModules: true,

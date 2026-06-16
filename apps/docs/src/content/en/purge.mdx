@@ -17,17 +17,17 @@ If you are using the `@lism-css/plugin` integrated plugin, just pass `purge: tru
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro({ purge: true })],
+  integrations: [lismCss({ purge: true })],
 });
 ```
 
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss({ purge: true })],
@@ -37,7 +37,7 @@ export default defineConfig({
 You can also pass an object to configure individual purge plugin options:
 
 ```js
-lismCssAstro({ purge: { report: true } })
+lismCss({ purge: { report: true } })
 ```
 
 When `known` (the catalog of Lism selectors that purge may remove) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that value is respected.

@@ -17,17 +17,17 @@ pnpm add -D @lism-css/plugin
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro({ purge: true })],
+  integrations: [lismCss({ purge: true })],
 });
 ```
 
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss({ purge: true })],
@@ -37,7 +37,7 @@ export default defineConfig({
 オブジェクトで渡すと、purge プラグインの各オプションも指定できます。
 
 ```js
-lismCssAstro({ purge: { report: true } })
+lismCss({ purge: { report: true } })
 ```
 
 `known`（purge が削除してよい Lism セレクタのカタログ）を**指定しない**場合、ビルド開始時に**config 反映済みの `full.css`** から自動構築されます。これにより、`lism.config.js` で追加した prop / トークン由来クラスの未使用分まで正しく purge されます。`known` を明示した場合はそれを尊重します。

@@ -100,7 +100,7 @@ SCSS を直接読み込む構成では、コンパイル時に `lism-css` 本体
 
 プロジェクトのルート直下に `lism.config.js`（または `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
 
-### Vite プラグインの登録（推奨セットアップ）
+### Vite / Astro プラグインの登録（推奨セットアップ）
 
 `lism.config.js` を読み込ませるには、Vite（または Astro）の設定ファイルで `@lism-css/plugin` の統合プラグインを登録します。**未登録の場合、ファイルを置いてもデフォルト設定のまま**になります。
 
@@ -111,7 +111,7 @@ pnpm add -D @lism-css/plugin
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss()],
@@ -121,10 +121,10 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro()],
+  integrations: [lismCss()],
 });
 ```
 
@@ -140,7 +140,7 @@ export default defineConfig({
 // Vite
 plugins: [lismCss({ configPath: './config/lism.config.js' })],
 // Astro
-integrations: [lismCssAstro({ configPath: './config/lism.config.js' })],
+integrations: [lismCss({ configPath: './config/lism.config.js' })],
 ```
 
 ### ブレイクポイントの有効化（xs / xl）

@@ -4,7 +4,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, test, vi } from 'vitest';
 import type { Plugin } from 'vite';
-import { lismCss, lismCssAstro } from './vite';
+import { lismCss } from './vite';
+import { lismCss as lismCssForAstro } from './astro';
 import { lismConfigAlias } from './vite-config-alias';
 
 type ConfigReturn = { optimizeDeps: { exclude: string[] }; resolve?: { alias: Record<string, string> } };
@@ -96,14 +97,14 @@ describe('lismConfigAlias', () => {
   });
 });
 
-describe('lismCssAstro (umbrella / astro)', () => {
+describe('lismCss (integrated / astro)', () => {
   test('purge なし: integration 1つ（name: lism-css）', () => {
-    const ints = lismCssAstro();
+    const ints = lismCssForAstro();
     expect(ints).toHaveLength(1);
     expect(ints[0].name).toBe('lism-css');
   });
 
   test('purge:true: lism-css + purge integration', () => {
-    expect(lismCssAstro({ purge: true }).map((i) => i.name)).toEqual(['lism-css', 'lism-css:purge']);
+    expect(lismCssForAstro({ purge: true }).map((i) => i.name)).toEqual(['lism-css', 'lism-css:purge']);
   });
 });

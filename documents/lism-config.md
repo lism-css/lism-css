@@ -83,7 +83,7 @@ export default {
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [...lismCss()],
@@ -93,14 +93,14 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from '@lism-css/plugin';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [...lismCssAstro()],
+  integrations: [...lismCss()],
 });
 ```
 
-purgeを使わない場合は`lismCss()`/`lismCssAstro()`を引数なしで使えばよい。`purge:true`は未使用Lismクラスの削除まで行いたいときだけ指定する。
+purgeを使わない場合は各エントリの`lismCss()`を引数なしで使えばよい。`purge:true`は未使用Lismクラスの削除まで行いたいときだけ指定する。
 
 ```js
 lismCss(); // config反映、型生成、動的CSSビルド
@@ -150,4 +150,4 @@ pnpm exec lism-css build
 - 値に`'-'`を指定したキーはカタログ登録のみで`:root`宣言を出力しない（実値は手書きSCSS側。主に`color`/`palette`で使う）。`'-'`以外の値を与えれば、その値が`:root`へ出力される。
 - `traits`はclass出力の追加であり、対応するスタイルは別途必要。
 - `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。
-- 統合入口は`@lism-css/plugin`の`lismCss()`/`lismCssAstro()`。
+- 統合入口は`@lism-css/plugin/vite`/`@lism-css/plugin/astro`の`lismCss()`。
