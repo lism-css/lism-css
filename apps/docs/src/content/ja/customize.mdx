@@ -50,8 +50,22 @@ export default {
 :::warning
 - `isFullMode` は、`full.css`（または `isFullMode` の状態での CLI 再ビルド）でスタイルが読み込まれていることが前提です。デフォルトの `main.css` のまま有効にすると、出力されたクラスに対応するスタイルが存在しない状態になります。
 - `isFullMode` はビルド時の設定です。ランタイムの `window._LISM_CSS_CONFIG_` では切り替えられません。
-- TypeScript の型は full 設定に追従していないため、`isFullMode` でも一部の指定（`pl` へのブレイクポイント配列指定など）は型エラーになります（ランタイムでは動作します）。
 :::
+
+型・補完も `isFullMode` に追従させられます。`lism-css/vite` の統合プラグインを使っている場合は、`isFullMode: true` のとき `lism-env.d.ts` が自動生成され、`pl` などへのブレイクポイント指定（配列・オブジェクト記法）も型エラーになりません。手書き拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
+
+統合プラグインを使わない場合は、プロジェクト直下の型定義ファイル（例: `src/lism-env.d.ts`）で次のように拡張してください。
+
+```ts
+// src/lism-env.d.ts
+import 'lism-css';
+
+declare module 'lism-css' {
+  interface FullModeRegistry {
+    enabled: true; // キー名は任意。1つでもキーがあれば full 版の型に切り替わる
+  }
+}
+```
 
 なお、[後述の CLI ビルド](#lism-css-のcliコマンドでcssビルドする)を `isFullMode` が有効の状態で実行すると、`main.css` にも full 用の設定が適用された状態でビルドされます。
 

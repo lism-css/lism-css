@@ -59,11 +59,11 @@ export function writeLismEnvDts(projectRoot: string, content: string | null, log
  * projectRoot の lism.config を読み、breakpoints / props / traits から `.d.ts` を生成 / 更新 / 削除する。
  */
 export async function syncLismEnvDts(projectRoot: string, opts: SyncTypesOptions = {}): Promise<void> {
-  const { mainConfig, defaultPropKeys, defaultTraitKeys } = await loadBuildConfigs(projectRoot, {
+  const { mainConfig, defaultPropKeys, defaultTraitKeys, isFullMode } = await loadBuildConfigs(projectRoot, {
     distDir: opts.distDir,
     configPath: opts.configPath,
   });
-  writeLismEnvDts(projectRoot, generateLismEnvDts(mainConfig, defaultPropKeys, defaultTraitKeys), opts.log);
+  writeLismEnvDts(projectRoot, generateLismEnvDts(mainConfig, defaultPropKeys, defaultTraitKeys, isFullMode), opts.log);
 }
 
 export interface LismTypegenOptions {

@@ -1,6 +1,7 @@
 import { TOKENS, PROPS } from '../../../config/index';
 import type { WithArbitraryString, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 import type { MakeResponsive } from './ResponsiveProps';
+import type { FullModeRegistry } from './FullModeRegistry';
 
 type PropsConfig = typeof PROPS;
 type TokensConfig = typeof TOKENS;
@@ -115,11 +116,58 @@ export type NonResponsivePropValueTypes = {
   [K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
 };
 
+/** defaults 由来の Props 型（full モード未適用時のデフォルト） */
+type DefaultPropValueTypes = MakeResponsive<ResponsivePropValueTypes> & NonResponsivePropValueTypes;
+
+// ============================================================
+// full モード（isFullMode）の型対応
+// ============================================================
+//
+// lism.config.js の isFullMode では、isVar 系を除く全 props が responsive 化する
+// （config/presets/props-full.ts のランタイム挙動）。これを型側にも反映する。
+// 静的型は .js の値を読めないため、FullModeRegistry の module augmentation で opt-in する。
+
+/**
+ * isVar 系（state 変数扱い・full preset の対象外）の prop かを判定。
+ * isVar 未設定の prop は `ExtractPropertyValue` が never を返す。`1 extends X` の向きで
+ * 判定することで、X が never でも 1 でもない（= false）になり、tuple ラップ時の
+ * `[never] extends [1]` が true に化ける罠を避ける。
+ */
+type IsVarProp<T> = 1 extends ExtractPropertyValue<T, 'isVar'> ? true : false;
+
+/**
+ * full モードでレスポンシブになる prop のキー。
+ * - isVar 系以外: full preset が bp:1 にするため常にレスポンシブ
+ * - isVar 系: props-full.ts の対象外なのでデフォルトの bp 判定のまま
+ */
+type FullPropsWithBreakpoint = {
+  [K in AllPropKeys]: IsVarProp<PropsConfig[K]> extends true ? (HasBreakpointSupport<PropsConfig[K]> extends true ? K : never) : K;
+}[AllPropKeys];
+
+type FullPropsWithoutBreakpoint = Exclude<AllPropKeys, FullPropsWithBreakpoint>;
+
+/** full モード適用時の Props 型（isVar 系を除く全 props がレスポンシブ） */
+type FullPropValueTypes = MakeResponsive<{
+  [K in FullPropsWithBreakpoint]?: PropValueType<PropsConfig[K]>;
+}> & {
+  [K in FullPropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
+};
+
+/**
+ * FullModeRegistry が module augmentation で拡張されている（= キーが1つ以上ある）か。
+ * 空 interface の `keyof` は never。`[never] extends [never]` の tuple ラップで
+ * naked never の分配（条件型が never に潰れる）を回避している（HasBreakpointSupport と同手法）。
+ */
+type IsFullModeAdvertised = [keyof FullModeRegistry] extends [never] ? false : true;
+
 /**
  * PROPS 設定から生成される Props 型（レスポンシブ対応含む）
  * - bp が有効なプロパティ: レスポンシブ対応（配列・オブジェクト形式可）
  * - bp なしのプロパティ: 単一値のみ
  * - presets/utils/token なしのプロパティ: string | number（フォールバック）
+ *
+ * {@link FullModeRegistry} が拡張されている場合は full 版に切り替わり、isVar 系を除く
+ * 全 props がレスポンシブになる（lism.config.js の isFullMode に型を追従させるための opt-in）。
  *
  * @example
  * ```ts
@@ -133,4 +181,4 @@ export type NonResponsivePropValueTypes = {
  * bg?: Responsive<string | number>
  * ```
  */
-export type PropValueTypes = MakeResponsive<ResponsivePropValueTypes> & NonResponsivePropValueTypes;
+export type PropValueTypes = IsFullModeAdvertised extends true ? FullPropValueTypes : DefaultPropValueTypes;

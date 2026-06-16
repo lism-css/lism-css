@@ -50,8 +50,22 @@ With `isFullMode: true`, the full preset is also applied to the component props 
 :::warning
 - `isFullMode` assumes the corresponding styles are loaded via `full.css` (or a CLI rebuild with `isFullMode` enabled). If you keep the default `main.css`, the output classes will have no matching styles.
 - `isFullMode` is a build-time setting. It cannot be toggled at runtime via `window._LISM_CSS_CONFIG_`.
-- TypeScript types do not follow the full configuration, so some usages (such as breakpoint arrays for `pl`) cause type errors even with `isFullMode` (they still work at runtime).
 :::
+
+Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `lism-css/vite`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `pl` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
+
+If you do not use the integrated plugin, extend the type in a type definition file at your project root (e.g. `src/lism-env.d.ts`) like this:
+
+```ts
+// src/lism-env.d.ts
+import 'lism-css';
+
+declare module 'lism-css' {
+  interface FullModeRegistry {
+    enabled: true; // The key name is arbitrary; any single key switches to the full type variant.
+  }
+}
+```
 
 Note that running the [CLI build described below](#build-css-using-the-lism-css-cli-command) with `isFullMode` enabled also applies the full preset to `main.css`.
 

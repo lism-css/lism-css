@@ -1,10 +1,11 @@
 /**
- * lism.config.js の breakpoints / props から module augmentation の `.d.ts` を生成する純粋関数（#427 / P4-P5）。
+ * lism.config.js の breakpoints / props / traits / isFullMode から module augmentation の `.d.ts` を生成する純粋関数（#427 / P4-P5）。
  *
  * 型のデフォルト広告は sm/md/lg（`lib/types/ResponsiveProps.ts` の `BreakpointRegistry`）。
  * config で xs/xl にサイズ（≠0）を与えて有効化した分を、プロジェクト直下の `.d.ts` で
  * `declare module 'lism-css'` 拡張して型側にも解禁する。これにより #428 の手書き augmentation を不要にする。
- * さらに、lism.config.js で追加された props / traits は `CustomPropRegistry` / `CustomTraitRegistry` 拡張として並べて出力する。
+ * さらに、lism.config.js で追加された props / traits は `CustomPropRegistry` / `CustomTraitRegistry` 拡張として並べて出力し、
+ * `isFullMode: true` のときは `FullModeRegistry` 拡張で型を full 版に切り替える（#425）。
  *
  * 副作用（ファイル書き出し）は `vite-typegen.ts` 側に分離し、ここは入力 → 文字列の純粋変換に限定する。
  */
@@ -88,19 +89,37 @@ ${lines}
 }
 
 /**
- * breakpoints / props / traits から `.d.ts` の内容を生成する。追加解禁キーが無ければ `null`（= ファイル不要）を返す。
+ * isFullMode 時は FullModeRegistry を拡張し、型側でも full 版（isVar 系を除く全 props が responsive）に切り替える。
+ * キー名・値は任意（PropValueTypes 側は `keyof` の有無だけを見る）。
+ */
+function generateFullModeBlock(isFullMode: boolean): string | null {
+  if (!isFullMode) return null;
+  return `  interface FullModeRegistry {
+    enabled: true;
+  }`;
+}
+
+/**
+ * breakpoints / props / traits / isFullMode から `.d.ts` の内容を生成する。
+ * 追加解禁キーも isFullMode も無ければ `null`（= ファイル不要）を返す。
  */
 export function generateLismEnvDts(
   mainConfig: Pick<BuildConfig, 'breakpoints' | 'props' | 'traits'>,
   defaultPropKeys: Iterable<string>,
-  defaultTraitKeys: Iterable<string> = []
+  defaultTraitKeys: Iterable<string> = [],
+  isFullMode = false
 ): string | null {
   const bpKeys = extraAdvertisedBpKeys(mainConfig.breakpoints);
   const propKeys = extraCustomPropKeys(mainConfig.props, defaultPropKeys);
   const traitKeys = extraCustomTraitKeys(mainConfig.traits, defaultTraitKeys);
-  if (bpKeys.length === 0 && propKeys.length === 0 && traitKeys.length === 0) return null;
+  if (bpKeys.length === 0 && propKeys.length === 0 && traitKeys.length === 0 && !isFullMode) return null;
 
-  const blocks = [generateBreakpointBlock(bpKeys), generateCustomPropBlock(propKeys), generateCustomTraitBlock(traitKeys)]
+  const blocks = [
+    generateBreakpointBlock(bpKeys),
+    generateCustomPropBlock(propKeys),
+    generateCustomTraitBlock(traitKeys),
+    generateFullModeBlock(isFullMode),
+  ]
     .filter((block): block is string => block !== null)
     .join('\n\n');
 
