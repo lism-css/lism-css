@@ -4,7 +4,7 @@ import path from 'node:path';
 import { downloadTemplate } from 'giget';
 import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
-import { LISM_CSS_VERSION } from '../version.js';
+import { LISM_PACKAGE_VERSIONS } from '../version.js';
 import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
 import { setLang, t, tOf, type Lang } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
@@ -558,7 +558,7 @@ function rewritePackageName(projectDir: string, name: string): void {
 }
 
 /**
- * 取得後の package.json 内の `workspace:*` 依存を `^{LISM_CSS_VERSION}` に書き換える。
+ * 取得後の package.json 内の `workspace:*` 依存を、依存パッケージごとの公開バージョンに書き換える。
  * 失敗しても警告に留め、生成自体は続行する（Best Effort）。
  */
 function rewriteWorkspaceDeps(projectDir: string): void {
@@ -567,20 +567,21 @@ function rewriteWorkspaceDeps(projectDir: string): void {
   try {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as PackageJson;
     let touched = false;
+    const fallbackVersion = LISM_PACKAGE_VERSIONS['lism-css'] ?? 'unknown';
     for (const key of ['dependencies', 'devDependencies', 'peerDependencies'] as const) {
       const deps = pkg[key];
       if (!deps) continue;
       for (const [name, value] of Object.entries(deps)) {
         if (typeof value !== 'string') continue;
         if (value.startsWith('workspace:')) {
-          deps[name] = `^${LISM_CSS_VERSION}`;
+          deps[name] = `^${LISM_PACKAGE_VERSIONS[name] ?? fallbackVersion}`;
           touched = true;
         }
       }
     }
     if (touched) {
       fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
-      logger.log(t('create.workspaceReplaced', { version: LISM_CSS_VERSION }));
+      logger.log(t('create.workspaceReplaced'));
     }
   } catch (err) {
     logger.warn(t('create.workspaceFailed', { reason: String(err) }));

@@ -17,6 +17,16 @@ vi.mock('@inquirer/prompts', () => ({
   select: vi.fn(),
 }));
 
+vi.mock('../version.js', () => ({
+  CLI_VERSION: '0.0.0-test',
+  LISM_CSS_VERSION: '1.2.3',
+  LISM_PACKAGE_VERSIONS: {
+    'lism-css': '1.2.3',
+    '@lism-css/ui': '2.3.4',
+    '@lism-css/plugin': '3.4.5',
+  },
+}));
+
 const cwd = process.cwd();
 let tmpDir: string;
 const originalIsTTY = process.stdin.isTTY;
@@ -106,6 +116,34 @@ describe('runCreate', () => {
       dependencies: Record<string, string>;
     };
     expect(pkg.dependencies['lism-css']).not.toBe('workspace:*');
+  });
+
+  it('workspace依存は依存名ごとの公開versionへ置換する', async () => {
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, {
+        name: 'lp-astro',
+        dependencies: {
+          'lism-css': 'workspace:*',
+          '@lism-css/ui': 'workspace:*',
+        },
+        devDependencies: {
+          '@lism-css/plugin': 'workspace:*',
+        },
+      });
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true });
+
+    const pkg = JSON.parse(fs.readFileSync(path.join(tmpDir, 'my-app', 'package.json'), 'utf-8')) as {
+      dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
+    };
+    expect(pkg.dependencies['lism-css']).toBe('^1.2.3');
+    expect(pkg.dependencies['@lism-css/ui']).toBe('^2.3.4');
+    expect(pkg.devDependencies['@lism-css/plugin']).toBe('^3.4.5');
   });
 
   it('stackが1件だけなら選択をスキップして自動確定する', async () => {

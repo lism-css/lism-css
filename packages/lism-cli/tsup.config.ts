@@ -5,15 +5,25 @@ import { defineConfig } from 'tsup';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-// lism-css の現在バージョンを `lism create` の workspace:* 置換用に埋め込む
-const lismCssPkg = JSON.parse(readFileSync(resolve(__dirname, '../lism-css/package.json'), 'utf-8')) as {
+type PackageMeta = {
+  name: string;
   version: string;
 };
 
+function readPackageMeta(packageJsonPath: string): PackageMeta {
+  return JSON.parse(readFileSync(resolve(__dirname, packageJsonPath), 'utf-8')) as PackageMeta;
+}
+
+// `lism create` の workspace:* 置換用に、公開パッケージごとの現在バージョンを埋め込む
+const packageVersions = Object.fromEntries(
+  ['../lism-css/package.json', '../lism-ui/package.json', '../plugin/package.json'].map((packageJsonPath) => {
+    const pkg = readPackageMeta(packageJsonPath);
+    return [pkg.name, pkg.version];
+  })
+);
+
 // `lism --version` 用に自身のバージョンを埋め込む（package.json と createProgram.ts の二重管理回避）
-const cliPkg = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8')) as {
-  version: string;
-};
+const cliPkg = readPackageMeta('package.json');
 
 export default defineConfig({
   entry: ['src/index.ts', 'src/lib.ts'],
@@ -23,7 +33,8 @@ export default defineConfig({
   clean: true,
   target: 'node18',
   define: {
-    __LISM_CSS_VERSION__: JSON.stringify(lismCssPkg.version),
+    __LISM_CSS_VERSION__: JSON.stringify(packageVersions['lism-css']),
+    __LISM_PACKAGE_VERSIONS__: JSON.stringify(packageVersions),
     __CLI_VERSION__: JSON.stringify(cliPkg.version),
   },
   // tsconfig の paths（@templates/*）を bundle 時に解決

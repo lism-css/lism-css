@@ -220,8 +220,8 @@ export const messages = {
     en: 'Failed to rewrite package.json name: {reason}',
   },
   'create.workspaceReplaced': {
-    ja: '  package.json の workspace:* を ^{version} に置換しました。',
-    en: '  Replaced workspace:* in package.json with ^{version}.',
+    ja: '  package.json の workspace:* を公開バージョンに置換しました。',
+    en: '  Replaced workspace:* in package.json with published versions.',
   },
   'create.workspaceFailed': {
     ja: 'package.json の書き換えに失敗しました: {reason}',
