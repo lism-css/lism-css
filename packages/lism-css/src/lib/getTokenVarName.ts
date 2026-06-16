@@ -8,14 +8,10 @@ import { TOKEN_VAR_PREFIX } from '../../config/defaults/token-var-prefix';
 export type TokensConfig = Record<string, Set<string> | readonly string[] | string[] | Record<string, unknown>>;
 
 /**
- * トークンキー + 値キーから、対応する CSS カスタムプロパティ名を導出する。
+ * トークンキー + 値キーから CSS カスタムプロパティ名を導出する。
  *
- * トークン値の「変数名の導出」を1か所に集約するための関数。
- * getMaybeTokenValue（コンポーネント / utility 解決）と serialize（値の出力）が共有し、
- * `lts="2xl"` の解決名と `:root` に出力する変数名を必ず一致させる。
- *
- * - TOKEN_VAR_PREFIX 登録トークン: `{prefix}{key}`（例: space → --s90 / c・palette → --brand / --red）
- * - それ以外のトークン: `--{tokenKey}--{key}`（例: fz → --fz--m / lts → --lts--2xl）
+ * 変数名の導出を1か所に集約し、getMaybeTokenValue（値の解決）と serialize（値の出力）が共有することで、
+ * `lts="2xl"` の解決名と `:root` に出力する変数名を必ず一致させる。命名規則は [[token-var-prefix]]。
  */
 export default function getTokenVarName(tokenKey: string, key: string): string {
   const prefix = TOKEN_VAR_PREFIX[tokenKey as keyof typeof TOKEN_VAR_PREFIX];

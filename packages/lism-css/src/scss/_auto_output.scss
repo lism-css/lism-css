@@ -240,7 +240,6 @@ $bp_outputs: ();
 
       .-#{$key}_#{$bp} {
         @if $alwaysVar == 1 {
-          // state 変数扱い: --prop を単一情報源にし、--prop を上書きして property は var(--prop) を読む
           #{$prop_name}: var(--#{$key}) #{get_important_str($important)};
           --#{$key}: var(--#{$key}_#{$bp}) !important;
         } @else {

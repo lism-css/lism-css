@@ -22,12 +22,12 @@ export type { BuildConfig } from './serialize';
 
 const MAIN_PROP_CONFIG = '_prop-config.gen.scss';
 const FULL_PROP_CONFIG = '_prop-config-full.gen.scss';
-// トークン値の生成 partial。base/tokens/*.scss の後に @forward され、インライン値の出力と
-// lism.config.js による上書き・追加の両立を担う。
+// トークン値の生成 partial（@forward 順序とその理由は base/index.scss を参照）。
 const TOKENS_GEN_PARTIAL = 'base/tokens/_tokens.gen.scss';
 // 生成物であることを明示するヘッダ。値が空でもこのヘッダは常に書き出され、同梱デフォルトと一致させる。
 const TOKENS_GEN_HEADER =
-  '// このファイルは lism.config.js の tokens から自動生成されます。直接編集しないでください（次回ビルド時に上書きされます）。\n';
+  '// このファイルは自動生成されます。直接編集しないでください（次回ビルド時に上書きされます）。\n' +
+  '// 生成元: コア → config/defaults/tokens.ts / 利用側 → defaults + lism.config.js の tokens\n';
 
 function resolvePostcssPlugins(minify: boolean): AcceptedPlugin[] {
   // minify=true: 従来どおり autoprefixer + cssnano（dist/css 出力相当）。
@@ -54,7 +54,6 @@ export function writePropConfigFiles({ scssDir, mainConfig, fullConfig }: WriteP
     fs.writeFileSync(path.join(scssDir, FULL_PROP_CONFIG), serializeConfigScss(fullConfig), 'utf8');
   }
   // tokens のインライン値は main/full 共通のため、main 系から 1 ファイルだけ生成する。
-  // base/tokens から @forward され、main.css / full.css / no_layer 系のいずれにも同じ値が乗る。
   fs.writeFileSync(path.join(scssDir, TOKENS_GEN_PARTIAL), TOKENS_GEN_HEADER + serializeTokens(mainConfig), 'utf8');
 }
 

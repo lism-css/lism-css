@@ -5,11 +5,7 @@
 $default_important: 0 !default;
 $is_container_query: 1 !default;
 
-// breakpoints の基底は単一情報源（config/defaults/breakpoints.ts → lism.config.js）由来の
-// props.$breakpoints。サイズ 0 は「無効」（_query.scss の bp-up / bp-down がスキップする）。
-// props.$breakpoints は正準順序（xs, sm, md, lg, xl）で直列化されるため、SCSS 直接利用の
-// `@use 'lism-css/scss/setting' with ($breakpoints: ('xs': '360px'))` 上書きを後から畳み込んでも
-// map.merge が「既存キーは位置を保ったまま値だけ更新」し、min-width カスケード順の崩れを防ぐ。
+// breakpoints: サイズ 0 は「無効」（_query.scss の bp-up / bp-down がスキップする）。
 $breakpoints: () !default;
 $breakpoints: map.merge(props.$breakpoints, $breakpoints);
 

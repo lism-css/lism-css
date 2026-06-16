@@ -7,6 +7,7 @@
  */
 import getMaybeTokenValue from '../lib/getMaybeTokenValue';
 import getTokenVarName from '../lib/getTokenVarName';
+import { TOKEN_SCOPE } from '../../config/defaults/token-scope';
 
 type TokenValue = string | number;
 type Tokens = Record<string, unknown>;
@@ -28,7 +29,7 @@ export interface BuildConfig {
   tokens: Tokens;
   props: Record<string, PropConfig>;
   /**
-   * ブレイクポイント定義（CSS 出力の単一情報源）。`'480px'` 等のサイズ文字列、または 0（無効）。
+   * ブレイクポイント定義。`'480px'` 等のサイズ文字列、または 0（無効）。
    * lism.config.js で差分上書きでき、xs/xl はサイズを与えるだけで有効化できる。
    */
   breakpoints?: Record<string, string | number>;
@@ -56,20 +57,17 @@ function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<strin
     if (Array.isArray(tokenCatalog)) {
       presets.push(...(tokenCatalog as TokenValue[]));
     } else if (tokenCatalog && typeof tokenCatalog === 'object') {
-      // フラット値マップ（{ key: value }）はキー一覧を presets 化する。
-      // '-' センチネルのキーもカタログ上は有効なので含める（例: -fz:root → var(--fz--root)）。
+      // '-' センチネル（実値は手書き SCSS）もカタログ上は有効なので、キー一覧を presets 化する。
       presets.push(...Object.keys(tokenCatalog));
     }
   }
 
-  // presets が定義されている場合
   if (presets.length > 0) {
     presets.forEach((preset) => {
       utilities[preset] = getMaybeTokenValue(token, preset, TOKENS as Parameters<typeof getMaybeTokenValue>[2]);
     });
   }
 
-  // utils が定義されている場合
   if (utils) {
     Object.entries(utils).forEach(([key, value]) => {
       utilities[key] = String(value);
@@ -88,7 +86,6 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
   const utilities = generateUtilities(propConfig, TOKENS);
   const hasUtilities = Object.keys(utilities).length > 0;
 
-  // 出力する CSS がない場合
   if (!hasUtilities && !bp) {
     return '';
   }
@@ -141,7 +138,6 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
       const items = bp.map((b) => `'${b}'`).join(', ');
       scss += `    bp: (${items}${bp.length === 1 ? ',' : ''}),\n`;
     } else if (typeof bp === 'number') {
-      // 数値（0 / 1）
       scss += `    bp: ${bp},\n`;
     } else {
       throw new TypeError(`[lism-css] prop "${propKey}": bp must be 0, 1, or an array of breakpoint names. Received ${JSON.stringify(bp)}.`);
@@ -179,7 +175,6 @@ export function serializePropConfig(CONFIG: BuildConfig): string {
     if (!propContent) return;
     scssContent += propContent;
 
-    // 最後の要素でない場合は改行を追加
     if (index < entries.length - 1) {
       scssContent += '\n';
     }
@@ -212,35 +207,49 @@ export function serializeBreakpoints(CONFIG: BuildConfig): string {
 
 /**
  * `_prop-config.gen.scss` に書き出す完全な SCSS（`$props` + `$breakpoints`）を生成する。
- * `_setting.scss` が両方を `@use './prop-config.gen'` 経由で読み、config を CSS 出力の単一情報源にする。
+ * `_setting.scss` が両方を `@use './prop-config.gen'` 経由で読み、config を CSS 出力の情報源にする。
  */
 export function serializeConfigScss(CONFIG: BuildConfig): string {
   return `${serializePropConfig(CONFIG)}\n${serializeBreakpoints(CONFIG)}`;
 }
 
 /**
- * CONFIG.tokens（値付きフラットマップ）を `:root { ... }` の CSS 宣言文字列へ直列化する。
+ * CONFIG.tokens（値付きフラットマップ）を `:root { ... }` の CSS 宣言文字列へ直列化し、
+ * `base/tokens/_tokens.gen.scss` として書き出す。
  *
- * - 変数名は getTokenVarName でトークン形式に整合させる（既定 `--{t}--{k}` / space `--s{k}` / color・palette `--{k}`）。
- * - 値が `'-'`（センチネル）または空のキーは **出力しない**（カタログ登録のみ・実値は手書き SCSS 側）。
- * - 生成結果は `base/tokens/_tokens.gen.scss` として既定の手書きトークン（`base/tokens/*.scss`）の **後** に
- *   `@layer lism-base` 内で読み込むことで、インライン値の出力と lism.config.js による上書き・追加を両立する。
+ * - 変数名は getTokenVarName で導出する（規則は [[token-var-prefix]]）。
+ * - 値が `'-'`（センチネル）または空のキーは出力しない（カタログ登録のみ・実値は手書き SCSS）。
+ * - TOKEN_SCOPE 登録トークンは `:root` ではなく `:root, .{scope} { ... }` で出力する（詳細は [[token-scope]]）。
  *
  * 出力する宣言が無くても `:root {}` を返し、同梱デフォルトと生成物の体裁を一致させる。
  */
 export function serializeTokens(CONFIG: BuildConfig): string {
   const { tokens = {} } = CONFIG;
 
-  const decls: string[] = [];
+  const rootDecls: string[] = [];
+  // スコープ別（`:root, .set--*`）の宣言。挿入順 = tokens のキー順を保つ。
+  const scopedDecls = new Map<string, string[]>();
+
   for (const [tokenKey, valueMap] of Object.entries(tokens)) {
     if (!valueMap || typeof valueMap !== 'object' || Array.isArray(valueMap)) continue;
+    const scope = TOKEN_SCOPE[tokenKey as keyof typeof TOKEN_SCOPE];
     for (const [key, value] of Object.entries(valueMap as Record<string, TokenValue>)) {
-      // '-' センチネル（手書き SCSS に実値を置くキー）は :root 宣言を出力しない。
       if (value === '-' || value === '' || value == null) continue;
-      decls.push(`  ${getTokenVarName(tokenKey, key)}: ${value};`);
+      const decl = `  ${getTokenVarName(tokenKey, key)}: ${value};`;
+      if (scope) {
+        const list = scopedDecls.get(scope);
+        if (list) list.push(decl);
+        else scopedDecls.set(scope, [decl]);
+      } else {
+        rootDecls.push(decl);
+      }
     }
   }
-  if (decls.length === 0) return ':root {\n}\n';
 
-  return `:root {\n${decls.join('\n')}\n}\n`;
+  let scss = rootDecls.length ? `:root {\n${rootDecls.join('\n')}\n}\n` : ':root {\n}\n';
+  // セレクタは prettier に合わせ1行1セレクタで出力する。
+  for (const [scope, decls] of scopedDecls) {
+    scss += `:root,\n.${scope} {\n${decls.join('\n')}\n}\n`;
+  }
+  return scss;
 }

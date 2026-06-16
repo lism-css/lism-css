@@ -16,7 +16,7 @@ type TokensConfig = typeof TOKENS;
 // 例:
 //   fs: { presets: ['italic'] } → fs?: 'italic' | (string & {})
 //   mx: { presets: ['auto', '0'], token: 'space' } → mx?: 'auto' | '0' | '5' | '10' | ... | (string & {})
-//   fz: { token: 'fz' } → fz?: 'root' | 'base' | '5xl' | ... | (string & {})
+//   fz: { token: 'fz' } → fz?: 'base' | '5xl' | ... | (string & {})
 //   bg: { prop: 'background', bp: 1 } → bg?: string | number  (フォールバック)
 //
 // ============================================================
@@ -29,7 +29,7 @@ type TokensConfig = typeof TOKENS;
  * @example
  * ```ts
  * type FzValues = TokenConfigValues<'fz'>;
- * // 結果: 'root' | 'base' | '5xl' | ...
+ * // 結果: 'base' | '5xl' | ...
  *
  * type SpaceValues = TokenConfigValues<'space'>;
  * // 結果: '5' | '10' | '15' | ...
@@ -124,7 +124,7 @@ export type NonResponsivePropValueTypes = {
  * @example
  * ```ts
  * // bp が有効なプロパティ（fz など）
- * fz?: 'root' | 'base' | ... | ['root', 'base'] | { base: 'root', md: 'base' }
+ * fz?: 'base' | 'l' | ... | ['base', 'l'] | { base: 'base', md: 'l' }
  *
  * // bp なしのプロパティ（fw など）
  * fw?: 'thin' | 'light' | 'normal' | ...

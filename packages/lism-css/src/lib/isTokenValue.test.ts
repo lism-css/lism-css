@@ -36,7 +36,7 @@ describe('isTokenValue', () => {
       expect(isTokenValue('space', 'xs')).toBe(false);
     });
 
-    test('color トークン（意味的カラー ∪ palette）に存在する値で true を返す', () => {
+    test('color トークン（セマンティックカラー ∪ palette）に存在する値で true を返す', () => {
       expect(isTokenValue('color', 'base')).toBe(true);
       expect(isTokenValue('color', 'text')).toBe(true);
       expect(isTokenValue('color', 'link')).toBe(true);

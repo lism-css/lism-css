@@ -3,12 +3,8 @@
  *
  * `import 'lism-css/main.css'` 等の CSS import を `resolveId` / `load` で捕捉し、
  * `lism.config.js` を反映した CSS をその場でコンパイルして返す（`@tailwindcss/vite` と同型）。
- * これにより `lism.config.js` が JS ランタイムと CSS 出力の単一情報源になる。
- *
- * dev では `lism.config.js` の変更を検知して再コンパイル + フルリロードする。
  *
  * NOTE: 本プラグインは `lismCss()` / `lismCssAstro()` が内部で使う低レベル部品。
- * ユーザー向けの公開入口は `lism-css/vite` の統合APIに寄せる。
  */
 import type { Plugin } from 'vite';
 

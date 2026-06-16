@@ -98,6 +98,22 @@ describe('serializeTokens', () => {
     expect(scss).toContain('--white: #fff;');
   });
 
+  test('TOKEN_SCOPE 登録トークン（space / bxsh）は :root, .set--* ブロックへ出力する', () => {
+    const scss = serializeTokens({
+      tokens: {
+        lts: { base: 'normal' },
+        space: { '10': 'var(--s-unit)' },
+        bxsh: { '10': 'var(--shsz--10) var(--shc)' },
+      },
+      props: {},
+    });
+    // 非スコープトークンは :root のまま。
+    expect(scss).toContain(':root {\n  --lts--base: normal;\n}\n');
+    // スコープトークンは再宣言セレクタ付きブロックへ。
+    expect(scss).toContain(':root,\n.set--s {\n  --s10: var(--s-unit);\n}\n');
+    expect(scss).toContain(':root,\n.set--bxsh {\n  --bxsh--10: var(--shsz--10) var(--shc);\n}\n');
+  });
+
   test('既定値の上書き（同名キー）も宣言として出力する', () => {
     const scss = serializeTokens({
       tokens: { lts: { base: '0.01em' } },

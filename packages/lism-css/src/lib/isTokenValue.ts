@@ -1,7 +1,6 @@
 import { TOKENS } from '../../config/index';
 
 export default function isTokenValue(tokenKey: string, value: unknown): boolean {
-  // 数値の時は文字列化してから判定
   let stringValue: string;
   if (typeof value === 'number') {
     stringValue = `${value}`;
@@ -21,7 +20,6 @@ export default function isTokenValue(tokenKey: string, value: unknown): boolean 
   } else if (Array.isArray(tokenValues)) {
     return tokenValues.includes(stringValue);
   } else if (typeof tokenValues === 'object' && tokenValues !== null) {
-    // 値付きフラットマップ（{ key: value }）はキーの有無で判定する。
     return Object.hasOwn(tokenValues, stringValue);
   }
   return false;

@@ -92,7 +92,7 @@ describe('createCssCompiler', () => {
     expect(updatedCss).not.toContain('--s90: 6rem');
   });
 
-  test('lism.config の breakpoints だけで xs を有効化できる（config 単一情報源）', async () => {
+  test('lism.config の breakpoints だけで xs を有効化できる', async () => {
     const c = makeCompiler();
     const base = configs({});
     // 差分上書き: xs にサイズを与えるだけで有効化（デフォルトは xs:0=無効）。

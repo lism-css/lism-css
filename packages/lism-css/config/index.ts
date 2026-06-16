@@ -25,10 +25,8 @@ export const CONFIG = mergedConfig;
 
 const { tokens, props, traits } = CONFIG;
 
-// color プロップの受理セットは「意味的カラー（color）∪ 生カラー（palette）」。
-// ...tokens を先に展開し、その後 color を両者のキーをマージしたフラットマップで上書きする
-// （raw な color マップに勝たせる）。これで `-bgc:brand`（color）も `-bgc:red`（palette）も同じ
-// color カタログで受理でき、変数名はどちらも TOKEN_VAR_PREFIX の `--{key}` に揃う。
+// color プロップは color（セマンティック）∪ palette（パレット）を受理する。
+// 両者をマージしたフラットマップで color を上書きし、`-bgc:brand` も `-bgc:red` も同じカタログで受理する。
 const tokensWithColor = {
   ...tokens,
   color: { ...tokens.color, ...tokens.palette },
