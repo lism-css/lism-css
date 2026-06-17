@@ -14,14 +14,23 @@
  * ③ `lism-env.d.ts` 生成。CSS 事前生成・typegen はいずれも非同期なので、Next が受け付ける
  * 「`(phase, ctx) => config | Promise<config>`」形式の **async config 関数**を返す設計にする。
  *
- * Next devにはVite/Astroのwatch APIやwebpack compiler hook相当の汎用注入口が無いため、
- * `lism.config.js`の変更は自動追従しない。設定変更後はdevサーバーを再起動する。
+ * Next dev には Vite/Astro の watch API や webpack compiler hook 相当の汎用注入口が無いため、dev 中の
+ * `lism.config.js` 変更追従は `watchLismConfig`（`fs.watch` ベース）が担う。dev フェーズで起動し、config 変更時に
+ * CSS / 型を再生成する。生成 CSS の変更は Turbopack（および `--webpack` dev の webpack）が拾うため、再起動なしで反映される。
  */
 import path from 'node:path';
 
 import { generateCssToDir } from './generated-css';
 import { buildWebpackAlias, buildTurbopackAlias } from './webpack-alias';
 import { syncLismEnvDts } from './typegen';
+import { watchLismConfig } from './config-watcher';
+
+/** Next.js の dev サーバーフェーズ識別子（`next/constants` の PHASE_DEVELOPMENT_SERVER。next 非依存にするため直書き）。 */
+const PHASE_DEVELOPMENT_SERVER = 'phase-development-server';
+
+// 同一 config を二重監視しないためのガード（config 関数が複数回呼ばれても watcher は 1 つに保つ）。
+// dev サーバーのライフタイム中は閉じない（プロセス終了で watcher も消える。FSWatcher は unref 済み）。
+const watchedConfigs = new Set<string>();
 
 export interface WithLismOptions {
   /** lism.config の明示パス。未指定時は projectRoot から探索する。 */
@@ -51,7 +60,7 @@ type WebpackFn = (config: WebpackConfig, options: unknown) => WebpackConfig;
  * 返り値は async config 関数で、Next がそれを解決する際に CSS 事前生成 / typegen / alias 注入を行う。
  */
 export function withLism<T extends Record<string, any>>(nextConfig?: T, opts?: WithLismOptions): (phase: string, ctx?: unknown) => Promise<T> {
-  return async (): Promise<T> => {
+  return async (phase?: string): Promise<T> => {
     const projectRoot = opts?.projectRoot ?? process.cwd();
     const outDir = path.join(projectRoot, '.lism-css/css');
 
@@ -66,6 +75,20 @@ export function withLism<T extends Record<string, any>>(nextConfig?: T, opts?: W
 
     if (opts?.typegen !== false) {
       await syncLismEnvDts(projectRoot, { configPath: opts?.configPath });
+    }
+
+    // dev フェーズかつ user lism.config がある場合のみ、変更追従の watcher を 1 つ起動する。
+    // 起動時生成（上）に加え、dev 中の保存でも CSS / 型を再生成して Turbopack に反映させる。
+    if (phase === PHASE_DEVELOPMENT_SERVER && generated.userConfigPath && !watchedConfigs.has(generated.userConfigPath)) {
+      const userConfigPath = generated.userConfigPath;
+      watchedConfigs.add(userConfigPath);
+      watchLismConfig({
+        configPath: userConfigPath,
+        onChange: async () => {
+          await generateCssToDir({ projectRoot, outDir, configPath: opts?.configPath, full: opts?.full ?? false, minify: false });
+          if (opts?.typegen !== false) await syncLismEnvDts(projectRoot, { configPath: opts?.configPath });
+        },
+      });
     }
 
     // Turbopack は project-relative、webpack は絶対パス（spike で確定した使い分け）。

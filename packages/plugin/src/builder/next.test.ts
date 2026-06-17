@@ -90,4 +90,28 @@ describe('withLism', () => {
 
     expect(fs.existsSync(path.join(root, 'lism-env.d.ts'))).toBe(false);
   });
+
+  test('dev フェーズでは lism.config.js 変更を watch して CSS / 型を再生成する', async () => {
+    const root = tmpDir();
+    const configPath = path.join(root, 'lism.config.js');
+    fs.writeFileSync(configPath, 'export default { props: { myz: { prop: "zIndex", utils: { "9": "9" } } } };\n');
+
+    // dev フェーズで起動 → 初回生成 + watcher 起動（watcher は unref 済みなのでプロセスを保持しない）。
+    await withLism({}, { projectRoot: root })('phase-development-server');
+    const dtsPath = path.join(root, 'lism-env.d.ts');
+    const before = fs.readFileSync(dtsPath, 'utf8');
+
+    // config を変更（別 custom prop を追加）→ watcher が型を再生成して内容が変わるはず。
+    fs.writeFileSync(
+      configPath,
+      'export default { props: { myz: { prop: "zIndex", utils: { "9": "9" } }, myw: { prop: "width", utils: { x: "10px" } } } };\n'
+    );
+
+    // 各再生成は SCSS コンパイルを伴い重い。初回 + (FSEvents エコー) + 実変更の再生成が積み上がるため余裕を持たせる。
+    const start = Date.now();
+    while (Date.now() - start < 16000 && fs.readFileSync(dtsPath, 'utf8') === before) {
+      await new Promise((r) => setTimeout(r, 50));
+    }
+    expect(fs.readFileSync(dtsPath, 'utf8')).not.toBe(before);
+  }, 20000);
 });
