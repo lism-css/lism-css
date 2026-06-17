@@ -9,7 +9,13 @@
 - [`lism.config.js` でのカスタマイズ](#lismconfigjs-でのカスタマイズ)
 - [追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法)
 
-[詳細](https://lism-css.com/docs/customize.md)
+詳細（公式ドキュメント）:
+
+- 概要: [https://lism-css.com/docs/customize/](https://lism-css.com/docs/customize/)
+- CSSビルドの選択（`@layer` / `full.css` / `isFullMode`）: [https://lism-css.com/docs/customize/build/](https://lism-css.com/docs/customize/build/)
+- `lism.config.js`（props / tokens / traits・breakpoints・追加スタイル）: [https://lism-css.com/docs/customize/config/](https://lism-css.com/docs/customize/config/)
+- SCSS（`$setting` / `$props`・BP上書き）: [https://lism-css.com/docs/customize/scss/](https://lism-css.com/docs/customize/scss/)
+- CSS Purge: [https://lism-css.com/docs/customize/purge/](https://lism-css.com/docs/customize/purge/)
 
 ---
 
@@ -69,7 +75,7 @@ import 'lism-css/main_no_layer.css';
 
 ### `$props` の個別カスタマイズ
 
-各 Property Class について、出力範囲やユーティリティクラスを追加できます。
+各 Property Class について、出力するブレイクポイントを絞ったり、ユーティリティクラスを追加したりできます。
 
 ```scss
 @use '../path-to/node_modules/lism-css/scss/setting' with (

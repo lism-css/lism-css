@@ -3,7 +3,7 @@
  *
  * props / tokens / traits / breakpoints などをここで上書き・追加できる。
  * dev 中（`next dev`）にこのファイルを保存すると、@lism-css/plugin/next の withLism が
- * CSS / 型を自動再生成する。詳細: https://lism-css.com/en/docs/customize/
+ * CSS / 型を自動再生成する。詳細: https://lism-css.com/en/docs/customize/config/
  */
 export default {
   tokens: {

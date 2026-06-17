@@ -39,7 +39,7 @@ Not all CSS properties support responsive switching.
 For details on which properties support breakpoint switching by default, refer to the [Property Class list page](/en/docs/property-class).
 :::
 
-You can also toggle responsive support per property by [customizing via SCSS files](/en/docs/customize/).
+You can also toggle responsive support per property by [customizing via SCSS files](/en/docs/customize/scss/).
 
 
 ## Array notation and object notation
@@ -120,7 +120,7 @@ Note that with container queries, a **container element** must be defined on an 
 
 <p class="-mbs:10">(In Lism, the easiest way to define a container element is to add `is--container` to an ancestor.)</p>
 
-You can also switch from container queries to media queries by [customizing via SCSS files](/en/docs/customize/).
+You can also switch from container queries to media queries by [customizing via SCSS files](/en/docs/customize/scss/).
 
 
 ## Breakpoints
@@ -148,10 +148,10 @@ Example: `-d:none -d_sm` + `--d_sm: block` → hidden by default, shown at `sm` 
 :::info
 Responsive Property Classes support all breakpoints (`sm`, `md`, and `lg`) by default.  
 You can check which properties are responsive in the BP column of the [Property Class list page](/en/docs/property-class/).  
-To use breakpoint classes with non-responsive properties, additional [SCSS configuration customization](/en/docs/customize/) is required.
+To use breakpoint classes with non-responsive properties, additional [SCSS configuration customization](/en/docs/customize/scss/) is required.
 :::
 
-`xs` and `xl` are also reserved keys, but they are undefined (disabled) by default and produce no output. See [Customize](/en/docs/customize/) to learn how to enable them.
+`xs` and `xl` are also reserved keys, but they are undefined (disabled) by default and produce no output. See [Customize](/en/docs/customize/config/) to learn how to enable them.
 
 
 ### Breakpoints offered by type completion
@@ -177,7 +177,7 @@ declare module 'lism-css' {
 ```
 
 :::info
-This only widens what types and autocompletion suggest. To actually output the corresponding CSS, you also need to define sizes for `xs` / `xl` via `lism.config.js` `breakpoints` (see [Customize](/en/docs/customize/)).
+This only widens what types and autocompletion suggest. To actually output the corresponding CSS, you also need to define sizes for `xs` / `xl` via `lism.config.js` `breakpoints` (see [Customize](/en/docs/customize/config/)).
 :::
 
 
