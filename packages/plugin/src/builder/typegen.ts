@@ -3,7 +3,7 @@
  *
  * lism.config.js の breakpoints / props / traits / isFullMode から module augmentation の `.d.ts` を
  * プロジェクト直下へ生成 / 更新 / 削除する IO 部分。Vite プラグイン（`vite-typegen.ts`）だけでなく、
- * Next.js / WordPress アダプタや CLI からも同じ処理を呼べるよう、Vite に依存しない関数として分離する。
+ * Next.js / webpack アダプタや CLI からも同じ処理を呼べるよう、Vite に依存しない関数として分離する。
  *
  * 生成物は **コミット対象**（next-env.d.ts 方式）。dev / build 起動時に内容が変わった時だけ書き込み
  * （HMR ループ回避）、追加キーが無くなった場合は生成物を削除する。

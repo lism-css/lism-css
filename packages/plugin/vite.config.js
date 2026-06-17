@@ -8,7 +8,7 @@ const entries = {
   'builder/vite': resolve(__dirname, 'src/builder/vite.ts'),
   'builder/astro': resolve(__dirname, 'src/builder/astro.ts'),
   'builder/next': resolve(__dirname, 'src/builder/next.ts'),
-  'builder/wordpress': resolve(__dirname, 'src/builder/wordpress.ts'),
+  'builder/webpack': resolve(__dirname, 'src/builder/webpack.ts'),
   'purge/vite': resolve(__dirname, 'src/purge/vite.ts'),
   'purge/astro': resolve(__dirname, 'src/purge/astro.ts'),
 };

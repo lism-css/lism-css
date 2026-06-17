@@ -2,7 +2,7 @@
  * 「config 反映済み CSS を任意の出力先へ事前生成し、bare CSS import の alias map を返す」中立 helper。
  *
  * Vite/Astro 統合は `lismDynamicCss` が bare CSS import（`import 'lism-css/main.css'`）をオンザフライで
- * 横取りしてコンパイルするが、Turbopack（Next.js）/ webpack（WordPress）にはその横取り口が無い。
+ * 横取りしてコンパイルするが、Turbopack（Next.js）/ webpack にはその横取り口が無い。
  * そこでこれらの環境では、config 反映済み CSS を `<root>/.lism-css/css/*` のような実ディレクトリへ**事前生成**し、
  * `lism-css/<entry>.css` をその生成物へ alias で差し替える方式を取る（P0.5 で Next.js 16 / Turbopack 実機確認済み）。
  *

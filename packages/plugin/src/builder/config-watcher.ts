@@ -1,7 +1,7 @@
 /**
  * lism.config の変更を監視する bundler 非依存の watcher（ロードマップ P8）。
  *
- * Vite/Astro は `handleHotUpdate`、WordPress（webpack）は compiler の `watchRun` フックで dev 中の
+ * Vite/Astro は `handleHotUpdate`、webpack は compiler の `watchRun` フックで dev 中の
  * config 変更に追従できるが、Next.js（Turbopack 主導）にはそれらに相当する汎用注入口が無い。
  * そこで Next.js では config 反映済み CSS を `.lism-css/css/*` へ事前生成 → alias で差し替える方式を取り、
  * dev 中の config 変更追従は「lism.config を `fs.watch` で監視し、変更時に CSS / 型を再生成する」本 watcher が担う。
