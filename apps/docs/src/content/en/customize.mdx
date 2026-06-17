@@ -52,7 +52,7 @@ With `isFullMode: true`, the full preset is also applied to the component props 
 - `isFullMode` is a build-time setting. It cannot be toggled at runtime via `window._LISM_CSS_CONFIG_`.
 :::
 
-Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `lism-css/vite`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `pl` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
+Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `@lism-css/plugin`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `pl` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
 
 If you do not use the integrated plugin, extend the type in a type definition file at your project root (e.g. `src/lism-env.d.ts`) like this:
 
@@ -175,7 +175,7 @@ export default {
 };
 ```
 
-This is all it takes. Every Property Class that supports responsive output (`bp: 1`) will then also emit responsive classes for `xs` / `xl` (e.g., `-p_xs` / `-p_xl`) — no per-prop configuration is needed. When you are using the `lism-css/vite` integrated plugin, these changes are automatically reflected in the dev server and production build CSS.
+This is all it takes. Every Property Class that supports responsive output (`bp: 1`) will then also emit responsive classes for `xs` / `xl` (e.g., `-p_xs` / `-p_xl`) — no per-prop configuration is needed. When you are using the `@lism-css/plugin` integrated plugin, these changes are automatically reflected in the dev server and production build CSS.
 
 This also lets you use `xs` / `xl` in object notation on the component side:
 
@@ -183,7 +183,7 @@ This also lets you use `xs` / `xl` in object notation on the component side:
 <Box p={{ base: 20, xs: 10, sm: 30 }} />
 ```
 
-To have `xs` / `xl` appear in type completion as well, see the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion). If you are using the integrated plugin (`lism-css/vite`), `lism-env.d.ts` is generated automatically and no hand-written type extension is needed.
+To have `xs` / `xl` appear in type completion as well, see the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion). If you are using the integrated plugin (`@lism-css/plugin`), `lism-env.d.ts` is generated automatically and no hand-written type extension is needed.
 
 :::info
 [`full.css`](#full-buildfullcss) already includes classes with `xs` enabled (using a provisional value of 360px).
@@ -223,23 +223,27 @@ By placing a `lism.config.js` (or `lism.config.mjs`) file in the root of your pr
 To make `lism.config.js` take effect, you must register the plugin in your Vite (or Astro) config file. Without registration, the file is ignored and default settings are used.
 :::
 
-Use the integrated plugin provided by `lism-css/vite`. A single registration enables **config alias (so the JS runtime reads `lism.config.js`), dynamic CSS build (changes are automatically reflected in dev/build CSS), and automatic type generation (`lism-env.d.ts`)** all at once.
+Use the integrated plugin provided by `@lism-css/plugin`. A single registration enables **config alias (so the JS runtime reads `lism.config.js`), dynamic CSS build (changes are automatically reflected in dev/build CSS), and automatic type generation (`lism-env.d.ts`)** all at once.
+
+```bash frame="none"
+pnpm add -D @lism-css/plugin
+```
 
 <Preview>
 <PreviewCode slot="tab" label="astro.config.mjs">
 ```js
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro()],
+  integrations: [lismCss()],
 });
 ```
 </PreviewCode>
 <PreviewCode slot="tab" label="vite.config.js">
 ```js
 import { defineConfig } from 'vite';
-import { lismCss } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss()],
@@ -251,7 +255,7 @@ export default defineConfig({
 The plugin auto-detects `lism.config.js` then `lism.config.mjs` from the project root. To use a file at a different location, specify the path via the `configPath` option:
 
 ```js
-integrations: [lismCssAstro({ configPath: './config/lism.config.js' })],
+integrations: [lismCss({ configPath: './config/lism.config.js' })],
 ```
 
 ### Format
@@ -361,7 +365,7 @@ Adding props in `lism.config.js` alone does not produce styles for the correspon
 
 ### Automatic reflection when using the Vite / Astro plugin
 
-If you have registered the `lism-css/vite` integrated plugin (`lismCss()` / `lismCssAstro()`), any additions or changes to `props` / `tokens` in `lism.config.js` are **automatically reflected in the CSS, both in the dev server and in production builds**. No manual CLI build is needed.
+If you have registered the `@lism-css/plugin` integrated plugin (`lismCss()` from `@lism-css/plugin/vite` or `@lism-css/plugin/astro`), any additions or changes to `props` / `tokens` in `lism.config.js` are **automatically reflected in the CSS, both in the dev server and in production builds**. No manual CLI build is needed.
 
 When the dev server is running, editing `lism.config.js` triggers HMR to regenerate the CSS.
 
@@ -393,7 +397,7 @@ Switch to the CLI / SCSS routes below only when you want to extend tokens system
 
 ### Build CSS using the lism-css CLI command
 
-For projects that do not use Vite or Astro (plain SCSS setups, other bundlers, etc.), run `npx lism-css build` to reflect `lism.config.js` into the CSS. This is not a legacy-only path — it is the **primary route** for that type of setup.
+For projects that do not use Vite or Astro (plain SCSS setups, other bundlers, etc.), run the `lism-css build` command provided by `@lism-css/plugin` to reflect `lism.config.js` into the CSS. This is not a legacy-only path — it is the **primary route** for that type of setup.
 
 ```bash frame="none"
 npx lism-css build

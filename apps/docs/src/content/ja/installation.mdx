@@ -115,7 +115,7 @@ React(.tsx)、Astro(.astro)形式のコンポーネントを `lism-css`として
 import 'lism-css/main.css';
 ```
 
-例：Next.jsであれば、`_app.js`や`layout.js`でimportしてください。
+Next.js（16 以降）では、ルートレイアウト（App Router なら `app/layout.tsx`）で読み込みます。`lism.config.js` の反映や型生成も行う場合は、後述の [Next.js での導入](#nextjs-での導入)で `@lism-css/plugin` をセットアップしてください。
 
 :::info
 `main.css` のほかに、`@layer` を使わない `main_no_layer.css` や、CSS purge ツールとの併用を前提にした全部入りビルドの `full.css` もあります。詳しくは[カスタマイズページ](/docs/customize/)をご覧ください。
@@ -139,6 +139,109 @@ import { Box, Flex, ... } from 'lism-css/astro';
 </PreviewCode>
 </Preview>
 
+
+
+## Next.js での導入
+
+Next.js では、`@lism-css/plugin` の `withLism()` で設定ファイルをラップすることで、`lism.config.js` を反映した CSS の生成・型生成・読み込みをまとめてセットアップできます。
+
+:::info
+対象は **Next.js 16 以降**です。Next.js 16 はデフォルトで Turbopack を使用します（`next dev --webpack` / `next build --webpack` の webpack フォールバックにも対応しています）。
+:::
+
+### 1. パッケージのインストール
+
+`lism-css` 本体に加えて、ビルド用の `@lism-css/plugin` を導入します。
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm add lism-css
+  pnpm add -D @lism-css/plugin
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm i lism-css
+  npm i -D @lism-css/plugin
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn add lism-css
+  yarn add -D @lism-css/plugin
+  ```
+  </PreviewCode>
+</Preview>
+
+### 2. `next.config.mjs` を `withLism()` でラップする
+
+```js
+// next.config.mjs
+import { withLism } from '@lism-css/plugin/next';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default withLism(nextConfig);
+```
+
+`withLism()` は `lism.config.js` を読み込み、設定を反映した CSS を `.lism-css/css/` 以下へ事前生成します。そのうえで `lism-css/main.css` などの import を生成済み CSS へ差し替え（alias）ます。Next.js には Vite / Astro のような「import をその場で変換する仕組み」が無いため、この方式を取っています。既存の `nextConfig` は壊さずにマージされます。
+
+### 3. CSS とコンポーネントの読み込み
+
+ルートレイアウト（App Router なら `app/layout.tsx`）で `main.css` をグローバルに読み込みます。
+
+```tsx
+// app/layout.tsx
+import 'lism-css/main.css';
+```
+
+コンポーネントは `lism-css/react` から import します。
+
+```tsx
+import { Box, Flex } from 'lism-css/react';
+```
+
+### 4. `lism.config.js` でカスタマイズする（任意）
+
+プロジェクトのルートに `lism.config.js` を置くと、props やトークンを追加・上書きできます。`next dev` の実行中にこのファイルを保存すると CSS と型が自動で再生成されるため、開発サーバーの再起動は不要です。
+
+```js
+// lism.config.js
+export default {
+  tokens: {
+    color: {
+      // 例: `--success` を出力し、`-c:success` / `-bgc:success` などで使えるようにする
+      success: 'oklch(0.6 0.15 150)',
+    },
+  },
+};
+```
+
+設定できる項目の詳細は[カスタマイズページ](/docs/customize/)を参照してください。
+
+### 5. 生成ファイルの扱い
+
+`withLism()` は、有効化したブレイクポイントや追加した props / traits を反映した `lism-env.d.ts` をプロジェクト直下に自動生成します。型補完を効かせるため、`tsconfig.json` の `include` に追加し、git にコミットしてください。
+
+```json
+// tsconfig.json
+{
+  "include": ["next-env.d.ts", "lism-env.d.ts", "**/*.ts", "**/*.tsx"]
+}
+```
+
+一方、`.lism-css/`（生成された CSS）はビルド出力なので `.gitignore` に追加します。
+
+```bash frame="none"
+# .gitignore
+.lism-css/
+```
+
+:::info
+Next.js 向けの **CSS パージ（未使用クラスの削除）は現在未対応**です（Vite / Astro のみ対応）。Next.js では `lism.config.js` を反映した CSS がそのまま読み込まれます。
+:::
 
 
 ## Lism UI の導入
@@ -203,22 +306,26 @@ npx lism-cli ui add --all
 
 ## 未使用CSSの削除（パージ）
 
-本番ビルド時に未使用の Lism CSS クラスを取り除き、CSS ファイルを軽量化するパージ機能を `lism-css` パッケージに同梱しています。`lism-css/vite` の統合プラグイン（`lismCss()` / `lismCssAstro()`）を使っている場合は、`purge: true` オプションを渡すだけで有効化できます。
+本番ビルド時に未使用の Lism CSS クラスを取り除き、CSS ファイルを軽量化するパージ機能は `@lism-css/plugin` で提供しています。Vite / Astro で使う場合は `@lism-css/plugin` を追加し、対象エントリ（`@lism-css/plugin/vite` または `@lism-css/plugin/astro`）の `lismCss()` に `purge: true` オプションを渡します。
+
+```bash frame="none"
+pnpm add -D @lism-css/plugin
+```
 
 ```js
 // astro.config.mjs の例
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro({ purge: true })],
+  integrations: [lismCss({ purge: true })],
 });
 ```
 
 ```js
 // vite.config.js の例
 import { defineConfig } from 'vite';
-import { lismCss } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss({ purge: true })],
@@ -228,7 +335,7 @@ export default defineConfig({
 `purge: { report: true }` のようにオブジェクトで渡すと、purge プラグインの各オプションも指定できます。
 
 :::info
-単体プラグイン（`lism-css/purge/astro` の `lismPurgeAstro` / `lism-css/purge/vite` の `lismPurge`）も後方互換で引き続き利用できます。
+単体プラグイン（`@lism-css/plugin/purge/astro` の `lismPurgeAstro` / `@lism-css/plugin/purge/vite` の `lismPurge`）を直接利用することもできます。
 :::
 
 詳しいセットアップ・オプション・safelist の指定方法は [CSS Purge](/docs/purge/) を参照してください。

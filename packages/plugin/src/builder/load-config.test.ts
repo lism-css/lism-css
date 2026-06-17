@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterAll, describe, expect, test } from 'vitest';
-import { objDeepMerge } from '../../config/helper';
+import { objDeepMerge } from 'lism-css/config/helper';
 import { computeBuildConfigs, findUserConfigPath } from './load-config';
 import type { BuildConfig } from './serialize';
 

@@ -2,7 +2,9 @@
 @use 'sass:string';
 @use './prop-config.gen' as props;
 
-$default_important: 0 !default;
+// $default_important: lism.config.js の defaultImportant を prop-config.gen 経由で既定値に読む。
+// `@use ... with ($default_important: ...)` で明示上書きされた場合は、!default が無効化されそちらが優先される。
+$default_important: props.$default_important !default;
 $is_container_query: 1 !default;
 
 // breakpoints: サイズ 0 は「無効」（_query.scss の bp-up / bp-down がスキップする）。

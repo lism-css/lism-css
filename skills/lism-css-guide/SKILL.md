@@ -25,6 +25,7 @@ description: "Lism CSS の設計・実装に関するガイド。CSSの編集・
 ### npm パッケージ
 
 - `lism-css` — コアパッケージ。Lism CSS本体となるCSSファイル、レイアウトプリミティブ、デザイントークン、Property Class、React/Astroコンポーネントを提供。
+- `@lism-css/plugin` — Vite / Astro / Next.js 統合、動的CSSビルド、CSS purge、`lism-css build` CLIを提供。
 - `@lism-css/ui` — `lism-css` を使って構築された UI コンポーネントライブラリ。Accordion, Modal, Tabs, Button, Badge, Callout 等を React/Astro で提供。
 
 ### CSS 読み込み
@@ -51,7 +52,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ### CSS Purge（未使用CSSの削除）
 
-本番ビルド時に未使用の Lism CSS クラスを取り除いて出力 CSS を軽量化できます。`lism-css/vite` の統合プラグインを使っている場合は `lismCss({ purge: true })` / `lismCssAstro({ purge: true })` で有効化するのが簡単です。統合プラグインを使わない場合は単体プラグイン `lism-css/purge/vite`（Vite）/ `lism-css/purge/astro`（Astro）も利用できます。詳細は https://lism-css.com/docs/purge/ を参照。
+本番ビルド時に未使用の Lism CSS クラスを取り除いて出力 CSS を軽量化できます。`@lism-css/plugin/vite` / `@lism-css/plugin/astro` の統合プラグインを使っている場合は、各エントリの `lismCss({ purge: true })` で有効化するのが簡単です。統合プラグインを使わない場合は単体プラグイン `@lism-css/plugin/purge/vite`（Vite）/ `@lism-css/plugin/purge/astro`（Astro）も利用できます。詳細は https://lism-css.com/docs/purge/ を参照。
 
 
 ## 実装ルール

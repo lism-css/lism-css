@@ -1,0 +1,113 @@
+{
+  "name": "@lism-css/plugin",
+  "version": "0.1.0",
+  "description": "Build, Vite, Astro, and purge plugins for Lism CSS.",
+  "author": {
+    "name": "ddryo",
+    "url": "https://github.com/ddryo"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "keywords": [
+    "css-framework",
+    "vite-plugin",
+    "astro-integration"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "lint": "eslint '**/*.{js,mjs,ts}'",
+    "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
+  },
+  "bin": {
+    "lism-css": "./bin/cli.mjs"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/builder/vite.d.ts",
+      "import": "./dist/builder/vite.js"
+    },
+    "./astro": {
+      "types": "./dist/builder/astro.d.ts",
+      "import": "./dist/builder/astro.js"
+    },
+    "./next": {
+      "types": "./dist/builder/next.d.ts",
+      "import": "./dist/builder/next.js",
+      "require": "./dist/builder/next.js"
+    },
+    "./wordpress": {
+      "types": "./dist/builder/wordpress.d.ts",
+      "import": "./dist/builder/wordpress.js",
+      "require": "./dist/builder/wordpress.js"
+    },
+    "./builder": {
+      "types": "./dist/builder/index.d.ts",
+      "import": "./dist/builder/index.js",
+      "require": "./dist/builder/index.js"
+    },
+    "./purge/vite": {
+      "types": "./dist/purge/vite.d.ts",
+      "import": "./dist/purge/vite.js"
+    },
+    "./purge/astro": {
+      "types": "./dist/purge/astro.d.ts",
+      "import": "./dist/purge/astro.js"
+    },
+    "./bin/*": "./bin/*"
+  },
+  "homepage": "https://lism-css.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lism-css/lism-css/tree/main/packages/plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/lism-css/lism-css/issues"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.27",
+    "cssnano": "^7.1.3",
+    "glob": "^13.0.6",
+    "lism-css": "workspace:*",
+    "postcss": "^8.5.8",
+    "sass": "^1.98.0"
+  },
+  "peerDependencies": {
+    "astro": "^6.0.0",
+    "vite": "^6.0.0 || ^7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "astro": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "astro": "^6.1.9",
+    "eslint": "^9.39.4",
+    "typescript": "^5.8.3",
+    "unplugin-dts": "1.0.0-beta.6",
+    "vite": "^7.3.1",
+    "vitest": "^4.1.0"
+  },
+  "sideEffects": false
+}

@@ -41,6 +41,12 @@ interface ShotDef {
 interface TemplateConfig {
   command?: 'preview' | 'dev';
   port: number;
+  /**
+   * ポートを CLI 引数（`-- --port <port>`）ではなく `PORT` 環境変数で渡す。
+   * Next.js の `next start` / `next dev` は `--` 後の `--port` をディレクトリ引数と誤解してエラーになるため、
+   * そうしたツールではこのフラグを立てて env 経由で渡す（既定は false = 従来どおり CLI 引数）。
+   */
+  portViaEnv?: boolean;
   waitAfterLoad?: number;
   shots: ShotDef[];
   /**
@@ -194,12 +200,16 @@ function startPreviewServer(entry: TemplateEntry): Promise<ChildProcess> {
   return new Promise((resolve, reject) => {
     console.log(`📡 ${command} server 起動中 (${entry.pkgName} :${port})`);
 
-    // preview ポートはテンプレ側のデフォルトに依存するが、各 dev/preview に --port を渡して固定する
-    const server = spawn('pnpm', ['--filter', entry.pkgName, command, '--', '--port', String(port)], {
+    // 各 dev/preview にポートを渡して固定する。portViaEnv のテンプレは PORT 環境変数で渡し（next 等 `--` 後引数 NG 対策）、
+    // それ以外は従来どおり `-- --port <port>` を渡す。
+    const usePortEnv = entry.config.portViaEnv ?? false;
+    const serverArgs = usePortEnv ? ['--filter', entry.pkgName, command] : ['--filter', entry.pkgName, command, '--', '--port', String(port)];
+    const server = spawn('pnpm', serverArgs, {
       cwd: REPO_ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],
       shell: false,
       detached: true,
+      env: usePortEnv ? { ...process.env, PORT: String(port) } : process.env,
     });
 
     let resolved = false;

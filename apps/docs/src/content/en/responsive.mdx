@@ -160,7 +160,7 @@ The TypeScript types and autocompletion defaults to offering `base`, `sm`, `md`,
 
 If you want to enable `xl` / `xs` and also have them appear in type completion, the simplest approach depends on your setup:
 
-**When using the `lism-css/vite` integrated plugin** (`lismCss()` / `lismCssAstro()`): just set the sizes in `lism.config.js`'s `breakpoints` and `lism-env.d.ts` is **automatically generated**, reflecting the enabled BP keys in type completion. No hand-written type extension is needed.
+**When using the `@lism-css/plugin` integrated plugin** (`lismCss()` from `@lism-css/plugin/vite` or `@lism-css/plugin/astro`): just set the sizes in `lism.config.js`'s `breakpoints` and `lism-env.d.ts` is **automatically generated**, reflecting the enabled BP keys in type completion. No hand-written type extension is needed.
 
 **When not using the plugin** (direct SCSS usage, other bundlers, etc.): extend `BreakpointRegistry` manually in a type declaration file in your project:
 

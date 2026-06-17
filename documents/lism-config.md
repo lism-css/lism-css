@@ -15,6 +15,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI
 | `traits` | `isHoge`→`is--hoge`のような真偽値class propを追加する |
 | `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
 | `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
+| `defaultImportant` | Property Classにデフォルトで`!important`を付与する（Sassの`$default_important`相当のビルド時設定） |
 | `cli` | `lism ui add`などの出力先設定。旧`lism-ui.json`の後継 |
 
 ```js
@@ -73,7 +74,7 @@ export default {
 
 - `props`/`tokens`/`traits`の上書きをReact/Astroコンポーネント側に効かせたいなら必要。
 - Vite/AstroのCSS importで、`lism.config.js`反映済みCSSをその場で出したい場合も必要。
-- `lism-css build`などでCSSを事前生成するだけなら、Vite/Astroプラグインは不要。
+- `lism-css build`などでCSSを事前生成するだけなら、Vite/Astroプラグイン登録は不要。ただしコマンド提供元として`@lism-css/plugin`は必要。
 
 理由は、コンポーネント側の設定読込が`lism-css/config.js`をimportする構造になっていて、ユーザープロジェクトの`lism.config.js`へ差し替えるにはaliasプラグインが必要なため。
 また、通常の`import 'lism-css/main.css'`だけではパッケージ同梱のCSSを読むので、Vite/Astro中でconfig反映済みCSSへ差し替える場合も動的CSSビルドプラグインが必要になる。
@@ -83,7 +84,7 @@ export default {
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismCss } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [...lismCss()],
@@ -93,14 +94,14 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [...lismCssAstro()],
+  integrations: [...lismCss()],
 });
 ```
 
-purgeを使わない場合は`lismCss()`/`lismCssAstro()`を引数なしで使えばよい。`purge:true`は未使用Lismクラスの削除まで行いたいときだけ指定する。
+purgeを使わない場合は各エントリの`lismCss()`を引数なしで使えばよい。`purge:true`は未使用Lismクラスの削除まで行いたいときだけ指定する。
 
 ```js
 lismCss(); // config反映、型生成、動的CSSビルド
@@ -110,8 +111,8 @@ lismCss({ purge: true }); // 上記 + purge
 
 ## `lism-css build`
 
-`lism-css build`は`packages/lism-css`が提供するbinコマンド。
-`packages/lism-css/package.json`の`bin`で`lism-css`→`./bin/cli.mjs`に紐づいている。
+`lism-css build`は`packages/plugin`（`@lism-css/plugin`）が提供するbinコマンド。
+`packages/plugin/package.json`の`bin`で`lism-css`→`./bin/cli.mjs`に紐づいている。
 
 ```bash
 npx lism-css build
@@ -150,4 +151,5 @@ pnpm exec lism-css build
 - 値に`'-'`を指定したキーはカタログ登録のみで`:root`宣言を出力しない（実値は手書きSCSS側。主に`color`/`palette`で使う）。`'-'`以外の値を与えれば、その値が`:root`へ出力される。
 - `traits`はclass出力の追加であり、対応するスタイルは別途必要。
 - `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。
-- 統合入口は`lism-css/vite`の`lismCss()`/`lismCssAstro()`。
+- `defaultImportant:true`はCSS生成時にSassの`$default_important`へ反映されるビルド時設定。CSSを再生成しないと反映されず、ランタイム注入（`window._LISM_CSS_CONFIG_`）では切り替えられない。素のSass利用で`@use 'lism-css/scss/setting' with ($default_important: ...)`と明示指定した場合は、そちらが`lism.config.js`の値より優先される。
+- 統合入口は`@lism-css/plugin/vite`/`@lism-css/plugin/astro`の`lismCss()`。

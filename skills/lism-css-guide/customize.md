@@ -100,14 +100,18 @@ SCSS を直接読み込む構成では、コンパイル時に `lism-css` 本体
 
 プロジェクトのルート直下に `lism.config.js`（または `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
 
-### Vite プラグインの登録（推奨セットアップ）
+### Vite / Astro プラグインの登録（推奨セットアップ）
 
-`lism.config.js` を読み込ませるには、Vite（または Astro）の設定ファイルで `lism-css/vite` の統合プラグインを登録します。**未登録の場合、ファイルを置いてもデフォルト設定のまま**になります。
+`lism.config.js` を読み込ませるには、Vite（または Astro）の設定ファイルで `@lism-css/plugin` の統合プラグインを登録します。**未登録の場合、ファイルを置いてもデフォルト設定のまま**になります。
+
+```bash
+pnpm add -D @lism-css/plugin
+```
 
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismCss } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/vite';
 
 export default defineConfig({
   plugins: [lismCss()],
@@ -117,10 +121,10 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/astro';
 
 export default defineConfig({
-  integrations: [lismCssAstro()],
+  integrations: [lismCss()],
 });
 ```
 
@@ -136,8 +140,23 @@ export default defineConfig({
 // Vite
 plugins: [lismCss({ configPath: './config/lism.config.js' })],
 // Astro
-integrations: [lismCssAstro({ configPath: './config/lism.config.js' })],
+integrations: [lismCss({ configPath: './config/lism.config.js' })],
 ```
+
+### Next.js（16 以降）での導入
+
+Next.js には Vite / Astro のような「import をその場で変換する仕組み」が無いため、`@lism-css/plugin/next` の `withLism()` で `next.config.mjs` をラップします。`lism.config.js` を反映した CSS を `.lism-css/css/` へ事前生成し、`lism-css/main.css` 等の import をその生成物へ alias します（型生成・dev 中の config 変更追従も含む）。
+
+```js
+// next.config.mjs
+import { withLism } from '@lism-css/plugin/next';
+
+export default withLism({ /* nextConfig */ });
+```
+
+- `app/layout.tsx` などで `import 'lism-css/main.css'` をグローバル読み込みする。
+- `.lism-css/` は `.gitignore`、`lism-env.d.ts` は `tsconfig.json` の `include` に追加してコミットする。
+- CSS purge は現状 Vite / Astro のみ対応（Next.js は未対応）。
 
 ### ブレイクポイントの有効化（xs / xl）
 
@@ -242,7 +261,7 @@ export default {
 
 ### Vite / Astro（統合プラグイン使用時）は自動反映（手動ビルド不要）
 
-`lism-css/vite` の統合プラグインを登録している場合、`lism.config.js` に props / tokens を追加すると、**dev サーバ / ビルドの CSS に自動反映されます**。追加クラス分の CSS を手動で追記したり `npx lism-css build` を回したりする必要はありません。dev 中に `lism.config.js` を変更すると HMR で CSS が再生成され、型 `.d.ts` も追従します。
+`@lism-css/plugin` の統合プラグインを登録している場合、`lism.config.js` に props / tokens を追加すると、**dev サーバ / ビルドの CSS に自動反映されます**。追加クラス分の CSS を手動で追記したり `npx lism-css build` を回したりする必要はありません。dev 中に `lism.config.js` を変更すると HMR で CSS が再生成され、型 `.d.ts` も追従します。
 
 参照先の **CSS 変数の値そのもの**（`:root { --lts--2xl: .5em }` のような定義）も、`tokens` に値を書けば自動生成されます。値の定義・ユーティリティ生成・props 受理がまとめて反映されるため、`global.css` への手書きは不要です（既定値の上書きも可能）。
 
@@ -272,7 +291,7 @@ export default {
 
 ### CLI コマンドで CSS を再ビルド（Vite / Astro を使わない構成）
 
-純 SCSS 構成や他バンドラなど、Vite / Astro の統合プラグインを使わない構成では、`npx lism-css build` が `lism.config.js` を CSS に反映するための正規の手段です。
+純 SCSS 構成や他バンドラなど、Vite / Astro の統合プラグインを使わない構成では、`@lism-css/plugin` が提供する `npx lism-css build` が `lism.config.js` を CSS に反映するための正規の手段です。
 
 ```bash
 npx lism-css build          # lism.config.js 反映の CSS を再生成

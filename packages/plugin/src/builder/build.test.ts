@@ -1,6 +1,13 @@
 import * as sass from 'sass';
 import { describe, expect, test } from 'vitest';
-import { serializePropConfig, serializeBreakpoints, serializeConfigScss, serializeTokens, type BuildConfig } from './serialize';
+import {
+  serializePropConfig,
+  serializeBreakpoints,
+  serializeDefaultImportant,
+  serializeConfigScss,
+  serializeTokens,
+  type BuildConfig,
+} from './serialize';
 
 const baseConfig: BuildConfig = {
   tokens: { space: ['10', '20', '30'] },
@@ -165,15 +172,36 @@ describe('serializeBreakpoints', () => {
   });
 });
 
+describe('serializeDefaultImportant', () => {
+  test('defaultImportant: true は $default_important: 1 を出力する', () => {
+    expect(serializeDefaultImportant({ tokens: {}, props: {}, defaultImportant: true })).toBe('$default_important: 1;\n');
+  });
+
+  test('defaultImportant 未指定でも $default_important: 0 を出力する（props.$default_important 参照の保証）', () => {
+    expect(serializeDefaultImportant({ tokens: {}, props: {} })).toBe('$default_important: 0;\n');
+  });
+
+  test('defaultImportant: false は $default_important: 0 を出力する', () => {
+    expect(serializeDefaultImportant({ tokens: {}, props: {}, defaultImportant: false })).toBe('$default_important: 0;\n');
+  });
+});
+
 describe('serializeConfigScss', () => {
-  test('$props と $breakpoints を両方含む', () => {
+  test('$props と $breakpoints と $default_important を含む', () => {
     const scss = serializeConfigScss({
       tokens: {},
       props: { g: { prop: 'gap', bp: 1 } },
       breakpoints: { xs: '360px' },
+      defaultImportant: true,
     });
     expect(scss).toContain('$props: (');
     expect(scss).toContain("$breakpoints: (\n  'xs': '360px',");
+    expect(scss).toContain('$default_important: 1;');
+  });
+
+  test('defaultImportant 未指定でも $default_important: 0 を含む', () => {
+    const scss = serializeConfigScss({ tokens: {}, props: {} });
+    expect(scss).toContain('$default_important: 0;');
   });
 });
 

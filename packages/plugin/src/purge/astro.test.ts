@@ -38,7 +38,9 @@ describe('lismPurgeAstro (Astro)', () => {
       'index.html': '<div class="button--primary"></div>',
     });
     try {
-      const integration = lismPurgeAstro();
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack', 'l--unused', '-p:20']), attrs: new Set() },
+      });
       const hook = getBuildDoneHook(integration);
       const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
       await hook({
@@ -61,7 +63,9 @@ describe('lismPurgeAstro (Astro)', () => {
       'index.html': `<!DOCTYPE html><html><head><link rel="stylesheet" href="/_astro/main.AAAA1111.css"></head><body><div class="l--stack -p:20"></div></body></html>`,
     });
     try {
-      const integration = lismPurgeAstro();
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack', 'l--unused', '-p:20']), attrs: new Set() },
+      });
       const hook = getBuildDoneHook(integration);
       const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
       await hook({
@@ -101,7 +105,9 @@ describe('lismPurgeAstro (Astro)', () => {
       'index.html': `<div class="l--stack"></div>`,
     });
     try {
-      const integration = lismPurgeAstro();
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--grid', 'l--unused']), attrs: new Set() },
+      });
       const hook = getBuildDoneHook(integration);
       const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
       await hook({
@@ -126,7 +132,9 @@ describe('lismPurgeAstro (Astro)', () => {
       '_astro/app.js': `import "/_astro/styles.BBBB2222.css";\nconsole.log("/_astro/styles.BBBB2222.css");`,
     });
     try {
-      const integration = lismPurgeAstro();
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--grid', 'l--unused']), attrs: new Set() },
+      });
       const hook = getBuildDoneHook(integration);
       const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
       await hook({

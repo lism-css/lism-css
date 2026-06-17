@@ -13,7 +13,7 @@ import docsMd from './src/integrations/docs-md';
 import { astroRedirects } from './src/config/redirects';
 
 // lism.config.jsを読み込む統合プラグイン: 動的 CSS ビルド + config alias + 型生成（lism-env.d.ts）を束ねる。
-import { lismCssAstro } from 'lism-css/vite';
+import { lismCss } from '@lism-css/plugin/astro';
 
 // ビルド時のみ lastmod-map.json を読み込む（dev では不要）
 const isBuild = process.argv.includes('build');
@@ -66,7 +66,7 @@ export default defineConfig({
     ],
   },
   integrations: [
-    lismCssAstro(),
+    lismCss(),
     expressiveCode(expressiveCodeOptions),
     react(),
     mdx({

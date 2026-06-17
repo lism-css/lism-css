@@ -1,14 +1,13 @@
 // @vitest-environment node
-import { fileURLToPath } from 'node:url';
 import { describe, expect, test, afterAll } from 'vitest';
-import defaultConfig from '../../config/default-config';
-import propsFull from '../../config/presets/props-full';
-import { objDeepMerge } from '../../config/helper';
+import defaultConfig from 'lism-css/default-config';
+import propsFull from 'lism-css/config/presets/props-full';
+import { objDeepMerge } from 'lism-css/config/helper';
 import { computeBuildConfigs } from './load-config';
 import { createCssCompiler, listCssEntries, type CssCompiler } from './compile-entry';
+import { scssDir } from './paths';
 import type { BuildConfig } from './serialize';
 
-const scssDir = fileURLToPath(new URL('../scss', import.meta.url));
 const objMerge = objDeepMerge as (a: Record<string, unknown>, b: Record<string, unknown>) => Record<string, unknown>;
 
 function configs(userConfig: Record<string, unknown>) {

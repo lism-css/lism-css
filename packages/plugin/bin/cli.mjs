@@ -1,15 +1,11 @@
 #!/usr/bin/env node
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { buildCssToDir, loadBuildConfigs } from '../dist/builder/index.js';
+import { cssDistDir, scssDir } from '../dist/builder/paths.js';
 
 // NOTE: lism-css build の簡易CLIエントリ。
 // 共有コア（dist/builder）経由で config を読み、CSS をビルドする。
 // buildCssToDir は src/scss を一時ディレクトリへ複製して prop-config を差し替えるため、
 // node_modules 内 src/scss へのインプレース書き換えは行わない（出力は dist/css）。
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // プロジェクトルート取得
 const projectRoot = process.cwd();
 
@@ -27,9 +23,7 @@ async function main() {
   if (command === 'build') {
     // config 読み込み（defaults → full preset → lism.config）。
     // mainConfig は isFullMode 時に full preset 適用済み（loadBuildConfigs が解決）。
-    const { mainConfig, fullConfig, userConfigPath } = await loadBuildConfigs(projectRoot, {
-      distDir: path.resolve(__dirname, '../dist'),
-    });
+    const { mainConfig, fullConfig, userConfigPath } = await loadBuildConfigs(projectRoot);
 
     if (userConfigPath) {
       console.log('===== 📁 userConfig =====');
@@ -39,8 +33,8 @@ async function main() {
 
     // full 系の生成・コンパイルは --full 指定時のみ行う。
     await buildCssToDir({
-      scssDir: path.resolve(__dirname, '../src/scss'),
-      distDir: path.resolve(__dirname, '../dist/css'),
+      scssDir,
+      distDir: cssDistDir,
       mainConfig,
       fullConfig,
       ignore: withFull ? [] : ['full.scss', 'full_no_layer.scss'],

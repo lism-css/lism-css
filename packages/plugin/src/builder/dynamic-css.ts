@@ -4,7 +4,7 @@
  * `import 'lism-css/main.css'` 等の CSS import を `resolveId` / `load` で捕捉し、
  * `lism.config.js` を反映した CSS をその場でコンパイルして返す（`@tailwindcss/vite` と同型）。
  *
- * NOTE: 本プラグインは `lismCss()` / `lismCssAstro()` が内部で使う低レベル部品。
+ * NOTE: 本プラグインは Vite/Astro 統合エントリの `lismCss()` が内部で使う低レベル部品。
  */
 import type { Plugin } from 'vite';
 
