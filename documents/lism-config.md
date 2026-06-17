@@ -124,6 +124,14 @@ pnpm exec lism-css build
 `--full`を付けると`full.css`/`full_no_layer.css`も生成対象になる。
 
 
+## 他バンドラ / SCSS-source 構成
+
+Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供する。
+
+- `@lism-css/plugin/webpack`の`withLismWebpack(config, opts)`: webpack主導バンドラ（`@wordpress/scripts`等）向けの汎用プリミティブ。`{ css, config, typegen, watch }`で挙動を切り替える（`css:false`でCSS事前生成・CSS aliasをno-op、`config:true`で`lism-css/config.js`をユーザー設定へalias、`watch:true`で`lism.config.js`を`fileDependencies`へ登録）。WP/テーマ固有ロジックは持たず消費側の責務とする。
+- `@lism-css/plugin/builder`の`generateLismScss({ projectRoot, outDir? })`: 自前SCSSビルド構成向けに、config適用済みsettingのbridgeを`_lism-config.gen.scss`・`lism-setting.scss`（既定outDir=`<projectRoot>/.lism-css/scss`）へ生成する。消費側は`loadPaths:['.lism-css/scss']`+`NodePackageImporter`で、`@use 'lism-setting'`→`@use 'pkg:lism-css/scss/main_no_layer'`の順に読む（settingをconfig付きで先にロードする必要があるため順序依存）。
+
+
 ## 処理フロー
 
 1. Vite/Astro起動時に、プロジェクトルートから`lism.config.js`→`lism.config.mjs`の順で探す。

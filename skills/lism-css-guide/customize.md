@@ -297,6 +297,8 @@ export default {
 
 純 SCSS 構成や他バンドラなど、Vite / Astro の統合プラグインを使わない構成では、`@lism-css/plugin` が提供する `npx lism-css build` が `lism.config.js` を CSS に反映するための正規の手段です。
 
+webpack 主導のバンドラ（`@wordpress/scripts` 等）では `@lism-css/plugin/webpack` の `withLismWebpack()` で webpack config をラップできます。自前の SCSS ビルドで config 適用済みの `setting` を `@use` したい構成では、`@lism-css/plugin/builder` の `generateLismScss()` が bridge SCSS（`@use 'lism-setting'`）を生成します。
+
 ```bash
 npx lism-css build          # lism.config.js 反映の CSS を再生成
 npx lism-css build --full   # full.css / full_no_layer.css も生成

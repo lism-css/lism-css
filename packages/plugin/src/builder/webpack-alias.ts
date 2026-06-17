@@ -1,8 +1,7 @@
 /**
  * 事前生成 CSS（`generated-css`）+ config 差し替えから、webpack / Turbopack の alias 構造を組む中立 helper。
  *
- * Next.js（Turbopack 主導 + webpack fallback）と WordPress（webpack 主導）が共有する低レベル部品（ロードマップ P3）。
- * いまは内部利用に限定し、`@lism-css/plugin/webpack` としての公開はしない。
+ * Next.js（Turbopack 主導 + webpack fallback）と `@lism-css/plugin/webpack`（webpack 主導）が共有する低レベル部品。
  *
  * P0.5 の知見:
  * - webpack の `resolve.alias` は絶対パスで解決できる。`lism-css/config.js` は完全一致（`$`）で差し替え、
