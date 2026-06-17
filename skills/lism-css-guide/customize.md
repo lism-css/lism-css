@@ -75,7 +75,7 @@ import 'lism-css/main_no_layer.css';
 
 ### `$props` の個別カスタマイズ
 
-各 Property Class について、出力範囲やユーティリティクラスを追加できます。
+各 Property Class について、出力するブレイクポイントを絞ったり、ユーティリティクラスを追加したりできます。
 
 ```scss
 @use '../path-to/node_modules/lism-css/scss/setting' with (

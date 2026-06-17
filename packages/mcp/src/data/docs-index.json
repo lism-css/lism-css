@@ -436,7 +436,6 @@
       "Vite / Astro プラグイン使用時は自動反映される",
       "軽微な追加なら手書きで済ませる",
       "lism-css のCLIコマンドでCSSビルドする",
-      "手動で追加する方法",
       "SCSSファイルへの追加上書き"
     ],
     "keywords": [
@@ -458,7 +457,7 @@
   {
     "sourcePath": "customize/scss.mdx",
     "title": "SCSS でのカスタマイズ",
-    "description": "lism-css の SCSS 変数（$setting）を上書きして、Property Class の出力範囲やブレイクポイントなどを低レベルに調整する方法を解説します。",
+    "description": "lism-css の SCSS 変数（setting モジュールの $breakpoints / $props など）を上書きして、出力されるクラスやブレイクポイントを調整する方法を解説します。",
     "category": "guide",
     "headings": [
       "上書き可能な変数",
@@ -471,15 +470,15 @@
       "customize",
       "カスタマイズ",
       "SCSS",
-      "$setting",
+      "setting",
       "$props",
       "$breakpoints",
       "Property Class",
-      "出力範囲",
+      "出力クラス",
       "ブレイクポイント",
-      "low-level"
+      "CSS出力"
     ],
-    "snippet": "lism-css の SCSS 変数（$setting）を @use ... with (...) で上書きしてCSSの出力を低レベルに調整する方法。$breakpoints / $is_container_query / $default_important / $props の個別カスタマイズ（bp・important・utilities）、ブレイクポイント（xs / xl）の有効化などを解説。純 SCSS 構成向け。"
+    "snippet": "lism-css の setting モジュールの SCSS 変数を @use ... with (...) で上書きして、出力されるクラスやブレイクポイントを調整する方法。$breakpoints / $is_container_query / $default_important / $props の個別カスタマイズ（bp・important・utilities）、ブレイクポイント（xs / xl）の有効化などを解説。純 SCSS 構成向け。"
   },
   {
     "sourcePath": "customize/purge.mdx",

@@ -28,7 +28,7 @@ import 'lism-css/full.css'; // @layer なし版は 'lism-css/full_no_layer.css'
 
 `full.css` には、`main.css` の内容に加えて以下が含まれます。
 
-- 変数出力専用（`isVar` 系）のプロパティを除く、全 Property Class のブレイクポイント対応クラス（`-pl_lg` など）
+- 変数出力専用（`isVar` 系＝クラスを出力せず CSS変数だけを出すプロパティ）を除く、全 Property Class のブレイクポイント対応クラス（`-pl_lg` など）
 - `pl` / `mt` / `cg` など、スペーシング系の方向指定プロパティに対する `SPACE` トークンのユーティリティクラス（`-pl:20` など）
 
 そのぶんCSSサイズは `main.css` より大きくなるため、**未使用のクラスをビルド時に削除する [CSS Purge](/docs/customize/purge/) との併用を前提とした配布物**です。

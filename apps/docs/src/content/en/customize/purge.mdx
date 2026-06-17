@@ -40,7 +40,7 @@ You can also pass an object to configure individual purge plugin options:
 lismCss({ purge: { report: true } })
 ```
 
-When `known` (the catalog of Lism selectors that purge may remove) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that value is respected.
+When `known` (the set of known Lism classes that purge targets) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that value is respected.
 
 :::info
 You can also use the standalone plugins directly: `lismPurge` from `@lism-css/plugin/purge/vite` and `lismPurgeAstro` from `@lism-css/plugin/purge/astro`.
@@ -89,7 +89,7 @@ The Vite plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens
 
 ## Pairing with full.css
 
-`lism-css/full.css` is an **everything-included build** that adds breakpoint-aware classes for every Property Class except the `isVar` ones (`sm` / `md` / `lg`), plus `SPACE` token utilities for spacing properties. It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
+`lism-css/full.css` is an **everything-included build** that adds breakpoint-aware classes for every Property Class except variable-only (`isVar`) ones (`sm` / `md` / `lg`), plus `SPACE` token utilities for spacing properties. It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
 
 ```js
 // Load full.css instead of main.css

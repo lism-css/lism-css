@@ -12,7 +12,7 @@ description: 'lism.config.js と @lism-css/plugin を使って、コンポーネ
 `lism.config.js` を読み込ませるには、Vite（または Astro）の設定ファイルでプラグインを登録する必要があります。登録していない場合、ファイルを置いてもデフォルト設定のままになります。
 :::
 
-`@lism-css/plugin` が提供する統合プラグインを使います。これ1つで、**config alias（JS ランタイムが `lism.config.js` を読む）・動的CSSビルド（dev/build で CSS に自動反映）・型自動生成（`lism-env.d.ts`）** がまとめて有効になります。
+`@lism-css/plugin` が提供する統合プラグインを使います。これ1つで、**設定の読み込み（JS ランタイムが `lism.config.js` を読む）・動的CSSビルド（dev/build で CSS に自動反映）・型自動生成（`lism-env.d.ts`）** がまとめて有効になります。
 
 ```bash frame="none"
 pnpm add -D @lism-css/plugin
@@ -248,7 +248,7 @@ npx lism-css build
 }
 ```
 
-`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のような **トークン参照を含むユーティリティクラス** に加えて、参照先の CSS 変数（`:root { --lts--2xl: .5em }` のような **値そのもの**）も同時に生成されます。なお値に `'-'` を指定したキーはカタログ登録のみで `:root` 宣言を出力しません（実値は手書きSCSS側で定義します。主に `color` / `palette` で使います）。
+`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のような **トークン参照を含むユーティリティクラス** に加えて、参照先の CSS 変数（`:root { --lts--2xl: .5em }` のような **値そのもの**）も同時に生成されます。なお、値に `'-'` を指定したキーは「名前だけを登録し、実値は出力しない」指定です（`:root` 宣言を生成せず、実値は手書きSCSS側で定義します。主に `color` / `palette` で使います）。
 
 一方で `is--` クラスのスタイルは自動生成されないため、別途手動で定義して読み込ませる必要があります。
 
@@ -272,11 +272,6 @@ npx lism-css build
 ```bash frame="none"
 npx lism-css build --full
 ```
-
-
-### 手動で追加する方法
-
-ビルドコマンドを使わず、すべて手動でCSSを書いて読み込ませてももちろんOKです。
 
 
 ### SCSSファイルへの追加上書き

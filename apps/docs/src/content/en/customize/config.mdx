@@ -12,7 +12,7 @@ By placing a `lism.config.js` (or `lism.config.mjs`) file in the root of your pr
 To make `lism.config.js` take effect, you must register the plugin in your Vite (or Astro) config file. Without registration, the file is ignored and default settings are used.
 :::
 
-Use the integrated plugin provided by `@lism-css/plugin`. A single registration enables **config alias (so the JS runtime reads `lism.config.js`), dynamic CSS build (changes are automatically reflected in dev/build CSS), and automatic type generation (`lism-env.d.ts`)** all at once.
+Use the integrated plugin provided by `@lism-css/plugin`. A single registration enables **config loading (so the JS runtime reads `lism.config.js`), dynamic CSS build (changes are automatically reflected in dev/build CSS), and automatic type generation (`lism-env.d.ts`)** all at once.
 
 ```bash frame="none"
 pnpm add -D @lism-css/plugin
@@ -248,7 +248,7 @@ In this example, the following styles would be automatically generated into `lis
 }
 ```
 
-When you give a value in `tokens`, the build generates both the **utility class that references the token** (such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`) and the referenced CSS variable itself (the actual token **value**, such as `:root { --lts--2xl: .5em }`). Note that a key whose value is `'-'` is registered in the catalog only and does not emit a `:root` declaration (its real value is defined in hand-written SCSS — mainly used for `color` / `palette`).
+When you give a value in `tokens`, the build generates both the **utility class that references the token** (such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`) and the referenced CSS variable itself (the actual token **value**, such as `:root { --lts--2xl: .5em }`). Note that a key whose value is `'-'` only registers the name and does not output a value: no `:root` declaration is emitted, and the real value is defined in hand-written SCSS (mainly used for `color` / `palette`).
 
 On the other hand, `is--` class styles are not auto-generated, so you need to define and load them manually.
 
@@ -270,11 +270,6 @@ Note that `full.css` / `full_no_layer.css` are not rebuilt by default. If you us
 ```bash frame="none"
 npx lism-css build --full
 ```
-
-
-### Adding styles manually
-
-You can also write all the necessary CSS manually and load it yourself without using the build command.
 
 
 ### Overriding SCSS files

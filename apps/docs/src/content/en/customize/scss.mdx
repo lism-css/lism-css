@@ -1,9 +1,9 @@
 ---
 title: 'SCSS Customization'
-description: 'How to override lism-css SCSS variables (such as the setting module variables $breakpoints / $props) to fine-tune the CSS output range, breakpoints, and more at a low level.'
+description: 'How to override lism-css SCSS variables (such as the setting module variables $breakpoints / $props) to adjust generated classes and breakpoints.'
 ---
 
-You can customize the output CSS by overriding SCSS variables. This approach is suited for plain SCSS setups and other cases where you need low-level control without using the Vite / Astro plugin.
+You can adjust the generated classes and breakpoints by overriding SCSS variables. This approach is for plain SCSS setups and other cases where you are not using the Vite / Astro plugin.
 
 
 ## Overridable variables
@@ -51,7 +51,7 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 
 ## Customizing individual `$props`
 
-For each Property Class, you can adjust the output range or add utility classes.
+For each Property Class, you can limit which breakpoints are generated or add utility classes.
 
 <PreviewTitle>Customize Property Class output</PreviewTitle>
 ```scss

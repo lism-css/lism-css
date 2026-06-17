@@ -3,7 +3,7 @@ title: 'Customize'
 description: 'Lism CSS のカスタマイズ方法の全体像。ビルドCSSの選択・lism.config.js・SCSS・CSS Purge のどれを使うべきかを目的別に案内します。'
 ---
 
-`lism-css` パッケージは、読み込むCSSやコンポーネントが受け付けるプロパティの挙動を上書きしてカスタマイズできます。カスタマイズの入口は大きく次の4つです。目的に応じて該当ページへ進んでください。
+`lism-css` パッケージは、読み込むCSS、コンポーネントが受け付ける props、出力されるクラスをカスタマイズできます。カスタマイズの入口は大きく次の4つです。目的に応じて該当ページへ進んでください。
 
 
 ## カスタマイズの入口
@@ -12,7 +12,7 @@ description: 'Lism CSS のカスタマイズ方法の全体像。ビルドCSSの
 |---|---|---|
 | `@layer` のオン / オフや `full.css` など、**読み込むビルド済みCSSを切り替えたい** | CSSファイルの差し替え / `isFullMode` | [CSSビルドの選択](/docs/customize/build/) |
 | **コンポーネントの props / tokens / traits を増やしたい**（Vite / Astro 向けの推奨パス） | `lism.config.js` + `@lism-css/plugin` | [lism.config.js でのカスタマイズ](/docs/customize/config/) |
-| **SCSS から低レベルに出力CSSを調整したい**（純SCSS構成など） | `setting` モジュールの変数（`$breakpoints` / `$props` など）の上書き | [SCSS でのカスタマイズ](/docs/customize/scss/) |
+| **SCSSだけで、出力されるクラスやブレイクポイントを調整したい**（Vite / Astro プラグインを使わない構成向け） | `$breakpoints` / `$props` などのSCSS変数を上書き | [SCSS でのカスタマイズ](/docs/customize/scss/) |
 | **本番CSSから未使用クラスを削除して軽量化したい** | purge プラグイン | [CSS Purge](/docs/customize/purge/) |
 
 
