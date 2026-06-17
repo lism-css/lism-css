@@ -118,7 +118,7 @@ import 'lism-css/main.css';
 Next.js（16 以降）では、ルートレイアウト（App Router なら `app/layout.tsx`）で読み込みます。`lism.config.js` の反映や型生成も行う場合は、後述の [Next.js での導入](#nextjs-での導入)で `@lism-css/plugin` をセットアップしてください。
 
 :::info
-`main.css` のほかに、`@layer` を使わない `main_no_layer.css` や、CSS purge ツールとの併用を前提にした全部入りビルドの `full.css` もあります。詳しくは[カスタマイズページ](/docs/customize/)をご覧ください。
+`main.css` のほかに、`@layer` を使わない `main_no_layer.css` や、CSS purge ツールとの併用を前提にした全部入りビルドの `full.css` もあります。詳しくは[カスタマイズページ](/docs/customize/build/)をご覧ください。
 :::
 
 
@@ -219,7 +219,7 @@ export default {
 };
 ```
 
-設定できる項目の詳細は[カスタマイズページ](/docs/customize/)を参照してください。
+設定できる項目の詳細は[カスタマイズページ](/docs/customize/config/)を参照してください。
 
 ### 5. 生成ファイルの扱い
 
@@ -338,7 +338,7 @@ export default defineConfig({
 単体プラグイン（`@lism-css/plugin/purge/astro` の `lismPurgeAstro` / `@lism-css/plugin/purge/vite` の `lismPurge`）を直接利用することもできます。
 :::
 
-詳しいセットアップ・オプション・safelist の指定方法は [CSS Purge](/docs/purge/) を参照してください。
+詳しいセットアップ・オプション・safelist の指定方法は [CSS Purge](/docs/customize/purge/) を参照してください。
 
 
 ## AIツール連携

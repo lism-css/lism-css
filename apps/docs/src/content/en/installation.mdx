@@ -118,7 +118,7 @@ import 'lism-css/main.css';
 In Next.js (16 or later), import it in your root layout (`app/layout.tsx` for App Router). If you also want to apply `lism.config.js` settings and generate types, set up `@lism-css/plugin` as described in [Setting up with Next.js](#setting-up-with-nextjs) below.
 
 :::info
-Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS purge tools. See the [Customize page](/en/docs/customize/) for details.
+Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS purge tools. See the [Customize page](/en/docs/customize/build/) for details.
 :::
 
 
@@ -219,7 +219,7 @@ export default {
 };
 ```
 
-See the [Customize page](/en/docs/customize/) for the full list of available options.
+See the [Customize page](/en/docs/customize/config/) for the full list of available options.
 
 ### 5. Handling generated files
 
@@ -338,7 +338,7 @@ You can also pass an object like `purge: { report: true }` to configure addition
 The standalone plugins (`lismPurgeAstro` from `@lism-css/plugin/purge/astro` / `lismPurge` from `@lism-css/plugin/purge/vite`) are also available when you want to register purge directly.
 :::
 
-See [CSS Purge](/en/docs/purge/) for the full setup, options, and safelist usage.
+See [CSS Purge](/en/docs/customize/purge/) for the full setup, options, and safelist usage.
 
 
 ## AI Tool Integration

@@ -395,29 +395,109 @@
   {
     "sourcePath": "customize.mdx",
     "title": "Customize",
-    "description": "SCSS変数の上書きや@layerの切り替えなど、Lism CSS をカスタマイズする方法について解説します。",
+    "description": "Lism CSS のカスタマイズ方法の全体像。ビルドCSSの選択・lism.config.js・SCSS・CSS Purge のどれを使うべきかを目的別に案内します。",
+    "category": "guide",
+    "headings": ["カスタマイズの入口"],
+    "keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme", "SCSS", "full.css", "isFullMode", "purge"],
+    "snippet": "Lism CSS のカスタマイズ方法の全体像。目的に応じて「CSSビルドの選択」「lism.config.js でのカスタマイズ」「SCSS でのカスタマイズ」「CSS Purge」の4つの入口を案内する概要ハブページ。"
+  },
+  {
+    "sourcePath": "customize/build.mdx",
+    "title": "CSSビルドの選択",
+    "description": "@layer のオン / オフや full.css への切り替えなど、読み込むビルド済みCSSを選ぶ方法を解説します。",
+    "category": "guide",
+    "headings": ["@layerをオフにする", "全部入りビルド（full.css）を使う", "isFullMode"],
+    "keywords": [
+      "customize",
+      "カスタマイズ",
+      "build",
+      "ビルド",
+      "CSS",
+      "@layer",
+      "full.css",
+      "isFullMode",
+      "main.css",
+      "main_no_layer.css",
+      "full_no_layer.css"
+    ],
+    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。isFullMode でコンポーネント出力も full.css に合わせられる。"
+  },
+  {
+    "sourcePath": "customize/config.mdx",
+    "title": "lism.config.js でのカスタマイズ",
+    "description": "lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。",
     "category": "guide",
     "headings": [
-      "@layerをオフにする",
-      "全部入りビルド（full.css）を使う",
-      "isFullMode",
-      "SCSS でのカスタマイズ",
-      "上書き可能な変数",
-      "基本フォーマット",
-      "$props の個別カスタマイズ",
-      "SCSSのコンパイル処理について",
-      "lism.config.js でのカスタマイズ",
-      "Vite プラグインの登録（必須）",
+      "Vite / Astro プラグインの登録（必須）",
       "フォーマット",
       "カスタマイズ例",
+      "ブレイクポイント（xs / xl）の有効化",
       "追加スタイルを読み込ませる方法",
+      "Vite / Astro プラグイン使用時は自動反映される",
       "軽微な追加なら手書きで済ませる",
       "lism-css のCLIコマンドでCSSビルドする",
       "手動で追加する方法",
       "SCSSファイルへの追加上書き"
     ],
-    "keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme", "SCSS", "full.css", "isFullMode", "purge"],
-    "snippet": "Lism CSS のトークンやスタイルのカスタマイズ方法について解説。SCSSの変数上書きやlism.config.jsでのコンポーネント挙動のカスタマイズが可能。CSS purge との併用を前提とした全部入りビルド full.css（@layerなし版は full_no_layer.css）と、コンポーネント出力を full 設定に揃える isFullMode についても解説。"
+    "keywords": [
+      "customize",
+      "カスタマイズ",
+      "config",
+      "lism.config.js",
+      "@lism-css/plugin",
+      "props",
+      "tokens",
+      "traits",
+      "breakpoints",
+      "ブレイクポイント",
+      "xs",
+      "xl"
+    ],
+    "snippet": "lism.config.js を使ったコンポーネントの挙動カスタマイズ方法。@lism-css/plugin の統合プラグイン登録（必須）から props / tokens / traits の追加・拡張、ブレイクポイント（xs / xl）の有効化、追加スタイルの読み込み方法（自動反映・CLI・手書き・SCSS）まで解説。"
+  },
+  {
+    "sourcePath": "customize/scss.mdx",
+    "title": "SCSS でのカスタマイズ",
+    "description": "lism-css の SCSS 変数（$setting）を上書きして、Property Class の出力範囲やブレイクポイントなどを低レベルに調整する方法を解説します。",
+    "category": "guide",
+    "headings": [
+      "上書き可能な変数",
+      "基本フォーマット",
+      "$props の個別カスタマイズ",
+      "ブレイクポイント（xs / xl）の有効化",
+      "SCSSのコンパイル処理について"
+    ],
+    "keywords": [
+      "customize",
+      "カスタマイズ",
+      "SCSS",
+      "$setting",
+      "$props",
+      "$breakpoints",
+      "Property Class",
+      "出力範囲",
+      "ブレイクポイント",
+      "low-level"
+    ],
+    "snippet": "lism-css の SCSS 変数（$setting）を @use ... with (...) で上書きしてCSSの出力を低レベルに調整する方法。$breakpoints / $is_container_query / $default_important / $props の個別カスタマイズ（bp・important・utilities）、ブレイクポイント（xs / xl）の有効化などを解説。純 SCSS 構成向け。"
+  },
+  {
+    "sourcePath": "customize/purge.mdx",
+    "title": "CSS Purge",
+    "description": "ビルド時に未使用の Lism CSS クラスを削除し、本番 CSS を軽量化するパージプラグインのセットアップと使い方。",
+    "category": "guide",
+    "headings": [
+      "推奨セットアップ（統合プラグイン経由）",
+      "仕組み",
+      "単体プラグインを直接使う場合",
+      "full.css と組み合わせる",
+      "オプション",
+      "safelist",
+      "report",
+      "注意事項"
+    ],
+    "keywords": ["purge", "CSS purge", "パージ", "軽量化", "未使用", "full.css", "@lism-css/plugin", "lismPurge", "safelist", "build"],
+    "snippet": "ビルド成果物をスキャンして使用中の Lism CSS クラスだけを残すパージ機能。@lism-css/plugin の統合プラグインで purge: true を渡すだけで有効化可能。仕組み・単体プラグイン直接利用・full.css との併用・safelist / report オプション・注意事項を解説。"
   },
   {
     "sourcePath": "utility-class.mdx",
