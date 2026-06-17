@@ -143,6 +143,21 @@ plugins: [lismCss({ configPath: './config/lism.config.js' })],
 integrations: [lismCss({ configPath: './config/lism.config.js' })],
 ```
 
+### Next.js（16 以降）での導入
+
+Next.js には Vite / Astro のような「import をその場で変換する仕組み」が無いため、`@lism-css/plugin/next` の `withLism()` で `next.config.mjs` をラップします。`lism.config.js` を反映した CSS を `.lism-css/css/` へ事前生成し、`lism-css/main.css` 等の import をその生成物へ alias します（型生成・dev 中の config 変更追従も含む）。
+
+```js
+// next.config.mjs
+import { withLism } from '@lism-css/plugin/next';
+
+export default withLism({ /* nextConfig */ });
+```
+
+- `app/layout.tsx` などで `import 'lism-css/main.css'` をグローバル読み込みする。
+- `.lism-css/` は `.gitignore`、`lism-env.d.ts` は `tsconfig.json` の `include` に追加してコミットする。
+- CSS purge は現状 Vite / Astro のみ対応（Next.js は未対応）。
+
 ### ブレイクポイントの有効化（xs / xl）
 
 デフォルトのブレイクポイントは **`xs: 0`（無効） / `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0`（無効）** です。値 `0` は「無効＝CSSクエリを出力しない」を表します。

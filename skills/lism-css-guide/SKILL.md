@@ -25,7 +25,7 @@ description: "Lism CSS の設計・実装に関するガイド。CSSの編集・
 ### npm パッケージ
 
 - `lism-css` — コアパッケージ。Lism CSS本体となるCSSファイル、レイアウトプリミティブ、デザイントークン、Property Class、React/Astroコンポーネントを提供。
-- `@lism-css/plugin` — Vite / Astro 統合、動的CSSビルド、CSS purge、`lism-css build` CLIを提供。
+- `@lism-css/plugin` — Vite / Astro / Next.js 統合、動的CSSビルド、CSS purge、`lism-css build` CLIを提供。
 - `@lism-css/ui` — `lism-css` を使って構築された UI コンポーネントライブラリ。Accordion, Modal, Tabs, Button, Badge, Callout 等を React/Astro で提供。
 
 ### CSS 読み込み
