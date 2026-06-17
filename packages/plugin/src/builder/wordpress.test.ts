@@ -105,6 +105,30 @@ describe('withLismWordPress', () => {
     expect(fs.existsSync(path.join(root, '.lism-css/css/main.css'))).toBe(true);
   });
 
+  test('full: true なら watchRun 再生成でも full.css を更新する', async () => {
+    const root = tmpDir();
+    const config = await withLismWordPress(baseConfig(), { projectRoot: root, full: true });
+    const plugin = config.plugins[config.plugins.length - 1];
+    const fullCss = path.join(root, '.lism-css/css/full.css');
+
+    // 初回生成で full.css も出力される（full: false だと出ない）。
+    expect(fs.existsSync(fullCss)).toBe(true);
+
+    // full.css を削除し、watchRun で再生成されることを確認する（full: false 固定だと再生成されない）。
+    fs.rmSync(fullCss);
+    const captured: { watch?: () => Promise<void> } = {};
+    const compiler = {
+      hooks: {
+        watchRun: { tapPromise: (_name: string, fn: () => Promise<void>) => (captured.watch = fn) },
+        afterCompile: { tap: () => {} },
+      },
+    };
+    plugin.apply(compiler);
+
+    await expect(captured.watch?.()).resolves.not.toThrow();
+    expect(fs.existsSync(fullCss)).toBe(true);
+  });
+
   test('追加 prop 設定で projectRoot 直下に lism-env.d.ts を生成する', async () => {
     const root = tmpDir();
     writeUserConfig(root);

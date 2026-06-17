@@ -59,6 +59,8 @@ interface LismCssWordPressPluginOptions {
   outDir: string;
   configPath?: string;
   typegen: boolean;
+  /** full.css / full_no_layer.css も生成するか（初回生成と揃える）。 */
+  full: boolean;
   /** watch 依存へ登録する user lism.config の絶対パス（無ければ null）。 */
   userConfigPath: string | null;
 }
@@ -78,12 +80,13 @@ class LismCssWordPressPlugin {
   }
 
   apply(compiler: Compiler): void {
-    const { projectRoot, outDir, configPath, typegen, userConfigPath } = this.options;
+    const { projectRoot, outDir, configPath, typegen, full, userConfigPath } = this.options;
 
     // watch 再ビルドの直前に CSS / 型を再生成する（dev watch 時のみ発火するフック）。
     compiler.hooks.watchRun.tapPromise('LismCssWordPress', async () => {
       // bundler（webpack）側が最終 minify するため、ここでは minify せず生成する。
-      await generateCssToDir({ projectRoot, outDir, configPath, full: false, minify: false });
+      // full は初回生成（withLismWordPress）と揃え、watch でも full.css を更新する。
+      await generateCssToDir({ projectRoot, outDir, configPath, full, minify: false });
       if (typegen) await syncLismEnvDts(projectRoot, { configPath });
     });
 
@@ -128,6 +131,7 @@ export async function withLismWordPress<T extends Record<string, any>>(webpackCo
     outDir,
     configPath: opts?.configPath,
     typegen,
+    full: opts?.full ?? false,
     userConfigPath: generated.userConfigPath,
   });
 
