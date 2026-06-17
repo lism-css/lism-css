@@ -41,6 +41,10 @@ export default defineConfig({
 </PreviewCode>
 </Preview>
 
+:::info
+For Next.js, use `withLism()` from `@lism-css/plugin/next` instead of the Vite / Astro plugin. See [Setting up with Next.js](/en/docs/installation/#setting-up-with-nextjs) for the setup steps.
+:::
+
 The plugin auto-detects `lism.config.js` then `lism.config.mjs` from the project root. To use a file at a different location, specify the path via the `configPath` option:
 
 ```js
@@ -141,8 +145,7 @@ Note that adding values to existing props (such as `ta="justify"`) never causes 
 :::
 
 :::warning
-Note that customizations via `lism.config.js` only affect the HTML output from components.
-The styles for any added utility classes are not automatically loaded (see [How to load additional styles](#how-to-load-additional-styles)).
+Note that adding props in `lism.config.js` only changes the HTML output from components — the styles for the added utility classes are not generated on their own. See [How to load additional styles](#how-to-load-additional-styles) for ways to apply them (automatic via the plugin / CLI / SCSS).
 :::
 
 
@@ -173,7 +176,7 @@ This also lets you use `xs` / `xl` in object notation on the component side:
 To have `xs` / `xl` appear in type completion as well, see the [Responsive page](/en/docs/responsive/). If you are using the integrated plugin (`@lism-css/plugin`), `lism-env.d.ts` is generated automatically and no hand-written type extension is needed.
 
 :::info
-[`full.css`](/en/docs/customize/build/) already includes classes with `xs` enabled (using a provisional value of 360px).
+Even when you load `full.css`, `xs` / `xl` are disabled by default (only `sm` / `md` / `lg` are emitted). To use them, enable them by specifying sizes in `breakpoints`, just as above.
 :::
 
 :::warning

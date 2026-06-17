@@ -12,7 +12,7 @@ description: 'Lism CSS のカスタマイズ方法の全体像。ビルドCSSの
 |---|---|---|
 | `@layer` のオン / オフや `full.css` など、**読み込むビルド済みCSSを切り替えたい** | CSSファイルの差し替え / `isFullMode` | [CSSビルドの選択](/docs/customize/build/) |
 | **コンポーネントの props / tokens / traits を増やしたい**（Vite / Astro 向けの推奨パス） | `lism.config.js` + `@lism-css/plugin` | [lism.config.js でのカスタマイズ](/docs/customize/config/) |
-| **SCSS から低レベルに出力CSSを調整したい**（純SCSS構成など） | `$setting` 変数の上書き | [SCSS でのカスタマイズ](/docs/customize/scss/) |
+| **SCSS から低レベルに出力CSSを調整したい**（純SCSS構成など） | `setting` モジュールの変数（`$breakpoints` / `$props` など）の上書き | [SCSS でのカスタマイズ](/docs/customize/scss/) |
 | **本番CSSから未使用クラスを削除して軽量化したい** | purge プラグイン | [CSS Purge](/docs/customize/purge/) |
 
 

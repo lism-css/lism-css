@@ -41,6 +41,10 @@ export default defineConfig({
 </PreviewCode>
 </Preview>
 
+:::info
+Next.js では Vite / Astro プラグインの代わりに、`@lism-css/plugin/next` の `withLism()` を使います。セットアップ手順は[インストールの「Next.js での導入」](/docs/installation/#nextjs-での導入)を参照してください。
+:::
+
 プラグインはプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所のファイルを使う場合は `configPath` オプションでパスを指定できます。
 
 ```js
@@ -141,8 +145,7 @@ export default {
 :::
 
 :::warning
-ただし、`lism.config.js` でのカスタマイズは、コンポーネントからのHTML出力が変わるだけです。  
-追加されたユーティリティクラスに対するスタイルは読み込まれません（[追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法)を参照）。
+ただし、`lism.config.js` に props を追加しただけでは、コンポーネントのHTML出力が変わるだけで、対応するユーティリティクラスのスタイルは生成されません。スタイルを反映する方法（プラグインによる自動反映 / CLI / SCSS）は[追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法)を参照してください。
 :::
 
 
@@ -150,7 +153,7 @@ export default {
 
 デフォルトのブレイクポイントは `xs: 0`（無効）/ `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0`（無効）です。値 `0` は「無効＝CSSクエリを出力しない」を表します。
 
-`xs` や `xl` を有効化するには、**`lism.config.js` の `breakpoints` に差分のサイズを指定する**のが最も簡単です。
+`xs` や `xl` を有効化するには、**`lism.config.js` の `breakpoints` に、有効化したいブレイクポイントのサイズだけを指定する**のが最も簡単です。
 
 ```js
 // lism.config.js
@@ -173,7 +176,7 @@ export default {
 型・補完でも `xs` / `xl` を提示させるには、[Responsive ページ](/docs/responsive/#型補完で提示されるブレイクポイント)を参照してください。統合プラグイン（`@lism-css/plugin`）を使っている場合は、`lism-env.d.ts` が自動生成されるため手書き拡張は不要です。
 
 :::info
-[`full.css`](/docs/customize/build/#全部入りビルドfullcssを使う)には、あらかじめ `xs`（仮値 360px）が有効化された状態のクラスが含まれています。
+`full.css` を読み込んでいる場合も、`xs` / `xl` はデフォルトでは無効です（出力されるのは `sm` / `md` / `lg`）。利用するには上記と同様に、`breakpoints` でサイズを指定して有効化してください。
 :::
 
 :::warning
@@ -222,7 +225,7 @@ dev サーバー起動中に `lism.config.js` を変更すると HMR で CSS が
 
 ### lism-css のCLIコマンドでCSSビルドする
 
-Vite / Astro を使わない構成（純 SCSS 構成・他バンドラ等）で `lism.config.js` を CSS に反映させるには、`@lism-css/plugin` が提供する `lism-css build` を実行します。これは後方互換専用ではなく、そのような構成向けの**現役の正規パス**です。
+Vite / Astro を使わない構成（純 SCSS 構成・他バンドラ等）で `lism.config.js` を CSS に反映させるには、`@lism-css/plugin` が提供する `lism-css build` を実行します。これは後方互換専用ではなく、そのような構成向けの**現在も推奨される正式な方法**です。
 
 ```bash frame="none"
 npx lism-css build

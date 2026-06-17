@@ -33,7 +33,7 @@ export default function warnUnsupportedBp(propName: string): void {
     lines.push(`  - Use the logical property \`${alt}\` instead`);
   }
   lines.push(`  - ${alt ? 'Or e' : 'E'}nable it via SCSS $props: \`'${propName}': ( bp: 1 )\``);
-  lines.push('  Docs: https://lism-css.com/en/docs/customize/config/');
+  lines.push('  Docs: https://lism-css.com/en/docs/customize/scss/');
   lines.push("  * If you've already customized this via SCSS, you can ignore this warning.");
 
   console.warn(lines.join('\n'));

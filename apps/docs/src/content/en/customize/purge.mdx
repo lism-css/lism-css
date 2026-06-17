@@ -89,7 +89,7 @@ The Vite plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens
 
 ## Pairing with full.css
 
-`lism-css/full.css` is an **everything-included build** that covers every property class, token, and breakpoint (extended up to `lg`, including the `xs` classes). It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
+`lism-css/full.css` is an **everything-included build** that adds breakpoint-aware classes for every Property Class except the `isVar` ones (`sm` / `md` / `lg`), plus `SPACE` token utilities for spacing properties. It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
 
 ```js
 // Load full.css instead of main.css

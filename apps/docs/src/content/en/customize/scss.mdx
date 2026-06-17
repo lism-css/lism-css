@@ -1,6 +1,6 @@
 ---
 title: 'SCSS Customization'
-description: 'How to override lism-css SCSS variables ($setting) to fine-tune the CSS output range, breakpoints, and more at a low level.'
+description: 'How to override lism-css SCSS variables (such as the setting module variables $breakpoints / $props) to fine-tune the CSS output range, breakpoints, and more at a low level.'
 ---
 
 You can customize the output CSS by overriding SCSS variables. This approach is suited for plain SCSS setups and other cases where you need low-level control without using the Vite / Astro plugin.
@@ -114,4 +114,4 @@ Enabling `xs` / `xl` adds a block for each active breakpoint to every Property C
 
 ## Notes on SCSS compilation
 
-When importing SCSS files directly, note that compilation order relative to other lism-css styles may be affected.
+When you compile SCSS directly, the order of your own styles and the lism-css styles in the final CSS may differ from what you expect. A broken order changes how specificity and the cascade resolve, which can apply styles you did not intend — so pay attention to your `@use` order (whether you place your own styles before or after loading lism-css).
