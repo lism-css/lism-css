@@ -39,7 +39,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | 透明度 (o) | `mp`, `p`, `pp`, `ppp` | `--o--{key}` | `--o--p` |
 | 角丸 (bdrs) | `10`, `20`, `30`, `40`, `99`, `inner` | `--bdrs--{key}` | `--bdrs--20` |
 | 影 (bxsh) | `10`, `20`, `30`, `40`, `50` | `--bxsh--{N}` | `--bxsh--20` |
-| サイズ (sz) | `xs`, `s`, `m`, `l`, `xl`, `bleed` | `--sz--{key}` | `--sz--l` |
+| サイズ (sz) | `xs`, `s`, `m`, `l`, `xl` | `--sz--{key}` | `--sz--l` |
 | アスペクト比 (ar) | `og` | `--ar--{key}` | `--ar--og` |
 | フロー余白 (flow) | `base`, `s` | `--flow--{key}` | `--flow--base` |
 | セマンティックカラー (color) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral` | `--{name}` | `--brand` |
@@ -187,7 +187,8 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | 初期値 |
 |---------|-----|
-| `--shc` | `hsl(220 4% 8% / 15%)` |
+| `--shadow` | `hsl(220 4% 8% / 12%)` |
+| `--shc` | `var(--shadow)` |
 | `--shsz--10` | `0px 1px 3px` |
 | `--shsz--20` | `0px 2px 6px` |
 | `--shsz--30` | `0px 4px 12px` |
@@ -229,11 +230,11 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | デフォルト値 | 説明 |
 |---------|------------|------|
-| `--base` | `hsl(224 4% 99%)` | ベース背景色 |
-| `--base-2` | `hsl(224 8% 95%)` | 代替背景色 |
-| `--text` | `hsl(224 4% 8%)` | 基本テキスト色 |
-| `--text-2` | `hsl(224 6% 32%)` | 補助テキスト色 |
-| `--divider` | `hsl(224 8% 88%)` | 区切り線色 |
+| `--base` | `hsl(220 0% 99%)` | ベース背景色 |
+| `--base-2` | `hsl(220 4% 95%)` | 代替背景色 |
+| `--text` | `hsl(220 0% 8%)` | 基本テキスト色 |
+| `--text-2` | `hsl(220 4% 32%)` | 補助テキスト色 |
+| `--divider` | `hsl(220 4% 88%)` | 区切り線色 |
 | `--link` | `oklch(50% 0.3 240)` | リンク色 |
 | `--brand` | `#1e5f8c` | ブランド色 |
 | `--accent` | `#d94a6a` | アクセント色 |
@@ -248,7 +249,7 @@ OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩
 | `--red` | `oklch(var(--L) var(--C) 20)` |
 | `--orange` | `oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48)` |
 | `--yellow` | `oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80)` |
-| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 152)` |
+| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152)` |
 | `--blue` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264)` |
 | `--purple` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288)` |
 | `--pink` | `oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352)` |

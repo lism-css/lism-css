@@ -19,7 +19,7 @@ description: "Lism CSS の設計・実装に関するガイド。CSSの編集・
 ### CDNでCSSファイルのみ読み込む場合
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.16.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm パッケージ

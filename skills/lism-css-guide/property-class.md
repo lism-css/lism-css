@@ -82,7 +82,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `ff` | `font-family` | `-ff:base`, `-ff:accent`, `-ff:mono` | — |
 | `fs` | `font-style` | `-fs:italic` | — |
 | `lh` | `line-height`（`--hl` 経由） | `-lh:base`, `-lh:xs`, `-lh:s`, `-lh:l`, `-lh:1` | — |
-| `hl` | `--hl` 変数のみ | — | — |
+| `hl` | `--hl` 変数のみ | `-hl:base`, `-hl:xs`, `-hl:s`, `-hl:l` | ✔ |
 | `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |

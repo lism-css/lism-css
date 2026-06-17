@@ -31,7 +31,7 @@
 
 ## Usage
 
-`<Icon>` には**4つの使い方**があります。
+`<Icon>` には**5つの使い方**があります。
 
 ### 1. 外部パッケージのアイコンを使う（`as` + `exProps`）
 
@@ -92,7 +92,7 @@ import { phIcons, logoIcons } from 'lism-css/react/atomic/Icon/presets';
 
 ### 5. `src` で画像をアイコンとして使う
 
-`src` を指定すると `<img>` として出力されます（厳密には4パターンに加えて画像指定も可能）。
+`src` を指定すると `<img>` として出力されます。
 
 ```jsx
 <Icon fz="4xl" src="/img/avatar01.jpg" alt="avatar" />

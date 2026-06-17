@@ -46,7 +46,6 @@ import 'lism-css/main_no_layer.css';
 | 変数 | 用途 | デフォルト |
 |------|------|-----------|
 | `$breakpoints` | ブレイクポイント数値の定義（`0` は無効＝クエリを出力しない） | `('xs': 0, 'sm': '480px', 'md': '800px', 'lg': '1120px', 'xl': 0)` |
-| `$common_support_bp` | 主要な Property Class が共通サポートするブレイクポイント上限 | `'lg'` |
 | `$is_container_query` | コンテナクエリで出力するか（`1` = container query, `0` = media query） | `1` |
 | `$default_important` | Property Class にデフォルトで `!important` を付与するか | `0` |
 | `$props` | Property Class ごとの個別出力設定 | `prop-config` のデフォルト |
@@ -59,7 +58,6 @@ import 'lism-css/main_no_layer.css';
   $breakpoints: (
     'sm': '400px',  // 個別キーの上書き可
   ),
-  $common_support_bp: 'md',  // デフォルトは 'lg'。小さくするとCSSサイズを削減できる
   $is_container_query: 0,
   $default_important: 1,
   $props: (
@@ -87,7 +85,7 @@ import 'lism-css/main_no_layer.css';
       bp: 0,               // .-h_sm 等のブレイクポイント版を出力しない
     ),
     'p': (
-      bp: 'md',            // BP対応クラスを .-p_sm / .-p_md までに制限
+      bp: ('sm', 'md'),    // BP対応クラスを .-p_sm / .-p_md だけに限定（bp は 0 / 1 / BPキーのリストのみ）
       utilities: (
         'box': '2em',      // .-p:box { --p: 2em } を追加
       ),

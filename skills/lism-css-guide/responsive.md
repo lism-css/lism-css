@@ -24,11 +24,30 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 
 | BP | 値 | 効くタイミング |
 |----|-----|----------------|
+| `xs` | 0（無効） | （opt-in） |
 | `sm` | 480px | sm 以上 |
 | `md` | 800px | md 以上 |
 | `lg` | 1120px | lg 以上 |
+| `xl` | 0（無効） | （opt-in） |
 
 **レスポンシブ対応の Property Class は、標準で `sm` / `md` / `lg` のすべてに対応。** どの Prop がレスポンシブ対応かは property-class.md の BP 列を参照。レスポンシブ非対応の Prop でブレイクポイント指定を使う場合は customize.md 参照の SCSS カスタマイズが必要です。
+
+**`xs` / `xl` は opt-in**:
+- デフォルト値は `0`（無効）で、CSS は出力されません。`lism.config.js` の `breakpoints` でサイズを与えると有効化されます（customize.md 参照）。
+- 型（Lism コンポーネント）でも `sm` / `md` / `lg` のみがデフォルトで補完・許可されます。`xs` / `xl` を使う場合は `declare module 'lism-css'` で `BreakpointRegistry` を拡張して解禁します。
+
+  ```ts
+  // src/lism.d.ts など
+  import 'lism-css';
+  declare module 'lism-css' {
+    interface BreakpointRegistry {
+      xl: true; // 配列の 5 要素目 [..., xl] と { xl: ... } を解禁
+      xs: true; // { xs: ... } を解禁（xs は配列記法では書けない）
+    }
+  }
+  ```
+
+- `xs` は配列記法では書けません（配列のインデックス → BP の対応が `[base, sm, md, lg, xl]` で固定のため）。オブジェクト記法（`{ xs: ... }`）でのみ指定します。`xl` は配列記法・オブジェクト記法の両方で利用できます。
 
 例: `-d:none -d_sm:block` → デフォルト非表示、`sm` 以上で表示。
 
@@ -99,10 +118,10 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 配列形式またはオブジェクト形式でレスポンシブ値を指定します。
 
 ```jsx
-// 配列形式: [デフォルト, sm, md]
+// 配列形式: 位置は [base, sm, md, lg, xl] で固定（xs は配列記法では書けない）
 <Box p={[20, 30, 40]} fz={['s', 'm', 'l']} />
 
-// オブジェクト形式
+// オブジェクト形式（xs を使う場合はこちら）
 <Box p={{ base: '20', sm: '30', md: '40' }} />
 ```
 
