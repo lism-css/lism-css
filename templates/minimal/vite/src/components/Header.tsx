@@ -1,12 +1,14 @@
 import { Lism, Flex, Frame, Cluster, Link, Icon } from 'lism-css/react';
 
 export default function Header() {
+  const baseUrl = import.meta.env.BASE_URL;
+
   return (
     <Lism as="header" isContainer hasGutter bd-b>
       <Flex ai="center" jc="between" py="20">
-        <Link href="/" d="inline-flex" fxsh="0">
+        <Link href={baseUrl} d="inline-flex" fxsh="0">
           <Frame w={['100px', '120px']}>
-            <img src="/logo-black.svg" alt="Lism CSS" width="120" height="24" />
+            <img src={`${baseUrl}logo-black.svg`} alt="Lism CSS" width="120" height="24" />
           </Frame>
         </Link>
         <Cluster as="nav" g={['5', '10']}>
