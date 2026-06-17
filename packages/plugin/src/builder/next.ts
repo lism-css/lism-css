@@ -13,6 +13,9 @@
  * 注入対象は ① `lism-css/<entry>.css` → 生成 CSS、② `lism-css/config.js` → user lism.config の 2 系統 +
  * ③ `lism-env.d.ts` 生成。CSS 事前生成・typegen はいずれも非同期なので、Next が受け付ける
  * 「`(phase, ctx) => config | Promise<config>`」形式の **async config 関数**を返す設計にする。
+ *
+ * Next devにはVite/Astroのwatch APIやwebpack compiler hook相当の汎用注入口が無いため、
+ * `lism.config.js`の変更は自動追従しない。設定変更後はdevサーバーを再起動する。
  */
 import path from 'node:path';
 
