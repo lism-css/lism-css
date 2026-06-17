@@ -38,6 +38,12 @@ export interface BuildConfig {
    * 型生成で「追加 trait の広告」に参照する。
    */
   traits?: Record<string, string>;
+  /**
+   * Property Class へデフォルトで `!important` を付与するか（Sass `$default_important`）。
+   * lism.config.js のルートキー `defaultImportant: true` で有効化する。
+   * これは CSS 生成時に決まるビルド時設定で、runtime injection では切り替えられない。
+   */
+  defaultImportant?: boolean;
 }
 
 /**
@@ -206,11 +212,23 @@ export function serializeBreakpoints(CONFIG: BuildConfig): string {
 }
 
 /**
- * `_prop-config.gen.scss` に書き出す完全な SCSS（`$props` + `$breakpoints`）を生成する。
- * `_setting.scss` が両方を `@use './prop-config.gen'` 経由で読み、config を CSS 出力の情報源にする。
+ * CONFIG.defaultImportant を SCSS の `$default_important: 0;` / `$default_important: 1;` 文字列へ直列化する。
+ *
+ * lism.config.js の `defaultImportant: true` を Sass の `$default_important`（Property Class への
+ * デフォルト `!important` 付与）へ反映する。未指定時も `$default_important: 0;` を出力し、
+ * `_setting.scss` の `props.$default_important` 参照が常に解決できるようにする
+ * （未定義メンバ参照による sass エラーの防止。`serializeBreakpoints` と同じ方針）。
+ */
+export function serializeDefaultImportant(CONFIG: BuildConfig): string {
+  return `$default_important: ${CONFIG.defaultImportant ? 1 : 0};\n`;
+}
+
+/**
+ * `_prop-config.gen.scss` に書き出す完全な SCSS（`$props` + `$breakpoints` + `$default_important`）を生成する。
+ * `_setting.scss` がこれらを `@use './prop-config.gen'` 経由で読み、config を CSS 出力の情報源にする。
  */
 export function serializeConfigScss(CONFIG: BuildConfig): string {
-  return `${serializePropConfig(CONFIG)}\n${serializeBreakpoints(CONFIG)}`;
+  return `${serializePropConfig(CONFIG)}\n${serializeBreakpoints(CONFIG)}\n${serializeDefaultImportant(CONFIG)}`;
 }
 
 /**

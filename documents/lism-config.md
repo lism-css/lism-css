@@ -15,6 +15,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI
 | `traits` | `isHoge`→`is--hoge`のような真偽値class propを追加する |
 | `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
 | `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
+| `defaultImportant` | Property Classにデフォルトで`!important`を付与する（Sassの`$default_important`相当のビルド時設定） |
 | `cli` | `lism ui add`などの出力先設定。旧`lism-ui.json`の後継 |
 
 ```js
@@ -150,4 +151,5 @@ pnpm exec lism-css build
 - 値に`'-'`を指定したキーはカタログ登録のみで`:root`宣言を出力しない（実値は手書きSCSS側。主に`color`/`palette`で使う）。`'-'`以外の値を与えれば、その値が`:root`へ出力される。
 - `traits`はclass出力の追加であり、対応するスタイルは別途必要。
 - `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。
+- `defaultImportant:true`はCSS生成時にSassの`$default_important`へ反映されるビルド時設定。CSSを再生成しないと反映されず、ランタイム注入（`window._LISM_CSS_CONFIG_`）では切り替えられない。素のSass利用で`@use 'lism-css/scss/setting' with ($default_important: ...)`と明示指定した場合は、そちらが`lism.config.js`の値より優先される。
 - 統合入口は`@lism-css/plugin/vite`/`@lism-css/plugin/astro`の`lismCss()`。
