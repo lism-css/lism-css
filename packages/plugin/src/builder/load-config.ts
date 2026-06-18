@@ -9,10 +9,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
-import defaultConfig from 'lism-css/default-config';
-import propsFull from 'lism-css/config/presets/props-full';
-import { objDeepMerge } from 'lism-css/config/helper';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { BuildConfig, PropConfig } from './serialize';
 
 export type ObjDeepMerge = (origin: Record<string, unknown>, source: Record<string, unknown>) => Record<string, unknown>;
@@ -23,6 +20,44 @@ const FULL_CSS_DEFAULTS = {
   // userConfig はこの後にマージするため、lism.config.js の breakpoints.xs が最後に勝つ。
   breakpoints: { xs: '360px' },
 } satisfies Record<string, unknown>;
+
+type DefaultModule<T> = { default: T };
+type HelperModule = { objDeepMerge: ObjDeepMerge };
+
+async function importFreshModule<T>(specifier: string): Promise<T> {
+  const resolved = import.meta.resolve(specifier);
+  if (!resolved.startsWith('file:')) return (await import(specifier)) as T;
+
+  const filePath = fileURLToPath(resolved);
+  const mtime = fs.statSync(filePath).mtimeMs;
+  return (await import(`${pathToFileURL(filePath).href}?v=${mtime}`)) as T;
+}
+
+async function loadCoreBuildDeps(): Promise<{
+  defaultConfig: BuildConfig;
+  propsFull: Record<string, PropConfig>;
+  objDeepMerge: ObjDeepMerge;
+}> {
+  const [tokens, props, traits, breakpoints, propsFullMod, helper] = await Promise.all([
+    importFreshModule<DefaultModule<BuildConfig['tokens']>>('lism-css/config/defaults/tokens'),
+    importFreshModule<DefaultModule<BuildConfig['props']>>('lism-css/config/defaults/props'),
+    importFreshModule<DefaultModule<BuildConfig['traits']>>('lism-css/config/defaults/traits'),
+    importFreshModule<DefaultModule<BuildConfig['breakpoints']>>('lism-css/config/defaults/breakpoints'),
+    importFreshModule<DefaultModule<Record<string, PropConfig>>>('lism-css/config/presets/props-full'),
+    importFreshModule<HelperModule>('lism-css/config/helper'),
+  ]);
+
+  return {
+    defaultConfig: {
+      tokens: tokens.default,
+      props: props.default,
+      traits: traits.default,
+      breakpoints: breakpoints.default,
+    },
+    propsFull: propsFullMod.default,
+    objDeepMerge: helper.objDeepMerge,
+  };
+}
 
 export interface LoadedBuildConfigs {
   /** main 系（main.css / 個別レイヤ）が読む prop-config の元 CONFIG。isFullMode 時は fullConfig と同一。 */
@@ -102,9 +137,10 @@ export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfi
     userConfig = userMod.default ?? {};
   }
 
+  const { defaultConfig, propsFull, objDeepMerge } = await loadCoreBuildDeps();
   const { mainConfig, fullConfig, isFullMode } = computeBuildConfigs({
-    defaultConfig: defaultConfig as unknown as BuildConfig,
-    propsFull: propsFull as Record<string, PropConfig>,
+    defaultConfig,
+    propsFull,
     userConfig,
     objDeepMerge,
   });
