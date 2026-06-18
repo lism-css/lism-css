@@ -133,8 +133,8 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | 値 |
 |---------|-----|
-| `--ff--base` | `-apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji'` |
-| `--ff--accent` | `'Garamond', 'Baskerville', 'Times New Roman', serif` |
+| `--ff--base` | `-apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif` |
+| `--ff--accent` | `Georgia, serif` |
 | `--ff--mono` | `ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace` |
 
 

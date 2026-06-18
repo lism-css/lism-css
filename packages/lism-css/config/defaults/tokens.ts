@@ -66,11 +66,16 @@ export default {
 
   // font-family
   ff: {
-    // Base: -apple-system → Safari/Firefox、BlinkMacSystemFont → Chrome用。sans-serif: Mac=Hiragino / Win=Noto|Meiryo
-    //   Memo: system-ui は和文に游ゴシックが当たるため使わない。
-    base: "-apple-system, 'BlinkMacSystemFont', sans-serif",
+    /* Base:
+     *   -apple-system/BlinkMacSystemFont → Macで英数字をSan Franciscoに。（前者がSafari/Firefox、後者がChrome用）
+     *   'Hiragino Sans' → Macでの和文フォントの指定。ここを省くと、Chromeで sans-serifが Hiragino Kaku Gothic ProN になってしまう
+     *   sans-serif: Mac=Hiragino系 / Win=Noto|Meiryo
+     *
+     *   Note: system-ui は和文に游ゴシックが当たるため使わない。
+     */
+    base: "-apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif",
     // Accent: 装飾用セリフ。初期状態はあくまで一例で実際はカスタマイズしてもらう想定。
-    accent: "Palatino, 'Palatino Linotype', serif",
+    accent: 'Georgia, serif',
     // Mono: ui-monospace=各OSのUI等幅 / SFMono・Menlo→Mac・Consolas→Win のフォールバック
     mono: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
   },
