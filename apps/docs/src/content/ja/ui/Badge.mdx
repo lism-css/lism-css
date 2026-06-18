@@ -31,9 +31,9 @@ import { Badge } from '@lism-css/ui/astro/Badge';
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="c--badge c--badge--outline -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="c--badge u--cbox -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:99" style="--keycolor:var(--blue)">Badge</span>
+      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
+      <span class="c--badge c--badge--outline -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
+      <span class="c--badge u--cbox -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:99" style="--keycolor:var(--blue)">Badge</span>
     </div>
     ```
   </PreviewCode>
@@ -105,9 +105,9 @@ import { Badge } from '@lism-css/ui/astro/Badge';
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--red)">Badge</span>
-      <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--orange)">Badge</span>
+      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
+      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--red)">Badge</span>
+      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--orange)">Badge</span>
       ...
     </div>
     ```
@@ -250,13 +250,13 @@ import { BookIcon } from '@phosphor-icons/react';
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
-      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bgc="text" c="base" bdrs="10">
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bgc="text" c="base" bdrs="10">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bd bdc="current" bdrs="10">
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bd bdc="current" bdrs="10">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" util="cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" hl="xs" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
     </Cluster>
@@ -264,19 +264,19 @@ import { BookIcon } from '@phosphor-icons/react';
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
-      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bgc="text" c="base" bdrs="10">Badge</Lism>
-      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bd bdc="current" bdrs="10">Badge</Lism>
-      <Lism as="span" util="cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bgc="text" c="base" bdrs="10">Badge</Lism>
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bd bdc="current" bdrs="10">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" hl="xs" py="5" px="10" bdrs="99">Badge</Lism>
     </Cluster>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <span class="-fz:xs -lh:xs -py:5 -px:10 -bgc:text -c:base -bdrs:10">Badge</span>
-      <span class="-fz:xs -lh:xs -py:5 -px:10 -bd -bdc:current -bdrs:10">Badge</span>
+      <span class="-fz:xs -hl:xs -py:5 -px:10 -bgc:text -c:base -bdrs:10">Badge</span>
+      <span class="-fz:xs -hl:xs -py:5 -px:10 -bd -bdc:current -bdrs:10">Badge</span>
       <span
-        class="u--cbox -bd -fz:xs -lh:xs -py:5 -px:10 -bdrs:99"
+        class="u--cbox -bd -fz:xs -hl:xs -py:5 -px:10 -bdrs:99"
         style="--keycolor: var(--blue); --bdc: color-mix(in srgb, var(--keycolor) 40%, var(--base))"
         >Badge</span
       >

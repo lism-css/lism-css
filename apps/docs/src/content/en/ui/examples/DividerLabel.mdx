@@ -15,7 +15,7 @@ Examples of labeled divider layouts built with Lism.
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20" >
     <Box bgc="base-2" c="text-2" py="40" ta="center">...Contents...</Box>
-    <Flex ai="center" g="20" lh="s">
+    <Flex ai="center" g="20" hl="s">
       <Divider fx="1" />
       <Inline fz="s">Label Text</Inline>
       <Divider fx="1" />
@@ -25,7 +25,7 @@ Examples of labeled divider layouts built with Lism.
   <PreviewCode slot="tab" label="JSX">
     ```jsx {2-6}
     <Box bgc="base-2" c="text-2" py="40" ta="center">...Contents...</Box>
-    <Flex ai="center" g="20" lh="s">
+    <Flex ai="center" g="20" hl="s">
       <Divider fx="1" />
       <Inline fz="s">Label Text</Inline>
       <Divider fx="1" />
@@ -36,7 +36,7 @@ Examples of labeled divider layouts built with Lism.
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--box -bgc:base-2 -c:text-2 -py:40 -ta:center">…Contents…</div>
-    <div class="l--flex -ai:center -g:20 -lh:s">
+    <div class="l--flex -ai:center -g:20 -hl:s">
       <div class="a--divider -fx:1" aria-hidden="true"></div>
       <span class="-fz:s">Label Text</span>
       <div class="a--divider -fx:1" aria-hidden="true"></div>
@@ -50,12 +50,12 @@ Examples of labeled divider layouts built with Lism.
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20" >
     <Box bgc="base-2" c="text-2" py="40" ta="center">...Contents...</Box>
-    <Flex ai="center" g="15" lh="s">
+    <Flex ai="center" g="15" hl="s">
       <span class="-fz:s -px:5">Label Text</span>
       <Divider fx="1" bdc="currentColor" o="pp" />
     </Flex>
     <Box bgc="base-2" c="text-2" py="40" ta="center">...Contents...</Box>
-    <Flex ai="center" g="15" lh="s" c="blue">
+    <Flex ai="center" g="15" hl="s" c="blue">
       <Divider fx="1" bdc="currentColor" bds="dotted" bdw="4px" o="ppp" />
       <span class="-fz:s -px:5">Label Text</span>
     </Flex>
@@ -64,12 +64,12 @@ Examples of labeled divider layouts built with Lism.
   <PreviewCode slot="tab" label="JSX">
     ```jsx {2-5} {7-10}
     <Box bgc="base-2" c="text-2" py="40" ta="center">...Contents...</Box>
-    <Flex ai="center" g="15" lh="s">
+    <Flex ai="center" g="15" hl="s">
       <span class="-fz:s -px:5">Label Text</span>
       <Divider fx="1" bdc="currentColor" o="pp" />
     </Flex>
     <Box bgc="base-2" c="text-2" py="40" ta="center">...Contents...</Box>
-    <Flex ai="center" g="15" lh="s" c="blue">
+    <Flex ai="center" g="15" hl="s" c="blue">
       <Divider fx="1" bdc="currentColor" bds="dotted" bdw="4px" o="ppp" />
       <span class="-fz:s -px:5">Label Text</span>
     </Flex>
@@ -79,12 +79,12 @@ Examples of labeled divider layouts built with Lism.
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--box -bgc:base-2 -c:text-2 -py:40 -ta:center">…Contents…</div>
-    <div class="l--flex -ai:center -g:15 -lh:s">
+    <div class="l--flex -ai:center -g:15 -hl:s">
       <span class="-fz:s -px:5">Label Text</span>
       <div class="a--divider -fx:1 -o:pp" style="--bdc: currentColor" aria-hidden="true"></div>
     </div>
     <div class="l--box -bgc:base-2 -c:text-2 -py:40 -ta:center">…Contents…</div>
-    <div class="l--flex -ai:center -g:15 -lh:s -c" style="--c: var(--blue)">
+    <div class="l--flex -ai:center -g:15 -hl:s -c" style="--c: var(--blue)">
       <div class="a--divider -fx:1 -o:ppp" style="--bdc: currentColor; --bds: dotted; --bdw: 4px" aria-hidden="true"></div>
       <span class="-fz:s -px:5">Label Text</span>
     </div>
@@ -101,7 +101,7 @@ Examples of labeled divider layouts built with Lism.
   <PreviewArea p="20" layout="">
     <Flex ai="center" g="15">
       <Box fx="1" bgc="base-2" py="40" ta="center">Box</Box>
-      <Stack ai="center" g="10" lh="s" fz="s" aslf="stretch">
+      <Stack ai="center" g="10" hl="s" fz="s" aslf="stretch">
         <Divider fx="1" wm="vertical-rl" />
         <span>Label</span>
         <Divider fx="1" wm="vertical-rl" />
@@ -115,7 +115,7 @@ Examples of labeled divider layouts built with Lism.
       <Box fx="1" bgc="base-2" py="40" ta="center">
         Box
       </Box>
-      <Stack ai="center" g="10" lh="s" fz="s" aslf="stretch">
+      <Stack ai="center" g="10" hl="s" fz="s" aslf="stretch">
         <Divider fx="1" wm="vertical-rl" />
         <span>Label</span>
         <Divider fx="1" wm="vertical-rl" />
@@ -130,7 +130,7 @@ Examples of labeled divider layouts built with Lism.
     ```html
     <div class="l--flex -ai:center -g:15">
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
-      <div class="l--stack -ai:center -g:10 -lh:s -fz:s -aslf:stretch">
+      <div class="l--stack -ai:center -g:10 -hl:s -fz:s -aslf:stretch">
         <div class="a--divider -wm:vertical-rl -fx:1" aria-hidden="true"></div>
         <span>Label</span>
         <div class="a--divider -wm:vertical-rl -fx:1" aria-hidden="true"></div>
@@ -146,12 +146,12 @@ Examples of labeled divider layouts built with Lism.
   <PreviewArea resize p="20" layout="">
     <Flex ai="stretch" g="15">
       <Box fx="1" bgc="base-2" py="40" ta="center">Box</Box>
-      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" hl="s" fz="xs" aslf="stretch">
         <span class="-px:5">Label</span>
         <Divider fx="1" />
       </Flex>
       <Box fx="1" bgc="base-2" py="40" ta="center">Box</Box>
-      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" hl="s" fz="xs" aslf="stretch">
         <Divider fx="1" />
         <span class="-px:5">Label</span>
       </Flex>
@@ -164,14 +164,14 @@ Examples of labeled divider layouts built with Lism.
       <Box fx="1" bgc="base-2" py="40" ta="center">
         Box
       </Box>
-      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" hl="s" fz="xs" aslf="stretch">
         <span class="-px:5">Label</span>
         <Divider fx="1" />
       </Flex>
       <Box fx="1" bgc="base-2" py="40" ta="center">
         Box
       </Box>
-      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" hl="s" fz="xs" aslf="stretch">
         <Divider fx="1" />
         <span class="-px:5">Label</span>
       </Flex>
@@ -185,12 +185,12 @@ Examples of labeled divider layouts built with Lism.
     ```html "-wm:vertical-rl"
     <div class="l--flex -ai:stretch -g:15">
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
-      <div class="l--flex -wm:vertical-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
+      <div class="l--flex -wm:vertical-rl -ai:center -g:15 -hl:s -fz:xs -aslf:stretch">
         <span class="-px:5">Label</span>
         <div class="a--divider -fx:1" aria-hidden="true"></div>
       </div>
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
-      <div class="l--flex -wm:vertical-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
+      <div class="l--flex -wm:vertical-rl -ai:center -g:15 -hl:s -fz:xs -aslf:stretch">
         <div class="a--divider -fx:1" aria-hidden="true"></div>
         <span class="-px:5">Label</span>
       </div>

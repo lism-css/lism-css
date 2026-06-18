@@ -4,7 +4,7 @@ import './style.css';
 
 export function Root({ children, isHorizontal, className, ...props }) {
   return (
-    <Grid gaf={isHorizontal ? 'c' : null} lh="s" {...props} className={atts(className, 'c--timeline', isHorizontal && 'c--timeline--horizontal')}>
+    <Grid gaf={isHorizontal ? 'c' : null} hl="s" {...props} className={atts(className, 'c--timeline', isHorizontal && 'c--timeline--horizontal')}>
       {children}
     </Grid>
   );

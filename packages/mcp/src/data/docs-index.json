@@ -192,9 +192,9 @@
     "title": "ハーフレディング（line-height）",
     "description": "Lism CSS のハーフレディングによる line-height 管理の仕組みと、関連するデザイントークンについて解説します。",
     "category": "guide",
-    "headings": ["仕組み", "トークン", "lh クラス", "ハーフレディング管理のメリット"],
-    "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "lh", "--hl"],
-    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理する仕組み。`calc(1em + var(--hl) * 2)` によりフォントサイズに依存しない一定の行間を実現。--hl--xs/s/base/l のトークンと -lh:{token} クラスの使い方を解説。"
+    "headings": ["仕組み", "トークン", "hl クラス", "lh（互換ショートカット）", "ハーフレディング管理のメリット"],
+    "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "hl", "lh", "--hl"],
+    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理する仕組み。`calc(1em + var(--hl) * 2)` によりフォントサイズに依存しない一定の行間を実現。--hl--xs/s/base/l のトークンと -hl:{token} クラス（正規）・-lh:{token}（互換ショートカット）の使い方を解説。"
   },
   {
     "sourcePath": "tokens/spacing.mdx",
@@ -252,6 +252,7 @@
       "fz",
       "fw",
       "ff",
+      "hl",
       "lh",
       "d",
       "ta",

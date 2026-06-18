@@ -36,7 +36,7 @@ const { posts, showCategory = true } = Astro.props;
               <Heading level="2" fz="l">
                 {post.data.title}
               </Heading>
-              <Text fz="xs" c="text-2" lh="s">
+              <Text fz="xs" c="text-2" hl="s">
                 {post.data.excerpt}
               </Text>
               {/* 日付 + タグ（カード全体が BoxLink のため、Tag は href なし＝Inline 表示でネスト<a>を避ける） */}

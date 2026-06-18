@@ -429,7 +429,7 @@ const reservationSites: readonly SiteCard[] = [
               c="white"
               lts="l"
               fz={['2xl', null, '3xl']}
-              lh="s"
+              hl="s"
               whs="nowrap"
             >
               {logoLabel}
@@ -455,7 +455,7 @@ const reservationSites: readonly SiteCard[] = [
                       g="5"
                     >
                       <Inline>{ja}</Inline>
-                      <Inline as="span" class="z--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" lh="xs" ta="c" d="block">
+                      <Inline as="span" class="z--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" hl="xs" ta="c" d="block">
                         {en}
                       </Inline>
                     </Link>
@@ -583,7 +583,7 @@ const reservationSites: readonly SiteCard[] = [
             <Stack class="z--ryokan-about_stack" g="0" ai="start">
               <Text as="p" fz={['l', null, 'xl']} mb="10" lts="l" ff="base" c="white" o="pp"> About us </Text>
               <Heading level="2" fz={['2xl', null, '4xl']} fw="500" mb="50" lts="l"> 当宿について </Heading>
-              <Text class="z--ryokan-about_body" as="p" fz="m" lh="l" lts="s" c="white" o="p">
+              <Text class="z--ryokan-about_body" as="p" fz="m" hl="l" lts="s" c="white" o="p">
                 {aboutBodyCopy}
               </Text>
             </Stack>
@@ -641,7 +641,7 @@ const reservationSites: readonly SiteCard[] = [
                   <Text as="p" class="z--ryokan-feature_lead" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
                     {featureLead}
                   </Text>
-                  <Text as="p" class="z--ryokan-feature_body" fz="m" lh="l" lts="s" c="text" max-w="100%">
+                  <Text as="p" class="z--ryokan-feature_body" fz="m" hl="l" lts="s" c="text" max-w="100%">
                     {featureBody}
                   </Text>
                 </Stack>
@@ -672,13 +672,13 @@ const reservationSites: readonly SiteCard[] = [
         <Container isWrapper="l" hasGutter isContainer pos="relative" z="1" pt="60" pb="0">
           <WithSide sideW="24em" g="50" ai="start">
             <Stack isSide g="30" ai="start" w="100%" min-w="0">
-              <Heading level="2" fz={['3xl', null, '4xl']} fw="500" lts="l" lh="l">
+              <Heading level="2" fz={['3xl', null, '4xl']} fw="500" lts="l" hl="l">
                 季節の移ろいを、<br />肌で感じる。
               </Heading>
               <Inline as="span" fz="l" ff="base" c="white" w="100%" lts="l"> Feeling the seasons </Inline>
             </Stack>
             <Stack g="0" ai="start" min-w="0" w="100%">
-              <Text as="p" fz="m" lh="l" lts="s" c="white" o="mp" w="100%">
+              <Text as="p" fz="m" hl="l" lts="s" c="white" o="mp" w="100%">
                 {feature2IntroBody}
               </Text>
             </Stack>
@@ -800,7 +800,7 @@ const reservationSites: readonly SiteCard[] = [
                 <Text as="p" fz="s" lts="l" ff="base" o="pp"> Facilities </Text>
                 <Heading level="2" fz={['xl', null, '2xl']} fw="500" lts="l"> 館内設備 </Heading>
               </Flex>
-              <Text as="p" fz="s" lh="l" lts="s" o="p" max-sz="s" min-w="0" fx="1">
+              <Text as="p" fz="s" hl="l" lts="s" o="p" max-sz="s" min-w="0" fx="1">
                 {informationIntro}
               </Text>
             </Flex>
@@ -851,7 +851,7 @@ const reservationSites: readonly SiteCard[] = [
                         </Accordion.Button>
                       </Accordion.Heading>
                       <Accordion.Panel py="0" pb="20" isOpen={item.defaultOpen === true}>
-                        <Text fz="s" c="text-2" lh="l" lts="s">
+                        <Text fz="s" c="text-2" hl="l" lts="s">
                           {item.answer}
                         </Text>
                       </Accordion.Panel>
@@ -889,7 +889,7 @@ const reservationSites: readonly SiteCard[] = [
                 <Text as="p" fz="m" lts="l" ff="base" o="pp"> Reservation </Text>
                 <Heading level="2" fz={['2xl', null, '3xl']} fw="500" lts="l"> ご予約はこちら </Heading>
               </Stack>
-              <Text as="p" fz="s" lh="l" lts="s" o="p" max-sz="m">
+              <Text as="p" fz="s" hl="l" lts="s" o="p" max-sz="m">
                 お好みの予約サイトからご予約いただけます。予約完了後は各サイトから確認メールが届きます。キャンセルや変更はご利用のサイトの案内に従ってお手続きください。
               </Text>
             </Stack>
@@ -921,7 +921,7 @@ const reservationSites: readonly SiteCard[] = [
                         py={['20', null, '30']}
                         ov="auto"
                       >
-                        <Heading level="3" fz="l" fw="600" lts="l" lh="l">
+                        <Heading level="3" fz="l" fw="600" lts="l" hl="l">
                           {site.title}
                         </Heading>
                         <Text as="p" fz="s" c="text-2" lts="s" o="p">
@@ -947,10 +947,10 @@ const reservationSites: readonly SiteCard[] = [
         <Stack g={['40', null, '50']} ai="stretch" w="100%">
           <!-- キャッチコピーをロゴの左隣に。下揃え（flex-end） -->
           <Flex fxd="row" ai="end" jc="start" fxw="wrap" g={['15', null, '40']} w="100%">
-            <Heading level="2" fz={['2xl', null, '3xl']} fw="normal" lts="l" lh="l" ff="accent">
+            <Heading level="2" fz={['2xl', null, '3xl']} fw="normal" lts="l" hl="l" ff="accent">
               {logoLabel}
             </Heading>
-            <Text as="p" fz={['s', null, 'm']} lh="l" lts="s" o="p" max-sz="m"> 都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。 </Text>
+            <Text as="p" fz={['s', null, 'm']} hl="l" lts="s" o="p" max-sz="m"> 都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。 </Text>
           </Flex>
 
           <!-- ナビと SNS を下揃え（flex-end） -->

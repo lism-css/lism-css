@@ -318,7 +318,7 @@ const contactFields = [
                 <Heading level="2" fz="5xl" lts="l" ff="accent">Mission</Heading>
                 <Text fz="xl" fw="bold" lts="l">What we stand for</Text>
               </Stack>
-              <Text lh="l" lts="s" c="text-2">
+              <Text hl="l" lts="s" c="text-2">
                 {missionBody}
               </Text>
             </Stack>
@@ -416,7 +416,7 @@ const contactFields = [
                   </Frame>
                   <Stack g="30" fx="1" jc="start">
                     <Flex ai="center" g="20">
-                      <Inline lh="1" fz="3xl" fw="bold" lts="l" ff="accent" fxsh="0">
+                      <Inline hl="0" fz="3xl" fw="bold" lts="l" ff="accent" fxsh="0">
                         {item.index}
                       </Inline>
                       <Decorator aslf="stretch" w="1px" bgc="text" fxsh="0" />
@@ -424,7 +424,7 @@ const contactFields = [
                         <Heading level="3" fz="m">
                           {item.titleJa}
                         </Heading>
-                        <Text fz="2xs" lh="s" c="text-2" o="p" ff="accent">
+                        <Text fz="2xs" hl="s" c="text-2" o="p" ff="accent">
                           {item.titleEn}
                         </Text>
                       </Stack>
@@ -510,7 +510,7 @@ const contactFields = [
                   <Heading level="3" fz="l" util="trim">
                     {card.title}
                   </Heading>
-                  <Text fz="s" c="text-2" lh="l" util="trim">
+                  <Text fz="s" c="text-2" hl="l" util="trim">
                     {card.body}
                   </Text>
                   <Text class="z--voice_attribution" fz="2xs" c="text-2" o="p" ta="end" w="100%" mt="auto" util="trim">
@@ -537,7 +537,7 @@ const contactFields = [
                     </Accordion.Button>
                   </Accordion.Heading>
                   <Accordion.Panel p="30" pbs="15" isOpen={item.defaultOpen === true}>
-                    <Text fz="s" c="text-2" lh="l">
+                    <Text fz="s" c="text-2" hl="l">
                       {item.answer}
                     </Text>
                   </Accordion.Panel>
@@ -555,7 +555,7 @@ const contactFields = [
         <Layer bgc="neutral:70%" style={{ backdropFilter: 'saturate(0.7) brightness(0.5) blur(4px)' }} />
         <Stack isWrapper="s" hasGutter pos="relative" g="40">
           <SectionHeading en="Contact" ja="We'd love to hear from you" c="white" />
-          <Text fz="s" c="white" ta="center" lh="l">
+          <Text fz="s" c="white" ta="center" hl="l">
             First-time inquiries are always welcome — feel free to reach out.<br />This form is a dummy.
           </Text>
           <Box as="form" class="z--contact_form" method="post" action="#">
@@ -598,7 +598,7 @@ const contactFields = [
                 class="z--contact_submit"
                 set="plain"
                 fw="500"
-                lh="xs"
+                hl="xs"
                 mbs="20"
                 p="20"
                 c="white"

@@ -204,6 +204,13 @@ describe('getLismProps', () => {
       expect(result.style?.['--hl_sm']).toBe('var(--hl--s)');
     });
 
+    test('hl: 0 は half-leading なしのユーティリティクラスになる（lh="1" と等価）', () => {
+      const result = getLismProps({ hl: '0' });
+      expect(result.className).toContain('-hl:0');
+      expect(result.style?.['--hl']).toBeUndefined();
+      expect(result.style?.lineHeight).toBeUndefined();
+    });
+
     test('lh: トークン値は half-leading の互換ユーティリティクラスになる', () => {
       const result = getLismProps({ lh: 's' });
       expect(result.className).toContain('-lh:s');

@@ -47,51 +47,69 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
 （`--fz--base` はデフォルト `1rem` のため、`--hl-unit` は `2px`前後の値となる想定です。）
 
 
-## `lh` クラス
+## `hl` クラス
 
-`lh`クラスの内部でこれらの変数を扱うようにしています。
+ハーフレディングは `hl`（half-leading）プロパティで指定します。`-hl:*` クラス（`<Lism>` 系コンポーネントでは `hl` prop）の内部で、これらの変数を `--hl` にセットしています。
 
 ```css
-.-lh\:base {
+.-hl\:base {
   --hl: var(--hl--base);
 }
-.-lh\:xs {
+.-hl\:xs {
   --hl: var(--hl--xs);
 }
-.-lh\:s {
+.-hl\:s {
   --hl: var(--hl--s);
 }
-.-lh\:l {
+.-hl\:l {
   --hl: var(--hl--l);
+}
+.-hl\:0 {
+  --hl: 0px; /* ハーフレディングなし */
 }
 ```
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s" style={{'--halfLead':'1em'}}>
-    <DummyText pre='<code class="-fz:s">1:</code> ' lh="1" />
-    <DummyText pre='<code class="-fz:s">xs:</code> ' lh="xs" />
-    <DummyText pre='<code class="-fz:s">s:</code> ' lh="s" />
-    <DummyText pre='<code class="-fz:s">base:</code> ' lh="base" />
-    <DummyText pre='<code class="-fz:s">l:</code> ' lh="l" />
+    <DummyText pre='<code class="-fz:s">0:</code> ' hl="0" />
+    <DummyText pre='<code class="-fz:s">xs:</code> ' hl="xs" />
+    <DummyText pre='<code class="-fz:s">s:</code> ' hl="s" />
+    <DummyText pre='<code class="-fz:s">base:</code> ' hl="base" />
+    <DummyText pre='<code class="-fz:s">l:</code> ' hl="l" />
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <p class="-lh:xs">Lorem ipsum ...</p>
-    <p class="-lh:s">Lorem ipsum ...</p>
-    <p class="-lh:base">Lorem ipsum ...</p>
-    <p class="-lh:l">Lorem ipsum ...</p>
+    <p class="-hl:xs">Lorem ipsum ...</p>
+    <p class="-hl:s">Lorem ipsum ...</p>
+    <p class="-hl:base">Lorem ipsum ...</p>
+    <p class="-hl:l">Lorem ipsum ...</p>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Text lh="xs">Lorem ipsum ...</Text>
-    <Text lh="s">Lorem ipsum ...</Text>
-    <Text lh="base">Lorem ipsum ...</Text>
-    <Text lh="l">Lorem ipsum ...</Text>
+    <Text hl="xs">Lorem ipsum ...</Text>
+    <Text hl="s">Lorem ipsum ...</Text>
+    <Text hl="base">Lorem ipsum ...</Text>
+    <Text hl="l">Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>
+
+`hl` はブレイクポイント指定にも対応しており、`hl={['s', null, 'l']}`（`-hl_md:l`）のようにレスポンシブに切り替えられます。
+
+
+### `lh`（互換ショートカット）
+
+`line-height` の感覚で指定したい場合のために、`lh` を互換ショートカットとして用意しています。
+
+|指定|挙動|
+|---|---|
+|`lh="base"` / `"xs"` / `"s"` / `"l"`|`hl` と同じトークンを参照（`--hl` を制御）|
+|`lh="1"`|ハーフレディングなし（`hl="0"` と等価）|
+|`lh="1.7"` などの任意の数値|従来どおり CSS の `line-height` をそのまま出力|
+
+公式の例では基本的に `hl` を使用します。`line-height` の数値をそのまま指定したいときだけ `lh` を利用してください。
 
 
 ## ハーフレディング管理のメリット

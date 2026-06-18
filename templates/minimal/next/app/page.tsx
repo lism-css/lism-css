@@ -23,7 +23,7 @@ export default function Home() {
             c="base"
             px="30"
             py="20"
-            lh="xs"
+            hl="xs"
             bdrs="10"
             hov={{ bxsh: '40', c: 'text', bgc: 'transparent', bd: true, bdc: 'text' }}
           >
