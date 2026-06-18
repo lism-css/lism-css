@@ -400,7 +400,7 @@ async function main() {
         console.log(`     差分画像: ${item.diffPath}`);
       }
       console.log('');
-      console.log('💡 変更を受け入れるには: pnpm screenshot:update');
+      console.log('💡 変更を受け入れるには: pnpm screenshot:patterns:update');
     }
 
     // 一時ディレクトリを削除
