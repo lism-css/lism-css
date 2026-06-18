@@ -28,13 +28,19 @@ import { writePropConfigFiles } from './compile';
  */
 export async function listCssEntries(scssDir: string): Promise<Map<string, string>> {
   const { globSync } = await import('glob');
-  const files = globSync('**/*.scss', { cwd: scssDir, ignore: ['**/_*.scss'] });
+  const files = globSync('**/*.scss', { cwd: scssDir, ignore: ['**/_*.scss'] }).sort();
   const map = new Map<string, string>();
   for (const rel of files) {
     const entry = rel.replace(/\.scss$/, '').replace(/\/index$/, '');
     map.set(entry, rel);
   }
   return map;
+}
+
+/** Sass が参照し得る全 SCSS ファイル。partial も含めて dev の watch 対象に登録する。 */
+export async function listCssSourceFiles(scssDir: string): Promise<string[]> {
+  const { globSync } = await import('glob');
+  return globSync('**/*.scss', { cwd: scssDir, absolute: true }).sort();
 }
 
 /** main / full の prop-config 直列化結果から作業ディレクトリの一意な署名を作る。 */
@@ -65,6 +71,8 @@ export interface CssCompiler {
   hasEntry(entry: string): Promise<boolean>;
   /** 全エントリ名。 */
   entries(): Promise<string[]>;
+  /** watch 対象に登録する SCSS ソースファイル一覧。 */
+  sourceFiles(): Promise<string[]>;
   /** 作業ディレクトリとキャッシュを破棄する（dev 終了時に呼ぶ）。 */
   dispose(): void;
 }
@@ -110,6 +118,9 @@ export function createCssCompiler({ scssDir, minify = false, log }: CssCompilerO
   return {
     async entries() {
       return [...(await getEntryMap()).keys()];
+    },
+    async sourceFiles() {
+      return listCssSourceFiles(scssDir);
     },
     async hasEntry(entry) {
       return (await getEntryMap()).has(entry);
