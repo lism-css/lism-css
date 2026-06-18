@@ -82,13 +82,13 @@ const previewUrl = representative ? getPreviewUrl(representative, lang) : undefi
     <Stack g="20" p="20" bd bdrs="20" bgc="base">
       {/* カテゴリ slug 版 */}
       <Stack g="10">
-        <Text util="trim" c="text-2" fz="xs" lh="s">{copy.installCategoryLead}</Text>
+        <Text util="trim" c="text-2" fz="xs" hl="s">{copy.installCategoryLead}</Text>
         <CopyCommand bdrs="10" command={categoryCommand} copyLabel={copy.copy} copiedLabel={copy.copied} />
       </Stack>
 
       {/* stack 別 slug 版 */}
       <Stack g="10">
-        <Text util="trim" c="text-2" fz="xs" lh="s">{copy.installStackLead}</Text>
+        <Text util="trim" c="text-2" fz="xs" hl="s">{copy.installStackLead}</Text>
         {
           templates.map((tpl) => (
             <Stack g="5">
@@ -126,7 +126,7 @@ const previewUrl = representative ? getPreviewUrl(representative, lang) : undefi
               loading="lazy"
             />
           </Frame>
-          <Text c="text-2" fz="xs" lh="s" ta="center">
+          <Text c="text-2" fz="xs" hl="s" ta="center">
             {copy.previewMissing}
           </Text>
         </Stack>

@@ -27,7 +27,7 @@ export default function App() {
           bdc="text"
           px="30"
           py="20"
-          lh="xs"
+          hl="xs"
           bdrs="10"
           hov={{ bxsh: '40', c: 'text', bgc: 'transparent' }}
         >

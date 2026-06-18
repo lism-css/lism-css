@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site';
 
 <Container as="header" isWrapper hasGutter py="20">
   <Flex ai="center" jc="between">
-    <Link href="/" set="plain" d="flex" fw="bold" fz="l" lh="xs">
+    <Link href="/" set="plain" d="flex" fw="bold" fz="l" hl="xs">
       {siteConfig.name}
     </Link>
 
@@ -53,7 +53,7 @@ import { siteConfig } from '@/config/site';
         <Stack as="nav" aria-label={siteConfig.uiText.nav.aria} util="divide" fz="s" bd-y>
           {
             siteConfig.nav.map((item) => (
-              <Link href={item.href} set="plain" lh="s" py="15" px="5" hov={{ c: 'brand' }}>
+              <Link href={item.href} set="plain" hl="s" py="15" px="5" hov={{ c: 'brand' }}>
                 {item.label}
               </Link>
             ))

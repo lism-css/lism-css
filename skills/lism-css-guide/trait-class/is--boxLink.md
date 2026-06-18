@@ -28,8 +28,8 @@ BoxLink には主に2通りの使い方があります。
 ```jsx
 <BoxLink href="/article/1" p="30" bgc="base" bd bdrs="30" hov="-o">
   <Group fz="xl" fw="bold">Heading text</Group>
-  <Text lh="s" mbs="15">記事の抜粋テキスト...</Text>
-  <Group fz="s" c="text-2" ta="right" lh="1" mbs="10">
+  <Text hl="s" mbs="15">記事の抜粋テキスト...</Text>
+  <Group fz="s" c="text-2" ta="right" hl="0" mbs="10">
     MORE →
   </Group>
 </BoxLink>
@@ -38,8 +38,8 @@ BoxLink には主に2通りの使い方があります。
 ```html
 <a class="is--boxLink -hov:-o -p:30 -bgc:base -bd -bdrs:30" href="/article/1">
   <p class="-fz:xl -fw:bold">Heading text</p>
-  <p class="-c:text-2 -lh:s -mbs:15">記事の抜粋テキスト...</p>
-  <p class="-fz:s -c:text-2 -ta:right -lh:1 -mbs:10">MORE →</p>
+  <p class="-c:text-2 -hl:s -mbs:15">記事の抜粋テキスト...</p>
+  <p class="-fz:s -c:text-2 -ta:right -hl:0 -mbs:10">MORE →</p>
 </a>
 ```
 
@@ -54,7 +54,7 @@ BoxLink には主に2通りの使い方があります。
       Heading link text
     </Link>
   </Group>
-  <Text c="text-2" lh="s" mbs="15">記事の抜粋テキスト...</Text>
+  <Text c="text-2" hl="s" mbs="15">記事の抜粋テキスト...</Text>
   <Group mbs="10">
     <a href="/tag/foo" className="-hov:-o">Inner Link</a>
   </Group>
@@ -66,7 +66,7 @@ BoxLink には主に2通りの使い方があります。
   <div class="-fz:xl -fw:bold">
     <a class="is--coverLink" href="/article/1">Heading link text</a>
   </div>
-  <p class="-c:text-2 -lh:s -mbs:15">記事の抜粋テキスト...</p>
+  <p class="-c:text-2 -hl:s -mbs:15">記事の抜粋テキスト...</p>
   <div class="-mbs:10">
     <a href="/tag/foo" class="-hov:-o">Inner Link</a>
   </div>

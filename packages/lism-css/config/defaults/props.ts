@@ -44,6 +44,9 @@ export default {
     token: 'hl',
     tokenClass: 1,
     bp: 1,
+    // hl="0" で half-leading なし (--hl:0px) を表現できるようにする互換ユーティリティ。
+    // lh="1"（互換ショートカット）の .-lh:1 と同じ出力にし、正規 prop の hl 側でも揃えられるようにする。
+    utils: { '0': '0px' },
   },
   lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
   ta: { prop: 'textAlign', presets: ['center', 'left', 'right'] },

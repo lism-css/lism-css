@@ -65,7 +65,7 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
   {/* ===== ヘッダー ===== */}
   <Stack g="20">
     <Heading level="1">{copy.title}</Heading>
-    <Text c="text-2" lh="s" max-sz="m">{copy.lead}</Text>
+    <Text c="text-2" hl="s" max-sz="m">{copy.lead}</Text>
   </Stack>
 
   {/* ===== クイックスタート ===== */}
@@ -74,15 +74,15 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
     <Stack g="40" p="30" bd bdrs="20" bgc="base">
       {/* 対話形式 */}
       <Stack>
-        <Text util="trim" c="text-2" fz="s" lh="s">{copy.commandLead}</Text>
+        <Text util="trim" c="text-2" fz="s" hl="s">{copy.commandLead}</Text>
         <Preview>
           <PreviewCode slot="tab" label="npm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>npm create lism@latest</code>
             </Lism>
           </PreviewCode>
           <PreviewCode slot="tab" label="pnpm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>pnpm create lism</code>
             </Lism>
           </PreviewCode>
@@ -90,15 +90,15 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
       </Stack>
       {/* 引数指定 */}
       <Stack>
-        <Text util="trim" c="text-2" fz="s" lh="s">{copy.fullFormLead}</Text>
+        <Text util="trim" c="text-2" fz="s" hl="s">{copy.fullFormLead}</Text>
         <Preview>
           <PreviewCode slot="tab" label="npm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>npm create lism@latest {'{targetDir}'} -- --template {'{slug}'}</code>
             </Lism>
           </PreviewCode>
           <PreviewCode slot="tab" label="pnpm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
             </Lism>
           </PreviewCode>
@@ -111,7 +111,7 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
   <Stack as="section" g="40" aria-labelledby="templates-list-title">
     <Stack g="20">
       <Heading id="templates-list-title" level="2">{copy.available}</Heading>
-      <Text c="text-2" lh="s">{copy.availableLead}</Text>
+      <Text c="text-2" hl="s">{copy.availableLead}</Text>
     </Stack>
 
     {/* カテゴリ別グルーピング */}
@@ -124,11 +124,11 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
               <Heading id={`templates-${category.id}`} level="3">
                 {category.label}
               </Heading>
-              <Inline c="text-2" fz="xs" lh="s" ff="mono">
+              <Inline c="text-2" fz="xs" hl="s" ff="mono">
                 ({items.length})
               </Inline>
             </Cluster>
-            <Text c="text-2" fz="s" lh="s">
+            <Text c="text-2" fz="s" hl="s">
               {category.description[lang]}
             </Text>
           </Stack>
@@ -207,11 +207,11 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
                           </Inline>
                         )}
                       </Heading>
-                      <Text c="text-2" fz="s" lh="s" util="trim">
+                      <Text c="text-2" fz="s" hl="s" util="trim">
                         {card.description}
                       </Text>
                       {card.features && card.features.length > 0 && (
-                        <Cluster as="ul" g="5" cg="15" fz="xs" lh="s" class="p--templates_features">
+                        <Cluster as="ul" g="5" cg="15" fz="xs" hl="s" class="p--templates_features">
                           {card.features.map((feat) => (
                             <li class="-d:flex -g:5 -c:text-2">{feat}</li>
                           ))}
@@ -268,7 +268,7 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
   {/* ===== Templates vs Patterns ===== */}
   <Stack as="section" g="20">
     <Heading level="2" fz="xl">{copy.termTitle}</Heading>
-    <Text c="text-2" lh="s">{copy.termBody}</Text>
+    <Text c="text-2" hl="s">{copy.termBody}</Text>
     <Link href={patternsUrl}>{copy.patternsLink}</Link>
   </Stack>
 

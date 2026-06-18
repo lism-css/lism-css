@@ -94,17 +94,17 @@ const displayFavicon = ogp?.favicon || '';
 >
   <Flex g="20" ai="stretch" w="100%">
     <Stack g="10" fx="1" py="5" min-w="0">
-      <Inline class="c--linkCard_title" fz="m" fw="bold" lh="s">{displayTitle}</Inline>
+      <Inline class="c--linkCard_title" fz="m" fw="bold" hl="s">{displayTitle}</Inline>
       {
         displayDescription && (
-          <Inline class="c--linkCard_desc" fz="xs" lh="s" c="text-2">
+          <Inline class="c--linkCard_desc" fz="xs" hl="s" c="text-2">
             {displayDescription}
           </Inline>
         )
       }
       <Flex class="c--linkCard_meta" g="5" ai="center" mbs="auto" pbs="10" fz="2xs" c="text-2">
         {displayFavicon && <img src={displayFavicon} alt="" width="16" height="16" class="c--linkCard_favicon" loading="lazy" />}
-        <Inline class="c--linkCard_site" lh="1">{displaySiteName}</Inline>
+        <Inline class="c--linkCard_site" hl="0">{displaySiteName}</Inline>
       </Flex>
     </Stack>
     {

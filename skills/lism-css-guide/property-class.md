@@ -81,14 +81,14 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `fw` | `font-weight` | `-fw:light`, `-fw:normal`, `-fw:bold`, `-fw:100`〜`-fw:900` | — |
 | `ff` | `font-family` | `-ff:base`, `-ff:accent`, `-ff:mono` | — |
 | `fs` | `font-style` | `-fs:italic` | — |
-| `lh` | `line-height`（`--hl` 経由） | `-lh:base`, `-lh:xs`, `-lh:s`, `-lh:l`, `-lh:1` | — |
-| `hl` | `--hl` 変数のみ | `-hl:base`, `-hl:xs`, `-hl:s`, `-hl:l` | ✔ |
+| `hl` | `--hl`（ハーフレディング） | `-hl:base`, `-hl:xs`, `-hl:s`, `-hl:l`, `-hl:0` | ✔ |
+| `lh` | `line-height`（`--hl` 経由・互換） | `-lh:base`, `-lh:xs`, `-lh:s`, `-lh:l`, `-lh:1` | — |
 | `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |
 | `tt` | `text-transform` | `-tt:upper`, `-tt:lower` | — |
 
-**注意:** `lh` は `--hl`（half-leading）変数を介して `line-height: calc(1em + var(--hl) * 2)` を制御します。`hl` は `--hl` 変数を直接セットするだけの isVar タイプです。
+**注意:** Lism はハーフレディングで `line-height` を管理します（`line-height: calc(1em + var(--hl) * 2)`）。正規のプロパティは `hl` で、`--hl` にトークン値をセットします（`hl="0"` でハーフレディングなし、BP 指定可）。`lh` は互換ショートカットで、トークン値・`1` は `--hl` を制御し、`lh="1.7"` のような任意値はそのまま CSS `line-height` を出力します。新規コードでは `hl` を推奨します。
 
 ### 表示・可視性
 

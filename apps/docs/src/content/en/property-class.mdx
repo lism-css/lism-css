@@ -102,7 +102,8 @@ Each table covers one group of properties.
 |`ff`|`font-family`|[`FF`](/en/docs/tokens/typography/#ff-font-family)|-|
 |`fw`|`font-weight`|[`FW`](/en/docs/tokens/typography/#fw--font-weight)|-|
 |`fs`|`font-style`|`italic`|-|
-|`lh`|`line-height`|[`LH`](/en/docs/tokens/half-leading/), <br/>`1`|-|
+|`hl`|`line-height` (half-leading)|[`LH`](/en/docs/tokens/half-leading/), <br/>`0`|✔|
+|`lh`|`line-height` (compat)|[`LH`](/en/docs/tokens/half-leading/), <br/>`1`|-|
 |`lts`|`letter-spacing`|[`LTS`](/en/docs/tokens/typography/#lts-letter-spacing)|-|
 |`ta`|`text-align`|`center`<br/>`left`<br/>`right`|-|
 |`td`|`text-decoration`|`none`|-|
@@ -342,7 +343,7 @@ The examples below demonstrate positioning with `position: absolute`.
     Positioning examples
   </PreviewTitle>
   <PreviewArea resize p="5">
-    <Box pos="relative" ar="16/9" lh="1" ff="mono">
+    <Box pos="relative" ar="16/9" hl="0" ff="mono">
       <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">
         <Fragment>A</Fragment>
       </Group>
@@ -374,7 +375,7 @@ The examples below demonstrate positioning with `position: absolute`.
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--box -pos:relative -ar:16/9 -lh:1 -ff:mono">
+    <div class="l--box -pos:relative -ar:16/9 -hl:0 -ff:mono">
       <div class="-pos:absolute -l:0 -t:0 -bgc:base-2 -bd -p:10">A</div>
       <div class="-pos:absolute -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">B</div>
       <div class="-pos:absolute -r:0 -t:0 -bgc:base-2 -bd -p:10">C</div>
@@ -389,7 +390,7 @@ The examples below demonstrate positioning with `position: absolute`.
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 
-    <Box pos="relative" ar="16/9" lh="1" ff="mono">
+    <Box pos="relative" ar="16/9" hl="0" ff="mono">
       <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">A</Group>
       <Group pos="absolute" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">B</Group>
       <Group pos="absolute" r="0" t="0" bgc="base-2" bd p="10">C</Group>
