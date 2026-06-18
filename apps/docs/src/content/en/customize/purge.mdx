@@ -37,7 +37,12 @@ export default defineConfig({
 You can also pass an object to configure individual purge plugin options:
 
 ```js
-lismCss({ purge: { report: true } })
+lismCss({
+  purge: {
+    report: true, // Log the file size before/after purging to the build log
+    safelist: ['-p:30'], // Keep classes not detected by static analysis
+  },
+});
 ```
 
 When `known` (the set of known Lism classes that purge targets) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that value is respected.
@@ -68,7 +73,7 @@ import { defineConfig } from 'vite';
 import { lismPurge } from '@lism-css/plugin/purge/vite';
 
 export default defineConfig({
-  plugins: [lismPurge({ report: true })],
+  plugins: [lismPurge()],
 });
 ```
 </PreviewCode>
@@ -78,7 +83,7 @@ import { defineConfig } from 'astro/config';
 import { lismPurgeAstro } from '@lism-css/plugin/purge/astro';
 
 export default defineConfig({
-  integrations: [lismPurgeAstro({ report: true })],
+  integrations: [lismPurgeAstro()],
 });
 ```
 </PreviewCode>
@@ -109,11 +114,11 @@ Loading `full.css` without purge ships a large CSS that still contains every unu
 
 Both plugins accept the same `LismPurgeOptions`.
 
-| Option | Type | Description |
-|---|---|---|
-| `safelist` | `(string \| RegExp \| ((className: string) => boolean))[]` | Keep classes that static analysis cannot detect |
-| `report` | `boolean` | Log the file size before and after purging |
-| `known` | `KnownSelectorSet \| (() => KnownSelectorSet \| undefined)` | Customize the set of known Lism classes. Pass a function to resolve it lazily at build time. Defaults to the set derived from `full.css` (rarely needed) |
+| Option | Description |
+|---|---|
+| <span class="-whs:nowrap">`safelist`</span> | Keep classes that static analysis cannot detect |
+| `report` | Log the file size before and after purging |
+| `known` | Customize the set of known Lism classes. Pass a function to resolve it lazily at build time. Defaults to the set derived from `full.css` (rarely needed) |
 
 
 ### safelist
