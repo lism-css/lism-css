@@ -35,7 +35,7 @@ nr publish:cli  # build → lism-cli publish → create-lism publish
 ```
 
 - `lism-cli` と `create-lism` は **同じバージョンで一緒に** publish する
-- `lism create` で生成されるプロジェクトの `lism-css: workspace:*` は tsup の `define` で埋め込んだ `__LISM_CSS_VERSION__`（`packages/lism-css/package.json` の version）に置換される。**lism-css リリース後は CLI も rebuild & publish しないと新規プロジェクトが古い lism-css を引く**
+- `lism create` で生成されるプロジェクトの `workspace:*` は npm レジストリの dist-tag `latest` を実行時に解決して `^x.y.z` へ置換される。レジストリ到達不可時だけ、tsup の `define` で埋め込んだ `LISM_PACKAGE_VERSIONS` にフォールバックする
 - `packages/lism-ui/registry-index.json` は **commit 対象**。コンポーネント増減時は `pnpm --filter @lism-css/ui build` で再生成して commit する
 - 検証目的の beta publish でも `DEFAULT_*_REF` を PR ブランチに固定しないこと（壊れる）。検証時は CLI 側の `--ref` フラグで都度指定する
 
