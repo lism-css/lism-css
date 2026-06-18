@@ -31,27 +31,33 @@ const distConfigDir = `${distDir}/config`;
 const BARE_CSS_RE = /^lism-css\/(.+)\.css$/;
 const CONFIG_FILE_RE = /\.(?:js|mjs|ts)$/;
 
-const CORE_CONFIG_WATCH_RELS = [
-  'package.json',
-  'config/default-config.ts',
-  'config/helper.ts',
-  'config/index.ts',
-  'config/defaults/breakpoints.ts',
-  'config/defaults/props.ts',
-  'config/defaults/tokens.ts',
-  'config/defaults/traits.ts',
-  'config/presets/props-full.ts',
-  'dist/config/default-config.js',
-  'dist/config/helper.js',
-  'dist/config/defaults/breakpoints.js',
-  'dist/config/defaults/props.js',
-  'dist/config/defaults/tokens.js',
-  'dist/config/defaults/traits.js',
-  'dist/config/presets/props-full.js',
-];
+const CORE_CONFIG_WATCH_FILES = [path.join(packageRootRaw, 'package.json')];
+const CORE_CONFIG_WATCH_DIRS = [path.join(packageRootRaw, 'config'), path.join(distDirRaw, 'config')];
+
+function isConfigModuleFile(file: string): boolean {
+  return CONFIG_FILE_RE.test(file) && !file.endsWith('.d.ts');
+}
+
+function collectConfigFiles(dir: string): string[] {
+  if (!fs.existsSync(dir)) return [];
+
+  const files: string[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+    const filePath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...collectConfigFiles(filePath));
+    } else if (entry.isFile() && isConfigModuleFile(filePath)) {
+      files.push(filePath);
+    }
+  }
+  return files;
+}
 
 function coreConfigWatchFiles(): string[] {
-  return CORE_CONFIG_WATCH_RELS.map((rel) => path.join(packageRootRaw, rel)).filter((filePath) => fs.existsSync(filePath));
+  return [
+    ...CORE_CONFIG_WATCH_FILES.filter((filePath) => fs.existsSync(filePath)),
+    ...CORE_CONFIG_WATCH_DIRS.flatMap((dir) => collectConfigFiles(dir)),
+  ];
 }
 
 function isCoreCssSourceFile(file: string): boolean {
@@ -62,8 +68,8 @@ function isCoreCssSourceFile(file: string): boolean {
 function isCoreConfigFile(file: string): boolean {
   const normalized = normalizePath(file);
   return (
-    (normalized.startsWith(`${sourceConfigDir}/`) && CONFIG_FILE_RE.test(normalized)) ||
-    (normalized.startsWith(`${distConfigDir}/`) && CONFIG_FILE_RE.test(normalized))
+    (normalized.startsWith(`${sourceConfigDir}/`) && isConfigModuleFile(normalized)) ||
+    (normalized.startsWith(`${distConfigDir}/`) && isConfigModuleFile(normalized))
   );
 }
 

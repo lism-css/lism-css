@@ -70,7 +70,9 @@ describe('lismDynamicCss watch / hot update', () => {
 
     expect(watched.some((file) => file.endsWith('/packages/lism-css/src/scss/main.scss'))).toBe(true);
     expect(watched.some((file) => file.endsWith('/packages/lism-css/config/defaults/tokens.ts'))).toBe(true);
+    expect(watched.some((file) => file.endsWith('/packages/lism-css/config/defaults/token-scope.ts'))).toBe(true);
     expect(watched.some((file) => file.endsWith('/packages/lism-css/dist/config/defaults/tokens.js'))).toBe(true);
+    expect(watched.some((file) => file.endsWith('/packages/lism-css/dist/config/defaults/token-scope.js'))).toBe(true);
   });
 
   test('core の SCSS 変更時に CSS モジュールを更新対象にして full reload する', async () => {

@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
@@ -38,7 +39,7 @@ function normalizeFsPath(filePath: string): string {
 }
 
 function watchLismCoreDistCss() {
-  const cssDirRaw = new URL('../../packages/lism-css/dist/css/', import.meta.url).pathname;
+  const cssDirRaw = fileURLToPath(new URL('../../packages/lism-css/dist/css/', import.meta.url));
   const cssDir = normalizeFsPath(cssDirRaw);
   let timer: ReturnType<typeof setTimeout> | undefined;
 
@@ -88,13 +89,13 @@ export default defineConfig({
       alias: {
         '@': '/src',
         '@ui': '/src/components/ui',
-        '@templates': new URL('../../templates', import.meta.url).pathname,
+        '@templates': fileURLToPath(new URL('../../templates', import.meta.url)),
       },
     },
     server: {
       fs: {
         // monorepo ルートの templates 配下を許可
-        allow: [new URL('../../', import.meta.url).pathname],
+        allow: [fileURLToPath(new URL('../../', import.meta.url))],
       },
     },
     plugins: [

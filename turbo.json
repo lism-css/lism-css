@@ -4,10 +4,29 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!src/scss/_prop-config.gen.scss",
+        "!src/scss/_prop-config-full.gen.scss",
+        "!src/scss/base/tokens/_tokens.gen.scss"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**",
+        "src/scss/_prop-config.gen.scss",
+        "src/scss/_prop-config-full.gen.scss",
+        "src/scss/base/tokens/_tokens.gen.scss"
+      ]
     },
     "build:css": {
-      "outputs": ["dist/css/**"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!src/scss/_prop-config.gen.scss",
+        "!src/scss/_prop-config-full.gen.scss",
+        "!src/scss/base/tokens/_tokens.gen.scss"
+      ],
+      "outputs": ["dist/css/**", "src/scss/_prop-config.gen.scss", "src/scss/_prop-config-full.gen.scss", "src/scss/base/tokens/_tokens.gen.scss"]
     },
     "test": {
       "dependsOn": ["^build"],
