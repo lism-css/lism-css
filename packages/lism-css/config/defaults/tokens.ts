@@ -66,8 +66,12 @@ export default {
 
   // font-family
   ff: {
-    base: "-apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji'",
-    accent: "'Garamond', 'Baskerville', 'Times New Roman', serif",
+    // Base: -apple-system → Safari/Firefox、BlinkMacSystemFont → Chrome用。sans-serif: Mac=Hiragino / Win=Noto|Meiryo
+    //   Memo: system-ui は和文に游ゴシックが当たるため使わない。
+    base: "-apple-system, 'BlinkMacSystemFont', sans-serif",
+    // Accent: 装飾用セリフ。初期状態はあくまで一例で実際はカスタマイズしてもらう想定。
+    accent: "Palatino, 'Palatino Linotype', serif",
+    // Mono: ui-monospace=各OSのUI等幅 / SFMono・Menlo→Mac・Consolas→Win のフォールバック
     mono: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
   },
 
