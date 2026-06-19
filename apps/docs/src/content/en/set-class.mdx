@@ -83,7 +83,16 @@ Classless `ul` / `ol` elements (lists with no `class` attribute at all) automati
 
 Elements with the `set--bxsh` class have the `--bxsh--` variables that compose the shadow redefined.
 
-<SrcCode path="src/scss/base/tokens/_tokens.gen.scss" />
+```css
+:root,
+.set--bxsh {
+  --bxsh--10: var(--shsz--10) var(--shc);
+  --bxsh--20: var(--shsz--20) var(--shc);
+  --bxsh--30: var(--shsz--30) var(--shc);
+  --bxsh--40: var(--shsz--40) var(--shc);
+  --bxsh--50: var(--shsz--50) var(--shc);
+}
+```
 
 By overriding the `--shc` variable here, you can adjust the color tint of the shadow.
 
@@ -140,7 +149,23 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
 
 A class that recalculates spacing tokens (`--s5` through `--s80`) against the current font size. Use it for parts like Buttons or Badges where internal spacing should follow the element's own font-size.
 
-<SrcCode path="src/scss/base/tokens/_tokens.gen.scss" />
+```css
+:root,
+.set--s {
+  --s5: calc(var(--s-unit) * 0.5);
+  --s10: var(--s-unit);
+  --s15: calc(var(--s-unit) * 1.5);
+  --s20: calc(var(--s-unit) * 2);
+  --s25: calc(var(--s-unit) * 2.5);
+  --s30: calc(var(--s-unit) * 3);
+  --s35: calc(var(--s-unit) * 4);
+  --s40: calc(var(--s-unit) * 5);
+  --s50: calc(var(--s-unit) * 8);
+  --s60: calc(var(--s-unit) * 13);
+  --s70: calc(var(--s-unit) * 21);
+  --s80: calc(var(--s-unit) * 34);
+}
+```
 
 ```html
 <button class="set--s -fz:s -py:10 -px:20">...</button>
