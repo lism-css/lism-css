@@ -54,7 +54,7 @@
       "purge",
       "パージ"
     ],
-    "snippet": "CSSを読み込むだけでも導入でき、CDN経由でも利用可能。`create lism` コマンドでテンプレートからプロジェクトを作成できる（minimal-astro, minimal-vite, blog-astro-*, lp-astro-* 等のテンプレートを提供）。npm パッケージとしてインストールし、lism-css/react や lism-css/astro からコンポーネントをインポートして使用。Next.js（16以降）では `@lism-css/plugin/next` の `withLism()` でセットアップ。UIコンポーネントは別パッケージ @lism-css/ui として提供（パッケージ利用または lism ui add コマンドでCLI追加も可能）。purge プラグインで本番CSS軽量化にも対応。AIコーディングツール向けのSkills・MCPサーバーも提供。"
+    "snippet": "CSSを読み込むだけでも導入でき、CDN経由でも利用可能。`create lism` コマンドでテンプレートからプロジェクトを作成できる（minimal-astro, minimal-vite, blog-astro-*, lp-astro-* 等のテンプレートを提供）。npm パッケージとしてインストールし、lism-css/react や lism-css/astro からコンポーネントをインポートして使用。Vite/Astro では @lism-css/plugin（lismCss()）を登録して lism.config.js の反映・CSS 動的ビルド・型自動生成を有効化。Next.js（16以降）では `@lism-css/plugin/next` の `withLism()` でセットアップ。UIコンポーネントは別パッケージ @lism-css/ui として提供（パッケージ利用または lism ui add コマンドでCLI追加も可能）。@lism-css/plugin の purge 機能で本番CSS軽量化にも対応。AIコーディングツール向けのSkills・MCPサーバーも提供。"
   },
   {
     "sourcePath": "css-methodology.mdx",
@@ -457,7 +457,7 @@
       "main_no_layer.css",
       "full_no_layer.css"
     ],
-    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。isFullMode でコンポーネント出力も full.css に合わせられる。"
+    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。full.css には main.css 非収録の全 Property Class ブレイクポイント対応クラスやスペーシング系トークンユーティリティを含む。isFullMode（lism.config.js で設定）でコンポーネント出力も full.css に合わせられる。@lism-css/plugin の統合プラグイン使用時は型も isFullMode に自動追従（lism-env.d.ts 生成）。"
   },
   {
     "sourcePath": "customize/config.mdx",
@@ -640,6 +640,13 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "lism-css v.0.23.0 (2026.06.19)",
+      "ビルド/プラグイン層を `@lism-css/plugin` へ分離 (#439)",
+      "トークンを値付きの単一情報源に刷新 (#434)",
+      "ブレイクポイント / フルビルド",
+      "その他",
+      "`@lism-css/plugin` v.0.3.0 (2026.06.19)",
+      "`@lism-css/ui` v.0.23.0 (2026.06.19)",
       "lism-css v.0.22.2 (2026.06.03)",
       "`@lism-css/ui` v.0.22.2 (2026.06.03)",
       "lism-css v.0.22.1 (2026.05.30)",
@@ -653,20 +660,24 @@
       "lism-css v.0.21.0 (2026.05.26)",
       "set クラスの命名変更 (#404)",
       "contentSize Prop と set--bleed の追加 (#405)",
+      "その他",
       "`@lism-css/ui` v.0.21.0 (2026.05.26)",
       "lism-css v.0.20.0 (2026.05.20)",
       "方向系 Property Class の命名整理 (#378)",
       "ブレークポイント対応プロパティの整理 (#394)",
       "hover 色のデフォルト変更 (#381)",
+      "その他",
       "`@lism-css/ui` v.0.20.0 (2026.05.20)",
       "lism-css v.0.18.0 (2026.05.17)",
       "`--sz--*` トークンを px 統一・80px 刻みで再設計 (#364)",
       "spacing tokens 拡充と `set--var:s` の新設 (#377)",
+      "その他",
       "lism-css v.0.17.0 (2026.05.09)",
       "`-max-sz:bleed` の新設 (#360)",
       "`--REM` 廃止と `--fz--base` の簡素化",
       "`a` タグのリンク装飾スタイル廃止",
       "Bug Fixes",
+      "その他",
       "`@lism-css/ui` v.0.17.0 (2026.05.09)",
       "lism-css v.0.16.1 (2026.04.29)",
       "lism-css v.0.16.0 (2026.04.21)",
@@ -674,17 +685,20 @@
       "`u--collapseGrid` のリネームと `u--divide` の追加 (#323)",
       "opacity トークンの命名変更 (#316)",
       "Layout Primitive の命名整理 (#319)",
+      "その他",
       "`@lism-css/ui` v.0.16.0 (2026.04.21)",
       "lism-css v.0.15.0 (2026.04.21)",
       "CSSレイヤー構造の再編 (#304)",
       "`set--` クラスの刷新 (#304)",
       "`-hov:` クラスの命名整理 (#300)",
       "シャドウトークンの刷新 (#311)",
+      "その他",
       "`@lism-css/ui` v.0.15.0 (2026.04.21)",
       "lism-css v.0.14.0 (2026.04.17)",
       "Props システムの整理",
       "Property Class のリネーム",
       "Trait Class / トークンの整理",
+      "その他",
       "`@lism-css/ui` v.0.14.0 (2026.04.17)",
       "lism-css v.0.13.1 (2026.04.15)",
       "`@lism-css/ui` v.0.13.1 (2026.04.15)",
@@ -693,6 +707,7 @@
       "State → Trait 識別子の統一",
       "set / util props の統一",
       "Trait Class / 命名整理",
+      "その他",
       "`@lism-css/ui` v.0.13.0 (2026.04.14)",
       "`@lism-css/ui` v.0.12.0 (2026.04.10)",
       "`@lism-css/ui` v.0.11.0 (2026.04.05)",
@@ -703,6 +718,7 @@
       "v.0.10.3 (2026.04.04)",
       "v.0.10.2 (2026.04.04)",
       "v.0.10.1 (2026.04.03)",
+      "`<HTML.xxx>` を廃止し、セマンティックラッパーコンポーネントに置き換え",
       "lism-css v.0.9.4 (2026.03.31)",
       "`@lism-css/ui` v.0.9.3 (2026.03.30)",
       "v.0.9.2 (2026.03.18)",
@@ -710,10 +726,17 @@
       "v.0.9.0 (2026.03.17)",
       "v.0.8.3",
       "v.0.8.2",
-      "v.0.8 (大幅な変更)"
+      "v.0.8 (大幅な変更)",
+      "[重要] line-heightの仕様を変更しました。",
+      "レイアウトモジュールの変更点",
+      "ダイナミックモジュールの削除",
+      "トークン・CSS変数の変更点",
+      "Property Class の変更点",
+      "ユーティリティクラスの変更点",
+      "コンテンツサイズ管理クラスの変更点"
     ],
     "keywords": ["changelog", "変更履歴", "更新", "バージョン", "u--cells", "u--enclose", "rename", "リネーム", "migration", "移行"],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.22.2 (2026.06.03) では --green 彩度微調整・alert アイコン変更、@lism-css/ui で Alert/Callout に tip プリセット追加・プリセット整理。v.0.22.1 (2026.05.30) では ':' 単体を true 相当のフラグとして対応・0.22.0 パッケージング修正、@lism-css/ui で NavMenu.Link にデフォルト hov 付与・Accordion.Item に isOpen prop 追加・Modal スクロールバーがたつき防止。v.0.22.0 (2026.05.28) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更、ユーティリティ・トークン名の整理（u--cells → u--enclose, --cells-p に整理, --gutter/--gutter--base 構造へ整理）、フォームコントロールのスタイル調整（border-radius 削除・padding を em 単位に変更）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（ps/pe/pbs/pbe、bd-s/bd-e/bd-bs/bd-be 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.23.0 (2026.06.19) では破壊的変更としてビルド/プラグイン層を新パッケージ @lism-css/plugin へ分離（lism-css/vite 等のエクスポートを廃止）、tokens を「キー: 値」のフラットマップに刷新（tokenValues チャンネル廃止・c を color に改名）、xs ブレイクポイントのオプトイン対応・full.css / isFullMode の追加（#428, #423, #425）、標準 BP デフォルトを md → lg に拡大など。@lism-css/ui v.0.23.0 では Badge/Button/Chat の lh を hl へ移行。v.0.22.2 (2026.06.03) では --green 彩度微調整・alert アイコン変更、@lism-css/ui で Alert/Callout に tip プリセット追加・プリセット整理。v.0.22.1 (2026.05.30) では ':' 単体を true 相当のフラグとして対応・0.22.0 パッケージング修正、@lism-css/ui で NavMenu.Link にデフォルト hov 付与・Accordion.Item に isOpen prop 追加・Modal スクロールバーがたつき防止。v.0.22.0 (2026.05.28) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更、ユーティリティ・トークン名の整理（u--cells → u--enclose, --cells-p に整理, --gutter/--gutter--base 構造へ整理）、フォームコントロールのスタイル調整（border-radius 削除・padding を em 単位に変更）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（ps/pe/pbs/pbe、bd-s/bd-e/bd-bs/bd-be 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
@@ -1383,11 +1406,12 @@
       "カラーとアイコンを指定する例",
       "`l--withSide` を使ってレスポンシブ対応",
       "ボタン付き + ブレイクポイントによるレスポンシブ対応",
+      "`l--withSide` を使ったレスポンシブ対応",
       "type一覧",
       "Only lism-css"
     ],
     "keywords": ["Alert", "アラート", "注意", "notice", "warning", "info", "お知らせ", "通知", "type", "keycolor", "icon", "withSide", "layout"],
-    "snippet": "短めの文言を目立たせて強調表示したい時に使えるコンポーネント。type prop（alert/point/warning/check/info/help/note）でアイコンとキーカラーをまとめて設定。layout=\"withSide\" でコンテナ幅が狭い時に縦並び対応。@lism-css/uiパッケージで提供。"
+    "snippet": "短めの文言を目立たせて強調表示したい時に使えるコンポーネント。type prop（alert/point/warning/check/info/help/note/tip）でアイコンとキーカラーをまとめて設定。layout=\"withSide\" でコンテナ幅が狭い時に縦並び対応。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Callout.mdx",
@@ -1396,7 +1420,7 @@
     "category": "ui",
     "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "type一覧", "`icon`、`keycolor`を指定", "Only lism-css"],
     "keywords": ["Callout", "コールアウト", "補足", "note", "注意書き", "強調ボックス", "highlight", "type", "keycolor", "icon", "title"],
-    "snippet": "記事の中で重要なポイントを示すためのコンポーネント。type prop（info/alert/warning/point/check/help/note）でアイコンとキーカラーをまとめて設定。title でタイトルテキストを表示。@lism-css/uiパッケージで提供。"
+    "snippet": "記事の中で重要なポイントを示すためのコンポーネント。type prop（info/alert/warning/point/check/help/note/tip）でアイコンとキーカラーをまとめて設定。title でタイトルテキストを表示。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Button.mdx",
