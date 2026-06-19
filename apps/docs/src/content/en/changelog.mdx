@@ -9,6 +9,43 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.23.0 (2026.06.19)
+
+This release contains **breaking changes**.
+
+### Split the build/plugin layer into `@lism-css/plugin` (#439)
+
+- Separated the Vite / Astro integration, purge, and the `npx lism-css build` CLI from the core, moving them into the new `@lism-css/plugin` package
+- Removed exports such as `lism-css/vite`, `lism-css/purge/*`, and `lism-css/vite-plugin`
+
+### Unified tokens into a single value-bearing source (#434)
+
+- Consolidated `tokens` into a flat "key: value" map (defining values, generating utilities, and accepting props in one place)
+- Removed the `tokenValues` channel, renamed `c` to `color`, and removed the `fz.root` / `writing` tokens
+
+### Breakpoints / full build
+
+- Added `xs` breakpoint support (opt-in for both CSS output and types) (#428)
+- Added `full.css` / `full_no_layer.css` (all props extended up to the `lg` breakpoint) and `isFullMode` (#423, #425)
+- Expanded the default standard-support breakpoint from `md` to `lg`
+
+### Other
+
+- Added `hl="0"` and migrated `lh` to the recommended `hl` property (#437)
+- Revised the default font families (`--ff--base` / `--ff--accent`)
+- Removed redundant explicit `bp:0` on props (output unchanged)
+
+### `@lism-css/plugin` v.0.3.0 (2026.06.19)
+
+New package. Provides the build / framework-integration layer for `lism-css`.
+
+- Dynamic build plugin that makes `lism.config.js` the single source of truth for CSS output (`lismCss()` / `lismCssAstro()`)
+- Lightweight CSS purge (`@lism-css/plugin/purge/vite` / `/astro`, or `purge: true` on the integrated plugin)
+- Next.js 16 (`@lism-css/plugin/next`) / WordPress (`@lism-css/plugin/wordpress`) adapters
+- Auto-generates `lism-env.d.ts` from `breakpoints`
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.22.2 (2026.06.03)
 
 - Slightly adjusted the saturation of the `--green` color token

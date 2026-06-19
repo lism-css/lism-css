@@ -1,0 +1,74 @@
+---
+title: 'CSS Builds'
+description: 'How to choose which pre-built CSS file to load — toggling @layer on/off, switching to full.css, and using isFullMode.'
+---
+
+The `lism-css` package ships with several pre-built CSS files for different use cases. Swapping the file you import is all it takes to toggle `@layer` on/off or switch to the "full" build.
+
+| File | Contents |
+|---|---|
+| `lism-css/main.css` | Standard build (with `@layer`) |
+| `lism-css/main_no_layer.css` | `@layer`-free version |
+| `lism-css/full.css` | Full build (with `@layer` / intended for use with purge) |
+| `lism-css/full_no_layer.css` | `@layer`-free version of the full build |
+
+
+## Disabling `@layer`
+
+You can disable `@layer` by importing `lism-css/main_no_layer.css` instead of `lism-css/main.css`.
+
+Just swap the imported CSS file — no other changes needed.
+
+
+## Full Build (full.css)
+
+Importing `lism-css/full.css` instead of `lism-css/main.css` gives you a "full" build that includes classes not output by default.
+
+```js
+import 'lism-css/full.css'; // For the version without @layer, use 'lism-css/full_no_layer.css'
+```
+
+In addition to everything in `main.css`, `full.css` includes:
+
+- Breakpoint support classes (such as `-pl_lg`) for all Property Classes except variable-only properties (`isVar` — these emit only a CSS variable, not a class)
+- `SPACE` token utility classes (such as `-pl:20`) for directional spacing properties like `pl` / `mt` / `cg`
+
+This makes the CSS larger than `main.css`, so **this build is intended to be used together with [CSS Purge](/en/docs/customize/purge/), which removes unused classes at build time**.
+
+
+### isFullMode
+
+Importing `full.css` alone does not change how components behave — they still use the default configuration (for example, `pl="20"` is output as an inline style).
+
+To align the component output with `full.css`, enable `isFullMode` in your `lism.config.js`.
+
+```js
+// lism.config.js
+export default {
+  isFullMode: true,
+};
+```
+
+With `isFullMode: true`, the full preset is also applied to the component props configuration, so `pl="20"` is output as the `-pl:20` class. The configuration is merged in the order "defaults → full preset → `props` in `lism.config.js`", with later entries taking precedence.
+
+:::warning
+- `isFullMode` assumes the corresponding styles are loaded via `full.css` (or a CLI rebuild with `isFullMode` enabled). If you keep the default `main.css`, the output classes will have no matching styles.
+- `isFullMode` is a build-time setting. It cannot be toggled at runtime via `window._LISM_CSS_CONFIG_`.
+:::
+
+Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `@lism-css/plugin`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `pl` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
+
+If you do not use the integrated plugin, extend the type in a type definition file at your project root (e.g. `src/lism-env.d.ts`) like this:
+
+```ts
+// src/lism-env.d.ts
+import 'lism-css';
+
+declare module 'lism-css' {
+  interface FullModeRegistry {
+    enabled: true; // The key name is arbitrary; any single key switches to the full type variant.
+  }
+}
+```
+
+Note that running the [CLI build](/en/docs/customize/config/) with `isFullMode` enabled also applies the full preset to `main.css`.

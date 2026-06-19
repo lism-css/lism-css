@@ -28,6 +28,9 @@ export default defineConfig(
       '**/.prettierrc.cjs',
       '**/.stylelintrc.mjs',
       '**/vite.config.*',
+      // プロジェクト/テンプレの設定ファイル（型 lint 対象外。tsconfig の project service に含めない）
+      '**/next.config.*',
+      '**/lism.config.*',
       '**/__*',
     ],
   },

@@ -115,7 +115,11 @@ React (.jsx) and Astro (.astro) components are distributed as an npm package.
 import 'lism-css/main.css';
 ```
 
-For example, in Next.js, import it in `_app.js` or `layout.js`.
+In Next.js (16 or later), import it in your root layout (`app/layout.tsx` for App Router). If you also want to apply `lism.config.js` settings and generate types, set up `@lism-css/plugin` as described in [Setting up with Next.js](#setting-up-with-nextjs) below.
+
+:::info
+Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS purge tools. See the [Customize page](/en/docs/customize/build/) for details.
+:::
 
 
 
@@ -135,6 +139,109 @@ import { Box, Flex, ... } from 'lism-css/astro';
 </PreviewCode>
 </Preview>
 
+
+
+## Setting up with Next.js
+
+In Next.js, wrapping your config with `withLism()` from `@lism-css/plugin` lets you set up CSS generation, type generation, and CSS loading — all reflecting your `lism.config.js` — in one step.
+
+:::info
+Requires **Next.js 16 or later**. Next.js 16 uses Turbopack by default (webpack fallback via `next dev --webpack` / `next build --webpack` is also supported).
+:::
+
+### 1. Install the packages
+
+In addition to `lism-css` itself, install `@lism-css/plugin` for the build integration.
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm add lism-css
+  pnpm add -D @lism-css/plugin
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm i lism-css
+  npm i -D @lism-css/plugin
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn add lism-css
+  yarn add -D @lism-css/plugin
+  ```
+  </PreviewCode>
+</Preview>
+
+### 2. Wrap `next.config.mjs` with `withLism()`
+
+```js
+// next.config.mjs
+import { withLism } from '@lism-css/plugin/next';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default withLism(nextConfig);
+```
+
+`withLism()` reads `lism.config.js` and pre-generates CSS reflecting your settings under `.lism-css/css/`. It then replaces (aliases) imports such as `lism-css/main.css` with the pre-generated CSS. This approach is necessary because Next.js does not have a mechanism to transform imports on the fly like Vite or Astro. Your existing `nextConfig` is merged without modification.
+
+### 3. Load the CSS and components
+
+Import `main.css` globally in your root layout (`app/layout.tsx` for App Router).
+
+```tsx
+// app/layout.tsx
+import 'lism-css/main.css';
+```
+
+Import components from `lism-css/react`.
+
+```tsx
+import { Box, Flex } from 'lism-css/react';
+```
+
+### 4. Customize with `lism.config.js` (optional)
+
+Placing a `lism.config.js` at the root of your project lets you add or override props and tokens. Saving this file while `next dev` is running automatically regenerates the CSS and types, so no server restart is needed.
+
+```js
+// lism.config.js
+export default {
+  tokens: {
+    color: {
+      // Example: outputs `--success` and makes it available as `-c:success` / `-bgc:success`, etc.
+      success: 'oklch(0.6 0.15 150)',
+    },
+  },
+};
+```
+
+See the [Customize page](/en/docs/customize/config/) for the full list of available options.
+
+### 5. Handling generated files
+
+`withLism()` automatically generates `lism-env.d.ts` at the project root, reflecting enabled breakpoints and any added props/traits. Add it to the `include` array in `tsconfig.json` and commit it to git so type completion works correctly.
+
+```json
+// tsconfig.json
+{
+  "include": ["next-env.d.ts", "lism-env.d.ts", "**/*.ts", "**/*.tsx"]
+}
+```
+
+On the other hand, `.lism-css/` (the generated CSS) is build output and should be added to `.gitignore`.
+
+```bash frame="none"
+# .gitignore
+.lism-css/
+```
+
+:::info
+**CSS purging (removing unused classes) is not yet supported for Next.js** (Vite and Astro only). In Next.js, the CSS reflecting your `lism.config.js` is loaded as-is.
+:::
 
 
 ## Installing Lism UI
@@ -195,6 +302,43 @@ npx lism-cli ui add --all
 ```
 
 Name resolution is case-insensitive and ignores hyphens and underscores, so `NavMenu` / `navmenu` / `nav-menu` / `nav_menu` all resolve to the same component.
+
+
+## Strip unused CSS (purge)
+
+The purge feature that removes unused Lism CSS classes from your production build is provided by `@lism-css/plugin`. For Vite / Astro projects, install `@lism-css/plugin` and pass `purge: true` to `lismCss()` from the matching entry (`@lism-css/plugin/vite` or `@lism-css/plugin/astro`).
+
+```bash frame="none"
+pnpm add -D @lism-css/plugin
+```
+
+```js
+// astro.config.mjs example
+import { defineConfig } from 'astro/config';
+import { lismCss } from '@lism-css/plugin/astro';
+
+export default defineConfig({
+  integrations: [lismCss({ purge: true })],
+});
+```
+
+```js
+// vite.config.js example
+import { defineConfig } from 'vite';
+import { lismCss } from '@lism-css/plugin/vite';
+
+export default defineConfig({
+  plugins: [lismCss({ purge: true })],
+});
+```
+
+You can also pass an object like `purge: { report: true }` to configure additional purge plugin options.
+
+:::info
+The standalone plugins (`lismPurgeAstro` from `@lism-css/plugin/purge/astro` / `lismPurge` from `@lism-css/plugin/purge/vite`) are also available when you want to register purge directly.
+:::
+
+See [CSS Purge](/en/docs/customize/purge/) for the full setup, options, and safelist usage.
 
 
 ## AI Tool Integration

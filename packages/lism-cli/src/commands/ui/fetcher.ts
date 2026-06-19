@@ -75,11 +75,14 @@ function isExcludedComponentFile(rel: string, excludeRootFiles: ReadonlySet<stri
   return false;
 }
 
+/** raw GitHub からの取得タイムアウト（ms）。ネットワーク不調時に CLI が無限待ちしないための保険。 */
+const FETCH_TIMEOUT_MS = 5000;
+
 /** カタログ（registry-index.json）を raw GitHub から取得 */
 export async function fetchCatalog(options: FetchOptions = {}): Promise<RegistryCatalog> {
   const ref = options.ref ?? DEFAULT_UI_REF;
   const url = `${RAW_GITHUB_BASE}/${SOURCE_REPO}/${ref}/${UI_REGISTRY_INDEX_PATH}`;
-  const res = await fetch(url);
+  const res = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
   if (!res.ok) {
     throw new Error(`Failed to fetch registry-index.json (${res.status} ${res.statusText}): ${url}`);
   }

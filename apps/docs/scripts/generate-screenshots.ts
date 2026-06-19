@@ -8,8 +8,8 @@
  * （CDNランダム画像をグレーに差し替え）も同時に再撮影します。
  *
  * 使い方:
- *   pnpm screenshot:new                # 新規のみ生成（全言語、ビルド後に実行）
- *   pnpm screenshot:force              # 全て再生成（public + baseline、全言語）
+ *   pnpm screenshot:patterns:new       # 新規のみ生成（全言語、ビルド後に実行）
+ *   pnpm screenshot:patterns:force     # 全て再生成（public + baseline、全言語）
  *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta/cta001     # パターン指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定

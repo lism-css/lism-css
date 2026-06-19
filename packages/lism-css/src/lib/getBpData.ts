@@ -1,11 +1,11 @@
 import filterEmptyObj from './helper/filterEmptyObj';
 import hasSomeKeys from './helper/hasSomeKeys';
-import { BREAK_POINTS_ALL } from '../../config/index';
+import { BREAK_POINTS_ALL, BREAK_POINTS_OBJ } from '../../config/index';
 
 type BpValue = string | number | boolean | object | null | undefined;
 
-// ブレイクポイントのキー型
-type BpKey = (typeof BREAK_POINTS_ALL)[number];
+// ブレイクポイントのキー型（オブジェクト記法で認識する全キー。xs を含む）
+type BpKey = (typeof BREAK_POINTS_OBJ)[number];
 
 // getBpData の戻り値型
 export type BpData = {
@@ -36,6 +36,7 @@ export default function getBpData(propVal: BpDataInput): BpData {
   }
 
   if (Array.isArray(propVal)) {
+    // 配列記法のインデックス→キー対応は固定（[base, sm, md, lg, xl]）。xs は含まれない。
     const values: Record<string, BpValue> = {};
     propVal.forEach((r, i) => {
       values[`${BREAK_POINTS_ALL[i]}`] = r;
@@ -43,8 +44,8 @@ export default function getBpData(propVal: BpDataInput): BpData {
     return filterEmptyObj(values);
   }
 
-  // オブジェクトの場合: BP指定オブジェクトか方向オブジェクトかを判定
-  if (hasSomeKeys(propVal, BREAK_POINTS_ALL)) {
+  // オブジェクトの場合: BP指定オブジェクトか方向オブジェクトかを判定（xs を含む BREAK_POINTS_OBJ で判定）
+  if (hasSomeKeys(propVal, BREAK_POINTS_OBJ)) {
     // 'sm', 'md' などがある場合はbp指定のオブジェクトとみなす
     return filterEmptyObj(propVal as Record<string, BpValue>);
   }

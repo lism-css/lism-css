@@ -1,20 +1,15 @@
 @use 'sass:map';
 @use 'sass:string';
-@use './prop-config' as props;
+@use './prop-config.gen' as props;
 
-$default_important: 0 !default;
+// $default_important: lism.config.js の defaultImportant を prop-config.gen 経由で既定値に読む。
+// `@use ... with ($default_important: ...)` で明示上書きされた場合は、!default が無効化されそちらが優先される。
+$default_important: props.$default_important !default;
 $is_container_query: 1 !default;
-$common_support_bp: 'md' !default;
 
+// breakpoints: サイズ 0 は「無効」（_query.scss の bp-up / bp-down がスキップする）。
 $breakpoints: () !default;
-$breakpoints: map.merge(
-  (
-    'sm': '480px',
-    'md': '800px',
-    'lg': '1120px',
-  ),
-  $breakpoints
-);
+$breakpoints: map.merge(props.$breakpoints, $breakpoints);
 
 $props: () !default;
 $props: map.deep-merge(props.$props, $props);

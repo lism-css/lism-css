@@ -127,6 +127,17 @@ export const TEMPLATES: TemplateDef[] = [
     previewUrl: `${PREVIEW_ORIGIN}/minimal-vite/`,
   },
   {
+    slug: 'minimal-next',
+    kind: 'project',
+    category: 'minimal',
+    stack: 'next',
+    sourcePath: 'minimal/next',
+    title: { ja: 'Minimal Next', en: 'Minimal Next' },
+    description: { ja: 'Next.js (App Router) ベースの最小構成', en: 'Minimal Next.js (App Router) setup' },
+    // preview サイト未配信・docs カード未整備のため draft（CLI 一覧・docs 本番ビルドから除外）
+    draft: true,
+  },
+  {
     slug: 'blog-astro-minimal',
     kind: 'project',
     category: 'blog',

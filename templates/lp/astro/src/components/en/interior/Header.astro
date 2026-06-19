@@ -36,7 +36,7 @@ const headerMenuNavItems = [
       {
         headerPrimaryNavItems.map(({ href, en }) => (
           <ListItem>
-            <Link class="z--nav_link" href={href} set="plain" d="block" lh="s" p="5" hasTransition hov="-o">
+            <Link class="z--nav_link" href={href} set="plain" d="block" hl="s" p="5" hasTransition hov="-o">
               {en}
             </Link>
           </ListItem>
@@ -62,7 +62,7 @@ const headerMenuNavItems = [
           <Stack class="z--header_menuNav u--divide">
             {
               headerMenuNavItems.map(({ href, en }) => (
-                <Link href={href} set="plain" layout="grid" gtc="1fr auto" ai="center" lh="s" py="20" px="25">
+                <Link href={href} set="plain" layout="grid" gtc="1fr auto" ai="center" hl="s" py="20" px="25">
                   <Inline>{en}</Inline>
                   <Icon icon="caret-right" fz="s" o="pp" />
                 </Link>

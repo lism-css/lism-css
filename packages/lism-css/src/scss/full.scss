@@ -1,0 +1,12 @@
+/*
+  full版（@layer あり）:
+  isVar系を除く全propsのBPサポートを lg まで拡張したビルド。
+  CSS purge と併用し、未使用分を削る前提の「全部入り」配布物。
+  _prop-config-full.gen.scss は config/presets/props-full.ts から生成される。
+*/
+@use './prop-config-full.gen' as full;
+@use './setting' with (
+  $props: full.$props
+);
+@use './with_layer';
+@use './props/index' as props;

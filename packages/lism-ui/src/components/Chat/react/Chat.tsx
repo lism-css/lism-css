@@ -38,13 +38,13 @@ export function Chat<T extends ElementType = 'div'>({
         </Frame>
       )}
       {name && (
-        <Lism className="c--chat_name" c="text-2" fs="italic" fz="2xs" lh="1" py="5" px="10" aslf="end">
+        <Lism className="c--chat_name" c="text-2" fs="italic" fz="2xs" hl="0" py="5" px="10" aslf="end">
           {name}
         </Lism>
       )}
       <Lism className="c--chat_body" pos="relative">
         <Decorator className="c--chat_deco" util="cbox" isSkipFlow pos="absolute" />
-        <Flow className="c--chat_content" util="cbox" bdrs="30" p="20" lh="s" flow={flow} jslf={direction}>
+        <Flow className="c--chat_content" util="cbox" bdrs="30" p="20" hl="s" flow={flow} jslf={direction}>
           {children}
         </Flow>
       </Lism>

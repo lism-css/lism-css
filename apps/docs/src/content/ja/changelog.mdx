@@ -9,6 +9,43 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.23.0 (2026.06.19)
+
+**破壊的変更**を含むリリースです。
+
+### ビルド/プラグイン層を `@lism-css/plugin` へ分離 (#439)
+
+- Vite / Astro 統合・purge・`npx lism-css build` CLI を本体から切り離し、新パッケージ `@lism-css/plugin` へ移行
+- `lism-css/vite`・`lism-css/purge/*`・`lism-css/vite-plugin` 等のエクスポートを廃止
+
+### トークンを値付きの単一情報源に刷新 (#434)
+
+- `tokens` を「キー: 値」のフラットマップに統合（値定義・ユーティリティ生成・props 受理を1か所で管理）
+- `tokenValues` チャンネルを廃止、`c` を `color` に改名、`fz.root` / `writing` トークンを削除
+
+### ブレイクポイント / フルビルド
+
+- `xs` ブレイクポイントに対応（CSS 出力・型ともオプトイン）(#428)
+- `full.css` / `full_no_layer.css`（全 props の BP を `lg` まで拡張）と `isFullMode` を追加 (#423, #425)
+- 標準サポート BP のデフォルトを `md` → `lg` に拡大
+
+### その他
+
+- `hl="0"` を追加し、`lh` を `hl` 推奨へ移行 (#437)
+- デフォルトフォントファミリーを見直し（`--ff--base` / `--ff--accent`）
+- props の冗長な `bp:0` 明示を削除（出力不変）
+
+### `@lism-css/plugin` v.0.3.0 (2026.06.19)
+
+新パッケージ。`lism-css` のビルド／フレームワーク統合レイヤーを提供します。
+
+- `lism.config.js` を CSS 出力の単一情報源とする動的ビルドプラグイン（`lismCss()` / `lismCssAstro()`）
+- 軽量 CSS purge（`@lism-css/plugin/purge/vite` / `/astro`、統合プラグインの `purge: true`）
+- Next.js 16（`@lism-css/plugin/next`）/ WordPress（`@lism-css/plugin/wordpress`）アダプタ
+- `breakpoints` から `lism-env.d.ts` を自動生成
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.22.2 (2026.06.03)
 
 - カラートークン `--green` の彩度を微調整

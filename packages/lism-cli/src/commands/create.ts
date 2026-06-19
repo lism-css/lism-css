@@ -4,8 +4,8 @@ import path from 'node:path';
 import { downloadTemplate } from 'giget';
 import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
-import { LISM_CSS_VERSION } from '../version.js';
-import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
+import { LISM_PACKAGE_VERSIONS } from '../version.js';
+import { DEFAULT_TEMPLATES_REF, NPM_REGISTRY_BASE, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
 import { setLang, t, tOf, type Lang } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
 import {
@@ -118,7 +118,7 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
 
   ensureTemplateDownloaded(outDir, tpl);
 
-  postProcessTemplate(outDir, tpl, resolvedLang);
+  await postProcessTemplate(outDir, tpl, resolvedLang);
 
   logger.success(t('create.created', { dir: outDir }));
   printNextSteps(outDir, tpl);
@@ -299,7 +299,7 @@ async function applyLangOverlay(tpl: TemplateDef, outDir: string, ref: string, l
   }
 }
 
-function postProcessTemplate(projectDir: string, tpl: TemplateDef, lang: Lang): void {
+async function postProcessTemplate(projectDir: string, tpl: TemplateDef, lang: Lang): Promise<void> {
   if (tpl.kind === 'static-html') return;
 
   if (tpl.kind === 'base-overlay' && tpl.rewritePackageName !== false) {
@@ -315,7 +315,7 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef, lang: Lang): 
   cleanupDevArtifacts(projectDir);
 
   // workspace:* を公開バージョンに書き換える
-  rewriteWorkspaceDeps(projectDir);
+  await rewriteWorkspaceDeps(projectDir);
 }
 
 /**
@@ -557,32 +557,108 @@ function rewritePackageName(projectDir: string, name: string): void {
   }
 }
 
+/** package.json 内で `workspace:*` 依存が現れ得るセクション */
+const DEP_SECTIONS = ['dependencies', 'devDependencies', 'peerDependencies'] as const;
+
+/** npm レジストリへの問い合わせタイムアウト（ms）。生成体験を遅くしないための保険。 */
+const REGISTRY_TIMEOUT_MS = 5000;
+
 /**
- * 取得後の package.json 内の `workspace:*` 依存を `^{LISM_CSS_VERSION}` に書き換える。
+ * 取得後の package.json 内の `workspace:*` 依存を、依存パッケージごとの公開バージョンに書き換える。
+ *
+ * バージョンは npm レジストリの dist-tag `latest`（＝安定版）を解決して使う。これにより `lism-css` 等を
+ * publish するだけで `lism create` が最新版を取得でき、CLI 自体を再公開する必要がなくなる。
+ * レジストリへ到達できない場合（オフライン / 障害 / 404 / タイムアウト）は、CLI ビルド時に焼き込んだ
+ * `LISM_PACKAGE_VERSIONS` へ依存ごとに個別フォールバックする。いずれも書式は `^x.y.z`。
+ *
  * 失敗しても警告に留め、生成自体は続行する（Best Effort）。
  */
-function rewriteWorkspaceDeps(projectDir: string): void {
+async function rewriteWorkspaceDeps(projectDir: string): Promise<void> {
   const pkgPath = path.join(projectDir, 'package.json');
   if (!fs.existsSync(pkgPath)) return;
   try {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as PackageJson;
-    let touched = false;
-    for (const key of ['dependencies', 'devDependencies', 'peerDependencies'] as const) {
-      const deps = pkg[key];
+
+    // 置換対象（workspace:* 依存）のパッケージ名を収集
+    const names = new Set<string>();
+    for (const section of DEP_SECTIONS) {
+      const deps = pkg[section];
       if (!deps) continue;
       for (const [name, value] of Object.entries(deps)) {
-        if (typeof value !== 'string') continue;
-        if (value.startsWith('workspace:')) {
-          deps[name] = `^${LISM_CSS_VERSION}`;
+        if (typeof value === 'string' && value.startsWith('workspace:')) names.add(name);
+      }
+    }
+    if (names.size === 0) return;
+
+    // 対象を並列でバージョン解決（レジストリ latest → 失敗時は焼き込み値）
+    const versions = await resolveWorkspaceVersions([...names]);
+
+    let touched = false;
+    for (const section of DEP_SECTIONS) {
+      const deps = pkg[section];
+      if (!deps) continue;
+      for (const [name, value] of Object.entries(deps)) {
+        if (typeof value === 'string' && value.startsWith('workspace:')) {
+          deps[name] = `^${versions[name]}`;
           touched = true;
         }
       }
     }
+
     if (touched) {
       fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
-      logger.log(t('create.workspaceReplaced', { version: LISM_CSS_VERSION }));
+      logger.log(t('create.workspaceReplaced'));
     }
   } catch (err) {
     logger.warn(t('create.workspaceFailed', { reason: String(err) }));
+  }
+}
+
+/**
+ * 依存名ごとに公開バージョンを解決する（全件並列）。返り値は常に全 name を含む。
+ */
+async function resolveWorkspaceVersions(names: string[]): Promise<Record<string, string>> {
+  const entries = await Promise.all(names.map(async (name) => [name, await resolveDepVersion(name)] as const));
+  return Object.fromEntries(entries);
+}
+
+/** CLI ビルド時に焼き込んだフォールバック版数（未知依存は lism-css の版に寄せる従来挙動を踏襲）。 */
+function bakedVersion(name: string): string {
+  return LISM_PACKAGE_VERSIONS[name] ?? LISM_PACKAGE_VERSIONS['lism-css'] ?? 'unknown';
+}
+
+/**
+ * 単一依存の公開バージョンを解決する。
+ *
+ * CLI が把握している公開 Lism パッケージ（＝焼き込み済み）のみレジストリへ問い合わせ、latest を採用する。
+ * 未知の workspace 依存は、無関係な npm パッケージを誤って引かないようレジストリへ問い合わせず焼き込み値を返す。
+ * レジストリ取得に失敗した場合も焼き込み値へフォールバックする。
+ */
+async function resolveDepVersion(name: string): Promise<string> {
+  const baked = bakedVersion(name);
+  if (!LISM_PACKAGE_VERSIONS[name]) return baked;
+  const latest = await fetchLatestVersion(name);
+  return latest ?? baked;
+}
+
+/**
+ * npm レジストリの `<pkg>/latest`（dist-tag latest ＝ 安定版）から version を取得する。
+ *
+ * パッケージ全体の最新 version を見ると prerelease を拾う恐れがあるため、必ず `/latest` を使う。
+ * スコープ名はスラッシュのみ `%2F` にエンコードする（`@lism-css/ui` → `@lism-css%2Fui`）。
+ * 失敗（オフライン / タイムアウト / 非 2xx / 不正レスポンス）時は null を返し、呼び出し側でフォールバックする。
+ */
+async function fetchLatestVersion(name: string): Promise<string | null> {
+  const url = `${NPM_REGISTRY_BASE}/${name.replace(/\//g, '%2F')}/latest`;
+  try {
+    const res = await fetch(url, {
+      headers: { accept: 'application/json' },
+      signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS),
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { version?: unknown };
+    return typeof data.version === 'string' ? data.version : null;
+  } catch {
+    return null;
   }
 }

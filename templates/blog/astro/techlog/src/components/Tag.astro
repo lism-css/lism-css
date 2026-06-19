@@ -15,7 +15,7 @@ const Root = href ? Link : Inline;
 const linkProps = href ? { href, hov: 'underline' as const } : {};
 ---
 
-<Root class:list={['c--tag', className]} set="plain s" d="inline-flex" ai="center" fz="2xs" lh="xs" py="5" px="5" c="text-2" {...linkProps} {...rest}>
+<Root class:list={['c--tag', className]} set="plain s" d="inline-flex" ai="center" fz="2xs" hl="xs" py="5" px="5" c="text-2" {...linkProps} {...rest}>
   <span class="-o:p" aria-hidden="true">#</span><slot />
 </Root>
 

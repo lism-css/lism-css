@@ -62,7 +62,7 @@ export interface PropRow {
   cssProperty: string;
   /** 所属する ### セクション名 */
   sectionName: string;
-  /** プリセット値クラス列の生テキスト（例: "-fz:root, -fz:base, ..."） */
+  /** プリセット値クラス列の生テキスト（例: "-fz:base, -fz:5xl, ..."） */
   presetColumn: string;
 }
 

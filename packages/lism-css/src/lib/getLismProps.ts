@@ -16,6 +16,8 @@ import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
 import { type TraitProps, type SetPropValue, type UtilPropValue } from './types/TraitProps';
 import { type PropValueTypes } from './types/PropValueTypes';
+import { type CustomPropRegistry } from './types/CustomPropRegistry';
+import { type CustomTraitRegistry } from './types/CustomTraitRegistry';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
 import { type AtomicType, type AtomicProps } from './types/AtomicProps';
 export { type LayoutType, type AtomicType };
@@ -24,13 +26,14 @@ export { type LayoutType, type AtomicType };
 interface PropConfig {
   prop?: string;
   token?: string | null | undefined | false;
-  tokenClass?: 0 | 1 | 2;
+  tokenClass?: 0 | 1;
   presets?: Set<string> | string[] | readonly string[];
   presetClass?: string;
   utils?: Record<string, string>;
   shorthands?: Record<string, string>;
   isVar?: number;
-  bp?: 0 | 1 | 'sm' | 'md' | 'lg' | 'xl';
+  // 0 / 1（有効BPすべて）/ ['sm','md'] 等（出力する BP の明示リスト）
+  bp?: 0 | 1 | readonly ('xs' | 'sm' | 'md' | 'lg' | 'xl')[];
   alwaysVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;
@@ -42,7 +45,7 @@ interface PropConfig {
 }
 
 // LismPropsData が受け取る型（layout / atomic 処理済み）
-export interface LismPropsBase extends TraitProps, PropValueTypes {
+export interface LismPropsBase extends TraitProps, PropValueTypes, CustomPropRegistry, CustomTraitRegistry {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   forwardedRef?: React.Ref<any>;
   class?: string | null;
@@ -194,7 +197,7 @@ export class LismPropsData {
       propConfig = Object.assign({}, propConfig, this._propConfig[propName]);
     }
 
-    // ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
+    // ブレイクポイント指定用のオブジェクト{base,xs,sm,md,lg,xl}かどうかをチェック
     const { base: baseValue, ...bpValues } = getBpData(propVal);
 
     // bp 非対応プロパティに BP 指定された場合、開発環境でのみ警告する。
@@ -262,11 +265,13 @@ export class LismPropsData {
   setAttrs(propKey: string, val: unknown, propConfig: PropConfig = {}, bpKey: string = ''): void {
     if (null == val || '' === val || false === val) return;
 
-    let styleName = `--${propKey}`;
+    const baseStyleName =
+      propConfig.isVar && typeof propConfig.prop === 'string' && propConfig.prop.startsWith('--') ? propConfig.prop : `--${propKey}`;
+    let styleName = baseStyleName;
     let utilName = `-${String(propConfig.utilKey || propKey)}`;
 
     if (bpKey) {
-      styleName = `--${propKey}_${bpKey}`;
+      styleName = `${baseStyleName}_${bpKey}`;
       utilName += `_${bpKey}`;
     }
 
@@ -307,6 +312,14 @@ export class LismPropsData {
       }
     }
 
+    // lh は hl の互換エイリアスだが、任意値だけは従来どおり CSS line-height として扱う。
+    if (propKey === 'lh' && !bpKey) {
+      if (typeof val === 'string' || typeof val === 'number') {
+        this.addStyle('lineHeight', val);
+        return;
+      }
+    }
+
     // .-prop: だけ出力するケース
     if (true === val) {
       this.addProp(utilName);
@@ -330,7 +343,7 @@ export class LismPropsData {
     // baseスタイルの追加処理
     if (!bpKey) {
       if (isVar) {
-        this.addStyle(`--${propKey}`, finalVal);
+        this.addStyle(baseStyleName, finalVal);
         return;
       } else if (!bp && !alwaysVar) {
         // インラインでスタイル出力するだけ

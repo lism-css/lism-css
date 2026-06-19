@@ -17,6 +17,16 @@ vi.mock('@inquirer/prompts', () => ({
   select: vi.fn(),
 }));
 
+vi.mock('../version.js', () => ({
+  CLI_VERSION: '0.0.0-test',
+  LISM_CSS_VERSION: '1.2.3',
+  LISM_PACKAGE_VERSIONS: {
+    'lism-css': '1.2.3',
+    '@lism-css/ui': '2.3.4',
+    '@lism-css/plugin': '3.4.5',
+  },
+}));
+
 const cwd = process.cwd();
 let tmpDir: string;
 const originalIsTTY = process.stdin.isTTY;
@@ -64,6 +74,35 @@ function writeFile(filePath: string, content: string): void {
   fs.writeFileSync(filePath, content);
 }
 
+/** registry の <pkg>/latest を引く URL（スコープ名はスラッシュのみ %2F にエンコード） */
+function registryLatestUrl(name: string): string {
+  return `https://registry.npmjs.org/${name.replace(/\//g, '%2F')}/latest`;
+}
+
+/** fetch モック用の最小 Response。コード側は res.ok と res.json() のみ参照する */
+function fetchResponse(ok: boolean, body: unknown): Response {
+  return { ok, status: ok ? 200 : 404, json: () => Promise.resolve(body) } as unknown as Response;
+}
+
+/** lism-css / @lism-css/ui（deps）+ @lism-css/plugin（devDeps）を workspace:* で持つテンプレ */
+function mockTemplateWithWorkspaceDeps(): void {
+  vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+    const dir = (options as { dir: string }).dir;
+    fs.mkdirSync(dir, { recursive: true });
+    writePackageJson(dir, {
+      name: 'lp-astro',
+      dependencies: {
+        'lism-css': 'workspace:*',
+        '@lism-css/ui': 'workspace:*',
+      },
+      devDependencies: {
+        '@lism-css/plugin': 'workspace:*',
+      },
+    });
+    return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+  });
+}
+
 describe('runCreate', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -75,6 +114,8 @@ describe('runCreate', () => {
     process.chdir(tmpDir);
     vi.spyOn(console, 'log').mockImplementation(() => undefined);
     vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    // レジストリ取得は既定でオフライン扱い（焼き込み値フォールバック）。テストはネットワークへ出ない。
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
     vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
       const dir = (options as { dir: string }).dir;
       fs.mkdirSync(dir, { recursive: true });
@@ -87,6 +128,7 @@ describe('runCreate', () => {
     process.chdir(cwd);
     fs.rmSync(tmpDir, { recursive: true, force: true });
     setStdinTTY(originalIsTTY);
+    vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
 
@@ -106,6 +148,68 @@ describe('runCreate', () => {
       dependencies: Record<string, string>;
     };
     expect(pkg.dependencies['lism-css']).not.toBe('workspace:*');
+  });
+
+  it('workspace依存をnpmレジストリのlatestへ置換する', async () => {
+    mockTemplateWithWorkspaceDeps();
+    const latest: Record<string, string> = {
+      'lism-css': '9.1.0',
+      '@lism-css/ui': '9.2.0',
+      '@lism-css/plugin': '9.3.0',
+    };
+    // dist-tag latest（= 安定版）を引くので prerelease は誤って選ばれない
+    const fetchMock = vi.fn((url: string | URL) => {
+      const name = Object.keys(latest).find((n) => String(url) === registryLatestUrl(n));
+      return Promise.resolve(fetchResponse(Boolean(name), name ? { version: latest[name] } : {}));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true });
+
+    const pkg = JSON.parse(fs.readFileSync(path.join(tmpDir, 'my-app', 'package.json'), 'utf-8')) as {
+      dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
+    };
+    expect(pkg.dependencies['lism-css']).toBe('^9.1.0');
+    expect(pkg.dependencies['@lism-css/ui']).toBe('^9.2.0');
+    expect(pkg.devDependencies['@lism-css/plugin']).toBe('^9.3.0');
+    // スコープ付きはスラッシュのみ %2F にエンコードして /latest を引く
+    expect(fetchMock).toHaveBeenCalledWith('https://registry.npmjs.org/@lism-css%2Fui/latest', expect.anything());
+  });
+
+  it('レジストリ到達不可時はCLI焼き込み版へフォールバックする', async () => {
+    mockTemplateWithWorkspaceDeps();
+    // fetch は beforeEach の既定（offline 拒否）のまま
+
+    await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true });
+
+    const pkg = JSON.parse(fs.readFileSync(path.join(tmpDir, 'my-app', 'package.json'), 'utf-8')) as {
+      dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
+    };
+    expect(pkg.dependencies['lism-css']).toBe('^1.2.3');
+    expect(pkg.dependencies['@lism-css/ui']).toBe('^2.3.4');
+    expect(pkg.devDependencies['@lism-css/plugin']).toBe('^3.4.5');
+  });
+
+  it('一部依存がレジストリで取得できない場合、その依存だけ焼き込み版へフォールバックする', async () => {
+    mockTemplateWithWorkspaceDeps();
+    const fetchMock = vi.fn((url: string | URL) => {
+      // lism-css は取得成功、それ以外（ui / plugin）は 404
+      if (String(url) === registryLatestUrl('lism-css')) return Promise.resolve(fetchResponse(true, { version: '9.9.9' }));
+      return Promise.resolve(fetchResponse(false, {}));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true });
+
+    const pkg = JSON.parse(fs.readFileSync(path.join(tmpDir, 'my-app', 'package.json'), 'utf-8')) as {
+      dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
+    };
+    expect(pkg.dependencies['lism-css']).toBe('^9.9.9'); // registry latest
+    expect(pkg.dependencies['@lism-css/ui']).toBe('^2.3.4'); // 404 → 焼き込み値
+    expect(pkg.devDependencies['@lism-css/plugin']).toBe('^3.4.5'); // 404 → 焼き込み値
   });
 
   it('stackが1件だけなら選択をスキップして自動確定する', async () => {

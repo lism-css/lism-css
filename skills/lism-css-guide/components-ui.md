@@ -240,7 +240,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `hovBgc` | Root | `string` | — | ホバー時の背景カラー。`--hov-bgc` 変数として出力 |
 | `hovC` | Root | `string` | — | ホバー時のテキストカラー。`--hov-c` 変数として出力 |
 | `itemP` | Root | `string` | — | 各アイテムのパディング。`--_item-p` 変数として出力 |
-| `href` | Link | `string` | — | リンク先URL。指定ありで `a` 要素、なしで `span` 要素 |
+| `href` | Link | `string` | — | リンク先URL（Link は常に `a` 要素として出力） |
 | `hov` | Link | `string` | `-bgc` | ホバー時のスタイル。デフォルトで背景色が変化 |
 
 ```jsx

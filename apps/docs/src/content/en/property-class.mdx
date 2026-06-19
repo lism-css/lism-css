@@ -72,7 +72,7 @@ This page lists all available Property Classes.
 
 
 :::info
-You can change which classes are output by [customizing via SCSS](/en/docs/customize/).
+You can change which classes are output by [customizing via SCSS](/en/docs/customize/scss/).
 :::
 
 
@@ -89,7 +89,7 @@ Each table covers one group of properties.
 |**Shorthand**| The abbreviated form of the CSS property. This is the `{prop}` string in the `-{prop}:{val}` class format, and also the prop name used with Lism components.|
 |**Property**| The corresponding CSS property |
 |**To Class**| Values that are output as Property Utility classes |
-|**BP**| Breakpoint support classes (`-{prop}_{bp}`). `✔` covers `sm` and `md`, `✔ lg` covers up to `lg`, and `-` means unsupported. |
+|**BP**| Breakpoint support classes (`-{prop}_{bp}`). `✔` covers `sm`, `md`, and `lg`, and `-` means unsupported. |
 
 
 
@@ -102,7 +102,8 @@ Each table covers one group of properties.
 |`ff`|`font-family`|[`FF`](/en/docs/tokens/typography/#ff-font-family)|-|
 |`fw`|`font-weight`|[`FW`](/en/docs/tokens/typography/#fw--font-weight)|-|
 |`fs`|`font-style`|`italic`|-|
-|`lh`|`line-height`|[`LH`](/en/docs/tokens/half-leading/), <br/>`1`|-|
+|`hl`|`line-height` (half-leading)|[`LH`](/en/docs/tokens/half-leading/), <br/>`0`|✔|
+|`lh`|`line-height` (compat)|[`LH`](/en/docs/tokens/half-leading/), <br/>`1`|-|
 |`lts`|`letter-spacing`|[`LTS`](/en/docs/tokens/typography/#lts-letter-spacing)|-|
 |`ta`|`text-align`|`center`<br/>`left`<br/>`right`|-|
 |`td`|`text-decoration`|`none`|-|
@@ -279,7 +280,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`|✔ lg|
+|`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`|✔|
 |`v`|`visibility`|`hidden`|-|
 |`o`|`opacity`|[`OPACITY`](/en/docs/tokens/#opacity), `0`|-|
 |`ov`|`overflow`| `auto`, `clip`, `hidden`|-|
@@ -342,7 +343,7 @@ The examples below demonstrate positioning with `position: absolute`.
     Positioning examples
   </PreviewTitle>
   <PreviewArea resize p="5">
-    <Box pos="relative" ar="16/9" lh="1" ff="mono">
+    <Box pos="relative" ar="16/9" hl="0" ff="mono">
       <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">
         <Fragment>A</Fragment>
       </Group>
@@ -374,7 +375,7 @@ The examples below demonstrate positioning with `position: absolute`.
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--box -pos:relative -ar:16/9 -lh:1 -ff:mono">
+    <div class="l--box -pos:relative -ar:16/9 -hl:0 -ff:mono">
       <div class="-pos:absolute -l:0 -t:0 -bgc:base-2 -bd -p:10">A</div>
       <div class="-pos:absolute -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">B</div>
       <div class="-pos:absolute -r:0 -t:0 -bgc:base-2 -bd -p:10">C</div>
@@ -389,7 +390,7 @@ The examples below demonstrate positioning with `position: absolute`.
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 
-    <Box pos="relative" ar="16/9" lh="1" ff="mono">
+    <Box pos="relative" ar="16/9" hl="0" ff="mono">
       <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">A</Group>
       <Group pos="absolute" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">B</Group>
       <Group pos="absolute" r="0" t="0" bgc="base-2" bd p="10">C</Group>
@@ -413,7 +414,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 |Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`g`|`gap`|<LinkSPACE/>,`inherit`|✔ lg|
+|`g`|`gap`|<LinkSPACE/>,`inherit`|✔|
 |`cg`|`column-gap`|-|-|
 |`rg`|`row-gap`|-|-|
 
@@ -471,15 +472,15 @@ The examples below demonstrate positioning with `position: absolute`.
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`gt`|`grid-template`|-|✔|
-|`gta`|`grid-template-areas`|-|✔ lg|
-|`gtc`|`grid-template-columns`|`subgrid`|✔ lg|
-|`gtr`|`grid-template-rows`|`subgrid`|✔ lg|
+|`gta`|`grid-template-areas`|-|✔|
+|`gtc`|`grid-template-columns`|`subgrid`|✔|
+|`gtr`|`grid-template-rows`|`subgrid`|✔|
 |`gaf`|`grid-auto-flow`|`column`,<br />`row`|✔|
 |`gar`|`grid-auto-rows`|-|-|
 |`gac`|`grid-auto-columns`|-|-|
-|`ga`|`grid-area`|`1/1`|✔ lg|
-|`gc`|`grid-column`|`1/-1`|✔ lg|
-|`gr`|`grid-row`|`1/-1`|✔ lg|
+|`ga`|`grid-area`|`1/1`|✔|
+|`gc`|`grid-column`|`1/-1`|✔|
+|`gr`|`grid-row`|`1/-1`|✔|
 |`gcs`|`grid-column-start`|-|-|
 |`grs`|`grid-row-start`|-|-|
 |`gce`|`grid-column-end`|-|-|
