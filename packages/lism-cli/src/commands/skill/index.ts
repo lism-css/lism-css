@@ -5,7 +5,7 @@ import { skillUpdateCommand } from './update.js';
 import { SKILL_PATHS } from './paths.js';
 import { t } from '../../i18n.js';
 
-/** `lism skill` サブコマンドツリー */
+/** `lism-cli skill` サブコマンドツリー */
 export function createSkillCommand(): Command {
   const skill = new Command('skill').description(t('cli.skill.description'));
 

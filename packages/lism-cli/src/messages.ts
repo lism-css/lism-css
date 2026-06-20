@@ -3,9 +3,9 @@
  *
  * 命名規則:
  *   - `cli.*`    … commander の description / argument / option
- *   - `create.*` … `lism create` サブコマンド
- *   - `ui.*`     … `lism ui` 配下
- *   - `skill.*`  … `lism skill` 配下
+ *   - `create.*` … `lism-cli create` サブコマンド
+ *   - `ui.*`     … `lism-cli ui` 配下
+ *   - `skill.*`  … `lism-cli skill` 配下
  *   - `config.*` … lism.config.* まわりのエラー・警告
  *   - `common.*` … 汎用
  *

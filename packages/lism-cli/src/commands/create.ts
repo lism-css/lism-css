@@ -82,7 +82,7 @@ export interface RunCreateArgs {
   lang?: string;
 }
 
-/** `lism create` / `create-lism` から共通で使える実体関数 */
+/** `lism-cli create` / `create-lism` から共通で使える実体関数 */
 export async function runCreate({ template, targetDir, force = false, lang }: RunCreateArgs): Promise<void> {
   await runCreateWithTemplates({ template, targetDir, force, lang }, TEMPLATES);
 }
@@ -567,7 +567,7 @@ const REGISTRY_TIMEOUT_MS = 5000;
  * 取得後の package.json 内の `workspace:*` 依存を、依存パッケージごとの公開バージョンに書き換える。
  *
  * バージョンは npm レジストリの dist-tag `latest`（＝安定版）を解決して使う。これにより `lism-css` 等を
- * publish するだけで `lism create` が最新版を取得でき、CLI 自体を再公開する必要がなくなる。
+ * publish するだけで `lism-cli create` が最新版を取得でき、CLI 自体を再公開する必要がなくなる。
  * レジストリへ到達できない場合（オフライン / 障害 / 404 / タイムアウト）は、CLI ビルド時に焼き込んだ
  * `LISM_PACKAGE_VERSIONS` へ依存ごとに個別フォールバックする。いずれも書式は `^x.y.z`。
  *

@@ -4,7 +4,7 @@ import { initCommand } from './init.js';
 import { listCommand } from './list.js';
 import { t } from '../../i18n.js';
 
-/** `lism ui` サブコマンドツリーを構築して返す */
+/** `lism-cli ui` サブコマンドツリーを構築して返す */
 export function createUiCommand(): Command {
   const ui = new Command('ui').description(t('cli.ui.description'));
 
