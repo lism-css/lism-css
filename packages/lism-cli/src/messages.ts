@@ -461,6 +461,10 @@ export const messages = {
     ja: '{path} を読み込めませんでした（構文エラー等）。修正してから再実行してください: {reason}',
     en: 'Failed to load {path} (syntax error, etc). Please fix it and retry: {reason}',
   },
+  'config.freshConfigExists': {
+    ja: '{path} は既に存在するため新規作成できません。',
+    en: 'Cannot create {path} because it already exists.',
+  },
 
   // ---------------------------------------------------------------------------
   // common

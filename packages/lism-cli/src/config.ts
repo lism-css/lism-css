@@ -81,11 +81,14 @@ export async function readConfig(): Promise<LismCliConfig | null> {
   }
 
   const modObj = mod as LismConfigFile | undefined;
-  const explicit = modObj?.ui ?? modObj?.cli;
+  // `??` だと「ui キーは存在するが値が null 等」のケースで cli/旧形式へ静かにフォールバックしてしまい、
+  // 設定ミスが見えなくなる。キーの「存在」自体で判定し、値の妥当性は validateCliConfig に委ねる。
+  const hasUiKey = modObj?.ui !== undefined;
+  const hasCliKey = modObj?.cli !== undefined;
 
-  if (explicit !== undefined) {
-    // 明示的な `ui:`（または旧 `cli:`）キーがある場合は厳格に検証し、不正なら throw する
-    if (modObj?.ui === undefined && modObj?.cli !== undefined) {
+  if (hasUiKey || hasCliKey) {
+    const explicit = hasUiKey ? modObj.ui : modObj.cli;
+    if (!hasUiKey && hasCliKey) {
       logger.warn(t('config.cliKeyDeprecated', { filename: found.filename }));
     }
     validateCliConfig(explicit);
@@ -119,9 +122,12 @@ function validateCliConfig(cli: unknown): asserts cli is LismCliConfig {
   }
 }
 
-/** lism.config.js を新規作成する（既存の場合は書き換えない） */
+/** lism.config.js を新規作成する。既に存在する場合は呼び出し側のロジック誤りとして throw する。 */
 export function writeFreshConfig(cli: LismCliConfig): string {
   const filePath = getDefaultConfigPath();
+  if (fs.existsSync(filePath)) {
+    throw new Error(t('config.freshConfigExists', { path: filePath }));
+  }
   const body = renderConfigTemplate(cli);
   fs.writeFileSync(filePath, body);
   return filePath;
