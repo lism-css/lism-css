@@ -97,7 +97,10 @@ export async function readConfig(): Promise<LismCliConfig | null> {
   // CSS カスタマイズ専用の lism.config.js（tokens/props 等）を誤って UI 設定と解釈しないため。
   try {
     validateCliConfig(modObj);
-    return modObj as LismCliConfig;
+    // jiti の interopDefault は default export のプロパティをモジュール名前空間に
+    // 合成する Proxy を返すため、そのまま返すと __esModule 等の余計な内部プロパティが
+    // 漏れる。必要な3フィールドだけを抜き出してクリーンなオブジェクトを構築する。
+    return { framework: modObj.framework, componentsDir: modObj.componentsDir, helperDir: modObj.helperDir };
   } catch {
     return null;
   }
