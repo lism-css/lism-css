@@ -1,6 +1,6 @@
 # lism-cli
 
-[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com/ui) のための CLI ツール。`lism` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
+[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com/ui) のための CLI ツール。`lism-cli` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
 
 ## 前提条件
 
@@ -9,9 +9,9 @@
 ## コマンド体系
 
 ```
-lism create [targetDir] [--template <name|category>]   # templates から新規プロジェクト
-lism ui    { init | add <names...> | list }            # Lism UI コンポーネントの追加
-lism skill { add | check | update }                    # AI エージェント向け SKILL.md 配置
+lism-cli create [targetDir] [--template <name|category>]   # templates から新規プロジェクト
+lism-cli ui    { init | add <names...> | list }            # Lism UI コンポーネントの追加
+lism-cli skill { add | check | update }                    # AI エージェント向け SKILL.md 配置
 ```
 
 ## 使い方
