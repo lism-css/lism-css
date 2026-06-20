@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { confirm, select } from '@inquirer/prompts';
-import { configExists, readConfig } from '../../config.js';
+import { readConfig, renderUiSnippet, DEFAULT_CONFIG_FILENAME } from '../../config.js';
 import {
   fetchCatalog,
   fetchComponent,
@@ -12,7 +12,7 @@ import {
   type RegistryFile,
 } from './fetcher.js';
 import { resolveHelperPlaceholder } from '../../transform.js';
-import { runInit } from './init.js';
+import { promptUiConfig } from './promptUiConfig.js';
 import { logger } from '../../logger.js';
 import { normalizeComponentName } from './normalize.js';
 import type { LismCliConfig } from '../../config.js';
@@ -22,6 +22,7 @@ interface AddOptions {
   overwrite: boolean;
   all: boolean;
   ref?: string;
+  framework?: LismCliConfig['framework'];
 }
 
 /** 上書き方針 */
@@ -29,13 +30,21 @@ type OverwritePolicy = 'all' | 'none' | 'per-component';
 
 export async function addCommand(names: string[], options: AddOptions): Promise<void> {
   let config: LismCliConfig;
+  let needsGuidance = false;
 
-  if (configExists()) {
-    config = await readConfig();
-  } else {
-    logger.info(t('ui.add.noConfig'));
-    config = await runInit();
-    console.log();
+  try {
+    const existing = await readConfig();
+    if (existing) {
+      config = existing;
+    } else {
+      needsGuidance = true;
+      logger.info(t('ui.add.noConfig'));
+      config = await promptUiConfig({ framework: options.framework });
+      console.log();
+    }
+  } catch (err) {
+    logger.error(err instanceof Error ? err.message : String(err));
+    process.exit(1);
   }
 
   const fetchOpts: FetchOptions = { ref: options.ref };
@@ -101,6 +110,10 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     }
     const helperFailed = await writeComponent(result.value, config, overwriteAll, overwritePolicy, installedHelpers, fetchOpts);
     if (helperFailed) hasFailure = true;
+  }
+
+  if (needsGuidance) {
+    logger.info(t('ui.init.snippetGuide', { filename: DEFAULT_CONFIG_FILENAME, snippet: renderUiSnippet(config) }));
   }
 
   if (hasFailure) {
