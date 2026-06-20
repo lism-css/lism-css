@@ -2,14 +2,13 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { select, input } from '@inquirer/prompts';
+import { select } from '@inquirer/prompts';
 import { setLang } from '../../i18n';
 import { logger } from '../../logger';
 import { runInit, initCommand } from './init';
 
 vi.mock('@inquirer/prompts', () => ({
   select: vi.fn(),
-  input: vi.fn(),
 }));
 
 const cwd = process.cwd();
@@ -24,7 +23,6 @@ function writeFile(filePath: string, content: string): void {
 
 function mockPrompts(): void {
   vi.mocked(select).mockResolvedValue('react');
-  vi.mocked(input).mockResolvedValueOnce('src/components/ui').mockResolvedValueOnce('src/components/ui/_helper');
 }
 
 beforeEach(() => {
@@ -78,7 +76,6 @@ describe('initCommand', () => {
     await initCommand({});
 
     expect(select).not.toHaveBeenCalled();
-    expect(input).not.toHaveBeenCalled();
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 

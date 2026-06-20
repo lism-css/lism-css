@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { select, input } from '@inquirer/prompts';
+import { select } from '@inquirer/prompts';
 import { setLang } from '../../i18n';
 import { logger } from '../../logger';
 import { addCommand } from './add';
@@ -10,7 +10,6 @@ import type { RegistryCatalog, RegistryComponent } from './fetcher';
 
 vi.mock('@inquirer/prompts', () => ({
   select: vi.fn(),
-  input: vi.fn(),
   confirm: vi.fn(),
 }));
 
@@ -70,16 +69,15 @@ afterEach(() => {
 });
 
 describe('addCommand', () => {
-  it('ui セクションが無い場合、対話で値を収集してメモリ上の値で配置し、ファイルは書き換えない', async () => {
+  it('ui セクションが無い場合、framework のみ対話で収集してメモリ上の値で配置し、ファイルは書き換えない', async () => {
     const original = "export default { tokens: { space: ['10', '20'] } };\n";
     writeFile(path.join(tmpDir, 'lism.config.js'), original);
     vi.mocked(select).mockResolvedValue('react');
-    vi.mocked(input).mockResolvedValueOnce('src/components/ui').mockResolvedValueOnce('src/components/ui/_helper');
 
     await addCommand(['Button'], { overwrite: false, all: false });
 
     expect(select).toHaveBeenCalledTimes(1);
-    // 配置はメモリ上の値で行われる
+    // 配置はメモリ上の値（componentsDir/helperDirは既定値）で行われる
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.jsx'))).toBe(true);
     // lism.config.js は書き換えられない
     expect(fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8')).toBe(original);
@@ -97,23 +95,34 @@ describe('addCommand', () => {
     await addCommand(['Button'], { overwrite: false, all: false });
 
     expect(select).not.toHaveBeenCalled();
-    expect(input).not.toHaveBeenCalled();
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.astro'))).toBe(true);
     expect(infoSpy.mock.calls.some((call: unknown[]) => String(call[0]).includes('ui: {'))).toBe(false);
   });
 
-  it('--framework 指定時は select がスキップされる', async () => {
-    vi.mocked(input).mockResolvedValueOnce('src/components/ui').mockResolvedValueOnce('src/components/ui/_helper');
-
+  it('--framework のみ指定すれば、componentsDir/helperDir のフラグが無くても完全に非対話で完走する', async () => {
     await addCommand(['Button'], { overwrite: false, all: false, framework: 'react' });
 
     expect(select).not.toHaveBeenCalled();
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.jsx'))).toBe(true);
+    expect(exitSpy).not.toHaveBeenCalled();
+  });
+
+  it('--components-dir / --helper-dir を指定すると、その値で配置され既定値は使われない', async () => {
+    await addCommand(['Button'], {
+      overwrite: false,
+      all: false,
+      framework: 'react',
+      componentsDir: 'custom/ui',
+      helperDir: 'custom/ui/_helper',
+    });
+
+    expect(select).not.toHaveBeenCalled();
+    expect(fs.existsSync(path.join(tmpDir, 'custom/ui/Button/Button.jsx'))).toBe(true);
+    expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.jsx'))).toBe(false);
   });
 
   it('設定ファイルが全く無い場合でも未捕捉エラーにならず、対話にフォールバックする（旧バグの再発防止）', async () => {
     vi.mocked(select).mockResolvedValue('react');
-    vi.mocked(input).mockResolvedValueOnce('src/components/ui').mockResolvedValueOnce('src/components/ui/_helper');
 
     await addCommand(['Button'], { overwrite: false, all: false });
 
@@ -124,7 +133,6 @@ describe('addCommand', () => {
   it('既存ファイルが lism.config.mjs の場合、スニペット案内のファイル名も lism.config.mjs になる', async () => {
     writeFile(path.join(tmpDir, 'lism.config.mjs'), "export default { tokens: { space: ['10', '20'] } };\n");
     vi.mocked(select).mockResolvedValue('react');
-    vi.mocked(input).mockResolvedValueOnce('src/components/ui').mockResolvedValueOnce('src/components/ui/_helper');
 
     await addCommand(['Button'], { overwrite: false, all: false });
 
