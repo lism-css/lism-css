@@ -84,7 +84,7 @@ describe('addCommand', () => {
     // lism.config.js は書き換えられない
     expect(fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8')).toBe(original);
     // 末尾にスニペット案内が出る
-    expect(infoSpy.mock.calls.some((call) => String(call[0]).includes('ui: {'))).toBe(true);
+    expect(infoSpy.mock.calls.some((call: unknown[]) => String(call[0]).includes('ui: {'))).toBe(true);
     expect(exitSpy).not.toHaveBeenCalled();
   });
 
@@ -99,7 +99,7 @@ describe('addCommand', () => {
     expect(select).not.toHaveBeenCalled();
     expect(input).not.toHaveBeenCalled();
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.astro'))).toBe(true);
-    expect(infoSpy.mock.calls.some((call) => String(call[0]).includes('ui: {'))).toBe(false);
+    expect(infoSpy.mock.calls.some((call: unknown[]) => String(call[0]).includes('ui: {'))).toBe(false);
   });
 
   it('--framework 指定時は select がスキップされる', async () => {
