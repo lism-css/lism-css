@@ -120,4 +120,16 @@ describe('addCommand', () => {
     expect(exitSpy).not.toHaveBeenCalled();
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.jsx'))).toBe(true);
   });
+
+  it('既存ファイルが lism.config.mjs の場合、スニペット案内のファイル名も lism.config.mjs になる', async () => {
+    writeFile(path.join(tmpDir, 'lism.config.mjs'), "export default { tokens: { space: ['10', '20'] } };\n");
+    vi.mocked(select).mockResolvedValue('react');
+    vi.mocked(input).mockResolvedValueOnce('src/components/ui').mockResolvedValueOnce('src/components/ui/_helper');
+
+    await addCommand(['Button'], { overwrite: false, all: false });
+
+    const guidance = infoSpy.mock.calls.map((call: unknown[]) => String(call[0])).find((msg) => msg.includes('ui: {'));
+    expect(guidance).toContain('lism.config.mjs');
+    expect(guidance).not.toContain('lism.config.js');
+  });
 });

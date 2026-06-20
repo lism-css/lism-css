@@ -110,6 +110,20 @@ describe('readConfig', () => {
     writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'vue', componentsDir: 'x', helperDir: 'y' }));
     await expect(readConfig()).rejects.toThrow();
   });
+
+  it('ui: が null で cli: もある場合、cli へフォールバックせず throw する', async () => {
+    writeFile(
+      path.join(tmpDir, 'lism.config.js'),
+      "export default { ui: null, cli: { framework: 'astro', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' } };\n"
+    );
+    await expect(readConfig()).rejects.toThrow();
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  it('cli: が null のみ（ui キー無し）の場合、旧形式フォールバックを試みず throw する', async () => {
+    writeFile(path.join(tmpDir, 'lism.config.js'), 'export default { cli: null };\n');
+    await expect(readConfig()).rejects.toThrow();
+  });
 });
 
 describe('writeFreshConfig', () => {
@@ -131,6 +145,13 @@ describe('writeFreshConfig', () => {
     expect(content).toContain('ui: {');
     expect(content).not.toContain('cli: {');
     expect(content).toContain('"react"');
+  });
+
+  it('既に lism.config.js が存在する場合は throw する（上書きしない）', () => {
+    writeFile(path.join(tmpDir, 'lism.config.js'), 'export default { tokens: {} };\n');
+    expect(() => writeFreshConfig({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' })).toThrow();
+    // 上書きされていないことを確認
+    expect(fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8')).toBe('export default { tokens: {} };\n');
   });
 });
 
