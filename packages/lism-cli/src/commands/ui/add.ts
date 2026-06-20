@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { confirm, select } from '@inquirer/prompts';
-import { readConfig, renderUiSnippet, DEFAULT_CONFIG_FILENAME } from '../../config.js';
+import { findConfigFile, readConfig, renderUiSnippet, DEFAULT_CONFIG_FILENAME } from '../../config.js';
 import {
   fetchCatalog,
   fetchComponent,
@@ -113,7 +113,8 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
   }
 
   if (needsGuidance) {
-    logger.info(t('ui.init.snippetGuide', { filename: DEFAULT_CONFIG_FILENAME, snippet: renderUiSnippet(config) }));
+    const filename = findConfigFile()?.filename ?? DEFAULT_CONFIG_FILENAME;
+    logger.info(t('ui.init.snippetGuide', { filename, snippet: renderUiSnippet(config) }));
   }
 
   if (hasFailure) {
