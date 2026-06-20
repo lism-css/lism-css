@@ -308,14 +308,6 @@ export const messages = {
     ja: 'フレームワークを選択してください:',
     en: 'Select a framework:',
   },
-  'ui.init.promptComponentsDir': {
-    ja: 'コンポーネントの出力先ディレクトリ:',
-    en: 'Output directory for components:',
-  },
-  'ui.init.promptHelperDir': {
-    ja: 'helper の出力先ディレクトリ:',
-    en: 'Output directory for helpers:',
-  },
   'ui.init.created': {
     ja: '{path} を作成しました。',
     en: 'Created {path}.',

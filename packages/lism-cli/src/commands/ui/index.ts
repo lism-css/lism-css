@@ -21,6 +21,8 @@ export function createUiCommand(): Command {
     .option('-o, --overwrite', t('cli.ui.add.opt.overwrite'), false)
     .option('-a, --all', t('cli.ui.add.opt.all'), false)
     .addOption(new Option('--framework <name>', t('cli.ui.init.opt.framework')).choices(['react', 'astro']))
+    .option('--components-dir <path>', t('cli.ui.init.opt.componentsDir'))
+    .option('--helper-dir <path>', t('cli.ui.init.opt.helperDir'))
     .option('--ref <ref>', t('cli.ui.opt.ref'))
     .action(addCommand);
 

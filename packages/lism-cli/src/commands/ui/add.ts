@@ -23,6 +23,8 @@ interface AddOptions {
   all: boolean;
   ref?: string;
   framework?: LismCliConfig['framework'];
+  componentsDir?: string;
+  helperDir?: string;
 }
 
 /** 上書き方針 */
@@ -39,7 +41,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     } else {
       needsGuidance = true;
       logger.info(t('ui.add.noConfig'));
-      config = await promptUiConfig({ framework: options.framework });
+      config = await promptUiConfig({ framework: options.framework, componentsDir: options.componentsDir, helperDir: options.helperDir });
       console.log();
     }
   } catch (err) {
