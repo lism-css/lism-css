@@ -54,8 +54,8 @@ export const messages = {
     en: 'Manage Lism UI components',
   },
   'cli.ui.init.description': {
-    ja: 'lism.config.js の ui セクションを生成する',
-    en: 'Generate the ui section of lism.config.js',
+    ja: 'lism.config の ui セクションを生成する',
+    en: 'Generate the ui section of lism.config',
   },
   'cli.ui.init.opt.framework': {
     ja: 'フレームワーク',
@@ -321,8 +321,8 @@ export const messages = {
     en: '{filename} already has a ui section configured.',
   },
   'ui.init.snippetGuide': {
-    ja: '次回から同じ質問をされないために、{filename} に以下を貼り付けてください:\n\n{snippet}\n',
-    en: 'To avoid being asked these questions again, paste the following into {filename}:\n\n{snippet}\n',
+    ja: '次回から同じ質問をされないために、{filename} の export default オブジェクト内に以下を貼り付けてください:\n\n{snippet}\n',
+    en: 'To avoid being asked these questions again, paste the following inside the exported config object in {filename}:\n\n{snippet}\n',
   },
 
   // ui list
