@@ -21,6 +21,13 @@
 
 `--flow--base` / `--flow--s` は `:root` で定義されたトークン（[tokens](../tokens.md#フロー余白-flow) 参照）。日本語環境では文字密度に合わせて `--flow--base` が広めに上書きされる。
 
+## 既定の挙動
+
+- `display:flow-root`。
+- 直下の`* + *`へ`margin-block-start:var(--flow)`を付与し、`--flow`は`--flow--base`を初期値にします。
+- 直下の見出しは上余白を広めにし、先頭要素と`is--skipFlow + *`は余白を打ち消します。
+- 直下の`img`/`video`/`iframe`は`display:block`へ初期化します。
+
 ## 専用Props
 
 | Prop | 説明 |

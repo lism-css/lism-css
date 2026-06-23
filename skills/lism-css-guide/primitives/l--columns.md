@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_columns.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--columns.md
 
+## 既定の挙動
+
+- `display:grid`。
+- `--cols:2`を初期値にし、`grid-template-columns:repeat(var(--cols), minmax(0, 1fr))`で等幅列を作ります。
+- 等幅N列は`Grid gtc="repeat(...)"`ではなく`Columns cols={...}`を優先します。
+
 ## 専用Props
 
 | Prop | CSS変数 | 説明 | デフォルト |

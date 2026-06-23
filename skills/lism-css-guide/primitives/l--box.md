@@ -6,6 +6,7 @@
 
 - クラス名: `l--box`
 - コンポーネント: `<Box>`
+- TSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/components/layout/Box/Box.tsx
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--box.md
 
 ## Usage

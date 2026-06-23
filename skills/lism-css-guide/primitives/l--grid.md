@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_grid.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--grid.md
 
+## 既定の挙動
+
+- `display:grid`。
+- 直下の子要素に`min-width:0`を付与し、grid itemのはみ出しを抑えます。
+- `grid-template-columns`や`gap`は既定で持たないため、必要な時だけ`gtc`/`g`などで指定します。
+
 ## Usage
 
 ### 基本的な使い方

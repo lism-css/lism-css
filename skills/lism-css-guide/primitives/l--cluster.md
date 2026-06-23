@@ -9,6 +9,13 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_cluster.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--cluster.md
 
+## 既定の挙動
+
+- `display:flex`。
+- `flex-wrap:wrap`で折り返しを有効化済み。
+- `align-items:center`でstretchを解除済み。
+- `gap`は既定で持たないため、間隔は`g`/`-g:*`で指定します。通常`fxw="wrap"`や`ai="center"`は足しません。
+
 ## Usage
 
 ### 基本的な使い方

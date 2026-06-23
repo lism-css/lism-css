@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_flex.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--flex.md
 
+## 既定の挙動
+
+- `display:flex`。
+- 直下の子要素に`min-width:0`を付与し、flex itemのはみ出しを抑えます。
+- `gap`、`flex-wrap`、`align-items`、`justify-content`、`flex-direction`は既定では指定しません。必要な時だけ`g`/`fxw`/`ai`/`jc`/`fxd`で指定します。
+
 ## Usage
 
 ### 基本的な使い方

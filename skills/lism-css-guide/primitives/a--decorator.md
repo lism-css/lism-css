@@ -6,6 +6,7 @@
 
 - クラス名: `a--decorator`
 - コンポーネント: `<Decorator>`
+- TSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/components/atomic/Decorator/Decorator.tsx
 - 公式ドキュメント: https://lism-css.com/docs/primitives/a--decorator.md
 
 ## 専用Props

@@ -15,6 +15,13 @@
 - メイン側が `--mainW` を維持できる範囲内では横並びを保ち、下回ると自動で縦並びに切り替わる
 - 子要素の**一方に `is--side` を付ける必要がある**（コンポーネントでは `isSide` prop）
 
+## 既定の挙動
+
+- `display:flex`。
+- `flex-wrap:wrap`で折り返しを有効化済み。
+- `--sideW:auto`、`--mainW:max(20rem, 50%)`を初期値にします。
+- 直下の`.is--side`をサイド側、それ以外をメイン側としてflex比率・basis・`min-width:0`を設定します。通常`fxw="wrap"`は足しません。
+
 ## 専用Props
 
 | Prop | 出力 | デフォルト | 説明 |

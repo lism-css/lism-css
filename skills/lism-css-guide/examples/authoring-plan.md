@@ -1,0 +1,61 @@
+# Authoring Plan例
+
+## 例: featureカード一覧セクション
+
+### FP0入力整理
+
+| 項目 | 内容 | 判定 |
+|---|---|---|
+| 対象 | トップページのfeatureカード一覧 | ✅ |
+| framework | Astro | ✅ |
+| 粒度 | セクション+カード部品 | ✅ |
+| 反復 | カード3件以上 | 🆕 component抽出候補 |
+| 不明点 | デザイン上の24px余白をtokenへ丸めるか | ⏸ |
+
+### 構造表
+
+| 対象領域 | 採用Primitive・Component | 理由 | route先 | 判定 |
+|---|---|---|---|---|
+| セクション幅 | `Container`+`Wrapper` | レスポンシブ値の基準と本文幅制限を分ける | `is--container.md`/`is--wrapper.md` | ✅ |
+| カード一覧 | `Columns cols={[1,2,3]}` | 等幅カード列でBP切替する | `primitive-class.md` | ✅ |
+| サムネイル | `Frame ar="16/9"` | 画像枠とfitは既定に任せる | `l--frame.md` | ✅ |
+| カード全体リンク | `BoxLink` | カード全体のクリック領域をtraitで管理 | `is--boxLink.md` | ✅ |
+
+### token表
+
+| 用途 | デザイン値 | 採用token | 差分 | 判定 |
+|---|---|---|---|---|
+| カードpadding | `24px` | `p="30"`候補 | +6px | ⏸ |
+| カードgap | — | `g="20"` | — | ✅ |
+| タイトルfz | — | `fz="l"` | — | ✅ |
+| 背景 | — | `bgc="base"` | — | ✅ |
+| 補助テキスト色 | — | `c="text-2"` | — | ✅ |
+
+### responsive表
+
+| 対象 | base | sm | md | lg | container祖先 | 注意 |
+|---|---|---|---|---|---|---|
+| カード列数 | 1 | 2 | 3 | — | セクションに`isContainer` | `cols={[1,2,3]}` |
+| セクション余白 | 40 | — | 60 | — | セクションに`isContainer` | base必須 |
+
+### 構成表
+
+| c--*名 | Props・Property Classで書く | CSSに残す | 状態・variant | 既定で足りる（指定しない） |
+|---|---|---|---|---|
+| `c--featureCard` | `p`, `bgc`, `bdrs`, `bxsh` | なし | featured時は`c--featureCard--featured` | `Frame ov`、直下imgの`w/h/object-fit` |
+| `c--featureCard_title` | `fz="l"` | なし | — | — |
+
+### 確認事項
+
+| 項目 | 要確認理由 | 候補 |
+|---|---|---|
+| カードpadding | 24pxはspacing tokenに完全一致しない | A=`p="30"`へ丸め/B=`--s24`追加/C=24px直書き例外 |
+
+### 実装後セルフチェック例
+
+| Plan項目 | 実装結果 | 分類 | 対応 |
+|---|---|---|---|
+| `Frame ar="16/9"` | `Frame`使用済み | OK | なし |
+| 直下img fitは既定 | imgに`-w:100%`を付けていた | 実装漏れ | 重複指定を削除 |
+| `data-*`状態 | 状態なし | OK | なし |
+| padding丸め | ユーザー確認後`p="30"` | 計画変更なし | なし |

@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_center.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--center.md
 
+## 既定の挙動
+
+- `display:grid`。
+- `place-content:center`と`place-items:center`で子要素を中央配置します。
+- 中央配置のために`d="grid"`、`pc="center"`、`pi="center"`などを重ねる必要はありません。
+
 ## 動作の仕組み
 
 - 高さを持たない場合: コンテンツを**水平方向のみ**中央揃え（内在的な中央寄せ。長いテキストは左寄せのまま）

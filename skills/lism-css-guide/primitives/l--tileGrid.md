@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_tileGrid.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--tileGrid.md
 
+## 既定の挙動
+
+- `display:grid`。
+- `grid-template:repeat(var(--rows, 1), minmax(0, 1fr)) / repeat(var(--cols, 1), minmax(0, 1fr))`で行数・列数を均等に割ります。
+- `rows`/`cols`を省略するとどちらも1です。
+
 ## 専用Props
 
 | Prop | CSS変数 | 説明 | デフォルト |

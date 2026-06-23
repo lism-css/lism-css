@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_autoColumns.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--autoColumns.md
 
+## 既定の挙動
+
+- `display:grid`。
+- `--cols:20rem`、`--autoMode:auto-fill`を初期値にします。
+- `grid-template-columns:repeat(var(--autoMode), minmax(min(var(--cols), 100%), 1fr))`で最小幅ベースの自動段組みを作ります。
+
 ## 専用Props
 
 | Prop | CSS変数 | デフォルト | 説明 |

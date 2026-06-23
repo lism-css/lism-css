@@ -9,6 +9,13 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_switchColumns.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--switchColumns.md
 
+## 既定の挙動
+
+- `display:flex`。
+- `flex-wrap:wrap`で折り返しを有効化済み。
+- `--breakSize:var(--sz--xs)`を初期値にし、直下子要素の`flex-basis`で親幅に応じた縦横切替を行います。
+- 通常`fxw="wrap"`は足しません。
+
 ## 専用Props
 
 | Prop | CSS変数 | デフォルト | 説明 |

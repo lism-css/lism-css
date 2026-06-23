@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_frame.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--frame.md
 
+## 既定の挙動
+
+- `overflow:hidden`を既定で持ちます。通常`ov="hidden"`は足しません。
+- 直下の`img`/`video`/`iframe`を`display:block;width:100%;height:100%;object-fit:cover`でフレームにフィットさせます。
+- 直下メディアへ`w`/`h`/`object-fit:cover`を重ねないでください。`object-fit:contain`や`object-position`など既定と違う意図がある場合だけ追加します。
+
 ## 専用Props
 
 | Prop | 説明 |

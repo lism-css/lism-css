@@ -9,6 +9,12 @@
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_stack.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--stack.md
 
+## 既定の挙動
+
+- `display:flex`。
+- `flex-direction:column`で縦並びにします。
+- `gap`は既定で持たないため、間隔は`g`/`-g:*`で指定します。通常`fxd="column"`は足しません。
+
 ## Usage
 
 ### 基本的な使い方
