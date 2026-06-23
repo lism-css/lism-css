@@ -117,6 +117,7 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 ### 退行注意
 
 - 重ね順（overlay → body）はDOM順で決まる。`Layer`の並びをBeforeと同じにする。
+- `Layer`＋`Center`の慣用形は、単一divでabsolute＋grid＋中央寄せを兼ねていたBeforeよりDOMノードが1つ増える。ノード数を厳密に保つなら`<Center isLayer g="15">`（`l--center is--layer`）で1ノードに畳める。挙動不変でも構造が変わる点に留意（最小diff原則）。
 - `rgb(0 0 0 / 40%)`のような任意色はtokenではない。Beforeの値をそのまま渡し、勝手に丸めない（Pass 5）。
 
 ---
