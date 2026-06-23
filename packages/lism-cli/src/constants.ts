@@ -48,8 +48,20 @@ export const UI_HELPER_PATH = 'packages/lism-ui/src/helper';
 /** lism-ui のカタログ JSON（raw GitHub から fetch） */
 export const UI_REGISTRY_INDEX_PATH = 'packages/lism-ui/registry-index.json';
 
-/** スキル配信元のディレクトリ */
-export const SKILL_SOURCE_PATH = 'skills/lism-css-guide';
+/** 配信元リポジトリ内で各スキルディレクトリを束ねるベースディレクトリ（実体は `skills/{name}`） */
+export const SKILL_SOURCE_BASE = 'skills';
+
+/**
+ * 配布対象のスキル名レジストリ。
+ *
+ * 引数なしの `lism skill add` / `lism skill update` はここに並ぶ全スキルを一括導入し、
+ * `lism skill check` も全スキルを対象に差分確認する。`lism skill add [name]` で個別指定も可。
+ * リポジトリ内の実体は `skills/{name}`、配置先は `.{tool}/skills/{name}`。
+ */
+export const SKILL_NAMES = ['lism-css-guide', 'lism-css-refactor'] as const;
+
+/** 配布対象スキル名 */
+export type SkillName = (typeof SKILL_NAMES)[number];
 
 /** templates の配置ディレクトリ */
 export const TEMPLATES_PATH = 'templates';

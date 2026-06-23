@@ -27,6 +27,7 @@ export function createSkillCommand(): Command {
     skill
       .command('add')
       .description(t('cli.skill.add.description'))
+      .argument('[skill]', t('cli.skill.add.arg.skill'))
       .option('-o, --overwrite', t('cli.skill.add.opt.overwrite'), false)
       .option('--ref <ref>', t('cli.skill.opt.ref'))
   ).action(skillAddCommand);
