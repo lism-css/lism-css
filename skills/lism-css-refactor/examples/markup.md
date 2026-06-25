@@ -1,6 +1,6 @@
 # 例: div手組み → Primitive化
 
-[`checklist.md`](../references/checklist.md) Pass 2の実例です。`<div>`＋素のCSSで組まれた構造を、同じ挙動のままLism Primitiveへ置換します。`c--*`の意味クラスは残します。
+[`checklist.md`](../references/checklist.md) Pass2の実例です。`<div>`＋素のCSSで組まれた構造を、同じ挙動のままLism Primitiveへ置換します。`c--*`の意味クラスは残します。
 
 import例（Reactの場合）:
 
@@ -56,17 +56,17 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 
 | Before | After | 由来 |
 |---|---|---|
-| `display:grid; grid-template-columns:repeat(3,1fr)` | `<Columns cols={3}>` | Pass 2 |
-| `display:flex; flex-direction:column; gap:15px` | `<Stack g="15">` | Pass 2 |
-| `overflow:hidden; aspect-ratio:16/9`の枠 | `<Frame ar="16/9">` | Pass 2 |
-| img の`width:100%; height:100%; object-fit:cover` | 削除（`Frame`直下メディアの既定） | Pass 9 |
-| `<h3>` / `<p>` | `<Heading level="3">` / `<Text>` | Pass 2 |
-| `gap:20px` | `g="20"` | Pass 5 |
+| `display:grid; grid-template-columns:repeat(3,1fr)` | `<Columns cols={3}>` | Pass2 |
+| `display:flex; flex-direction:column; gap:15px` | `<Stack g="15">` | Pass2 |
+| `overflow:hidden; aspect-ratio:16/9`の枠 | `<Frame ar="16/9">` | Pass2 |
+| img の`width:100%; height:100%; object-fit:cover` | 削除（`Frame`直下メディアの既定） | Pass9 |
+| `<h3>` / `<p>` | `<Heading level="3">` / `<Text>` | Pass2 |
+| `gap:20px` | `g="20"` | Pass5 |
 
-### 退行注意
+### 壊さないための注意
 
-- **`cols={3}`は固定3列のまま**。元が固定3列なら挙動同等（✅）。`cols={[1,2,3]}`へのレスポンシブ化は挙動変更なので別提案として⏸（Pass 8）。
-- `Frame`化で直下`img`以外の子があると、その子にもfit既定が当たる。直下にメディア以外を置く構造では注意（Pass 9の退行注意）。
+- **`cols={3}`は固定3列のまま**。元が固定3列なら見た目・挙動は同じ（✅）。`cols={[1,2,3]}`へのレスポンシブ化は挙動変更なので別提案として⏸（Pass8）。
+- `Frame`化で直下`img`以外の子があると、その子にもfit既定が当たる。直下にメディア以外を置く構造では注意（Pass9の壊さないための注意）。
 - `level="3"`は文字列。`level={3}`にしない（[`antipatterns.md#prop-型ミス`](../../lism-css-guide/antipatterns.md#prop-型ミス)）。
 
 ---
@@ -114,11 +114,11 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 - `place-items:center` の中央寄せ → `<Center>`。
 - img の`width/height/object-fit` → 削除（`Frame`既定）。
 
-### 退行注意
+### 壊さないための注意
 
 - 重ね順（overlay → body）はDOM順で決まる。`Layer`の並びをBeforeと同じにする。
-- `Layer`＋`Center`の慣用形は、単一divでabsolute＋grid＋中央寄せを兼ねていたBeforeよりDOMノードが1つ増える。ノード数を厳密に保つなら`<Center isLayer g="15">`（`l--center is--layer`）で1ノードに畳める。挙動不変でも構造が変わる点に留意（最小diff原則）。
-- `rgb(0 0 0 / 40%)`のような任意色はtokenではない。Beforeの値をそのまま渡し、勝手に丸めない（Pass 5）。
+- `Layer`＋`Center`の慣用形は、単一divでabsolute＋grid＋中央寄せを兼ねていたBeforeよりDOMノードが1つ増える。ノード数を厳密に保つなら`<Center isLayer g="15">`（`l--center is--layer`）で1ノードに畳める。見た目・挙動は変わらなくても構造が変わる点に注意（差分を小さくする原則）。
+- `rgb(0 0 0 / 40%)`のような任意色はtokenではない。Beforeの値をそのまま渡し、勝手に丸めない（Pass5）。
 
 ---
 
@@ -142,7 +142,7 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 </div>
 ```
 
-### After（提案・要sign-off）
+### After（提案・要ユーザー確認）
 
 ```jsx
 <WithSide className="c--layout" sideW="16rem" g="40">

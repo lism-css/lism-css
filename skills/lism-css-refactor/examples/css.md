@@ -1,6 +1,6 @@
 # 例: CSS束 → Property Class化
 
-[`checklist.md`](../references/checklist.md) Pass 4の実例です。`.c--*`のCSSブロックを、「Property Class/Propsへ移す宣言」と「CSSにしか書けない宣言」に分けます。**空になっても`c--*`クラス名はマークアップに残します**。
+[`checklist.md`](../references/checklist.md) Pass4の実例です。`.c--*`のCSSブロックを、「Property Class/Propsへ移す宣言」と「CSSにしか書けない宣言」に分けます。**空になっても`c--*`クラス名はマークアップに残します**。
 
 ---
 
@@ -48,7 +48,7 @@
 | `::before { content … }` | CSSに残す | 擬似要素はProperty Class/Propsで書けない |
 
 - `.c--tag {}`は空になるが**クラス名は残す**（コンポーネントとしての役割をソースから読めるようにする・[`antipatterns.md#property-class-で書けるのに-css-で書く`](../../lism-css-guide/antipatterns.md#property-class-で書けるのに-css-で書く)）。
-- CSS変数の値（`var(--s10)`→`-p:10`など）は同一。挙動不変。
+- CSS変数の値（`var(--s10)`→`-p:10`など）は同一。見た目・挙動は変わらない。
 
 ---
 
@@ -77,9 +77,9 @@
 <Box className="c--card" p="20" bgc="base" bdrs="20" hov={{ bgc: 'base-2' }}>{children}</Box>
 ```
 
-### 退行注意
+### 壊さないための注意
 
-- Beforeに`transition`が無ければ、`hov={{}}`も即時切替のまま（挙動不変）。**`hasTransition`を足すとアニメーションが付き挙動が変わる**ので、意図がある時だけ別提案として⏸。
+- Beforeに`transition`が無ければ、`hov={{}}`も即時切替のまま（見た目・挙動は変わらない）。**`hasTransition`を足すとアニメーションが付き挙動が変わる**ので、意図がある時だけ別提案として⏸。
 - 擬似要素・複雑な子孫セレクタを伴うhoverはCSSに残す。
 
 ---
@@ -105,8 +105,8 @@
 
 `.c--lead`のCSSは空にできる。レスポンシブ値は配列Propsへまとめ、`@container`分を取り残さない。
 
-### 退行注意
+### 壊さないための注意
 
 - 配列を単一値に潰さない（`p={['20','30']}`→`-p:20`にしない・[`common-mistakes.md`](../references/common-mistakes.md)）。
-- レスポンシブProps（コンテナクエリ既定）には祖先`isContainer`が必要（Pass 8）。Beforeが`@container`運用なら、その祖先コンテナを引き継ぐ。
+- レスポンシブProps（コンテナクエリ既定）には祖先`isContainer`が必要（Pass8）。Beforeが`@container`運用なら、その祖先コンテナを引き継ぐ。
 - `@media`運用で`isContainer`を持たない設計だった場合は、安易にコンテナクエリへ移さず⏸で確認する。
