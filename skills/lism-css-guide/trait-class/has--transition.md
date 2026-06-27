@@ -6,8 +6,9 @@
 
 - クラス名: `has--transition`
 - Lism props: `hasTransition`（`<Lism hasTransition>` / `<Box hasTransition>` 等）
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/has/_transition.scss
 - 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--transition
+
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## SCSS 定義
 
@@ -31,41 +32,6 @@
 | `--ease` | イージング関数 | `ease` |
 | `--delay` | ディレイ | `0s` |
 | `--transition-duration` | 全体のデフォルト duration を `:root` などから上書きするためのグローバル変数 | `0.25s` |
-
-## Usage
-
-### 基本：`-hov:*` と組み合わせる
-
-```html
-<div class="has--transition -hov:-c" style="--transitionProps: color; --hov-c: var(--red);">Example</div>
-```
-```jsx
-<Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
-```
-
-### `duration` を個別に上書き
-
-```html
-<a class="is--boxLink has--transition -hov:-bdc -bd -p:20" style="--hov-bdc: var(--red); --duration: 0.5s">
-  ...
-</a>
-```
-```jsx
-<BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd p="20" style={{ '--duration': '.5s' }}>
-  ...
-</BoxLink>
-```
-
-### `box-shadow` を変化させる例
-
-```html
-<a href="###" class="is--boxLink has--transition -bxsh:10 -hov:-bxsh -bd -p:20" style="--hov-bxsh: var(--bxsh--40)">
-  ...
-</a>
-```
-```jsx
-<BoxLink href="###" hasTransition bxsh="10" hov={{ bxsh: '40' }} bd p="20">...</BoxLink>
-```
 
 ## 関連
 

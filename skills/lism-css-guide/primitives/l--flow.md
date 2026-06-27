@@ -6,8 +6,9 @@
 
 - クラス名: `l--flow`
 - コンポーネント: `<Flow>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_flow.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--flow.md
+
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 余白の仕組み
 
@@ -33,69 +34,6 @@
 | Prop | 説明 |
 |------|------|
 | `flow` | `--flow` の値を指定。`s` / `l` などのトークン値を渡すと `-flow:{value}` クラスが付与、任意値を渡すと `-flow:` + `style="--flow:..."` が出力される |
-
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Flow>
-  <p>本文1...</p>
-  <p>本文2...</p>
-  <h2>Heading 2</h2>
-  <p>本文3...</p>
-  <ul>
-    <li>リスト項目1</li>
-    <li>リスト項目2</li>
-  </ul>
-</Flow>
-```
-
-```html
-<div class="l--flow">
-  <p>本文1...</p>
-  <p>本文2...</p>
-  <h2>Heading 2</h2>
-  <p>本文3...</p>
-  <ul>...</ul>
-</div>
-```
-
-### 余白量をトークンで変える（`flow="s"`）
-
-```jsx
-<Flow flow="s">
-  <p>本文...</p>
-  <h2>Heading</h2>
-  <p>本文...</p>
-</Flow>
-```
-
-```html
-<div class="l--flow -flow:s">
-  <p>本文...</p>
-  <h2>Heading</h2>
-  <p>本文...</p>
-</div>
-```
-
-### 任意の値を指定する
-
-トークン値以外を `flow` に渡すと、`-flow:` クラスと `--flow` CSS変数で出力されます。
-
-```jsx
-<Flow flow="10px">
-  <p>本文...</p>
-  <p>本文...</p>
-</Flow>
-```
-
-```html
-<div class="l--flow -flow:" style="--flow:10px">
-  <p>本文...</p>
-  <p>本文...</p>
-</div>
-```
 
 ## `is--skipFlow`
 

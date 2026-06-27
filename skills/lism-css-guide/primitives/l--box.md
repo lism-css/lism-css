@@ -6,24 +6,9 @@
 
 - クラス名: `l--box`
 - コンポーネント: `<Box>`
-- TSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/components/layout/Box/Box.tsx
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--box.md
 
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Box p="30" bgc="base-2" bxsh="10" bdrs="10">
-  <p>コンテンツ...</p>
-</Box>
-```
-
-```html
-<div class="l--box -p:30 -bgc:base-2 -bxsh:10 -bdrs:10">
-  <p>コンテンツ...</p>
-</div>
-```
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 関連プリミティブ
 

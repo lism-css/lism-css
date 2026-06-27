@@ -6,36 +6,15 @@
 
 - クラス名: `a--decorator`
 - コンポーネント: `<Decorator>`
-- TSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/components/atomic/Decorator/Decorator.tsx
 - 公式ドキュメント: https://lism-css.com/docs/primitives/a--decorator.md
+
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 専用Props
 
 | Prop | 説明 |
 |------|------|
 | `size` | デコレーターのサイズを一括指定。この指定があると `w`（`width`）に値が渡され、自動で `ar="1/1"`（`aspect-ratio:1/1`）が付与される |
-
-## Usage
-
-### 装飾に使用する例（コーナー装飾）
-
-`pos="absolute"` と組み合わせて、親の四隅にコーナー枠を配置する例です。`bdc="current"` で文字色に追随します。
-
-```jsx
-<Box p="30" pos="relative">
-  <p>本文テキスト...</p>
-  <Decorator size="1.25em" pos="absolute" t="0" l="0" bd-s bd-bs bdc="current" />
-  <Decorator size="1.25em" pos="absolute" r="0" b="0" bd-e bd-be bdc="current" />
-</Box>
-```
-
-```html
-<div class="l--box -p:30 -pos:relative">
-  <p>本文テキスト...</p>
-  <div class="a--decorator -pos:absolute -t:0 -l:0 -bd-s -bd-bs -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
-  <div class="a--decorator -pos:absolute -r:0 -b:0 -bd-e -bd-be -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
-</div>
-```
 
 ## 関連プリミティブ
 

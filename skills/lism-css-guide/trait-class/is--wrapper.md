@@ -6,8 +6,9 @@
 
 - クラス名: `is--wrapper`
 - コンポーネント: `<Wrapper>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/is/_wrapper.scss
 - 公式ドキュメント: https://lism-css.com/docs/trait-class/is--wrapper.md
+
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 使い方
 
@@ -32,54 +33,6 @@
 // 下記の ① と ② は同じ結果
 <Flow isWrapper="s" isContainer>...</Flow>
 <Wrapper contentSize="s" layout="flow" isContainer>...</Wrapper>
-```
-
-## Usage
-
-### `layout` との組み合わせ
-
-```jsx
-<Wrapper layout="flow" p="20">
-  <p>Content</p>
-  <p>Content</p>
-</Wrapper>
-```
-
-```html
-<div class="l--flow is--wrapper -p:20">
-  <p>Content</p>
-  <p>Content</p>
-</div>
-```
-
-### `contentSize` 指定
-
-```jsx
-<Wrapper contentSize="s" layout="flow" p="20">
-  <p>Content</p>
-  <p>Content</p>
-</Wrapper>
-```
-
-```html
-<div class="l--flow is--wrapper -contentSize:s -p:20">
-  <p>Content</p>
-  <p>Content</p>
-</div>
-```
-
-### 任意値のコンテンツ幅
-
-```jsx
-<Lism isWrapper="20rem" p="20">
-  <div>Contents...</div>
-</Lism>
-```
-
-```html
-<div class="is--wrapper -p:20" style="--contentSize: 20rem">
-  <div>Contents...</div>
-</div>
 ```
 
 ## 直下の子要素の挙動

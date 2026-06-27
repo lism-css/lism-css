@@ -6,8 +6,9 @@
 
 - クラス名: `l--withSide`
 - コンポーネント: `<WithSide>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_withSide.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--withSide.md
+
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 動作の仕組み
 
@@ -36,78 +37,6 @@
   <div>Main Content</div>
   <div class="is--side">Side Content</div>
 </div>
-```
-
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<WithSide sideW="12rem" mainW="20rem" g="20">
-  <Box p="15" bd bdc="blue">
-    <p>Main Content</p>
-    <p>メインコンテンツ本文...</p>
-  </Box>
-  <Box isSide p="15" bd bdc="red">
-    <p>Side Content</p>
-  </Box>
-</WithSide>
-```
-
-```html
-<div class="l--withSide -g:20" style="--sideW:12rem;--mainW:20rem">
-  <div class="l--box -p:15 -bd" style="--bdc:var(--blue)">
-    <p>Main Content</p>
-    <p>メインコンテンツ本文...</p>
-  </div>
-  <div class="l--box is--side -p:15 -bd" style="--bdc:var(--red)">
-    <p>Side Content</p>
-  </div>
-</div>
-```
-
-### Side 要素の位置を反転（`-fxd:row-reverse`）
-
-`flex-direction: row-reverse` を併用することで、横並びの時だけ順序を反転できます。**横並びで左側・縦並びで下側に Side を配置**したいときに便利。
-
-```jsx
-<WithSide fxd="row-reverse" sideW="10rem" mainW="16rem" g="20">
-  <Box>
-    <p>Main content...</p>
-  </Box>
-  <Box isSide bgc="blue:20%">Side Content</Box>
-</WithSide>
-```
-
-```html
-<div class="l--withSide -fxd:row-reverse -g:20" style="--sideW:10rem;--mainW:16rem">
-  <div class="l--box">
-    <p>Main content...</p>
-  </div>
-  <div class="l--box is--side">Side Content</div>
-</div>
-```
-
-### メディアとテキストが交互に並ぶレイアウト
-
-`l--withSide` は「メディア + テキスト」のペアを複数並べて、横並びの時はメディアの位置（左右）が交互に切り替わりつつも、縦並びの時はメディアが上側に統一されるレイアウトにも活用できる。
-
-```jsx
-<Stack isContainer g="40">
-  <WithSide sideW="40%" g="30" ai="center">
-    <Frame ar="3/2" isSide max-h="50cqw">
-      <img src="..." alt="" width="960" height="640" />
-    </Frame>
-    <Box px="10">本文テキスト...</Box>
-  </WithSide>
-
-  <WithSide fxd="row-reverse" sideW="40%" g="30" ai="center">
-    <Frame ar="3/2" isSide max-h="50cqw">
-      <img src="..." alt="" width="960" height="640" />
-    </Frame>
-    <Box px="10">本文テキスト...</Box>
-  </WithSide>
-</Stack>
 ```
 
 ## `l--grid` との使い分け

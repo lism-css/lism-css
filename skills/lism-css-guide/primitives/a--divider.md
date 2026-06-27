@@ -6,54 +6,9 @@
 
 - クラス名: `a--divider`
 - コンポーネント: `<Divider>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/atomic/_divider.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/a--divider.md
 
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Box bgc="base-2" py="40" ta="center">...Contents...</Box>
-<Divider />
-<Box bgc="base-2" py="40" ta="center">...Contents...</Box>
-```
-
-```html
-<div class="l--box -bgc:base-2 -py:40 -ta:center">...Contents...</div>
-<div class="a--divider" aria-hidden="true"></div>
-<div class="l--box -bgc:base-2 -py:40 -ta:center">...Contents...</div>
-```
-
-### スタイルの変更
-
-```jsx
-<Divider bds="dotted" bdw="4px" bdc="blue" />
-```
-
-```html
-<div class="a--divider" aria-hidden="true" style="--bds: dotted; --bdw: 4px; --bdc: var(--blue)"></div>
-```
-
-### 縦方向の区切り線
-
-Property Class `-wm:vertical-rl`（または `<Divider wm="vertical-rl">`）を指定すると縦方向の区切り線になります。Flex 子要素として使うなら `aslf="stretch"` で高さいっぱいに伸ばせます。
-
-```jsx
-<Flex ai="center" g="20">
-  <Box fx="1" bgc="base-2" py="40">...Contents...</Box>
-  <Divider wm="vertical-rl" bds="dashed" bdw="2px" aslf="stretch" />
-  <Box fx="1" bgc="base-2" py="40">...Contents...</Box>
-</Flex>
-```
-
-```html
-<div class="l--flex -g:20 -ai:center">
-  <div class="-fx:1 -bgc:base-2 -py:40">...Contents...</div>
-  <div class="a--divider -wm:vertical-rl -aslf:stretch" style="--bds: dashed; --bdw: 2px" aria-hidden="true"></div>
-  <div class="-fx:1 -bgc:base-2 -py:40">...Contents...</div>
-</div>
-```
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 関連プリミティブ
 

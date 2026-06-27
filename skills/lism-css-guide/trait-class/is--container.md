@@ -6,8 +6,9 @@
 
 - クラス名: `is--container`
 - コンポーネント: `<Container>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/is/_container.scss
 - 公式ドキュメント: https://lism-css.com/docs/trait-class/is--container.md
+
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 使い方
 
@@ -16,28 +17,6 @@
 | Prop | 出力 |
 |------|------|
 | `isContainer` | `is--container` |
-
-## Usage
-
-### 使用例
-
-```jsx
-<Container isWrapper="s" p="20">
-  <Box bd p={['10', '30']}>
-    このBOXは、padding が切り替わります
-  </Box>
-</Container>
-```
-
-```html
-<div class="is--container is--wrapper -contentSize:s -p:20">
-  <div class="l--box -bd -p:10 -p_sm" style="--p_sm: var(--s30)">
-    このBOXは、padding が切り替わります
-  </div>
-</div>
-```
-
-子要素側は `p={['10', '30']}` のようなブレイクポイント配列指定にすることで、親の `is--container` を基準としたコンテナクエリで値が切り替わります。
 
 ## `--sz--bleed` の提供
 

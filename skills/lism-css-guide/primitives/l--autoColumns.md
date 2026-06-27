@@ -6,8 +6,9 @@
 
 - クラス名: `l--autoColumns`
 - コンポーネント: `<AutoColumns>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_autoColumns.scss
 - 公式ドキュメント: https://lism-css.com/docs/primitives/l--autoColumns.md
+
+**使い方・コード例については、公式ドキュメントを参照すること。**
 
 ## 既定の挙動
 
@@ -21,54 +22,6 @@
 |------|--------|-----------|------|
 | `cols` | `--cols` | `20rem` | カラムが維持する最小幅を指定（`16em`, `320px` など） |
 | `autoFit` | `--autoMode` | `auto-fill` | `auto-fit` モードに切り替え |
-
-## Usage
-
-### `--cols`でサイズを指定する
-
-```jsx
-<AutoColumns cols="16em" g="20">
-  <Lism as="div" p="20" bd>Item A</Lism>
-  <Lism as="div" p="20" bd>Item B</Lism>
-  <Lism as="div" p="20" bd>Item C</Lism>
-  <Lism as="div" p="20" bd>Item D</Lism>
-</AutoColumns>
-```
-
-```html
-<div class="l--autoColumns -g:20" style="--cols: 16em">
-  <div class="-p:20 -bd">Item A</div>
-  <div class="-p:20 -bd">Item B</div>
-  <div class="-p:20 -bd">Item C</div>
-  <div class="-p:20 -bd">Item D</div>
-</div>
-```
-
-### `auto-fit`を使用する
-
-`l--autoColumns` では、`grid-template-columns` の `repeat()` 関数の第一引数を `--autoMode` で指定できます（デフォルトは `auto-fill`）。`--autoMode:auto-fit`（`autoFit`）を指定することで、要素数が少ない時の挙動が変わります。
-
-```jsx
-<AutoColumns cols="12em" g="20" fz="s">
-  <Lism as="div" p="20" bd>auto-fill</Lism>
-  <Lism as="div" p="20" bd>auto-fill</Lism>
-</AutoColumns>
-<AutoColumns cols="12em" autoFit g="20" fz="s">
-  <Lism as="div" p="20" bd>auto-fit</Lism>
-  <Lism as="div" p="20" bd>auto-fit</Lism>
-</AutoColumns>
-```
-
-```html
-<div class="l--autoColumns -g:20 -fz:s" style="--cols:12em">
-  <div class="-p:20 -bd">auto-fill</div>
-  <div class="-p:20 -bd">auto-fill</div>
-</div>
-<div class="l--autoColumns -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fit">
-  <div class="-p:20 -bd">auto-fit</div>
-  <div class="-p:20 -bd">auto-fit</div>
-</div>
-```
 
 ## 関連プリミティブ
 
