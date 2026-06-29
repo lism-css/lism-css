@@ -26,6 +26,11 @@ describe('buildWebpackAlias', () => {
     expect(alias['lism-css/config.js$']).toBeUndefined();
     expect(alias['lism-css/main.css']).toBe('/proj/.lism-css/css/main.css');
   });
+
+  test('userConfigPath が .ts でも拡張子に関係なく config alias を差し替える', () => {
+    const alias = buildWebpackAlias({ generated, userConfigPath: '/proj/lism.config.ts' });
+    expect(alias['lism-css/config.js$']).toBe('/proj/lism.config.ts');
+  });
 });
 
 describe('buildTurbopackAlias', () => {

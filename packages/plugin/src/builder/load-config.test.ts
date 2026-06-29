@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { afterAll, describe, expect, test } from 'vitest';
 import { objDeepMerge } from 'lism-css/config/helper';
-import { computeBuildConfigs, findUserConfigPath } from './load-config';
+import { computeBuildConfigs, findUserConfigPath, loadBuildConfigs } from './load-config';
 import type { BuildConfig } from './serialize';
 
 const objMerge = objDeepMerge as (a: Record<string, unknown>, b: Record<string, unknown>) => Record<string, unknown>;
@@ -94,5 +94,73 @@ describe('findUserConfigPath', () => {
     fs.writeFileSync(path.join(root, 'lism.config.js'), 'export default {};\n');
 
     expect(findUserConfigPath(root, 'missing.config.js')).toBeNull();
+  });
+
+  test('lism.config.ts のみ存在する場合はそれを解決する', () => {
+    const root = tmpDir();
+    fs.writeFileSync(path.join(root, 'lism.config.ts'), 'export default {};\n');
+
+    expect(findUserConfigPath(root)).toBe(path.join(root, 'lism.config.ts'));
+  });
+
+  test('探索優先順は .js → .mjs → .ts（同居時は .js が勝つ）', () => {
+    const root = tmpDir();
+    fs.writeFileSync(path.join(root, 'lism.config.ts'), 'export default {};\n');
+    fs.writeFileSync(path.join(root, 'lism.config.mjs'), 'export default {};\n');
+    fs.writeFileSync(path.join(root, 'lism.config.js'), 'export default {};\n');
+
+    expect(findUserConfigPath(root)).toBe(path.join(root, 'lism.config.js'));
+  });
+
+  test('探索優先順は .js → .mjs → .ts（.js が無ければ .mjs が勝つ）', () => {
+    const root = tmpDir();
+    fs.writeFileSync(path.join(root, 'lism.config.ts'), 'export default {};\n');
+    fs.writeFileSync(path.join(root, 'lism.config.mjs'), 'export default {};\n');
+
+    expect(findUserConfigPath(root)).toBe(path.join(root, 'lism.config.mjs'));
+  });
+
+  test('明示 configPath に .ts を渡せる', () => {
+    const root = tmpDir();
+    fs.mkdirSync(path.join(root, 'configs'));
+    fs.writeFileSync(path.join(root, 'configs/lism.custom.ts'), 'export default {};\n');
+
+    expect(findUserConfigPath(root, 'configs/lism.custom.ts')).toBe(path.join(root, 'configs/lism.custom.ts'));
+  });
+});
+
+describe('loadBuildConfigs', () => {
+  const dirs: string[] = [];
+  function tmpDir(): string {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-config-'));
+    dirs.push(dir);
+    return dir;
+  }
+  afterAll(() => dirs.forEach((d) => fs.rmSync(d, { recursive: true, force: true })));
+
+  test('lism.config.ts を実際に読み込み、user 設定が main/full config にマージされる', async () => {
+    const root = tmpDir();
+    fs.writeFileSync(
+      path.join(root, 'lism.config.ts'),
+      'const breakpoints: Record<string, string> = { xs: "360px" };\nexport default { breakpoints };\n'
+    );
+
+    const result = await loadBuildConfigs(root);
+
+    expect(result.userConfigPath).toBe(path.join(root, 'lism.config.ts'));
+    expect(result.mainConfig.breakpoints?.xs).toBe('360px');
+  });
+
+  test('moduleCache: false により、同一 .ts ファイルの変更後の再読込が反映される（dev watch相当）', async () => {
+    const root = tmpDir();
+    const configPath = path.join(root, 'lism.config.ts');
+    fs.writeFileSync(configPath, 'export default { breakpoints: { xs: "360px" } };\n');
+
+    const first = await loadBuildConfigs(root);
+    expect(first.mainConfig.breakpoints?.xs).toBe('360px');
+
+    fs.writeFileSync(configPath, 'export default { breakpoints: { xs: "420px" } };\n');
+    const second = await loadBuildConfigs(root);
+    expect(second.mainConfig.breakpoints?.xs).toBe('420px');
   });
 });
