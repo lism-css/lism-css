@@ -1,0 +1,33 @@
+---
+/**
+ * セクション見出し。
+ * 英語タイトル（大）＋日本語サブタイトル（小、両端に短いライン）の 2 段構成。
+ * 日本語サブタイトル両端のラインは `c--sectionHeading_ja::before/::after` で描画している。
+ * 関連 CSS: `pages/corporate/_style.css` の `.c--sectionHeading_ja` ブロック
+ */
+import { Heading, Inline } from 'lism-css/astro';
+
+interface Props {
+  en: string;
+  ja: string;
+  level?: '1' | '2' | '3' | '4' | '5' | '6';
+}
+
+const { en, ja, level = '2' } = Astro.props;
+---
+
+<Heading level={level} class="c--sectionHeading" layout="stack" pos="relative" fz="m" lts="xl" ai="center" g="5">
+  <Inline lang="en" fz="3xl" fw="400" aria-hidden="true">{en}</Inline>
+  <Inline d="flex" ai="center" g="20" fz="s" fw="normal" o="p">{ja}</Inline>
+</Heading>
+
+<style>
+  .c--sectionHeading > :not([lang='en'])::before,
+  .c--sectionHeading > :not([lang='en'])::after {
+    content: '';
+    display: block;
+    width: 0.75rem;
+    height: 1px;
+    background-color: currentColor;
+  }
+</style>

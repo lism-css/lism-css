@@ -1,0 +1,316 @@
+---
+title: 'lism.config.js'
+description: 'How to extend component props, tokens, traits, and breakpoints using lism.config.js and @lism-css/plugin.'
+---
+
+By placing a `lism.config.js` (or `lism.config.mjs`) file in the root of your project, you can customize component behavior (rather than styles).
+
+
+## Registering the Vite / Astro plugin (required)
+
+:::warning
+To make `lism.config.js` take effect, you must register the plugin in your Vite (or Astro) config file. Without registration, the file is ignored and default settings are used.
+:::
+
+Use the integrated plugin provided by `@lism-css/plugin`. A single registration enables **config loading (so the JS runtime reads `lism.config.js`), dynamic CSS build (changes are automatically reflected in dev/build CSS), and automatic type generation (`lism-env.d.ts`)** all at once.
+
+```bash frame="none"
+pnpm add -D @lism-css/plugin
+```
+
+<Preview>
+<PreviewCode slot="tab" label="astro.config.mjs">
+```js
+import { defineConfig } from 'astro/config';
+import { lismCss } from '@lism-css/plugin/astro';
+
+export default defineConfig({
+  integrations: [lismCss()],
+});
+```
+</PreviewCode>
+<PreviewCode slot="tab" label="vite.config.js">
+```js
+import { defineConfig } from 'vite';
+import { lismCss } from '@lism-css/plugin/vite';
+
+export default defineConfig({
+  plugins: [lismCss()],
+});
+```
+</PreviewCode>
+</Preview>
+
+:::info
+For Next.js, use `withLism()` from `@lism-css/plugin/next` instead of the Vite / Astro plugin. See [Setting up with Next.js](/en/docs/installation/#setting-up-with-nextjs) for the setup steps.
+:::
+
+The plugin auto-detects `lism.config.js` then `lism.config.mjs` from the project root. To use a file at a different location, specify the path via the `configPath` option:
+
+```js
+integrations: [lismCss({ configPath: './config/lism.config.js' })],
+```
+
+
+## Format
+
+```js
+export default {
+  props: {
+    hoge: { ... },
+    foo: { ... },
+    ...
+  },
+  tokens: {
+    hoge: { ... },
+    foo: { ... },
+    ...
+  },
+  traits: {
+    isHoge: 'is--hoge',
+    setFoo: 'set--foo',
+    ...
+  },
+};
+```
+
+<Preview>
+  <PreviewTitle>Default values</PreviewTitle>
+  <PreviewCode slot="tab" label="props">
+  <SrcCode path="config/defaults/props.ts" />
+  </PreviewCode>
+  <PreviewCode slot="tab" label="tokens">
+  <SrcCode path="config/defaults/tokens.ts" />
+  </PreviewCode>
+  <PreviewCode slot="tab" label="traits">
+  <SrcCode path="config/defaults/traits.ts" />
+  </PreviewCode>
+</Preview>
+
+
+## Customization example
+
+Here's an example configuration:
+
+<PreviewTitle>Customization example using lism.config.js</PreviewTitle>
+```js
+import DEFAULT_CONFIG from 'lism-css/default-config';
+const { props } = DEFAULT_CONFIG;
+
+export default {
+  props: {
+    // Add presets to an existing prop
+    ta: { presets: [...(props.ta.presets || []), 'justify'] },
+    // Add a utility value to an existing prop
+    p: { utils: { box: '2em' } },
+    // Add a brand-new prop (filter is not in defaults)
+    filter: { utils: { blur: 'blur(3px)' } },
+  },
+  tokens: {
+    // Define tokens as a { key: value } map (deep-merged into the defaults)
+    // → emits :root { --lts--2xl: .5em } and auto-generates the -lts:2xl utility
+    lts: { '2xl': '.5em' },
+  },
+  traits: {
+    // Add props for Trait (is--* / has--*) output
+    isHoge: 'is--hoge',
+  },
+};
+```
+
+With the above customization, the following behavior is added to Lism components:
+
+- `ta='justify'` → outputs `-ta:justify`
+- `p='box'` → outputs `-p:box`
+- `filter='blur'` → outputs `-filter:blur`
+- `lts='2xl'` → outputs `-lts:2xl`
+- `isHoge` → outputs `is--hoge`
+
+<Preview>
+  <PreviewCode slot="tab" label="HTML">
+  ```jsx
+  <Box p="box" ta="justify" filter="blur" lts="2xl" isHoge>Box</Box>
+
+  ↓ Output
+
+  <div class="l--box is--hoge -p:box -ta:justify -filter:blur -lts:2xl">Box</div>
+  ```
+  </PreviewCode>
+</Preview>
+
+:::note[Added props / traits are also unlocked for types]
+When you use the integrated plugin (with type generation enabled), props / traits added in `lism.config.js` are also automatically unlocked on the type side via `lism-env.d.ts` (emitted as `CustomPropRegistry` / `CustomTraitRegistry` augmentations). So new props / traits like `<Box filter="blur" ... isHoge>` above do not raise type errors in your editor or `astro check`. No hand-written type extension is needed (commit `lism-env.d.ts` to git).
+
+Note that adding values to existing props (such as `ta="justify"`) never causes a type error to begin with, since those accept arbitrary strings (they just won't appear in completion candidates).
+:::
+
+:::warning
+Note that adding props in `lism.config.js` only changes the HTML output from components — the styles for the added utility classes are not generated on their own. See [How to load additional styles](#how-to-load-additional-styles) for ways to apply them (automatic via the plugin / CLI / SCSS).
+:::
+
+
+## Enabling xs / xl breakpoints
+
+The default breakpoints are `xs: 0` (disabled) / `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0` (disabled). A value of `0` means "disabled — no CSS query is output".
+
+The easiest way to enable `xs` or `xl` is to **specify the sizes in the `breakpoints` key of `lism.config.js`**:
+
+```js
+// lism.config.js
+export default {
+  breakpoints: {
+    xs: '360px', // Enable xs
+    xl: '1400px', // Enable xl
+  },
+};
+```
+
+This is all it takes. Every Property Class that supports responsive output (`bp: 1`) will then also emit responsive classes for `xs` / `xl` (e.g., `-p_xs` / `-p_xl`) — no per-prop configuration is needed. When you are using the `@lism-css/plugin` integrated plugin, these changes are automatically reflected in the dev server and production build CSS.
+
+This also lets you use `xs` / `xl` in object notation on the component side:
+
+```jsx
+<Box p={{ base: 20, xs: 10, sm: 30 }} />
+```
+
+To have `xs` / `xl` appear in type completion as well, see the [Responsive page](/en/docs/responsive/). If you are using the integrated plugin (`@lism-css/plugin`), `lism-env.d.ts` is generated automatically and no hand-written type extension is needed.
+
+:::info
+Even when you load `full.css`, `xs` / `xl` are disabled by default (only `sm` / `md` / `lg` are emitted). To use them, enable them by specifying sizes in `breakpoints`, just as above.
+:::
+
+:::warning
+Enabling `xs` / `xl` adds a block for each active breakpoint to every Property Class that uses `bp: 1`, which increases the CSS size. **This feature is designed to be used together with CSS purge.** If you are not using purge, consider using the list form of `bp` (e.g., `bp: ('sm', 'md')`) to restrict which breakpoints are output on a per-prop basis.
+:::
+
+For projects using SCSS directly, you can also enable `xs` / `xl` via the `$breakpoints` SCSS variable override (see [SCSS Customization](/en/docs/customize/scss/)).
+
+
+## How to load additional styles
+
+Adding props in `lism.config.js` alone does not produce styles for the corresponding utility classes. Use one of the following approaches to add the styles.
+
+
+### Automatic reflection when using the Vite / Astro plugin
+
+If you have registered the `@lism-css/plugin` integrated plugin (`lismCss()` from `@lism-css/plugin/vite` or `@lism-css/plugin/astro`), any additions or changes to `props` / `tokens` in `lism.config.js` are **automatically reflected in the CSS, both in the dev server and in production builds**. No manual CLI build is needed.
+
+When the dev server is running, editing `lism.config.js` triggers HMR to regenerate the CSS.
+
+
+### Hand-write styles for small additions
+
+For small additions, you don't need to rebuild via the CLI or reconfigure SCSS. The Lism Props `:value` notation combined with hand-written rules in `global.css` is enough.
+
+```css
+/* global.css */
+@layer lism-base {
+  :root {
+    --lts--2xl: 0.15em;
+  }
+}
+
+/* Property Classes are not wrapped in @layer */
+.-lts\:2xl {
+  letter-spacing: var(--lts--2xl);
+}
+```
+
+```jsx
+<Text lts=":2xl">...</Text>
+```
+
+Switch to the CLI / SCSS routes below only when you want to extend tokens systematically.
+
+
+### Build CSS using the lism-css CLI command
+
+For projects that do not use Vite or Astro (plain SCSS setups, other bundlers, etc.), run the `lism-css build` command provided by `@lism-css/plugin` to reflect `lism.config.js` into the CSS. This is not a legacy-only path — it is the **primary route** for that type of setup.
+
+```bash frame="none"
+npx lism-css build
+```
+
+In this example, the following styles would be automatically generated into `lism-css/main.css` by this command:
+
+```css
+.-ta\:justify {
+  text-align: justify;
+}
+.-p\:box {
+  padding: 2em;
+}
+.-filter\:blur {
+  filter: blur(3px);
+}
+.-lts\:2xl {
+  letter-spacing: var(--lts--2xl);
+}
+```
+
+When you give a value in `tokens`, the build generates both the **utility class that references the token** (such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`) and the referenced CSS variable itself (the actual token **value**, such as `:root { --lts--2xl: .5em }`). Note that a key whose value is `'-'` only registers the name and does not output a value: no `:root` declaration is emitted, and the real value is defined in hand-written SCSS (mainly used for `color` / `palette`).
+
+On the other hand, `is--` class styles are not auto-generated, so you need to define and load them manually.
+
+<PreviewTitle>is-- class styles must be loaded manually:</PreviewTitle>
+```css
+@layer lism-trait {
+  .is--hoge {
+    /* ... */
+  }
+}
+```
+
+:::warning
+Since this command rebuilds the package styles, it must be run each time the package is updated.
+:::
+
+Note that `full.css` / `full_no_layer.css` are not rebuilt by default. If you use `full.css`, run the build with the `--full` option.
+
+```bash frame="none"
+npx lism-css build --full
+```
+
+
+### Overriding SCSS files
+
+You can also override SCSS variables in line with your `lism.config.js` configuration before loading the styles. See [SCSS Customization](/en/docs/customize/scss/) for details on SCSS variables.
+
+<PreviewTitle>Customize SCSS to match lism.config.js</PreviewTitle>
+```scss
+// Configuration overrides
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+  $props: (
+    'ta': (
+      utilities: (
+        'justify': 'justify',
+      ),
+    ),
+    'p': (
+      utilities: (
+        'box': '2em',
+      ),
+    ),
+    'filter': (
+      utilities: (
+        'blur': 'blur(3px)',
+      ),
+    ),
+    'lts': (
+      utilities: (
+        '2xl': 'var(--lts--2xl)',
+      ),
+    ),
+  )
+);
+
+// Load the Lism SCSS file
+@use '../path-to/node_modules/lism-css/scss/main';
+
+// Append token definitions
+@layer lism-base {
+  :root {
+    --lts--2xl: 0.15em;
+  }
+}
+```

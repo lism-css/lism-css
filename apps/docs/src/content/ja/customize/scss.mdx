@@ -1,0 +1,117 @@
+---
+title: 'SCSS でのカスタマイズ'
+description: 'lism-css の SCSS 変数（setting モジュールの $breakpoints / $props など）を上書きして、出力されるクラスやブレイクポイントを調整する方法を解説します。'
+---
+
+SCSSの変数を上書きすることで、出力されるクラスやブレイクポイントを調整できます。純 SCSS 構成など、Vite / Astro プラグインを使わない構成向けの方法です。
+
+
+## 上書き可能な変数
+
+`lism-css/scss/_setting.scss`で定義している変数を `@use ... with (...)` で上書きできます。
+
+<PreviewTitle>`_setting.scss`</PreviewTitle>
+<SrcCode path="src/scss/_setting.scss" />
+
+| 変数 | 用途 |
+|------|------|
+| `$breakpoints` | ブレイクポイント数値の定義 |
+| `$is_container_query` | コンテナクエリで出力するか（`1` = container query / `0` = media query） |
+| `$default_important` | Property Class にデフォルトで `!important` を付与するか（`0` / `1`） |
+| `$props` | Property Class ごとの個別出力設定 |
+
+
+## 基本フォーマット
+
+上書き定義をしてから `lism-css/scss/main.scss` を読み込むことで、スタイルをカスタマイズできます。
+
+<PreviewTitle>SCSS変数の上書きフォーマット</PreviewTitle>
+```scss
+// 1. 設定変数を上書き
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+  $breakpoints: (
+    'sm': '400px', // 個別キーの上書き可
+  ),
+  $is_container_query: 0,   // 1 = container query / 0 = media query
+  $default_important: 1,    // 0 / 1
+  $props: (
+    // 個別 Prop の設定（後述）
+  )
+);
+
+// 2. main.scss を読み込む（@layer を使わない場合は main_no_layer.scss）
+@use '../path-to/node_modules/lism-css/scss/main';
+```
+
+:::info
+- `@layer` のオン・オフは変数管理ではありません。読み込む`main.scss`を切り替えてください（[CSSビルドの選択](/docs/customize/build/)）。
+- Astro の場合は`../path-to/node_modules/`部分は不要です。
+:::
+
+
+## `$props` の個別カスタマイズ
+
+各 Property Class について、出力するブレイクポイントを絞ったり、ユーティリティクラスを追加したりできます。
+
+<PreviewTitle>Property Classの出力をカスタマイズする</PreviewTitle>
+```scss
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+  $props: (
+    'fz': (
+      important: 1,
+      // fzのユーティリティクラスに対して !important を出力する
+    ),
+    'h': (
+      bp: 0,
+      // 'h'のブレイクポイント対応クラスを出力しないようにする
+    ),
+    'p': (
+      bp: ('sm', 'md'),
+      // 'p'のブレイクポイント対応クラスは sm / md のみに制限する
+      utilities: (
+        'box': '2em',
+      ),
+      //.-p:box{--p:2em} を追加する
+    ),
+  )
+);
+
+@use '../path-to/node_modules/lism-css/scss/main';
+```
+
+`bp` には次の値を指定できます。
+
+| `bp` の値 | 意味 |
+|-----------|------|
+| `1` | `$breakpoints` でサイズが定義された全ブレイクポイントで出力する |
+| `0` | ブレイクポイント対応クラスを出力しない |
+| `('sm', 'md')` などのリスト | 列挙したブレイクポイントだけを出力する（範囲ではなく明示指定） |
+
+リスト形式は「この prop だけ特定のブレイクポイントに絞りたい」といった用途に使えます。`lism.config.js` 側で指定する場合は配列 `bp: ['sm', 'md']` で記述します。なお、リストに無効なブレイクポイント（`$breakpoints` でサイズが未定義のもの。デフォルトの `xs` / `xl` など）を含めても、クエリサイズがないため出力されず、ビルド時に警告が出ます。
+
+
+## ブレイクポイント（xs / xl）の有効化
+
+デフォルトのブレイクポイントは `xs: 0`（無効）/ `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0`（無効）です。値 `0` は「無効＝CSSクエリを出力しない」を表します。
+
+`lism.config.js` を使う構成であれば、`breakpoints` の指定が最も簡単です（[lism.config.js でのカスタマイズ](/docs/customize/config/#ブレイクポイントxs--xlの有効化)を参照）。SCSS を直接利用する構成では、`$breakpoints` での SCSS 変数上書きによる有効化も利用できます。
+
+```scss
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+  $breakpoints: (
+    'xs': '360px',
+    'xl': '1440px',
+  )
+);
+
+@use '../path-to/node_modules/lism-css/scss/main';
+```
+
+:::warning
+`xs` / `xl` などを有効化すると `bp: 1` の全 Property Class に該当ブレイクポイントのブロックが追加されるぶん、CSS サイズが増えます。**CSS purge との併用が前提**の設計です。
+:::
+
+
+## SCSSのコンパイル処理について
+
+SCSS を直接コンパイルする構成では、最終的な CSS に出力される自分のスタイルと lism-css のスタイルの**順序が想定とずれる**ことがあります。順序が崩れると詳細度・カスケードの解決結果が変わり、意図しないスタイルが適用される場合があるため、`@use` の記述順（lism-css を読み込む前後どちらに自分のスタイルを置くか）に注意してください。
