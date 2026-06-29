@@ -47,10 +47,10 @@ describe('lism.config.ts の読み込み', () => {
     expect(result).toEqual({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
   });
 
-  it('lism.config.js と lism.config.ts が同居する場合は .js が優先される', () => {
+  it('lism.config.js と lism.config.ts が同居する場合は .ts が優先される', () => {
     writeFile(path.join(tmpDir, 'lism.config.ts'), 'export default {};\n');
     writeFile(path.join(tmpDir, 'lism.config.js'), 'export default {};\n');
 
-    expect(findConfigFile()?.filename).toBe('lism.config.js');
+    expect(findConfigFile()?.filename).toBe('lism.config.ts');
   });
 });

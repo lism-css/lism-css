@@ -15,7 +15,7 @@ import type { BuildConfig, PropConfig } from './serialize';
 
 export type ObjDeepMerge = (origin: Record<string, unknown>, source: Record<string, unknown>) => Record<string, unknown>;
 
-const USER_CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs', 'lism.config.ts'];
+const USER_CONFIG_SEARCH = ['lism.config.ts', 'lism.config.mjs', 'lism.config.js'];
 const FULL_CSS_DEFAULTS = {
   // full.css は purge 併用前提のスーパーセットとして xs を有効化する。
   // userConfig はこの後にマージするため、lism.config.js の breakpoints.xs が最後に勝つ。

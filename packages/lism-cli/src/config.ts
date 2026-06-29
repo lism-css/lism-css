@@ -6,7 +6,7 @@ import { t } from './i18n.js';
 import { getInvokeCommand } from './invokeCommand.js';
 
 const LEGACY_CONFIG_FILE = 'lism-ui.json';
-const CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs', 'lism.config.ts'] as const;
+const CONFIG_SEARCH = ['lism.config.ts', 'lism.config.mjs', 'lism.config.js'] as const;
 
 export interface LismCliConfig {
   framework: 'react' | 'astro';

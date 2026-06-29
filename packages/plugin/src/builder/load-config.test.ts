@@ -103,19 +103,19 @@ describe('findUserConfigPath', () => {
     expect(findUserConfigPath(root)).toBe(path.join(root, 'lism.config.ts'));
   });
 
-  test('探索優先順は .js → .mjs → .ts（同居時は .js が勝つ）', () => {
+  test('探索優先順は .ts → .mjs → .js（同居時は .ts が勝つ）', () => {
     const root = tmpDir();
     fs.writeFileSync(path.join(root, 'lism.config.ts'), 'export default {};\n');
     fs.writeFileSync(path.join(root, 'lism.config.mjs'), 'export default {};\n');
     fs.writeFileSync(path.join(root, 'lism.config.js'), 'export default {};\n');
 
-    expect(findUserConfigPath(root)).toBe(path.join(root, 'lism.config.js'));
+    expect(findUserConfigPath(root)).toBe(path.join(root, 'lism.config.ts'));
   });
 
-  test('探索優先順は .js → .mjs → .ts（.js が無ければ .mjs が勝つ）', () => {
+  test('探索優先順は .ts → .mjs → .js（.ts が無ければ .mjs が勝つ）', () => {
     const root = tmpDir();
-    fs.writeFileSync(path.join(root, 'lism.config.ts'), 'export default {};\n');
     fs.writeFileSync(path.join(root, 'lism.config.mjs'), 'export default {};\n');
+    fs.writeFileSync(path.join(root, 'lism.config.js'), 'export default {};\n');
 
     expect(findUserConfigPath(root)).toBe(path.join(root, 'lism.config.mjs'));
   });
