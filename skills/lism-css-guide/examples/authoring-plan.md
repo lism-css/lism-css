@@ -1,29 +1,29 @@
-# Authoring Plan例
+# 実装プラン例
 
 ## 例: featureカード一覧セクション
 
-### FP0入力整理
+### C0入力整理
 
 | 項目 | 内容 | 判定 |
 |---|---|---|
 | 対象 | トップページのfeatureカード一覧 | ✅ |
-| framework | Astro | ✅ |
+| フレームワーク | Astro | ✅ |
 | 粒度 | セクション+カード部品 | ✅ |
-| 反復 | カード3件以上 | 🆕 component抽出候補 |
-| 不明点 | デザイン上の24px余白をtokenへ丸めるか | ⏸ |
+| 反復 | カード3件以上 | 🆕 コンポーネント抽出候補 |
+| 不明点 | デザイン上の24px余白をトークンへ丸めるか | ⏸ |
 
 ### 構造表
 
-| 対象領域 | 採用Primitive・Component | 理由 | route先 | 判定 |
+| 対象領域 | 採用Primitive・コンポーネント | 理由 | 参照先 | 判定 |
 |---|---|---|---|---|
 | セクション幅 | `Container`+`Wrapper` | レスポンシブ値の基準と本文幅制限を分ける | `is--container.md`/`is--wrapper.md` | ✅ |
 | カード一覧 | `Columns cols={[1,2,3]}` | 等幅カード列でBP切替する | `primitive-class.md` | ✅ |
 | サムネイル | `Frame ar="16/9"` | 画像枠とfitは既定に任せる | `l--frame.md` | ✅ |
 | カード全体リンク | `BoxLink` | カード全体のクリック領域をtraitで管理 | `is--boxLink.md` | ✅ |
 
-### token表
+### トークン表
 
-| 用途 | デザイン値 | 採用token | 差分 | 判定 |
+| 用途 | デザイン値 | 採用トークン | 差分 | 判定 |
 |---|---|---|---|---|
 | カードpadding | `24px` | `p="30"`候補 | +6px | ⏸ |
 | カードgap | — | `g="20"` | — | ✅ |
@@ -31,7 +31,7 @@
 | 背景 | — | `bgc="base"` | — | ✅ |
 | 補助テキスト色 | — | `c="text-2"` | — | ✅ |
 
-### responsive表
+### レスポンシブ表
 
 | 対象 | base | sm | md | lg | container祖先 | 注意 |
 |---|---|---|---|---|---|---|
@@ -40,7 +40,7 @@
 
 ### 構成表
 
-| c--*名 | Props・Property Classで書く | CSSに残す | 状態・variant | 既定で足りる（指定しない） |
+| c--*名 | Props・Property Classで書く | CSSに残す | 状態・バリエーション | 既定で足りる（指定しない） |
 |---|---|---|---|---|
 | `c--featureCard` | `p`, `bgc`, `bdrs`, `bxsh` | なし | featured時は`c--featureCard--featured` | `Frame ov`、直下imgの`w/h/object-fit` |
 | `c--featureCard_title` | `fz="l"` | なし | — | — |
@@ -49,11 +49,11 @@
 
 | 項目 | 要確認理由 | 候補 |
 |---|---|---|
-| カードpadding | 24pxはspacing tokenに完全一致しない | A=`p="30"`へ丸め/B=`--s24`追加/C=24px直書き例外 |
+| カードpadding | 24pxはspacingトークンに完全一致しない | A=`p="30"`へ丸め/B=`--s24`追加/C=24px直書き例外 |
 
 ### 実装後セルフチェック例
 
-| Plan項目 | 実装結果 | 分類 | 対応 |
+| 計画項目 | 実装結果 | 分類 | 対応 |
 |---|---|---|---|
 | `Frame ar="16/9"` | `Frame`使用済み | OK | なし |
 | 直下img fitは既定 | imgに`-w:100%`を付けていた | 実装漏れ | 重複指定を削除 |
