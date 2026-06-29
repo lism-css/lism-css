@@ -11,9 +11,7 @@ describe('PropValueTypes', () => {
     // token: 'fz' → TOKENS.fz の値
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['fz']>().toEqualTypeOf<
-      Responsive<
-        'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined
-      >
+      Responsive<'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined>
     >();
   });
 
@@ -140,7 +138,7 @@ describe('PropValueTypes', () => {
     expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<string | number | boolean | undefined>();
   });
 
-  it('gtc（bp: lg）は配列形式で null を含められる', () => {
+  it('gtc（bp: 1）は配列形式で null を含められる', () => {
     expectTypeOf<PropValueTypes['gtc']>().toEqualTypeOf<Responsive<'subgrid' | (string & {}) | number | boolean | null | undefined>>();
     const gtc: PropValueTypes['gtc'] = ['auto', null, '1fr 1fr'];
     expectTypeOf(gtc).toMatchTypeOf<PropValueTypes['gtc']>();
@@ -187,7 +185,7 @@ describe('ResponsivePropValueTypes', () => {
   it('bp が有効なプロパティのみが含まれる', () => {
     type Props = ResponsivePropValueTypes;
 
-    // bp: 1 または bp: 'lg' 等が設定されているプロパティ（レスポンシブ対応）
+    // bp: 1 または bp: ['sm', 'md'] 等が設定されているプロパティ（レスポンシブ対応）
     type FzExists = 'fz' extends keyof Props ? true : false;
     type DExists = 'd' extends keyof Props ? true : false;
     type WExists = 'w' extends keyof Props ? true : false;
@@ -225,7 +223,7 @@ describe('ResponsivePropValueTypes', () => {
     // fz は bp: 1 なので ResponsivePropValueTypes に含まれる
     // ResponsivePropValueTypes 自体は単一値のみを受け付ける
     expectTypeOf<FzProp>().toEqualTypeOf<
-      'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined
+      'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | null | undefined
     >();
   });
 

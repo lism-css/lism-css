@@ -4,9 +4,9 @@ import path from 'node:path';
 import { downloadTemplate } from 'giget';
 import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
-import { LISM_CSS_VERSION } from '../version.js';
-import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
-import { t, tOf } from '../i18n.js';
+import { LISM_PACKAGE_VERSIONS } from '../version.js';
+import { DEFAULT_TEMPLATES_REF, NPM_REGISTRY_BASE, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
+import { setLang, t, tOf, type Lang } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
 import {
   TEMPLATES,
@@ -65,18 +65,34 @@ interface CreateOptions {
   force?: boolean;
 }
 
+/** commander の action 第3引数（グローバル --lang を読むために最小限の構造だけ受ける） */
+interface CommandLike {
+  optsWithGlobals(): Record<string, unknown>;
+}
+
 export interface RunCreateArgs {
   template?: string;
   targetDir?: string;
   force?: boolean;
+  /**
+   * 明示指定された言語（`--lang`）。`ja` / `en` のときその言語で CLI 表示・テンプレ生成を確定する。
+   * 未指定（undefined / 不正値）の場合は、対話端末では最初に言語選択プロンプトを出し、
+   * 非対話端末（CI・パイプ等）では `en` にフォールバックする。
+   */
+  lang?: string;
 }
 
 /** `lism create` / `create-lism` から共通で使える実体関数 */
-export async function runCreate({ template, targetDir, force = false }: RunCreateArgs): Promise<void> {
-  await runCreateWithTemplates({ template, targetDir, force }, TEMPLATES);
+export async function runCreate({ template, targetDir, force = false, lang }: RunCreateArgs): Promise<void> {
+  await runCreateWithTemplates({ template, targetDir, force, lang }, TEMPLATES);
 }
 
-export async function runCreateWithTemplates({ template, targetDir, force = false }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
+export async function runCreateWithTemplates({ template, targetDir, force = false, lang }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
+  // 言語を最初に確定する。--lang 明示ならそれを使い、未指定かつ対話端末なら言語選択を出す。
+  // 選択言語で「以降の対話・ログ表示」と「生成テンプレ本体（overlay）」の両方を確定する。
+  const resolvedLang = await resolveLang(lang);
+  setLang(resolvedLang);
+
   // draft:true は CLI からは完全に隠す（一覧・選択・slug 直接指定すべて unknown 扱い）
   const availableTemplates = templates.filter((tpl) => !tpl.draft);
   const tpl = await resolveTemplate(template, availableTemplates);
@@ -97,17 +113,47 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
   logger.info(t('create.fetching', { name: tpl.slug, ref }));
   await downloadTemplateSource(tpl, outDir, ref, force);
 
+  // 要求言語に対応する overlay があれば、base の上にマージする（生成テンプレ本体の言語切替）
+  await applyLangOverlay(tpl, outDir, ref, resolvedLang);
+
   ensureTemplateDownloaded(outDir, tpl);
 
-  postProcessTemplate(outDir, tpl);
+  await postProcessTemplate(outDir, tpl, resolvedLang);
 
   logger.success(t('create.created', { dir: outDir }));
   printNextSteps(outDir, tpl);
 }
 
 /** commander から呼ぶアクション */
-export async function createCommand(targetDir: string | undefined, options: CreateOptions): Promise<void> {
-  await runCreate({ template: options.template, targetDir, force: options.force });
+export async function createCommand(targetDir: string | undefined, options: CreateOptions, command?: CommandLike): Promise<void> {
+  // ルートプログラムの `--lang` はグローバルオプションなので optsWithGlobals() で取得する。
+  const langOpt = command?.optsWithGlobals().lang;
+  const lang = typeof langOpt === 'string' ? langOpt : undefined;
+  await runCreate({ template: options.template, targetDir, force: options.force, lang });
+}
+
+/**
+ * 生成テンプレ本体・CLI 表示言語の確定。
+ *
+ * - `--lang ja` / `--lang en` が明示されていればそれを使う（プロンプトは出さない）。
+ * - 未指定（不正値含む）のとき:
+ *   - 対話端末（TTY）では、他のどのプロンプトよりも先に言語を選ばせる。
+ *     こうすることで、以降のカテゴリ／タイプ／出力先プロンプトも選択言語で表示される。
+ *   - 非対話端末（CI・パイプ等）では `en` にフォールバックする。
+ *
+ * プロンプト自体は現在の検出言語に依存せず読めるよう、`English / 日本語` の固定表示にする。
+ */
+async function resolveLang(explicit: string | undefined): Promise<Lang> {
+  if (explicit === 'ja' || explicit === 'en') return explicit;
+  if (!process.stdin.isTTY) return 'en';
+
+  return select<Lang>({
+    message: 'Select language / 言語を選択:',
+    choices: [
+      { name: 'English', value: 'en' },
+      { name: '日本語', value: 'ja' },
+    ],
+  });
 }
 
 async function resolveTemplate(requested: string | undefined, templates: TemplateDef[]): Promise<TemplateDef> {
@@ -229,7 +275,31 @@ async function downloadTemplatePath(sourcePath: string, outDir: string, ref: str
   });
 }
 
-function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
+/**
+ * 言語別 overlay を適用する。
+ *
+ * base 取得後、要求言語に対応する `langOverlays[lang]` があれば、その差分を temp に取得して
+ * `outDir` へマージする（差分ファイルが base を上書きする）。
+ * base 言語（多くは `ja`）には overlay を用意しない方針なので、その場合は何もしない。
+ *
+ * overlay の実体はテンプレート内の `.lang/{lang}/` に同梱されており、base 取得時にも
+ * `outDir/.lang/` として降りてくるが、それは postProcessTemplate の cleanup で取り除く。
+ */
+async function applyLangOverlay(tpl: TemplateDef, outDir: string, ref: string, lang: Lang): Promise<void> {
+  if (tpl.kind !== 'project') return;
+  const overlayPath = tpl.langOverlays?.[lang];
+  if (!overlayPath) return;
+
+  const overlayDir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-template-lang-'));
+  try {
+    await downloadTemplatePath(overlayPath, overlayDir, ref, true);
+    mergeDirectory(overlayDir, outDir);
+  } finally {
+    fs.rmSync(overlayDir, { recursive: true, force: true });
+  }
+}
+
+async function postProcessTemplate(projectDir: string, tpl: TemplateDef, lang: Lang): Promise<void> {
   if (tpl.kind === 'static-html') return;
 
   if (tpl.kind === 'base-overlay' && tpl.rewritePackageName !== false) {
@@ -237,7 +307,7 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
   }
 
   if (tpl.kind === 'single-project-variant') {
-    extractVariantFiles(projectDir, tpl);
+    extractVariantFiles(projectDir, tpl, lang);
     rewritePackageName(projectDir, tpl.packageName ?? tpl.slug);
   }
 
@@ -245,12 +315,13 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
   cleanupDevArtifacts(projectDir);
 
   // workspace:* を公開バージョンに書き換える
-  rewriteWorkspaceDeps(projectDir);
+  await rewriteWorkspaceDeps(projectDir);
 }
 
 /**
- * テンプレートに同梱されている開発専用のスクリーンショット関連ファイルを削除する。
- * （docs サムネ生成用なので、生成プロジェクトには不要）
+ * テンプレートに同梱されている配布不要ファイルを削除する。
+ * - `screenshots/` + `screenshots.config.json`: docs サムネ生成用
+ * - `.lang/`: 言語別 overlay の配信元（base 取得時に降りてくるが、生成プロジェクトには残さない）
  */
 function cleanupDevArtifacts(projectDir: string): void {
   const screenshotsDir = path.join(projectDir, 'screenshots');
@@ -262,6 +333,27 @@ function cleanupDevArtifacts(projectDir: string): void {
   if (fs.existsSync(screenshotsConfig)) {
     fs.rmSync(screenshotsConfig, { force: true });
   }
+
+  const langDir = path.join(projectDir, '.lang');
+  if (fs.existsSync(langDir)) {
+    fs.rmSync(langDir, { recursive: true, force: true });
+  }
+}
+
+/**
+ * single-project-variant の言語別 variant ディレクトリを解決する。
+ *
+ * LP のように文章量が多くデザインごと差し替えたいテンプレートでは、言語別コンテンツを
+ * overlay（差分マージ）ではなく `src/pages/{lang}/{variant}/` 配下の完全コピーとして同梱する。
+ * 要求言語の `src/pages/{lang}/{variant}/index.astro` があればその 2 セグメントパス
+ * （例: `en/corporate`）を variant として返し、無ければ base 言語（`tpl.variant`）へフォールバックする。
+ *
+ * これにより、英語版を用意していない variant は要求言語に関係なく従来どおり base を生成できる。
+ */
+function resolveVariantDir(srcDir: string, variant: string, lang: Lang): string {
+  const langVariant = `${lang}/${variant}`;
+  const hasLangVariant = fs.existsSync(path.join(srcDir, 'pages', langVariant, 'index.astro'));
+  return hasLangVariant ? langVariant : variant;
 }
 
 /**
@@ -279,13 +371,17 @@ function cleanupDevArtifacts(projectDir: string): void {
  * 加えて、配布ファイル内の `@/{dir}/{variant}/...` 形式の path-alias import を
  * `@/{dir}/...` に書き換える。
  *
+ * 言語別コンテンツは `resolveVariantDir()` で解決した variant パス（例: `en/corporate`）を
+ * 起点に同じ処理を行う。2 セグメントになっても `src/{dir}/{variant}/` の持ち上げ・
+ * alias 書き換えはそのまま機能する。
+ *
  * `src/pages/{variant}/index.astro` の存在だけは必須（無ければエラー）。
  * その他のディレクトリ（components/styles/lib 等）では variant ディレクトリが存在しなければ
  * 何もしない（既存ファイルはそのまま）。
  */
-function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef): void {
+function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef, lang: Lang): void {
   const srcDir = path.join(projectDir, 'src');
-  const variant = tpl.variant;
+  const variant = resolveVariantDir(srcDir, tpl.variant, lang);
 
   // `src/pages/{variant}/index.astro` の存在は必須
   const pagesVariantIndex = path.join(srcDir, 'pages', variant, 'index.astro');
@@ -461,32 +557,108 @@ function rewritePackageName(projectDir: string, name: string): void {
   }
 }
 
+/** package.json 内で `workspace:*` 依存が現れ得るセクション */
+const DEP_SECTIONS = ['dependencies', 'devDependencies', 'peerDependencies'] as const;
+
+/** npm レジストリへの問い合わせタイムアウト（ms）。生成体験を遅くしないための保険。 */
+const REGISTRY_TIMEOUT_MS = 5000;
+
 /**
- * 取得後の package.json 内の `workspace:*` 依存を `^{LISM_CSS_VERSION}` に書き換える。
+ * 取得後の package.json 内の `workspace:*` 依存を、依存パッケージごとの公開バージョンに書き換える。
+ *
+ * バージョンは npm レジストリの dist-tag `latest`（＝安定版）を解決して使う。これにより `lism-css` 等を
+ * publish するだけで `lism create` が最新版を取得でき、CLI 自体を再公開する必要がなくなる。
+ * レジストリへ到達できない場合（オフライン / 障害 / 404 / タイムアウト）は、CLI ビルド時に焼き込んだ
+ * `LISM_PACKAGE_VERSIONS` へ依存ごとに個別フォールバックする。いずれも書式は `^x.y.z`。
+ *
  * 失敗しても警告に留め、生成自体は続行する（Best Effort）。
  */
-function rewriteWorkspaceDeps(projectDir: string): void {
+async function rewriteWorkspaceDeps(projectDir: string): Promise<void> {
   const pkgPath = path.join(projectDir, 'package.json');
   if (!fs.existsSync(pkgPath)) return;
   try {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as PackageJson;
-    let touched = false;
-    for (const key of ['dependencies', 'devDependencies', 'peerDependencies'] as const) {
-      const deps = pkg[key];
+
+    // 置換対象（workspace:* 依存）のパッケージ名を収集
+    const names = new Set<string>();
+    for (const section of DEP_SECTIONS) {
+      const deps = pkg[section];
       if (!deps) continue;
       for (const [name, value] of Object.entries(deps)) {
-        if (typeof value !== 'string') continue;
-        if (value.startsWith('workspace:')) {
-          deps[name] = `^${LISM_CSS_VERSION}`;
+        if (typeof value === 'string' && value.startsWith('workspace:')) names.add(name);
+      }
+    }
+    if (names.size === 0) return;
+
+    // 対象を並列でバージョン解決（レジストリ latest → 失敗時は焼き込み値）
+    const versions = await resolveWorkspaceVersions([...names]);
+
+    let touched = false;
+    for (const section of DEP_SECTIONS) {
+      const deps = pkg[section];
+      if (!deps) continue;
+      for (const [name, value] of Object.entries(deps)) {
+        if (typeof value === 'string' && value.startsWith('workspace:')) {
+          deps[name] = `^${versions[name]}`;
           touched = true;
         }
       }
     }
+
     if (touched) {
       fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
-      logger.log(t('create.workspaceReplaced', { version: LISM_CSS_VERSION }));
+      logger.log(t('create.workspaceReplaced'));
     }
   } catch (err) {
     logger.warn(t('create.workspaceFailed', { reason: String(err) }));
+  }
+}
+
+/**
+ * 依存名ごとに公開バージョンを解決する（全件並列）。返り値は常に全 name を含む。
+ */
+async function resolveWorkspaceVersions(names: string[]): Promise<Record<string, string>> {
+  const entries = await Promise.all(names.map(async (name) => [name, await resolveDepVersion(name)] as const));
+  return Object.fromEntries(entries);
+}
+
+/** CLI ビルド時に焼き込んだフォールバック版数（未知依存は lism-css の版に寄せる従来挙動を踏襲）。 */
+function bakedVersion(name: string): string {
+  return LISM_PACKAGE_VERSIONS[name] ?? LISM_PACKAGE_VERSIONS['lism-css'] ?? 'unknown';
+}
+
+/**
+ * 単一依存の公開バージョンを解決する。
+ *
+ * CLI が把握している公開 Lism パッケージ（＝焼き込み済み）のみレジストリへ問い合わせ、latest を採用する。
+ * 未知の workspace 依存は、無関係な npm パッケージを誤って引かないようレジストリへ問い合わせず焼き込み値を返す。
+ * レジストリ取得に失敗した場合も焼き込み値へフォールバックする。
+ */
+async function resolveDepVersion(name: string): Promise<string> {
+  const baked = bakedVersion(name);
+  if (!LISM_PACKAGE_VERSIONS[name]) return baked;
+  const latest = await fetchLatestVersion(name);
+  return latest ?? baked;
+}
+
+/**
+ * npm レジストリの `<pkg>/latest`（dist-tag latest ＝ 安定版）から version を取得する。
+ *
+ * パッケージ全体の最新 version を見ると prerelease を拾う恐れがあるため、必ず `/latest` を使う。
+ * スコープ名はスラッシュのみ `%2F` にエンコードする（`@lism-css/ui` → `@lism-css%2Fui`）。
+ * 失敗（オフライン / タイムアウト / 非 2xx / 不正レスポンス）時は null を返し、呼び出し側でフォールバックする。
+ */
+async function fetchLatestVersion(name: string): Promise<string | null> {
+  const url = `${NPM_REGISTRY_BASE}/${name.replace(/\//g, '%2F')}/latest`;
+  try {
+    const res = await fetch(url, {
+      headers: { accept: 'application/json' },
+      signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS),
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { version?: unknown };
+    return typeof data.version === 'string' ? data.version : null;
+  } catch {
+    return null;
   }
 }

@@ -1,5 +1,6 @@
 ---
 import { Group, Link, Inline } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
 import type { ComponentProps } from 'astro/types';
 
 type GroupProps = ComponentProps<typeof Group>;
@@ -20,7 +21,7 @@ const { items, class: className, ...rest } = Astro.props;
 {
   items.length >= 3 && (
     <Group isWrapper="l" hasGutter py="5" bgc="base-2" fz="11px" c="text-2">
-      <Group as="nav" aria-label="パンくず" class:list={['c--breadcrumb', className]} {...rest}>
+      <Group as="nav" aria-label={siteConfig.uiText.breadcrumb.aria} class:list={['c--breadcrumb', className]} {...rest}>
         {items.map((item, i) => (
           <Fragment>
             {i > 0 && <Inline aria-hidden="true">／ </Inline>}

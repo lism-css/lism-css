@@ -46,51 +46,69 @@ The `--hl-unit` above is defined as follows:
 (Since `--REM ≒ 1rem`, `--hl-unit` is expected to be approximately `2px`.)
 
 
-## `lh` Classes
+## `hl` Classes
 
-The `lh` class uses these variables internally:
+Half-leading is specified with the `hl` (half-leading) property. The `-hl:*` classes (or the `hl` prop on `<Lism>`-based components) set these variables on `--hl` internally:
 
 ```css
-.-lh\:base {
+.-hl\:base {
   --hl: var(--hl--base);
 }
-.-lh\:xs {
+.-hl\:xs {
   --hl: var(--hl--xs);
 }
-.-lh\:s {
+.-hl\:s {
   --hl: var(--hl--s);
 }
-.-lh\:l {
+.-hl\:l {
   --hl: var(--hl--l);
+}
+.-hl\:0 {
+  --hl: 0px; /* no half-leading */
 }
 ```
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s" style={{'--halfLead':'1em'}}>
-    <DummyText pre='<code class="-fz:s">1:</code> ' lh="1" />
-    <DummyText pre='<code class="-fz:s">xs:</code> ' lh="xs" />
-    <DummyText pre='<code class="-fz:s">s:</code> ' lh="s" />
-    <DummyText pre='<code class="-fz:s">base:</code> ' lh="base" />
-    <DummyText pre='<code class="-fz:s">l:</code> ' lh="l" />
+    <DummyText pre='<code class="-fz:s">0:</code> ' hl="0" />
+    <DummyText pre='<code class="-fz:s">xs:</code> ' hl="xs" />
+    <DummyText pre='<code class="-fz:s">s:</code> ' hl="s" />
+    <DummyText pre='<code class="-fz:s">base:</code> ' hl="base" />
+    <DummyText pre='<code class="-fz:s">l:</code> ' hl="l" />
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <p class="-lh:xs">Lorem ipsum ...</p>
-    <p class="-lh:s">Lorem ipsum ...</p>
-    <p class="-lh:base">Lorem ipsum ...</p>
-    <p class="-lh:l">Lorem ipsum ...</p>
+    <p class="-hl:xs">Lorem ipsum ...</p>
+    <p class="-hl:s">Lorem ipsum ...</p>
+    <p class="-hl:base">Lorem ipsum ...</p>
+    <p class="-hl:l">Lorem ipsum ...</p>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Text lh="xs">Lorem ipsum ...</Text>
-    <Text lh="s">Lorem ipsum ...</Text>
-    <Text lh="base">Lorem ipsum ...</Text>
-    <Text lh="l">Lorem ipsum ...</Text>
+    <Text hl="xs">Lorem ipsum ...</Text>
+    <Text hl="s">Lorem ipsum ...</Text>
+    <Text hl="base">Lorem ipsum ...</Text>
+    <Text hl="l">Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>
+
+`hl` also supports breakpoints, so you can switch it responsively like `hl={['s', null, 'l']}` (`-hl_md:l`).
+
+
+### `lh` (Compatibility Shortcut)
+
+For cases where you prefer to think in terms of `line-height`, `lh` is available as a compatibility shortcut.
+
+|Value|Behavior|
+|---|---|
+|`lh="base"` / `"xs"` / `"s"` / `"l"`|References the same tokens as `hl` (controls `--hl`)|
+|`lh="1"`|No half-leading (equivalent to `hl="0"`)|
+|Arbitrary numbers like `lh="1.7"`|Output as a raw CSS `line-height`, as before|
+
+Official examples use `hl` by default. Use `lh` only when you want to specify a raw `line-height` value.
 
 
 ## Why Use Half-Leading?

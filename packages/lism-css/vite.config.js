@@ -30,7 +30,14 @@ function deleteDuplicateDir(filePath) {
 
 // ファイルパスは大文字・小文字まで一致しないと Vercel でこけるので注意。
 const entries = {
+  index: resolve(__dirname, 'src/index.ts'),
   'components/index': resolve(__dirname, 'src/components/index.ts'),
+
+  // full.css 用 preset。@lism-css/plugin が dist から読むため単独エントリとして出力する
+  'config/default-config': resolve(__dirname, 'config/default-config.ts'),
+  'config/helper': resolve(__dirname, 'config/helper.ts'),
+  'config/defaults/token-scope': resolve(__dirname, 'config/defaults/token-scope.ts'),
+  'config/presets/props-full': resolve(__dirname, 'config/presets/props-full.ts'),
   // 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 
   // ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
@@ -56,6 +63,7 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     typecheck: {
       enabled: true,
+      exclude: ['**/node_modules/**', '**/.git/**', '**/ResponsiveProps.module-augmentation.spec-d.ts'],
     },
   },
   build: {
@@ -80,7 +88,13 @@ export default defineConfig({
     },
     rollupOptions: {
       plugins: [],
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'lism-css/config.js',
+        /^node:/,
+      ],
       output: {
         dir: 'dist',
         // exports: 'named',

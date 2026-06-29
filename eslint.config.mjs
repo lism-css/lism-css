@@ -17,6 +17,8 @@ export default defineConfig(
       '**/node_modules/**',
       '**/.astro/**',
       '**/.turbo/**',
+      // 言語別テンプレ overlay（配布用の差分ファイル。tsconfig の project service 対象外）
+      '**/.lang/**',
       'apps/catalog/.storybook/**',
       'apps/catalog/storybook-static/**',
       'eslint.config.mjs',
@@ -26,6 +28,9 @@ export default defineConfig(
       '**/.prettierrc.cjs',
       '**/.stylelintrc.mjs',
       '**/vite.config.*',
+      // プロジェクト/テンプレの設定ファイル（型 lint 対象外。tsconfig の project service に含めない）
+      '**/next.config.*',
+      '**/lism.config.*',
       '**/__*',
     ],
   },

@@ -3,6 +3,7 @@
  *
  * ここに置く対象:
  * - GitHub の取得元（リポジトリ名 / raw base URL / リポジトリ内パス）
+ * - npm レジストリの base URL（公開バージョン解決に使用）
  * - giget で参照する ref のデフォルト値
  *
  * 注: ユーザーが触る `lism.config.js` の設定とは別物。ユーザー設定は config.ts を参照。
@@ -13,6 +14,9 @@ export const SOURCE_REPO = 'lism-css/lism-css';
 
 /** raw GitHub の base URL（生ファイル fetch に使用） */
 export const RAW_GITHUB_BASE = 'https://raw.githubusercontent.com';
+
+/** npm レジストリの base URL（`lism create` の workspace:* 置換時に公開最新版を解決するのに使用） */
+export const NPM_REGISTRY_BASE = 'https://registry.npmjs.org';
 
 // -----------------------------------------------------------------------------
 // Default refs

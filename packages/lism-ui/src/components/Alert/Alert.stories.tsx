@@ -45,6 +45,10 @@ export const Info: Story = {
   args: { type: 'info', children: '情報のメッセージです。' },
 };
 
+export const Note: Story = {
+  args: { type: 'note', children: 'メモのメッセージです。' },
+};
+
 export const WithSide: Story = {
   name: 'layout: withSide',
   args: {

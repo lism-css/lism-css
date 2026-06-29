@@ -53,3 +53,7 @@ export const Check: Story = {
 export const Help: Story = {
   args: { type: 'help', title: 'ヘルプ', children: 'ヘルプのメッセージです。' },
 };
+
+export const Info: Story = {
+  args: { type: 'info', title: '情報', children: '情報のメッセージです。' },
+};

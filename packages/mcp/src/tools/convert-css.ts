@@ -97,7 +97,7 @@ interface PropMapping {
   sectionName: string;
 }
 
-/** プリセット値列から値を抽出する（例: "-fz:root, -fz:base" → ["root", "base"]） */
+/** プリセット値列から値を抽出する（例: "-fz:base, -fz:5xl" → ["base", "5xl"]） */
 function extractPresetValues(presetColumn: string, propName: string): string[] {
   if (!presetColumn || presetColumn === '—' || presetColumn === '-') return [];
 

@@ -126,13 +126,20 @@ const docsSidebar: SidebarSection[] = [
   {
     label: 'はじめに',
     translate: { en: 'Getting Started' },
-    items: ['/docs/overview/', '/docs/installation/', '/docs/skills/', '/docs/mcp/', '/docs/features/', '/docs/changelog/'],
+    items: [
+      { label: 'Lism CSSとは', translate: { en: 'What is Lism CSS?' }, link: '/docs/overview/' },
+      '/docs/installation/',
+      '/docs/skills/',
+      '/docs/mcp/',
+      '/docs/features/',
+      '/docs/changelog/',
+    ],
   },
 
-  // 概要カテゴリ
+  // 基本概念カテゴリ
   {
-    label: '概要',
-    translate: { en: 'Overview' },
+    label: '基本概念',
+    translate: { en: 'Core Concepts' },
     rootPath: '/docs/',
     items: [
       '/docs/css-methodology/',
@@ -154,8 +161,19 @@ const docsSidebar: SidebarSection[] = [
       '/docs/property-class/hov',
       '/docs/property-class/max-sz',
       '/docs/responsive/',
-      { type: 'separator' },
-      '/docs/customize/',
+    ],
+  },
+
+  // カスタマイズ カテゴリ
+  {
+    label: 'カスタマイズ',
+    translate: { en: 'Customize' },
+    items: [
+      { label: 'カスタマイズの基本', translate: { en: 'Customization Basics' }, link: '/docs/customize/' },
+      { label: 'CSSビルド', translate: { en: 'CSS Builds' }, link: '/docs/customize/build/' },
+      { label: 'lism.config.js', link: '/docs/customize/config/' },
+      { label: 'SCSS', link: '/docs/customize/scss/' },
+      { label: 'CSS Purge', link: '/docs/customize/purge/' },
     ],
   },
 

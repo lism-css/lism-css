@@ -6,10 +6,10 @@ export const FzDemos = ({ lang = 'ja' }) => (
     {['2xs', 'xs', 's', 'base', 'l', 'xl', '2xl', '3xl', '4xl', '5xl'].map((fz, _i) => {
       return (
         <Stack key={fz} g="5">
-          <Inline className="is--sizeTip u--trim" fz="12px" lh="s">
+          <Inline className="is--sizeTip u--trim" fz="12px" hl="s">
             <code>{fz}</code>
           </Inline>
-          <DummyText lang={lang} length="s" fz={fz} className="-whs:nowrap -lh:1" />
+          <DummyText lang={lang} length="s" fz={fz} className="-whs:nowrap -hl:0" />
         </Stack>
       );
     })}
@@ -32,13 +32,13 @@ export const BoxShadowDemos = ({ shadows = [] }) => {
 
 export const SpacingDemos = ({ spaces, isValueLabel }) => {
   return (
-    <Stack g="5" lh="s">
+    <Stack g="5" hl="s">
       {spaces.map((s, i) => {
         const label = isValueLabel ? <code>{s}</code> : <code>{i}</code>;
         return (
           <Stack key={s} g="5">
             {!isValueLabel && (
-              <Box bd-l bdw="2px" lh="1" pl="10" fz="2xs">
+              <Box bd-l bdw="2px" hl="0" pl="10" fz="2xs">
                 {s}
               </Box>
             )}

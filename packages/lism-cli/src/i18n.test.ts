@@ -1,15 +1,35 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { execFileSync } from 'node:child_process';
 import { detectLang, getLang, setLang, preScanLang, t, tOf } from './i18n';
 import type { MessageKey } from './messages';
+
+vi.mock('node:child_process', () => ({
+  execFileSync: vi.fn(),
+}));
+
+const mockedExecFileSync = vi.mocked(execFileSync);
+
+const originalPlatform = process.platform;
+function setPlatform(platform: NodeJS.Platform): void {
+  Object.defineProperty(process, 'platform', { value: platform, configurable: true });
+}
+
+function mockIntlLocale(locale: string) {
+  return vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(() => ({ resolvedOptions: () => ({ locale }) }) as unknown as Intl.DateTimeFormat);
+}
 
 describe('detectLang', () => {
   beforeEach(() => {
     vi.stubEnv('LC_ALL', '');
     vi.stubEnv('LANG', '');
+    mockedExecFileSync.mockReset();
+    // 既定では macOS 以外として AppleLanguages 経路を無効化する
+    setPlatform('linux');
   });
 
   afterEach(() => {
     vi.unstubAllEnvs();
+    setPlatform(originalPlatform);
   });
 
   it('override が "ja" のときはそのまま返す', () => {
@@ -35,11 +55,56 @@ describe('detectLang', () => {
     expect(detectLang()).toBe('ja');
   });
 
+  it('macOS で LANG が英語でも AppleLanguages 先頭が ja* なら ja', () => {
+    vi.stubEnv('LC_ALL', 'en_US.UTF-8');
+    setPlatform('darwin');
+    mockedExecFileSync.mockReturnValue('(\n    "ja-JP",\n    "en-JP"\n)\n');
+    expect(detectLang()).toBe('ja');
+    expect(mockedExecFileSync).toHaveBeenCalledWith('/usr/bin/defaults', ['read', '-g', 'AppleLanguages'], expect.anything());
+  });
+
+  it('macOS で AppleLanguages 先頭が en* なら ja にはしない', () => {
+    vi.stubEnv('LC_ALL', 'en_US.UTF-8');
+    setPlatform('darwin');
+    mockedExecFileSync.mockReturnValue('(\n    "en-US",\n    "ja-JP"\n)\n');
+    const spy = mockIntlLocale('en-US');
+    try {
+      expect(detectLang()).toBe('en');
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+  it('macOS で defaults コマンドが失敗しても Intl 判定にフォールバックする', () => {
+    vi.stubEnv('LC_ALL', 'en_US.UTF-8');
+    setPlatform('darwin');
+    mockedExecFileSync.mockImplementation(() => {
+      throw new Error('defaults: command not found');
+    });
+    const spy = mockIntlLocale('ja-JP');
+    try {
+      expect(detectLang()).toBe('ja');
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+  it('macOS 以外では AppleLanguages を参照しない', () => {
+    vi.stubEnv('LC_ALL', 'en_US.UTF-8');
+    setPlatform('linux');
+    mockedExecFileSync.mockReturnValue('(\n    "ja-JP"\n)\n');
+    const spy = mockIntlLocale('en-US');
+    try {
+      expect(detectLang()).toBe('en');
+      expect(mockedExecFileSync).not.toHaveBeenCalled();
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
   it('LC_ALL / LANG が英語でも Intl が ja* ならフォールバックで ja', () => {
     vi.stubEnv('LC_ALL', 'en_US.UTF-8');
-    const spy = vi
-      .spyOn(Intl, 'DateTimeFormat')
-      .mockImplementation(() => ({ resolvedOptions: () => ({ locale: 'ja-JP' }) }) as unknown as Intl.DateTimeFormat);
+    const spy = mockIntlLocale('ja-JP');
     try {
       expect(detectLang()).toBe('ja');
     } finally {
@@ -49,9 +114,7 @@ describe('detectLang', () => {
 
   it('どこからも ja が引けない場合は en', () => {
     vi.stubEnv('LC_ALL', 'en_US.UTF-8');
-    const spy = vi
-      .spyOn(Intl, 'DateTimeFormat')
-      .mockImplementation(() => ({ resolvedOptions: () => ({ locale: 'en-US' }) }) as unknown as Intl.DateTimeFormat);
+    const spy = mockIntlLocale('en-US');
     try {
       expect(detectLang()).toBe('en');
     } finally {

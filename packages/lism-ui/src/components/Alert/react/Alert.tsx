@@ -11,7 +11,9 @@ export function Alert<T extends ElementType = 'div'>({ children, className, ...i
       <Center isSide={layout === 'withSide'} c="keycolor" fz="xl" fxsh="0">
         <Icon icon={icon} />
       </Center>
-      <Flow flow={flow}>{children}</Flow>
+      <Flow flow={flow} w="100%">
+        {children}
+      </Flow>
     </Lism>
   );
 }

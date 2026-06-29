@@ -1,6 +1,7 @@
 ---
 import { Lism, Columns, Link, Stack, Inline } from 'lism-css/astro';
 import Eyebrow from '@/components/Eyebrow.astro';
+import { siteConfig } from '@/config/site';
 
 interface NavItem {
   title: string;
@@ -15,12 +16,12 @@ interface Props {
 const { prev, next } = Astro.props;
 ---
 
-<Lism as="nav" aria-label="記事ナビゲーション">
+<Lism as="nav" aria-label={siteConfig.uiText.articleNav.aria}>
   <Columns g="0">
     {
       prev ? (
         <Link href={`/posts/${prev.id}/`} set="plain" hov={{ c: 'brand' }} d="block">
-          <Stack g="5" lh="s">
+          <Stack g="5" hl="s">
             <Eyebrow c="inherit">
               <Inline aria-hidden="true">←</Inline> PREVIOUS
             </Eyebrow>
@@ -34,7 +35,7 @@ const { prev, next } = Astro.props;
     {
       next ? (
         <Link href={`/posts/${next.id}/`} set="plain" hov={{ c: 'brand' }} d="block" ta="right">
-          <Stack g="5" lh="s">
+          <Stack g="5" hl="s">
             <Eyebrow c="inherit">
               NEXT <Inline aria-hidden="true">→</Inline>
             </Eyebrow>

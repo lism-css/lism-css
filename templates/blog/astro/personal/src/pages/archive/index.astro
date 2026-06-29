@@ -9,7 +9,7 @@ const posts = await getCollection('posts');
 const summaries = getArchiveSummaries(posts);
 ---
 
-<ArchiveLayout title={`Archive — ${siteConfig.name}`} description="年月別の記事一覧">
+<ArchiveLayout title={`Archive — ${siteConfig.name}`} description={siteConfig.uiText.archiveIndexDescription}>
   <Heading level="1">Archive</Heading>
 
   <List bd-be>

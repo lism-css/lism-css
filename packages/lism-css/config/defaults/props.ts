@@ -1,12 +1,11 @@
 /**
  * isVar: 1 → クラス出力はせずstyle属性での変数出力のみ (--bdw, --keycolor など)
- * bp: 0 → Prop-valユーティリティクラス化されなければ、style属性で出力するだけ。
+ * bp: 0（= bp 省略時のデフォルト）→ Prop-valユーティリティクラス化されなければ、style属性で出力するだけ。
  * bp: 1 → .-prop と --prop の セットがベースにあり、.-prop_bp と .--prop_bp で ブレイクポイント指定できる。
  *       .-prop{property:var(--prop)} が基本で、ユーティリティクラスは .-prop:val{property:value} となる。
  *
  * ↓コンポーネント処理で使用される
  * tokenClass: 1 → 対応するトークン値がそのまま全てユーティリティクラス化されるもの。
- *             2 → ユーティリティクラスされ、内容は別途ファイルで記述するもの。
  * shorthands: → コンポーネント側で短く書くための設定
  *
  * ↓SCSS出力で使用される
@@ -33,19 +32,23 @@ export default {
   ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
   fs: { prop: 'fontStyle', presets: ['italic'], shorthands: { i: 'italic' } },
   lh: {
-    prop: 'lineHeight',
-    presets: ['1'],
-    token: 'hl',
-    tokenClass: 2,
-    exUtility: { 1: '' },
-  },
-  hl: {
+    prop: '--hl',
     isVar: 1,
     token: 'hl',
-    tokenClass: 0,
-    bp: 0,
+    tokenClass: 1,
+    utils: { '1': '0px' },
   },
-  lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1, bp: 0 },
+  hl: {
+    prop: '--hl',
+    isVar: 1,
+    token: 'hl',
+    tokenClass: 1,
+    bp: 1,
+    // hl="0" で half-leading なし (--hl:0px) を表現できるようにする互換ユーティリティ。
+    // lh="1"（互換ショートカット）の .-lh:1 と同じ出力にし、正規 prop の hl 側でも揃えられるようにする。
+    utils: { '0': '0px' },
+  },
+  lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
   ta: { prop: 'textAlign', presets: ['center', 'left', 'right'] },
   td: { prop: 'textDecoration', utils: { none: 'none' } },
   tt: { prop: 'textTransform', utils: { upper: 'uppercase', lower: 'lowercase' } },
@@ -55,7 +58,7 @@ export default {
   d: {
     prop: 'display',
     presets: ['none', 'block', 'flex', 'inline-flex', 'grid', 'inline-grid', 'inline', 'inline-block'],
-    bp: 'lg',
+    bp: 1,
   },
   o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
   v: { prop: 'visibility', presets: ['hidden'] },
@@ -97,7 +100,7 @@ export default {
   'max-bsz': { prop: 'maxBlockSize', token: 'sz' },
 
   // bg
-  bg: { prop: 'background', bp: 0 },
+  bg: { prop: 'background' },
   bgi: { prop: 'backgroundImage' },
   bgr: { prop: 'backgroundRepeat', presets: ['no-repeat'] },
   bgp: { prop: 'backgroundPosition', presets: ['center'] },
@@ -202,10 +205,10 @@ export default {
   pe: { prop: 'paddingInlineEnd', token: 'space', bp: 1 },
   pbs: { prop: 'paddingBlockStart', token: 'space', bp: 1 },
   pbe: { prop: 'paddingBlockEnd', token: 'space', bp: 1 },
-  pl: { prop: 'paddingLeft', token: 'space', bp: 0 },
-  pr: { prop: 'paddingRight', token: 'space', bp: 0 },
-  pt: { prop: 'paddingTop', token: 'space', bp: 0 },
-  pb: { prop: 'paddingBottom', token: 'space', bp: 0 },
+  pl: { prop: 'paddingLeft', token: 'space' },
+  pr: { prop: 'paddingRight', token: 'space' },
+  pt: { prop: 'paddingTop', token: 'space' },
+  pb: { prop: 'paddingBottom', token: 'space' },
   m: {
     prop: 'margin',
     presets: ['auto', '0'],
@@ -220,10 +223,10 @@ export default {
   me: { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', bp: 1 },
   mbs: { prop: 'marginBlockStart', token: 'space', bp: 1, presets: ['auto', '0'], tokenClass: 1 },
   mbe: { prop: 'marginBlockEnd', presets: ['auto'], token: 'space', bp: 1 },
-  ml: { prop: 'marginLeft', token: 'space', bp: 0 },
-  mr: { prop: 'marginRight', token: 'space', bp: 0 },
-  mt: { prop: 'marginTop', token: 'space', bp: 0 },
-  mb: { prop: 'marginBottom', token: 'space', bp: 0 },
+  ml: { prop: 'marginLeft', token: 'space' },
+  mr: { prop: 'marginRight', token: 'space' },
+  mt: { prop: 'marginTop', token: 'space' },
+  mb: { prop: 'marginBottom', token: 'space' },
 
   g: {
     prop: 'gap',
@@ -231,11 +234,11 @@ export default {
     exUtility: { inherit: { gap: 'inherit' } },
     token: 'space',
     tokenClass: 1,
-    bp: 'lg',
+    bp: 1,
   },
-  cg: { prop: 'columnGap', token: 'space', bp: 0 },
-  rg: { prop: 'rowGap', token: 'space', bp: 0 },
-  cols: { isVar: 1, bp: 'lg' },
+  cg: { prop: 'columnGap', token: 'space' },
+  rg: { prop: 'rowGap', token: 'space' },
+  cols: { isVar: 1, bp: 1 },
   rows: { isVar: 1, bp: 1 },
 
   // flex
@@ -253,25 +256,25 @@ export default {
     prop: 'gridTemplate',
     bp: 1,
   },
-  gta: { prop: 'gridTemplateAreas', bp: 'lg' },
+  gta: { prop: 'gridTemplateAreas', bp: 1 },
   gtc: {
     prop: 'gridTemplateColumns',
     presets: ['subgrid'],
-    bp: 'lg',
+    bp: 1,
   },
   gtr: {
     prop: 'gridTemplateRows',
     presets: ['subgrid'],
-    bp: 'lg',
+    bp: 1,
   },
   gaf: { prop: 'gridAutoFlow', presets: ['row', 'column'], bp: 1 }, //dense
   gac: { prop: 'gridAutoColumns' },
   gar: { prop: 'gridAutoRows' },
 
   // grid item
-  ga: { prop: 'gridArea', utils: { '1/1': '1 / 1' }, bp: 'lg' },
-  gc: { prop: 'gridColumn', utils: { '1/-1': '1 / -1' }, bp: 'lg' },
-  gr: { prop: 'gridRow', utils: { '1/-1': '1 / -1' }, bp: 'lg' },
+  ga: { prop: 'gridArea', utils: { '1/1': '1 / 1' }, bp: 1 },
+  gc: { prop: 'gridColumn', utils: { '1/-1': '1 / -1' }, bp: 1 },
+  gr: { prop: 'gridRow', utils: { '1/-1': '1 / -1' }, bp: 1 },
   gcs: { prop: 'gridColumnStart' },
   gce: { prop: 'gridColumnEnd' },
   grs: { prop: 'gridRowStart' },

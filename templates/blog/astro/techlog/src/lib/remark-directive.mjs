@@ -2,25 +2,25 @@
  * remark-directive で解析された directive を Callout / Alert に変換するプラグイン
  *
  * 例:
- *   :::point[ヒント]
+ *   :::tip[ヒント]
  *   本文
  *   :::
- *   →  <Callout type="point" title="ヒント">本文</Callout>
+ *   →  <Callout type="tip" title="ヒント">本文</Callout>
  *
- *   :::point
+ *   :::tip
  *   本文
  *   :::
- *   →  <Alert type="point">本文</Alert>
+ *   →  <Alert type="tip">本文</Alert>
  *
  * ラベル（:::type[ラベル]）あり → Callout、ラベルなし → Alert に振り分ける。
- * 対応する type: alert, point, warning, check, help, note, info
+ * 対応する type: alert, point, tip, warning, check, help, note, info
  *
  * また、本文中に `:foo` のような textDirective が紛れた場合は元のテキストへ復元する
  * （remark-directive がコロン記法を意図せず directive として解釈するのを防ぐ）。
  */
 import { visit } from 'unist-util-visit';
 
-const DIRECTIVE_TYPES = ['alert', 'point', 'warning', 'check', 'help', 'note', 'info'];
+const DIRECTIVE_TYPES = ['alert', 'point', 'tip', 'warning', 'check', 'help', 'note', 'info'];
 
 export function remarkDirectiveHandler() {
   return (tree) => {

@@ -10,15 +10,19 @@ async function main(): Promise<void> {
   let targetDir: string | undefined;
   let force = false;
   let showHelp = false;
+  let lang: string | undefined;
 
   // --help の description や printHelp 表示に言語選択を反映させるため、
   // まず `--lang` を先に走査してから残りの引数を処理する。
+  // 明示値は runCreate にも渡す（未指定なら runCreate 側で言語選択プロンプト or en フォールバック）。
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
     if (a === '--lang' && args[i + 1]) {
-      setLang(args[i + 1]);
+      lang = args[i + 1];
+      setLang(lang);
     } else if (a.startsWith('--lang=')) {
-      setLang(a.slice('--lang='.length));
+      lang = a.slice('--lang='.length);
+      setLang(lang);
     }
   }
 
@@ -46,7 +50,7 @@ async function main(): Promise<void> {
     return;
   }
 
-  await runCreate({ template, targetDir, force });
+  await runCreate({ template, targetDir, force, lang });
 }
 
 function printHelp(): void {

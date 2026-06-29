@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
@@ -11,11 +12,58 @@ import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 import { loadLastmodMap } from './src/lib/sitemap-lastmod';
 import docsMd from './src/integrations/docs-md';
 import { astroRedirects } from './src/config/redirects';
-// import lismCss from 'lism-css/vite-plugin';
+
+// lism.config.jsを読み込む統合プラグイン: 動的 CSS ビルド + config alias + 型生成（lism-env.d.ts）を束ねる。
+import { lismCss } from '@lism-css/plugin/astro';
 
 // ビルド時のみ lastmod-map.json を読み込む（dev では不要）
 const isBuild = process.argv.includes('build');
 const lastmodMap = isBuild ? loadLastmodMap() : new Map<string, string>();
+
+type DevServerLike = {
+  watcher: {
+    add(paths: string | string[]): void;
+    on(event: 'change', callback: (file: string) => void): void;
+  };
+  moduleGraph: {
+    getModulesByFile(file: string): Set<unknown> | undefined;
+    invalidateModule(mod: unknown): void;
+  };
+  ws: {
+    send(payload: { type: 'full-reload'; path?: string; triggeredBy?: string }): void;
+  };
+};
+
+function normalizeFsPath(filePath: string): string {
+  return filePath.replace(/\\/g, '/');
+}
+
+function watchLismCoreDistCss() {
+  const cssDirRaw = fileURLToPath(new URL('../../packages/lism-css/dist/css/', import.meta.url));
+  const cssDir = normalizeFsPath(cssDirRaw);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  return {
+    name: 'docs:watch-lism-core-dist-css',
+    apply: 'serve' as const,
+    configureServer(server: DevServerLike) {
+      server.watcher.add(cssDirRaw);
+      server.watcher.on('change', (file) => {
+        const normalized = normalizeFsPath(file);
+        if (!normalized.startsWith(cssDir) || !normalized.endsWith('.css')) return;
+
+        const modules = server.moduleGraph.getModulesByFile(file) ?? server.moduleGraph.getModulesByFile(normalized);
+        modules?.forEach((mod) => server.moduleGraph.invalidateModule(mod));
+
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          server.ws.send({ type: 'full-reload', path: '*', triggeredBy: file });
+        }, 50);
+        timer.unref?.();
+      });
+    },
+  };
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -41,19 +89,19 @@ export default defineConfig({
       alias: {
         '@': '/src',
         '@ui': '/src/components/ui',
-        '@templates': new URL('../../templates', import.meta.url).pathname,
+        '@templates': fileURLToPath(new URL('../../templates', import.meta.url)),
       },
     },
     server: {
       fs: {
         // monorepo ルートの templates 配下を許可
-        allow: [new URL('../../', import.meta.url).pathname],
+        allow: [fileURLToPath(new URL('../../', import.meta.url))],
       },
     },
-    // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
     plugins: [
-      // lismCss(),
+      watchLismCoreDistCss(),
       {
+        // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
         name: 'ignore-underscore-prefix',
         resolveId(id, importer) {
           // __ で始まるディレクトリのファイルをexternalとして扱う
@@ -65,6 +113,7 @@ export default defineConfig({
     ],
   },
   integrations: [
+    lismCss(),
     expressiveCode(expressiveCodeOptions),
     react(),
     mdx({

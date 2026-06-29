@@ -29,12 +29,12 @@ const getPageHref = (n: number) => (n === 1 ? getTagHref(tag) : `/tags/${tag}/${
 
 <ArchiveLayout
   title={`#${tag} — ${siteConfig.name}`}
-  description={`タグ「${tag}」の記事一覧`}
+  description={siteConfig.uiText.tagArchiveDescription(tag)}
   breadcrumb={[{ label: 'TAGS', href: '/tags/' }, { label: tag.toUpperCase() }]}
 >
   {/* ページタイトル */}
   <ArchiveHeader eyebrow="TAG" title={`# ${tag}`}>
-    {page.total} 件の記事
+    {siteConfig.uiText.postCount(page.total)}
   </ArchiveHeader>
 
   {/* 記事リスト */}

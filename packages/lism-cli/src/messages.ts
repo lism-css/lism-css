@@ -26,8 +26,8 @@ export const messages = {
     en: 'CLI for Lism CSS / UI',
   },
   'cli.opt.lang': {
-    ja: 'CLI の表示言語を指定（ja | en）',
-    en: 'Display language for the CLI (ja | en)',
+    ja: 'CLI 表示と生成テンプレートの言語（ja | en、未指定なら対話時に選択）',
+    en: 'Language for the CLI and generated template (ja | en; prompted when omitted)',
   },
 
   // create
@@ -220,8 +220,8 @@ export const messages = {
     en: 'Failed to rewrite package.json name: {reason}',
   },
   'create.workspaceReplaced': {
-    ja: '  package.json の workspace:* を ^{version} に置換しました。',
-    en: '  Replaced workspace:* in package.json with ^{version}.',
+    ja: '  package.json の workspace:* を公開バージョンに置換しました。',
+    en: '  Replaced workspace:* in package.json with published versions.',
   },
   'create.workspaceFailed': {
     ja: 'package.json の書き換えに失敗しました: {reason}',

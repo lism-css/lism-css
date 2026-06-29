@@ -67,24 +67,24 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
   <PreviewTitle>Badge usage example and variable customization</PreviewTitle>
   <PreviewArea resize p="20">
     <Lism layout="cluster" g="10">
-      <Lism as="span" util="cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
     </Lism>
     <Lism layout="cluster" g="10" style={{ '--cbox-cPct': '76%', '--cbox-bdPct': '20%' }}>
-      <Lism as="span" util="cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
     </Lism>
@@ -100,14 +100,14 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Lism layout="cluster" g="10">
-      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
-      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
-      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>
     <Lism layout="cluster" g="10" style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
-      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
-      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
-      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>
     ```
   </PreviewCode>
@@ -491,7 +491,7 @@ A class for clipping a background with text.
   <PreviewArea p="20">
     <Center>
       <Box util="clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
-        <Text fz="5xl" fw="bold" lh="1" lts="l">TEXT</Text>
+        <Text fz="5xl" fw="bold" hl="0" lts="l">TEXT</Text>
       </Box>
     </Center>
   </PreviewArea>
@@ -499,7 +499,7 @@ A class for clipping a background with text.
     ```jsx
     <Center>
       <Box util="clipText" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
-        <Text fz="5xl" fw="bold" lh="1" lts="l">
+        <Text fz="5xl" fw="bold" hl="0" lts="l">
           TEXT
         </Text>
       </Box>

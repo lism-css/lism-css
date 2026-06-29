@@ -94,6 +94,9 @@ export const astroRedirects: AstroRedirects = {
   '/en/docs/primitives/is--container/': '/en/docs/trait-class/is--container/',
   '/en/docs/primitives/is--wrapper/': '/en/docs/trait-class/is--wrapper/',
   '/en/docs/primitives/is--layer/': '/en/docs/trait-class/is--layer/',
+  // purge -> customize/purge 移動（Customize セクション化に伴う統合）
+  '/docs/purge/': '/docs/customize/purge/',
+  '/en/docs/purge/': '/en/docs/customize/purge/',
 };
 
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。

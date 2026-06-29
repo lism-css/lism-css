@@ -10,7 +10,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 - [トークン概要テーブル](#トークン概要テーブル)
 - [余白 (space)](#余白-space)
 - [フォントサイズ (fz)](#フォントサイズ-fz)
-- [行間 (lh/hl)](#行間-lhhl)
+- [行間 (hl/lh)](#行間-hllh)
 - [字間 (lts)](#字間-lts)
 - [フォント (ff)](#フォント-ff)
 - [ウェイト (fw)](#ウェイト-fw)
@@ -31,18 +31,18 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | カテゴリ | トークン値 | CSS変数パターン | 例 |
 |---|---|---|---|
 | 余白 (space) | `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80` | `--s{N}` | `--s20` |
-| フォントサイズ (fz) | `root`, `base`, `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, `4xl`, `5xl` | `--fz--{key}` | `--fz--l` |
-| ハーフレディング・行間 (lh/hl) | `base`, `xs`, `s`, `l` | `--hl--{key}` | `--hl--s` |
+| フォントサイズ (fz) | `base`, `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, `4xl`, `5xl` | `--fz--{key}` | `--fz--l` |
+| ハーフレディング・行間 (hl/lh) | `base`, `xs`, `s`, `l` | `--hl--{key}` | `--hl--s` |
 | 字間 (lts) | `base`, `s`, `l`, `xl` | `--lts--{key}` | `--lts--s` |
 | フォント (ff) | `base`, `accent`, `mono` | `--ff--{key}` | `--ff--mono` |
 | ウェイト (fw) | `light`, `normal`, `bold` | `--fw--{key}` | `--fw--bold` |
 | 透明度 (o) | `mp`, `p`, `pp`, `ppp` | `--o--{key}` | `--o--p` |
 | 角丸 (bdrs) | `10`, `20`, `30`, `40`, `99`, `inner` | `--bdrs--{key}` | `--bdrs--20` |
 | 影 (bxsh) | `10`, `20`, `30`, `40`, `50` | `--bxsh--{N}` | `--bxsh--20` |
-| サイズ (sz) | `xs`, `s`, `m`, `l`, `xl`, `bleed` | `--sz--{key}` | `--sz--l` |
+| サイズ (sz) | `xs`, `s`, `m`, `l`, `xl` | `--sz--{key}` | `--sz--l` |
 | アスペクト比 (ar) | `og` | `--ar--{key}` | `--ar--og` |
 | フロー余白 (flow) | `base`, `s` | `--flow--{key}` | `--flow--base` |
-| セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral` | `--{name}` | `--brand` |
+| セマンティックカラー (color) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral` | `--{name}` | `--brand` |
 | パレットカラー (palette) | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black` | `--{name}` | `--red` |
 
 
@@ -103,12 +103,11 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--fz--xs` | `calc(1em * var(--fz-mol) / (var(--fz-mol) + 2))` | XS（mol/(mol+2)） |
 | `--fz--2xs` | `calc(1em * var(--fz-mol) / (var(--fz-mol) + 3))` | 最小（mol/(mol+3)） |
 | `--fz--base` | `1rem` | 本文の基本フォントサイズ |
-| `--fz--root` | — | `:root` のフォントサイズ |
 
 `--fz-mol` を上書きすることでスケール全体を調整可能（7以上の値に対応）。
 
 
-## 行間 (lh/hl)
+## 行間 (hl/lh)
 
 ハーフレディングの大きさ。Lism CSSでは、`line-height` は `calc(1em + var(--hl) * 2)` で算出される。`--hl-unit`（≒ 2px）を基準単位とする。
 
@@ -134,8 +133,8 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | 値 |
 |---------|-----|
-| `--ff--base` | `-apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji'` |
-| `--ff--accent` | `'Garamond', 'Baskerville', 'Times New Roman', serif` |
+| `--ff--base` | `-apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif` |
+| `--ff--accent` | `Georgia, serif` |
 | `--ff--mono` | `ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace` |
 
 
@@ -188,7 +187,8 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | 初期値 |
 |---------|-----|
-| `--shc` | `hsl(220 4% 8% / 15%)` |
+| `--shadow` | `hsl(220 4% 8% / 12%)` |
+| `--shc` | `var(--shadow)` |
 | `--shsz--10` | `0px 1px 3px` |
 | `--shsz--20` | `0px 2px 6px` |
 | `--shsz--30` | `0px 4px 12px` |
@@ -230,11 +230,11 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | デフォルト値 | 説明 |
 |---------|------------|------|
-| `--base` | `hsl(224 4% 99%)` | ベース背景色 |
-| `--base-2` | `hsl(224 8% 95%)` | 代替背景色 |
-| `--text` | `hsl(224 4% 8%)` | 基本テキスト色 |
-| `--text-2` | `hsl(224 6% 32%)` | 補助テキスト色 |
-| `--divider` | `hsl(224 8% 88%)` | 区切り線色 |
+| `--base` | `hsl(220 0% 99%)` | ベース背景色 |
+| `--base-2` | `hsl(220 4% 95%)` | 代替背景色 |
+| `--text` | `hsl(220 0% 8%)` | 基本テキスト色 |
+| `--text-2` | `hsl(220 4% 32%)` | 補助テキスト色 |
+| `--divider` | `hsl(220 4% 88%)` | 区切り線色 |
 | `--link` | `oklch(50% 0.3 240)` | リンク色 |
 | `--brand` | `#1e5f8c` | ブランド色 |
 | `--accent` | `#d94a6a` | アクセント色 |
@@ -249,7 +249,7 @@ OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩
 | `--red` | `oklch(var(--L) var(--C) 20)` |
 | `--orange` | `oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48)` |
 | `--yellow` | `oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80)` |
-| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 152)` |
+| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152)` |
 | `--blue` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264)` |
 | `--purple` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288)` |
 | `--pink` | `oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352)` |
