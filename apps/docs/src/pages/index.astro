@@ -9,48 +9,37 @@ import { Button } from '@lism-css/ui/astro/Button';
 import { siteConfig } from '@/config/site';
 // import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
 
+// Features
 const features = [
   {
     title: 'レイアウトプリミティブ',
     desc: 'Stack, Flex, Grid, Columns など、よく使うレイアウトパターンをレイアウトプリミティブとして提供。組み合わせるだけでサイトの骨組みが完成します。',
     src: '/img/features-01.png',
-    width: 259,
-    height: 181,
   },
   {
     title: 'ハーモニックスケール',
     desc: '余白・フォントサイズ・行間を調和的な比率で設計。自然と心地よいリズムをデザインに生み出すタイポグラフィ設計です。',
     src: '/img/features-02.png',
-    width: 245,
-    height: 198,
   },
   {
     title: 'デザイントークン',
     desc: 'カラー・フォントサイズ・余白・角丸・シャドウなどを段階的なCSS変数で一元管理。サイト全体の一貫性を保ちます。',
     src: '/img/features-03.png',
-    width: 200,
-    height: 200,
   },
   {
     title: 'Property Class',
     desc: '-fz:l, -p:20 のような直感的なクラス名で素早くスタイリング可能。形式が明確で短縮記法なのにAIが迷いません。',
     src: '/img/features-04.png',
-    width: 210,
-    height: 216,
   },
   {
     title: 'CSSレイヤー構造',
     desc: '@layer による 厳格なCSSレイヤー設計。詳細度の衝突を防ぎ、拡張性と保守性を両立します。',
     src: '/img/features-05.png',
-    width: 250,
-    height: 193,
   },
   {
     title: 'レスポンシブ',
     desc: 'CSS変数とクラスを組み合わせた独自のレスポンシブ手法。軽量なのに柔軟で幅広いレイアウトに対応できます。',
     src: '/img/features-06.png',
-    width: 256,
-    height: 197,
   },
 ];
 
@@ -211,16 +200,7 @@ const presets = [
               <Text fz="s" c="text-2" hl="s" mt="20" fxg="1">
                 {card.desc}
               </Text>
-              <Media
-                src={card.src}
-                alt=""
-                width={card.width}
-                height={card.height}
-                mx="auto"
-                mt="50"
-                w="auto"
-                h={{ base: '9.375rem', md: '12.5rem' }}
-              />
+              <Media src={card.src} alt="" width="336" height="200" mx="auto" mt="50" ar="336/200" w={{ base: '15.75rem', md: '21rem' }} />
             </Stack>
           ))
         }
