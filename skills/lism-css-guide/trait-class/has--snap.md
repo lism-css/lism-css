@@ -27,7 +27,7 @@
 ## CSS 変数
 
 | 変数 | 役割 | デフォルト |
-|------|------|-----------|
+| --- | --- | --- |
 | `--snapType` | `scroll-snap-type` | `both mandatory` |
 | `--snapAlign` | 子要素の `scroll-snap-align` | `start` |
 | `--snapStop` | 子要素の `scroll-snap-stop` | `normal` |

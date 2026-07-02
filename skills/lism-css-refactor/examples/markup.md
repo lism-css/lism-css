@@ -55,7 +55,7 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 ### 変換の対応
 
 | Before | After | 由来 |
-|---|---|---|
+| --- | --- | --- |
 | `display:grid; grid-template-columns:repeat(3,1fr)` | `<Columns cols={3}>` | Pass2 |
 | `display:flex; flex-direction:column; gap:15px` | `<Stack g="15">` | Pass2 |
 | `overflow:hidden; aspect-ratio:16/9`の枠 | `<Frame ar="16/9">` | Pass2 |

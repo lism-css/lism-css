@@ -9,7 +9,7 @@
 `<Wrapper>` は `<Lism isWrapper>` のエイリアスです。`isWrapper` Prop は他のコンポーネントにも使用できます（例: `<Flow isWrapper>`）。
 
 | 指定 | 出力 |
-|------|------|
+| --- | --- |
 | `isWrapper` | `is--wrapper` |
 | `isWrapper="s"` | `is--wrapper -contentSize:s` |
 | `isWrapper="m"` | `is--wrapper -contentSize:m` |
@@ -20,7 +20,7 @@
 ## 専用Props
 
 | Prop | 説明 |
-|------|------|
+| --- | --- |
 | `contentSize` | コンテンツサイズ。`s` / `m` / `l` / `xl` / トークン / 任意値 |
 
 ```jsx

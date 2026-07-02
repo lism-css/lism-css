@@ -43,7 +43,7 @@
 ### 線引き
 
 | 宣言 | 移動先 | 理由 |
-|---|---|---|
+| --- | --- | --- |
 | `font-size` / `padding` / `background` / `border-radius` / `text-transform` | Property Class | 単一要素向けの装飾束 |
 | `::before { content … }` | CSSに残す | 擬似要素はProperty Class/Propsで書けない |
 

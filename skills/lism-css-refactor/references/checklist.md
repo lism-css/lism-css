@@ -27,7 +27,7 @@
 - **見るもの**: `<div>`/`<section>`に`display:flex/grid`・`-d:flex/grid`・`gtc`・`fxd`・`fxw`・`ai`・`jc`が集まっている箇所。メディア枠・幅制御・オーバーレイ・全体リンクを手組みしている箇所。
 - **判定**: Stack/Flex/Cluster/Grid/Columns/Frame/WithSide/Wrapper/Container/Layer/BoxLinkで同じ見た目・挙動にできる→🔧。すでに適切なPrimitive/Trait→✅。DOM順・セマンティクス・JS依存・レスポンシブ挙動が変わる→⏸。独自レイアウト意図が明確→⬜。
 - **直し方**: 手組み構造をPrimitive/Traitへ置き換え、余白・色はLism Props/Property Classへ寄せる。複雑なGrid配置を無理にColumnsへ潰さない。
-- **参照先**: [`primitive-class.md`](../../lism-css-guide/primitive-class.md)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`components-core.md`](../../lism-css-guide/components-core.md)、[`antipatterns.md#レイアウト選択ミス`](../../lism-css-guide/antipatterns.md#レイアウト選択ミス)、[`antipatterns.md#frame-未使用のメディア枠手組み`](../../lism-css-guide/antipatterns.md#frame-未使用のメディア枠手組み)、[`antipatterns.md#サイト最外殻を-wrapper-に使う`](../../lism-css-guide/antipatterns.md#サイト最外殻を-wrapper-に使う)。実例は[`../examples/markup.md`](../examples/markup.md)。
+- **参照先**: [`primitive-class.md`](../../lism-css-guide/primitive-class.md)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`components-core.md`](../../lism-css-guide/components-core.md)、[`antipatterns-layout.md#レイアウト選択ミス`](../../lism-css-guide/antipatterns-layout.md#レイアウト選択ミス)、[`antipatterns-layout.md#frame-未使用のメディア枠手組み`](../../lism-css-guide/antipatterns-layout.md#frame-未使用のメディア枠手組み)、[`antipatterns-layout.md#サイト最外殻を-wrapper-に使う`](../../lism-css-guide/antipatterns-layout.md#サイト最外殻を-wrapper-に使う)。実例は[`../examples/markup.md`](../examples/markup.md)。
 - **NG→OK**: NG=`<div className="c--cards -d:grid -g:20" style={{ gridTemplateColumns: 'repeat(3,1fr)' }}>` → OK=`<Columns className="c--cards" cols={3} g="20">`。NG=`<div className="c--media -ov:hidden -ar:16/9"><img /></div>` → OK=`<Frame className="c--media" ar="16/9"><img /></Frame>`。
 - **注意**: Grid→Columnsで複雑なトラック/エリア指定を失わない。Wrapper追加で直下子要素の幅が変わらないか見る。Frame化で直下メディア以外の子に既定スタイルが当たらないか見る。
 - **guideで確認すること**: 「メディア枠→Frame／幅制御→Wrapper・Container／全体リンク→BoxLink／等幅列→Columns」の方針。
@@ -75,7 +75,7 @@
 - **見るもの**: `is--active`/`is--current`/`is--disabled`/`is--open`/`is--solid`/`is--outline`など、guide掲載外の`is--*`が状態や見た目違いに使われている箇所。
 - **判定**: 正規Trait（`is--container`/`is--wrapper`/`is--layer`/`is--boxLink`/`is--coverLink`/`is--skipFlow`/`is--side`、`has--transition`等）→✅。状態管理→🔧（`data-*`またはARIAへ）。見た目違い→🔧（`c--name--variant`へ）。独自Traitとして妥当だがguide外→⬜または⏸。
 - **直し方**: 状態は属性セレクタへ、見た目違いはModifierへ移す。CSSセレクタとJSの切り替え対象も同時に更新する。
-- **参照先**: [`antipatterns.md#is---の誤用状態バリエーション`](../../lism-css-guide/antipatterns.md#is---の誤用状態バリエーション)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`css-rules.md#component-classc--`](../../lism-css-guide/css-rules.md#component-classc--)。
+- **参照先**: [`antipatterns-layout.md#is---の誤用状態バリエーション`](../../lism-css-guide/antipatterns-layout.md#is---の誤用状態バリエーション)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`css-rules.md#component-classc--`](../../lism-css-guide/css-rules.md#component-classc--)。
 - **NG→OK**: NG=`<a className="c--catTab is--active">`＋`.c--catTab.is--active{}` → OK=`<a className="c--catTab" data-is-active>`＋`.c--catTab[data-is-active]{}`。NG=`<span className="c--tag is--solid">` → OK=`<span className="c--tag c--tag--solid">`。
 - **注意**: JSの`classList.toggle('is--active')`・テスト・CSSセレクタを直し忘れると状態表示が壊れる。`aria-current`などが使える箇所は意味も確認する。
 - **guideで確認すること**: 正規Trait一覧と、状態/variant/独自Traitの境界例。
@@ -87,7 +87,7 @@
 - **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`、サイト領域を表す`c--header`/`c--sidebar`など。
 - **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
 - **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。ゾーニングは`z--*`、ページ固有は`p--*`へ寄せる。
-- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自プレフィックス`](../../lism-css-guide/css-rules.md#独自プレフィックス)、[`css-rules.md#z--p--c--の使い分け`](../../lism-css-guide/css-rules.md#z--p--c--の使い分け)、[`antipatterns.md#クラス名の命名ミスkebab-case`](../../lism-css-guide/antipatterns.md#クラス名の命名ミスkebab-case)、[`antipatterns.md#カスタムクラスを全て-c---にしてしまう`](../../lism-css-guide/antipatterns.md#カスタムクラスを全て-c---にしてしまう)。
+- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自プレフィックス`](../../lism-css-guide/css-rules.md#独自プレフィックス)、[`css-rules.md#z--p--c--の使い分け`](../../lism-css-guide/css-rules.md#z--p--c--の使い分け)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう`](../../lism-css-guide/antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう)。
 - **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.z--header{}`（再利用UIでない場合）。
 - **注意**: CSSだけrenameしてJS/テスト/HTML生成側を漏らさない。`c--block.c--otherBlock`のようなBlock併用を見逃さない。
 - **guideで確認すること**: `z--`/`p--`の使い分け例と、公開classを⏸にする判断基準。
@@ -99,7 +99,7 @@
 - **見るもの**: 配列/オブジェクトProps、`-{prop}_{bp}`、`--{prop}_{bp}`、`xs`/`xl`キー、固定`gtc="repeat(3,1fr)"`、レスポンシブ値の祖先に`is--container`がない箇所。
 - **判定**: base値あり・sm/md/lg・祖先isContainerあり→✅。base抜け・xs誤用など明確なミス→🔧。isContainer追加位置や固定Gridのレスポンシブ化で挙動が変わる→⏸。SCSS設定でmedia query運用が確認済み（`$is_container_query:0`等）→⬜。
 - **直し方**: base値を補い、標準BPへ直し、必要な祖先へisContainerを追加する。固定3列→`Columns cols={3}`は同等だが、`cols={[1,2,3]}`化は挙動変更なので⏸で確認する。
-- **参照先**: [`responsive.md`](../../lism-css-guide/responsive.md)、[`antipatterns.md#レスポンシブ抜け`](../../lism-css-guide/antipatterns.md#レスポンシブ抜け)、[`antipatterns.md#レスポンシブ配列の冗長指定`](../../lism-css-guide/antipatterns.md#レスポンシブ配列の冗長指定)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`primitive-class.md#カラムレイアウト-primitive-の使い分けガイド`](../../lism-css-guide/primitive-class.md#カラムレイアウト-primitive-の使い分けガイド)。
+- **参照先**: [`responsive.md`](../../lism-css-guide/responsive.md)、[`antipatterns-layout.md#レスポンシブ抜け`](../../lism-css-guide/antipatterns-layout.md#レスポンシブ抜け)、[`antipatterns-layout.md#レスポンシブ配列の冗長指定`](../../lism-css-guide/antipatterns-layout.md#レスポンシブ配列の冗長指定)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`primitive-class.md#カラムレイアウト-primitive-の使い分けガイド`](../../lism-css-guide/primitive-class.md#カラムレイアウト-primitive-の使い分けガイド)。
 - **NG→OK**: NG=`<Box p={{ sm: '30' }}>` → OK=`<Box p={{ base: '20', sm: '30' }}>`（base値が既存見た目から確定できる場合）。NG=`<div className="-p_sm" style={{ '--p_sm': 'var(--s30)' }}>` → OK=`<div className="-p:20 -p_sm" style={{ '--p_sm': 'var(--s30)' }}>`。
 - **注意**: isContainerを置く位置でコンテナ幅・発火タイミングが変わる。重複配列を単一値に潰すと、breakpointごとの差分を消してしまう。
 - **guideで確認すること**: 冗長配列の圧縮ルール、`$is_container_query:0`時の扱い、container配置方針。
@@ -111,7 +111,7 @@
 - **見るもの**: Primitiveが元々持つ挙動と同じProps/Property Classを重ねている箇所。例: `<Cluster fxw="wrap" ai="center">`・`<Frame ov="hidden">`・Frame直下メディアへの`-w:100% -h:100%`/`object-fit:cover`。
 - **判定**: guideに既定値として明記されていて同じ値を重ねている→🔧。既定値と違う意図的な上書き→✅または⬜。guide未整備のPrimitive既定値→guide TODOへ回す。詳細度が必要な上書き→⬜。
 - **直し方**: 重複しているProps/Property Classだけ削除し、Primitive自体と意味classは残す。Clusterの`g`は既定値ではないので消さない。
-- **参照先**: [`primitive-class.md`](../../lism-css-guide/primitive-class.md)、[`primitives/l--cluster.md`](../../lism-css-guide/primitives/l--cluster.md)、[`primitives/l--frame.md`](../../lism-css-guide/primitives/l--frame.md)、[`antipatterns.md#primitive-既定値の重複指定`](../../lism-css-guide/antipatterns.md#primitive-既定値の重複指定)。
+- **参照先**: [`primitive-class.md`](../../lism-css-guide/primitive-class.md)、[`primitives/l--cluster.md`](../../lism-css-guide/primitives/l--cluster.md)、[`primitives/l--frame.md`](../../lism-css-guide/primitives/l--frame.md)、[`antipatterns-layout.md#primitive-既定値の重複指定`](../../lism-css-guide/antipatterns-layout.md#primitive-既定値の重複指定)。
 - **NG→OK**: NG=`<Cluster fxw="wrap" ai="center" g="15">` → OK=`<Cluster g="15">`。NG=`<Frame ar="16/9" ov="hidden"><img className="-w:100% -h:100%" style={{ objectFit: 'cover' }} /></Frame>` → OK=`<Frame ar="16/9"><img /></Frame>`。
 - **注意**: プロジェクトCSSでPrimitive既定値を上書きしていると、削除で見た目が変わる。直下メディア以外・`object-fit:contain`・`object-position`指定は消さない。
 - **guideで確認すること**: 各`primitives/l--*.md`の既定CSS概要。特にl--frameのoverflow:hiddenと直下メディアfit、l--clusterのflex-wrap/align-items/gapなし。

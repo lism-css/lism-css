@@ -25,7 +25,7 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 以下は `lism-css` コアの CSS に組み込まれているユーティリティクラスです。
 
 | クラス | 用途 | ソースファイル |
-|--------|------|---------------|
+| --- | --- | --- |
 | `u--trim` | ハーフレディングのネガティブマージンでテキスト上下の余白を詰める | [`_trim.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trim.scss) |
 | `u--trimAll` | 直下の子要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table` を除く）にハーフレディングトリムを一括適用する除外方式のクラス | [`_trim.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trim.scss) |
 | `u--cbox` | `--keycolor` を使い `color-mix()` で `--c` / `--bgc` / `--bdc` を自動生成する色付きボックス | [`_cbox.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_cbox.scss) |

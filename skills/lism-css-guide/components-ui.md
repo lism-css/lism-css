@@ -48,7 +48,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 **構造:** `Accordion.Root > Accordion.Item > (Accordion.Heading > Accordion.Button) + Accordion.Panel`（`Accordion.Icon` は自動で含まれる）
 
 | Prop | 対象 | 型 | デフォルト | 説明 |
-|------|------|-----|----------|------|
+| --- | --- | --- | --- | --- |
 | `allowMultiple` | Root | `boolean` | — | 複数アイテムの同時展開を許可 |
 | `isOpen` | Item / Button / Panel | `boolean` | `false` | アイテムを初期展開。Item・Button・Panel の3つ揃えて指定（Item=`data-opened` 付与、Button=`aria-expanded`、Panel=`hidden` 解除） |
 | `as` | Heading | `string` | `div` | 見出しのHTMLタグ。`div` 時は `role='heading'` が自動付与。`h2`〜`h6` 指定時は role なし |
@@ -74,7 +74,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 プリセット: `alert`=alert/red, `point`=lightbulb/orange（`tip`も同じ）, `warning`=warning/yellow, `check`=check-circle/green, `help`=question/purple, `info`=info/blue, `note`=note/gray。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `type` | `'alert' \| 'point' \| 'tip' \| 'warning' \| 'check' \| 'help' \| 'info' \| 'note'` | `'alert'` | アラートタイプ。keycolor と icon の組み合わせプリセット |
 | `keycolor` | `string` | — | キーカラー |
 | `icon` | `ReactNode \| string` | — | カスタムアイコン |
@@ -93,7 +93,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`c--avatar` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `src` | `string` | — | 画像URL |
 | `alt` | `string` | — | 代替テキスト |
 | `size` | `string` | `'1.5em'` | アバターのサイズ |
@@ -110,7 +110,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 バッジ（ラベル）コンポーネント。`span` 要素としてインライン表示。`c--badge` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `variant` | `string` | — | バリエーション（`'outline'` 等）。`c--badge--{variant}` クラスが出力 |
 | `keycolor` | `string` | — | キーカラー |
 
@@ -126,7 +126,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 ボタン型リンクコンポーネント。デフォルトで `a` 要素として出力。`c--button` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `variant` | `string` | — | バリエーション（`'fill'`, `'outline'` 等）。`c--button--{variant}` クラスが出力 |
 | `keycolor` | `string` | — | キーカラー |
 | `href` | `string` | — | リンク先URL |
@@ -143,7 +143,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される（プリセット内容は [Alert](#alert) と同一）。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `type` | `'alert' \| 'point' \| 'tip' \| 'warning' \| 'check' \| 'help' \| 'info' \| 'note'` | `'note'` | コールアウトタイプ |
 | `keycolor` | `string` | — | キーカラー |
 | `icon` | `ReactNode \| string` | — | カスタムアイコン |
@@ -162,7 +162,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 チャット風の吹き出しコンポーネント。Grid ベースの会話形式 UI。`c--chat` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `name` | `string` | — | 発言者の名前 |
 | `avatar` | `string` | — | アバター画像の src |
 | `variant` | `'speak' \| 'think'` | `'speak'` | チャットタイプ |
@@ -184,7 +184,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 **構造:** `Details.Root > Details.Summary > (Details.Title + Details.Icon) + Details.Content`
 
 | Prop | 対象 | 型 | デフォルト | 説明 |
-|------|------|-----|----------|------|
+| --- | --- | --- | --- | --- |
 | `as` | Title | `string` | `'span'` | Title の HTML タグ |
 | `--duration` | Root | `string` | — | 展開アニメーションの秒数（style 経由で指定） |
 
@@ -208,7 +208,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 **構造:** `Modal.OpenBtn + Modal.Root > Modal.Inner > Modal.Body + Modal.CloseBtn`
 
 | Prop | 対象 | 型 | デフォルト | 説明 |
-|------|------|-----|----------|------|
+| --- | --- | --- | --- | --- |
 | `id` | Root | `string` | — | モーダルの ID（必須） |
 | `modalId` | OpenBtn / CloseBtn | `string` | — | 対象モーダルの ID |
 | `duration` | Root | `string` | — | アニメーション持続時間。`--duration` 変数として出力 |
@@ -235,7 +235,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 **構造:** `NavMenu.Root > NavMenu.Item > NavMenu.Link`（`NavMenu.Nest` でネスト可能）
 
 | Prop | 対象 | 型 | デフォルト | 説明 |
-|------|------|-----|----------|------|
+| --- | --- | --- | --- | --- |
 | `hovBgc` | Root | `string` | — | ホバー時の背景カラー。`--hov-bgc` 変数として出力 |
 | `hovC` | Root | `string` | — | ホバー時のテキストカラー。`--hov-c` 変数として出力 |
 | `itemP` | Root | `string` | — | 各アイテムのパディング。`--_item-p` 変数として出力 |
@@ -263,7 +263,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 **構造:** `Tabs.Root > Tabs.Item > (Tabs.Tab + Tabs.Panel)`（`Tabs.List` も利用可能）
 
 | Prop | 対象 | 型 | デフォルト | 説明 |
-|------|------|-----|----------|------|
+| --- | --- | --- | --- | --- |
 | `tabId` | Root | `string` | — | タブを特定するための ID 文字列 |
 | `defaultIndex` | Root | `number` | `1` | 初期アクティブタブ（1始まり） |
 | `listProps` | Root | `object` | — | タブボタンリスト要素へ渡す props |
@@ -289,7 +289,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 セクション間の波型などの装飾的な区切り要素。SVG ベースの形状で区切りを表現。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `viewBox` | `string` | — | SVG の viewBox |
 | `level` | `number` | `5` | シェイプの高さレベル。`0` で非表示 |
 | `flip` | `'X' \| 'Y' \| 'XY'` | — | 反転方向。`data-flip` 属性として出力 |
@@ -312,7 +312,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 ダミーテキストを生成するコンポーネント。プレビューやテスト用。複数の言語とテキスト長に対応。
 
 | Prop | 型 | デフォルト | 説明 |
-|------|-----|----------|------|
+| --- | --- | --- | --- |
 | `lang` | `'ja' \| 'en' \| 'ar'` | `'en'` | テキストの言語 |
 | `length` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'codes'` | `'m'` | テキストの長さ。`'codes'` は `b`, `i`, `a`, `code` 要素を含むテキスト |
 | `pre` | `string` | — | テキストの前に表示する文字列 |

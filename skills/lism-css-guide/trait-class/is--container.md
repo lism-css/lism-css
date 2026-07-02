@@ -9,7 +9,7 @@
 `<Container>` は `<Lism isContainer>` のエイリアスです。`isContainer` Prop は他のコンポーネントにも使用できます（例: `<Flow isContainer>`）。
 
 | Prop | 出力 |
-|------|------|
+| --- | --- |
 | `isContainer` | `is--container` |
 
 ## `--sz--bleed` の提供
