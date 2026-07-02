@@ -48,6 +48,9 @@
   }
 
   body {
+    /* BFCを作り、先頭子要素のmargin-topがbody外へ相殺されてmin-heightと合算スクロールが発生するのを防ぐ (#458) */
+    display: flow-root;
+
     /* htmlから継承する */
     overflow: inherit;
 
