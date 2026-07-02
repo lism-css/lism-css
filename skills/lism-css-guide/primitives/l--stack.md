@@ -2,52 +2,13 @@
 
 複数の要素を Flex レイアウトで縦並びに配置するクラス。`gap` で余白を管理します。
 
-## 基本情報
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--stack.md
 
-- クラス名: `l--stack`
-- コンポーネント: `<Stack>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_stack.scss
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--stack.md
+## 既定の挙動
 
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Stack g="20">
-  <p>コンテンツ</p>
-  <p>コンテンツ</p>
-  <p>コンテンツ</p>
-</Stack>
-```
-
-```html
-<div class="l--stack -g:20">
-  <p>コンテンツ</p>
-  <p>コンテンツ</p>
-  <p>コンテンツ</p>
-</div>
-```
-
-### 内在的な中央寄せ（`ai="center"`）
-
-`ai="center"` を併用すると、Every Layout で言うところの**内在的な中央寄せ**（コンテンツ幅が短い要素だけ中央揃え、長い要素はそのまま）になります。
-
-```jsx
-<Stack ai="center" g="20" p="30">
-  <h3>見出し</h3>
-  <p>短いテキスト</p>
-  <p>長めのテキスト...</p>
-</Stack>
-```
-
-```html
-<div class="l--stack -ai:center -p:30 -g:20">
-  <h3>見出し</h3>
-  <p>短いテキスト</p>
-  <p>長めのテキスト...</p>
-</div>
-```
+- `display:flex`。
+- `flex-direction:column`で縦並びにします。
+- `gap`は既定で持たないため、間隔は`g`/`-g:*`で指定します。通常`fxd="column"`は足しません。
 
 ## 関連プリミティブ
 

@@ -2,65 +2,20 @@
 
 複数列 ↔ 1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するクラス。Flexbox ベースで、親コンテナ幅に応じて自動的に折り返します。
 
-## 基本情報
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--switchColumns.md
 
-- クラス名: `l--switchColumns`
-- コンポーネント: `<SwitchColumns>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_switchColumns.scss
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--switchColumns.md
+## 既定の挙動
+
+- `display:flex`。
+- `flex-wrap:wrap`で折り返しを有効化済み。
+- `--breakSize:var(--sz--xs)`を初期値にし、直下子要素の`flex-basis`で親幅に応じた縦横切替を行います。
+- 通常`fxw="wrap"`は足しません。
 
 ## 専用Props
 
 | Prop | CSS変数 | デフォルト | 説明 |
 |------|--------|-----------|------|
 | `breakSize` | `--breakSize` | `var(--sz--xs)` | 横並びを維持するのに必要な親コンテナ幅を指定。`sz` トークンが使える |
-
-## Usage
-
-### デフォルト幅で利用する
-
-```jsx
-<SwitchColumns g="20">
-  <div class="-bgc:base-2 -p:20">Box</div>
-  <div class="-bgc:base-2 -p:20">Box</div>
-  <div class="-bgc:base-2 -p:20">Box</div>
-</SwitchColumns>
-```
-
-```html
-<div class="l--switchColumns -g:20">
-  <div class="-bgc:base-2 -p:20">Box</div>
-  <div class="-bgc:base-2 -p:20">Box</div>
-  <div class="-bgc:base-2 -p:20">Box</div>
-</div>
-```
-
-### `breakSize` の指定
-
-```jsx
-<SwitchColumns breakSize="s" g="20">
-  <div class="-bgc:base-2 -p:20">Box</div>
-  <div class="-bgc:base-2 -p:20">Box</div>
-</SwitchColumns>
-```
-
-```html
-<div class="l--switchColumns -g:20" style="--breakSize: var(--sz--s)">
-  <div class="-bgc:base-2 -p:20">Box</div>
-  <div class="-bgc:base-2 -p:20">Box</div>
-</div>
-```
-
-### `flex-grow` で比率を調整
-
-子要素に `flex-grow` を指定すると、横並び時の幅の比率を個別に調整できます。
-
-```jsx
-<SwitchColumns breakSize="s" g="20">
-  <div class="-bgc:base-2 -p:20">Box</div>
-  <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>Box</div>
-</SwitchColumns>
-```
 
 ## 関連プリミティブ
 

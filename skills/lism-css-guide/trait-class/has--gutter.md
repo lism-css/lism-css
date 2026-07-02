@@ -2,12 +2,9 @@
 
 要素の左右に、サイト共通の gutter（余白）を適用する Trait クラス。`padding` 系ユーティリティとは別に、「サイト全体で統一した左右余白」を確保したい時に使う。
 
-## 基本情報
-
-- クラス名: `has--gutter`
 - Lism props: `hasGutter`（`<Lism hasGutter>` 等）
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/has/_gutter.scss
-- 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--gutter
+
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class.md#has--gutter
 
 ## SCSS 定義
 
@@ -32,31 +29,6 @@
 
 - サイト全体の基準を変えたい場合は `:root` 等で `--gutter--base` を上書きする
 - 個別要素のみガター量を変えたい場合は、その要素で `style="--gutter: 20px"` のように `--gutter` を直接上書きする
-
-## Usage
-
-```html
-<div class="has--gutter">
-  <p>Lorem ipsum content...</p>
-  <p>Lorem ipsum content...</p>
-</div>
-
-<!-- 個別要素でガター量を上書きする例 -->
-<div class="has--gutter" style="--gutter: 20px">
-  <p>Lorem ipsum content...</p>
-</div>
-```
-```jsx
-<Lism hasGutter>
-  <p>Lorem ipsum content...</p>
-  <p>Lorem ipsum content...</p>
-</Lism>
-
-{/* 個別要素でガター量を上書きする例 */}
-<Lism hasGutter style={{ '--gutter': '20px' }}>
-  <p>Lorem ipsum content...</p>
-</Lism>
-```
 
 ## 関連
 

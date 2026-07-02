@@ -111,7 +111,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     expect(text).toContain('# l--flex / `<Flex>`');
-    expect(text).toContain('SCSSソース:');
+    expect(text).toContain('https://lism-css.com/docs/primitives/l--flex.md');
     expect(text).toContain('## 関連プリミティブ');
   });
 
@@ -129,14 +129,14 @@ describe('MCP Tools (integration)', () => {
     expect(texts[0]).toContain('# l--flex / `<Flex>`');
   });
 
-  it('get_component で Container (Trait Primitive) が primitives/is--container.md を返す', async () => {
+  it('get_component で Container (Trait Primitive) が trait-class/is--container.md を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'Container' } });
     expect(result.isError).toBeFalsy();
 
     const text = getText(result);
     expect(text).toContain('# is--container / `<Container>`');
-    expect(text).toContain('SCSSソース:');
+    expect(text).toContain('https://lism-css.com/docs/trait-class/is--container.md');
   });
 
   it('get_component で Icon (Atomic Primitive) が primitives/a--icon.md を返す', async () => {
@@ -146,7 +146,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     expect(text).toContain('# a--icon / `<Icon>`');
-    expect(text).toContain('SCSSソース:');
+    expect(text).toContain('https://lism-css.com/docs/primitives/a--icon.md');
   });
 
   it('get_component で Lism を検索すると該当セクションの Markdown が返る', async () => {

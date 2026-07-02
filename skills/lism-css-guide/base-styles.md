@@ -71,7 +71,7 @@ Reset CSS に加え、`@layer lism-base` 内で HTML タグに基本スタイル
 
 ### リスト（ul, ol）
 
-class を持たない `ul` / `ol` のみブラウザ標準スタイルが自動で復活する（`_html.scss`）。Property Class のみが付いた `ul` / `ol` では list-style が消えたままになるため、箇条書き表示を維持したい場合は [`set--revert`](./set-class.md#set--revert) を付与する。
+class を持たない `ul` / `ol` のみブラウザ標準スタイルが自動で復活する（`_html.scss`）。クラス付きで箇条書き表示を維持したい場合は [`set--revert`](./set-class.md#set--revert) を付与する。
 
 | 変数 | フォールバック | 用途 |
 |------|------------|------|

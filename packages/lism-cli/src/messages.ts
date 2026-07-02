@@ -107,6 +107,10 @@ export const messages = {
     ja: 'スキルを配置する',
     en: 'Deploy skills',
   },
+  'cli.skill.add.arg.skill': {
+    ja: '配置するスキル名（省略時は全スキル）',
+    en: 'Skill name to deploy (all skills if omitted)',
+  },
   'cli.skill.add.opt.overwrite': {
     ja: '確認なしで上書き',
     en: 'Overwrite without confirmation',
@@ -380,8 +384,12 @@ export const messages = {
     en: 'No target tools were selected.',
   },
   'skill.add.fetching': {
-    ja: 'スキルを取得中（ref: {ref}）...',
-    en: 'Fetching skills (ref: {ref})...',
+    ja: 'スキル {skill} を取得中（ref: {ref}）...',
+    en: 'Fetching skill {skill} (ref: {ref})...',
+  },
+  'skill.unknownSkill': {
+    ja: 'スキル "{name}" は存在しません。利用可能: {list}',
+    en: 'Unknown skill "{name}". Available: {list}',
   },
   'skill.add.skippedSame': {
     ja: '  スキップ（差分なし）: {label}',
@@ -422,8 +430,8 @@ export const messages = {
     en: 'No installed skills found. Run `{invoke} skill add` to deploy them.',
   },
   'skill.check.fetching': {
-    ja: 'リモートスキルを取得中（ref: {ref}）...',
-    en: 'Fetching remote skills (ref: {ref})...',
+    ja: 'リモートスキル {skill} を取得中（ref: {ref}）...',
+    en: 'Fetching remote skill {skill} (ref: {ref})...',
   },
   'skill.check.upToDate': {
     ja: '  ✓ {label}  (最新)',
@@ -434,8 +442,8 @@ export const messages = {
     en: 'All skills are up to date.',
   },
   'skill.check.outdated': {
-    ja: '{count} 件のツールに差分があります。`{invoke} skill update` で最新に更新できます。',
-    en: '{count} tools have changes. Run `{invoke} skill update` to update them.',
+    ja: '{count} 件の配置に差分があります。`{invoke} skill update` で最新に更新できます。',
+    en: '{count} deployment(s) differ from the remote. Run `{invoke} skill update` to update them.',
   },
   'skill.check.diffModified': {
     ja: '変更 {count}',
