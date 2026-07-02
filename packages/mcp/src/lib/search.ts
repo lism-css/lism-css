@@ -141,6 +141,11 @@ function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): strin
   if (withoutExt.startsWith('property-class/')) {
     return `get_props_system(prop: "${basename}")`;
   }
+  // ui/examples/ は実装例ページ（Card, Hero 等）で get_component では解決できないため誘導しない。
+  // 詳細が必要な場合は検索結果の url を参照してもらう。
+  if (withoutExt.startsWith('ui/examples/')) {
+    return null;
+  }
 
   // category ベースの判定
   switch (entry.category) {

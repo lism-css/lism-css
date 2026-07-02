@@ -243,6 +243,21 @@ server.registerTool(
 JSON 返却系ツール（search_docs, convert_css）はさらに `outputSchema` を宣言し、レスポンスの `structuredContent` が SDK によって検証されます。
 
 ```typescript
+// search-docs.ts の例
+outputSchema: {
+    meta: MetaInfoSchema,
+    query: z.string(),
+    results: z.array(
+        z.object({
+            sourcePath: z.string(),
+            url: z.string(),
+            heading: z.string(),
+            snippet: z.string(),
+            score: z.number(),
+            nextTool: z.string().nullable(),
+        })
+    ),
+},
 ```
 
 全ツールは読み取り専用（`readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`）です。

@@ -114,6 +114,13 @@ describe('searchDocs — nextTool', () => {
     expect(results[0].nextTool).toBe('get_component(name: "Accordion", package: "@lism-css/ui")');
   });
 
+  it('ui/examples/ 配下は category=ui でも null を返す（get_component で解決できないため）', () => {
+    const results = searchDocs([entry({ sourcePath: 'ui/examples/Card.mdx', title: 'Card', keywords: ['example'], category: 'ui' })], 'Card', {
+      guideTopics,
+    });
+    expect(results[0].nextTool).toBeNull();
+  });
+
   it('category=guide かつ guideTopics に含まれる場合は get_guide(topic) を返す', () => {
     const results = searchDocs(
       [entry({ sourcePath: 'guide/responsive.mdx', title: 'Responsive', keywords: ['responsive'], category: 'guide' })],
