@@ -99,19 +99,19 @@ C0–C8の詳細・出力形式・記入例は[`references/authoring.md`](./refe
 
 ## 目的別実装ガイド
 
-| やりたいこと | まず使う | 判断要約 | よくあるNG | 詳細 |
-|---|---|---|---|---|
-| 縦並び | `Stack`/`Flow` | 要素の縦積みはPrimitiveに任せ、素の`<div>`+CSSで組まない。 | `<div>`+`display:flex; flex-direction:column`で手組みする。 | [`primitives/l--stack.md`](./primitives/l--stack.md)、[`primitives/l--flow.md`](./primitives/l--flow.md) |
-| 横並び | `Cluster`/`Flex` | 折り返す横並びは`Cluster`、細かく制御するなら`Flex`。 | `<div>`+`display:flex`で手組みする。 | [`primitives/l--cluster.md`](./primitives/l--cluster.md)、[`primitives/l--flex.md`](./primitives/l--flex.md) |
-| 画像・動画・iframeを置く | `Frame` | アスペクト比枠・直下メディアのfit・overflowは`Frame`に任せる。 | `<Lism ov="hidden"><img /></Lism>`で手組みする。 | [`primitives/l--frame.md`](./primitives/l--frame.md) |
-| ボタン | `@lism-css/ui`の`Button`、または`set--plain` | UIコンポーネントで足りるなら`Button`を優先。素のbuttonを整える時はreset済みの`set--plain`を使う。 | 独自CSSでresetから作る。 | [`components-ui.md`](./components-ui.md)、[`set-class.md`](./set-class.md) |
-| hover効果 | `-hov:*`/`hov={{}}`/`set--var:hov`/`has--transition` | hoverはLismのhover Property Class/Propsとtransition traitを先に検討する。 | `.c--button:hover{}`へ書いてProperty Classに負ける。 | [`property-class/hov.md`](./property-class/hov.md)、[`trait-class/has--transition.md`](./trait-class/has--transition.md) |
-| カラム | `Columns`/`AutoColumns`/`WithSide` | 等幅N列は`Columns`、最小幅ベースの自動段組みは`AutoColumns`、2カラム自動切替は`WithSide`。 | `gtc="repeat(3,1fr)"`で固定PC前提にする。 | [`primitive-class.md`](./primitive-class.md#カラムレイアウト-primitive-の使い分けガイド) |
-| 幅制御 | `Container`/`Wrapper`/`max-sz` | コンテナクエリ基準は`Container`、直下領域の幅制限は`Wrapper`、単体幅は`max-sz`。 | サイト最外殻に`Wrapper`を置く。 | [`trait-class/is--container.md`](./trait-class/is--container.md)、[`trait-class/is--wrapper.md`](./trait-class/is--wrapper.md)、[`property-class/max-sz.md`](./property-class/max-sz.md) |
-| 全体リンク | `BoxLink`/`is--boxLink` | カード全体をリンク化する時は`BoxLink`を使い、クリック領域と重なり順を任せる。 | absoluteな擬似要素で全面リンクを手組みする。 | [`trait-class/is--boxLink.md`](./trait-class/is--boxLink.md) |
-| 小さいUI部品 | `c--*`+Property Class | 意味名として`c--*`を残し、単一要素の見た目はProperty Class/Lism Propsへ寄せる。 | `.c--tag{padding...}`へ装飾束を溜める。 | [`property-class.md`](./property-class.md)、[`css-rules.md`](./css-rules.md#component-classc--) |
-| レスポンシブ | baseの値・標準BP・`isContainer` | baseの値を必ず置き、標準BP（sm/md/lg）とcontainer/media運用を確認する。 | `{ sm: ... }`だけ指定する、`xs`キーを使う、container祖先を忘れる。 | [`responsive.md`](./responsive.md)、[`trait-class/is--container.md`](./trait-class/is--container.md) |
-| 重複UI | React/Astroコンポーネント | 同じProperty Classの組み合わせが3箇所以上ならCSSへ逃がさずコンポーネント抽出を検討する。 | 同じクラスの組み合わせを各所にコピペする。 | [`components-core.md`](./components-core.md)、[`references/authoring.md`](./references/authoring.md) |
+やりたいことからPrimitive/コンポーネントの候補を引く表です。候補が複数ある行は括弧内の基準で使い分けます。
+
+| やりたいこと | 使う候補 | 詳細 |
+|---|---|---|
+| 縦並び | `Stack`/`Flow` | [`primitives/l--stack.md`](./primitives/l--stack.md)、[`primitives/l--flow.md`](./primitives/l--flow.md) |
+| 横並び | `Cluster`（折り返す）/`Flex`（細かく制御する） | [`primitives/l--cluster.md`](./primitives/l--cluster.md)、[`primitives/l--flex.md`](./primitives/l--flex.md) |
+| カラム | `Columns`（等幅N列）/`AutoColumns`（最小幅ベースの自動段組み）/`WithSide`（2カラム自動切替） | [`primitive-class.md`](./primitive-class.md#カラムレイアウト-primitive-の使い分けガイド) |
+| 幅制御 | `Container`（コンテナクエリ基準）/`Wrapper`（直下領域の幅制限）/`max-sz`（単体の幅） | [`trait-class/is--container.md`](./trait-class/is--container.md)、[`trait-class/is--wrapper.md`](./trait-class/is--wrapper.md)、[`property-class/max-sz.md`](./property-class/max-sz.md) |
+| 画像・動画・iframeを置く | `Frame`（アスペクト比枠・直下メディアのfit・overflowを任せる） | [`primitives/l--frame.md`](./primitives/l--frame.md) |
+| ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | [`components-ui.md`](./components-ui.md)、[`set-class.md`](./set-class.md) |
+| hover効果 | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | [`property-class/hov.md`](./property-class/hov.md)、[`trait-class/has--transition.md`](./trait-class/has--transition.md) |
+| 全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | [`trait-class/is--boxLink.md`](./trait-class/is--boxLink.md) |
+| 小さいUI部品 | `c--*`＋Property Class（`c--*`は意味名に留め、単一要素の見た目はProperty Class/Lism Propsへ） | [`property-class.md`](./property-class.md)、[`css-rules.md`](./css-rules.md#component-classc--) |
 
 ## 提出前セルフチェック
 
