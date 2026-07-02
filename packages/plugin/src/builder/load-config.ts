@@ -18,7 +18,7 @@ export type ObjDeepMerge = (origin: Record<string, unknown>, source: Record<stri
 const USER_CONFIG_SEARCH = ['lism.config.ts', 'lism.config.mjs', 'lism.config.js'];
 const FULL_CSS_DEFAULTS = {
   // full.css は purge 併用前提のスーパーセットとして xs を有効化する。
-  // userConfig はこの後にマージするため、lism.config.js の breakpoints.xs が最後に勝つ。
+  // userConfig はこの後にマージするため、lism.config.* の breakpoints.xs が最後に勝つ。
   breakpoints: { xs: '360px' },
 } satisfies Record<string, unknown>;
 
@@ -69,7 +69,7 @@ export interface LoadedBuildConfigs {
   defaultPropKeys: string[];
   /** default-config に最初から含まれる trait キー。typegen で追加 trait との差分抽出に使う。 */
   defaultTraitKeys: string[];
-  /** lism.config.js の isFullMode フラグ。 */
+  /** lism.config.* の isFullMode フラグ。 */
   isFullMode: boolean;
   /** 見つかった user 設定ファイルの絶対パス（無ければ null）。watch 対象に使う。 */
   userConfigPath: string | null;

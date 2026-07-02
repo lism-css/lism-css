@@ -52,7 +52,7 @@ export function getDefaultConfigPath(): string {
 
 /**
  * UI（旧 CLI）設定を読み込む。
- * - `lism.config.{js,mjs}`: 動的インポート（jiti）で default export から `ui`（フォールバックで旧 `cli`）を取得
+ * - `lism.config.{ts,mjs,js}`: 動的インポート（jiti）で default export から `ui`（フォールバックで旧 `cli`）を取得
  * - `lism-ui.json` (legacy): JSON.parse、deprecation 警告を出す
  *
  * `ui`/`cli` セクションが見つからない場合は `null` を返す（throw しない）。
