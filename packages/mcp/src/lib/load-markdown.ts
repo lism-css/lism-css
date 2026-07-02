@@ -22,6 +22,16 @@ export function loadMarkdown(filename: string): string {
   return content;
 }
 
+// Prop 検索・変換で参照するファイル群。
+// 全 Prop の実テーブルは property-class/all-props.md に分冊されているため、
+// property-class.md 単体では bd 系などの一部しか拾えない（#474）。
+const PROP_SOURCE_FILES = ['property-class.md', 'property-class/all-props.md'];
+
+/** Prop 検索用の Markdown（property-class.md + 分冊の all-props.md）を結合して返す */
+export function loadPropsMarkdown(): string {
+  return PROP_SOURCE_FILES.map((filename) => loadMarkdown(filename)).join('\n\n');
+}
+
 /** guidesDir 配下を再帰的に走査し、`.md` ファイルの相対パス（posix 区切り）を返す */
 function walkMarkdownFiles(dir: string, baseDir: string = dir): string[] {
   const results: string[] = [];

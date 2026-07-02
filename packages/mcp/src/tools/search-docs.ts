@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { loadMarkdown } from '../lib/load-markdown.js';
+import { loadPropsMarkdown } from '../lib/load-markdown.js';
 import { DocsEntrySchema } from '../lib/schemas.js';
 import { parsePropRows } from '../lib/markdown-utils.js';
 import { searchDocs } from '../lib/search.js';
@@ -44,7 +44,7 @@ export function registerSearchDocs(server: McpServer): void {
     ({ query, category, limit }) => {
       try {
         const entries = loadJSON('docs-index.json', z.array(DocsEntrySchema));
-        const cssPropertyMap = buildCssPropertyMapFromMarkdown(loadMarkdown('property-class.md'));
+        const cssPropertyMap = buildCssPropertyMapFromMarkdown(loadPropsMarkdown());
         const results = searchDocs(entries, query, { category, limit, cssPropertyMap });
         return success({ query, results });
       } catch (e) {

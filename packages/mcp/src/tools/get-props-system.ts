@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadMarkdown } from '../lib/load-markdown.js';
+import { loadPropsMarkdown } from '../lib/load-markdown.js';
 import { parsePropRows } from '../lib/markdown-utils.js';
 import { parsePropClassName } from '../lib/search.js';
 import { markdownResponse, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
@@ -35,7 +35,7 @@ export function registerGetPropsSystem(server: McpServer): void {
     },
     ({ prop }) => {
       try {
-        const md = loadMarkdown('property-class.md');
+        const md = loadPropsMarkdown();
 
         // prop 未指定: 全文を返す
         if (!prop) {
