@@ -10,6 +10,7 @@ export interface SearchResult {
   heading: string;
   snippet: string;
   score: number;
+  nextTool: string | null;
 }
 
 export interface DocsEntry {

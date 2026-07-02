@@ -10,17 +10,17 @@ Enables AI tools (Claude Code, Cursor, etc.) to accurately reference the latest 
 | Tool | Description |
 |------|-------------|
 | `get_overview` | Framework overview (architecture, design philosophy, packages, breakpoints, installation guide, CSS Layers) |
-| `get_tokens` | List and filter design tokens (colors, spacing, font sizes, shadows, radii, etc.) |
+| `get_tokens` | Get the full design token reference (colors, spacing, font sizes, shadows, radii, etc.) |
 | `get_props_system` | Props system reference — how React/Astro props map to CSS classes and styles. Supports reverse lookup by CSS property name (e.g. `padding` → `p`) and Property Class notation (e.g. `-g:5`) |
 | `get_component` | Component details (props, usage examples, sub-component structure). Optionally filter by package (`lism-css` or `@lism-css/ui`) |
-| `get_guide` | Detailed guide on a specific topic (CSS rules, responsive design, utility classes, module classes, set classes, base styles, etc.) |
+| `get_guide` | Detailed guide on a specific topic (CSS rules, responsive design, utility classes, primitive/trait classes, set classes, base styles, naming, customization, etc.) |
 | `search_docs` | Full-text documentation search with relevance scoring. Supports category filtering and CSS property name expansion |
 | `convert_css` | Convert CSS code to lism-css props and component suggestions. Useful for migrating existing CSS to Lism CSS |
 
 ## Example Queries
 
 - "What is the basic architecture of Lism CSS?" → `get_overview`
-- "Show me the spacing tokens" → `get_tokens(category: "spacing")`
+- "Show me the spacing tokens" → `get_tokens()`
 - "What do shorthand props like `p` or `fz` map to?" → `get_props_system(prop: "p")`
 - "What does the class `-g:5` mean?" → `get_props_system(prop: "-g:5")`
 - "What CSS property does `fz` correspond to?" → `get_props_system(prop: "font-size")`

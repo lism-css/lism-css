@@ -77,10 +77,11 @@ export interface SearchDocsOptions {
   category?: string;
   limit?: number;
   cssPropertyMap?: Map<string, string[]>;
+  guideTopics?: ReadonlySet<string>;
 }
 
 export function searchDocs(entries: DocsEntry[], query: string, options?: SearchDocsOptions): SearchResult[] {
-  const { category, limit = 10, cssPropertyMap } = options ?? {};
+  const { category, limit = 10, cssPropertyMap, guideTopics } = options ?? {};
 
   // CSSプロパティ名・Property Class記法をLism prop名に展開してからトークナイズ
   const expandedQuery = expandQuery(query, cssPropertyMap);
@@ -109,7 +110,49 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
     heading: entry.title,
     snippet: entry.snippet,
     score,
+    nextTool: getNextTool(entry, guideTopics),
   }));
+}
+
+/** `sourcePath`（拡張子なし）の末尾セグメントを返す（例: `primitives/l--flex` → `l--flex`） */
+function getBasename(withoutExt: string): string {
+  const parts = withoutExt.split('/');
+  return parts[parts.length - 1];
+}
+
+/**
+ * 検索結果のページを詳しく見るための推奨フォローアップツール呼び出しを返す。
+ * sourcePath による判定をカテゴリによる判定より優先する。
+ */
+function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): string | null {
+  const withoutExt = entry.sourcePath.replace(/\.mdx$/, '');
+  const basename = getBasename(withoutExt);
+
+  // sourcePath ベースの判定（category より優先）
+  if (withoutExt === 'core-components/lism-props') {
+    return 'get_props_system()';
+  }
+  if (withoutExt.startsWith('primitives/') || withoutExt.startsWith('trait-class/')) {
+    return `get_component(name: "${basename}")`;
+  }
+  if (withoutExt === 'property-class') {
+    return 'get_guide(topic: "property-class")';
+  }
+  if (withoutExt.startsWith('property-class/')) {
+    return `get_props_system(prop: "${basename}")`;
+  }
+
+  // category ベースの判定
+  switch (entry.category) {
+    case 'core-components':
+      return `get_component(name: "${basename}")`;
+    case 'ui':
+      return `get_component(name: "${basename}", package: "@lism-css/ui")`;
+    case 'guide':
+      return guideTopics?.has(basename) ? `get_guide(topic: "${basename}")` : null;
+    default:
+      return null;
+  }
 }
 
 /**
@@ -131,7 +174,7 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
  */
 const PRESERVE_CASE_PREFIXES = ['primitives/', 'trait-class/'];
 
-function sourcePathToUrlSlug(sourcePath: string): string {
+export function sourcePathToUrlSlug(sourcePath: string): string {
   const withoutExt = sourcePath.replace(/\.mdx$/, '');
   return PRESERVE_CASE_PREFIXES.some((prefix) => withoutExt.startsWith(prefix)) ? withoutExt : withoutExt.toLowerCase();
 }

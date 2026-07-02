@@ -10,6 +10,9 @@ const skillsDir = resolve(__dirname, '..', '..', '..', '..', 'skills', 'lism-css
 const distDir = resolve(__dirname, '..', 'data', 'guides');
 const guidesDir = existsSync(skillsDir) ? skillsDir : distDir;
 
+/** skills/ を直接参照しているか（= モノレポ開発時）。npm 配布物（dist/data/guides/）を使っている場合は false。 */
+export const isRunningFromSource = guidesDir === skillsDir;
+
 const cache = new Map<string, string>();
 
 /** guides/ ディレクトリから Markdown ファイルを読み込む（キャッシュ付き）。

@@ -91,7 +91,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     const data = JSON.parse(text);
-    expect(data.error).toContain('見つかりません');
+    expect(data.message).toContain('No prop matches');
     expect(data.availableProps).toBeDefined();
   });
 
@@ -172,7 +172,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     const data = JSON.parse(text);
-    expect(data.error).toContain('not found');
+    expect(data.message).toContain('not found');
   });
 
   it('get_guide で tokens トピックが Markdown を返す', async () => {
@@ -234,6 +234,34 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('OK');
   });
 
+  it('get_guide で trait-class トピックが Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'trait-class' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('Trait クラス');
+    expect(text).toContain('is--');
+  });
+
+  it('get_guide で naming トピックが Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'naming' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('命名規則');
+  });
+
+  it('get_guide で customize トピックが Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'customize' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('カスタマイズ');
+  });
+
   it('search_docs が正常にデータを返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'search_docs', arguments: { query: 'Box' } });
@@ -243,6 +271,8 @@ describe('MCP Tools (integration)', () => {
     const data = JSON.parse(text);
     expect(data.query).toBe('Box');
     expect(data.results).toBeDefined();
+    expect(result.structuredContent).toBeDefined();
+    expect((result.structuredContent as { query: string }).query).toBe('Box');
   });
 
   it('ツール一覧が7つ登録されている', async () => {
