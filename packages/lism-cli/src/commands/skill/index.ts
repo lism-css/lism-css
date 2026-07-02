@@ -5,7 +5,7 @@ import { skillUpdateCommand } from './update.js';
 import { SKILL_PATHS } from './paths.js';
 import { t } from '../../i18n.js';
 
-/** `lism skill` サブコマンドツリー */
+/** `lism-cli skill` サブコマンドツリー */
 export function createSkillCommand(): Command {
   const skill = new Command('skill').description(t('cli.skill.description'));
 
@@ -27,6 +27,7 @@ export function createSkillCommand(): Command {
     skill
       .command('add')
       .description(t('cli.skill.add.description'))
+      .argument('[skill]', t('cli.skill.add.arg.skill'))
       .option('-o, --overwrite', t('cli.skill.add.opt.overwrite'), false)
       .option('--ref <ref>', t('cli.skill.opt.ref'))
   ).action(skillAddCommand);

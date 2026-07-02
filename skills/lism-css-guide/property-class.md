@@ -148,8 +148,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:inherit` | — |
 | `keycolor` | `--keycolor` 変数のみ | — | — |
 
-セマンティックカラー: `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral`<br />
-パレットカラー: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`  
+セマンティック/パレットの全カラートークンは [tokens.md のカラー](./tokens.md#カラー)を参照。<br />
 キーカラー変数: `keycolor`（ユーザー定義の `--keycolor` を参照する独立変数。詳細は `tokens.md` を参照）
 
 ### 角丸
@@ -208,7 +207,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `pt` | `padding-top` | — | — |
 | `pb` | `padding-bottom` | — | — |
 
-SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`
+SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (space)](./tokens.md#余白-space) を参照。
 
 ### 余白 — Margin
 
@@ -367,6 +366,8 @@ Property Class の値名は基本的に CSS の実値と同じですが、以下
   .-p_sm { padding: var(--p); --p: var(--p_sm) !important }
 }
 ```
+
+対象プロパティは、ソースの [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts) で `alwaysVar: 1` がセットされているものです。
 
 
 ## Property Class の検索・一括修正

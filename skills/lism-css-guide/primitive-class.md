@@ -22,7 +22,7 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 | `l--` | Layout Primitive | `lism-primitive.layout` | レイアウトの構成単位となる Primitive |
 | `a--` | Atomic Primitive | `lism-primitive.atomic` | レイアウトの最小単位（アイコン・区切り線等） |
 
-併用ルールは [css-rules.md](./css-rules.md#プレフィックスとクラス分類) を参照してください。
+併用ルールは [css-rules.md](./css-rules.md#クラス分類とプレフィックス) を参照してください。
 
 
 ## Layout Primitive（`l--`）

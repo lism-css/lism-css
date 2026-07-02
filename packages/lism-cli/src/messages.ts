@@ -3,9 +3,9 @@
  *
  * 命名規則:
  *   - `cli.*`    … commander の description / argument / option
- *   - `create.*` … `lism create` サブコマンド
- *   - `ui.*`     … `lism ui` 配下
- *   - `skill.*`  … `lism skill` 配下
+ *   - `create.*` … `lism-cli create` サブコマンド
+ *   - `ui.*`     … `lism-cli ui` 配下
+ *   - `skill.*`  … `lism-cli skill` 配下
  *   - `config.*` … lism.config.* まわりのエラー・警告
  *   - `common.*` … 汎用
  *
@@ -54,8 +54,8 @@ export const messages = {
     en: 'Manage Lism UI components',
   },
   'cli.ui.init.description': {
-    ja: 'lism.config.js の cli セクションを生成する',
-    en: 'Generate the cli section of lism.config.js',
+    ja: 'lism.config の ui セクションを生成する',
+    en: 'Generate the ui section of lism.config',
   },
   'cli.ui.init.opt.framework': {
     ja: 'フレームワーク',
@@ -68,10 +68,6 @@ export const messages = {
   'cli.ui.init.opt.helperDir': {
     ja: 'helper の出力先ディレクトリ',
     en: 'Output directory for helpers',
-  },
-  'cli.ui.init.opt.force': {
-    ja: '既存の cli セクションを上書き',
-    en: 'Overwrite the existing cli section',
   },
   'cli.ui.add.description': {
     ja: 'コンポーネントを追加する',
@@ -106,6 +102,10 @@ export const messages = {
   'cli.skill.add.description': {
     ja: 'スキルを配置する',
     en: 'Deploy skills',
+  },
+  'cli.skill.add.arg.skill': {
+    ja: '配置するスキル名（省略時は全スキル）',
+    en: 'Skill name to deploy (all skills if omitted)',
   },
   'cli.skill.add.opt.overwrite': {
     ja: '確認なしで上書き',
@@ -239,8 +239,8 @@ export const messages = {
 
   // ui add
   'ui.add.noConfig': {
-    ja: 'lism.config.js が見つかりません。セットアップを開始します...\n',
-    en: 'lism.config.js not found. Starting setup...\n',
+    ja: 'ui セクションが見つかりません。いくつか質問します。',
+    en: 'No ui section found. A few questions to get you started.',
   },
   'ui.add.addingAll': {
     ja: '全 {count} コンポーネントを追加します...',
@@ -312,26 +312,6 @@ export const messages = {
     ja: 'フレームワークを選択してください:',
     en: 'Select a framework:',
   },
-  'ui.init.promptComponentsDir': {
-    ja: 'コンポーネントの出力先ディレクトリ:',
-    en: 'Output directory for components:',
-  },
-  'ui.init.promptHelperDir': {
-    ja: 'helper の出力先ディレクトリ:',
-    en: 'Output directory for helpers:',
-  },
-  'ui.init.patchedUpdate': {
-    ja: '{path} に cli セクションを更新しました。',
-    en: 'Updated the cli section in {path}.',
-  },
-  'ui.init.patchedAdd': {
-    ja: '{path} に cli セクションを追記しました。',
-    en: 'Added the cli section to {path}.',
-  },
-  'ui.init.notPatched': {
-    ja: '{path} に既に cli セクションが含まれているか、export default が検出できませんでした。手動で追記してください。',
-    en: 'Either {path} already contains a cli section or no export default was detected. Please add it manually.',
-  },
   'ui.init.created': {
     ja: '{path} を作成しました。',
     en: 'Created {path}.',
@@ -341,12 +321,12 @@ export const messages = {
     en: 'Detected {filename}. Migrating to lism.config.js. Please remove the old file afterwards.',
   },
   'ui.init.alreadyExists': {
-    ja: '{filename} には既に cli セクションが設定されています。上書きするには --force を指定してください。',
-    en: '{filename} already has a cli section. Use --force to overwrite.',
+    ja: '{filename} には既に ui セクションが設定されています。',
+    en: '{filename} already has a ui section configured.',
   },
-  'ui.init.willOverwrite': {
-    ja: '{filename} の既存の cli セクションを上書きします。',
-    en: 'Overwriting the existing cli section in {filename}.',
+  'ui.init.snippetGuide': {
+    ja: '次回から同じ質問をされないために、{filename} の export default オブジェクト内に以下を貼り付けてください:\n\n{snippet}\n',
+    en: 'To avoid being asked these questions again, paste the following inside the exported config object in {filename}:\n\n{snippet}\n',
   },
 
   // ui list
@@ -380,8 +360,12 @@ export const messages = {
     en: 'No target tools were selected.',
   },
   'skill.add.fetching': {
-    ja: 'スキルを取得中（ref: {ref}）...',
-    en: 'Fetching skills (ref: {ref})...',
+    ja: 'スキル {skill} を取得中（ref: {ref}）...',
+    en: 'Fetching skill {skill} (ref: {ref})...',
+  },
+  'skill.unknownSkill': {
+    ja: 'スキル "{name}" は存在しません。利用可能: {list}',
+    en: 'Unknown skill "{name}". Available: {list}',
   },
   'skill.add.skippedSame': {
     ja: '  スキップ（差分なし）: {label}',
@@ -422,8 +406,8 @@ export const messages = {
     en: 'No installed skills found. Run `{invoke} skill add` to deploy them.',
   },
   'skill.check.fetching': {
-    ja: 'リモートスキルを取得中（ref: {ref}）...',
-    en: 'Fetching remote skills (ref: {ref})...',
+    ja: 'リモートスキル {skill} を取得中（ref: {ref}）...',
+    en: 'Fetching remote skill {skill} (ref: {ref})...',
   },
   'skill.check.upToDate': {
     ja: '  ✓ {label}  (最新)',
@@ -434,8 +418,8 @@ export const messages = {
     en: 'All skills are up to date.',
   },
   'skill.check.outdated': {
-    ja: '{count} 件のツールに差分があります。`{invoke} skill update` で最新に更新できます。',
-    en: '{count} tools have changes. Run `{invoke} skill update` to update them.',
+    ja: '{count} 件の配置に差分があります。`{invoke} skill update` で最新に更新できます。',
+    en: '{count} deployment(s) differ from the remote. Run `{invoke} skill update` to update them.',
   },
   'skill.check.diffModified': {
     ja: '変更 {count}',
@@ -457,29 +441,29 @@ export const messages = {
     ja: '[deprecated] {filename} は廃止予定です。"{invoke} ui init" で lism.config.js へ移行してください。',
     en: '[deprecated] {filename} is deprecated. Run "{invoke} ui init" to migrate to lism.config.js.',
   },
-  'config.notFound': {
-    ja: 'lism.config.js / lism.config.mjs / lism-ui.json のいずれも見つかりません。',
-    en: 'None of lism.config.js / lism.config.mjs / lism-ui.json were found.',
-  },
-  'config.cliSectionMissing': {
-    ja: '{filename} から CLI 設定（cli キー）を読み込めませんでした。',
-    en: 'Failed to read the CLI config (cli key) from {filename}.',
-  },
   'config.invalidFramework': {
-    ja: 'cli.framework は "react" または "astro" を指定してください。',
-    en: 'cli.framework must be "react" or "astro".',
+    ja: 'ui.framework は "react" または "astro" を指定してください。',
+    en: 'ui.framework must be "react" or "astro".',
   },
   'config.invalidComponentsDir': {
-    ja: 'cli.componentsDir は文字列で指定してください。',
-    en: 'cli.componentsDir must be a string.',
+    ja: 'ui.componentsDir は文字列で指定してください。',
+    en: 'ui.componentsDir must be a string.',
   },
   'config.invalidHelperDir': {
-    ja: 'cli.helperDir は文字列で指定してください。',
-    en: 'cli.helperDir must be a string.',
+    ja: 'ui.helperDir は文字列で指定してください。',
+    en: 'ui.helperDir must be a string.',
+  },
+  'config.cliKeyDeprecated': {
+    ja: '[deprecated] {filename} の "cli:" キーは "ui:" への変更が推奨されています。',
+    en: '[deprecated] The "cli:" key in {filename} is recommended to be renamed to "ui:".',
   },
   'config.loadFailed': {
     ja: '{path} を読み込めませんでした（構文エラー等）。修正してから再実行してください: {reason}',
     en: 'Failed to load {path} (syntax error, etc). Please fix it and retry: {reason}',
+  },
+  'config.freshConfigExists': {
+    ja: '{path} は既に存在するため新規作成できません。',
+    en: 'Cannot create {path} because it already exists.',
   },
 
   // ---------------------------------------------------------------------------

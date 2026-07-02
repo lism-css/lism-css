@@ -1,5 +1,5 @@
 /**
- * English template overlay for `lism create --lang en`.
+ * English template overlay for `lism-cli create --lang en`.
  * Mirrors the base `src/config/categories.ts`; only the display `description`
  * values are translated. Keys / labels / ogImage overrides stay in sync.
  */

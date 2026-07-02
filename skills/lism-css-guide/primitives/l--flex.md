@@ -2,70 +2,13 @@
 
 コンテンツを Flex レイアウトで配置するためのクラス。
 
-## 基本情報
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--flex.md
 
-- クラス名: `l--flex`
-- コンポーネント: `<Flex>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_flex.scss
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--flex.md
+## 既定の挙動
 
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Flex>
-  <div>Item</div>
-  <div>Item</div>
-  <div>Item</div>
-</Flex>
-```
-
-```html
-<div class="l--flex">
-  <div>Item</div>
-  <div>Item</div>
-  <div>Item</div>
-</div>
-```
-
-### Flex プロパティの指定
-
-Property Class や Lism Props で Flex 関連プロパティ（`g`, `fxw`, `jc`, `ai`, `fxd` など）を指定できます。レスポンシブ対応プロパティは配列・オブジェクトで指定可能。
-
-```jsx
-<Flex fxw="wrap" jc="center" g="20">
-  <div>Flex Content</div>
-  <div>Flex Content</div>
-  <div>Flex Content</div>
-</Flex>
-```
-
-```html
-<div class="l--flex -fxw:wrap -g:20 -jc:center">
-  <div>Flex Content</div>
-  <div>Flex Content</div>
-  <div>Flex Content</div>
-</div>
-```
-
-### 子要素の Flex プロパティ
-
-子要素側も `fx`（flex shorthand）, `fxb`（flex-basis）, `fxg`（flex-grow）, `fxsh`（flex-shrink）などで個別制御できます。
-
-```jsx
-<Flex g="20">
-  <Lism fx="1">Flex Content</Lism>
-  <Lism fxb={['50%', null, '25%']}>Flex Content</Lism>
-</Flex>
-```
-
-```html
-<div class="l--flex -g:20">
-  <div class="-fx:1">Flex Content</div>
-  <div class="-fxb -fxb_md" style="--fxb:50%;--fxb_md:25%">Flex Content</div>
-</div>
-```
+- `display:flex`。
+- 直下の子要素に`min-width:0`を付与し、flex itemのはみ出しを抑えます。
+- `gap`、`flex-wrap`、`align-items`、`justify-content`、`flex-direction`は既定では指定しません。必要な時だけ`g`/`fxw`/`ai`/`jc`/`fxd`で指定します。
 
 ## 関連プリミティブ
 

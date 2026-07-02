@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 言語別テンプレ overlay（.lang/<lang>/）を一時的に src へマージしてビルドするヘルパー。
-// `lism create --lang <lang>` と同じ overlay マージをローカルで再現する用途。
+// `lism-cli create --lang <lang>` と同じ overlay マージをローカルで再現する用途。
 //
 // build 後に src を元へ復元するので作業ツリーは汚れない。dist には指定言語の出力が残るため、
 // 続けて `nr preview:template <pkg>` で英語版などを確認できる。

@@ -2,12 +2,7 @@
 
 子要素間の余白を `margin-block-start` で管理するフローレイアウト。**記事コンテンツなどテキスト主体のフローレイアウト**に最適。
 
-## 基本情報
-
-- クラス名: `l--flow`
-- コンポーネント: `<Flow>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_flow.scss
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--flow.md
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--flow.md
 
 ## 余白の仕組み
 
@@ -21,74 +16,18 @@
 
 `--flow--base` / `--flow--s` は `:root` で定義されたトークン（[tokens](../tokens.md#フロー余白-flow) 参照）。日本語環境では文字密度に合わせて `--flow--base` が広めに上書きされる。
 
+## 既定の挙動
+
+- `display:flow-root`。
+- 直下の`* + *`へ`margin-block-start:var(--flow)`を付与し、`--flow`は`--flow--base`を初期値にします。
+- 直下の見出しは上余白を広めにし、先頭要素と`is--skipFlow + *`は余白を打ち消します。
+- 直下の`img`/`video`/`iframe`は`display:block`へ初期化します。
+
 ## 専用Props
 
 | Prop | 説明 |
 |------|------|
 | `flow` | `--flow` の値を指定。`s` / `l` などのトークン値を渡すと `-flow:{value}` クラスが付与、任意値を渡すと `-flow:` + `style="--flow:..."` が出力される |
-
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Flow>
-  <p>本文1...</p>
-  <p>本文2...</p>
-  <h2>Heading 2</h2>
-  <p>本文3...</p>
-  <ul>
-    <li>リスト項目1</li>
-    <li>リスト項目2</li>
-  </ul>
-</Flow>
-```
-
-```html
-<div class="l--flow">
-  <p>本文1...</p>
-  <p>本文2...</p>
-  <h2>Heading 2</h2>
-  <p>本文3...</p>
-  <ul>...</ul>
-</div>
-```
-
-### 余白量をトークンで変える（`flow="s"`）
-
-```jsx
-<Flow flow="s">
-  <p>本文...</p>
-  <h2>Heading</h2>
-  <p>本文...</p>
-</Flow>
-```
-
-```html
-<div class="l--flow -flow:s">
-  <p>本文...</p>
-  <h2>Heading</h2>
-  <p>本文...</p>
-</div>
-```
-
-### 任意の値を指定する
-
-トークン値以外を `flow` に渡すと、`-flow:` クラスと `--flow` CSS変数で出力されます。
-
-```jsx
-<Flow flow="10px">
-  <p>本文...</p>
-  <p>本文...</p>
-</Flow>
-```
-
-```html
-<div class="l--flow -flow:" style="--flow:10px">
-  <p>本文...</p>
-  <p>本文...</p>
-</div>
-```
 
 ## `is--skipFlow`
 

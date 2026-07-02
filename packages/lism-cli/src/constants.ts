@@ -15,7 +15,7 @@ export const SOURCE_REPO = 'lism-css/lism-css';
 /** raw GitHub の base URL（生ファイル fetch に使用） */
 export const RAW_GITHUB_BASE = 'https://raw.githubusercontent.com';
 
-/** npm レジストリの base URL（`lism create` の workspace:* 置換時に公開最新版を解決するのに使用） */
+/** npm レジストリの base URL（`lism-cli create` の workspace:* 置換時に公開最新版を解決するのに使用） */
 export const NPM_REGISTRY_BASE = 'https://registry.npmjs.org';
 
 // -----------------------------------------------------------------------------
@@ -26,13 +26,13 @@ export const NPM_REGISTRY_BASE = 'https://registry.npmjs.org';
 //   - main ブランチへマージする直前に、各値を `'main'` に揃えること。
 // -----------------------------------------------------------------------------
 
-/** `lism ui add` / `lism ui list` が参照する lism-ui ソースの ref */
+/** `lism-cli ui add` / `lism-cli ui list` が参照する lism-ui ソースの ref */
 export const DEFAULT_UI_REF = 'main';
 
-/** `lism skill add` / `check` / `update` が参照するスキルディレクトリの ref */
+/** `lism-cli skill add` / `check` / `update` が参照するスキルディレクトリの ref */
 export const DEFAULT_SKILL_REF = 'main';
 
-/** `lism create` が参照する templates の ref */
+/** `lism-cli create` が参照する templates の ref */
 export const DEFAULT_TEMPLATES_REF = 'main';
 
 // -----------------------------------------------------------------------------
@@ -48,8 +48,20 @@ export const UI_HELPER_PATH = 'packages/lism-ui/src/helper';
 /** lism-ui のカタログ JSON（raw GitHub から fetch） */
 export const UI_REGISTRY_INDEX_PATH = 'packages/lism-ui/registry-index.json';
 
-/** スキル配信元のディレクトリ */
-export const SKILL_SOURCE_PATH = 'skills/lism-css-guide';
+/** 配信元リポジトリ内で各スキルディレクトリを束ねるベースディレクトリ（実体は `skills/{name}`） */
+export const SKILL_SOURCE_BASE = 'skills';
+
+/**
+ * 配布対象のスキル名レジストリ。
+ *
+ * 引数なしの `lism skill add` / `lism skill update` はここに並ぶ全スキルを一括導入し、
+ * `lism skill check` も全スキルを対象に差分確認する。`lism skill add [name]` で個別指定も可。
+ * リポジトリ内の実体は `skills/{name}`、配置先は `.{tool}/skills/{name}`。
+ */
+export const SKILL_NAMES = ['lism-css-guide', 'lism-css-refactor'] as const;
+
+/** 配布対象スキル名 */
+export type SkillName = (typeof SKILL_NAMES)[number];
 
 /** templates の配置ディレクトリ */
 export const TEMPLATES_PATH = 'templates';
