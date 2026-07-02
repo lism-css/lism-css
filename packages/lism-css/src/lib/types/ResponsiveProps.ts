@@ -1,4 +1,5 @@
 import type { LimitedArray } from './utils';
+import type { BreakpointSequence } from '../../../config/defaults/breakpoints';
 
 // ------------------------------------------------------------
 // ブレイクポイント関連の型
@@ -40,8 +41,9 @@ type AdvertisedBpKey = Extract<keyof BreakpointRegistry, string>;
 /**
  * 配列記法の位置順（`base` を除く）。位置は固定の契約（変更しない）。
  * `xs` はこの並びに含めない（= 配列記法では書けず、オブジェクト記法のみ）。
+ * 定義は `config/defaults/breakpoints` の `BREAK_POINTS` を single source とする。
  */
-type ArrayBpSequence = ['sm', 'md', 'lg', 'xl'];
+type ArrayBpSequence = BreakpointSequence;
 
 /** タプルのうち `Keys` に含まれる要素だけを残す */
 type FilterByKeys<Tuple extends readonly unknown[], Keys, Acc extends unknown[] = []> = Tuple extends readonly [infer Head, ...infer Rest]

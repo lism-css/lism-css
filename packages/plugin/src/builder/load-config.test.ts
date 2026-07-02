@@ -4,7 +4,7 @@ import path from 'node:path';
 import { afterAll, describe, expect, test } from 'vitest';
 import { objDeepMerge } from 'lism-css/config/helper';
 import { computeBuildConfigs, findUserConfigPath, loadBuildConfigs } from './load-config';
-import type { BuildConfig } from './serialize';
+import type { BuildConfig, PropConfig } from './serialize';
 
 const objMerge = objDeepMerge as (a: Record<string, unknown>, b: Record<string, unknown>) => Record<string, unknown>;
 
@@ -17,7 +17,7 @@ const defaultConfig: BuildConfig = {
 };
 
 // full preset は defaults への差分のみ（ここでは p の bp を 1 へ拡張）。
-const propsFull = {
+const propsFull: Record<string, PropConfig> = {
   p: { bp: 1 },
 };
 

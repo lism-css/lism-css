@@ -8,22 +8,13 @@
 import getMaybeTokenValue from 'lism-css/lib/getMaybeTokenValue';
 import getTokenVarName from 'lism-css/lib/getTokenVarName';
 import { TOKEN_SCOPE } from 'lism-css/config/defaults/token-scope';
+// PropConfig は config 執筆用の型（lism-css core）を single source として共有する。
+import type { PropConfig } from 'lism-css/config-types';
 
 type TokenValue = string | number;
 type Tokens = Record<string, unknown>;
 
-export interface PropConfig {
-  prop?: string;
-  bp?: number | string[];
-  isVar?: number;
-  alwaysVar?: number;
-  important?: number;
-  utils?: Record<string, TokenValue>;
-  presets?: TokenValue[];
-  token?: string;
-  tokenClass?: number;
-  exUtility?: Record<string, Record<string, string>>;
-}
+export type { PropConfig };
 
 export interface BuildConfig {
   tokens: Tokens;

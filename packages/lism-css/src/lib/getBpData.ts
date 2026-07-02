@@ -1,6 +1,6 @@
 import filterEmptyObj from './helper/filterEmptyObj';
 import hasSomeKeys from './helper/hasSomeKeys';
-import { BREAK_POINTS_ALL, BREAK_POINTS_OBJ } from '../../config/index';
+import { BREAK_POINTS_ALL, BREAK_POINTS_OBJ } from '../../config/defaults/breakpoints';
 
 type BpValue = string | number | boolean | object | null | undefined;
 
