@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createJiti } from 'jiti';
+import type { LismConfig } from 'lism-css/config-types';
 import type { BuildConfig, PropConfig } from './serialize';
 
 export type ObjDeepMerge = (origin: Record<string, unknown>, source: Record<string, unknown>) => Record<string, unknown>;
@@ -110,7 +111,7 @@ export function computeBuildConfigs({ defaultConfig, propsFull, userConfig, objD
   fullConfig: BuildConfig;
   isFullMode: boolean;
 } {
-  const isFullMode = !!(userConfig as { isFullMode?: boolean }).isFullMode;
+  const isFullMode = !!(userConfig as LismConfig).isFullMode;
 
   const base = defaultConfig as unknown as Record<string, unknown>;
   const fullBase = objDeepMerge(objDeepMerge(base, { props: propsFull }), FULL_CSS_DEFAULTS);
