@@ -104,6 +104,22 @@ describe('setEvent (dialog 要素)', () => {
 
     expect(showModalSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('連打防止: 同一フレーム内（data-is-open 付与前）の連続 click でも showModal は 1 回のみ', async () => {
+    const modal = document.querySelector<HTMLDialogElement>('#m1')!;
+    const trigger = document.querySelector<HTMLElement>('[data-modal-open="m1"]')!;
+    const showModalSpy = vi.spyOn(modal, 'showModal');
+    setEvent(modal);
+
+    trigger.click();
+    trigger.click();
+
+    expect(showModalSpy).toHaveBeenCalledTimes(1);
+
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
+  });
 });
 
 describe('setEvent (非 dialog 要素)', () => {

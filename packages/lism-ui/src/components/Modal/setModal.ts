@@ -21,8 +21,10 @@ export function setEvent(modal: HTMLElement): void {
    *   Point: showModal() してから、CSSアニメーション用の data-is-open属性を付与する
    */
   const openDialog = () => {
-    // すでに open & data-is-open が付いていれば何もしない（連打防止）
-    if (modal.hasAttribute('open') && modal.hasAttribute('data-is-open')) return;
+    // すでに open が付いていれば何もしない（連打防止）。
+    // data-is-open は rAF で1フレーム遅れて付与されるため、条件に含めると
+    // その間の連打で showModal() が二重に呼ばれてしまう（dialog では InvalidStateError になる）
+    if (modal.hasAttribute('open')) return;
 
     // dialog 要素なら showModal()、それ以外は open 属性を付与
     if (isDialog) {
