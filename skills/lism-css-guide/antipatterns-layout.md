@@ -1,6 +1,6 @@
 # アンチパターン辞書（構造・レイアウト・レスポンシブ編）
 
-[antipatterns.md](./antipatterns.md)の続編。値・スタイル宣言系のNG→OKはそちらを参照。
+[antipatterns.md](./antipatterns.md)の分冊。値・スタイル宣言系のNG→OKはそちらを参照。
 
 ## TOC
 

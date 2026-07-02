@@ -1,6 +1,6 @@
 # Property Class 全Prop一覧
 
-[property-class.md](../property-class.md)の別冊。全Propのプリセット値クラス・BP対応の詳細表。
+[property-class.md](../property-class.md)の分冊。全Propのプリセット値クラス・BP対応の詳細表。
 
 ソース: [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts)
 
@@ -15,8 +15,6 @@
 
 
 ## 全 Prop 一覧
-
-ソース: [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts)
 
 ### タイポグラフィ
 

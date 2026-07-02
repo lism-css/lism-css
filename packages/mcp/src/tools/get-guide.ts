@@ -26,7 +26,12 @@ const GUIDE_TOPICS = {
   responsive: { file: 'responsive.md', label: 'Responsive design, breakpoints, container queries' },
   antipatterns: {
     file: 'antipatterns.md',
-    label: 'AI code-generation antipatterns: token typos, prop type mistakes, layout choice errors, responsive omissions',
+    label: 'AI code-generation antipatterns (values / style declarations): px hardcoding, token typos, keycolor misuse, prop type mistakes',
+  },
+  'antipatterns-layout': {
+    file: 'antipatterns-layout.md',
+    label:
+      'AI code-generation antipatterns (structure / layout / responsive): layout choice errors, responsive omissions, is-- misuse, naming mistakes',
   },
 } as const;
 
