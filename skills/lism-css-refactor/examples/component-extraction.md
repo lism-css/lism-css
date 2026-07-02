@@ -54,7 +54,7 @@ export function Tag({ children, className, ...props }) {
 </div>
 ```
 
-### 透過（最重要の壊しやすいポイント）
+### 透過（最も壊しやすいポイント）
 
 - `className`/`style`/`data-*`/ARIA/event handlerを`{...props}`で透過する。抽出前に`<span>`が受けられた属性を、抽出後も同じように受けられるようにする。
 - `<Inline>`はセマンティックコンポーネント（既定`<span>`）。要素を変えたくない場合は要素も合わせる（[`components-core.md`](../../lism-css-guide/components-core.md)）。
@@ -115,4 +115,4 @@ export function Features({ items }) {
 - **レスポンシブPropsを単一値に潰さない**。元のカードが`p={['20','30']}`のような配列Propsを持っていたら、抽出後のコンポーネントもその配列を受けて出力する（[`common-mistakes.md`](../references/common-mistakes.md)）。
 - 値差分はProps（`item`）へ。`c--features_card`等の意味クラスは残す。
 - 抽出でHTML要素が変わらないようにする（`<Stack>`=`<div>`基盤。元が`<article>`なら`as="article"`を付ける）。
-- 3箇所未満に減らした結果、抽出が過剰になるなら✅で据え置く判断もある（不要な差分を出さない）。
+- リファクタの結果、重複が3箇所未満になり抽出が過剰になるなら、✅で据え置く判断もある（不要な差分を出さない）。

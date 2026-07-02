@@ -52,7 +52,7 @@
 
 ---
 
-## 例2: hoverはCSSに溜めずhov Propsへ
+## 例2: hoverはCSSに書かずhov Propsへ
 
 単純な色・影・transformのhoverは、`.c--*:hover`に書くとProperty Classやhover変数の設計と競合しやすい（[`antipatterns.md#hover-を-component-css-に書いて負ける`](../../lism-css-guide/antipatterns.md#hover-を-component-css-に書いて負ける)）。
 
@@ -79,7 +79,7 @@
 
 ### 壊さないための注意
 
-- Beforeに`transition`が無ければ、`hov={{}}`も即時切替のまま（見た目・挙動は変わらない）。**`hasTransition`を足すとアニメーションが付き挙動が変わる**ので、意図がある時だけ別提案として⏸。
+- Beforeに`transition`が無ければ、hov Propsへ移した後も即時切替のまま（見た目・挙動は変わらない）。**`hasTransition`を足すとアニメーションが付き挙動が変わる**ので、意図がある時だけ別提案として⏸。
 - 擬似要素・複雑な子孫セレクタを伴うhoverはCSSに残す。
 
 ---

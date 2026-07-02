@@ -13,7 +13,7 @@
 ## Pass1: 対象コードの洗い出し
 
 - **見るもの**: 対象範囲内のclass/className・Lism Props・CSS宣言・style属性・@media/@container・重複しているclass束。
-- **判定**: 原則ここでは確定しない。対象外だけ✅、意図的にスコープ外とするものだけ⬜、残りはPass2以降で判定する。
+- **判定**: 原則ここでは確定しない。指定範囲の外にあるものだけ✅、範囲内だがユーザーと合意してあえて触らないものだけ⬜、残りはPass2以降で判定する。
 - **直し方**: 修正しない。洗い出し表の行を作るだけ。
 - **参照先**: なし（[`output-format.md`](./output-format.md)の洗い出し表を使う）。
 - **NG→OK**: NG=`.c--card{ padding }`だけ拾い、`p={[20,30]}`や`is--active`を漏らす。OK=class/Props/CSS/値/重複/レスポンシブ指定を別行で列挙する。
@@ -62,7 +62,7 @@
 
 - **見るもの**: px/rem/em直書き、`p="8"`/`fz="14"`/`bgc="secondary"`など存在しない値、`--keycolor`のグローバル利用、任意色/任意サイズのstyle属性。
 - **判定**: `tokens.md`にある値で書けている→✅。guideで明確に置換できるtypo→🔧。px丸め・任意色推測・デザイン値置換→⏸。1px罫線・transform微調整・@media閾値などの例外→⬜。
-- **直し方**: 明確なtypoは正しいtokenへ置き換える。置換先のトークンは`tokens.md`だけでなく、プロジェクトにインストール済みの実CSS（`main.css`や生成済みCSS）でも実在を確認してから採用する（typoとプロジェクト側上書きの見落としを同時に防げる）。固定値は近い候補と差分を出し、ユーザー確認後にProps/Property Class/token CSS変数へ移す。
+- **直し方**: 明確なtypoは正しいtokenへ置き換える。置換先のtokenは`tokens.md`だけでなく、プロジェクトにインストール済みの実CSS（`main.css`や生成済みCSS）でも実在を確認してから採用する（typoとプロジェクト側上書きの見落としを同時に防げる）。固定値は近い候補と差分を出し、ユーザー確認後にProps/Property Class/token CSS変数へ移す。
 - **参照先**: [`tokens.md`](../../lism-css-guide/tokens.md)、[`property-class.md`](../../lism-css-guide/property-class.md)、[`antipatterns.md#token-typo存在しない値`](../../lism-css-guide/antipatterns.md#token-typo存在しない値)、[`antipatterns.md#px--固定値の直書き`](../../lism-css-guide/antipatterns.md#px--固定値の直書き)、[`antipatterns.md#--keycolor-の誤用`](../../lism-css-guide/antipatterns.md#--keycolor-の誤用)。
 - **NG→OK**: typo（🔧）: `bgc="secondary" c="muted"` → `bgc="base-2" c="text-2"`。丸め（⏸）: `padding:24px; border-radius:8px` → `p="30"`/`bdrs="20"`候補を提示し、確認後に適用（`p="8"`も丸めなので⏸）。
 - **注意**: プロジェクト側で`--s-unit`やtokenを上書きしているとpx換算が変わる。`--keycolor`は局所的な色軸であり、ブランド色の代替として使わない。
@@ -109,7 +109,7 @@
 ## Pass9: 既定値重複の確認
 
 - **見るもの**: Primitiveが元々持つ挙動と同じProps/Property Classを重ねている箇所。例: `<Cluster fxw="wrap" ai="center">`・`<Frame ov="hidden">`・Frame直下メディアへの`-w:100% -h:100%`/`object-fit:cover`。
-- **判定**: guideに既定値として明記されていて同じ値を重ねている→🔧。既定値と違う意図的な上書き→✅または⬜。guide未整備のPrimitive既定値→guide TODOへ回す。詳細度が必要な上書き→⬜。
+- **判定**: guideに既定値として明記されていて同じ値を重ねている→🔧。既定値と違う意図的な上書き→✅または⬜。guide未整備のPrimitive既定値→⏸（判断材料がguideに無いため確定できない。guide側の整備が必要な旨を完了報告に書く）。詳細度が必要な上書き→⬜。
 - **直し方**: 重複しているProps/Property Classだけ削除し、Primitive自体と意味classは残す。Clusterの`g`は既定値ではないので消さない。
 - **参照先**: [`primitive-class.md`](../../lism-css-guide/primitive-class.md)、[`primitives/l--cluster.md`](../../lism-css-guide/primitives/l--cluster.md)、[`primitives/l--frame.md`](../../lism-css-guide/primitives/l--frame.md)、[`antipatterns-layout.md#primitive-既定値の重複指定`](../../lism-css-guide/antipatterns-layout.md#primitive-既定値の重複指定)。
 - **NG→OK**: NG=`<Cluster fxw="wrap" ai="center" g="15">` → OK=`<Cluster g="15">`。NG=`<Frame ar="16/9" ov="hidden"><img className="-w:100% -h:100%" style={{ objectFit: 'cover' }} /></Frame>` → OK=`<Frame ar="16/9"><img /></Frame>`。
