@@ -5,7 +5,7 @@ import { objDeepMerge, arrayConvertToSet } from './helper';
 import type { LismConfig } from './types';
 
 interface Window {
-  _LISM_CSS_CONFIG_: LismConfig;
+  _LISM_CSS_CONFIG_?: LismConfig;
 }
 declare const window: Window;
 
