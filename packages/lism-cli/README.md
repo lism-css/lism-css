@@ -11,7 +11,7 @@
 ```
 lism-cli create [targetDir] [--template <name|category>]   # templates から新規プロジェクト
 lism-cli ui    { init | add <names...> | list }            # Lism UI コンポーネントの追加
-lism-cli skill { add | check | update }                    # AI エージェント向け SKILL.md 配置
+lism-cli skill { add [skill] | check | update }            # AI エージェント向け SKILL.md 配置
 ```
 
 ## 使い方
@@ -55,24 +55,35 @@ pnpm dlx lism-cli ui add accordion --ref dev
 
 コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されます。`lism-ui` を更新するだけで CLI 側も自動で追従します。
 
-初回実行時に `lism.config.js` が無い場合は対話式セットアップが走り、`cli` セクションを書き込みます。
+`ui` セクションの設定が見つからない状態で `ui add` を実行すると、対話式セットアップが走ります。
 
 ```
 ? フレームワークを選択してください: React
 ? コンポーネントの出力先ディレクトリ: src/components/ui
 ? helper の出力先ディレクトリ: src/components/ui/_helper
-✔ lism.config.js を作成しました。
 ```
 
-`ui init` で設定の生成のみ行うこともできます。既存の `lism.config.js` には `cli` セクションのみ追記されます。
+`ui add` は入力した値をその回の実行に使うだけで設定ファイルは書き換えず、最後に `lism.config.*` へ貼り付けるための `ui` セクションのスニペットを案内します。
+
+設定をファイルとして残すには `ui init` を使います。`lism.config.{ts,mjs,js}` が無い場合は `ui` セクションを持つ `lism.config.js` を新規作成し、既存の `lism.config.*` がある場合はファイルを書き換えず、貼り付け用スニペットの表示に留めます（CSS カスタマイズ用に先に作られた設定を壊さないため）。
 
 ### AI エージェント向けスキルの配置
 
-`SKILL.md` を各種 AI ツールの所定ディレクトリへ展開します。
+同梱スキル（`SKILL.md` ほか一式）を各種 AI ツールの所定ディレクトリへ展開します。
+
+同梱スキルは以下の 2 つです：
+
+| スキル | 説明 |
+|--------|------|
+| `lism-css-guide` | Lism CSS で UI・ページを実装・修正する時に使う実装ガイド |
+| `lism-css-refactor` | 既存の Lism CSS コードを、見た目や挙動を変えずに Lism らしい書き方へ整理するリファクタガイド |
 
 ```bash
 # 対話モード（使用中のツールを自動検出）
 pnpm dlx lism-cli skill add
+
+# スキル名を指定して個別に導入
+pnpm dlx lism-cli skill add lism-css-refactor
 
 # ツールを明示指定
 pnpm dlx lism-cli skill add --claude --cursor
@@ -87,26 +98,28 @@ pnpm dlx lism-cli skill check
 pnpm dlx lism-cli skill update --claude
 ```
 
-配置先の対応表：
+`skill add` は引数なしで実行すると同梱スキルすべてを一括導入し、`skill add <skill>` でスキル名を指定すると、そのスキルだけを配置します。`check` / `update` はスキル引数を取らず、常に同梱スキル全体が対象です。
+
+配置先の対応表（`<skill>` にはスキル名が入ります）：
 
 | ツール | 配置先 |
 |--------|--------|
-| `--claude` | `.claude/skills/lism-css-guide` |
-| `--codex` | `.agents/skills/lism-css-guide` |
-| `--cursor` | `.cursor/skills/lism-css-guide` |
-| `--windsurf` | `.windsurf/skills/lism-css-guide` |
-| `--cline` | `.cline/skills/lism-css-guide` |
-| `--copilot` | `.github/skills/lism-css-guide` |
-| `--gemini` | `.gemini/skills/lism-css-guide` |
-| `--junie` | `.junie/skills/lism-css-guide` |
+| `--claude` | `.claude/skills/<skill>` |
+| `--codex` | `.agents/skills/<skill>` |
+| `--cursor` | `.cursor/skills/<skill>` |
+| `--windsurf` | `.windsurf/skills/<skill>` |
+| `--cline` | `.cline/skills/<skill>` |
+| `--copilot` | `.github/skills/<skill>` |
+| `--gemini` | `.gemini/skills/<skill>` |
+| `--junie` | `.junie/skills/<skill>` |
 
 ## lism.config.js
 
-`ui init` / `ui add` が生成・読み込む設定ファイル。CSS の設定（`tokens` 等）と CLI 設定を同居できます。
+`ui add` / `ui init` が読み込む設定ファイル（新規作成するのは `ui init`）。CSS の設定（`tokens` 等）と CLI 設定を同居できます。
 
 ```js
 export default {
-  cli: {
+  ui: {
     framework: 'react', // 'react' | 'astro'
     componentsDir: 'src/components/ui',
     helperDir: 'src/components/ui/_helper',
@@ -114,9 +127,9 @@ export default {
 };
 ```
 
-`lism.config.mjs` も同様に読み込まれます。旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。
+設定ファイルは `lism.config.ts` / `lism.config.mjs` / `lism.config.js` に対応しており、この順で探索して最初に見つかったものを読み込みます。`lism-css` 本体の設定読込（`@lism-css/plugin` / `lism-css build`）も同じ探索順です。
 
-> **Note:** TypeScript の `lism.config.ts` は現在未対応です。`lism-css` 本体の設定読込（`@lism-css/plugin` / `lism-css build`）も `.ts` を読み込まない設計のため、設定ファイルは `.js` / `.mjs` で記述してください。
+旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。旧 `cli` セクション名も後方互換のため読み込めますが、deprecation 警告が出るので `ui` へのリネームを推奨します。
 
 ## パッケージが見つからないエラーが出る場合
 

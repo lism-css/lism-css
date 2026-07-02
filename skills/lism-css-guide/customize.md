@@ -102,7 +102,7 @@ SCSS を直接読み込む構成では、コンパイル時に `lism-css` 本体
 
 ## `lism.config.js` でのカスタマイズ
 
-プロジェクトのルート直下に `lism.config.js`（または `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
+プロジェクトのルート直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
 
 ### Vite / Astro プラグインの登録（推奨セットアップ）
 
@@ -138,7 +138,7 @@ export default defineConfig({
 - **動的CSSビルド**: `import 'lism-css/main.css'` 等を捕捉し、`lism.config.js` を反映済みの CSS をその場で生成する（props / tokens を追加すると CSS に自動反映される）
 - **型の自動生成**: 有効化したブレイクポイント・追加した props / traits を反映した `lism-env.d.ts` を起動時に自動生成する
 
-`lism.config.js` はプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所に置く場合は `configPath` で指定できます。
+設定ファイルはプロジェクトルートから `lism.config.ts` → `lism.config.mjs` → `lism.config.js` の順で自動検出します。別の場所に置く場合は `configPath` で指定できます。
 
 ```js
 // Vite
