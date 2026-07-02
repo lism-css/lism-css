@@ -59,7 +59,7 @@
 
 ### `c--*`の命名
 
-Block/Element/Modifierの形式（Block=`c--{name}`、Element=`_`ひとつ、Modifier=`--`ふたつ）は[css-rules.md](./css-rules.md#component-classc--)を参照。Block名はcamelCaseを第一候補にし、既存コードがアンダースコア区切りならそれに合わせます。単語区切りのハイフン（`c--feature-card`）とBEM風の`__`は使いません（NG→OK例は[antipatterns.md](./antipatterns.md#クラス名の命名ミス)を参照）。
+Block/Element/Modifierの形式（Block=`c--{name}`、Element=`_`ひとつ、Modifier=`--`ふたつ）は[css-rules.md](./css-rules.md#component-classc--)を参照。Block名はcamelCaseを第一候補にし、既存コードがアンダースコア区切りならそれに合わせます。単語区切りのハイフン（`c--feature-card`）とBEM風の`__`は使いません（NG→OK例は[antipatterns-layout.md](./antipatterns-layout.md#クラス名の命名ミス)を参照）。
 
 Property Class の形式:
 

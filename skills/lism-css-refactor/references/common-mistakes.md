@@ -2,7 +2,7 @@
 
 修正案を作った後、**ユーザーへ提示する前**に確認する項目です（[`checklist.md`](./checklist.md)のPass10）。自分の修正案を他人のPRだと思って読み直し、リファクタによって元の見た目や動きを壊していないかを確認します。
 
-ここで見るのは、**元は正しく動いていたものを、自分の変更で壊していないか**です。token typo・px直書き・`is--`誤用など、新規実装時にも起きる一般的なミスはここに重複して書かず、`lism-css-guide`の[`antipatterns.md`](../../lism-css-guide/antipatterns.md)を参照します。
+ここで見るのは、**元は正しく動いていたものを、自分の変更で壊していないか**です。token typo・px直書き・`is--`誤用など、新規実装時にも起きる一般的なミスはここに重複して書かず、`lism-css-guide`の[`antipatterns.md`](../../lism-css-guide/antipatterns.md)と[`antipatterns-layout.md`](../../lism-css-guide/antipatterns-layout.md)を参照します。
 
 ## 最初に必ず見ること
 
