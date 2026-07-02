@@ -4,20 +4,21 @@
  * - `computeBuildConfigs`: defaults / full preset / full CSS defaults / userConfig をマージして main / full の BuildConfig を作る純粋関数。
  *   マージ順（later wins）は `config/index.ts`・`bin/cli.mjs` と一致させる（JS ランタイムと CSS 出力の乖離防止）。
  * - `loadBuildConfigs`: lism-css の default-config / props-full preset / helper と
- *   projectRoot の `lism.config.{js,mjs}` を読み込んでマージする。consumer 環境（インストール済みパッケージ）で実行される前提。
- *   user 設定は mtime をクエリに付けて import し、dev での `lism.config.js` 変更を ESM モジュールキャッシュ越しに拾えるようにする。
+ *   projectRoot の `lism.config.{js,mjs,ts}` を読み込んでマージする。consumer 環境（インストール済みパッケージ）で実行される前提。
+ *   user 設定は jiti（`moduleCache: false`）経由で import し、dev での `lism.config.*` 変更を再評価できるようにする。
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createJiti } from 'jiti';
 import type { BuildConfig, PropConfig } from './serialize';
 
 export type ObjDeepMerge = (origin: Record<string, unknown>, source: Record<string, unknown>) => Record<string, unknown>;
 
-const USER_CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'];
+const USER_CONFIG_SEARCH = ['lism.config.ts', 'lism.config.mjs', 'lism.config.js'];
 const FULL_CSS_DEFAULTS = {
   // full.css は purge 併用前提のスーパーセットとして xs を有効化する。
-  // userConfig はこの後にマージするため、lism.config.js の breakpoints.xs が最後に勝つ。
+  // userConfig はこの後にマージするため、lism.config.* の breakpoints.xs が最後に勝つ。
   breakpoints: { xs: '360px' },
 } satisfies Record<string, unknown>;
 
@@ -68,13 +69,13 @@ export interface LoadedBuildConfigs {
   defaultPropKeys: string[];
   /** default-config に最初から含まれる trait キー。typegen で追加 trait との差分抽出に使う。 */
   defaultTraitKeys: string[];
-  /** lism.config.js の isFullMode フラグ。 */
+  /** lism.config.* の isFullMode フラグ。 */
   isFullMode: boolean;
   /** 見つかった user 設定ファイルの絶対パス（無ければ null）。watch 対象に使う。 */
   userConfigPath: string | null;
 }
 
-/** 明示パス、または projectRoot 直下の lism.config.{js,mjs} を探す。 */
+/** 明示パス、または projectRoot 直下の lism.config.{js,mjs,ts} を探す。 */
 export function findUserConfigPath(projectRoot: string, configPath?: string): string | null {
   if (configPath) {
     const abs = path.resolve(projectRoot, configPath);
@@ -131,10 +132,13 @@ export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfi
   const userConfigPath = findUserConfigPath(projectRoot, opts.configPath);
   let userConfig: Record<string, unknown> = {};
   if (userConfigPath) {
-    // mtime をクエリに付けて ESM モジュールキャッシュをバストする（dev で lism.config.js 変更を拾うため）。
-    const mtime = fs.statSync(userConfigPath).mtimeMs;
-    const userMod = (await import(`${pathToFileURL(userConfigPath).href}?v=${mtime}`)) as { default?: Record<string, unknown> };
-    userConfig = userMod.default ?? {};
+    // jiti で読み込む（.ts も含めて対応するため）。moduleCache: false で dev watch 時の
+    // 再評価を担保する（mtime クエリ方式の代替）。jiti 2 の interopDefault は既定で true の
+    // ため false を明示し、native import() と同じ「default 無し→空オブジェクト」の意味論を
+    // 維持して手動で `?.default` を取り出す。
+    const jiti = createJiti(import.meta.url, { moduleCache: false, interopDefault: false });
+    const mod = await jiti.import(userConfigPath);
+    userConfig = (mod as { default?: Record<string, unknown> })?.default ?? {};
   }
 
   const { defaultConfig, propsFull, objDeepMerge } = await loadCoreBuildDeps();
