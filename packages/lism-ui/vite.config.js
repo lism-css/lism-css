@@ -43,6 +43,10 @@ const entries = {
 // build.lib を設定すると でライブラリモードになる。
 // https://ja.vitejs.dev/guide/build.html#library-mode
 export default defineConfig({
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.ts'],
+  },
   plugins: [
     react({ jsxRuntime: 'automatic' }),
     libInjectCss(),
