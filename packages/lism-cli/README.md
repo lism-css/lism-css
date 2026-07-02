@@ -55,16 +55,17 @@ pnpm dlx lism-cli ui add accordion --ref dev
 
 コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されます。`lism-ui` を更新するだけで CLI 側も自動で追従します。
 
-初回実行時に `lism.config.{ts,mjs,js}` が無い場合は対話式セットアップが走り、`ui` セクションを持つ `lism.config.js` を新規作成します。
+`ui` セクションの設定が見つからない状態で `ui add` を実行すると、対話式セットアップが走ります。
 
 ```
 ? フレームワークを選択してください: React
 ? コンポーネントの出力先ディレクトリ: src/components/ui
 ? helper の出力先ディレクトリ: src/components/ui/_helper
-✔ lism.config.js を作成しました。
 ```
 
-`ui init` で設定の生成のみ行うこともできます。既存の `lism.config.*` がある場合はファイルを書き換えず、貼り付け用の `ui` セクションのスニペットを表示します（CSS カスタマイズ用に先に作られた設定を壊さないため）。
+`ui add` は入力した値をその回の実行に使うだけで設定ファイルは書き換えず、最後に `lism.config.*` へ貼り付けるための `ui` セクションのスニペットを案内します。
+
+設定をファイルとして残すには `ui init` を使います。`lism.config.{ts,mjs,js}` が無い場合は `ui` セクションを持つ `lism.config.js` を新規作成し、既存の `lism.config.*` がある場合はファイルを書き換えず、貼り付け用スニペットの表示に留めます（CSS カスタマイズ用に先に作られた設定を壊さないため）。
 
 ### AI エージェント向けスキルの配置
 
@@ -114,7 +115,7 @@ pnpm dlx lism-cli skill update --claude
 
 ## lism.config.js
 
-`ui init` / `ui add` が生成・読み込む設定ファイル。CSS の設定（`tokens` 等）と CLI 設定を同居できます。
+`ui add` / `ui init` が読み込む設定ファイル（新規作成するのは `ui init`）。CSS の設定（`tokens` 等）と CLI 設定を同居できます。
 
 ```js
 export default {

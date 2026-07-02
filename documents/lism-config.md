@@ -119,7 +119,7 @@ npx lism-css build
 pnpm exec lism-css build
 ```
 
-このコマンドはプロジェクトルートの`lism.config.js`を直接読み、config反映済みCSSを生成する。
+このコマンドはプロジェクトルートの設定ファイルを探索順（`.ts`→`.mjs`→`.js`）で直接読み、config反映済みCSSを生成する。
 そのため、CSSを事前生成するだけならVite/Astroプラグインは不要。
 `--full`を付けると`full.css`/`full_no_layer.css`も生成対象になる。
 
