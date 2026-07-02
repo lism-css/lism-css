@@ -54,7 +54,6 @@ describe('setTabs', () => {
 
   it('aria-controls が無い tab を click しても例外で落ちない', () => {
     const tabs = document.querySelector<HTMLElement>('.c--tabs')!;
-    setTabs(tabs);
 
     const extraItem = document.createElement('div');
     const extraBtn = document.createElement('button');

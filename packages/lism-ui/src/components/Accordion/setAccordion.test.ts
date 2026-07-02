@@ -106,12 +106,17 @@ describe('setEvent', () => {
   it('クリーンアップ後はクリックしてもトグルされない', async () => {
     const item = document.querySelector<HTMLElement>('.c--accordion_item')!;
     const button = item.querySelector<HTMLElement>('.c--accordion_button')!;
+    const panel = item.querySelector<HTMLElement>('.c--accordion_panel')!;
     const cleanup = setEvent(item);
 
     cleanup();
     button.click();
 
-    await Promise.resolve();
+    // リスナーが残っていれば hidden は同期的に外れるため、まず同期状態を検証する
+    expect(panel).toHaveAttribute('hidden', 'until-found');
+
+    // data-opened の付与はマイクロタスク数周後のため、setTimeout で全消化してから検証する
+    await new Promise((resolve) => setTimeout(resolve, 0));
     expect(item).not.toHaveAttribute('data-opened');
   });
 

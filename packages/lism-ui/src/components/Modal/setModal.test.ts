@@ -119,8 +119,11 @@ describe('setEvent (非 dialog 要素)', () => {
     setEvent(modal);
 
     trigger.click();
+    // open 属性は同期で付くが、closeDialog は data-is-open を見て早期 return するため、
+    // rAF での data-is-open 付与まで待ってから閉じる
     await vi.waitFor(() => {
       expect(modal).toHaveAttribute('open');
+      expect(modal.dataset.isOpen).toBe('1');
     });
 
     document.querySelector<HTMLElement>('[data-modal-close="m2"]')!.click();

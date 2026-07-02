@@ -1,11 +1,9 @@
 import '@testing-library/jest-dom/vitest';
 
-// jsdom の requestAnimationFrame はコールバックを即時実行しないため shim
+// jsdom の requestAnimationFrame は実フレームに紐づかないため setTimeout ベースの shim に差し替える。
+// 同期実行にはせず 1 tick 遅らせることで、「次フレームで実行される」という非同期境界を再現する
 Object.defineProperty(window, 'requestAnimationFrame', {
-  value: (cb: FrameRequestCallback) => {
-    cb(0);
-    return 0;
-  },
+  value: (cb: FrameRequestCallback) => window.setTimeout(() => cb(performance.now()), 0),
   writable: true,
 });
 
