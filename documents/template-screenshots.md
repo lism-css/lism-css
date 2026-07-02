@@ -67,7 +67,7 @@ pnpm --filter lism-docs screenshot:templates -- --no-build
 
 ## 英語版（en）スクショ
 
-テンプレの英語版（`lism create --lang en` 相当）は、テンプレの言語対応方式によって撮り方が分かれる。いずれも出力先は **`screenshots/en/`** に揃える。
+テンプレの英語版（`lism-cli create --lang en` 相当）は、テンプレの言語対応方式によって撮り方が分かれる。いずれも出力先は **`screenshots/en/`** に揃える。
 
 ### LP（言語別 variant 方式）— `shots` に追記するだけ
 

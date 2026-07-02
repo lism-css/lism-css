@@ -1,7 +1,7 @@
 # lism.config.js メモ
 
 `lism.config.js`は、Lism CSSのユーザー設定をまとめるプロジェクトルートの設定ファイル。
-CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI設定を同じファイルに同居できる。
+CSS出力、React/Astroコンポーネントの実行時設定、`lism-cli ui`系CLI設定を同じファイルに同居できる。
 
 
 ## できること
@@ -16,7 +16,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI
 | `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
 | `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
 | `defaultImportant` | Property Classにデフォルトで`!important`を付与する（Sassの`$default_important`相当のビルド時設定） |
-| `cli` | `lism ui add`などの出力先設定。旧`lism-ui.json`の後継 |
+| `cli` | `lism-cli ui add`などの出力先設定。旧`lism-ui.json`の後継 |
 
 ```js
 // lism.config.js
