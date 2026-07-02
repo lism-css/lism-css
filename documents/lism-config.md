@@ -67,6 +67,27 @@ export default {
 
 `.ts`/`.mjs`/`.js`が対象（`lism.config.ts`→`lism.config.mjs`→`lism.config.js`の順で探索し、最初に見つかったものを読む）。
 
+### 型サポート（`lism-css/config-types`）
+
+設定ファイルの執筆時に型チェック・補完を効かせるには、`lism-css/config-types`の`LismConfig`型を使う。
+`.ts`は`satisfies LismConfig`、`.js`はJSDoc`@type`を付ける。ジェネリクスの`defineConfig`ヘルパーは提供しない（`satisfies`が literal 保持・typo検出・エラーメッセージすべてで優れるため）。
+
+```ts
+// lism.config.ts
+import type { LismConfig } from 'lism-css/config-types';
+export default { /* ... */ } satisfies LismConfig;
+```
+
+```js
+// lism.config.js
+/** @type {import('lism-css/config-types').LismConfig} */
+export default { /* ... */ };
+```
+
+- `LismConfig`/`PropConfig`/`BreakpointKey`を公開。`config/types.ts`が実体で、副作用のある`config/index.ts`には依存しない。
+- ビルド時生成物の`lism-env.d.ts`（コンポーネント側のprop/trait解禁）とは別レイヤー。
+- `PropConfig`は`@lism-css/plugin`のSCSS直列化（`serialize.ts`）でも同じ型をre-exportして共有する（型の二重管理を解消）。
+
 
 ## プラグインは必要か
 

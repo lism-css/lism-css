@@ -104,6 +104,8 @@ SCSS を直接読み込む構成では、コンパイル時に `lism-css` 本体
 
 プロジェクトのルート直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
 
+設定ファイルの型チェック・補完には `lism-css/config-types` の `LismConfig` 型を使います。`.ts` は `export default { ... } satisfies LismConfig`、`.js` は `/** @type {import('lism-css/config-types').LismConfig} */` を付けると、キー名の typo や値の形をエディタが検出します（コンポーネント側の prop/trait を解禁する生成物 `lism-env.d.ts` とは別物）。
+
 ### Vite / Astro プラグインの登録（推奨セットアップ）
 
 `lism.config.js` を読み込ませるには、Vite（または Astro）の設定ファイルで `@lism-css/plugin` の統合プラグインを登録します。**未登録の場合、ファイルを置いてもデフォルト設定のまま**になります。
