@@ -102,15 +102,15 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 | やりたいこと | 使う候補 | 詳細  |
 | --- | --- | --- |
-| 縦並び | `Stack`/`Flow` | [`primitives/l--stack.md`](./primitives/l--stack.md)、[`primitives/l--flow.md`](./primitives/l--flow.md)  |
-| 横並び | `Cluster`（折り返す）/`Flex`（細かく制御する） | [`primitives/l--cluster.md`](./primitives/l--cluster.md)、[`primitives/l--flex.md`](./primitives/l--flex.md)  |
-| カラム | `Columns`（等幅N列）/`AutoColumns`（最小幅ベースの自動段組み）/`WithSide`（2カラム自動切替）  | [`primitive-class.md`](./primitive-class.md#カラムレイアウト-primitive-の使い分けガイド)  |
-| 幅制御 | `Container`（コンテナクエリ基準）/`Wrapper`（直下領域の幅制限）/`max-sz`（単体の幅）  | [`trait-class/is--container.md`](./trait-class/is--container.md)、[`trait-class/is--wrapper.md`](./trait-class/is--wrapper.md)、[`property-class/max-sz.md`](./property-class/max-sz.md) |
-| 画像・動画・iframeを置く | `Frame`（アスペクト比枠・直下メディアのfit・overflowを任せる）  | [`primitives/l--frame.md`](./primitives/l--frame.md)  |
-| ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | [`components-ui.md`](./components-ui.md)、[`set-class.md`](./set-class.md)  |
-| hover効果  | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | [`property-class/hov.md`](./property-class/hov.md)、[`trait-class/has--transition.md`](./trait-class/has--transition.md)  |
-| 全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | [`trait-class/is--boxLink.md`](./trait-class/is--boxLink.md)  |
-| 小さいUI部品 | `c--*`＋Property Class（`c--*`は意味名に留め、単一要素の見た目はProperty Class/Lism Propsへ） | [`property-class.md`](./property-class.md)、[`css-rules.md`](./css-rules.md#component-classc--) |
+| 縦並び | `Stack`/`Flow` | `primitives/l--stack.md`、`primitives/l--flow.md`  |
+| 横並び | `Cluster`（折り返す）/`Flex`（細かく制御する） | `primitives/l--cluster.md`、`primitives/l--flex.md`  |
+| カラム | `Columns`（等幅N列）/`AutoColumns`（最小幅ベースの自動段組み）/`WithSide`（2カラム自動切替）  | `primitive-class.md#カラムレイアウト-primitive-の使い分けガイド`  |
+| 幅制御 | `Container`（コンテナクエリ基準）/`Wrapper`（直下領域の幅制限）/`max-sz`（単体の幅）  | `trait-class/is--container.md`、`trait-class/is--wrapper.md`、`property-class/max-sz.md` |
+| 画像・動画・iframeを置く | `Frame`（アスペクト比枠・直下メディアのfit・overflowを任せる）  | `primitives/l--frame.md`  |
+| ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | `components-ui.md`、`set-class.md`  |
+| hover効果  | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | `property-class/hov.md`、`trait-class/has--transition.md`  |
+| ボックス・カードの全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | `trait-class/is--boxLink.md`  |
+| 小さいUI部品 | `c--*`＋Property Class（`c--*`は意味名に留め、単一要素の見た目はProperty Class/Lism Propsへ） | `property-class.md`、`css-rules.md#component-classc--` |
 
 ## 提出前セルフチェック
 
@@ -138,60 +138,60 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 | ファイル | 内容 | こんな時に読む |
 | --- | --- | --- |
-| [`primitive-class.md`](./primitive-class.md) | `l--`/`a--` Primitive一覧と使い分け | レイアウト選定（必要なら`primitives/l--*.md`も） |
-| [`trait-class.md`](./trait-class.md) | `is--`/`has--` Trait一覧と役割  | 状態・バリエーション設計 |
-| [`property-class.md`](./property-class.md) | `-{prop}:{value}`形式のProperty Class | CSSをProperty Class/Propsへ移せるか  |
-| [`utility-class.md`](./utility-class.md) | `u--*`ユーティリティ  | ユーティリティの確認 |
-| [`set-class.md`](./set-class.md) | `set--plain`/`set--hov`等のセットクラス | reset済みボタン等を使う  |
-| [`tokens.md`](./tokens.md) | デザイントークンとCSS変数 | 余白・色・角丸・影・fzの照合 |
-| [`naming.md`](./naming.md) | 命名規則とProperty Class省略ルール  | 命名・prefix・Property Class表記 |
-| [`css-rules.md`](./css-rules.md) | CSS設計・Layer構造・`c--*`・独自prefix  | CSSレイヤー・`c--*`・カスタムCSS |
-| [`responsive.md`](./responsive.md) | BP・コンテナクエリ・レスポンシブProps | レスポンシブ・コンテナクエリ |
-| [`base-styles.md`](./base-styles.md) | Reset CSSとHTML要素の基本スタイル | 素のHTML要素の既定を確認 |
-| [`components-core.md`](./components-core.md) | `lism-css`のReact/Astroコアコンポーネント | React/Astroコンポーネント  |
-| [`components-ui.md`](./components-ui.md) | `@lism-css/ui`のUIコンポーネント  | UIコンポーネント置換 |
-| [`customize.md`](./customize.md) | SCSS変数・`lism.config.js`によるカスタマイズ  | トークン/設定をカスタマイズ  |
-| [`antipatterns.md`](./antipatterns.md) | AIが生成しがちなNG→OKカタログ | 典型ミス確認 |
-| [`references/authoring.md`](./references/authoring.md) | 実装プランの作り方（C0–C8詳細・出力フォーマット） | 実装プランを作る/書式を確認  |
+| `primitive-class.md` | `l--`/`a--` Primitive一覧と使い分け | レイアウト選定（必要なら`primitives/l--*.md`も） |
+| `trait-class.md` | `is--`/`has--` Trait一覧と役割  | 状態・バリエーション設計 |
+| `property-class.md` | `-{prop}:{value}`形式のProperty Class | CSSをProperty Class/Propsへ移せるか  |
+| `utility-class.md` | `u--*`ユーティリティ  | ユーティリティの確認 |
+| `set-class.md` | `set--plain`/`set--hov`等のセットクラス | reset済みボタン等を使う  |
+| `tokens.md` | デザイントークンとCSS変数 | 余白・色・角丸・影・fzの照合 |
+| `naming.md` | 命名規則とProperty Class省略ルール  | 命名・prefix・Property Class表記 |
+| `css-rules.md` | CSS設計・Layer構造・`c--*`・独自prefix  | CSSレイヤー・`c--*`・カスタムCSS |
+| `responsive.md` | BP・コンテナクエリ・レスポンシブProps | レスポンシブ・コンテナクエリ |
+| `base-styles.md` | Reset CSSとHTML要素の基本スタイル | 素のHTML要素の既定を確認 |
+| `components-core.md` | `lism-css`のReact/Astroコアコンポーネント | React/Astroコンポーネント  |
+| `components-ui.md` | `@lism-css/ui`のUIコンポーネント  | UIコンポーネント置換 |
+| `customize.md` | SCSS変数・`lism.config.js`によるカスタマイズ  | トークン/設定をカスタマイズ  |
+| `antipatterns.md` | AIが生成しがちなNG→OKカタログ | 典型ミス確認 |
+| `references/authoring.md` | 実装プランの作り方（C0–C8詳細・出力フォーマット） | 実装プランを作る/書式を確認  |
 
 ## クラス単位の詳細リファレンス
 
 **Layout Primitives**
 
-- `l--box`/`<Box>`: [`primitives/l--box.md`](./primitives/l--box.md)
-- `l--flex`/`<Flex>`: [`primitives/l--flex.md`](./primitives/l--flex.md)
-- `l--stack`/`<Stack>`: [`primitives/l--stack.md`](./primitives/l--stack.md)
-- `l--cluster`/`<Cluster>`: [`primitives/l--cluster.md`](./primitives/l--cluster.md)
-- `l--grid`/`<Grid>`: [`primitives/l--grid.md`](./primitives/l--grid.md)
-- `l--flow`/`<Flow>`: [`primitives/l--flow.md`](./primitives/l--flow.md)
-- `l--center`/`<Center>`: [`primitives/l--center.md`](./primitives/l--center.md)
-- `l--frame`/`<Frame>`: [`primitives/l--frame.md`](./primitives/l--frame.md)
-- `l--columns`/`<Columns>`: [`primitives/l--columns.md`](./primitives/l--columns.md)
-- `l--tileGrid`/`<TileGrid>`: [`primitives/l--tileGrid.md`](./primitives/l--tileGrid.md)
-- `l--autoColumns`/`<AutoColumns>`: [`primitives/l--autoColumns.md`](./primitives/l--autoColumns.md)
-- `l--switchColumns`/`<SwitchColumns>`: [`primitives/l--switchColumns.md`](./primitives/l--switchColumns.md)
-- `l--withSide`/`<WithSide>`: [`primitives/l--withSide.md`](./primitives/l--withSide.md)
+- `l--box`/`<Box>`: `primitives/l--box.md`
+- `l--flex`/`<Flex>`: `primitives/l--flex.md`
+- `l--stack`/`<Stack>`: `primitives/l--stack.md`
+- `l--cluster`/`<Cluster>`: `primitives/l--cluster.md`
+- `l--grid`/`<Grid>`: `primitives/l--grid.md`
+- `l--flow`/`<Flow>`: `primitives/l--flow.md`
+- `l--center`/`<Center>`: `primitives/l--center.md`
+- `l--frame`/`<Frame>`: `primitives/l--frame.md`
+- `l--columns`/`<Columns>`: `primitives/l--columns.md`
+- `l--tileGrid`/`<TileGrid>`: `primitives/l--tileGrid.md`
+- `l--autoColumns`/`<AutoColumns>`: `primitives/l--autoColumns.md`
+- `l--switchColumns`/`<SwitchColumns>`: `primitives/l--switchColumns.md`
+- `l--withSide`/`<WithSide>`: `primitives/l--withSide.md`
 
 **Trait Class**
 
-- `is--container`/`<Container>`: [`trait-class/is--container.md`](./trait-class/is--container.md)
-- `is--wrapper`/`<Wrapper>`: [`trait-class/is--wrapper.md`](./trait-class/is--wrapper.md)
-- `is--layer`/`<Layer>`: [`trait-class/is--layer.md`](./trait-class/is--layer.md)
-- `is--boxLink`/`<BoxLink>`: [`trait-class/is--boxLink.md`](./trait-class/is--boxLink.md)
-- `has--transition`: [`trait-class/has--transition.md`](./trait-class/has--transition.md)
-- `has--gutter`: [`trait-class/has--gutter.md`](./trait-class/has--gutter.md)
-- `has--snap`: [`trait-class/has--snap.md`](./trait-class/has--snap.md)
-- `has--mask`: [`trait-class/has--mask.md`](./trait-class/has--mask.md)
+- `is--container`/`<Container>`: `trait-class/is--container.md`
+- `is--wrapper`/`<Wrapper>`: `trait-class/is--wrapper.md`
+- `is--layer`/`<Layer>`: `trait-class/is--layer.md`
+- `is--boxLink`/`<BoxLink>`: `trait-class/is--boxLink.md`
+- `has--transition`: `trait-class/has--transition.md`
+- `has--gutter`: `trait-class/has--gutter.md`
+- `has--snap`: `trait-class/has--snap.md`
+- `has--mask`: `trait-class/has--mask.md`
 
 **Atomic Primitives/Property Class**
 
-- `a--icon`/`<Icon>`: [`primitives/a--icon.md`](./primitives/a--icon.md)
-- `a--divider`/`<Divider>`: [`primitives/a--divider.md`](./primitives/a--divider.md)
-- `a--spacer`/`<Spacer>`: [`primitives/a--spacer.md`](./primitives/a--spacer.md)
-- `a--decorator`/`<Decorator>`: [`primitives/a--decorator.md`](./primitives/a--decorator.md)
-- `-bd`/`-bd-{side}`系: [`property-class/bd.md`](./property-class/bd.md)
-- `-hov:*`系: [`property-class/hov.md`](./property-class/hov.md)
-- `-max-sz:full`/`-max-sz:bleed`: [`property-class/max-sz.md`](./property-class/max-sz.md)
+- `a--icon`/`<Icon>`: `primitives/a--icon.md`
+- `a--divider`/`<Divider>`: `primitives/a--divider.md`
+- `a--spacer`/`<Spacer>`: `primitives/a--spacer.md`
+- `a--decorator`/`<Decorator>`: `primitives/a--decorator.md`
+- `-bd`/`-bd-{side}`系: `property-class/bd.md`
+- `-hov:*`系: `property-class/hov.md`
+- `-max-sz:full`/`-max-sz:bleed`: `property-class/max-sz.md`
 
 ## このスキルファイル自身のアップデート方法
 
