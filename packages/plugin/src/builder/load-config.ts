@@ -133,9 +133,10 @@ export async function loadBuildConfigs(projectRoot: string, opts: LoadBuildConfi
   let userConfig: Record<string, unknown> = {};
   if (userConfigPath) {
     // jiti で読み込む（.ts も含めて対応するため）。moduleCache: false で dev watch 時の
-    // 再評価を担保する（mtime クエリ方式の代替）。interopDefault は付けず、現状の意味
-    // （default 無し→空オブジェクト）を維持するため手動で `?.default` を取り出す。
-    const jiti = createJiti(import.meta.url, { moduleCache: false });
+    // 再評価を担保する（mtime クエリ方式の代替）。jiti 2 の interopDefault は既定で true の
+    // ため false を明示し、native import() と同じ「default 無し→空オブジェクト」の意味論を
+    // 維持して手動で `?.default` を取り出す。
+    const jiti = createJiti(import.meta.url, { moduleCache: false, interopDefault: false });
     const mod = await jiti.import(userConfigPath);
     userConfig = (mod as { default?: Record<string, unknown> })?.default ?? {};
   }
