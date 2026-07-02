@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadMarkdown } from '../lib/load-markdown.js';
+import { loadPropsMarkdown } from '../lib/load-markdown.js';
 import { parsePropRows, type PropRow } from '../lib/markdown-utils.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
@@ -284,7 +284,7 @@ export function registerConvertCss(server: McpServer): void {
           return error(atRuleError);
         }
 
-        const md = loadMarkdown('property-class.md');
+        const md = loadPropsMarkdown();
         const mappings = buildMappings(md);
         const cssPropertyMap = buildCssPropertyMap(mappings);
 

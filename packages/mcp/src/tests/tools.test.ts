@@ -194,6 +194,23 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('md');
   });
 
+  it('get_guide で property-class トピックが分冊（all-props / bd / hov / max-sz）を含む Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'property-class' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    // 本体
+    expect(text).toContain('Property Class');
+    // all-props.md の全 Prop 表（本体には存在しない行）
+    expect(text).toContain('`mt`');
+    expect(text).toContain('margin-top');
+    // bd.md / hov.md / max-sz.md
+    expect(text).toContain('-bd-');
+    expect(text).toContain('-hov:');
+    expect(text).toContain('-max-sz:bleed');
+  });
+
   it('get_guide で antipatterns トピックが NG/OK カタログの Markdown を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'antipatterns' } });

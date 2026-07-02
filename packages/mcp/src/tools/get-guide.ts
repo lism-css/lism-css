@@ -3,33 +3,38 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadMarkdown } from '../lib/load-markdown.js';
 import { markdownResponse, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
+// files に複数指定したトピックは結合して返す。
+// MCP クライアントは Markdown 内の相対リンクを辿れないため、分冊ファイルは本体に結合する。
 const GUIDE_TOPICS = {
-  overview: { file: 'SKILL.md', label: 'Framework overview, packages, implementation rules' },
-  tokens: { file: 'tokens.md', label: 'Design tokens (spacing, colors, font sizes, etc.)' },
-  'property-class': { file: 'property-class.md', label: 'Property Class system, all props reference table' },
+  overview: { files: ['SKILL.md'], label: 'Framework overview, packages, implementation rules' },
+  tokens: { files: ['tokens.md'], label: 'Design tokens (spacing, colors, font sizes, etc.)' },
+  'property-class': {
+    files: ['property-class.md', 'property-class/all-props.md', 'property-class/bd.md', 'property-class/hov.md', 'property-class/max-sz.md'],
+    label: 'Property Class system, all props reference table, border (bd) / hover (hov) / max-sz details',
+  },
   'components-core': {
-    file: 'components-core.md',
+    files: ['components-core.md'],
     label: 'Core component system (Lism, Box, Flex, Stack, Grid, etc.)',
   },
   'components-ui': {
-    file: 'components-ui.md',
+    files: ['components-ui.md'],
     label: 'UI components (Accordion, Modal, Tabs, Button, etc.)',
   },
-  'base-styles': { file: 'base-styles.md', label: 'Base styling, reset CSS, HTML element styles' },
-  'set-class': { file: 'set-class.md', label: 'Set classes (set--plain, set--bxsh, set--hov, etc.)' },
+  'base-styles': { files: ['base-styles.md'], label: 'Base styling, reset CSS, HTML element styles' },
+  'set-class': { files: ['set-class.md'], label: 'Set classes (set--plain, set--bxsh, set--hov, etc.)' },
   'primitive-class': {
-    file: 'primitive-class.md',
+    files: ['primitive-class.md'],
     label: 'Primitive class prefixes (is--, l--, a--) and Component class (c--), with column-layout primitive selection guide',
   },
-  'utility-class': { file: 'utility-class.md', label: 'Utility classes (u--trim, u--cbox, etc.)' },
-  'css-rules': { file: 'css-rules.md', label: 'CSS methodology, layer structure, naming conventions' },
-  responsive: { file: 'responsive.md', label: 'Responsive design, breakpoints, container queries' },
+  'utility-class': { files: ['utility-class.md'], label: 'Utility classes (u--trim, u--cbox, etc.)' },
+  'css-rules': { files: ['css-rules.md'], label: 'CSS methodology, layer structure, naming conventions' },
+  responsive: { files: ['responsive.md'], label: 'Responsive design, breakpoints, container queries' },
   antipatterns: {
-    file: 'antipatterns.md',
+    files: ['antipatterns.md'],
     label: 'AI code-generation antipatterns (values / style declarations): px hardcoding, token typos, keycolor misuse, prop type mistakes',
   },
   'antipatterns-layout': {
-    file: 'antipatterns-layout.md',
+    files: ['antipatterns-layout.md'],
     label:
       'AI code-generation antipatterns (structure / layout / responsive): layout choice errors, responsive omissions, is-- misuse, naming mistakes',
   },
@@ -57,8 +62,8 @@ export function registerGetGuide(server: McpServer): void {
     },
     ({ topic }) => {
       try {
-        const { file } = GUIDE_TOPICS[topic];
-        return markdownResponse(loadMarkdown(file));
+        const { files } = GUIDE_TOPICS[topic];
+        return markdownResponse(files.map((file) => loadMarkdown(file)).join('\n\n'));
       } catch (e) {
         return error(
           `Failed to load guide "${topic}": ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
