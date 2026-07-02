@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadPropsMarkdown } from '../lib/load-markdown.js';
 import { parsePropRows, type PropRow } from '../lib/markdown-utils.js';
+import { MetaInfoSchema } from '../lib/schemas.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 /** CSS宣言 */
@@ -35,7 +36,7 @@ interface ComponentSuggestion {
 function detectAtRules(cssText: string): string | null {
   const atRuleMatch = cssText.match(/^@(\w[\w-]*)/m);
   if (atRuleMatch) {
-    return `@${atRuleMatch[1]} ルールは未対応です。CSS 宣言（property: value;）のみを入力してください。`;
+    return `@${atRuleMatch[1]} rules are not supported. Provide plain CSS declarations (property: value;) only.`;
   }
   return null;
 }
@@ -174,7 +175,7 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
   if (display === 'flex' && (flexDirection === 'column' || flexDirection === 'column-reverse')) {
     return {
       name: 'Stack',
-      reason: 'display: flex + flex-direction: column → Stack（縦積み Flex）',
+      reason: 'display: flex + flex-direction: column → Stack (vertical flex)',
       implicitCss: ['display: flex', 'flex-direction: column'],
     };
   }
@@ -183,7 +184,7 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
   if (display === 'grid' && placeItems === 'center') {
     return {
       name: 'Center',
-      reason: 'display: grid + place-items: center → Center（中央配置 Grid）',
+      reason: 'display: grid + place-items: center → Center (centered grid)',
       implicitCss: ['display: grid', 'place-items: center'],
     };
   }
@@ -192,7 +193,7 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
   if (display === 'flex') {
     return {
       name: 'Flex',
-      reason: 'display: flex → Flex コンポーネント',
+      reason: 'display: flex → Flex component',
       implicitCss: ['display: flex'],
     };
   }
@@ -201,7 +202,7 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
   if (display === 'grid') {
     return {
       name: 'Grid',
-      reason: 'display: grid → Grid コンポーネント',
+      reason: 'display: grid → Grid component',
       implicitCss: ['display: grid'],
     };
   }
@@ -274,6 +275,22 @@ export function registerConvertCss(server: McpServer): void {
             'CSS code to convert. Accepts a full rule block with selector (e.g. ".foo { padding: 1rem; }") or bare declarations (e.g. "padding: 1rem; font-size: 16px;"). @media and other at-rules are not supported.'
           ),
       },
+      outputSchema: {
+        meta: MetaInfoSchema,
+        conversions: z.array(
+          z.object({
+            css: z.string(),
+            lismProp: z.string().nullable(),
+            suggestedValue: z.string().nullable(),
+            availableTokens: z.array(z.string()).nullable(),
+            confidence: z.enum(['exact', 'approximate', 'unmapped']),
+            note: z.string(),
+          })
+        ),
+        suggestedComponent: z.object({ name: z.string(), reason: z.string(), implicitCss: z.array(z.string()) }).nullable(),
+        example: z.string(),
+        tip: z.string(),
+      },
       annotations: READ_ONLY_ANNOTATIONS,
     },
     ({ css }) => {
@@ -291,7 +308,7 @@ export function registerConvertCss(server: McpServer): void {
         const declarations = parseCssDeclarations(css);
 
         if (declarations.length === 0) {
-          return error('CSS 宣言が見つかりません。"property: value;" 形式の CSS を入力してください。');
+          return error('No CSS declarations found. Provide CSS in "property: value;" format.');
         }
 
         // 各宣言を変換
@@ -305,7 +322,7 @@ export function registerConvertCss(server: McpServer): void {
               suggestedValue: null,
               availableTokens: null,
               confidence: 'unmapped' as const,
-              note: 'Lism Props に該当なし。style で直接指定してください。',
+              note: 'No matching Lism prop. Specify it directly via the style attribute.',
             };
           }
 
@@ -319,10 +336,10 @@ export function registerConvertCss(server: McpServer): void {
             availableTokens: mapping.presetValues.length > 0 ? mapping.presetValues : null,
             confidence: suggested ? ('exact' as const) : ('approximate' as const),
             note: suggested
-              ? `トークン値 '${suggested}' を使用（カテゴリ: ${category}）`
+              ? `Use token value '${suggested}' (category: ${category})`
               : mapping.presetValues.length > 0
-                ? `カスタム値。利用可能なトークン: ${mapping.presetValues.join(', ')}（カテゴリ: ${category}）`
-                : `カスタム値として指定（カテゴリ: ${category}）`,
+                ? `Custom value. Available tokens: ${mapping.presetValues.join(', ')} (category: ${category})`
+                : `Use as a custom value (category: ${category})`,
           };
         });
 
@@ -336,10 +353,10 @@ export function registerConvertCss(server: McpServer): void {
           conversions,
           suggestedComponent,
           example,
-          tip: 'トークン値にマッチしない値は style 属性で CSS 変数として指定できます（例: style="--p: 1rem"）。get_props_system で各 prop の詳細を確認できます。',
-        } as unknown as Record<string, unknown>);
+          tip: 'Values that do not match a token can be set as CSS variables via the style attribute (e.g. style="--p: 1rem"). Use get_props_system for details on each prop.',
+        });
       } catch (e) {
-        return error(`CSS 変換に失敗しました: ${e instanceof Error ? e.message : String(e)}`);
+        return error(`CSS conversion failed: ${e instanceof Error ? e.message : String(e)}`);
       }
     }
   );

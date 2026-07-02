@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { getGuideFilenames, loadMarkdown } from '../lib/load-markdown.js';
 import { findComponentByHeading, findComponentInTables } from '../lib/markdown-utils.js';
-import { markdownResponse, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
+import { markdownResponse, loadFailureError, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 /** 入力を正規化してエイリアス検索のキーに変換する。
  *  `<Flex>` / `Flex` / `l--flex` / `flex` をすべて `flex` に揃える。 */
@@ -190,9 +190,7 @@ export function registerGetComponent(server: McpServer): void {
           tip: 'Use get_guide with topic="components-core" or "components-ui" to see all available components.',
         });
       } catch (e) {
-        return error(
-          `Failed to load component data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
-        );
+        return loadFailureError('component data', e);
       }
     }
   );

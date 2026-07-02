@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadMarkdown } from '../lib/load-markdown.js';
-import { markdownResponse, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
+import { markdownResponse, loadFailureError, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 // files に複数指定したトピックは結合して返す。
 // MCP クライアントは Markdown 内の相対リンクを辿れないため、分冊ファイルは本体に結合する。
@@ -26,9 +26,21 @@ const GUIDE_TOPICS = {
     files: ['primitive-class.md'],
     label: 'Primitive class prefixes (is--, l--, a--) and Component class (c--), with column-layout primitive selection guide',
   },
+  'trait-class': {
+    files: ['trait-class.md'],
+    label: 'Trait classes (is--, has--): declarative role/feature classes in the lism-trait layer',
+  },
   'utility-class': { files: ['utility-class.md'], label: 'Utility classes (u--trim, u--cbox, etc.)' },
   'css-rules': { files: ['css-rules.md'], label: 'CSS methodology, layer structure, naming conventions' },
+  naming: {
+    files: ['naming.md'],
+    label: 'Naming conventions: CSS variable / class naming rules, {prop} and {value} abbreviation rules',
+  },
   responsive: { files: ['responsive.md'], label: 'Responsive design, breakpoints, container queries' },
+  customize: {
+    files: ['customize.md'],
+    label: 'Customization: @layer opt-out, SCSS settings, lism.config.js, CSS purge',
+  },
   antipatterns: {
     files: ['antipatterns.md'],
     label: 'AI code-generation antipatterns (values / style declarations): px hardcoding, token typos, keycolor misuse, prop type mistakes',
@@ -41,6 +53,9 @@ const GUIDE_TOPICS = {
 } as const;
 
 type GuideTopic = keyof typeof GUIDE_TOPICS;
+
+/** get_guide が受理するトピックキーの集合。search.ts の nextTool 判定で利用する。 */
+export const GUIDE_TOPIC_KEYS: ReadonlySet<string> = new Set(Object.keys(GUIDE_TOPICS));
 
 const TOPIC_DESCRIPTION = Object.entries(GUIDE_TOPICS)
   .map(([key, { label }]) => `- ${key}: ${label}`)
@@ -65,9 +80,7 @@ export function registerGetGuide(server: McpServer): void {
         const { files } = GUIDE_TOPICS[topic];
         return markdownResponse(files.map((file) => loadMarkdown(file)).join('\n\n'));
       } catch (e) {
-        return error(
-          `Failed to load guide "${topic}": ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
-        );
+        return loadFailureError(`guide "${topic}"`, e);
       }
     }
   );

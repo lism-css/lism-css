@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadMarkdown } from '../lib/load-markdown.js';
 import { extractSection } from '../lib/markdown-utils.js';
-import { markdownResponse, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
+import { markdownResponse, loadFailureError, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 /**
  * SKILL.md を中核に、css-rules.md の Layer 構造セクションと
@@ -43,9 +43,7 @@ export function registerGetOverview(server: McpServer): void {
       try {
         return markdownResponse(buildOverviewMarkdown());
       } catch (e) {
-        return error(
-          `Failed to load overview data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
-        );
+        return loadFailureError('overview data', e);
       }
     }
   );

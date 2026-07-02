@@ -3,7 +3,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadPropsMarkdown } from '../lib/load-markdown.js';
 import { parsePropRows } from '../lib/markdown-utils.js';
 import { parsePropClassName } from '../lib/search.js';
-import { markdownResponse, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
+import { markdownResponse, loadFailureError, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 /** cssProperty フィールドからコア名を抽出（"--hl 変数のみ" → "--hl"） */
 function normalizeCssProperty(raw: string): string {
@@ -56,8 +56,10 @@ export function registerGetPropsSystem(server: McpServer): void {
         if (matched.length === 0) {
           const availableProps = rows.map((r) => `${r.prop} (${r.cssProperty})`);
           return notFound(
-            `"${prop}" に一致する Prop が見つかりません。Lism prop 名 (例: "p", "fz") または CSS プロパティ名 (例: "padding", "font-size") で検索できます。`,
-            { availableProps }
+            `No prop matches "${prop}". Search by Lism prop name (e.g. "p", "fz") or CSS property name (e.g. "padding", "font-size").`,
+            {
+              availableProps,
+            }
           );
         }
 
@@ -66,7 +68,7 @@ export function registerGetPropsSystem(server: McpServer): void {
 
         // property-class.md から対象セクションを抽出して結合
         const lines = md.split('\n');
-        const resultParts: string[] = [`## 検索結果: "${prop}"\n`];
+        const resultParts: string[] = [`## Search results: "${prop}"\n`];
 
         for (const sectionName of sections) {
           // セクション内の一致する行だけを含む簡易 Markdown を生成
@@ -86,9 +88,7 @@ export function registerGetPropsSystem(server: McpServer): void {
 
         return markdownResponse(resultParts.join('\n\n'));
       } catch (e) {
-        return error(
-          `Failed to load props system data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
-        );
+        return loadFailureError('props system data', e);
       }
     }
   );

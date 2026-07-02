@@ -97,6 +97,58 @@ describe('searchDocs', () => {
   });
 });
 
+describe('searchDocs — nextTool', () => {
+  const guideTopics = new Set(['responsive', 'tokens']);
+
+  it('primitives/ 配下は get_component(name) を返す', () => {
+    const results = searchDocs([entry({ sourcePath: 'primitives/l--flex.mdx', title: 'Flex', keywords: ['flex'], category: 'primitives' })], 'Flex', {
+      guideTopics,
+    });
+    expect(results[0].nextTool).toBe('get_component(name: "l--flex")');
+  });
+
+  it('category=ui は get_component(name, package) を返す', () => {
+    const results = searchDocs([entry({ sourcePath: 'ui/Accordion.mdx', title: 'Accordion', keywords: ['ui'], category: 'ui' })], 'Accordion', {
+      guideTopics,
+    });
+    expect(results[0].nextTool).toBe('get_component(name: "Accordion", package: "@lism-css/ui")');
+  });
+
+  it('ui/examples/ 配下は category=ui でも null を返す（get_component で解決できないため）', () => {
+    const results = searchDocs([entry({ sourcePath: 'ui/examples/Card.mdx', title: 'Card', keywords: ['example'], category: 'ui' })], 'Card', {
+      guideTopics,
+    });
+    expect(results[0].nextTool).toBeNull();
+  });
+
+  it('category=guide かつ guideTopics に含まれる場合は get_guide(topic) を返す', () => {
+    const results = searchDocs(
+      [entry({ sourcePath: 'guide/responsive.mdx', title: 'Responsive', keywords: ['responsive'], category: 'guide' })],
+      'Responsive',
+      { guideTopics }
+    );
+    expect(results[0].nextTool).toBe('get_guide(topic: "responsive")');
+  });
+
+  it('category=guide でも guideTopics に含まれない場合は null を返す', () => {
+    const results = searchDocs(
+      [entry({ sourcePath: 'guide/unknown-topic.mdx', title: 'Unknown', keywords: ['unknown'], category: 'guide' })],
+      'Unknown',
+      { guideTopics }
+    );
+    expect(results[0].nextTool).toBeNull();
+  });
+
+  it('core-components/lism-props.mdx は特例で get_props_system() を返す', () => {
+    const results = searchDocs(
+      [entry({ sourcePath: 'core-components/lism-props.mdx', title: 'Lism Props', keywords: ['props'], category: 'core-components' })],
+      'Lism Props',
+      { guideTopics }
+    );
+    expect(results[0].nextTool).toBe('get_props_system()');
+  });
+});
+
 describe('searchDocs — 自然言語 alias (keywords) による検索', () => {
   const aliasEntries: DocsEntry[] = [
     entry({
