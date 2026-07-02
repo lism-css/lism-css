@@ -44,7 +44,7 @@ import 'lism-css/main_no_layer.css';
 ### 上書き可能な変数
 
 | 変数 | 用途 | デフォルト |
-|------|------|-----------|
+| --- | --- | --- |
 | `$breakpoints` | ブレイクポイント数値の定義（`0` は無効＝クエリを出力しない） | `('xs': 0, 'sm': '480px', 'md': '800px', 'lg': '1120px', 'xl': 0)` |
 | `$is_container_query` | コンテナクエリで出力するか（`1` = container query, `0` = media query） | `1` |
 | `$default_important` | Property Class にデフォルトで `!important` を付与するか | `0` |
@@ -240,7 +240,7 @@ export default {
 これによってコンポーネント側で次のような挙動が追加されます：
 
 | 入力 | 出力されるクラス |
-|------|----------------|
+| --- | --- |
 | `ta="justify"` | `-ta:justify` |
 | `p="box"` | `-p:box` |
 | `filter="blur"` | `-filter:blur` |

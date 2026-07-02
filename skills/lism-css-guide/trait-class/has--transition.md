@@ -22,7 +22,7 @@
 ## CSS 変数
 
 | 変数 | 役割 | デフォルト |
-|------|------|-----------|
+| --- | --- | --- |
 | `--transitionProps` | transition 対象プロパティ | `all` |
 | `--duration` | トランジションの長さ | `var(--transition-duration, 0.25s)` |
 | `--ease` | イージング関数 | `ease` |

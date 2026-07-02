@@ -17,39 +17,39 @@
 
 ### トークン変数
 
-| 種類   | 形式                | 例                                               |
-| ------ | ------------------- | ------------------------------------------------ |
-| 基本   | `--{prop}--{token}` | `--fz--l`, `--bdrs--20`, `--bxsh--10`, `--sz--s` |
-| カラー | `--{color}`         | `--brand`, `--text`, `--text-2`, `--red`         |
-| 余白   | `--s{Token}`        | `--s10`, `--s40`                                 |
+| 種類 | 形式 | 例 |
+| --- | --- | --- |
+| 基本 | `--{prop}--{token}` | `--fz--l`, `--bdrs--20`, `--bxsh--10`, `--sz--s` |
+| カラー | `--{color}` | `--brand`, `--text`, `--text-2`, `--red` |
+| 余白 | `--s{Token}` | `--s10`, `--s40` |
 
 トークンのバリエーション:
 
-| 表記                   | 条件                                      | 例                         |
-| ---------------------- | ----------------------------------------- | -------------------------- |
-| `s`, `m`, `l`, `xl`... | ベース値を中心に大小の段階を示す          | `--fz--s`, `--fz--l`       |
-| `base`                 | `:root`/`body` の初期値にセットされるもの | `--fz--base`, `--lh--base` |
-| `10`, `20`, `30`...    | `0`(`none`)基準で段階的に増加             | `--bdrs--20`, `--bxsh--30` |
-| セマンティック名       | 上記に当てはまらない場合                  | `--ar--og`                 |
+| 表記 | 条件 | 例 |
+| --- | --- | --- |
+| `s`, `m`, `l`, `xl`... | ベース値を中心に大小の段階を示す | `--fz--s`, `--fz--l` |
+| `base` | `:root`/`body` の初期値にセットされるもの | `--fz--base`, `--lh--base` |
+| `10`, `20`, `30`... | `0`(`none`)基準で段階的に増加 | `--bdrs--20`, `--bxsh--30` |
+| セマンティック名 | 上記に当てはまらない場合 | `--ar--og` |
 
 > 🎵 **例外: opacity トークン**
 > opacity（`--o--mp` / `--o--p` / `--o--pp` / `--o--ppp`）は、音楽の強弱記号（piano 系列）に由来するセマンティック命名を採用している。`p`（piano / 弱く）の反復回数が多いほど透明度が増す構造で、「文字の反復回数で段階を表す」命名は Lism 内で opacity のみの例外。
 
 ### Property Class 用の変数
 
-| 形式            | 説明                               | 例                              |
-| --------------- | ---------------------------------- | ------------------------------- |
-| `--{prop}`      | クラスの `{prop}` 部分と同じ省略名 | `--p`, `--bgc`, `--bdrs`, `--m` |
-| `--{prop}_{bp}` | ブレークポイント値                 | `--p_sm`, `--mx_md`             |
+| 形式 | 説明 | 例 |
+| --- | --- | --- |
+| `--{prop}` | クラスの `{prop}` 部分と同じ省略名 | `--p`, `--bgc`, `--bdrs`, `--m` |
+| `--{prop}_{bp}` | ブレークポイント値 | `--p_sm`, `--mx_md` |
 
 ### その他の変数
 
-| 形式                   | 用途                                                                                                 | 例                           |
-| ---------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `--{target}-{prop}`    | 要素・クラスに対するプロパティ（`:root`で上書き可）                                                  | `--link-td`, `--headings-ff` |
-| `--{propName}`         | クラス自身の主要機能を制御する変数。要素側で値が初期化され、`:root` からは初期値の定義ができないもの | `--sideW`, `--mainW`         |
-| `--_{item}-{propName}` | `c--` の子要素プロパティ                                                                             | `--_icon-size`               |
-| `--_{varName}`         | 状態管理用の内部変数                                                                                 | `--_isHov`, `--_notHov`      |
+| 形式 | 用途 | 例 |
+| --- | --- | --- |
+| `--{target}-{prop}` | 要素・クラスに対するプロパティ（`:root`で上書き可） | `--link-td`, `--headings-ff` |
+| `--{propName}` | クラス自身の主要機能を制御する変数。要素側で値が初期化され、`:root` からは初期値の定義ができないもの | `--sideW`, `--mainW` |
+| `--_{item}-{propName}` | `c--` の子要素プロパティ | `--_icon-size` |
+| `--_{varName}` | 状態管理用の内部変数 | `--_isHov`, `--_notHov` |
 
 ## クラスの命名規則
 
@@ -78,16 +78,16 @@ Property Class の形式:
 
 1文字に省略する主要プロパティは以下の通り（このリストが全て）。
 
-| 省略 | プロパティ | 省略 | プロパティ   |
-| ---- | ---------- | ---- | ------------ |
-| `p`  | `padding`  | `i`  | `inset`      |
-| `m`  | `margin`   | `t`  | `top`        |
-| `g`  | `gap`      | `b`  | `bottom`     |
-| `c`  | `color`    | `l`  | `left`       |
-| `f`  | `font`     | `r`  | `right`      |
-| `w`  | `width`    | `o`  | `opacity`    |
-| `h`  | `height`   | `v`  | `visibility` |
-| `d`  | `display`  | `z`  | `z-index`    |
+| 省略 | プロパティ | 省略 | プロパティ |
+| --- | --- | --- | --- |
+| `p` | `padding` | `i` | `inset` |
+| `m` | `margin` | `t` | `top` |
+| `g` | `gap` | `b` | `bottom` |
+| `c` | `color` | `l` | `left` |
+| `f` | `font` | `r` | `right` |
+| `w` | `width` | `o` | `opacity` |
+| `h` | `height` | `v` | `visibility` |
+| `d` | `display` | `z` | `z-index` |
 
 Emmet と異なるのは `o` (`opacity`) のみ。
 
@@ -95,29 +95,29 @@ Emmet と異なるのは `o` (`opacity`) のみ。
 
 #### 基本形式: 「グループ略称」+「サブプロパティ名の省略形」
 
-| CSS プロパティ        | Prop   |
-| --------------------- | ------ |
-| font-size             | `fz`   |
-| font-weight           | `fw`   |
-| background-color      | `bgc`  |
-| background-image      | `bgi`  |
-| flex                  | `fx`   |
-| flex-shrink           | `fxsh` |
-| flex-grow             | `fxg`  |
-| grid-template-columns | `gtc`  |
-| grid-template-rows    | `gtr`  |
+| CSS プロパティ | Prop |
+| --- | --- |
+| font-size | `fz` |
+| font-weight | `fw` |
+| background-color | `bgc` |
+| background-image | `bgi` |
+| flex | `fx` |
+| flex-shrink | `fxsh` |
+| flex-grow | `fxg` |
+| grid-template-columns | `gtc` |
+| grid-template-rows | `gtr` |
 
 #### 方向指定系: 「グループ略称」 + `-` +「方向指定」
 
 `inline-start`/`inline-end`は`is`/`ie`ではなく、すでに普及しているCSSフレームワークの慣習に沿って`s`/`e`とする。
 
-| 方向               | サフィックス              | 例                                                           |
-| ------------------ | ------------------------- | ------------------------------------------------------------ |
-| physical           | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r`                               |
-| inline / block     | `-x` / `-y`               | `bd-x`, `bd-y`                                               |
-| inline-start / end | `-s` / `-e`               | `bd-s`, `bd-e`, `ps`, `pe`, `ms`, `me`, `i-s`, `i-e`         |
-| block-start / end  | `-bs` / `-be`             | `bd-bs`, `bd-be`, `pbs`, `pbe`, `mbs`, `mbe`, `i-bs`, `i-be` |
-| x / y              | `-x` / `-y`               | `ov-x`, `ov-y`                                               |
+| 方向 | サフィックス | 例 |
+| --- | --- | --- |
+| physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
+| inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
+| inline-start / end | `-s` / `-e` | `bd-s`, `bd-e`, `ps`, `pe`, `ms`, `me`, `i-s`, `i-e` |
+| block-start / end | `-bs` / `-be` | `bd-bs`, `bd-be`, `pbs`, `pbe`, `mbs`, `mbe`, `i-bs`, `i-be` |
+| x / y | `-x` / `-y` | `ov-x`, `ov-y` |
 
 例外: `p`, `m` のみハイフンを省略 → `pt`, `px`, `my`, `ms` 等。
 
@@ -135,28 +135,28 @@ NG例: `flex` → `fx` としたうえで `flex-shrink` を `fsh` にする（`f
 1. 1単語: そのまま使用 or 省略
 2. ハイフン繋がり、または6文字以上: Emmet形式または認識しやすい範囲で省略
 
-| CSS プロパティ | Prop    | 分類     |
-| -------------- | ------- | -------- |
-| float          | `float` | そのまま |
-| order          | `order` | そのまま |
-| position       | `pos`   | 省略     |
-| overflow       | `ov`    | 省略     |
-| inline-size    | `sz`    | 省略     |
-| block-size     | `bsz`   | 省略     |
-| aspect-ratio   | `ar`    | 省略     |
-| writing-mode   | `wm`    | 省略     |
-| white-space    | `whs`   | 省略     |
+| CSS プロパティ | Prop | 分類 |
+| --- | --- | --- |
+| float | `float` | そのまま |
+| order | `order` | そのまま |
+| position | `pos` | 省略 |
+| overflow | `ov` | 省略 |
+| inline-size | `sz` | 省略 |
+| block-size | `bsz` | 省略 |
+| aspect-ratio | `ar` | 省略 |
+| writing-mode | `wm` | 省略 |
+| white-space | `whs` | 省略 |
 
 ### 1文字プロパティの短縮名の再利用
 
 グループを持たない1文字プロパティや、方向プロパティのみをサブプロパティに持つ場合は、衝突しない範囲で再利用可。
 
-| 1文字 Prop     | 再利用先    | 展開例               |
-| -------------- | ----------- | -------------------- |
-| `t`(`top`)     | `text-*`    | `ta`(`text-align`)   |
-| `l`(`left`)    | `line-*`    | `lh`(`line-height`)  |
-| `w`(`width`)   | `writing-*` | `wm`(`writing-mode`) |
-| `p`(`padding`) | `place-*`   | `pi`(`place-items`)  |
+| 1文字 Prop | 再利用先 | 展開例 |
+| --- | --- | --- |
+| `t`(`top`) | `text-*` | `ta`(`text-align`) |
+| `l`(`left`) | `line-*` | `lh`(`line-height`) |
+| `w`(`width`) | `writing-*` | `wm`(`writing-mode`) |
+| `p`(`padding`) | `place-*` | `pi`(`place-items`) |
 
 ## `{value}` の省略ルール
 
@@ -198,10 +198,10 @@ opacity トークンは音楽記号に由来する例外的な命名で、その
 
 6文字以上かつ省略しても意味が通るものは省略可:
 
-| 実際の値        | 省略名    | クラスの例                   |
-| --------------- | --------- | ---------------------------- |
-| `uppercase`     | `upper`   | `-tt:upper`                  |
-| `lowercase`     | `lower`   | `-tt:lower`                  |
-| `fit-content`   | `fit`     | `-w:fit`, `-h:fit`           |
+| 実際の値 | 省略名 | クラスの例 |
+| --- | --- | --- |
+| `uppercase` | `upper` | `-tt:upper` |
+| `lowercase` | `lower` | `-tt:lower` |
+| `fit-content` | `fit` | `-w:fit`, `-h:fit` |
 | `space-between` | `between` | `-ac:between`, `-jc:between` |
-| `currentColor`  | `current` | `-bdc:current`               |
+| `currentColor` | `current` | `-bdc:current` |
