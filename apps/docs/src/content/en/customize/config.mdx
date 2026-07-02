@@ -3,7 +3,7 @@ title: 'lism.config.js'
 description: 'How to extend component props, tokens, traits, and breakpoints using lism.config.js and @lism-css/plugin.'
 ---
 
-By placing a `lism.config.js` (or `lism.config.mjs`) file in the root of your project, you can customize component behavior (rather than styles).
+By placing a `lism.config.js` (or `lism.config.ts` / `lism.config.mjs`) file in the root of your project, you can customize component behavior (rather than styles).
 
 
 ## Registering the Vite / Astro plugin (required)
@@ -45,7 +45,7 @@ export default defineConfig({
 For Next.js, use `withLism()` from `@lism-css/plugin/next` instead of the Vite / Astro plugin. See [Setting up with Next.js](/en/docs/installation/#setting-up-with-nextjs) for the setup steps.
 :::
 
-The plugin auto-detects `lism.config.js` then `lism.config.mjs` from the project root. To use a file at a different location, specify the path via the `configPath` option:
+The plugin auto-detects the config file from the project root in the order `lism.config.ts` → `lism.config.mjs` → `lism.config.js`. To use a file at a different location, specify the path via the `configPath` option:
 
 ```js
 integrations: [lismCss({ configPath: './config/lism.config.js' })],

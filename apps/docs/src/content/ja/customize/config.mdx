@@ -3,7 +3,7 @@ title: 'lism.config.js でのカスタマイズ'
 description: 'lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。'
 ---
 
-プロジェクトのルートディレクトリ直下に `lism.config.js`（または `lism.config.mjs`）を用意することで、スタイルではなくコンポーネントの挙動をカスタマイズすることができます。
+プロジェクトのルートディレクトリ直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を用意することで、スタイルではなくコンポーネントの挙動をカスタマイズすることができます。
 
 
 ## Vite / Astro プラグインの登録（必須）
@@ -45,7 +45,7 @@ export default defineConfig({
 Next.js では Vite / Astro プラグインの代わりに、`@lism-css/plugin/next` の `withLism()` を使います。セットアップ手順は[インストールの「Next.js での導入」](/docs/installation/#nextjs-での導入)を参照してください。
 :::
 
-プラグインはプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所のファイルを使う場合は `configPath` オプションでパスを指定できます。
+プラグインはプロジェクトルートから `lism.config.ts` → `lism.config.mjs` → `lism.config.js` の順で自動検出します。別の場所のファイルを使う場合は `configPath` オプションでパスを指定できます。
 
 ```js
 integrations: [lismCss({ configPath: './config/lism.config.js' })],
