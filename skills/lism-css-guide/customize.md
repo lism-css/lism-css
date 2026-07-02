@@ -254,7 +254,7 @@ export default {
 
 ### 追加した prop / trait の型解禁
 
-統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した **prop / trait も `lism-env.d.ts` 経由で型側に自動解禁**されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
+統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した **prop / trait も `lism-env.d.ts` 経由で型側に自動解禁**されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です。
 
 なお、既存 prop への値追加（`ta="justify"` 等）はもともと任意の文字列を受け付けるため、型エラーにはなりません（ただし補完候補には出ません）。
 
