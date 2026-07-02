@@ -354,7 +354,7 @@ export function registerConvertCss(server: McpServer): void {
           suggestedComponent,
           example,
           tip: 'Values that do not match a token can be set as CSS variables via the style attribute (e.g. style="--p: 1rem"). Use get_props_system for details on each prop.',
-        } as unknown as Record<string, unknown>);
+        });
       } catch (e) {
         return error(`CSS conversion failed: ${e instanceof Error ? e.message : String(e)}`);
       }

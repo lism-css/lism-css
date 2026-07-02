@@ -3,12 +3,15 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { sourcePathToUrlSlug } from '../lib/search.js';
-import { toContentSlug } from '../../../../apps/docs/src/lib/contentSlug.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const docsIndexPath = resolve(__dirname, '..', 'data', 'docs-index.json');
 const docsContentDir = resolve(__dirname, '..', '..', '..', '..', 'apps', 'docs', 'src', 'content', 'ja');
+
+// apps/docs 依存のモジュールを static import すると、apps/docs がない環境では
+// describe.skipIf の評価前にモジュールロードで落ちるため、存在確認後に動的 import する
+const toContentSlug = existsSync(docsContentDir) ? (await import('../../../../apps/docs/src/lib/contentSlug.js')).toContentSlug : null;
 
 type IndexEntry = { sourcePath: string };
 
@@ -49,7 +52,7 @@ describe.skipIf(!existsSync(docsContentDir))('docs-index.json の構造検証', 
   it('URL スラッグ変換が apps/docs の toContentSlug と一致する', () => {
     for (const sourcePath of new Set(entries.map((e) => e.sourcePath))) {
       const rawSlug = sourcePath.replace(/\.mdx$/, '');
-      expect(sourcePathToUrlSlug(sourcePath), sourcePath).toBe(toContentSlug(rawSlug));
+      expect(sourcePathToUrlSlug(sourcePath), sourcePath).toBe(toContentSlug!(rawSlug));
     }
   });
 });
