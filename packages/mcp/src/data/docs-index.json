@@ -467,6 +467,7 @@
     "headings": [
       "Vite / Astro プラグインの登録（必須）",
       "フォーマット",
+      "型サポート（LismConfig）",
       "カスタマイズ例",
       "ブレイクポイント（xs / xl）の有効化",
       "追加スタイルを読み込ませる方法",
@@ -490,9 +491,16 @@
       "breakpoints",
       "ブレイクポイント",
       "xs",
-      "xl"
+      "xl",
+      "LismConfig",
+      "config-types",
+      "satisfies",
+      "型",
+      "型チェック",
+      "補完",
+      "TypeScript"
     ],
-    "snippet": "lism.config.js（または lism.config.ts / lism.config.mjs）を使ったコンポーネントの挙動カスタマイズ方法。プラグインはプロジェクトルートから lism.config.ts → lism.config.mjs → lism.config.js の順で自動検出し、configPath オプションで別パスも指定可能。@lism-css/plugin の統合プラグイン登録（必須）から props / tokens / traits の追加・拡張、ブレイクポイント（xs / xl）の有効化、追加スタイルの読み込み方法（自動反映・CLI・手書き・SCSS）まで解説。"
+    "snippet": "lism.config.js（または lism.config.ts / lism.config.mjs）を使ったコンポーネントの挙動カスタマイズ方法。プラグインはプロジェクトルートから lism.config.ts → lism.config.mjs → lism.config.js の順で自動検出し、configPath オプションで別パスも指定可能。@lism-css/plugin の統合プラグイン登録（必須）から props / tokens / traits の追加・拡張、lism-css/config-types の LismConfig 型による設定ファイルの型チェック・補完（.ts は satisfies LismConfig、.js は JSDoc @type）、ブレイクポイント（xs / xl）の有効化、追加スタイルの読み込み方法（自動反映・CLI・手書き・SCSS）まで解説。"
   },
   {
     "sourcePath": "customize/scss.mdx",
