@@ -78,6 +78,20 @@
 - `set--` は `lism-base` 層で HTML 要素の基礎スタイル・変数を提供するもの。
 - `is--` / `has--` は `lism-trait` 層に属する。
 
+### `c--*`命名でよくあるNG例
+
+`c--*`はBEM風の構造を持てますが、単語区切りにハイフンを使わず、Element区切りに`__`を使いません。
+
+| NG | OK | 理由 |
+|---|---|---|
+| `c--feature-card` | `c--featureCard`（既存規約に合わせる場合は`c--feature_card`） | ハイフンは禁止 |
+| `c--hero__inner` | `c--hero_inner` | Element区切りは`_`ひとつ |
+| `c--myCard__body` | `c--myCard_body` | BEM風の`__`は使わない |
+
+- Block名はcamelCaseを第一候補にし、既存コードがアンダースコア区切りならそれに合わせる。
+- Elementは`c--{block}_{element}`。
+- Modifierは`c--{block}--{modifier}`。
+
 Property Class の形式:
 
 - 特定の値とセット: `-{prop}:{value}`
