@@ -2,13 +2,7 @@
 
 コンテンツ間に区切り線を描画するクラス。`--bdc` は `var(--divider)` が初期セットされます。`<Divider>` は `<Lism atomic="divider" aria-hidden="true" />` のエイリアスとして用意されています。
 
-## 基本情報
-
-- クラス名: `a--divider`
-- コンポーネント: `<Divider>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/a--divider.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/a--divider.md
 
 ## 関連プリミティブ
 

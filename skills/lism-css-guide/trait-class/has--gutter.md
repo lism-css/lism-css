@@ -2,13 +2,9 @@
 
 要素の左右に、サイト共通の gutter（余白）を適用する Trait クラス。`padding` 系ユーティリティとは別に、「サイト全体で統一した左右余白」を確保したい時に使う。
 
-## 基本情報
-
-- クラス名: `has--gutter`
 - Lism props: `hasGutter`（`<Lism hasGutter>` 等）
-- 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--gutter
 
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class.md#has--gutter
 
 ## SCSS 定義
 

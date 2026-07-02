@@ -2,13 +2,7 @@
 
 複数列 ↔ 1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するクラス。Flexbox ベースで、親コンテナ幅に応じて自動的に折り返します。
 
-## 基本情報
-
-- クラス名: `l--switchColumns`
-- コンポーネント: `<SwitchColumns>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--switchColumns.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--switchColumns.md
 
 ## 既定の挙動
 

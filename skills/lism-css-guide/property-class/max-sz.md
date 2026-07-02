@@ -2,13 +2,10 @@
 
 コンテンツの最大幅（`max-inline-size`）を制御する Property Class。標準のコンテンツサイズトークン（`xs`〜`xl`）に加え、特殊挙動の `full` / `bleed` を持つ。
 
-## 基本情報
-
 - クラス名: `-max-sz:{xs|s|m|l|xl|full|bleed}`
 - Lism props: `max-sz`（`<Lism max-sz="m">` 等）
-- 公式ドキュメント: https://lism-css.com/docs/property-class/max-sz.md
 
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/property-class/max-sz.md
 
 ## トークン対応クラス
 

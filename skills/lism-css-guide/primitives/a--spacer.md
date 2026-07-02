@@ -2,13 +2,7 @@
 
 要素間のスペースを確保するクラス。`<Spacer>` は `<Lism atomic="spacer" aria-hidden="true" />` のエイリアスとして用意されています。
 
-## 基本情報
-
-- クラス名: `a--spacer`
-- コンポーネント: `<Spacer>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/a--spacer.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/a--spacer.md
 
 ## 専用Props
 

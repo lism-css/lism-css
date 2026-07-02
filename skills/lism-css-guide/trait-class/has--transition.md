@@ -2,13 +2,9 @@
 
 `transition` 系のプロパティを CSS 変数経由でセットする Trait クラス。主に `-hov:*` クラスと組み合わせて、ホバー時のスムーズな変化に使う。
 
-## 基本情報
-
-- クラス名: `has--transition`
 - Lism props: `hasTransition`（`<Lism hasTransition>` / `<Box hasTransition>` 等）
-- 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--transition
 
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class.md#has--transition
 
 ## SCSS 定義
 

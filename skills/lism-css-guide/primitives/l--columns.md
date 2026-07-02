@@ -2,13 +2,7 @@
 
 ブレイクポイントごとに指定した列数で表示できるカラムクラス。等幅の複数カラムを定義したい場合に使います。
 
-## 基本情報
-
-- クラス名: `l--columns`
-- コンポーネント: `<Columns>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--columns.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--columns.md
 
 ## 既定の挙動
 

@@ -2,13 +2,7 @@
 
 直下のコンテンツ幅を一括制御するクラス。`max-width` とセンタリングを担い、記事・セクションのコンテンツ幅の統一に使います。
 
-## 基本情報
-
-- クラス名: `is--wrapper`
-- コンポーネント: `<Wrapper>`
-- 公式ドキュメント: https://lism-css.com/docs/trait-class/is--wrapper.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class/is--wrapper.md
 
 ## 使い方
 

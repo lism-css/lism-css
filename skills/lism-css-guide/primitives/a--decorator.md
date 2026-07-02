@@ -2,13 +2,7 @@
 
 コンテンツを装飾するための空要素として使うクラス。`<Decorator>` は `<Lism atomic="decorator" aria-hidden="true" />` のエイリアスとして用意されています。
 
-## 基本情報
-
-- クラス名: `a--decorator`
-- コンポーネント: `<Decorator>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/a--decorator.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/a--decorator.md
 
 ## 専用Props
 

@@ -2,13 +2,7 @@
 
 複数の要素を Flex レイアウトで縦並びに配置するクラス。`gap` で余白を管理します。
 
-## 基本情報
-
-- クラス名: `l--stack`
-- コンポーネント: `<Stack>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--stack.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--stack.md
 
 ## 既定の挙動
 

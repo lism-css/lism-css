@@ -2,13 +2,9 @@
 
 `scroll-snap-*` 系のプロパティを CSS 変数経由でセットする Trait クラス。横スクロールカルーセルなどで子要素のスナップ位置を制御したい時に使う。
 
-## 基本情報
-
-- クラス名: `has--snap`
 - Lism props: `hasSnap`（`<Lism hasSnap>` 等）
-- 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--snap
 
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class.md#has--snap
 
 ## SCSS 定義
 

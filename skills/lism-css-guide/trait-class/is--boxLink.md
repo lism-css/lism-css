@@ -2,13 +2,7 @@
 
 ボックス全体をクリック可能なリンク領域にするクラス。
 
-## 基本情報
-
-- クラス名: `is--boxLink`
-- コンポーネント: `<BoxLink>`
-- 公式ドキュメント: https://lism-css.com/docs/trait-class/is--boxLink.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class/is--boxLink.md
 
 ## 専用Props
 

@@ -2,13 +2,7 @@
 
 `position: absolute` で親要素の上に被せて配置するオーバーレイ用クラス。親には `pos="relative"` が必要です。
 
-## 基本情報
-
-- クラス名: `is--layer`
-- コンポーネント: `<Layer>`
-- 公式ドキュメント: https://lism-css.com/docs/trait-class/is--layer.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class/is--layer.md
 
 ## 使い方
 

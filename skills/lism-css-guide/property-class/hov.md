@@ -2,13 +2,10 @@
 
 hover 時の挙動を制御する Property Class。`:hover` 擬似クラスで動作する系と、親の `set--hov` に連動する系の 2 系統に分かれる。
 
-## 基本情報
-
 - クラス名: `-hov:-{prop}` / `-hov:{preset}` / `-hov:in:{preset}`
 - Lism props: `hov`（`<Lism hov="-c">` / `<Box hov={{ bgc: 'brand' }}>` 等）
-- 公式ドキュメント: https://lism-css.com/docs/property-class/hov.md
 
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/property-class/hov.md
 
 ## 3 つの形式
 

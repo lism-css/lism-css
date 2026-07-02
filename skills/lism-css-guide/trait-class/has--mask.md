@@ -2,13 +2,9 @@
 
 `--maskImg` 変数と組み合わせて、要素自身にマスク画像を適用する Trait クラス。SVG を使った異形シェイプ表示などに使う。
 
-## 基本情報
-
-- クラス名: `has--mask`
 - Lism props: `hasMask`（`<Lism hasMask>` 等）
-- 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--mask
 
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class.md#has--mask
 
 ## SCSS 定義
 

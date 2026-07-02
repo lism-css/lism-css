@@ -2,13 +2,7 @@
 
 直下のメディア要素（`img`, `video`, `iframe`）を自身のサイズにフィットさせて表示するクラス。アスペクト比固定のメディア枠を簡単に作れます。
 
-## 基本情報
-
-- クラス名: `l--frame`
-- コンポーネント: `<Frame>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--frame.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--frame.md
 
 ## 既定の挙動
 

@@ -2,13 +2,7 @@
 
 カラム要素が指定した幅より小さくならないように自動で折り返す、**ブレイクポイント非依存の段組みクラス**。`auto-fill` / `auto-fit` を使った流動カラムを簡潔に記述できます。
 
-## 基本情報
-
-- クラス名: `l--autoColumns`
-- コンポーネント: `<AutoColumns>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--autoColumns.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--autoColumns.md
 
 ## 既定の挙動
 

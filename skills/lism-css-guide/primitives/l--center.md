@@ -2,13 +2,7 @@
 
 要素を上下左右中央揃えで配置するクラス。高さの有無で水平中央のみ / 上下左右中央を自動的に切り替えます。
 
-## 基本情報
-
-- クラス名: `l--center`
-- コンポーネント: `<Center>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--center.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--center.md
 
 ## 既定の挙動
 

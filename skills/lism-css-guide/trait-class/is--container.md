@@ -2,13 +2,7 @@
 
 `container-type` を宣言してコンテナクエリを有効にするクラス。レスポンシブ Property Class（`p={['10', '30']}` のような配列指定）を使うとき、基準要素として必要になります。
 
-## 基本情報
-
-- クラス名: `is--container`
-- コンポーネント: `<Container>`
-- 公式ドキュメント: https://lism-css.com/docs/trait-class/is--container.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class/is--container.md
 
 ## 使い方
 

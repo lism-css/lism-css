@@ -2,13 +2,7 @@
 
 子要素間の余白を `margin-block-start` で管理するフローレイアウト。**記事コンテンツなどテキスト主体のフローレイアウト**に最適。
 
-## 基本情報
-
-- クラス名: `l--flow`
-- コンポーネント: `<Flow>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--flow.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--flow.md
 
 ## 余白の仕組み
 

@@ -2,13 +2,7 @@
 
 アイコン要素を表示するためのクラス。`flex-shrink: 0`、デフォルトサイズ `1em`。
 
-## 基本情報
-
-- クラス名: `a--icon`
-- コンポーネント: `<Icon>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/a--icon.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/a--icon.md
 
 ## 出力されるHTML構造
 

@@ -2,13 +2,7 @@
 
 コンテンツを CSS Grid レイアウトで配置するクラス。`gtc` / `gta` / `ga` などの Grid プロパティと組み合わせて使います。
 
-## 基本情報
-
-- クラス名: `l--grid`
-- コンポーネント: `<Grid>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--grid.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--grid.md
 
 ## 既定の挙動
 

@@ -2,13 +2,7 @@
 
 `cols`（列数）と `rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するクラス。内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用します。
 
-## 基本情報
-
-- クラス名: `l--tileGrid`
-- コンポーネント: `<TileGrid>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--tileGrid.md
-
-**使い方・コード例については、公式ドキュメントを参照すること。**
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--tileGrid.md
 
 ## 既定の挙動
 
