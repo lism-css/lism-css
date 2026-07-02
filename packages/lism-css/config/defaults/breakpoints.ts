@@ -22,7 +22,8 @@ export type BreakpointKey = keyof typeof BREAKPOINTS;
 // この index → キーの並び順はユーザーの JSX が依存しているので、後から変えない。
 // （順番を変えて index 1 が sm 以外になると、既存の p={[20, 40]} の意味が黙ってずれてしまう）
 // xs は配列の index をずらさずには足せない（＝配列記法では書けない）ため、この並びには含めない。
-export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const; // index 1..4 のキー（base を除く）
+// `satisfies` で各要素が BreakpointKey（全キー集合）に含まれることを型検査し、位置契約とのズレを検知する。
+export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const satisfies readonly BreakpointKey[]; // index 1..4 のキー（base を除く）
 
 /** 配列記法の位置順（`base` を除く）。位置は固定の契約（変更しない）。 */
 export type BreakpointSequence = typeof BREAK_POINTS;
@@ -32,6 +33,3 @@ export const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS] as const; // index 0..
 // オブジェクト記法 p={{ base, xs, sm, ... }} で「BP 指定」とみなすキーの集合。
 // xs はオブジェクト記法専用キーとしてここにだけ含める。
 export const BREAK_POINTS_OBJ = ['base', 'xs', ...BREAK_POINTS] as const;
-
-// 位置契約（BREAK_POINTS）が全キー集合（BreakpointKey）からズレたら型エラーで検知する。
-type _AssertBpSeq = BreakpointSequence[number] extends BreakpointKey ? true : never;
