@@ -19,6 +19,11 @@
         "src/scss/base/tokens/_tokens.gen.scss"
       ]
     },
+    "@lism-css/mcp#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/skills/lism-css-guide/**"],
+      "outputs": ["dist/**"]
+    },
     "build:css": {
       "inputs": [
         "$TURBO_DEFAULT$",
