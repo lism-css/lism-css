@@ -7,7 +7,7 @@
 ## 表の読み方
 
 | カラム | 説明 |
-|--------|------|
+| --- | --- |
 | **Prop** | クラス名に使う省略名（例: `-fz:l` の `fz` 部分）。Lism コンポーネントの Props 名でもある |
 | **CSS プロパティ** | 実際に制御される CSS プロパティ |
 | **プリセット値クラス** | そのまま使えるクラス名の一覧（`-{prop}:{value}` 形式）。`—` はカスタム値のみ対応 |
@@ -21,7 +21,7 @@
 ### タイポグラフィ
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `f` | `font` | `-f:inherit` | — |
 | `fz` | `font-size` | `-fz:base`, `-fz:5xl`〜`-fz:2xs` | ✔ |
 | `fw` | `font-weight` | `-fw:light`, `-fw:normal`, `-fw:bold`, `-fw:100`〜`-fw:900` | — |
@@ -39,7 +39,7 @@
 ### 表示・可視性
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | ✔ |
 | `o` | `opacity` | `-o:0`, `-o:mp`, `-o:p`, `-o:pp`, `-o:ppp` | — |
 | `v` | `visibility` | `-v:hidden` | — |
@@ -51,7 +51,7 @@
 ### サイズ
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `w` | `width` | `-w:100%`, `-w:fit` | ✔ |
 | `h` | `height` | `-h:100%`, `-h:fit` | ✔ |
 | `min-w` | `min-width` | `-min-w:100%` | ✔ |
@@ -79,7 +79,7 @@
 ### 背景
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `bg` | `background` | — | — |
 | `bgi` | `background-image` | — | — |
 | `bgr` | `background-repeat` | `-bgr:no-repeat` | — |
@@ -90,7 +90,7 @@
 ### カラー
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:inherit` | — |
 | `keycolor` | `--keycolor` 変数のみ | — | — |
 
@@ -100,7 +100,7 @@
 ### 角丸
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `bdrs` | `border-radius` | `-bdrs:0`, `-bdrs:10`, `-bdrs:20`, `-bdrs:30`, `-bdrs:40`, `-bdrs:99`, `-bdrs:inner` | ✔ |
 | `bdrs-tl` | `border-top-left-radius` | — | — |
 | `bdrs-tr` | `border-top-right-radius` | — | — |
@@ -114,7 +114,7 @@
 ### 影
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `bxsh` | `box-shadow` | `-bxsh:0`, `-bxsh:10`, `-bxsh:20`, `-bxsh:30`, `-bxsh:40`, `-bxsh:50` | ✔ |
 
 **補足:** 影色（`--shc`）を要素内で上書きして再計算させたい場合は、`set--bxsh` クラスを併用する。
@@ -122,7 +122,7 @@
 ### ポジション
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `pos` | `position` | `-pos:static`, `-pos:fixed`, `-pos:sticky`, `-pos:relative`, `-pos:absolute` | ✔ |
 | `z` | `z-index` | `-z:-1`, `-z:0`, `-z:1`, `-z:99` | — |
 | `t` | `top` | `-t:0`, `-t:50%`, `-t:100%` | — |
@@ -140,7 +140,7 @@
 ### 余白 — Padding
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `p` | `padding` | `-p:0`, `-p:5`, `-p:10`, `-p:20`, ... (SPACEトークン) | ✔ |
 | `px` | `padding-inline` | `-px:0`, `-px:5`, `-px:10`, `-px:20`, ... (SPACEトークン) | ✔ |
 | `py` | `padding-block` | `-py:0`, `-py:5`, `-py:10`, `-py:20`, ... (SPACEトークン) | ✔ |
@@ -158,7 +158,7 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 ### 余白 — Margin
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `m` | `margin` | `-m:auto`, `-m:0`, `-m:5`, `-m:10`, `-m:20`, ... (SPACEトークン) | ✔ |
 | `mx` | `margin-inline` | `-mx:auto`, `-mx:0`, `-mx:5`, `-mx:10`, `-mx:20`, ... (SPACEトークン) | ✔ |
 | `my` | `margin-block` | `-my:auto`, `-my:0`, `-my:5`, `-my:10`, `-my:20`, ... (SPACEトークン) | ✔ |
@@ -174,7 +174,7 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 ### Gap
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | ✔ |
 | `cg` | `column-gap` | — | — |
 | `rg` | `row-gap` | — | — |
@@ -182,7 +182,7 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 ### Flex
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `fxf` | `flex-flow` | — | — |
 | `fxw` | `flex-wrap` | `-fxw:wrap` | ✔ |
 | `fxd` | `flex-direction` | `-fxd:column`, `-fxd:column-reverse`, `-fxd:row-reverse` | ✔ |
@@ -194,7 +194,7 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 ### Grid
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `gt` | `grid-template` | — | ✔ |
 | `gta` | `grid-template-areas` | — | ✔ |
 | `gtc` | `grid-template-columns` | `-gtc:subgrid` | ✔ |
@@ -208,7 +208,7 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 ### Grid アイテム
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `ga` | `grid-area` | `-ga:1/1` | ✔ |
 | `gc` | `grid-column` | `-gc:1/-1` | ✔ |
 | `gr` | `grid-row` | `-gr:1/-1` | ✔ |
@@ -220,7 +220,7 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 ### 配置（Places）
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `ai` | `align-items` | `-ai:start`, `-ai:center`, `-ai:end`, `-ai:stretch`, `-ai:flex-start`, `-ai:flex-end` | ✔ |
 | `ac` | `align-content` | `-ac:start`, `-ac:center`, `-ac:end`, `-ac:flex-start`, `-ac:flex-end`, `-ac:between` | ✔ |
 | `ji` | `justify-items` | `-ji:start`, `-ji:center`, `-ji:end`, `-ji:stretch`, `-ji:flex-start`, `-ji:flex-end` | ✔ |
@@ -237,7 +237,7 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 ### その他
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
-|------|--------------|-------------|-----|
+| --- | --- | --- | --- |
 | `ovw` | `overflow-wrap` | `-ovw:anywhere` | — |
 | `whs` | `white-space` | `-whs:nowrap` | — |
 | `float` | `float` | `-float:left`, `-float:right` | — |

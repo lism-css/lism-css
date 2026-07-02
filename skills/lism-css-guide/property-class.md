@@ -89,7 +89,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理される特殊仕様。`-bd` または `-bd-{side}` を付けると初期値（`solid` / `1px` / `var(--divider)`）がセットされ、`bds` / `bdc` / `bdw` Prop で上書きする。
 
 | Prop | CSS プロパティ / 変数 | 主なクラス |
-|------|-----------------------|------------|
+| --- | --- | --- |
 | `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|s\|e\|bs\|be\|t\|b\|l\|r}`, `-bd:none` |
 | `bds` | `--bds` | `-bds:dashed`, `-bds:dotted`, `-bds:double` |
 | `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` |
@@ -102,7 +102,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 ホバーエフェクト用のクラス群。以下の 3 形式がある。
 
 | 形式 | 役割 | 動作条件 |
-|------|------|---------|
+| --- | --- | --- |
 | `-hov:-{prop}` | `--hov-{prop}` 変数で hover 時の値を変化させる | `:hover`（`@media (any-hover: hover)` 内） |
 | `-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
 | `-hov:in:{preset}` | 親の `set--hov` を起点に子のスタイルを変化させる | 親に `set--hov` が必要 |
@@ -119,7 +119,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 Property Class の値名は基本的に CSS の実値と同じですが、以下は省略形が使われます。
 
 | クラス例 | 実際の CSS 値 | 対象 Prop |
-|----------|------------|-----------|
+| --- | --- | --- |
 | `-tt:upper` | `text-transform: uppercase` | `tt` |
 | `-tt:lower` | `text-transform: lowercase` | `tt` |
 | `-w:fit` | `width: fit-content` | `w`, `h` |
@@ -156,7 +156,7 @@ Property Class の値名は基本的に CSS の実値と同じですが、以下
 Property Class をコードベース全体で一括修正する場合、同じ Prop が**複数の書式**で出現するため、以下のパターンをすべて検索する必要があります。
 
 | 出現場所 | 検索パターン例（`p` の場合） |
-|---------|--------------------------|
+| --- | --- |
 | HTML / className — プリセット値 | `-p:20` |
 | HTML / className — BP対応・カスタム値 | `-p` / `-p_sm` / `-p_md` |
 | JSX Props | `p="20"` / `p={20}` / `p={[20, 30]}` |

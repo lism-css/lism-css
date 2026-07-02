@@ -34,7 +34,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | --- | --- |
 | ✅ | 確定。新規定義（コンポーネント/トークン/クラスなど）や合意済みの直書き例外は、行内に注記する（例: `✅新規`、`✅例外（1px罫線）`） |
 | 🔁 | 資料確認トリガーに該当する未通過項目。対応操作をコードに書く手前で指定資料を読み、✅または⏸へ解消する。🔁のまま実装しない |
-| ⏸  | 要ユーザー確認。確認まで実装しない |
+| ⏸ | 要ユーザー確認。確認まで実装しない |
 
 判定記号と注記はこの閉集合だけを使います（記号は✅/🔁/⏸、✅への注記は`✅新規`・`✅例外`・`✅前提`のみ）。`✅例外/前提`のような記号・注記の合成や自作は無効で、その行は未通過（🔁相当）として扱います。
 
@@ -50,21 +50,21 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 | C | 見ること | 主な参照先 |
 | --- | --- | --- |
-| C0  | 入力整理:対象/粒度/フレームワーク/既存制約/不明点 | 既存コード・要件 |
-| C1  | 構造・セマンティクス選定  | `primitive-class.md`、`components-core.md` |
-| C2  | 再利用・コンポーネント境界  | `components-core.md`、`components-ui.md` |
-| C3  | 命名設計 | `naming.md`、`css-rules.md`  |
-| C4  | 状態・バリエーション設計  | `trait-class.md`、`antipatterns.md`  |
-| C5  | 値・トークン照合  | `tokens.md`、`property-class.md` |
-| C6  | レスポンシブ方針  | `responsive.md`、`is--container.md`  |
-| C7  | CSSに書くもの/Propsに移すもの | `property-class.md`、`css-rules.md`  |
-| C8  | 既定値の確認 | `primitives/l--*.md` |
+| C0 | 入力整理:対象/粒度/フレームワーク/既存制約/不明点 | 既存コード・要件 |
+| C1 | 構造・セマンティクス選定 | `primitive-class.md`、`components-core.md` |
+| C2 | 再利用・コンポーネント境界 | `components-core.md`、`components-ui.md` |
+| C3 | 命名設計 | `naming.md`、`css-rules.md` |
+| C4 | 状態・バリエーション設計 | `trait-class.md`、`antipatterns.md` |
+| C5 | 値・トークン照合 | `tokens.md`、`property-class.md` |
+| C6 | レスポンシブ方針 | `responsive.md`、`is--container.md` |
+| C7 | CSSに書くもの/Propsに移すもの | `property-class.md`、`css-rules.md` |
+| C8 | 既定値の確認 | `primitives/l--*.md` |
 
 ## 事前チェック実行レベル
 
-| レベル | 条件  | 確認するC  | 出力 |
-| --- | --- | ----- | ----- |
-| 不要 | 説明のみ/コード変更なし/既存の書き方に沿った微修正 | —  | — |
+| レベル | 条件 | 確認するC | 出力 |
+| --- | --- | --- | --- |
+| 不要 | 説明のみ/コード変更なし/既存の書き方に沿った微修正 | — | — |
 | 軽量 | 数行の小変更・既存パターン内の変更 | C1・C5中心 | 3〜5行の箇条書き |
 | 通常 | 新規UI/コンポーネント/セクション | 必須=初期確認した資料、C0、C1、C5、C6。該当時だけC2/C3/C4/C7/C8 | 項目別の表 |
 | 値照合付き | Figma/スクショ等のデザイン再現 | 通常+C5/C7を詳しく確認 | 項目別の表＋トークン差分表（差分列必須）。`.lism/plan.md`へ保存 |
@@ -77,14 +77,14 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 | この操作をする手前で | この資料を読む |
 | --- | --- |
-| まだ読んでいないPrimitiveを使う  | 該当の`primitives/l--*.md` |
-| まだ読んでいないTrait Classを使う  | 該当の`trait-class/*.md`または`trait-class.md`  |
-| スタイル宣言をCSS（ファイル・`<style>`）に書く、またはProperty Class/Lism Propsへ移す | `property-class.md`  |
-| hover/focus等の状態スタイルを書く  | `property-class/hov.md`（必要に応じて`trait-class/has--transition.md`） |
+| まだ読んでいないPrimitiveを使う | 該当の`primitives/l--*.md` |
+| まだ読んでいないTrait Classを使う | 該当の`trait-class/*.md`または`trait-class.md` |
+| スタイル宣言をCSS（ファイル・`<style>`）に書く、またはProperty Class/Lism Propsへ移す | `property-class.md` |
+| hover/focus等の状態スタイルを書く | `property-class/hov.md`（必要に応じて`trait-class/has--transition.md`） |
 | トークン外の数値・色をコードに書く（丸める場合を含む。CSS/Props問わず） | `tokens.md`、`antipatterns.md`の「px / 固定値の直書き」節 |
-| レスポンシブの切替を決める | `responsive.md`  |
-| `c--*`を新しく作る/名前を付ける  | `naming.md`、`css-rules.md`の該当節 |
-| `c--*`のCSSを書く  | `css-rules.md`の`@layer lism-component`/`c--*`節  |
+| レスポンシブの切替を決める | `responsive.md` |
+| `c--*`を新しく作る/名前を付ける | `naming.md`、`css-rules.md`の該当節 |
+| `c--*`のCSSを書く | `css-rules.md`の`@layer lism-component`/`c--*`節 |
 | 状態・バリエーションを設計する | `trait-class.md` |
 
 「必要なら参照」などの曖昧な表現で代替しない。対象操作の直前に読む。
@@ -105,16 +105,16 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 やりたいことからPrimitive/コンポーネントの候補を引く表です。候補が複数ある行は括弧内の基準で使い分けます。
 
-| やりたいこと | 使う候補 | 詳細  |
+| やりたいこと | 使う候補 | 詳細 |
 | --- | --- | --- |
-| 縦並び | `Stack`/`Flow` | `primitives/l--stack.md`、`primitives/l--flow.md`  |
-| 横並び | `Cluster`（折り返す）/`Flex`（細かく制御する） | `primitives/l--cluster.md`、`primitives/l--flex.md`  |
-| カラム | `Columns`（等幅N列）/`AutoColumns`（最小幅ベースの自動段組み）/`WithSide`（2カラム自動切替）  | `primitive-class.md#カラムレイアウト-primitive-の使い分けガイド`  |
-| 幅制御 | `Container`（コンテナクエリ基準）/`Wrapper`（直下領域の幅制限）/`max-sz`（単体の幅）  | `trait-class/is--container.md`、`trait-class/is--wrapper.md`、`property-class/max-sz.md` |
-| 画像・動画・iframeを置く | `Frame`（アスペクト比枠・直下メディアのfit・overflowを任せる）  | `primitives/l--frame.md`  |
-| ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | `components-ui.md`、`set-class.md`  |
-| hover効果  | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | `property-class/hov.md`、`trait-class/has--transition.md`  |
-| ボックス・カードの全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | `trait-class/is--boxLink.md`  |
+| 縦並び | `Stack`/`Flow` | `primitives/l--stack.md`、`primitives/l--flow.md` |
+| 横並び | `Cluster`（折り返す）/`Flex`（細かく制御する） | `primitives/l--cluster.md`、`primitives/l--flex.md` |
+| カラム | `Columns`（等幅N列）/`AutoColumns`（最小幅ベースの自動段組み）/`WithSide`（2カラム自動切替） | `primitive-class.md#カラムレイアウト-primitive-の使い分けガイド` |
+| 幅制御 | `Container`（コンテナクエリ基準）/`Wrapper`（直下領域の幅制限）/`max-sz`（単体の幅） | `trait-class/is--container.md`、`trait-class/is--wrapper.md`、`property-class/max-sz.md` |
+| 画像・動画・iframeを置く | `Frame`（アスペクト比枠・直下メディアのfit・overflowを任せる） | `primitives/l--frame.md` |
+| ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | `components-ui.md`、`set-class.md` |
+| hover効果 | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | `property-class/hov.md`、`trait-class/has--transition.md` |
+| ボックス・カードの全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | `trait-class/is--boxLink.md` |
 | 小さいUI部品 | `c--*`＋Property Class（`c--*`は意味名に留め、単一要素の見た目はProperty Class/Lism Propsへ） | `property-class.md`、`css-rules.md#component-classc--` |
 | ページの定番セクション（ヒーロー・サイトヘッダー・フッター等） | `Group`＋`Wrapper`/`Stack`/`Cluster`の定番構成 | `references/page-sections.md` |
 
@@ -156,21 +156,21 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | ファイル | 内容 | こんな時に読む |
 | --- | --- | --- |
 | `primitive-class.md` | `l--`/`a--` Primitive一覧と使い分け | レイアウト選定（必要なら`primitives/l--*.md`も） |
-| `trait-class.md` | `is--`/`has--` Trait一覧と役割  | 状態・バリエーション設計 |
-| `property-class.md` | `-{prop}:{value}`形式のProperty Class | CSSをProperty Class/Propsへ移せるか  |
-| `utility-class.md` | `u--*`ユーティリティ  | ユーティリティの確認 |
-| `set-class.md` | `set--plain`/`set--hov`等のセットクラス | reset済みボタン等を使う  |
+| `trait-class.md` | `is--`/`has--` Trait一覧と役割 | 状態・バリエーション設計 |
+| `property-class.md` | `-{prop}:{value}`形式のProperty Class | CSSをProperty Class/Propsへ移せるか |
+| `utility-class.md` | `u--*`ユーティリティ | ユーティリティの確認 |
+| `set-class.md` | `set--plain`/`set--hov`等のセットクラス | reset済みボタン等を使う |
 | `tokens.md` | デザイントークンとCSS変数 | 余白・色・角丸・影・fzの照合 |
-| `naming.md` | 命名規則とProperty Class省略ルール  | 命名・prefix・Property Class表記 |
-| `css-rules.md` | CSS設計・Layer構造・`c--*`・独自prefix  | CSSレイヤー・`c--*`・カスタムCSS |
+| `naming.md` | 命名規則とProperty Class省略ルール | 命名・prefix・Property Class表記 |
+| `css-rules.md` | CSS設計・Layer構造・`c--*`・独自prefix | CSSレイヤー・`c--*`・カスタムCSS |
 | `responsive.md` | BP・コンテナクエリ・レスポンシブProps | レスポンシブ・コンテナクエリ |
 | `base-styles.md` | Reset CSSとHTML要素の基本スタイル | 素のHTML要素の既定を確認 |
-| `components-core.md` | `lism-css`のReact/Astroコアコンポーネント | React/Astroコンポーネント  |
-| `components-ui.md` | `@lism-css/ui`のUIコンポーネント  | UIコンポーネント置換 |
-| `customize.md` | SCSS変数・`lism.config.js`によるカスタマイズ  | トークン/設定をカスタマイズ  |
+| `components-core.md` | `lism-css`のReact/Astroコアコンポーネント | React/Astroコンポーネント |
+| `components-ui.md` | `@lism-css/ui`のUIコンポーネント | UIコンポーネント置換 |
+| `customize.md` | SCSS変数・`lism.config.js`によるカスタマイズ | トークン/設定をカスタマイズ |
 | `antipatterns.md` | AIが生成しがちなNG→OK（値・スタイル宣言系） | 典型ミス確認 |
 | `antipatterns-layout.md` | NG→OK続編（構造・レイアウト・レスポンシブ系） | 構造・レイアウトの典型ミス確認 |
-| `references/authoring.md` | 実装プランの作り方（C0–C8詳細・出力フォーマット） | 実装プランを作る/書式を確認  |
+| `references/authoring.md` | 実装プランの作り方（C0–C8詳細・出力フォーマット） | 実装プランを作る/書式を確認 |
 | `references/verification.md` | `.lism/`規約・評価サブエージェントによる検収 | プラン保存・提出前チェックの委任 |
 | `references/page-sections.md` | ヒーロー・ヘッダー・フッター等の定番構成例 | ページセクションの実装 |
 
