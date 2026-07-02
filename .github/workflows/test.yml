@@ -37,7 +37,7 @@ jobs:
             packages/*/.astro
             apps/*/.astro
 
-  typecheck-lism-css:
+  typecheck:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -62,36 +62,8 @@ jobs:
           name: dist
           path: .
 
-      - name: Typecheck lism-css
-        run: pnpm --filter lism-css run typecheck
-
-  typecheck-docs:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: .
-
-      - name: Typecheck docs
-        run: pnpm --filter lism-docs run typecheck
+      - name: Run typecheck
+        run: pnpm typecheck
 
   lint:
     needs: build
