@@ -13,7 +13,7 @@
 ## Pass1: 対象コードの洗い出し
 
 - **見るもの**: 対象範囲内のclass/className・Lism Props・CSS宣言・style属性・@media/@container・重複しているclass束。
-- **判定**: 原則ここでは確定しない。対象外だけ✅、意図的にスコープ外とするものだけ⬜、残りはPass2以降で判定する。
+- **判定**: 原則ここでは確定しない。指定範囲の外にあるものだけ✅、範囲内だがユーザーと合意してあえて触らないものだけ⬜、残りはPass2以降で判定する。
 - **直し方**: 修正しない。洗い出し表の行を作るだけ。
 - **参照先**: なし（[`output-format.md`](./output-format.md)の洗い出し表を使う）。
 - **NG→OK**: NG=`.c--card{ padding }`だけ拾い、`p={[20,30]}`や`is--active`を漏らす。OK=class/Props/CSS/値/重複/レスポンシブ指定を別行で列挙する。
@@ -62,7 +62,7 @@
 
 - **見るもの**: px/rem/em直書き、`p="8"`/`fz="14"`/`bgc="secondary"`など存在しない値、`--keycolor`のグローバル利用、任意色/任意サイズのstyle属性。
 - **判定**: `tokens.md`にある値で書けている→✅。guideで明確に置換できるtypo→🔧。px丸め・任意色推測・デザイン値置換→⏸。1px罫線・transform微調整・@media閾値などの例外→⬜。
-- **直し方**: 明確なtypoは正しいtokenへ置き換える。固定値は近い候補と差分を出し、ユーザー確認後にProps/Property Class/token CSS変数へ移す。
+- **直し方**: 明確なtypoは正しいtokenへ置き換える。置換先のtokenは`tokens.md`だけでなく、プロジェクトにインストール済みの実CSS（`main.css`や生成済みCSS）でも実在を確認してから採用する（typoとプロジェクト側上書きの見落としを同時に防げる）。固定値は近い候補と差分を出し、ユーザー確認後にProps/Property Class/token CSS変数へ移す。
 - **参照先**: [`tokens.md`](../../lism-css-guide/tokens.md)、[`property-class.md`](../../lism-css-guide/property-class.md)、[`antipatterns.md#token-typo存在しない値`](../../lism-css-guide/antipatterns.md#token-typo存在しない値)、[`antipatterns.md#px--固定値の直書き`](../../lism-css-guide/antipatterns.md#px--固定値の直書き)、[`antipatterns.md#--keycolor-の誤用`](../../lism-css-guide/antipatterns.md#--keycolor-の誤用)。
 - **NG→OK**: typo（🔧）: `bgc="secondary" c="muted"` → `bgc="base-2" c="text-2"`。丸め（⏸）: `padding:24px; border-radius:8px` → `p="30"`/`bdrs="20"`候補を提示し、確認後に適用（`p="8"`も丸めなので⏸）。
 - **注意**: プロジェクト側で`--s-unit`やtokenを上書きしているとpx換算が変わる。`--keycolor`は局所的な色軸であり、ブランド色の代替として使わない。
@@ -109,7 +109,7 @@
 ## Pass9: 既定値重複の確認
 
 - **見るもの**: Primitiveが元々持つ挙動と同じProps/Property Classを重ねている箇所。例: `<Cluster fxw="wrap" ai="center">`・`<Frame ov="hidden">`・Frame直下メディアへの`-w:100% -h:100%`/`object-fit:cover`。
-- **判定**: guideに既定値として明記されていて同じ値を重ねている→🔧。既定値と違う意図的な上書き→✅または⬜。guide未整備のPrimitive既定値→guide TODOへ回す。詳細度が必要な上書き→⬜。
+- **判定**: guideに既定値として明記されていて同じ値を重ねている→🔧。既定値と違う意図的な上書き→✅または⬜。guide未整備のPrimitive既定値→⏸（判断材料がguideに無いため確定できない。guide側の整備が必要な旨を完了報告に書く）。詳細度が必要な上書き→⬜。
 - **直し方**: 重複しているProps/Property Classだけ削除し、Primitive自体と意味classは残す。Clusterの`g`は既定値ではないので消さない。
 - **参照先**: [`primitive-class.md`](../../lism-css-guide/primitive-class.md)、[`primitives/l--cluster.md`](../../lism-css-guide/primitives/l--cluster.md)、[`primitives/l--frame.md`](../../lism-css-guide/primitives/l--frame.md)、[`antipatterns-layout.md#primitive-既定値の重複指定`](../../lism-css-guide/antipatterns-layout.md#primitive-既定値の重複指定)。
 - **NG→OK**: NG=`<Cluster fxw="wrap" ai="center" g="15">` → OK=`<Cluster g="15">`。NG=`<Frame ar="16/9" ov="hidden"><img className="-w:100% -h:100%" style={{ objectFit: 'cover' }} /></Frame>` → OK=`<Frame ar="16/9"><img /></Frame>`。
@@ -120,10 +120,21 @@
 
 ## Pass10: 提示前の見直し
 
-- **見るもの**: ユーザーに提示する前の修正案。
-- **判定**: [`common-mistakes.md`](./common-mistakes.md)の全項目がOK→✅。自分の修正で元の動きを壊した→🔧。px丸めや挙動変更など、ユーザー確認が必要なものが残る→⏸。合意済みの例外→⬜。
+サブエージェント／タスク委任機能が使える環境では、このPassは実装した本人ではなく読み取り専用の評価サブエージェントが実行します（指示テンプレ・報告書式は[`output-format.md`](./output-format.md)）。評価者は読み取りだけで違反を報告し、修正は実装した本人が行って再評価を依頼します。委任できない環境では、本人が同じ照合を行います。
+
+- **見るもの**: ユーザーに提示する前の修正案と、洗い出し表の判定。
+- **判定**: [`common-mistakes.md`](./common-mistakes.md)の全項目と下記「判定の再審査」がOK→✅。自分の修正で元の動きを壊した→🔧。px丸めや挙動変更など、ユーザー確認が必要なものが残る→⏸。合意済みの例外→⬜。
 - **直し方**: 修正案を他人のPRとして読み直し、壊した箇所だけを直す。新規実装時の一般的なアンチパターンはguide側を見る。このファイルでは、リファクタで起こしやすい「元の動きを壊す変更」だけを見る。
 - **参照先**: [`common-mistakes.md`](./common-mistakes.md)。
 - **NG→OK**: NG=CSSを空にした勢いで`className="c--tag"`も削除 → OK=CSS宣言だけ移し、意味classは残す。NG=`is--active`→`data-is-active`に変えたがCSS/JSセレクタ未更新 → OK=markup/CSS/JS/testsを同時更新。
 - **注意**: [`common-mistakes.md`](./common-mistakes.md)の全項目を確認する。
 - **guideで確認すること**: 不要。提示前の見直し項目はこのスキル側で持つ。
+
+### 判定の再審査
+
+壊していないかの確認とは別に、洗い出し表の判定自体を見直します。判定段階で誤って✅・⬜にした行は修正案のdiffに現れない（差分ゼロ＝合格になってしまう）ため、diffの見直しだけでは検出できません。
+
+- `.lism/plan.md`に洗い出し表が存在するか確認する。表が無い、またはPass1の実体列挙が空の場合、その修正案は無効。Pass1へ戻って洗い出し表を作成し、Pass2以降をやり直す。
+- 洗い出し表の✅・⬜行を、該当Passの判定基準に再照合する。根拠列が空・推測のみの行は照合し直し、事実で根拠を書けない⬜は⏸へ戻す（`SKILL.md`「判定記号」の⬜の条件を参照）。リスト外の記号・注記が付いた行は未確定として判定し直す（同「判定記号」を参照）。
+- 洗い出し表の網羅性を確認する。対象範囲のclass/className・style属性・@media/@containerに加え、CSS宣言（プロパティ名）・px/rem/em・生hex値も機械的に再検索（grep等）し、表に無い実体が見つかったらPass1へ戻る。具体的なgrepパターンは[guideの`references/verification.md`の「grepによる補助チェック」](../../lism-css-guide/references/verification.md#grepによる補助チェックコマンドが実行できる環境のみ)を流用できる。
+- Pass2–9を省略していないか確認する。該当する実体が1つも無かったPassは、見直し表に「該当なし」と記録する（無言で飛ばさない）。
