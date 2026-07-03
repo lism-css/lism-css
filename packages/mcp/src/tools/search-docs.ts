@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
 import { loadPropsMarkdown } from '../lib/load-markdown.js';
-import { DocsEntrySchema, MetaInfoSchema } from '../lib/schemas.js';
+import { DocsEntrySchema, MetaInfoSchema, SearchResultSchema } from '../lib/schemas.js';
 import { parsePropRows } from '../lib/markdown-utils.js';
 import { searchDocs } from '../lib/search.js';
 import { success, loadFailureError, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
@@ -43,16 +43,7 @@ export function registerSearchDocs(server: McpServer): void {
       outputSchema: {
         meta: MetaInfoSchema,
         query: z.string(),
-        results: z.array(
-          z.object({
-            sourcePath: z.string(),
-            url: z.string(),
-            heading: z.string(),
-            snippet: z.string(),
-            score: z.number(),
-            nextTool: z.string().nullable(),
-          })
-        ),
+        results: z.array(SearchResultSchema),
       },
       annotations: READ_ONLY_ANNOTATIONS,
     },

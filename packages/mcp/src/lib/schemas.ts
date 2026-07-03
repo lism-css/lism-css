@@ -15,3 +15,12 @@ export const DocsEntrySchema = z.object({
   keywords: z.array(z.string()),
   snippet: z.string(),
 });
+
+export const SearchResultSchema = z.object({
+  sourcePath: z.string(),
+  url: z.string(),
+  heading: z.string(),
+  snippet: z.string(),
+  score: z.number(),
+  nextTool: z.string().nullable(),
+});
