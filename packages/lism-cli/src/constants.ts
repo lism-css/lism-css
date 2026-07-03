@@ -54,8 +54,8 @@ export const SKILL_SOURCE_BASE = 'skills';
 /**
  * 配布対象のスキル名レジストリ。
  *
- * 引数なしの `lism skill add` / `lism skill update` はここに並ぶ全スキルを一括導入し、
- * `lism skill check` も全スキルを対象に差分確認する。`lism skill add [name]` で個別指定も可。
+ * 引数なしの `lism-cli skill add` / `lism-cli skill update` はここに並ぶ全スキルを一括導入し、
+ * `lism-cli skill check` も全スキルを対象に差分確認する。`lism-cli skill add [name]` で個別指定も可。
  * リポジトリ内の実体は `skills/{name}`、配置先は `.{tool}/skills/{name}`。
  */
 export const SKILL_NAMES = ['lism-css-guide', 'lism-css-refactor'] as const;

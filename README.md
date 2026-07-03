@@ -48,7 +48,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 ### CDN (no build required)
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.23.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -151,9 +151,9 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 npx lism-cli skill add
 ```
 
-This installs the bundled `lism-css-guide` skill into your AI tool's skill directory (e.g. `.claude/skills/lism-css-guide` for Claude Code). Run without flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
+This installs the bundled skills (`lism-css-guide` and `lism-css-refactor`) into your AI tool's skill directory (e.g. `.claude/skills/` for Claude Code). Pass a skill name like `npx lism-cli skill add lism-css-guide` to install a single skill. Run without tool flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
 
-You can also fetch the same skill via [skills.sh](https://skills.sh):
+You can also fetch the `lism-css-guide` skill via [skills.sh](https://skills.sh):
 
 ```bash
 npx skills add lism-css/lism-css

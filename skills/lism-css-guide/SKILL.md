@@ -215,4 +215,4 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 ## このスキルファイル自身のアップデート方法
 
-ユーザーがスキル更新を依頼した場合は、`lism skill add`または`lism skill update`を案内してください。最新を確認したい場合は、GitHubリポジトリの`skills/lism-css-guide`を確認してください。
+ユーザーがスキル更新を依頼した場合は、`lism-cli skill add`または`lism-cli skill update`を案内してください。最新を確認したい場合は、GitHubリポジトリの`skills/lism-css-guide`を確認してください。
