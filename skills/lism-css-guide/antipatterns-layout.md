@@ -11,6 +11,8 @@
 - [全面リンクの手組み（`BoxLink` 未使用）](#全面リンクの手組みboxlink-未使用)
 - [primitive 既定値の重複指定](#primitive-既定値の重複指定)
 - [サイト最外殻を `Wrapper` に使う](#サイト最外殻を-wrapper-に使う)
+- [row 方向の `Flex` / `Cluster` 直下に `Wrapper` を置く](#row-方向の-flex--cluster-直下に-wrapper-を置く)
+- [セクション外殻を `Flex` + `min-h` で組む](#セクション外殻を-flex--min-h-で組む)
 - [標準 HTML 属性を `exProps` に入れる](#標準-html-属性を-exprops-に入れる)
 - [レスポンシブ抜け](#レスポンシブ抜け)
 - [レスポンシブ配列の冗長指定](#レスポンシブ配列の冗長指定)
@@ -107,6 +109,22 @@ Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ね�
 | `<main className="is--wrapper">`をページ全体に付与 | `<main className="z--main"><Wrapper>...</Wrapper></main>` | ゾーニングは`z--*`、幅制限は`Wrapper` |
 
 `Wrapper`直下の子要素には幅に関する既定が当たるため、最外殻に置くと予期しない幅制御を生むことがある。
+
+## row 方向の `Flex` / `Cluster` 直下に `Wrapper` を置く
+
+`is--wrapper`は直下の子に幅を配るだけで、自身の幅を決める宣言を持たない。row方向のflexアイテムになるとコンテンツ幅まで縮み、内側の`jc="between"`等が広がる余地を失う。外殻は`Group`等のブロック要素にする。
+
+| NG | OK | 理由 |
+| --- | --- | --- |
+| `<Flex as="header" ai="center"><Wrapper>...</Wrapper></Flex>` | `<Group as="header" py="20"><Wrapper>...</Wrapper></Group>` | flexアイテム化した`Wrapper`は幅が縮み、両端寄せ等が効かなくなる |
+
+## セクション外殻を `Flex` + `min-h` で組む
+
+ヘッダー等のセクション外殻を、デザイン実測の高さを再現するために`Flex`＋`ai="center"`＋`min-h`で組まない。高さは`py`とコンテンツが決める（→ [page-sections.md](./references/page-sections.md)）。
+
+| NG | OK | 理由 |
+| --- | --- | --- |
+| `<Flex as="header" ai="center" min-h="77px">` | `<Group as="header" py="20">` | セクションの高さをデザインpxで固定しない |
 
 ## 標準 HTML 属性を `exProps` に入れる
 
