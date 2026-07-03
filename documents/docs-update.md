@@ -7,7 +7,7 @@
 
 ## cdn読み込みの紹介部分のバージョン番号を更新する処理
 
-`packages/lism-css`のバージョンを上げても、`installation.mdx`等に書かれたCDN URL（`cdn.jsdelivr.net/npm/lism-css@x.y.z/...`）のバージョン番号は自動では更新されない。`nr sync:cdn-versions`を実行すると、`packages/lism-css/package.json`の`version`を読み取り、対象ファイル（`apps/docs`のinstallation.mdx/base-styles.mdx、ルートとlism-cssパッケージのREADME.md、`packages/mcp/src/data/overview.json`）内のCDN URLを一括で書き換える。
+`packages/lism-css`のバージョンを上げても、`installation.mdx`等に書かれたCDN URL（`cdn.jsdelivr.net/npm/lism-css@x.y.z/...`）のバージョン番号は自動では更新されない。`nr sync:cdn-versions`を実行すると、`packages/lism-css/package.json`の`version`を読み取り、対象ファイル（`apps/docs`のinstallation.mdx/base-styles.mdx/overview.mdx、ルートとlism-cssパッケージのREADME.md/README.ja.md）内のCDN URLを一括で書き換える。
 
 # 翻訳
 

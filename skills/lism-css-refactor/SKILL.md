@@ -15,7 +15,7 @@ description: "既存のLism CSSコード（React/Astro/HTML/CSS）を、見た�
 
 このスキルは、`lism-css-guide`が同じ階層に入っていることを前提にします。
 
-`lism-css-guide`がない場合は、ユーザーに`lism skill add`で追加してもらってください。guideなしで、推測だけでリファクタ判断を進めないでください。
+`lism-css-guide`がない場合は、ユーザーに`lism-cli skill add`で追加してもらってください。guideなしで、推測だけでリファクタ判断を進めないでください。
 
 ## 基本方針
 
@@ -84,4 +84,4 @@ Passは、このスキル内で使う確認ステップの番号です。いき�
 
 ## このスキルファイル自身のアップデート方法
 
-ユーザーがスキル更新を依頼した場合は、`lism skill add`または`lism skill update`を案内してください。最新を確認したい場合は、GitHubリポジトリの`skills/lism-css-refactor`を参照してください。
+ユーザーがスキル更新を依頼した場合は、`lism-cli skill add`または`lism-cli skill update`を案内してください。最新を確認したい場合は、GitHubリポジトリの`skills/lism-css-refactor`を参照してください。

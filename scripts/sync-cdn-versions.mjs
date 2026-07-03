@@ -16,13 +16,16 @@ const { version } = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
 
 // CDN URL を含むファイル一覧
 const targets = [
-	'apps/docs/src/content/ja/installation.mdx',
-	'apps/docs/src/content/ja/base-styles.mdx',
-	'apps/docs/src/content/en/installation.mdx',
-	'apps/docs/src/content/en/base-styles.mdx',
-	'README.md',
-	'packages/lism-css/README.md',
-	'packages/mcp/src/data/overview.json',
+  'apps/docs/src/content/ja/installation.mdx',
+  'apps/docs/src/content/ja/base-styles.mdx',
+  'apps/docs/src/content/ja/overview.mdx',
+  'apps/docs/src/content/en/installation.mdx',
+  'apps/docs/src/content/en/base-styles.mdx',
+  'apps/docs/src/content/en/overview.mdx',
+  'README.md',
+  'README.ja.md',
+  'packages/lism-css/README.md',
+  'packages/lism-css/README.ja.md',
 ];
 
 // cdn.jsdelivr.net/npm/lism-css or lism-css@x.y.z → lism-css@{version}
@@ -32,17 +35,17 @@ const replacement = `$1@${version}$3`;
 let updatedCount = 0;
 
 for (const rel of targets) {
-	const filePath = resolve(ROOT, rel);
-	const original = readFileSync(filePath, 'utf-8');
-	const updated = original.replace(pattern, replacement);
+  const filePath = resolve(ROOT, rel);
+  const original = readFileSync(filePath, 'utf-8');
+  const updated = original.replace(pattern, replacement);
 
-	if (original !== updated) {
-		writeFileSync(filePath, updated, 'utf-8');
-		updatedCount++;
-		console.log(`Updated: ${rel}`);
-	} else {
-		console.log(`No change: ${rel}`);
-	}
+  if (original !== updated) {
+    writeFileSync(filePath, updated, 'utf-8');
+    updatedCount++;
+    console.log(`Updated: ${rel}`);
+  } else {
+    console.log(`No change: ${rel}`);
+  }
 }
 
 console.log(`\nDone. ${updatedCount} file(s) updated to lism-css@${version}`);
