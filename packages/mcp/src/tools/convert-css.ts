@@ -12,21 +12,23 @@ interface CssDeclaration {
 }
 
 /** 変換結果の1行 */
-interface ConversionEntry {
-  css: string;
-  lismProp: string | null;
-  suggestedValue: string | null;
-  availableTokens: string[] | null;
-  confidence: 'exact' | 'approximate' | 'unmapped';
-  note: string;
-}
+const ConversionEntrySchema = z.object({
+  css: z.string(),
+  lismProp: z.string().nullable(),
+  suggestedValue: z.string().nullable(),
+  availableTokens: z.array(z.string()).nullable(),
+  confidence: z.enum(['exact', 'approximate', 'unmapped']),
+  note: z.string(),
+});
+type ConversionEntry = z.infer<typeof ConversionEntrySchema>;
 
 /** コンポーネント提案 */
-interface ComponentSuggestion {
-  name: string;
-  reason: string;
-  implicitCss: string[];
-}
+const ComponentSuggestionSchema = z.object({
+  name: z.string(),
+  reason: z.string(),
+  implicitCss: z.array(z.string()),
+});
+type ComponentSuggestion = z.infer<typeof ComponentSuggestionSchema>;
 
 // ----------------------------------------------------------------
 // CSS パース
@@ -277,17 +279,8 @@ export function registerConvertCss(server: McpServer): void {
       },
       outputSchema: {
         meta: MetaInfoSchema,
-        conversions: z.array(
-          z.object({
-            css: z.string(),
-            lismProp: z.string().nullable(),
-            suggestedValue: z.string().nullable(),
-            availableTokens: z.array(z.string()).nullable(),
-            confidence: z.enum(['exact', 'approximate', 'unmapped']),
-            note: z.string(),
-          })
-        ),
-        suggestedComponent: z.object({ name: z.string(), reason: z.string(), implicitCss: z.array(z.string()) }).nullable(),
+        conversions: z.array(ConversionEntrySchema),
+        suggestedComponent: ComponentSuggestionSchema.nullable(),
         example: z.string(),
         tip: z.string(),
       },
