@@ -26,6 +26,8 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 - [全面リンクの手組み（`BoxLink` 未使用）](./antipatterns-layout.md#全面リンクの手組みboxlink-未使用)
 - [primitive 既定値の重複指定](./antipatterns-layout.md#primitive-既定値の重複指定)
 - [サイト最外殻を `Wrapper` に使う](./antipatterns-layout.md#サイト最外殻を-wrapper-に使う)
+- [row 方向の `Flex` / `Cluster` 直下に `Wrapper` を置く](./antipatterns-layout.md#row-方向の-flex--cluster-直下に-wrapper-を置く)
+- [セクション外殻を `Flex` + `min-h` で組む](./antipatterns-layout.md#セクション外殻を-flex--min-h-で組む)
 - [標準 HTML 属性を `exProps` に入れる](./antipatterns-layout.md#標準-html-属性を-exprops-に入れる)
 - [レスポンシブ抜け](./antipatterns-layout.md#レスポンシブ抜け)
 - [レスポンシブ配列の冗長指定](./antipatterns-layout.md#レスポンシブ配列の冗長指定)
@@ -244,4 +246,12 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 | --- | --- | --- |
 | `<Columns cols="1,2,3">` | `<Columns cols={[1, 2, 3]}>` | レスポンシブは配列 |
 | `<Box p="20 30 40">` | `<Box p={[20, 30, 40]}>` | 同上 |
+
+### BP 非対応 Prop への配列指定
+
+レスポンシブ配列を渡せるのは BP 対応の Prop だけ。BP 対応可否は [all-props.md](./property-class/all-props.md) の BP 列で確認する。
+
+| NG | OK | 理由 |
+| --- | --- | --- |
+| `<Grid cg={['40', null, '80']}>` | `<Grid g={['40', null, '80']}>` または `<Grid cg="40">` | `cg` / `rg` は BP 非対応。レスポンシブにするなら BP 対応の `g` を使うか、単一値にする |
 
