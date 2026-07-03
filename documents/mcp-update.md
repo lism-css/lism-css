@@ -22,8 +22,9 @@ MCP サーバーの `docs-index.json`（`packages/mcp/src/data/`）を最新ソ�
 1. バージョン情報・コミットハッシュを取得
 2. `lism-mcp-editor` サブエージェント（sonnet）を 1 並列で起動
 3. 完了後 `meta.ts` の `generatedAt` / `sourceCommit` を更新
-4. `packages/mcp` で `pnpm test` を実行し、`docs-index.test.ts` の構造検証（sourcePath の実在・収録漏れ・URL スラッグ変換の apps/docs との一致）が通ることを確認する
-5. 変更点のサマリーを報告
+4. 変更点のサマリーを報告
+
+> **注:** `packages/mcp` で `pnpm test` を実行すると、`docs-index.test.ts` による構造検証（sourcePath の実在・収録漏れ・URL スラッグ変換の apps/docs との一致）が行える。ただし `/mcp-update` コマンド自体の処理フローには含まれないため、必要な場合はコマンド外で手動実行して確認する。
 
 > **注:** `docs-index.json` は 1 つの MDX ファイルに対して複数エントリ（セクション単位）を持てる。
 > `sourcePath` の重複はエラーではなく、長いページを検索単位で分割するための意図的な設計。

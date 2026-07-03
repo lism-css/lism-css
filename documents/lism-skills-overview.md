@@ -1,393 +1,246 @@
 # Lismスキル群 解説
 
-PR459でリニューアルしたLism CSSのskillsについて、何ができるのか、どう使うのか、内部でどういう処理の流れになっているのかを整理する。
+Lism CSSが配布するAIエージェント向けskillについて、何ができるのか、どう導入するのか、内部でどういう処理の流れになっているのかを整理する運営者向けメモ。
 
-## ひとことで言うと
+PR459で、それまで「読むだけの資料」だった`lism-css-guide`を「AIに手順を踏ませる実行ガイド」へ作り変え、リファクタ専用の`lism-css-refactor`を新設し、CLIを複数skill配布へ一般化した。以下は現行仕様に基づく整理。
 
-今回のリニューアルは、Lism CSSのskillを**「読むだけの資料」から「AIに手順を踏ませる実行ガイド」へ作り変える**もの。
 
-これまでの課題は、`lism-css-guide`を読ませても、初期実装でもリファクタでもベストプラクティスを取りこぼすことだった。つまり「読む」だけでは、Primitive選定・token照合・Property Class化・レスポンシブ確認などを実作業で必ず実行する強制力が足りなかった。
+## 配布しているskill
 
-PR459では、その問題に対して次の3本柱で対応している。
-
-| 柱 | 内容 |
-|---|---|
-| `lism-css-guide`強化 | 新規実装用ガイドを、単なる索引から「判断入口＋手順」へ刷新 |
-| `lism-css-refactor`新設 | 既存コードの監査・リファクタ専用skillを追加 |
-| CLI複数skill配布 | `lism skill`を複数skill対応へ一般化 |
-
-結果として、Lismのskillは役割の違う2つになる。
+配布対象は以下の2つ。実体はリポジトリの`skills/{name}`配下、配信元は`packages/lism-cli/src/constants.ts`の`SKILL_NAMES`で管理する。
 
 | skill | 役割 | 起動する場面 |
 |---|---|---|
 | `lism-css-guide` | 新規実装、UI作成、ページ作成、コンポーネント作成の前向き作業 | 要件・デザインからコードを書くとき |
 | `lism-css-refactor` | 既存コードの監査・整理・リファクタの後ろ向き作業 | ユーザーがリファクタ・監査・整理を明示したとき |
 
-重要なのは、`lism-css-refactor`はtoken値やPrimitive選定などの一般知識を自分で重複保持しないこと。迷ったときは同階層の`lism-css-guide`へrouteする。知識の正典はguideに寄せ、refactorは既存コードを順番に棚卸しする手順に集中する。
+`lism-css-refactor`は、token値やPrimitive選定などの一般知識を自分で重複保持しない。判断に迷ったら同階層の`lism-css-guide`へrouteする設計で、知識の正典は常にguide側に置く。`lism-css-refactor`のSKILL.md冒頭にも「`lism-css-guide`が同じ階層に入っていることを前提にする」と明記されている。
 
 ---
 
-## 何ができる？
+## どう導入する？
 
-### `lism-css-guide`でできること
+### `lism-cli skill`コマンド
 
-`lism-css-guide`は、新規UI・ページ・コンポーネントを書くときの実装ガイド。単なるクラス一覧ではなく、**実装前preflight→実装→提出前セルフチェック**を通すことで、Lismらしい書き方の取りこぼしを防ぐ。
-
-主に以下を扱う。
-
-- Primitive選定
-  - `Stack` / `Cluster` / `Grid` / `Columns` / `AutoColumns` / `WithSide` / `Frame`など
-- Trait選定
-  - `Container` / `Wrapper` / `Layer` / `BoxLink` / `has--transition`など
-- token照合
-  - spacing / color / font-size / radius / shadowなど
-- Property Class / Lism Props活用
-  - CSSに書くべきか、`-p:20`や`p="20"`へ寄せるべきか
-- レスポンシブ設計
-  - base値、`sm` / `md` / `lg`、container query、`isContainer`祖先の有無
-- 命名設計
-  - `c--*` / `z--*` / `p--*`
-  - `c--block_element` / `c--block--modifier`
-- 状態・バリエーション設計
-  - 状態は`data-*`/ARIA
-  - 見た目違いは`c--name--variant`
-  - `is--active`のような`is--`誤用を避ける
-- アンチパターン確認
-  - div手組み、px直書き、存在しないtoken、固定Grid、Primitive既定値の重複など
-
-### `lism-css-refactor`でできること
-
-`lism-css-refactor`は、既存のLism CSSコードを棚卸しして、**挙動を変えずに**idiomaticな書き方へ寄せるためのskill。
-
-主に以下を検出・提案する。
-
-- div手組みレイアウトをPrimitiveへ置換できる箇所
-  - 例: 手組みメディア枠 → `Frame`
-  - 例: 固定的な等幅列 → `Columns`
-- CSSに溜まった装飾束をProperty Class / Propsへ移せる箇所
-- token逸脱
-  - px/rem/em直書き
-  - 存在しない値
-  - `bgc="secondary"`のような曖昧値
-- `is--`誤用
-  - `is--active` / `is--open` / `is--solid`など
-- 命名ミス
-  - kebab-case
-  - 何でも`c--`にする
-  - `z--` / `p--` / `c--`の使い分けミス
-- レスポンシブ抜け
-  - base値なし
-  - `xs`など標準外BP
-  - container query運用時の`isContainer`祖先不足
-- Primitive既定値の重複
-  - `<Cluster fxw="wrap" ai="center">`
-  - `<Frame ov="hidden">`
-  - Frame直下imgへの`w/h/object-fit`重複指定
-
-ただし、refactorの原則は**挙動不変・最小diff**。公開class名、CMS、外部JS、E2Eセレクタ、DOM順、レスポンシブ挙動に影響しそうな変更は勝手に実行せず、`⏸`としてユーザー確認に回す。
-
----
-
-## どう使う？
-
-### CLIで導入する
-
-PR459で`lism skill`は複数skill対応になる。引数なしの`add`/`update`は、登録済みskillをまとめて扱う。
+配布元パッケージは`lism-cli`（binは`lism-cli`のみ。`lism`というbinは存在しない）。サブコマンドは`add` / `check` / `update`の3つ。
 
 ```bash
-lism skill add
+# 対話モード（プロジェクト直下の .claude / .agents / .cursor 等のマーカーから使用中ツールを自動検出し、選択式で導入先を決める）
+pnpm dlx lism-cli skill add
+
+# skill名を指定して個別に導入（未指定なら全skill = lism-css-guide + lism-css-refactor）
+pnpm dlx lism-cli skill add lism-css-guide
+pnpm dlx lism-cli skill add lism-css-refactor
+
+# 導入先ツールを明示指定
+pnpm dlx lism-cli skill add --claude --cursor
+pnpm dlx lism-cli skill add --all
+
+# 既存配置との差分確認（変更/追加/ローカル限定ファイルのサマリ表示）
+pnpm dlx lism-cli skill check
+pnpm dlx lism-cli skill check --verbose
+
+# 配置済みskillをまとめて最新版へ上書き
+pnpm dlx lism-cli skill update --claude
 ```
 
-上記は、CLIが知っている全skillを導入する。PR459時点では以下の2つ。
+対応するツールと配置先（`packages/lism-cli/src/commands/skill/paths.ts`の`SKILL_PATHS`）：
 
-- `lism-css-guide`
-- `lism-css-refactor`
+| ツールフラグ | 配置先 | 自動検出マーカー |
+|---|---|---|
+| `--claude` | `.claude/skills/<skill>` | `.claude` |
+| `--codex` | `.agents/skills/<skill>` | `.agents`, `.codex` |
+| `--cursor` | `.cursor/skills/<skill>` | `.cursor` |
+| `--windsurf` | `.windsurf/skills/<skill>` | `.windsurf` |
+| `--cline` | `.cline/skills/<skill>` | `.cline` |
+| `--copilot` | `.github/skills/<skill>` | `.github/copilot-instructions.md`, `.github/copilot` |
+| `--gemini` | `.gemini/skills/<skill>` | `.gemini` |
+| `--junie` | `.junie/skills/<skill>` | `.junie` |
 
-個別に入れることもできる。
+各サブコマンドの引数・オプション：
+
+| サブコマンド | 引数 | オプション |
+|---|---|---|
+| `skill add [skill]` | skill名（省略時は全skill、未知の名前はエラー） | `-o, --overwrite`、`--ref <ref>`、ツールフラグ（`--all`含む） |
+| `skill check` | なし（常に全skill×全ツールが対象） | `--ref <ref>`、`-v, --verbose` |
+| `skill update` | なし（常に全skillが対象） | `--ref <ref>`、ツールフラグ（`--all`含む） |
+
+ツールフラグを1つも指定しなかった場合、`skill add`はプロジェクト直下のマーカーから使用中ツールを自動検出し、それを初期選択状態にした対話式チェックボックスで導入先を確定する（`skill check`はツールフラグを持たず、常に「配置済み＝各`<配置先>/SKILL.md`が存在するもの」全件を対象にする）。
+
+### 開発版・PR版を試す
+
+`--ref <ref>`で、skillファイルの取得元ブランチ・タグ・コミットを変えられる。未指定時の既定値は`constants.ts`の`DEFAULT_SKILL_REF`（`DEFAULT_UI_REF`/`DEFAULT_TEMPLATES_REF`と同様、dev/mainマージ運用で手動切替される値。詳細は[cli-guide.md](./cli-guide.md)を参照）。
 
 ```bash
-lism skill add lism-css-guide
-lism skill add lism-css-refactor
+lism-cli skill add --ref dev
+lism-cli skill add --ref feat/some-branch
+lism-cli skill check --ref dev
 ```
 
-導入先ツールも指定できる。
+`--ref`が切り替えるのは**取得するskillファイルの場所**だけで、CLIが認識するskill一覧（`SKILL_NAMES`）は実行しているCLI本体のバージョンに依存する。新しいskillをCLI経由で扱うには、CLI側にも対応するリリースが必要。
+
+### skills.sh経由の配布
+
+`lism-cli`を使わずskills.sh経由で導入する方法もある（トップレベル`README.md`の案内）。
 
 ```bash
-lism skill add --codex
-lism skill add --claude --cursor
-lism skill add --all
+npx skills add lism-css/lism-css
 ```
 
-対応している配置先は以下。
-
-| tool | 配置先 |
-|---|---|
-| claude | `.claude/skills` |
-| codex | `.agents/skills` |
-| cursor | `.cursor/skills` |
-| windsurf | `.windsurf/skills` |
-| cline | `.cline/skills` |
-| copilot | `.github/skills` |
-| gemini | `.gemini/skills` |
-| junie | `.junie/skills` |
-
-ツール指定がない場合は、プロジェクト直下の`.claude` / `.agents` / `.cursor`などのマーカーから利用中と思われるツールを自動検出し、選択式で導入先を決める。
-
-### 更新・差分確認
-
-```bash
-lism skill check
-lism skill check --verbose
-lism skill update
-```
-
-- `check`: ローカルに導入済みのskillが配布元と一致しているか確認する
-- `check --verbose`: ファイル単位の差分も表示する
-- `update`: 引数なし`add --overwrite`相当で、登録済みskillを最新版で上書きする
-
-### 開発版・PR版を試す場合
-
-`--ref`を指定すると、skillファイルの取得元ブランチ・タグ・コミットを変えられる。
-
-```bash
-lism skill add --ref dev
-lism skill add --ref feat/lism-skill-overhaul
-lism skill check --ref dev
-```
-
-ただし、`--ref`が切り替えるのは**取得するskillファイルの場所**だけ。CLI本体が知っているskill一覧は、実行しているCLIの`SKILL_NAMES`に依存する。
-
-そのため、`lism-css-refactor`をCLI経由で扱うには、CLI側にもPR459の変更が入っている必要がある。
-
-| やりたいこと | CLI更新が必要か |
-|---|---|
-| 既存の`lism-css-guide`をdev版にする | 旧CLIでも可能な場合がある |
-| `lism skill add lism-css-refactor`で導入する | 必要 |
-| 引数なし`lism skill add`でguide+refactorを一括導入する | 必要 |
-| 手動で`.agents/skills/lism-css-refactor/`などへコピーする | 不要 |
-
-つまり、`--ref`は「どこから取るか」を変えるだけで、「CLIが何のskillを知っているか」は変えない。
+配信元は`lism-cli skill add`と同じ`skills/lism-css-guide/`・`skills/lism-css-refactor/`。詳細は[Skillsドキュメント](https://lism-css.com/en/docs/skills/)を参照。
 
 ---
 
 ## `lism-css-guide`の処理の流れ
 
-`lism-css-guide`の基本フローは以下。
+`skills/lism-css-guide/SKILL.md`に定義された実装フロー（厳守）:
 
 ```txt
-目的確認
-  → 実装前preflight
-  → Authoring Plan作成
-  → ⏸項目はユーザー確認
-  → 実装
-  → 提出前セルフチェック
-  → 報告
+0. 実行レベル判定（不要/軽量/通常/値照合付き。「不要」なら以降省略可）
+1. 初期確認（対象に関係する詳細ファイルを先に開く）
+2. 目的別実装ガイドでPrimitive/コンポーネント候補を選定
+3. 実装前チェック（C0–C8）→ 実装プラン作成（未確認判断には🔁を付ける）
+4. 資料確認トリガーに従い、操作の直前に資料を読んで🔁を✅/⏸へ解消
+5. ⏸が残る項目はユーザー確認
+6. 実装
+7. 提出前セルフチェックで実装プランと実装を照合
 ```
 
-### preflight実行レベル
+値照合付きレベル（Figma/スクショ等のデザイン再現）では、実装プランをチャット内の回答ではなく`.lism/plan.md`として保存する。
 
-作業規模によって、preflightの重さを変える。
+### 判定記号
 
-| レベル | trigger | 出力 |
-|---|---|---|
-| 不要 | 説明のみ、コード変更なし、既存idiomaticな微修正 | なし |
-| 軽量 | 数行の小変更、既存パターン内の変更 | 3〜5行の箇条書き |
-| 通常 | 新規UI、コンポーネント、セクション | ドメイン別表 |
-| 値照合付き | Figma/スクショ等のデザイン再現 | token差分表つき |
+`lism-css-guide`の実装プランで使う記号は次の3つのみ（`⬜`や`🆕`は使わない）。
 
-### Authoring PlanのFP
-
-Authoring Planは、これから書く構造・値・命名・responsive方針を事前に宣言するための成果物。FP0〜FP8で整理する。
-
-| FP | 見ること |
+| 記号 | 意味 |
 |---|---|
-| FP0 | 入力整理。対象、粒度、framework、既存制約、不明点 |
-| FP1 | 構造・セマンティクス選定 |
-| FP2 | reuse・コンポーネント境界 |
-| FP3 | 命名設計 |
-| FP4 | 状態・バリエーション設計 |
-| FP5 | 値・token照合 |
-| FP6 | レスポンシブ方針 |
-| FP7 | CSS境界の分解 |
-| FP8 | Primitive既定値の確認 |
+| ✅ | 確定。新規定義や合意済み例外は`✅新規`・`✅例外`・`✅前提`のように注記する |
+| 🔁 | 資料確認トリガー該当。対応資料を読んで✅/⏸へ解消するまでコードへ反映しない |
+| ⏸ | 要ユーザー確認。確認まで実装しない |
 
-重要なのは、形式的に全部埋めることではなく、実装に影響する項目だけを列挙すること。
+`✅例外`にできるのは`antipatterns.md`の「直書きしてよい例外」に該当する場合のみで、根拠の引用が必須。自律実行などでユーザー確認が取れない場合は、原則準拠側の既定動作を選び`✅前提`として前提を明示した上で進める運用がある。
 
-### `⏸`にする条件
+### 実装前チェック項目（C0–C8）とチェックレベル
 
-次のようなものはAIが勝手に判断せず、ユーザー確認に回す。
-
-- px/rem/emをtokenへ丸める
-- 任意色・ブランド色・密度・忠実度を決める
-- tokenを新規追加する
-- 固定Gridをレスポンシブ化する
-- `isContainer`の位置を変える
-- 公開class名、CMS、外部JS、E2Eセレクタに依存する構造や命名を変える
+C0〜C8（Check）で構造・命名・状態・トークン・レスポンシブ・CSS/Props境界・Primitive既定値を確認する。詳細と出力形式は`references/authoring.md`。事前チェックの重さは変更規模に応じて「不要/軽量/通常/値照合付き」の4段階に分ける。
 
 ### 提出前セルフチェック
 
-実装後は、Authoring Planと実装を1行ずつ照合する。
-
-- 計画どおり実装できたか
-- 計画変更があるなら理由があるか
-- 実装漏れがないか
-- 未確認の`⏸`を勝手に実装していないか
-
-そのうえで、Primitive選定、token、Property Class化、レスポンシブ、命名、状態、既定値重複などを確認する。
+実装プランと実装を1行ずつ照合し、「計画変更（意図的）/実装漏れ/要確認」に分類したうえで、プロセス照合・ルール照合・プラン再審査・個別確認を行う。サブエージェント／タスク委任機能が使える環境では、この照合を実装した本人ではなく**読み取り専用の評価サブエージェント**に委任し、結果を`.lism/review.md`へ保存、違反ゼロが出るまで修正→再評価を繰り返す。
 
 ---
 
 ## `lism-css-refactor`の処理の流れ
 
-`lism-css-refactor`の基本フローは以下。
+`skills/lism-css-refactor/SKILL.md`に定義されたワークフロー（厳守）:
 
 ```txt
-スコープ確定
-  → 対象コード・周辺・利用箇所を読む
-  → Inventory表を作る
-  → Pass1〜9で判定する
-  → draft diffを作る
-  → Self-reviewゲートを通す
-  → 修正案を提示する
-  → ユーザー許可後に適用する
-  → 検証・報告する
+0. 範囲を決める（対象ファイル/コンポーネント/選択範囲を明示）
+1. 読む（対象コード・周辺・利用箇所）
+2. Pass1実行 → 洗い出し表を .lism/plan.md として保存
+3. Pass2–9実行（洗い出し表の各行に判定を付与）
+4. 修正案の差分を作る（この時点ではユーザーに未提示）
+5. Pass10実行（提示前の見直し・再審査。評価サブエージェントへ委任可）
+6. 修正案を提示する（⏸はここでユーザー確認）
+7. 適用する（ユーザー許可後のみ）
+8. 検証して報告する
 ```
 
-### Inventory表
+前提として、このskillは`lism-css-guide`が同じ階層に導入済みであることを想定する。無い場合はユーザーに`lism-cli skill add`での追加を案内し、guideなしで推測だけのリファクタ判断を進めない。
 
-最初に、対象範囲内の実体を1行ずつ棚卸しする。
+### Pass定義
 
-- class / className
-- Lism Props
-- CSS宣言
-- style属性
-- `@media` / `@container`
-- 重複したクラス束やProps束
-
-これはチェックリストではなく、**コード上に存在する実体を落とさず列挙する表**。棚卸し漏れがあると後続Passで検出できないため、ここが重要になる。
-
-### Pass1〜10
-
-| Pass | 内容 |
+| Pass | 確認すること |
 |---|---|
-| Pass1 | 棚卸し。実体を全列挙する |
-| Pass2 | 構造。div手組みをPrimitive/Traitへ寄せられるか |
-| Pass3 | 重複。3箇所以上ならコンポーネント抽出を検討 |
-| Pass4 | Property Class抽出。CSS束をProps/Property Classへ移せるか |
-| Pass5 | token監査。px直書き・存在しない値を検出 |
-| Pass6 | trait/状態/バリエーション。`is--`誤用を検出 |
-| Pass7 | 命名。kebab-caseや何でも`c--`を検出 |
-| Pass8 | レスポンシブ。base抜け、固定Grid、isContainer不足を検出 |
-| Pass9 | 既定値重複。Primitive既定と同じ指定を検出 |
-| Pass10 | Self-reviewゲート。自分の修正案が退行を作っていないか確認 |
+| Pass1 | 対象コードの洗い出し |
+| Pass2 | 構造（div手組みをPrimitive/Traitへ置き換えられるか） |
+| Pass3 | 重複（3箇所以上あるものをコンポーネント化できるか） |
+| Pass4 | Property Class化（CSSに書いた装飾をProps/classへ移せるか） |
+| Pass5 | token（px直書き・存在しない値がないか） |
+| Pass6 | 状態・バリエーション（`is--`の誤用がないか） |
+| Pass7 | 命名（class名がLismの命名規則に合うか） |
+| Pass8 | レスポンシブ（base抜け・固定Grid・container指定漏れ） |
+| Pass9 | 既定値重複（Primitiveが元々持つ指定を重ねていないか） |
+| Pass10 | 提示前の見直し（自分の修正案が元の見た目・動きを壊していないか） |
 
-順序に意味がある。先に構造を決めないと、何に値を載せるか、どこに状態を持たせるか、何を命名するかが定まらないため、個別監査が無駄になりやすい。
+詳しい判定基準は`references/checklist.md`に集約されている。
 
-### refactorのverdict
-
-refactorでは以下の記号を使う。
+### 判定記号
 
 | 記号 | 意味 |
 |---|---|
-| ✅ | 触らない。既にidiomatic、または対象外 |
-| 🔧 | 修正対象。修正案あり |
-| ⏸ | 要ユーザー判断。px丸め、色推測、挙動変更、外部契約など |
-| ⬜ | 意図的に残す。合意済み例外、独自意図が明確 |
+| ✅ | 触らない（既に問題ない／対象外） |
+| 🔧 | 修正する（修正案を出す） |
+| ⏸ | 要ユーザー確認（px丸め・色推測・挙動変更・外部依存など） |
+| ⬜ | 意図的に残す（合意済み例外・独自意図が明確） |
 
-### Self-reviewゲート
-
-draft diffを作ったあと、ユーザーへ提示する前に必ずSelf-reviewゲートを通す。
-
-主に以下を確認する。
-
-- 抽出・置換で`className` / `style` / `data-*` / ARIA / event handlerを渡し忘れていないか
-- 公開class名、CMS、外部JS、E2Eセレクタを勝手に変えていないか
-- `is--active`→`data-*`などで、CSSだけ直してJS/test/HTML生成側を漏らしていないか
-- レスポンシブ配列を単一値に潰していないか
-- CSSを空にしたついでに`c--`意味クラスまで消していないか
-- pxを勝手にtokenへ丸めていないか
-- Primitive化・既定値削除でgap/align/幅/見た目が変わっていないか
-
-ここでNGがあれば、提示前に修正案を直す。丸めや挙動変更のようにユーザー判断が必要なものは、`⏸`として提示する。
+Pass10の見直し（評価サブエージェントへの委任を含む）の結果は`.lism/review.md`へ保存し、違反ゼロが出るまで修正→再評価を繰り返してから提示する。
 
 ---
 
-## verdict記号の注意
+## 判定記号の注意（skill間の違い）
 
-`lism-css-guide`と`lism-css-refactor`では、同じ記号でも意味が一部違う。
+同じ記号でも、`lism-css-guide`（forward系）と`lism-css-refactor`（refactor系）では意味・使用可能な記号セットが異なる。
 
 | 記号 | guide（forward系） | refactor系 |
 |---|---|---|
-| ✅ | 確定 | 触らない |
-| ⏸ | 要ユーザー確認 | 要ユーザー判断 |
-| ⬜ | 例外、直書き許容 | 意図的に残す |
-| 🔁 | 参照して正規値・正規Primitiveへ確定 | なし |
-| 🆕 | 新規定義 | なし |
-| 🔧 | なし | 修正対象 |
+| ✅ | 確定（`✅新規`・`✅例外`・`✅前提`の注記あり） | 触らない |
+| 🔁 | 資料確認トリガー未通過 | （使わない） |
+| ⏸ | 要ユーザー確認 | 要ユーザー確認 |
+| 🔧 | （使わない） | 修正対象 |
+| ⬜ | （使わない） | 意図的に残す |
 
-共通しているのは`⏸`が「ユーザー確認なしに進めない」という意味であること。表を出すときは、forward系なのかrefactor系なのかを明示する必要がある。
+共通しているのは`⏸`が「ユーザー確認なしに進めない」という意味であること。両skillとも、リスト外の記号や注記の組み合わせを自作することを明示的に禁止しており、該当行は未確定/未通過として扱う。
 
 ---
 
 ## CLI内部の処理の流れ
 
-### `lism skill add`
+### `lism-cli skill add`
+
+対象ファイル: `packages/lism-cli/src/commands/skill/add.ts`
 
 ```txt
-対象skillを決める
-  → 導入先ツールを決める
-  → GitHubのskills/{name}を一時ディレクトリへ取得
-  → 既存配置先とsha256で差分比較
-  → 差分があれば上書き確認
+positional引数からskill対象を解決（未指定なら SKILL_NAMES 全件）
+  → ツールフラグから導入先を解決（未指定ならマーカー自動検出 + 対話選択）
+  → skillごとに giget で github:lism-css/lism-css/skills/{name}#{ref} を一時ディレクトリへ取得（1回のみ）
+  → 選択された各ツール配置先ごとに、既存ディレクトリとsha256で差分比較
+  → 差分が無ければスキップ、あれば（--overwrite未指定時は）差分サマリ表示 → 上書き確認
   → コピー
   → 一時ディレクトリ削除
 ```
 
-対象skillは`SKILL_NAMES`で管理される。
-
-```ts
-export const SKILL_NAMES = ['lism-css-guide', 'lism-css-refactor'] as const;
-```
-
-引数なしの場合は全skill、引数ありの場合はそのskillだけを対象にする。未知の名前はエラーになる。
-
-### `lism skill check`
-
-```txt
-全skill × 全ツール配置先を走査
-  → SKILL.mdがあるものだけ導入済みとして扱う
-  → skillごとにリモートを一度取得
-  → 各ローカル配置先とファイル単位で比較
-  → 差分サマリを表示
-```
-
-差分は以下の4種類。
+差分は`packages/lism-cli/src/commands/skill/skillSource.ts`の`compareSkillDirs`がファイル単位のsha256ハッシュで判定し、4種類に分類する。
 
 | 種類 | 意味 |
 |---|---|
 | unchanged | ローカルとリモートが一致 |
 | modified | 両方に存在するが内容が違う |
 | added | リモートにのみ存在する |
-| localOnly | ローカルにのみ存在する |
+| localOnly | ローカルにのみ存在する（旧ファイルまたはユーザー独自ファイル） |
 
-### `lism skill update`
+### `lism-cli skill check`
 
-`update`は、内部的には引数なし`add --overwrite`相当。登録済みの全skillを強制上書きする。
+対象ファイル: `packages/lism-cli/src/commands/skill/check.ts`
+
+```txt
+SKILL_NAMES × ALL_SKILL_TOOLS の全組から、配置先に SKILL.md があるものだけを「配置済み」として収集
+  → skillごとにリモートを1度だけ取得
+  → 配置済みの各ローカルディレクトリとファイル単位で比較
+  → 差分サマリを表示（--verbose でファイル単位の詳細も表示）
+```
+
+配置済みが1件も無い場合は、その旨を案内して終了する。
+
+### `lism-cli skill update`
+
+`packages/lism-cli/src/commands/skill/update.ts`は、内部的に`skillAddCommand(undefined, { ...options, overwrite: true })`を呼ぶだけの薄いラッパー。つまり「skill引数なし・`--overwrite`強制」の`add`と同義で、登録済みの全skillを対象ツールへ強制上書きする。
 
 ---
 
 ## まとめ
 
-PR459のskillリニューアルは、Lismの知識を増やすだけでなく、AIに**作業順序を守らせる**ための設計変更。
-
-- 新規実装は`lism-css-guide`
-  - Authoring Planで、書く前にPrimitive・token・responsive・CSS境界を宣言する
-- 既存コード整理は`lism-css-refactor`
-  - Inventory表と順序Passで、既存コードを漏れなく棚卸しする
-- 一般知識はguideに集約
-  - refactorは迷ったときだけguideへrouteする
-- CLIは複数skill配布へ一般化
-  - `lism skill add`でguide+refactorを一括導入できる
-  - ただし`lism-css-refactor`をCLI経由で扱うには、CLI側にもPR459の変更が入っている必要がある
-
-つまり、今回のリニューアルの価値は「Lism CSSのルールを知っている」ではなく、**実装やリファクタのたびに、そのルールを手順として実行させる**ところにある。
+- 配布skillは`lism-css-guide`（新規実装）と`lism-css-refactor`（既存コード整理）の2つ。知識の正典はguideに集約し、refactorはPass手順で棚卸しに専念する。
+- 導入経路は`lism-cli skill add/check/update`（bin: `lism-cli`）と、skills.sh経由の`npx skills add lism-css/lism-css`の2系統。どちらも実体は`skills/{name}`が配信元。
+- どちらのskillも、実装/リファクタの各ステップに`✅`/`🔁`/`⏸`/`🔧`/`⬜`のいずれかの判定記号を付けて進行を管理し、ユーザー確認が必要な項目（⏸）を明示する。値照合や洗い出し表など重い成果物は`.lism/plan.md`・`.lism/review.md`として保存し、サブエージェントへの検証委任も定義されている。
+- CLI側は`--ref`で取得元ブランチを切り替えられるが、CLIが認識するskill一覧自体は実行しているCLI本体のバージョンに依存する点に注意する。

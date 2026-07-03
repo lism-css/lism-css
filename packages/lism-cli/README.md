@@ -1,6 +1,6 @@
 # lism-cli
 
-[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com/ui) のための CLI ツール。`lism-cli` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
+[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com/ui) のためのCLIツール。`lism-cli` コマンドで新規プロジェクト生成・UIコンポーネント追加・AIスキル配置を行います。
 
 ## 前提条件
 
@@ -9,7 +9,7 @@
 ## コマンド体系
 
 ```
-lism-cli create [targetDir] [--template <name|category>]   # templates から新規プロジェクト
+lism-cli create [targetDir] [--template <name|category>] [--lang <ja|en>]  # templates から新規プロジェクト
 lism-cli ui    { init | add <names...> | list }            # Lism UI コンポーネントの追加
 lism-cli skill { add [skill] | check | update }            # AI エージェント向け SKILL.md 配置
 ```
@@ -34,9 +34,9 @@ pnpm dlx lism-cli create --template blog-astro-minimal --lang en ./my-blog
 
 同じ動作は `pnpm create lism` / `npm create lism@latest` でも呼び出せます（`create-lism` パッケージ経由）。挙動は両者で共通です。
 
-`--lang <ja|en>` は CLI の表示言語に加えて、**生成されるテンプレート本体の言語**にも反映されます。`--lang` を指定しない場合は、対話端末（TTY）ではほかのどの選択よりも先に言語選択プロンプトが表示され、選んだ言語で以降の表示とテンプレート生成が確定します（非対話環境・CI 等では `en` にフォールバック）。対応言語版を持つテンプレート（`blog-astro-minimal` / `blog-astro-personal` / `blog-astro-techlog` / `lp-astro-corporate` / `lp-astro-interior`）では、指定言語のサイト文言・サンプルコンテンツで生成されます。言語版が無いテンプレートは、指定言語に関わらず既存（ベース）の内容で生成されます。
+`--lang <ja|en>` は CLIの表示言語に加えて、**生成されるテンプレート本体の言語**にも反映されます。`--lang` を指定しない場合は、対話端末（TTY）ではほかのどの選択よりも先に言語選択プロンプトが表示され、選んだ言語で以降の表示とテンプレート生成が確定します（非対話環境・CI等では `en` にフォールバック）。対応言語版を持つテンプレート（`blog-astro-minimal` / `blog-astro-personal` / `blog-astro-techlog` / `lp-astro-corporate` / `lp-astro-interior`）では、指定言語のサイト文言・サンプルコンテンツで生成されます。言語版が無いテンプレートは、指定言語に関わらず既存（ベース）の内容で生成されます。
 
-### UI コンポーネントの追加
+### UIコンポーネントの追加
 
 ```bash
 # 単一 / 複数
@@ -53,7 +53,7 @@ pnpm dlx lism-cli ui list
 pnpm dlx lism-cli ui add accordion --ref dev
 ```
 
-コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されます。`lism-ui` を更新するだけで CLI 側も自動で追従します。
+コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されるため、既存コンポーネントの実装を更新するだけでCLI側も自動で追従します。ただし、コンポーネントを追加・削除した場合は `lism-ui` 側で `registry-index.json` を再生成（ビルド時の `gen:registry`）してcommitする必要があります（`ui list` / `ui add --all` が参照するカタログのため）。
 
 `ui` セクションの設定が見つからない状態で `ui add` を実行すると、対話式セットアップが走ります。
 
@@ -65,18 +65,18 @@ pnpm dlx lism-cli ui add accordion --ref dev
 
 `ui add` は入力した値をその回の実行に使うだけで設定ファイルは書き換えず、最後に `lism.config.*` へ貼り付けるための `ui` セクションのスニペットを案内します。
 
-設定をファイルとして残すには `ui init` を使います。`lism.config.{ts,mjs,js}` が無い場合は `ui` セクションを持つ `lism.config.js` を新規作成し、既存の `lism.config.*` がある場合はファイルを書き換えず、貼り付け用スニペットの表示に留めます（CSS カスタマイズ用に先に作られた設定を壊さないため）。
+設定をファイルとして残すには `ui init` を使います。`lism.config.{ts,mjs,js}` が無い場合は `ui` セクションを持つ `lism.config.js` を新規作成し、既存の `lism.config.*` がある場合はファイルを書き換えず、貼り付け用スニペットの表示に留めます（CSSカスタマイズ用に先に作られた設定を壊さないため）。
 
 ### AI エージェント向けスキルの配置
 
-同梱スキル（`SKILL.md` ほか一式）を各種 AI ツールの所定ディレクトリへ展開します。
+同梱スキル（`SKILL.md` ほか一式）を各種AIツールの所定ディレクトリへ展開します。
 
-同梱スキルは以下の 2 つです：
+同梱スキルは以下の2つです：
 
 | スキル | 説明 |
 |--------|------|
-| `lism-css-guide` | Lism CSS で UI・ページを実装・修正する時に使う実装ガイド |
-| `lism-css-refactor` | 既存の Lism CSS コードを、見た目や挙動を変えずに Lism らしい書き方へ整理するリファクタガイド |
+| `lism-css-guide` | Lism CSSでUI・ページを実装・修正する時に使う実装ガイド |
+| `lism-css-refactor` | 既存の Lism CSSコードを、見た目や挙動を変えずにLismらしい書き方へ整理するリファクタガイド |
 
 ```bash
 # 対話モード（使用中のツールを自動検出）
@@ -115,7 +115,7 @@ pnpm dlx lism-cli skill update --claude
 
 ## lism.config.js
 
-`ui add` / `ui init` が読み込む設定ファイル（新規作成するのは `ui init`）。CSS の設定（`tokens` 等）と CLI 設定を同居できます。
+`ui add` / `ui init` が読み込む設定ファイル（新規作成するのは `ui init`）。CSSの設定（`tokens` 等）とCLI設定を同居できます。
 
 ```js
 export default {
@@ -129,16 +129,18 @@ export default {
 
 設定ファイルは `lism.config.ts` / `lism.config.mjs` / `lism.config.js` に対応しており、この順で探索して最初に見つかったものを読み込みます。`lism-css` 本体の設定読込（`@lism-css/plugin` / `lism-css build`）も同じ探索順です。
 
-旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。旧 `cli` セクション名も後方互換のため読み込めますが、deprecation 警告が出るので `ui` へのリネームを推奨します。
+旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時にdeprecation警告）。旧 `cli` セクション名も後方互換のため読み込めますが、deprecation警告が出るので `ui` へのリネームを推奨します。
 
 ## パッケージが見つからないエラーが出る場合
 
-npm / pnpm の Safe Supply Chain 機能により、公開から間もないパッケージがブロックされる場合があります。
+npm / pnpmには、公開から間もないバージョンのインストールを一定期間ブロックする仕組みがあります（npmの`min-release-age`設定、pnpmの`minimumReleaseAge`設定）。公開直後の`lism-cli`を実行すると、このガードによりパッケージが見つからないエラーになる場合があります。次のように一時的に無効化して実行できます。
 
 ```bash
-npm exec --safe-chain-skip-minimum-package-age lism-cli create
-pnpm --safe-chain-skip-minimum-package-age dlx lism-cli create
+npm exec --min-release-age 0 lism-cli create
+pnpm dlx --config.minimumReleaseAge=0 lism-cli create
 ```
+
+Aikido Securityのsafe-chainなど、サードパーティのサプライチェーン保護ツールを導入している場合は、そのツール側の設定（例: `SAFE_CHAIN_MINIMUM_PACKAGE_AGE_HOURS=0`）も確認してください。
 
 ## License
 
