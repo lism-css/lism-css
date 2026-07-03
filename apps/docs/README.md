@@ -4,7 +4,7 @@ Astro + TypeScript + MDX で構築された、Lism CSS (`packages/lism-css`) & L
 
 | 機能 | 技術 |
 |------|------|
-| フレームワーク | Astro 5.x |
+| フレームワーク | Astro 6.x |
 | コンテンツ | MDX（コンテンツコレクション） |
 | CSS | lism-css |
 | 検索 | Pagefind（静的検索ライブラリ） |
@@ -48,18 +48,24 @@ src/
 │   │   ├── NavLink.astro
 │   │   ├── Pagination.astro
 │   │   └── PostNavigation.astro
+│   ├── templates/            # テンプレート一覧・詳細用UI
 │   ├── ex/                   # MDX 内サンプル用コンポーネント
 │   └── Preview/              # コードプレビュー UI
 ├── config/               # サイト設定
 │   ├── site.ts               # サイト全体設定・言語設定
 │   ├── sidebar.ts            # サイドバーナビ設定
 │   ├── patterns.ts           # パターンカテゴリ設定
+│   ├── page-layouts.ts       # ページレイアウトカテゴリ設定
+│   ├── templates.ts          # テンプレートカテゴリ設定
+│   ├── redirects.ts          # リダイレクト設定
 │   └── translations.ts       # UI翻訳テキスト
 ├── content.config.ts     # コンテンツコレクションスキーマ定義
 ├── content/              # コンテンツコレクション（多言語）
 │   ├── ja/                   # 日本語記事（root言語）
 │   ├── en/                   # 英語記事（非root言語）
 │   └── token-previews.jsx    # トークンプレビュー用JSX
+├── integrations/
+│   └── docs-md/               # ビルド時にHTML→Markdown変換・llms.txt/ui.md生成を行うAstro integration
 ├── layouts/
 │   ├── BaseLayout.astro      # 共通レイアウト
 │   ├── SimpleLayout.astro    # シンプルレイアウト
@@ -75,6 +81,8 @@ src/
 │   ├── jsonLd.ts             # 構造化データ生成
 │   ├── sitemap-lastmod.ts    # サイトマップ用更新日付
 │   ├── patterns.ts           # パターン取得
+│   ├── page-layouts.ts       # ページレイアウト取得
+│   ├── templates.ts          # テンプレート取得
 │   ├── remark-directive.ts   # :::記法変換（remark）
 │   ├── rehype-blockquote-cite.ts # blockquote 拡張（rehype）
 │   └── expressive-code.config.ts
@@ -87,10 +95,12 @@ src/
 │   ├── ui/[...slug].astro    # ui セクション
 │   ├── ui/og/[...slug].png.ts # ui 用 OG画像
 │   ├── patterns/             # パターン一覧／詳細
+│   ├── page-layouts/         # ページレイアウト一覧／詳細
+│   ├── templates/            # テンプレート一覧／詳細
 │   ├── preview/patterns/     # パターンのプレビュー
+│   ├── preview/page-layouts/ # ページレイアウトのプレビュー
 │   ├── demo/                 # 各種デモページ
-│   ├── page-layout/          # ページレイアウトのサンプル
-│   └── [lang]/               # 非root言語用ページ
+│   └── [lang]/               # 非root言語用ページ（docs・ui 以外の各セクションを含む）
 ├── styles/
 │   ├── main.scss             # エントリーポイント
 │   ├── _base.scss
@@ -103,6 +113,7 @@ src/
 │   ├── _theme.scss
 │   ├── _docs/                # docs 系の個別スタイル
 │   └── _memo/                # 検証用メモスタイル
+├── assets/               # OG画像生成用のフォント・画像
 ├── img/                  # 画像アセット
 ├── utils/                # 汎用ユーティリティ
 │   └── getSvgUrl.ts
@@ -114,9 +125,20 @@ src/
 
 ## セクション構造
 
-サイトは `/docs/` と `/ui/` の2つのセクションに分かれており、URLに応じて異なるナビゲーションを表示します。
+サイトは `docs` / `ui` / `patterns` / `page-layouts` / `templates` / `demo` の複数セクションで構成されています。`docs` と `ui` はコンテンツコレクション（MDX）を、それ以外は `src/config/` の設定データをコンテンツソースとします。日本語（root言語）はプレフィックス無し、英語は `/en/` 配下で提供されます。
 
-| セクション | URL | コンテンツ配置 | ページファイル |
-|------------|-----|----------------|----------------|
+| セクション | URL（ja） | コンテンツソース | ページファイル |
+|------------|-----------|-------------------|----------------|
 | docs | `/docs/xxx/` | `content/{lang}/xxx.mdx` | `src/pages/docs/[...slug].astro` |
 | ui | `/ui/xxx/` | `content/{lang}/ui/xxx.mdx` | `src/pages/ui/[...slug].astro` |
+| patterns | `/patterns/{category}/` | `src/config/patterns.ts` | `src/pages/patterns/` |
+| page-layouts | `/page-layouts/{category}/` | `src/config/page-layouts.ts` | `src/pages/page-layouts/` |
+| templates | `/templates/` | `src/config/templates.ts` | `src/pages/templates/` |
+| demo | `/demo/xxx/` | 各ページ内に直接記述 | `src/pages/demo/` |
+
+英語版（`docs` / `ui` / `patterns` / `page-layouts` / `templates`）は `src/pages/[lang]/` 配下にまとめて実装されています。
+
+
+## docs-md integration
+
+`src/integrations/docs-md/` は、ビルド後の HTML を AI エージェント向けの Markdown に変換する Astro integration です。`docs` / `ui` セクションの各ページを `dist/{path}.md` として出力するほか、`/ui/` 一覧ページ用の `dist/ui.md` と、サイト全体のインデックスとなる `dist/llms.txt` を生成します。詳細な処理フローは [`documents/docs-md.md`](../../documents/docs-md.md) を参照してください。

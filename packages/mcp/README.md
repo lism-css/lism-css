@@ -3,13 +3,13 @@
 [English](./README.md) | [日本語](./README.ja.md)
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for [Lism CSS](https://lism-css.com).
-Enables AI tools (Claude Code, Cursor, etc.) to accurately reference the latest Lism CSS documentation and API.
+Enables AI tools (Claude Code, Cursor, etc.) to accurately reference Lism CSS documentation and API, matching the version of this package that is installed.
 
 ## Available Tools
 
 | Tool | Description |
 |------|-------------|
-| `get_overview` | Framework overview (architecture, design philosophy, packages, breakpoints, installation guide, CSS Layers) |
+| `get_overview` | Framework overview (architecture, design philosophy, packages, breakpoints, CSS layers, implementation rules) |
 | `get_tokens` | Get the full design token reference (colors, spacing, font sizes, shadows, radii, etc.) |
 | `get_props_system` | Props system reference — how React/Astro props map to CSS classes and styles. Supports reverse lookup by CSS property name (e.g. `padding` → `p`) and Property Class notation (e.g. `-g:5`) |
 | `get_component` | Component details (props, usage examples, sub-component structure). Optionally filter by package (`lism-css` or `@lism-css/ui`) |

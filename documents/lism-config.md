@@ -129,6 +129,7 @@ pnpm exec lism-css build
 Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供する。
 
 - `@lism-css/plugin/webpack`の`withLismWebpack(config, opts)`: webpack主導バンドラ（`@wordpress/scripts`等）向けの汎用プリミティブ。`{ css, config, typegen, watch }`で挙動を切り替える（`css:false`でCSS事前生成・CSS aliasをno-op、`config:true`で`lism-css/config.js`をユーザー設定へalias、`watch:true`で`lism.config.js`を`fileDependencies`へ登録）。WP/テーマ固有ロジックは持たず消費側の責務とする。
+- `@lism-css/plugin/next`の`withLism(nextConfig, opts)`: Next.js（16以降）向けの統合エントリ。Next.jsにはVite/Astroのようなbare CSS importをオンザフライで横取りする口が無いため、config反映済みCSSを`<projectRoot>/.lism-css/css/*`へ事前生成し、`lism-css/<entry>.css`をその生成物へaliasで差し替える方式を取る。Turbopackが主経路（`turbopack.resolveAlias`にproject-relativeパスで注入）、`next dev --webpack`/`next build --webpack`のfallback用にwebpack `resolve.alias`へも絶対パスで同等aliasを注入する。`lism-css/config.js`のユーザー設定alias、`lism-env.d.ts`生成（`opts.typegen`、既定true）も併せて行う。返り値は`(phase, ctx) => config`の非同期config関数で、`next.config`の default exportへ`export default withLism(nextConfig, opts)`のように渡す。devフェーズでは`lism.config.js`の変更を`fs.watch`ベースで監視し、変更時にCSS/型を再生成する。
 - `@lism-css/plugin/builder`の`generateLismScss({ projectRoot, outDir? })`: 自前SCSSビルド構成向けに、config適用済みsettingのbridgeを`_lism-config.gen.scss`・`lism-setting.scss`（既定outDir=`<projectRoot>/.lism-css/scss`）へ生成する。消費側は`loadPaths:['.lism-css/scss']`+`NodePackageImporter`で、`@use 'lism-setting'`→`@use 'pkg:lism-css/scss/main_no_layer'`の順に読む（settingをconfig付きで先にロードする必要があるため順序依存）。
 
 
@@ -143,8 +144,8 @@ Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供�
 4. `isFullMode:true`の場合、`main.css`系で使う設定もfull preset適用済みに寄せる。
 5. `import 'lism-css/main.css'`などのCSS importをViteプラグインが捕捉し、設定反映済みCSSをその場でコンパイルして返す。
    `node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して生成SCSS（`_prop-config.gen.scss`/`_tokens.gen.scss`）だけ差し替える。
-6. `breakpoints`で`xs`/`xl`などが有効なら、`lism-env.d.ts`を自動生成して型側にも反映する。
-   生成対象は主にbreakpointsで、props/tokens全体の型拡張までは追従しない。
+6. `breakpoints`の追加BP、`props`/`traits`の追加キー、`isFullMode`のいずれかがあれば、`lism-env.d.ts`を自動生成して型側にも反映する（`generateLismEnvDts`）。
+   反映対象はbreakpoints・追加props・追加traits・isFullModeの4種類で、`tokens`は型拡張の対象外（値マップの実行時登録のみ）。
 7. `purge:true`時は、設定反映済みの`full.css`からknown selectorを作る。
    configで追加したクラスもpurge対象として扱える。
 

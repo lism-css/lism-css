@@ -38,7 +38,10 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 |---------|-------------|
 | [lism-css](https://www.npmjs.com/package/lism-css) | Core CSS framework + React / Astro layout components |
 | [@lism-css/ui](https://www.npmjs.com/package/@lism-css/ui) | Interactive UI components (Accordion, Modal, Tabs, etc.) |
-| [@lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp) | MCP server for AI coding tools |
+| [@lism-css/mcp](https://www.npmjs.com/package/@lism-css/mcp) | MCP server for AI coding tools |
+| [lism-cli](https://www.npmjs.com/package/lism-cli) | CLI for scaffolding projects, adding UI components, and installing AI skills |
+| [create-lism](https://www.npmjs.com/package/create-lism) | Wrapper for `pnpm create lism` / `npm create lism` (bundles `lism-cli`) |
+| [@lism-css/plugin](https://www.npmjs.com/package/@lism-css/plugin) | Build / Vite / Astro / purge plugins for Lism CSS |
 
 ## Quick Start
 
@@ -80,7 +83,7 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/react';
 
 ```astro
 ---
-import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
+import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 ---
 
 <Stack g="20">
@@ -143,6 +146,14 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 ## AI Tool Integration
 
 ### Claude Code Skill
+
+```bash
+npx lism-cli skill add
+```
+
+This installs the bundled `lism-css-guide` skill into your AI tool's skill directory (e.g. `.claude/skills/lism-css-guide` for Claude Code). Run without flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
+
+You can also fetch the same skill via [skills.sh](https://skills.sh):
 
 ```bash
 npx skills add lism-css/lism-css

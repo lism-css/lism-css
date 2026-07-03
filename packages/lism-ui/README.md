@@ -32,16 +32,16 @@ All components are based on the layout system and design tokens of Lism CSS.
 ## Installation
 
 ```bash
-npm i @lism-css/ui lism-css
+npm i @lism-css/ui
 ```
 
 or
 
 ```bash
-pnpm add @lism-css/ui lism-css
+pnpm add @lism-css/ui
 ```
 
-> `lism-css` is a required peer dependency.
+> `lism-css` is a regular dependency of `@lism-css/ui`, so it is installed automatically — no separate install step needed.
 
 ## Setup
 
@@ -120,12 +120,12 @@ import { Text } from 'lism-css/astro';
 
 ## Relationship to lism-css
 
-Lism CSS is organized into two packages:
+This package builds on top of a separate core CSS package. The two most relevant packages here are:
 
 - **[lism-css](https://www.npmjs.com/package/lism-css)** — Core CSS framework providing layout components (Box, Flex, Stack, Grid, etc.), design tokens, property classes, and the responsive system.
 - **@lism-css/ui** (this package) — Interactive UI components (Accordion, Modal, Tabs, etc.) that extend the core layout system with ready-to-use interface patterns.
 
-You need `lism-css` installed to use `@lism-css/ui`.
+`lism-css` is a regular dependency of `@lism-css/ui`, so it is installed automatically.
 
 ## AI Tool Integration
 

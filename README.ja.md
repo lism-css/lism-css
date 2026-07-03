@@ -13,32 +13,35 @@
   <a href="./README.md">English</a> | <a href="./README.ja.md">日本語</a>
 </p>
 
-## Lism CSS とは？
+## Lism CSSとは？
 
-Lism CSS は、WEB サイトのレイアウトを素早く、かつ美しく構築するための軽量な **CSS 設計フレームワーク**です。
+Lism CSSは、Webサイトのレイアウトを素早く、かつ美しく構築するための軽量な**CSS設計フレームワーク**です。
 
 [Every Layout](https://every-layout.dev/) のレイアウトプリミティブやハーモニックモジュラースケーリング、[Tailwind CSS](https://tailwindcss.com/) のCSSプロパティ単位でのユーティリティファーストなアプローチから着想を得て、独自のCSS設計を組み立てました。
 
-ビルドステップや設定は不要です。CDN 経由で CSS ファイルを読み込むか、npm からインポートするだけですぐに使い始められます。React / Astro 向けのコンポーネントも提供しており、props を通じて CSS クラスとカスタムプロパティに変換されるため、ランタイムでのスタイル生成なしにコンポーネントベースの開発が可能です。
+ビルドステップや設定は不要です。CDN経由でCSSファイルを読み込むか、npmからインポートするだけですぐに使い始められます。React / Astro向けのコンポーネントも提供しており、propsを通じてCSSクラスとカスタムプロパティに変換されるため、ランタイムでのスタイル生成なしにコンポーネントベースの開発が可能です。
 
 ## 特徴
 
-- **軽量** — CSS バンドル全体で約 30 KB（gzip 圧縮時 約 8 KB）。
-- **ゼロビルドフレームワーク** — CDN または npm でプレーン HTML でも動作。ビルドツールや設定は不要。
+- **軽量** — CSSバンドル全体で約30 KB（gzip圧縮時約8 KB）。
+- **ゼロビルドフレームワーク** — CDNまたはnpmでプレーンHTMLでも動作。ビルドツールや設定は不要。
 - **レイアウト優先プリミティブ** — プリビルトのレイアウトパターン: `l--flex`、`l--stack`、`l--grid`、`l--columns`、`l--center`、`l--withSide` など。
-- **CSS レイヤー構造** — `@layer`（lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-trait` は `is--` / `has--` の Trait クラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-component` は BEM 構造の `c--` コンポーネント用レイヤー、`lism-custom` はユーザー独自プレフィックスのクラス用レイヤーです。詳細度の衝突を最小限に抑えます。
-- **デザイントークン** — カラー、余白、フォントサイズ、シャドウを CSS カスタムプロパティで管理。
-- **柔軟なプロップクラス** — `-{prop}:{value}` 構文（例: `-p:20`、`-bgc:base-2`、`-fz:l`）。
-- **レスポンシブシステム** — ブレークポイントクラスと CSS 変数（例: `-p_sm`、`-p_md`）にデフォルトでコンテナクエリを採用し、親要素ベースのレスポンシブデザインを実現。メディアクエリへの切り替えも可能。
-- **React & Astro コンポーネント** — `class="l--stack -g:20"` の代わりに `<Stack g="20">` と書ける。
+- **CSSレイヤー構造** — `@layer`（lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-component` はBEM構造の `c--` コンポーネント用レイヤー、`lism-custom` はユーザー独自プレフィックスのクラス用レイヤーです。詳細度の衝突を最小限に抑えます。
+- **デザイントークン** — カラー、余白、フォントサイズ、シャドウをCSSカスタムプロパティで管理。
+- **柔軟なProperty Class** — `-{prop}:{value}` 構文（例: `-p:20`、`-bgc:base-2`、`-fz:l`）。
+- **レスポンシブシステム** — ブレークポイントクラスとCSS変数（例: `-p_sm`、`-p_md`）にデフォルトでコンテナクエリを採用し、親要素ベースのレスポンシブデザインを実現。メディアクエリへの切り替えも可能。
+- **React & Astroコンポーネント** — `class="l--stack -g:20"` の代わりに `<Stack g="20">` と書ける。
 
 ## パッケージ
 
 | パッケージ | 説明 |
 |-----------|------|
-| [lism-css](https://www.npmjs.com/package/lism-css) | コア CSS フレームワーク + React / Astro レイアウトコンポーネント |
-| [@lism-css/ui](https://www.npmjs.com/package/@lism-css/ui) | インタラクティブ UI コンポーネント（Accordion、Modal、Tabs など） |
-| [@lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp) | AI コーディングツール向け MCP サーバー |
+| [lism-css](https://www.npmjs.com/package/lism-css) | コアCSSフレームワーク + React / Astroレイアウトコンポーネント |
+| [@lism-css/ui](https://www.npmjs.com/package/@lism-css/ui) | インタラクティブUIコンポーネント（Accordion、Modal、Tabsなど） |
+| [@lism-css/mcp](https://www.npmjs.com/package/@lism-css/mcp) | AIコーディングツール向けMCPサーバー |
+| [lism-cli](https://www.npmjs.com/package/lism-cli) | プロジェクト生成・UIコンポーネント追加・AIスキル配置を行うCLI |
+| [create-lism](https://www.npmjs.com/package/create-lism) | `pnpm create lism` / `npm create lism` 用のラッパー（`lism-cli` を内包） |
+| [@lism-css/plugin](https://www.npmjs.com/package/@lism-css/plugin) | Lism CSS向けのBuild / Vite / Astro / purgeプラグイン |
 
 ## クイックスタート
 
@@ -80,7 +83,7 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/react';
 
 ```astro
 ---
-import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
+import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 ---
 
 <Stack g="20">
@@ -96,7 +99,7 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 </Stack>
 ```
 
-### HTML（CSS のみ）
+### HTML（CSSのみ）
 
 ```html
 <div class="l--stack -g:20">
@@ -112,13 +115,13 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 </div>
 ```
 
-## CSS クラスの例
+## CSSクラスの例
 
 | タイプ | 例 |
 |--------|-----|
 | レイアウトプリミティブ | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
-| トレイトプリミティブ | `is--wrapper`, `is--container`, `is--layer` |
-| プロップクラス | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
+| Trait Class | `is--wrapper`, `is--container`, `is--layer`, `has--transition`, `has--gutter` |
+| Property Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | ブレークポイント | `-p_sm`, `-g_md`, `-fz_lg` |
 | ユーティリティ | `u--cbox` |
 
@@ -140,23 +143,31 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 </Lism>
 ```
 
-## AI ツール連携
+## AIツール連携
 
 ### Claude Code Skill
+
+```bash
+npx lism-cli skill add
+```
+
+同梱の `lism-css-guide` スキルを、使用しているAIツールのスキルディレクトリ（例: Claude Codeなら `.claude/skills/lism-css-guide`）へ配置します。引数なしで実行すると対話モードになり、`--claude`、`--cursor` などのフラグでツールを個別指定することもできます。
+
+[skills.sh](https://skills.sh) 経由で同じスキルを取得することもできます。
 
 ```bash
 npx skills add lism-css/lism-css
 ```
 
-詳細は [Skills ドキュメント](https://lism-css.com/docs/skills/) を参照してください。
+詳細は [Skillsドキュメント](https://lism-css.com/docs/skills/) を参照してください。
 
-### MCP サーバー
+### MCPサーバー
 
 ```bash
 claude mcp add lism-css -- npx -y @lism-css/mcp
 ```
 
-Cursor や VS Code のセットアップ方法は、[lism-css パッケージの README](https://www.npmjs.com/package/lism-css#ai-tool-integration) を参照してください。
+CursorやVS Codeのセットアップ方法は、[lism-cssパッケージのREADME](https://www.npmjs.com/package/lism-css#ai-tool-integration) を参照してください。
 
 ### llms.txt
 
@@ -170,11 +181,11 @@ https://lism-css.com/llms.txt
 
 ## プレイグラウンド
 
-サンドボックス環境で Lism CSS を試す: [lism-css/lism-playgrounds](https://github.com/lism-css/lism-playgrounds)
+サンドボックス環境でLism CSSを試す: [lism-css/lism-playgrounds](https://github.com/lism-css/lism-playgrounds)
 
 ## コミュニティ
 
-フィードバックや質問は、[Lism CSS Discord サーバー](https://discord.gg/6PMcFHvc4h)までお気軽にどうぞ。
+フィードバックや質問は、[Lism CSS Discordサーバー](https://discord.gg/6PMcFHvc4h)までお気軽にどうぞ。
 
 ## クレジット
 
