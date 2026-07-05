@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { readdir, readFile, stat, unlink, writeFile } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
@@ -15,8 +16,10 @@ const SCAN_EXT = /\.(html?|js|mjs|cjs)$/;
 const CSS_EXT = /\.css$/;
 // 参照更新の対象拡張子: HTML / JS / JSON manifest / sourcemap / RSS など、文字列で参照を持ち得るもの
 const REF_EXT = /\.(html?|js|mjs|cjs|json|txt|xml|map)$/;
-// `<name>.<hash>.css` 形式のハッシュ部を判定する。Astro / Vite 既定では 8 文字英数字。
-const HASHED_CSS_NAME = /^(.+)\.([A-Za-z0-9_-]{6,})\.css$/;
+// `<name>.<hash>.css` 形式のハッシュ部を判定する。Astro / Vite 既定・本プラグインの shortContentHash は
+// いずれも 8 文字英数字なので 8 文字ちょうどに限定する。緩い判定だと `theme.mobile.css` の `.mobile` 等を
+// 誤ってハッシュ扱いしてしまう（#496）。
+const HASHED_CSS_NAME = /^(.+)\.([A-Za-z0-9_-]{8})\.css$/;
 
 async function* walk(dir: string): AsyncGenerator<string> {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -77,8 +80,8 @@ async function purgeCssFiles(
     if (purged === source && !hasCssSourceMappingUrl(source)) continue;
     const output = stripCssSourceMappingUrl(purged);
 
-    beforeBytes += source.length;
-    afterBytes += output.length;
+    beforeBytes += Buffer.byteLength(source);
+    afterBytes += Buffer.byteLength(output);
 
     const oldBase = basename(file);
     const match = HASHED_CSS_NAME.exec(oldBase);

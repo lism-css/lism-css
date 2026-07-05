@@ -130,6 +130,33 @@ describe('lismPurgeAstro (Astro)', () => {
     }
   });
 
+  test('8 文字未満の末尾を持つファイル名はハッシュ扱いせず in-place で上書きされる（リネームなし）', async () => {
+    const dir = await setupDist({
+      'theme.mobile.css': `.l--stack{display:flex}.l--unused{display:grid}`,
+      'index.html': `<div class="l--stack"></div>`,
+    });
+    try {
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack', 'l--unused']), attrs: new Set() },
+      });
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+
+      expect(await fileExists(join(dir, 'theme.mobile.css'))).toBe(true);
+      const cssAfter = await readFile(join(dir, 'theme.mobile.css'), 'utf8');
+      expect(cssAfter).toContain('l--stack');
+      expect(cssAfter).not.toContain('l--unused');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
   test('JS / manifest 内の CSS ファイル参照もリネームに同期する', async () => {
     const cssOriginal = `.l--grid{display:grid}.l--unused{display:flex}`;
     const dir = await setupDist({
