@@ -28,7 +28,7 @@ pnpm workspaces と Turbo を使用したモノレポ構造。lint 系設定フ�
 ### その他のディレクトリ
 - `skills/lism-css-guide/`: `lism-cli skill add` および skills.sh の配信元
 - `templates/`: `lism-cli create` のテンプレート（`package.json` に `"private": true` 必須）
-- `documents/`: 運営者向けの運用ノート（CLI ガイド・docs / mcp 更新手順 等）
+- `documents/`: 運営者向けの運用ノート（CLI ガイド・docs 更新手順 等）
 
 各ワークスペースの詳細な実装やアーキテクチャについては、それぞれの CLAUDE.md や README.md を参照。
 
