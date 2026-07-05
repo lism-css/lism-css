@@ -54,17 +54,13 @@ export const messages = {
     ja: 'lism.config ファイルを新規生成する',
     en: 'Generate a new lism.config file',
   },
-  'cli.init.opt.framework': {
-    ja: 'フレームワーク',
-    en: 'Framework',
+  'cli.init.opt.uiFramework': {
+    ja: 'UI コンポーネントのフレームワーク（ui.framework）',
+    en: 'Framework for UI components (ui.framework)',
   },
-  'cli.init.opt.componentsDir': {
-    ja: 'コンポーネントの出力先ディレクトリ',
-    en: 'Output directory for components',
-  },
-  'cli.init.opt.helperDir': {
-    ja: 'helper の出力先ディレクトリ',
-    en: 'Output directory for helpers',
+  'cli.init.opt.uiDir': {
+    ja: 'UI コンポーネントの出力先ディレクトリ（ui.dir）',
+    en: 'Output directory for UI components (ui.dir)',
   },
 
   // ui
@@ -249,6 +245,10 @@ export const messages = {
   'init.created': {
     ja: '{path} を作成しました。',
     en: 'Created {path}.',
+  },
+  'init.uiFrameworkRequired': {
+    ja: '非対話環境では --ui-dir 単独で ui セクションを生成できません。--ui-framework を指定してください。',
+    en: 'Cannot generate the ui section from --ui-dir alone in a non-interactive environment. Specify --ui-framework.',
   },
 
   // ---------------------------------------------------------------------------
@@ -454,13 +454,9 @@ export const messages = {
     ja: 'ui.framework は "react" または "astro" を指定してください。',
     en: 'ui.framework must be "react" or "astro".',
   },
-  'config.invalidComponentsDir': {
-    ja: 'ui.componentsDir は文字列で指定してください。',
-    en: 'ui.componentsDir must be a string.',
-  },
-  'config.invalidHelperDir': {
-    ja: 'ui.helperDir は文字列で指定してください。',
-    en: 'ui.helperDir must be a string.',
+  'config.invalidDir': {
+    ja: 'ui.dir は文字列で指定してください。',
+    en: 'ui.dir must be a string.',
   },
   'config.cliKeyDeprecated': {
     ja: '[deprecated] {filename} の "cli:" キーは "ui:" への変更が推奨されています。',

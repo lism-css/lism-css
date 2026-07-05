@@ -30,9 +30,8 @@ export function createLismProgram(): Command {
   program
     .command('init')
     .description(t('cli.init.description'))
-    .addOption(new Option('--framework <name>', t('cli.init.opt.framework')).choices(['react', 'astro']))
-    .option('--components-dir <path>', t('cli.init.opt.componentsDir'))
-    .option('--helper-dir <path>', t('cli.init.opt.helperDir'))
+    .addOption(new Option('--ui-framework <name>', t('cli.init.opt.uiFramework')).choices(['react', 'astro']))
+    .option('--ui-dir <path>', t('cli.init.opt.uiDir'))
     .action(initCommand);
 
   program.addCommand(createUiCommand());

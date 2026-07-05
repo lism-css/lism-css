@@ -4,21 +4,19 @@ import type { LismCliConfig } from '../../config.js';
 
 export interface PromptUiConfigOptions {
   framework?: LismCliConfig['framework'];
-  componentsDir?: string;
-  helperDir?: string;
+  dir?: string;
 }
 
 /**
- * UI セクション（`framework`/`componentsDir`/`helperDir`）の値を決定する。
+ * UI セクション（`framework`/`dir`）の値を決定する。
  * ファイルの読み書きは一切行わない。永続化するかどうかは呼び出し側の責務
  * （`initCommand` は書き込み、`addCommand` は今回限りの値として使うだけ）。
  *
- * `componentsDir`/`helperDir` は本質的に config に書く値であり、毎回対話で
- * 尋ねる必要は無いため既定値をそのまま採用する（変更したい場合は
- * `--components-dir`/`--helper-dir` フラグ、または `lism.config.js` の
- * `ui:` セクションを直接編集してもらう）。`framework` は react/astro を
- * 確実に自動判定できない（Astro + React アイランド併用等）ため、唯一の
- * 対話質問として残す。
+ * `dir` は本質的に config に書く値であり、毎回対話で尋ねる必要は無いため
+ * 既定値をそのまま採用する（変更したい場合は `--ui-dir` フラグ、または
+ * `lism.config.js` の `ui:` セクションを直接編集してもらう）。`framework` は
+ * react/astro を確実に自動判定できない（Astro + React アイランド併用等）ため、
+ * 唯一の対話質問として残す。
  */
 export async function promptUiConfig(options: PromptUiConfigOptions = {}): Promise<LismCliConfig> {
   const framework =
@@ -31,8 +29,7 @@ export async function promptUiConfig(options: PromptUiConfigOptions = {}): Promi
       ],
     }));
 
-  const componentsDir = options.componentsDir ?? 'src/components/ui';
-  const helperDir = options.helperDir ?? `${componentsDir}/_helper`;
+  const dir = options.dir ?? 'src/components/ui';
 
-  return { framework, componentsDir, helperDir };
+  return { framework, dir };
 }

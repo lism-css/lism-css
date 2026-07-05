@@ -10,14 +10,22 @@ const CONFIG_SEARCH = ['lism.config.ts', 'lism.config.mjs', 'lism.config.js'] as
 
 export interface LismCliConfig {
   framework: 'react' | 'astro';
-  componentsDir: string;
-  helperDir: string;
+  /** UI コンポーネントの出力先。helper は常に `{dir}/_helper` に固定 */
+  dir: string;
+}
+
+/** config ファイル上の ui セクションの生の形（検証・正規化前） */
+interface RawUiConfig {
+  framework?: unknown;
+  dir?: unknown;
+  /** @deprecated 旧キー。`dir` が無い場合のみ読む後方互換。 */
+  componentsDir?: unknown;
 }
 
 interface LismConfigFile {
-  ui?: LismCliConfig;
+  ui?: RawUiConfig;
   /** @deprecated `ui` へリネーム済み。後方互換のための読み取り専用。 */
-  cli?: LismCliConfig;
+  cli?: RawUiConfig;
   // 他のキー（tokens 等）はここでは関心外
   [key: string]: unknown;
 }
@@ -67,9 +75,7 @@ export async function readConfig(): Promise<LismCliConfig | null> {
   if (found.kind === 'legacy-json') {
     logger.warn(t('config.legacyWarning', { filename: LEGACY_CONFIG_FILE, invoke: getInvokeCommand() }));
     const raw = fs.readFileSync(found.path, 'utf-8');
-    const parsed = JSON.parse(raw) as LismCliConfig;
-    validateCliConfig(parsed);
-    return parsed;
+    return normalizeUiConfig(JSON.parse(raw));
   }
 
   const jiti = createJiti(import.meta.url, { interopDefault: true });
@@ -82,44 +88,43 @@ export async function readConfig(): Promise<LismCliConfig | null> {
 
   const modObj = mod as LismConfigFile | undefined;
   // `??` だと「ui キーは存在するが値が null 等」のケースで cli/旧形式へ静かにフォールバックしてしまい、
-  // 設定ミスが見えなくなる。キーの「存在」自体で判定し、値の妥当性は validateCliConfig に委ねる。
+  // 設定ミスが見えなくなる。キーの「存在」自体で判定し、値の妥当性は normalizeUiConfig に委ねる。
   const hasUiKey = modObj?.ui !== undefined;
   const hasCliKey = modObj?.cli !== undefined;
 
   if (hasUiKey || hasCliKey) {
-    const explicit = hasUiKey ? modObj.ui : modObj.cli;
     if (!hasUiKey && hasCliKey) {
       logger.warn(t('config.cliKeyDeprecated', { filename: found.filename }));
     }
-    validateCliConfig(explicit);
-    return explicit;
+    return normalizeUiConfig(hasUiKey ? modObj.ui : modObj.cli);
   }
 
   // 明示キーが無い場合、モジュール全体が直接 UI 設定という旧形式への後方互換を試す。
   // 検証に失敗したら「UI セクションが無い」とみなし null を返す（throw しない）。
   // CSS カスタマイズ専用の lism.config.js（tokens/props 等）を誤って UI 設定と解釈しないため。
   try {
-    validateCliConfig(modObj);
-    // jiti の interopDefault は default export のプロパティをモジュール名前空間に
-    // 合成する Proxy を返すため、そのまま返すと __esModule 等の余計な内部プロパティが
-    // 漏れる。必要な3フィールドだけを抜き出してクリーンなオブジェクトを構築する。
-    return { framework: modObj.framework, componentsDir: modObj.componentsDir, helperDir: modObj.helperDir };
+    return normalizeUiConfig(modObj);
   } catch {
     return null;
   }
 }
 
-function validateCliConfig(cli: unknown): asserts cli is LismCliConfig {
-  const c = (cli ?? {}) as Partial<LismCliConfig>;
+/**
+ * ui セクションの生の値を検証し、クリーンな LismCliConfig を構築して返す。
+ * `dir` を最優先で読み、無ければ旧キー `componentsDir` を後方互換として読む。
+ * 必要フィールドだけを抜き出すのは、jiti の interopDefault が __esModule 等の
+ * 内部プロパティを合成した Proxy を返すケースがあるため。
+ */
+function normalizeUiConfig(raw: unknown): LismCliConfig {
+  const c = (raw ?? {}) as RawUiConfig;
   if (c.framework !== 'react' && c.framework !== 'astro') {
     throw new Error(t('config.invalidFramework'));
   }
-  if (typeof c.componentsDir !== 'string' || !c.componentsDir) {
-    throw new Error(t('config.invalidComponentsDir'));
+  const dir = c.dir !== undefined ? c.dir : c.componentsDir;
+  if (typeof dir !== 'string' || !dir) {
+    throw new Error(t('config.invalidDir'));
   }
-  if (typeof c.helperDir !== 'string' || !c.helperDir) {
-    throw new Error(t('config.invalidHelperDir'));
-  }
+  return { framework: c.framework, dir };
 }
 
 /**
@@ -163,8 +168,7 @@ function renderCliObject(cli: LismCliConfig, indent: string): string {
   return [
     '{', //
     `${indent}  framework: ${JSON.stringify(cli.framework)},`,
-    `${indent}  componentsDir: ${JSON.stringify(cli.componentsDir)},`,
-    `${indent}  helperDir: ${JSON.stringify(cli.helperDir)},`,
+    `${indent}  dir: ${JSON.stringify(cli.dir)},`,
     `${indent}}`,
   ].join('\n');
 }

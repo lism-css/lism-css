@@ -10,7 +10,7 @@
 
 ```
 lism-cli create [targetDir] [--template <name|category>] [--lang <ja|en>]  # templates から新規プロジェクト
-lism-cli init  [--framework <react|astro>]                  # lism.config ファイルの新規生成
+lism-cli init  [--ui-framework <react|astro>] [--ui-dir <path>]  # lism.config ファイルの新規生成
 lism-cli ui    { add <names...> | list }                    # Lism UI コンポーネントの追加
 lism-cli skill { add [skill] | check | update }             # AI エージェント向け SKILL.md 配置
 ```
@@ -45,7 +45,14 @@ pnpm dlx lism-cli create --template blog-astro-minimal --lang en ./my-blog
 pnpm dlx lism-cli init
 ```
 
-core 設定（`tokens` / `props` 等、コメントアウトされたひな形）を持つ `lism.config.js` を新規作成します。対話の中で「UIコンポーネントも使いますか？」と確認され（デフォルト: No）、Yes と答えた場合のみ `ui` セクション（`framework` / `componentsDir` / `helperDir`）も併せて生成されます。`--framework <react|astro>` を指定すると、この確認をスキップして `ui` セクション込みで生成します（非対話環境では確認プロンプトを出さず、`ui` セクション無しで生成します）。
+core 設定（`tokens` / `props` 等、コメントアウトされたひな形）を持つ `lism.config.js` を新規作成します。対話の中で「Lism UI のコンポーネントも使いますか？」と確認され（デフォルト: No）、Yes と答えた場合のみ `ui` セクション（`framework` / `dir`）も併せて生成されます。
+
+`ui` セクションの値はオプションで先渡しできます。指定されなかった質問だけが対話で行われます。
+
+- `--ui-framework <react|astro>`: framework の選択をスキップし、UI 利用の確認のみ行います（この場合のデフォルトは Yes）
+- `--ui-dir <path>`: UI コンポーネントの出力先。指定すると UI 利用の意思とみなし、確認を省略して framework の選択のみ行います
+
+非対話環境（CI 等）では質問を出せないため、`--ui-framework` があれば `ui` セクション込みで生成し、無ければ `ui` セクション無しで生成します（`--ui-dir` のみの指定はエラーになります）。
 
 既に `lism.config.{ts,mjs,js}` がある場合は何も変更しません（`ui` セクションの後付けは、後述の `ui add` 実行時に表示されるスニペットを貼り付けてください）。
 
@@ -72,9 +79,9 @@ pnpm dlx lism-cli ui add accordion --ref dev
 
 ```
 ? フレームワークを選択してください: React
-? コンポーネントの出力先ディレクトリ: src/components/ui
-? helper の出力先ディレクトリ: src/components/ui/_helper
 ```
+
+出力先ディレクトリは既定値（`src/components/ui`）が使われます。変更したい場合は `--ui-dir` フラグで指定してください。
 
 `ui add` は入力した値をその回の実行に使うだけで設定ファイルは書き換えず、最後に `lism.config.*` へ貼り付けるための `ui` セクションのスニペットを案内します（CSSカスタマイズ用に先に作られた設定を壊さないため）。
 
@@ -134,11 +141,12 @@ pnpm dlx lism-cli skill update --claude
 export default {
   ui: {
     framework: 'react', // 'react' | 'astro'
-    componentsDir: 'src/components/ui',
-    helperDir: 'src/components/ui/_helper',
+    dir: 'src/components/ui',
   },
 };
 ```
+
+helper の配置先は個別に設定できず、常に `{dir}/_helper` に固定されます。旧キー `ui.componentsDir` は `ui.dir` が無い場合のみ後方互換として読み込まれます（`ui.helperDir` は無視されます）。
 
 設定ファイルは `lism.config.ts` / `lism.config.mjs` / `lism.config.js` に対応しており、この順で探索して最初に見つかったものを読み込みます。`lism-css` 本体の設定読込（`@lism-css/plugin` / `lism-css build`）も同じ探索順です。
 

@@ -40,54 +40,57 @@ describe('readConfig', () => {
   });
 
   it('ui: セクションがあれば値を返し、deprecation警告は出さない', async () => {
-    writeFile(
-      path.join(tmpDir, 'lism.config.js'),
-      "export default { ui: { framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' } };\n"
-    );
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: { framework: 'react', dir: 'src/components/ui' } };\n");
     const result = await readConfig();
-    expect(result).toEqual({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    expect(result).toEqual({ framework: 'react', dir: 'src/components/ui' });
     expect(warnSpy).not.toHaveBeenCalled();
   });
 
-  it('旧 cli: セクションのみあれば値を返し、deprecation警告を出す', async () => {
+  it('旧キー componentsDir のみの ui: セクションも dir として読める（後方互換）', async () => {
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: { framework: 'react', componentsDir: 'src/legacy/ui' } };\n");
+    const result = await readConfig();
+    expect(result).toEqual({ framework: 'react', dir: 'src/legacy/ui' });
+  });
+
+  it('dir と componentsDir が両方ある場合は dir を優先する', async () => {
     writeFile(
       path.join(tmpDir, 'lism.config.js'),
-      "export default { cli: { framework: 'astro', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' } };\n"
+      "export default { ui: { framework: 'react', dir: 'src/new/ui', componentsDir: 'src/old/ui' } };\n"
     );
     const result = await readConfig();
-    expect(result).toEqual({ framework: 'astro', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    expect(result).toEqual({ framework: 'react', dir: 'src/new/ui' });
+  });
+
+  it('旧 cli: セクションのみあれば値を返し、deprecation警告を出す', async () => {
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { cli: { framework: 'astro', componentsDir: 'src/components/ui' } };\n");
+    const result = await readConfig();
+    expect(result).toEqual({ framework: 'astro', dir: 'src/components/ui' });
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 
   it('ui: と cli: が両方あれば ui: を優先し、警告は出さない', async () => {
     writeFile(
       path.join(tmpDir, 'lism.config.js'),
-      "export default { ui: { framework: 'react', componentsDir: 'a', helperDir: 'a/_helper' }, cli: { framework: 'astro', componentsDir: 'b', helperDir: 'b/_helper' } };\n"
+      "export default { ui: { framework: 'react', dir: 'a' }, cli: { framework: 'astro', dir: 'b' } };\n"
     );
     const result = await readConfig();
-    expect(result).toEqual({ framework: 'react', componentsDir: 'a', helperDir: 'a/_helper' });
+    expect(result).toEqual({ framework: 'react', dir: 'a' });
     expect(warnSpy).not.toHaveBeenCalled();
   });
 
   it('旧形式（ui/cliキー無しでモジュール全体が有効な設定）は後方互換で読み込める', async () => {
-    writeFile(
-      path.join(tmpDir, 'lism.config.js'),
-      "export default { framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' };\n"
-    );
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { framework: 'react', componentsDir: 'src/components/ui' };\n");
     const result = await readConfig();
-    expect(result).toEqual({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    expect(result).toEqual({ framework: 'react', dir: 'src/components/ui' });
   });
 
   it('framework が不正な値なら throw する', async () => {
-    writeFile(
-      path.join(tmpDir, 'lism.config.js'),
-      "export default { ui: { framework: 'vue', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' } };\n"
-    );
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: { framework: 'vue', dir: 'src/components/ui' } };\n");
     await expect(readConfig()).rejects.toThrow();
   });
 
-  it('componentsDir が文字列でなければ throw する', async () => {
-    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: { framework: 'react', componentsDir: 123, helperDir: 'x' } };\n");
+  it('dir が文字列でなければ throw する', async () => {
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: { framework: 'react', dir: 123 } };\n");
     await expect(readConfig()).rejects.toThrow();
   });
 
@@ -97,25 +100,19 @@ describe('readConfig', () => {
   });
 
   it('legacy json (lism-ui.json) を読み込み、deprecation警告を出す', async () => {
-    writeFile(
-      path.join(tmpDir, 'lism-ui.json'),
-      JSON.stringify({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' })
-    );
+    writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'react', componentsDir: 'src/components/ui' }));
     const result = await readConfig();
-    expect(result).toEqual({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    expect(result).toEqual({ framework: 'react', dir: 'src/components/ui' });
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 
   it('legacy json の値が不正なら throw する', async () => {
-    writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'vue', componentsDir: 'x', helperDir: 'y' }));
+    writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'vue', componentsDir: 'x' }));
     await expect(readConfig()).rejects.toThrow();
   });
 
   it('ui: が null で cli: もある場合、cli へフォールバックせず throw する', async () => {
-    writeFile(
-      path.join(tmpDir, 'lism.config.js'),
-      "export default { ui: null, cli: { framework: 'astro', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' } };\n"
-    );
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: null, cli: { framework: 'astro', dir: 'src/components/ui' } };\n");
     await expect(readConfig()).rejects.toThrow();
     expect(warnSpy).not.toHaveBeenCalled();
   });
@@ -149,15 +146,15 @@ describe('lism.config.ts の読み込み', () => {
     writeFile(
       path.join(tmpDir, 'lism.config.ts'),
       [
-        "interface Ui { framework: 'react' | 'astro'; componentsDir: string; helperDir: string }",
-        "const ui: Ui = { framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' };",
+        "interface Ui { framework: 'react' | 'astro'; dir: string }",
+        "const ui: Ui = { framework: 'react', dir: 'src/components/ui' };",
         'export default { ui };',
         '',
       ].join('\n')
     );
 
     const result = await readConfig();
-    expect(result).toEqual({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    expect(result).toEqual({ framework: 'react', dir: 'src/components/ui' });
   });
 
   it('探索優先順は .ts → .mjs → .js（同居時は .ts が勝つ）', () => {
@@ -189,7 +186,7 @@ describe('writeFreshConfig', () => {
   });
 
   it('ui: キーで新規 lism.config.js を生成する', () => {
-    const outPath = writeFreshConfig({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    const outPath = writeFreshConfig({ framework: 'react', dir: 'src/components/ui' });
     expect(outPath).toBe(getDefaultConfigPath());
     const content = fs.readFileSync(outPath, 'utf-8');
     expect(content).toContain('ui: {');
@@ -207,7 +204,7 @@ describe('writeFreshConfig', () => {
 
   it('既に lism.config.js が存在する場合は throw する（上書きしない）', () => {
     writeFile(path.join(tmpDir, 'lism.config.js'), 'export default { tokens: {} };\n');
-    expect(() => writeFreshConfig({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' })).toThrow();
+    expect(() => writeFreshConfig({ framework: 'react', dir: 'src/components/ui' })).toThrow();
     // 上書きされていないことを確認
     expect(fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8')).toBe('export default { tokens: {} };\n');
   });
@@ -215,7 +212,7 @@ describe('writeFreshConfig', () => {
 
 describe('renderUiSnippet', () => {
   it('貼り付け用の ui: スニペット文字列を返す', () => {
-    const snippet = renderUiSnippet({ framework: 'astro', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
-    expect(snippet).toBe('ui: {\n  framework: "astro",\n  componentsDir: "src/components/ui",\n  helperDir: "src/components/ui/_helper",\n},');
+    const snippet = renderUiSnippet({ framework: 'astro', dir: 'src/components/ui' });
+    expect(snippet).toBe('ui: {\n  framework: "astro",\n  dir: "src/components/ui",\n},');
   });
 });
