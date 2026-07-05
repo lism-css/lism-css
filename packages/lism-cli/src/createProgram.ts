@@ -1,7 +1,9 @@
 import { Command } from 'commander';
 import { createUiCommand } from './commands/ui/index.js';
+import { applyUiSectionOptions } from './commands/ui/uiSectionOptions.js';
 import { createSkillCommand } from './commands/skill/index.js';
 import { createCommand } from './commands/create.js';
+import { initCommand } from './commands/init.js';
 import { CLI_VERSION } from './version.js';
 import { setLang, t } from './i18n.js';
 
@@ -25,6 +27,9 @@ export function createLismProgram(): Command {
     .option('-t, --template <name>', t('cli.create.opt.template'))
     .option('-f, --force', t('cli.create.opt.force'), false)
     .action(createCommand);
+
+  const init = program.command('init').description(t('cli.init.description'));
+  applyUiSectionOptions(init).action(initCommand);
 
   program.addCommand(createUiCommand());
   program.addCommand(createSkillCommand());

@@ -22,9 +22,8 @@ interface AddOptions {
   overwrite: boolean;
   all: boolean;
   ref?: string;
-  framework?: LismCliConfig['framework'];
-  componentsDir?: string;
-  helperDir?: string;
+  uiFramework?: LismCliConfig['framework'];
+  uiDir?: string;
 }
 
 /** 上書き方針 */
@@ -41,7 +40,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     } else {
       needsGuidance = true;
       logger.info(t('ui.add.noConfig'));
-      config = await promptUiConfig({ framework: options.framework, componentsDir: options.componentsDir, helperDir: options.helperDir });
+      config = await promptUiConfig({ framework: options.uiFramework, dir: options.uiDir });
       console.log();
     }
   } catch (err) {
@@ -116,7 +115,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
 
   if (needsGuidance) {
     const filename = findConfigFile()?.filename ?? DEFAULT_CONFIG_FILENAME;
-    logger.info(t('ui.init.snippetGuide', { filename, snippet: renderUiSnippet(config) }));
+    logger.info(t('ui.add.snippetGuide', { filename, snippet: renderUiSnippet(config) }));
   }
 
   if (hasFailure) {
@@ -164,8 +163,9 @@ async function writeComponent(
 
   // component.name は registry-index.json 由来で PascalCase が保持されている
   const componentDirName = component.name;
-  const componentDir = path.resolve(process.cwd(), config.componentsDir, componentDirName);
-  const helperDir = path.resolve(process.cwd(), config.helperDir);
+  const componentDir = path.resolve(process.cwd(), config.dir, componentDirName);
+  // helper の配置先は個別設定させず、常に UI ディレクトリ直下の _helper に固定する
+  const helperDir = path.resolve(process.cwd(), config.dir, '_helper');
 
   // コンポーネント単位の上書き判定
   let shouldWrite: boolean;

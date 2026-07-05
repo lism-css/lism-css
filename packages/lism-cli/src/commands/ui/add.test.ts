@@ -77,7 +77,7 @@ describe('addCommand', () => {
     await addCommand(['Button'], { overwrite: false, all: false });
 
     expect(select).toHaveBeenCalledTimes(1);
-    // 配置はメモリ上の値（componentsDir/helperDirは既定値）で行われる
+    // 配置はメモリ上の値（dir は既定値）で行われる
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.jsx'))).toBe(true);
     // lism.config.js は書き換えられない
     expect(fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8')).toBe(original);
@@ -87,10 +87,7 @@ describe('addCommand', () => {
   });
 
   it('ui セクションが既にある場合、prompt は呼ばれずスニペット案内も出ない', async () => {
-    writeFile(
-      path.join(tmpDir, 'lism.config.js'),
-      "export default { ui: { framework: 'astro', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' } };\n"
-    );
+    writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: { framework: 'astro', dir: 'src/components/ui' } };\n");
 
     await addCommand(['Button'], { overwrite: false, all: false });
 
@@ -99,22 +96,16 @@ describe('addCommand', () => {
     expect(infoSpy.mock.calls.some((call: unknown[]) => String(call[0]).includes('ui: {'))).toBe(false);
   });
 
-  it('--framework のみ指定すれば、componentsDir/helperDir のフラグが無くても完全に非対話で完走する', async () => {
-    await addCommand(['Button'], { overwrite: false, all: false, framework: 'react' });
+  it('--ui-framework のみ指定すれば、--ui-dir のフラグが無くても完全に非対話で完走する', async () => {
+    await addCommand(['Button'], { overwrite: false, all: false, uiFramework: 'react' });
 
     expect(select).not.toHaveBeenCalled();
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.jsx'))).toBe(true);
     expect(exitSpy).not.toHaveBeenCalled();
   });
 
-  it('--components-dir / --helper-dir を指定すると、その値で配置され既定値は使われない', async () => {
-    await addCommand(['Button'], {
-      overwrite: false,
-      all: false,
-      framework: 'react',
-      componentsDir: 'custom/ui',
-      helperDir: 'custom/ui/_helper',
-    });
+  it('--ui-dir を指定すると、その値で配置され既定値は使われない', async () => {
+    await addCommand(['Button'], { overwrite: false, all: false, uiFramework: 'react', uiDir: 'custom/ui' });
 
     expect(select).not.toHaveBeenCalled();
     expect(fs.existsSync(path.join(tmpDir, 'custom/ui/Button/Button.jsx'))).toBe(true);

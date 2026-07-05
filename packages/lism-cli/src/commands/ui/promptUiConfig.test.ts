@@ -11,32 +11,26 @@ describe('promptUiConfig', () => {
     vi.clearAllMocks();
   });
 
-  it('オプション未指定なら framework のみ対話で聞き、componentsDir/helperDir はデフォルト値を採用する', async () => {
+  it('オプション未指定なら framework のみ対話で聞き、dir はデフォルト値を採用する', async () => {
     vi.mocked(select).mockResolvedValue('react');
 
     const result = await promptUiConfig();
 
     expect(select).toHaveBeenCalledTimes(1);
-    expect(result).toEqual({ framework: 'react', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    expect(result).toEqual({ framework: 'react', dir: 'src/components/ui' });
   });
 
   it('framework を指定すると select はスキップされ、プロンプトが一切呼ばれない', async () => {
     const result = await promptUiConfig({ framework: 'astro' });
 
     expect(select).not.toHaveBeenCalled();
-    expect(result).toEqual({ framework: 'astro', componentsDir: 'src/components/ui', helperDir: 'src/components/ui/_helper' });
+    expect(result).toEqual({ framework: 'astro', dir: 'src/components/ui' });
   });
 
   it('全オプション指定時は指定値がそのまま使われる', async () => {
-    const result = await promptUiConfig({ framework: 'react', componentsDir: 'src/ui', helperDir: 'src/ui/_helper' });
+    const result = await promptUiConfig({ framework: 'react', dir: 'src/ui' });
 
     expect(select).not.toHaveBeenCalled();
-    expect(result).toEqual({ framework: 'react', componentsDir: 'src/ui', helperDir: 'src/ui/_helper' });
-  });
-
-  it('componentsDir 指定時、helperDir の既定値が連動する', async () => {
-    const result = await promptUiConfig({ framework: 'react', componentsDir: 'custom' });
-
-    expect(result.helperDir).toBe('custom/_helper');
+    expect(result).toEqual({ framework: 'react', dir: 'src/ui' });
   });
 });

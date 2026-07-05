@@ -59,8 +59,7 @@ export default {
 
   ui: {
     framework: 'react',
-    componentsDir: 'src/components/ui',
-    helperDir: 'src/components/ui/_helper',
+    dir: 'src/components/ui', // helper は常に {dir}/_helper に配置される
   },
 };
 ```

@@ -4,6 +4,7 @@
  * 命名規則:
  *   - `cli.*`    … commander の description / argument / option
  *   - `create.*` … `lism-cli create` サブコマンド
+ *   - `init.*`   … `lism-cli init` サブコマンド
  *   - `ui.*`     … `lism-cli ui` 配下
  *   - `skill.*`  … `lism-cli skill` 配下
  *   - `config.*` … lism.config.* まわりのエラー・警告
@@ -48,26 +49,24 @@ export const messages = {
     en: 'Overwrite existing directory',
   },
 
+  // init
+  'cli.init.description': {
+    ja: 'lism.config ファイルを新規生成する',
+    en: 'Generate a new lism.config file',
+  },
+  'cli.init.opt.uiFramework': {
+    ja: 'UI コンポーネントのフレームワーク（ui.framework）',
+    en: 'Framework for UI components (ui.framework)',
+  },
+  'cli.init.opt.uiDir': {
+    ja: 'UI コンポーネントの出力先ディレクトリ（ui.dir）',
+    en: 'Output directory for UI components (ui.dir)',
+  },
+
   // ui
   'cli.ui.description': {
     ja: 'Lism UI コンポーネントの追加・管理',
     en: 'Manage Lism UI components',
-  },
-  'cli.ui.init.description': {
-    ja: 'lism.config の ui セクションを生成する',
-    en: 'Generate the ui section of lism.config',
-  },
-  'cli.ui.init.opt.framework': {
-    ja: 'フレームワーク',
-    en: 'Framework',
-  },
-  'cli.ui.init.opt.componentsDir': {
-    ja: 'コンポーネントの出力先ディレクトリ',
-    en: 'Output directory for components',
-  },
-  'cli.ui.init.opt.helperDir': {
-    ja: 'helper の出力先ディレクトリ',
-    en: 'Output directory for helpers',
   },
   'cli.ui.add.description': {
     ja: 'コンポーネントを追加する',
@@ -229,9 +228,37 @@ export const messages = {
   },
 
   // ---------------------------------------------------------------------------
+  // init
+  // ---------------------------------------------------------------------------
+  'init.alreadyExists': {
+    ja: '{filename} は既に存在するため、何も変更しませんでした。',
+    en: '{filename} already exists; nothing was changed.',
+  },
+  'init.legacyDetected': {
+    ja: '{filename} を検出しました。lism.config.js へ移行します。古いファイルは後で削除してください。',
+    en: 'Detected {filename}. Migrating to lism.config.js. Please remove the old file afterwards.',
+  },
+  'init.promptUseUi': {
+    ja: 'Lism UI のコンポーネントも使いますか？（ui セクションを追加します）',
+    en: 'Will you also use Lism UI components? (adds a ui section)',
+  },
+  'init.created': {
+    ja: '{path} を作成しました。',
+    en: 'Created {path}.',
+  },
+  'init.uiFrameworkRequired': {
+    ja: '非対話環境では --ui-dir 単独で ui セクションを生成できません。--ui-framework を指定してください。',
+    en: 'Cannot generate the ui section from --ui-dir alone in a non-interactive environment. Specify --ui-framework.',
+  },
+
+  // ---------------------------------------------------------------------------
   // ui
   // ---------------------------------------------------------------------------
-  // ui 共通（add / list で共有）
+  // ui 共通（add / init で共有）
+  'ui.promptFramework': {
+    ja: 'フレームワークを選択してください:',
+    en: 'Select a framework:',
+  },
   'ui.catalogFailed': {
     ja: 'カタログの取得に失敗しました{refInfo}: {reason}',
     en: 'Failed to fetch catalog{refInfo}: {reason}',
@@ -306,25 +333,7 @@ export const messages = {
     ja: '  スキップ: {path}',
     en: '  Skipped: {path}',
   },
-
-  // ui init
-  'ui.init.promptFramework': {
-    ja: 'フレームワークを選択してください:',
-    en: 'Select a framework:',
-  },
-  'ui.init.created': {
-    ja: '{path} を作成しました。',
-    en: 'Created {path}.',
-  },
-  'ui.init.legacyDetected': {
-    ja: '{filename} を検出しました。lism.config.js へ移行します。古いファイルは後で削除してください。',
-    en: 'Detected {filename}. Migrating to lism.config.js. Please remove the old file afterwards.',
-  },
-  'ui.init.alreadyExists': {
-    ja: '{filename} には既に ui セクションが設定されています。',
-    en: '{filename} already has a ui section configured.',
-  },
-  'ui.init.snippetGuide': {
+  'ui.add.snippetGuide': {
     ja: '次回から同じ質問をされないために、{filename} の export default オブジェクト内に以下を貼り付けてください:\n\n{snippet}\n',
     en: 'To avoid being asked these questions again, paste the following inside the exported config object in {filename}:\n\n{snippet}\n',
   },
@@ -438,20 +447,16 @@ export const messages = {
   // config
   // ---------------------------------------------------------------------------
   'config.legacyWarning': {
-    ja: '[deprecated] {filename} は廃止予定です。"{invoke} ui init" で lism.config.js へ移行してください。',
-    en: '[deprecated] {filename} is deprecated. Run "{invoke} ui init" to migrate to lism.config.js.',
+    ja: '[deprecated] {filename} は廃止予定です。"{invoke} init" で lism.config.js へ移行してください。',
+    en: '[deprecated] {filename} is deprecated. Run "{invoke} init" to migrate to lism.config.js.',
   },
   'config.invalidFramework': {
     ja: 'ui.framework は "react" または "astro" を指定してください。',
     en: 'ui.framework must be "react" or "astro".',
   },
-  'config.invalidComponentsDir': {
-    ja: 'ui.componentsDir は文字列で指定してください。',
-    en: 'ui.componentsDir must be a string.',
-  },
-  'config.invalidHelperDir': {
-    ja: 'ui.helperDir は文字列で指定してください。',
-    en: 'ui.helperDir must be a string.',
+  'config.invalidDir': {
+    ja: 'ui.dir は文字列で指定してください。',
+    en: 'ui.dir must be a string.',
   },
   'config.cliKeyDeprecated': {
     ja: '[deprecated] {filename} の "cli:" キーは "ui:" への変更が推奨されています。',

@@ -10,8 +10,9 @@
 
 ```
 lism-cli create [targetDir] [--template <name|category>] [--lang <ja|en>]  # templates から新規プロジェクト
-lism-cli ui    { init | add <names...> | list }            # Lism UI コンポーネントの追加
-lism-cli skill { add [skill] | check | update }            # AI エージェント向け SKILL.md 配置
+lism-cli init  [--ui-framework <react|astro>] [--ui-dir <path>]  # lism.config ファイルの新規生成
+lism-cli ui    { add <names...> | list }                    # Lism UI コンポーネントの追加
+lism-cli skill { add [skill] | check | update }             # AI エージェント向け SKILL.md 配置
 ```
 
 ## 使い方
@@ -36,6 +37,25 @@ pnpm dlx lism-cli create --template blog-astro-minimal --lang en ./my-blog
 
 `--lang <ja|en>` は CLIの表示言語に加えて、**生成されるテンプレート本体の言語**にも反映されます。`--lang` を指定しない場合は、対話端末（TTY）ではほかのどの選択よりも先に言語選択プロンプトが表示され、選んだ言語で以降の表示とテンプレート生成が確定します（非対話環境・CI等では `en` にフォールバック）。対応言語版を持つテンプレート（`blog-astro-minimal` / `blog-astro-personal` / `blog-astro-techlog` / `lp-astro-corporate` / `lp-astro-interior`）では、指定言語のサイト文言・サンプルコンテンツで生成されます。言語版が無いテンプレートは、指定言語に関わらず既存（ベース）の内容で生成されます。
 
+### lism.config の生成
+
+既存プロジェクトに Lism CSS を後付けする場合など、設定ファイルのひな形が必要なときは `init` を使います。
+
+```bash
+pnpm dlx lism-cli init
+```
+
+core 設定（`tokens` / `props` 等、コメントアウトされたひな形）を持つ `lism.config.js` を新規作成します。対話の中で「Lism UI のコンポーネントも使いますか？」と確認され（デフォルト: No）、Yes と答えた場合のみ `ui` セクション（`framework` / `dir`）も併せて生成されます。
+
+`ui` セクションの値はオプションで先渡しできます。指定されなかった質問だけが対話で行われます。
+
+- `--ui-framework <react|astro>`: framework の選択をスキップし、UI 利用の確認のみ行います（この場合のデフォルトは Yes）
+- `--ui-dir <path>`: UI コンポーネントの出力先。指定すると UI 利用の意思とみなし、確認を省略して framework の選択のみ行います
+
+非対話環境（CI 等）では質問を出せないため、`--ui-framework` があれば `ui` セクション込みで生成し、無ければ `ui` セクション無しで生成します（`--ui-dir` のみの指定はエラーになります）。
+
+既に `lism.config.{ts,mjs,js}` がある場合は何も変更しません（`ui` セクションの後付けは、後述の `ui add` 実行時に表示されるスニペットを貼り付けてください）。
+
 ### UIコンポーネントの追加
 
 ```bash
@@ -59,13 +79,13 @@ pnpm dlx lism-cli ui add accordion --ref dev
 
 ```
 ? フレームワークを選択してください: React
-? コンポーネントの出力先ディレクトリ: src/components/ui
-? helper の出力先ディレクトリ: src/components/ui/_helper
 ```
 
-`ui add` は入力した値をその回の実行に使うだけで設定ファイルは書き換えず、最後に `lism.config.*` へ貼り付けるための `ui` セクションのスニペットを案内します。
+出力先ディレクトリは既定値（`src/components/ui`）が使われます。変更したい場合は `--ui-dir` フラグで指定してください。
 
-設定をファイルとして残すには `ui init` を使います。`lism.config.{ts,mjs,js}` が無い場合は `ui` セクションを持つ `lism.config.js` を新規作成し、既存の `lism.config.*` がある場合はファイルを書き換えず、貼り付け用スニペットの表示に留めます（CSSカスタマイズ用に先に作られた設定を壊さないため）。
+`ui add` は入力した値をその回の実行に使うだけで設定ファイルは書き換えず、最後に `lism.config.*` へ貼り付けるための `ui` セクションのスニペットを案内します（CSSカスタマイズ用に先に作られた設定を壊さないため）。
+
+設定をファイルとして残すには、`lism.config.*` が無い場合は `lism-cli init`（前述）で `ui` セクション込みの設定ファイルを生成し、既にある場合は上記スニペットを貼り付けてください。
 
 ### AI エージェント向けスキルの配置
 
@@ -115,17 +135,18 @@ pnpm dlx lism-cli skill update --claude
 
 ## lism.config.js
 
-`ui add` / `ui init` が読み込む設定ファイル（新規作成するのは `ui init`）。CSSの設定（`tokens` 等）とCLI設定を同居できます。
+`ui add` が読み込む設定ファイル（新規作成するのは `init`）。CSSの設定（`tokens` 等）とUI設定を同居できます。
 
 ```js
 export default {
   ui: {
     framework: 'react', // 'react' | 'astro'
-    componentsDir: 'src/components/ui',
-    helperDir: 'src/components/ui/_helper',
+    dir: 'src/components/ui',
   },
 };
 ```
+
+helper の配置先は個別に設定できず、常に `{dir}/_helper` に固定されます。旧キー `ui.componentsDir` は `ui.dir` が無い場合のみ後方互換として読み込まれます。
 
 設定ファイルは `lism.config.ts` / `lism.config.mjs` / `lism.config.js` に対応しており、この順で探索して最初に見つかったものを読み込みます。`lism-css` 本体の設定読込（`@lism-css/plugin` / `lism-css build`）も同じ探索順です。
 
