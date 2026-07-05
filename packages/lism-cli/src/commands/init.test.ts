@@ -15,10 +15,15 @@ vi.mock('@inquirer/prompts', () => ({
 const cwd = process.cwd();
 let tmpDir: string;
 let warnSpy: ReturnType<typeof vi.spyOn>;
+const originalIsTTY = process.stdin.isTTY;
 
 function writeFile(filePath: string, content: string): void {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, content);
+}
+
+function setStdinTTY(value: boolean | undefined): void {
+  Object.defineProperty(process.stdin, 'isTTY', { value, configurable: true });
 }
 
 beforeEach(() => {
@@ -26,11 +31,14 @@ beforeEach(() => {
   vi.clearAllMocks();
   tmpDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'lism-init-')));
   process.chdir(tmpDir);
+  // テスト実行環境は非 TTY のため、対話プロンプト系のテストは TTY ありに固定する
+  setStdinTTY(true);
   warnSpy = vi.spyOn(logger, 'warn').mockImplementation(() => undefined);
   vi.spyOn(logger, 'success').mockImplementation(() => undefined);
 });
 
 afterEach(() => {
+  setStdinTTY(originalIsTTY);
   process.chdir(cwd);
   fs.rmSync(tmpDir, { recursive: true, force: true });
   vi.restoreAllMocks();
@@ -78,6 +86,16 @@ describe('initCommand', () => {
     expect(select).not.toHaveBeenCalled();
     const content = fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8');
     expect(content).toContain('"astro"');
+  });
+
+  it('非対話環境（TTY なし）では確認プロンプトを出さず、ui セクション無しで生成する', async () => {
+    setStdinTTY(undefined);
+
+    await initCommand({});
+
+    expect(confirm).not.toHaveBeenCalled();
+    const content = fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8');
+    expect(content).not.toContain('ui: {');
   });
 
   it('legacy json (lism-ui.json) 検出時は警告を出して新規生成する', async () => {

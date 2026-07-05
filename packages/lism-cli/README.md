@@ -35,6 +35,8 @@ pnpm dlx lism-cli create --template blog-astro-minimal --lang en ./my-blog
 
 同じ動作は `pnpm create lism` / `npm create lism@latest` でも呼び出せます（`create-lism` パッケージ経由）。挙動は両者で共通です。
 
+`--lang <ja|en>` は CLIの表示言語に加えて、**生成されるテンプレート本体の言語**にも反映されます。`--lang` を指定しない場合は、対話端末（TTY）ではほかのどの選択よりも先に言語選択プロンプトが表示され、選んだ言語で以降の表示とテンプレート生成が確定します（非対話環境・CI等では `en` にフォールバック）。対応言語版を持つテンプレート（`blog-astro-minimal` / `blog-astro-personal` / `blog-astro-techlog` / `lp-astro-corporate` / `lp-astro-interior`）では、指定言語のサイト文言・サンプルコンテンツで生成されます。言語版が無いテンプレートは、指定言語に関わらず既存（ベース）の内容で生成されます。
+
 ### lism.config の生成
 
 既存プロジェクトに Lism CSS を後付けする場合など、設定ファイルのひな形が必要なときは `init` を使います。
@@ -43,11 +45,9 @@ pnpm dlx lism-cli create --template blog-astro-minimal --lang en ./my-blog
 pnpm dlx lism-cli init
 ```
 
-core 設定（`tokens` / `props` 等、コメントアウトされたひな形）を持つ `lism.config.js` を新規作成します。対話の中で「UIコンポーネントも使いますか？」と確認され（デフォルト: No）、Yes と答えた場合のみ `ui` セクション（`framework` / `componentsDir` / `helperDir`）も併せて生成されます。`--framework <react|astro>` を指定すると、この確認をスキップして `ui` セクション込みで生成します。
+core 設定（`tokens` / `props` 等、コメントアウトされたひな形）を持つ `lism.config.js` を新規作成します。対話の中で「UIコンポーネントも使いますか？」と確認され（デフォルト: No）、Yes と答えた場合のみ `ui` セクション（`framework` / `componentsDir` / `helperDir`）も併せて生成されます。`--framework <react|astro>` を指定すると、この確認をスキップして `ui` セクション込みで生成します（非対話環境では確認プロンプトを出さず、`ui` セクション無しで生成します）。
 
 既に `lism.config.{ts,mjs,js}` がある場合は何も変更しません（`ui` セクションの後付けは、後述の `ui add` 実行時に表示されるスニペットを貼り付けてください）。
-
-`--lang <ja|en>` は CLIの表示言語に加えて、**生成されるテンプレート本体の言語**にも反映されます。`--lang` を指定しない場合は、対話端末（TTY）ではほかのどの選択よりも先に言語選択プロンプトが表示され、選んだ言語で以降の表示とテンプレート生成が確定します（非対話環境・CI等では `en` にフォールバック）。対応言語版を持つテンプレート（`blog-astro-minimal` / `blog-astro-personal` / `blog-astro-techlog` / `lp-astro-corporate` / `lp-astro-interior`）では、指定言語のサイト文言・サンプルコンテンツで生成されます。言語版が無いテンプレートは、指定言語に関わらず既存（ベース）の内容で生成されます。
 
 ### UIコンポーネントの追加
 

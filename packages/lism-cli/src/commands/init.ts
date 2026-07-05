@@ -25,8 +25,12 @@ export async function initCommand(options: InitOptions = {}): Promise<void> {
     logger.warn(t('init.legacyDetected', { filename: found.filename }));
   }
 
-  // --framework が明示されている場合は UI を使う意思とみなし、確認プロンプトを省略する
-  const useUi = options.framework !== undefined || (await confirm({ message: t('init.promptUseUi'), default: false }));
+  // --framework が明示されている場合は UI を使う意思とみなし、確認プロンプトを省略する。
+  // 非対話環境（TTY なし）では確認プロンプトを出せないため、デフォルトと同じ No に倒す。
+  let useUi = options.framework !== undefined;
+  if (!useUi && process.stdin.isTTY) {
+    useUi = await confirm({ message: t('init.promptUseUi'), default: false });
+  }
   const ui = useUi ? await promptUiConfig(options) : null;
 
   const outPath = writeFreshConfig(ui);
