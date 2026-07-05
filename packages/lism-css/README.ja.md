@@ -30,7 +30,7 @@ React / Astro向けのコンポーネントも提供しており、propsを通�
 ### CDN（ビルド不要）
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.23.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.24.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm

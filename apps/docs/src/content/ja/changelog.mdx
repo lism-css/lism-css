@@ -9,6 +9,22 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.24.0 (2026.07.06)
+
+- config の値（utils / presets / token）を導出してコンポーネント側の補完に反映 (#505)
+- `lism.config` 執筆用の `LismConfig` 型を追加 (#472)
+- `body` に `display: flow-root` を追加し、margin collapse による余分な縦スクロールを防止
+- `pre` のデフォルトスタイルを変更（`background-color` / `padding` を削除） (#477)
+- boxLink 内の coverLink を除外して重なり順を調整
+
+### AI スキル群の刷新 (#459)
+
+- `lism-css-guide` を強化・軽量化し、リファクタリング用スキル `lism-css-refactor` を新設
+- 検証プロセスのサブエージェント分離やチェックの素通り防止など、実装精度を改善 (#469, #473)
+- アンチパターン集を拡充 (#488)
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.23.0 (2026.06.19)
 
 **破壊的変更**を含むリリースです。
