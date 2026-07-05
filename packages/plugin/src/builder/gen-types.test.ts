@@ -81,6 +81,10 @@ describe('derivePropValueLiterals', () => {
     expect(derivePropValueLiterals({ token: 'unknown' }, { space: { '10': '8px' } })).toEqual([]);
     expect(derivePropValueLiterals({ token: 'space' })).toEqual([]);
   });
+
+  test("token: 'color' は palette カタログのキーも合成する（color ∪ palette の解決規則）", () => {
+    expect(derivePropValueLiterals({ token: 'color' }, { color: { main: '#333' }, palette: { red: '#f00' } })).toEqual(['main', 'red']);
+  });
 });
 
 describe('extraPropValueEntries', () => {
@@ -102,6 +106,12 @@ describe('extraPropValueEntries', () => {
 
   test('追加値が無ければ空配列を返す（defaults と同一の値は差分にしない）', () => {
     expect(extraPropValueEntries({ props: DEFAULT_CONFIG.props, tokens: DEFAULT_CONFIG.tokens }, DEFAULT_CONFIG)).toEqual([]);
+  });
+
+  test("token: 'color' の既定 prop は palette への追加キーも拾う", () => {
+    const defaults = { props: { c: { prop: 'color', token: 'color' } }, tokens: { color: { main: '#333' }, palette: { red: '#f00' } } };
+    const main = { props: defaults.props, tokens: { color: { main: '#333' }, palette: { red: '#f00', brand: '#00f' } } };
+    expect(extraPropValueEntries(main, defaults)).toEqual([['c', ['brand']]]);
   });
 });
 
@@ -223,6 +233,26 @@ describe('generateLismEnvDts', () => {
     // 値レジストリはリテラル型のみで import 不要
     expect(dts).not.toContain('import type');
     expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
+  });
+
+  test("追加 prop の token: 'color' では palette カタログのキーも候補化される", () => {
+    const dts = generateLismEnvDts(
+      {
+        breakpoints: {},
+        props: { ...DEFAULT_CONFIG.props, accent: { prop: 'accentColor', token: 'color' } },
+        tokens: { ...DEFAULT_CONFIG.tokens, color: { main: '#333' }, palette: { red: '#f00' } },
+      },
+      DEFAULT_CONFIG
+    );
+    expect(dts).toContain("accent?: CustomPropValue<'main' | 'red'>;");
+  });
+
+  test('値リテラル内のシングルクォート・改行・バックスラッシュをエスケープする', () => {
+    const dts = generateLismEnvDts(
+      { breakpoints: {}, props: { ...DEFAULT_CONFIG.props, weird: { prop: 'x', utils: { "a'b": '1', 'c\nd': '2', 'e\\f': '3' } } } },
+      DEFAULT_CONFIG
+    );
+    expect(dts).toContain("weird?: CustomPropValue<'a\\'b' | 'c\\nd' | 'e\\\\f'>;");
   });
 });
 

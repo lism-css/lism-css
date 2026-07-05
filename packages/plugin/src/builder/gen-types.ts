@@ -65,20 +65,28 @@ export function extraCustomTraitKeys(traits: BuildConfig['traits'] | undefined, 
 /** typegen が差分抽出に使う default-config（マージ前）。traits / tokens は未定義でも動くよう optional。 */
 export type TypegenDefaultConfig = Pick<BuildConfig, 'props'> & Partial<Pick<BuildConfig, 'tokens' | 'traits'>>;
 
+/** token カタログ（配列 or 値付きフラットマップ）から値リテラル一覧を取り出す。 */
+function tokenCatalogKeys(catalog: unknown): string[] {
+  if (Array.isArray(catalog)) return catalog.map(String);
+  if (catalog && typeof catalog === 'object') return Object.keys(catalog);
+  return [];
+}
+
 /**
  * PropConfig から補完対象の値リテラル一覧を導出する（presets の値 + utils のキー + token 参照先カタログのキー）。
  * `PropValueTypes.ts` の型レベル計算（ExtractPropValues）と同じ規則の文字列生成版（#450）。
  * token カタログは配列なら要素、値付きフラットマップならキー一覧（'-' センチネルもカタログ上有効なので含める）。
+ * token: 'color' は color（セマンティック）∪ palette（パレット）の合成カタログとして解決されるため、palette も加える。
  */
 export function derivePropValueLiterals(propConfig: PropConfig, tokens?: BuildConfig['tokens']): string[] {
   const values: string[] = [];
   if (propConfig.presets) values.push(...propConfig.presets.map(String));
   if (propConfig.utils) values.push(...Object.keys(propConfig.utils));
-  const catalog = propConfig.token ? tokens?.[propConfig.token] : undefined;
-  if (Array.isArray(catalog)) {
-    values.push(...catalog.map(String));
-  } else if (catalog && typeof catalog === 'object') {
-    values.push(...Object.keys(catalog));
+  if (propConfig.token) {
+    values.push(...tokenCatalogKeys(tokens?.[propConfig.token]));
+    // color は color（セマンティック）∪ palette（パレット）の合成カタログとして解決される
+    // （config/index.ts の tokensWithColor / getMaybeTokenValue.ts の palette フォールバックと同じ規則）。
+    if (propConfig.token === 'color') values.push(...tokenCatalogKeys(tokens?.palette));
   }
   return [...new Set(values)];
 }
@@ -109,7 +117,15 @@ function formatTypePropertyKey(key: string): string {
 
 /** 値リテラルの配列を single quote の文字列リテラルユニオンへ整形する。 */
 function formatStringLiteralUnion(values: string[]): string {
-  return values.map((value) => `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`).join(' | ');
+  return values.map((value) => `'${escapeStringLiteral(value)}'`).join(' | ');
+}
+
+/**
+ * 文字列を single quote リテラルの中身としてエスケープする。
+ * バックスラッシュ・制御文字（改行等）のエスケープは JSON.stringify に任せ、生成 .d.ts の構文エラーを防ぐ。
+ */
+function escapeStringLiteral(value: string): string {
+  return JSON.stringify(value).slice(1, -1).replace(/\\"/g, '"').replace(/'/g, "\\'");
 }
 
 function generateBreakpointBlock(keys: string[]): string | null {
