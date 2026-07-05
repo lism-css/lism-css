@@ -19,6 +19,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 - [Trait Components](#trait-components)
 - [Layout Primitives](#layout-primitives)
 - [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
+- [AstroでのラップコンポーネントのProps型](#astroでのラップコンポーネントのprops型)
 
 [詳細](https://lism-css.com/docs/core-components/lism-props.md)
 
@@ -293,3 +294,20 @@ function MyComponent({ children }) {
   return <div {...lismProps}>{children}</div>;
 }
 ```
+
+## AstroでのラップコンポーネントのProps型
+
+Astroで`<Lism>`をラップする独自コンポーネントのProps型は、`interface extends`ではなく交差型（`&`）で合成する。`Lism`のProps型は`layout`による discriminated union を含むため、`interface extends`はTSエラーになる。
+
+```ts
+import { Lism } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
+
+// NG: interface Props extends LismProps { class?: string } → TSエラー
+// OK: 交差型で合成
+type Props = LismProps & { class?: string };
+```
+
+この制約は`<Lism>`に限らず、`<Text>`や`<Wrapper>`など layout Prop を受け取れるコンポーネント全般に共通する。`<Cluster>`など layout 固定のレイアウトコンポーネントのみ union を含まず`interface extends`も通るが、交差型に統一する。

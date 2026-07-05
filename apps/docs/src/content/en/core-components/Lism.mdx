@@ -58,3 +58,37 @@ import { Lism, Media } from 'lism-css/astro';
 The Lism CSS-specific props that `<Lism>` accepts (**Lism Props**) are documented in a dedicated page.
 
 <DocsLink path="/docs/core-components/lism-props/" />
+
+
+## Prop types when wrapping `<Lism>` in Astro
+
+When you build a custom component in Astro that wraps `<Lism>`, compose its prop type with an **intersection type (`&`)** instead of `interface extends`.
+
+```ts
+import { Lism } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
+
+// OK: compose with an intersection type
+type Props = LismProps & {
+  class?: string;
+};
+```
+
+The prop type of `Lism` includes a union type whose accepted properties change depending on the value of `layout`. Because of this, extending it with `interface extends` results in a TypeScript error like the following.
+
+```ts
+// NG: interface extends results in an error
+interface Props extends LismProps {
+  class?: string;
+}
+// Error: An interface can only extend an object type or intersection of
+// object types with statically known members.
+```
+
+:::note
+This constraint isn't unique to `<Lism>`. Components such as `<Text>` and `<Wrapper>` that accept the `layout` prop include the same union type in their prop types, so apply the same intersection-type composition when wrapping them as well.
+
+On the other hand, layout components with a fixed `layout`, such as `<Cluster>` and `<Stack>`, don't include a union type in their prop types, so `interface extends` also works for them. That said, we recommend using intersection types consistently so the same approach works for every component.
+:::
