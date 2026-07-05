@@ -74,6 +74,43 @@ export default {
 };
 ```
 
+
+## 型サポート（LismConfig）
+
+`lism-css/config-types` から `LismConfig` 型を読み込むと、設定ファイルのキー名や値の形をエディタが補完・チェックしてくれます。`props` を `porps` とタイプミスした、といった間違いをその場で見つけられます。
+
+`lism.config.ts` では `satisfies LismConfig` を付けるのがおすすめです。型チェックが効きつつ、書いた内容（追加した prop / token のキーなど）の具体的な型はそのまま保たれます。
+
+```ts
+// lism.config.ts
+import type { LismConfig } from 'lism-css/config-types';
+
+export default {
+  props: {
+    filter: { utils: { blur: 'blur(3px)' } },
+  },
+  breakpoints: {
+    xs: '360px',
+  },
+} satisfies LismConfig;
+```
+
+`lism.config.js`（JavaScript）でも、JSDoc の `@type` を付ければ同じように補完・チェックが効きます。
+
+```js
+// lism.config.js
+/** @type {import('lism-css/config-types').LismConfig} */
+export default {
+  props: {
+    filter: { utils: { blur: 'blur(3px)' } },
+  },
+};
+```
+
+:::note[`lism-env.d.ts` とは別物です]
+ここで使う `LismConfig` は「**設定ファイルを書くとき**」の型です。統合プラグインが生成する `lism-env.d.ts`（追加した prop / trait を**コンポーネント側の props**で解禁する型）とは役割が異なります。両方を併用することで、設定ファイルの執筆時とコンポーネント利用時の両方で型の恩恵を受けられます。
+:::
+
 <Preview>
   <PreviewTitle>デフォルト値</PreviewTitle>
   <PreviewCode slot="tab" label="props">
