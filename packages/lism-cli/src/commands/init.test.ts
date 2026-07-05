@@ -146,13 +146,13 @@ describe('initCommand', () => {
     expect(fs.existsSync(path.join(tmpDir, 'lism.config.js'))).toBe(false);
   });
 
-  it('legacy json (lism-ui.json) 検出時は警告を出して新規生成する', async () => {
+  it('旧 lism-ui.json は既存 config として扱わず、警告なしで新規生成へ進む', async () => {
     vi.mocked(confirm).mockResolvedValue(false);
     writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'react', componentsDir: 'src/components/ui' }));
 
     await initCommand({});
 
-    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy).not.toHaveBeenCalled();
     expect(fs.existsSync(path.join(tmpDir, 'lism.config.js'))).toBe(true);
   });
 });

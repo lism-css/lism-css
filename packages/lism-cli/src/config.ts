@@ -3,9 +3,7 @@ import path from 'node:path';
 import { createJiti } from 'jiti';
 import { logger } from './logger.js';
 import { t } from './i18n.js';
-import { getInvokeCommand } from './invokeCommand.js';
 
-const LEGACY_CONFIG_FILE = 'lism-ui.json';
 const CONFIG_SEARCH = ['lism.config.ts', 'lism.config.mjs', 'lism.config.js'] as const;
 
 export interface LismCliConfig {
@@ -36,13 +34,11 @@ function resolvePath(filename: string): string {
 }
 
 /** 使用する設定ファイルを検出（存在する最初のもの）。見つからなければ null。 */
-export function findConfigFile(): { path: string; filename: string; kind: 'module' | 'legacy-json' } | null {
+export function findConfigFile(): { path: string; filename: string } | null {
   for (const name of CONFIG_SEARCH) {
     const abs = resolvePath(name);
-    if (fs.existsSync(abs)) return { path: abs, filename: name, kind: 'module' };
+    if (fs.existsSync(abs)) return { path: abs, filename: name };
   }
-  const legacy = resolvePath(LEGACY_CONFIG_FILE);
-  if (fs.existsSync(legacy)) return { path: legacy, filename: LEGACY_CONFIG_FILE, kind: 'legacy-json' };
   return null;
 }
 
@@ -60,8 +56,7 @@ export function getDefaultConfigPath(): string {
 
 /**
  * UI（旧 CLI）設定を読み込む。
- * - `lism.config.{ts,mjs,js}`: 動的インポート（jiti）で default export から `ui`（フォールバックで旧 `cli`）を取得
- * - `lism-ui.json` (legacy): JSON.parse、deprecation 警告を出す
+ * `lism.config.{ts,mjs,js}` を動的インポート（jiti）し、default export から `ui`（フォールバックで旧 `cli`）を取得する。
  *
  * `ui`/`cli` セクションが見つからない場合は `null` を返す（throw しない）。
  * `lism.config.js` が tokens/props 等の CSS カスタマイズ専用に作られていて
@@ -71,12 +66,6 @@ export function getDefaultConfigPath(): string {
 export async function readConfig(): Promise<LismCliConfig | null> {
   const found = findConfigFile();
   if (!found) return null;
-
-  if (found.kind === 'legacy-json') {
-    logger.warn(t('config.legacyWarning', { filename: LEGACY_CONFIG_FILE, invoke: getInvokeCommand() }));
-    const raw = fs.readFileSync(found.path, 'utf-8');
-    return normalizeUiConfig(JSON.parse(raw));
-  }
 
   const jiti = createJiti(import.meta.url, { interopDefault: true });
   let mod: unknown;

@@ -16,7 +16,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism-cli ui`�
 | `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
 | `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
 | `defaultImportant` | Property Classにデフォルトで`!important`を付与する（Sassの`$default_important`相当のビルド時設定） |
-| `ui` | `lism-cli ui add`などの出力先設定。旧`lism-ui.json`の後継。旧`cli`キーも互換読込される（deprecation警告あり） |
+| `ui` | `lism-cli ui add`などの出力先設定。旧`cli`キーも互換読込される（deprecation警告あり） |
 
 ```js
 // lism.config.js
