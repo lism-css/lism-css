@@ -30,22 +30,15 @@ interface AddOptions {
 type OverwritePolicy = 'all' | 'none' | 'per-component';
 
 export async function addCommand(names: string[], options: AddOptions): Promise<void> {
-  let config: LismCliConfig;
+  // 設定読み込み・プロンプトのエラー（Ctrl+C 中断含む）はエントリポイントで一括処理する。#500
+  let config = await readConfig();
   let needsGuidance = false;
 
-  try {
-    const existing = await readConfig();
-    if (existing) {
-      config = existing;
-    } else {
-      needsGuidance = true;
-      logger.info(t('ui.add.noConfig'));
-      config = await promptUiConfig({ framework: options.uiFramework, dir: options.uiDir });
-      console.log();
-    }
-  } catch (err) {
-    logger.error(err instanceof Error ? err.message : String(err));
-    process.exit(1);
+  if (!config) {
+    needsGuidance = true;
+    logger.info(t('ui.add.noConfig'));
+    config = await promptUiConfig({ framework: options.uiFramework, dir: options.uiDir });
+    console.log();
   }
 
   const fetchOpts: FetchOptions = { ref: options.ref };
