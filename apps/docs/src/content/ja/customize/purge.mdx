@@ -89,7 +89,9 @@ export default defineConfig({
 </PreviewCode>
 </Preview>
 
-Vite プラグインは `apply: 'build'` / `enforce: 'post'` で動作するため、開発サーバー (`vite dev`) では何も実行されません。`vite build` 実行時のみ、生成された CSS から未使用セレクタが削除されます。Astro 用は `astro:build:done` フックで、`dist/` 配下の HTML / JS をスキャンし、CSS ファイルを書き換えます。
+Vite プラグインは `apply: 'build'` / `enforce: 'post'` で動作するため、開発サーバー (`vite dev`) では何も実行されません。`vite build` 実行時のみ、生成された CSS から未使用セレクタが削除されます。Astro 用は `astro:build:done` フックで、ビルド出力配下の HTML / JS をスキャンし、CSS ファイルを書き換えます。
+
+SSR / hybrid 構成（`output: 'server'`、または `prerender = false` のルートがある場合）では、client 出力（`dist/client/`）に加えて server 出力（`dist/server/`）もスキャンと参照書き換えの対象になります。これにより、オンデマンドレンダリングされるページだけで使われているクラスも正しく保持されます。
 
 
 ## full.css と組み合わせる

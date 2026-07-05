@@ -89,7 +89,9 @@ export default defineConfig({
 </PreviewCode>
 </Preview>
 
-The Vite plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens during `vite dev`. Unused selectors are stripped only when you run `vite build`. The Astro integration hooks into `astro:build:done`, scans HTML / JS under `dist/`, and rewrites the CSS files in place.
+The Vite plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens during `vite dev`. Unused selectors are stripped only when you run `vite build`. The Astro integration hooks into `astro:build:done`, scans HTML / JS under the build output, and rewrites the CSS files in place.
+
+In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender = false`), the server output (`dist/server/`) is also scanned and reference-rewritten in addition to the client output (`dist/client/`). This ensures that classes used only on on-demand rendered pages are preserved correctly.
 
 
 ## Pairing with full.css
