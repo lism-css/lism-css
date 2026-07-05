@@ -195,6 +195,14 @@ describe('writeFreshConfig', () => {
     expect(content).toContain('ui: {');
     expect(content).not.toContain('cli: {');
     expect(content).toContain('"react"');
+    expect(content).toContain("@type {import('lism-css/config-types').LismConfig}");
+  });
+
+  it('ui が null なら core ひな形（コメントアウト）のみで ui: を含まない', () => {
+    const outPath = writeFreshConfig(null);
+    const content = fs.readFileSync(outPath, 'utf-8');
+    expect(content).toContain('// tokens: {},');
+    expect(content).not.toContain('ui: {');
   });
 
   it('既に lism.config.js が存在する場合は throw する（上書きしない）', () => {

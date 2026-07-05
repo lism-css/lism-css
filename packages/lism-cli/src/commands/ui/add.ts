@@ -116,7 +116,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
 
   if (needsGuidance) {
     const filename = findConfigFile()?.filename ?? DEFAULT_CONFIG_FILENAME;
-    logger.info(t('ui.init.snippetGuide', { filename, snippet: renderUiSnippet(config) }));
+    logger.info(t('ui.add.snippetGuide', { filename, snippet: renderUiSnippet(config) }));
   }
 
   if (hasFailure) {

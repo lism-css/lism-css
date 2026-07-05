@@ -1,7 +1,8 @@
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import { createUiCommand } from './commands/ui/index.js';
 import { createSkillCommand } from './commands/skill/index.js';
 import { createCommand } from './commands/create.js';
+import { initCommand } from './commands/init.js';
 import { CLI_VERSION } from './version.js';
 import { setLang, t } from './i18n.js';
 
@@ -25,6 +26,14 @@ export function createLismProgram(): Command {
     .option('-t, --template <name>', t('cli.create.opt.template'))
     .option('-f, --force', t('cli.create.opt.force'), false)
     .action(createCommand);
+
+  program
+    .command('init')
+    .description(t('cli.init.description'))
+    .addOption(new Option('--framework <name>', t('cli.init.opt.framework')).choices(['react', 'astro']))
+    .option('--components-dir <path>', t('cli.init.opt.componentsDir'))
+    .option('--helper-dir <path>', t('cli.init.opt.helperDir'))
+    .action(initCommand);
 
   program.addCommand(createUiCommand());
   program.addCommand(createSkillCommand());

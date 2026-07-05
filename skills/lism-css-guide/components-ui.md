@@ -330,8 +330,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 コンポーネント名は `import` するときと同じ PascalCase で指定します。
 
 ```bash
-# 初期設定（framework、出力先ディレクトリを対話的に設定）
-npx lism-cli ui init
+# 初期設定（lism.config.js が無い場合に新規生成。framework 等を対話的に設定）
+npx lism-cli init
 
 # コンポーネントを追加
 npx lism-cli ui add Button Modal
@@ -342,11 +342,11 @@ npx lism-cli ui add --all        # 全コンポーネントを追加
 npx lism-cli ui list
 ```
 
-`ui init` で生成される `lism.config.js` の `cli` セクション:
+`init` で生成される `lism.config.js` の `ui` セクション:
 
 ```js
 export default {
-  cli: {
+  ui: {
     framework: 'react',
     componentsDir: 'src/components/ui',
     helperDir: 'src/components/ui/_helper',

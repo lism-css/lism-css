@@ -11,7 +11,7 @@ export interface PromptUiConfigOptions {
 /**
  * UI セクション（`framework`/`componentsDir`/`helperDir`）の値を決定する。
  * ファイルの読み書きは一切行わない。永続化するかどうかは呼び出し側の責務
- * （`runInit` は書き込み、`addCommand` は今回限りの値として使うだけ）。
+ * （`initCommand` は書き込み、`addCommand` は今回限りの値として使うだけ）。
  *
  * `componentsDir`/`helperDir` は本質的に config に書く値であり、毎回対話で
  * 尋ねる必要は無いため既定値をそのまま採用する（変更したい場合は
@@ -24,7 +24,7 @@ export async function promptUiConfig(options: PromptUiConfigOptions = {}): Promi
   const framework =
     options.framework ??
     (await select<LismCliConfig['framework']>({
-      message: t('ui.init.promptFramework'),
+      message: t('ui.promptFramework'),
       choices: [
         { name: 'React', value: 'react' },
         { name: 'Astro', value: 'astro' },

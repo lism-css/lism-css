@@ -122,27 +122,39 @@ function validateCliConfig(cli: unknown): asserts cli is LismCliConfig {
   }
 }
 
-/** lism.config.js を新規作成する。既に存在する場合は呼び出し側のロジック誤りとして throw する。 */
-export function writeFreshConfig(cli: LismCliConfig): string {
+/**
+ * lism.config.js を新規作成する（`init` コマンド用）。
+ * core 設定（tokens/props 等）はコメントアウトのひな形として出力し、`ui` は渡された場合のみ含める。
+ * 既に存在する場合は呼び出し側のロジック誤りとして throw する。
+ */
+export function writeFreshConfig(ui: LismCliConfig | null): string {
   const filePath = getDefaultConfigPath();
   if (fs.existsSync(filePath)) {
     throw new Error(t('config.freshConfigExists', { path: filePath }));
   }
-  const body = renderConfigTemplate(cli);
+  const body = renderConfigTemplate(ui);
   fs.writeFileSync(filePath, body);
   return filePath;
 }
 
-function renderConfigTemplate(cli: LismCliConfig): string {
-  return [
-    'export default {', //
-    `  ui: ${renderCliObject(cli, '  ')},`,
-    '};',
-    '',
-  ].join('\n');
+function renderConfigTemplate(ui: LismCliConfig | null): string {
+  const lines = [
+    // `.js` でもエディタ補完・typo 検出が効くように LismConfig 型（#449）を JSDoc で付与する
+    "/** @type {import('lism-css/config-types').LismConfig} */",
+    'export default {',
+    '  // tokens: {},',
+    '  // props: {},',
+    '  // traits: {},',
+    '  // breakpoints: {},',
+  ];
+  if (ui) {
+    lines.push(`  ui: ${renderCliObject(ui, '  ')},`);
+  }
+  lines.push('};', '');
+  return lines.join('\n');
 }
 
-/** `ui add` / `ui init` で「貼り付け用スニペット」として表示する文字列を返す（`ui:` キーを含む） */
+/** `ui add` で「貼り付け用スニペット」として表示する文字列を返す（`ui:` キーを含む） */
 export function renderUiSnippet(cli: LismCliConfig): string {
   return `ui: ${renderCliObject(cli, '')},`;
 }
