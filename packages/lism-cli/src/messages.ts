@@ -234,10 +234,6 @@ export const messages = {
     ja: '{filename} は既に存在するため、何も変更しませんでした。',
     en: '{filename} already exists; nothing was changed.',
   },
-  'init.legacyDetected': {
-    ja: '{filename} を検出しました。lism.config.js へ移行します。古いファイルは後で削除してください。',
-    en: 'Detected {filename}. Migrating to lism.config.js. Please remove the old file afterwards.',
-  },
   'init.promptUseUi': {
     ja: 'Lism UI のコンポーネントも使いますか？（ui セクションを追加します）',
     en: 'Will you also use Lism UI components? (adds a ui section)',
@@ -446,10 +442,6 @@ export const messages = {
   // ---------------------------------------------------------------------------
   // config
   // ---------------------------------------------------------------------------
-  'config.legacyWarning': {
-    ja: '[deprecated] {filename} は廃止予定です。"{invoke} init" で lism.config.js へ移行してください。',
-    en: '[deprecated] {filename} is deprecated. Run "{invoke} init" to migrate to lism.config.js.',
-  },
   'config.invalidFramework': {
     ja: 'ui.framework は "react" または "astro" を指定してください。',
     en: 'ui.framework must be "react" or "astro".',

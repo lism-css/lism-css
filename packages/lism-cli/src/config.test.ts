@@ -99,18 +99,6 @@ describe('readConfig', () => {
     await expect(readConfig()).rejects.toThrow();
   });
 
-  it('legacy json (lism-ui.json) を読み込み、deprecation警告を出す', async () => {
-    writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'react', componentsDir: 'src/components/ui' }));
-    const result = await readConfig();
-    expect(result).toEqual({ framework: 'react', dir: 'src/components/ui' });
-    expect(warnSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('legacy json の値が不正なら throw する', async () => {
-    writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'vue', componentsDir: 'x' }));
-    await expect(readConfig()).rejects.toThrow();
-  });
-
   it('ui: が null で cli: もある場合、cli へフォールバックせず throw する', async () => {
     writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: null, cli: { framework: 'astro', dir: 'src/components/ui' } };\n");
     await expect(readConfig()).rejects.toThrow();
@@ -139,7 +127,7 @@ describe('lism.config.ts の読み込み', () => {
     writeFile(path.join(tmpDir, 'lism.config.ts'), 'export default {};\n');
 
     const found = findConfigFile();
-    expect(found).toEqual({ path: path.join(tmpDir, 'lism.config.ts'), filename: 'lism.config.ts', kind: 'module' });
+    expect(found).toEqual({ path: path.join(tmpDir, 'lism.config.ts'), filename: 'lism.config.ts' });
   });
 
   it('readConfig が lism.config.ts の ui セクションを読める（型注釈を含む TS 構文）', async () => {

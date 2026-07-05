@@ -20,12 +20,9 @@ export interface InitOptions {
 export async function initCommand(options: InitOptions = {}): Promise<void> {
   const found = findConfigFile();
 
-  if (found?.kind === 'module') {
+  if (found) {
     logger.warn(t('init.alreadyExists', { filename: found.filename }));
     return;
-  }
-  if (found?.kind === 'legacy-json') {
-    logger.warn(t('init.legacyDetected', { filename: found.filename }));
   }
 
   const ui = await resolveUiConfig(options);

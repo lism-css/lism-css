@@ -150,7 +150,7 @@ helper の配置先は個別に設定できず、常に `{dir}/_helper` に固�
 
 設定ファイルは `lism.config.ts` / `lism.config.mjs` / `lism.config.js` に対応しており、この順で探索して最初に見つかったものを読み込みます。`lism-css` 本体の設定読込（`@lism-css/plugin` / `lism-css build`）も同じ探索順です。
 
-旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時にdeprecation警告）。旧 `cli` セクション名も後方互換のため読み込めますが、deprecation警告が出るので `ui` へのリネームを推奨します。
+旧 `cli` セクション名も後方互換のため読み込めますが、deprecation警告が出るので `ui` へのリネームを推奨します。
 
 ## パッケージが見つからないエラーが出る場合
 
