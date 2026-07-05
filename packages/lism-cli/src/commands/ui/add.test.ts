@@ -136,7 +136,7 @@ describe('addCommand', () => {
 
     await addCommand(['Button'], { overwrite: false, all: false });
 
-    const guidance = infoSpy.mock.calls.map((call: unknown[]) => String(call[0])).find((msg) => msg.includes('ui: {'));
+    const guidance = infoSpy.mock.calls.map((call: unknown[]) => String(call[0])).find((msg: string) => msg.includes('ui: {'));
     expect(guidance).toContain('lism.config.mjs');
     expect(guidance).not.toContain('lism.config.js');
   });

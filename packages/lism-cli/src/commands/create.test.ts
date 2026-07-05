@@ -45,6 +45,7 @@ const LANG_OVERLAY_TEMPLATE: Parameters<typeof runCreateWithTemplates>[1] = [
     variant: 'minimal',
     sourcePath: 'blog/astro/minimal',
     langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+    title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
     description: { ja: 'Minimal blog', en: 'Minimal blog' },
   },
 ];
@@ -220,6 +221,7 @@ describe('runCreate', () => {
         category: 'minimal',
         stack: 'astro',
         sourcePath: 'minimal/astro',
+        title: { ja: 'Minimal Astro', en: 'Minimal Astro' },
         description: { ja: 'Astro minimal', en: 'Astro minimal' },
       },
     ];
@@ -247,6 +249,7 @@ describe('runCreate', () => {
         variant: 'minimal',
         variantLabel: { ja: 'Minimal', en: 'Minimal' },
         sourcePath: 'blog/astro/minimal',
+        title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
         description: { ja: 'Minimal blog', en: 'Minimal blog' },
       },
       {
@@ -257,6 +260,7 @@ describe('runCreate', () => {
         variant: 'techlog',
         variantLabel: { ja: 'Tech Log', en: 'Tech Log' },
         sourcePath: 'blog/astro/techlog',
+        title: { ja: 'Blog Tech Log', en: 'Blog Tech Log' },
         description: { ja: 'Tech blog', en: 'Tech blog' },
       },
     ];
@@ -287,6 +291,7 @@ describe('runCreate', () => {
         variantLabel: { ja: 'SaaS', en: 'SaaS' },
         basePath: 'lp/astro/_base',
         overlayPath: 'lp/astro/_variants/saas',
+        title: { ja: 'LP SaaS', en: 'LP SaaS' },
         description: { ja: 'SaaS LP', en: 'SaaS landing page' },
       },
     ];
@@ -333,6 +338,7 @@ describe('runCreate', () => {
         variant: 'minimal',
         sourcePath: 'blog/astro/minimal',
         langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+        title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
         description: { ja: 'Minimal blog', en: 'Minimal blog' },
       },
     ];
@@ -385,6 +391,7 @@ describe('runCreate', () => {
         variant: 'minimal',
         sourcePath: 'blog/astro/minimal',
         langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+        title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
         description: { ja: 'Minimal blog', en: 'Minimal blog' },
       },
     ];
@@ -474,6 +481,7 @@ describe('runCreate', () => {
         variant: 'minimal',
         variantLabel: { ja: 'Minimal', en: 'Minimal' },
         sourcePath: 'blog/astro/minimal',
+        title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
         description: { ja: 'Minimal blog', en: 'Minimal blog' },
       },
       {
@@ -484,6 +492,7 @@ describe('runCreate', () => {
         variant: 'techlog',
         variantLabel: { ja: 'Tech Log', en: 'Tech Log' },
         sourcePath: 'blog/astro/techlog',
+        title: { ja: 'Blog Tech Log', en: 'Blog Tech Log' },
         description: { ja: 'Tech blog', en: 'Tech blog' },
       },
     ];
@@ -511,6 +520,7 @@ describe('runCreate', () => {
         variantLabel: { ja: 'Interior', en: 'Interior' },
         sourcePath: 'lp/astro',
         packageName: 'lp-astro-interior',
+        title: { ja: 'LP Interior', en: 'LP Interior' },
         description: { ja: 'Interior LP', en: 'Interior landing page' },
       },
     ];
@@ -568,6 +578,7 @@ describe('runCreate', () => {
         variantLabel: { ja: 'Corporate', en: 'Corporate' },
         sourcePath: 'lp/astro',
         packageName: 'lp-astro-corporate',
+        title: { ja: 'LP Corporate', en: 'LP Corporate' },
         description: { ja: 'Corporate LP', en: 'Corporate landing page' },
       },
     ];
@@ -648,6 +659,7 @@ describe('runCreate', () => {
         variant: 'ryokan',
         sourcePath: 'lp/astro',
         packageName: 'lp-astro-ryokan',
+        title: { ja: 'LP Ryokan', en: 'LP Ryokan' },
         description: { ja: 'Ryokan LP', en: 'Ryokan landing page' },
       },
     ];
@@ -678,6 +690,7 @@ describe('runCreate', () => {
         variant: 'corporate',
         sourcePath: 'lp/astro',
         packageName: 'lp-astro-corp-empty',
+        title: { ja: 'LP Corp Empty', en: 'LP Corp Empty' },
         description: { ja: 'corp empty', en: 'corp empty' },
       },
     ];
@@ -714,6 +727,7 @@ describe('runCreate', () => {
         variant: 'missing',
         sourcePath: 'lp/astro',
         packageName: 'lp-astro-missing',
+        title: { ja: 'LP Missing', en: 'LP Missing' },
         description: { ja: 'missing', en: 'missing' },
       },
     ];
@@ -742,6 +756,7 @@ describe('runCreate', () => {
         variant: 'corporate',
         sourcePath: 'lp/astro',
         packageName: 'lp-astro-corporate',
+        title: { ja: 'LP Corporate', en: 'LP Corporate' },
         description: { ja: 'Corporate LP', en: 'Corporate landing page' },
       },
     ];
@@ -803,6 +818,7 @@ describe('runCreate', () => {
         variant: 'ryokan',
         sourcePath: 'lp/astro',
         packageName: 'lp-astro-ryokan',
+        title: { ja: 'LP Ryokan', en: 'LP Ryokan' },
         description: { ja: 'Ryokan LP', en: 'Ryokan landing page' },
       },
     ];
@@ -836,6 +852,7 @@ describe('runCreate', () => {
         variant: 'saas',
         variantLabel: { ja: 'SaaS', en: 'SaaS' },
         sourcePath: 'lp/html/_generated/saas',
+        title: { ja: 'LP SaaS HTML', en: 'LP SaaS HTML' },
         description: { ja: 'SaaS LP HTML', en: 'SaaS landing page HTML' },
       },
     ];
@@ -861,6 +878,7 @@ describe('runCreate', () => {
         category: 'minimal',
         stack: 'astro',
         sourcePath: 'minimal/astro',
+        title: { ja: 'Minimal Astro', en: 'Minimal Astro' },
         description: { ja: 'Astro minimal', en: 'Astro minimal' },
       },
       {
@@ -869,6 +887,7 @@ describe('runCreate', () => {
         category: 'minimal',
         stack: 'vite',
         sourcePath: 'minimal/vite',
+        title: { ja: 'Minimal Vite', en: 'Minimal Vite' },
         description: { ja: 'Vite minimal', en: 'Vite minimal' },
       },
     ];
@@ -893,6 +912,7 @@ describe('runCreate', () => {
         category: 'minimal',
         stack: 'astro',
         sourcePath: 'minimal/astro',
+        title: { ja: 'Minimal Astro', en: 'Minimal Astro' },
         description: { ja: 'Astro minimal', en: 'Astro minimal' },
       },
     ];
@@ -921,6 +941,7 @@ describe('runCreate', () => {
         category: 'lp',
         stack: 'html',
         sourcePath: 'lp/html/_generated/empty',
+        title: { ja: 'LP Empty', en: 'LP Empty' },
         description: { ja: 'empty', en: 'empty' },
       },
     ];
