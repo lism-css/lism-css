@@ -99,6 +99,13 @@ describe('readConfig', () => {
     await expect(readConfig()).rejects.toThrow();
   });
 
+  it('旧 lism-ui.json は設定ファイルとして扱わない（findConfigFile / readConfig とも null、警告なし）', async () => {
+    writeFile(path.join(tmpDir, 'lism-ui.json'), JSON.stringify({ framework: 'react', componentsDir: 'src/components/ui' }));
+    expect(findConfigFile()).toBeNull();
+    await expect(readConfig()).resolves.toBeNull();
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
   it('ui: が null で cli: もある場合、cli へフォールバックせず throw する', async () => {
     writeFile(path.join(tmpDir, 'lism.config.js'), "export default { ui: null, cli: { framework: 'astro', dir: 'src/components/ui' } };\n");
     await expect(readConfig()).rejects.toThrow();
