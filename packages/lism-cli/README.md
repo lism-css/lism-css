@@ -146,7 +146,7 @@ export default {
 };
 ```
 
-helper の配置先は個別に設定できず、常に `{dir}/_helper` に固定されます。旧キー `ui.componentsDir` は `ui.dir` が無い場合のみ後方互換として読み込まれます（`ui.helperDir` は無視されます）。
+helper の配置先は個別に設定できず、常に `{dir}/_helper` に固定されます。旧キー `ui.componentsDir` は `ui.dir` が無い場合のみ後方互換として読み込まれます。
 
 設定ファイルは `lism.config.ts` / `lism.config.mjs` / `lism.config.js` に対応しており、この順で探索して最初に見つかったものを読み込みます。`lism-css` 本体の設定読込（`@lism-css/plugin` / `lism-css build`）も同じ探索順です。
 
