@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { LISM_CSS_SIGNATURE, hasCssSourceMappingUrl, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
+import { LISM_CSS_SIGNATURE, formatReport, hasCssSourceMappingUrl, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
 
 describe('LISM_CSS_SIGNATURE', () => {
   test('Lism の Property Class (.-x) にマッチする', () => {
@@ -62,6 +62,16 @@ describe('stripCssSourceMappingUrl', () => {
   test('sourceMappingURL がなければ末尾以外は変えない', () => {
     const css = '/*! lism-css */\n.-p\\:20{padding:20px}';
     expect(stripCssSourceMappingUrl(css)).toBe(css);
+  });
+});
+
+describe('formatReport', () => {
+  test('削減バイト数と削減率を含むレポート文字列を返す', () => {
+    expect(formatReport(1000, 400)).toBe('CSS: 1000 → 400 bytes (-600 / -60.0%)');
+  });
+
+  test('削減が無い場合は 0 / 0.0% になる', () => {
+    expect(formatReport(500, 500)).toBe('CSS: 500 → 500 bytes (-0 / -0.0%)');
   });
 });
 

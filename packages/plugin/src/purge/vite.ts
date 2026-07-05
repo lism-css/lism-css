@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { basename, dirname } from 'node:path/posix';
 import type { Plugin } from 'vite';
@@ -14,7 +15,9 @@ function decodeAssetSource(source: string | Uint8Array): string {
 }
 
 const REF_EXT = /\.(html?|js|mjs|cjs|json|txt|xml|map)$/;
-const HASHED_CSS_NAME = /^(.+)([.-])([A-Za-z0-9_-]{6,})\.css$/;
+// `<name>[.-]<hash>.css` 形式のハッシュ部を判定する。Vite 既定・本プラグインの shortContentHash はいずれも
+// 8 文字英数字なので 8 文字ちょうどに限定する。緩い判定だと `my-styles.css` の `-styles` 等を誤ってハッシュ扱いしてしまう（#496）。
+const HASHED_CSS_NAME = /^(.+)([.-])([A-Za-z0-9_-]{8})\.css$/;
 
 interface RenameInfo {
   oldName: string;
@@ -117,8 +120,8 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
           bundle[rename.newName] = asset;
           renames.push(rename);
         }
-        beforeBytes += source.length;
-        afterBytes += output.length;
+        beforeBytes += Buffer.byteLength(source);
+        afterBytes += Buffer.byteLength(output);
       }
 
       if (staleCssMaps.size > 0) {
