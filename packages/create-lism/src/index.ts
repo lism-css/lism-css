@@ -69,6 +69,8 @@ function printHelp(): void {
 }
 
 main().catch((err: unknown) => {
+  // プロンプトの Ctrl+C 中断はユーザーの意思なので、何も表示せず SIGINT 慣例の 130 で終了する
+  if (err instanceof Error && err.name === 'ExitPromptError') process.exit(130);
   process.stderr.write(String(err) + '\n');
   process.exit(1);
 });
