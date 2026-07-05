@@ -2,59 +2,11 @@
 
 要素間のスペースを確保するクラス。`<Spacer>` は `<Lism atomic="spacer" aria-hidden="true" />` のエイリアスとして用意されています。
 
-## 基本情報
-
-- クラス名: `a--spacer`
-- コンポーネント: `<Spacer>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/atomic/_spacer.scss
-- 公式ドキュメント: https://lism-css.com/docs/primitives/a--spacer.md
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/a--spacer.md
 
 ## 専用Props
 
 `<Spacer>`では **`w` / `h` に対してSPACEトークンの値**が使えます（他のコンポーネントではSIZEトークンが優先されるため、スペースサイズを直感的に指定できる特殊対応）。
-
-## Usage
-
-### 縦方向のスペース
-
-```jsx
-<p>Content...</p>
-<Spacer h="100px" />
-<p>Content...</p>
-```
-
-```html
-<p>Content...</p>
-<div class="a--spacer -h" style="--h:100px" aria-hidden="true"></div>
-<p>Content...</p>
-```
-
-### SPACEトークンを使う
-
-```jsx
-<p>Content...</p>
-<Spacer h="60" />
-<p>Content...</p>
-```
-
-```html
-<p>Content...</p>
-<div class="a--spacer -h" style="--h:var(--s60)" aria-hidden="true"></div>
-<p>Content...</p>
-```
-
-### 横方向のスペーサー
-
-Flex コンテナ内で `w` を指定すれば横方向のスペーサーとしても使えます。
-
-```jsx
-<Flex g="10">
-  <Box p="20" bd>Box</Box>
-  <Spacer w="40" />
-  <Box p="20" bd>Box</Box>
-  <Box p="20" bd>Box</Box>
-</Flex>
-```
 
 ## 関連プリミティブ
 

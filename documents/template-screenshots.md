@@ -57,6 +57,7 @@ pnpm --filter lism-docs screenshot:templates -- --no-build
 |----------|---|------|------|
 | `command` | `'preview' \| 'dev'` | `'preview'` | 起動コマンド。`preview` の場合は事前にビルドが実行される |
 | `port` | number | — | プレビューサーバーのポート（テンプレごとに重複しないよう調整） |
+| `portViaEnv` | boolean | `false` | `true` なら`port`を CLI 引数ではなく`PORT`環境変数で渡す。`next start` / `next dev` は`--`後の`--port`をディレクトリ引数と誤解してエラーになるための回避策。`false`（既定）は従来どおり`-- --port <port>`を渡す |
 | `waitAfterLoad` | number | `500` | ページ読み込み後の待機ms |
 | `shots[].name` | string | — | 出力ファイル名のベース。`screenshots/{name}.png` で保存。`/` を含めるとサブディレクトリに出力される（例: `en/top` → `screenshots/en/top.png`） |
 | `shots[].path` | string | — | サーバールートからのパス |
@@ -67,7 +68,7 @@ pnpm --filter lism-docs screenshot:templates -- --no-build
 
 ## 英語版（en）スクショ
 
-テンプレの英語版（`lism create --lang en` 相当）は、テンプレの言語対応方式によって撮り方が分かれる。いずれも出力先は **`screenshots/en/`** に揃える。
+テンプレの英語版（`lism-cli create --lang en` 相当）は、テンプレの言語対応方式によって撮り方が分かれる。いずれも出力先は **`screenshots/en/`** に揃える。
 
 ### LP（言語別 variant 方式）— `shots` に追記するだけ
 
@@ -110,7 +111,7 @@ blog の en は overlay 方式（`.lang/en` を src へマージ）のため、*
 ### docs / 一覧側の参照
 
 - **docs テンプレカード**: `apps/docs/src/config/templates.ts` の `getThumb(tpl, lang)` が、en 表示時に `screenshots/en/{variant|top}.png` を優先し、未撮影なら ja スクショにフォールバックする。
-- **LP en 一覧**（`templates/lp/astro/src/pages/en/index.astro`）: en スクショ撮影後、サムネ import を `../../../screenshots/en/*.png` に差し替えると en 版サムネで表示できる。
+- **LP en 一覧**（`templates/lp/astro/src/pages/en/index.astro`）: `import.meta.glob`で`screenshots/en/*.png`を優先取得し、未撮影のスラッグは`screenshots/*.png`（ja版）へ自動フォールバックする実装済み。en スクショを撮影してコミットするだけで en 版サムネに切り替わり、手動でのサムネ import 差し替えは不要。
 
 
 ## ファイル構成
@@ -150,7 +151,7 @@ templates/
    - LP は `shots` に `en/*`、blog は `langShots.en` を追加（[英語版（en）スクショ](#英語版en-スクショ)参照）
    - `pnpm screenshot:templates` で新規分（`screenshots/en/`）を撮影 → コミット
    - blog は overlay 再ビルドが走るため LP より時間がかかる
-   - 撮影後、LP en 一覧のサムネ import を `screenshots/en/*` に差し替えるとカードが en 版になる
+   - LP en 一覧は`screenshots/en/*`を自動優先取得する実装済みのため、撮影・コミットするだけでカードが en 版になる（手動差し替え不要）
 
 
 ## スクリプト
@@ -158,7 +159,7 @@ templates/
 [`apps/docs/scripts/template-screenshots.ts`](../apps/docs/scripts/template-screenshots.ts) に本体がある。
 
 - `templates/` 以下を再帰的に走査し、`screenshots.config.json` を持つディレクトリを撮影対象として収集
-- 各テンプレについて `pnpm --filter <name> build` → `pnpm --filter <name> preview --port <port>` で起動
+- 各テンプレについて `pnpm --filter <name> build` → `pnpm --filter <name> preview` で起動。ポートは通常 `-- --port <port>` で渡すが、`portViaEnv: true` のテンプレ（`next start` / `next dev` 系）は `PORT` 環境変数で渡す（`--` 後の `--port` をディレクトリ引数と誤解してエラーになるための回避策）
 - Playwright（headless chromium）で `shots` を順次撮影
 - `langShots` があるテンプレは、通常撮影に続けて `node scripts/build-template-lang.mjs <pkg> <lang>`（= `nr build:template:en`）で overlay を再ビルド → preview 起動 → 撮影し、`screenshots/<lang>/` に保存
 - compare モードでは pixelmatch でベースラインと比較し、しきい値（既定 0.01%）以下なら「変更なし」とみなす

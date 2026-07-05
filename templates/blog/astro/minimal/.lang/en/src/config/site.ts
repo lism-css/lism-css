@@ -1,5 +1,5 @@
 /**
- * English template overlay for `lism create --lang en`.
+ * English template overlay for `lism-cli create --lang en`.
  * This file fully replaces `src/config/site.ts`, so keep its shape in sync
  * with the base (Japanese) config — components read values from `siteConfig.uiText.*`.
  */

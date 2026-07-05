@@ -42,6 +42,8 @@ sourcePath, title, description, category, headings[], keywords[], snippet
 ## docs-index.json の参照先と注意事項
 
 - **ソース**: `apps/docs/src/content/ja/` 配下の全 MDX ファイル
+- **sourcePath ルール**: 実在する MDX ファイルの `ja/` からの相対パスを正確に記載する（`packages/mcp` の `pnpm test` にある `docs-index.test.ts` で実在チェックされる）
+- **複数エントリ許可**: 長いページは同一 `sourcePath` でセクション単位に複数エントリへ分割してよい（utility-class.mdx 等で使用中の意図的な設計）
 - **title ルール**: primitives カテゴリは `コンポーネント名 / クラス名` 形式で併記（例: `"Flex / l--flex"`）
 - **keywords ルール（CSS 逆引き用）**: props・primitives カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex → `"display", "flex-direction"`, ボーダー → `"border", "border-radius"` 等）
 - **keywords ルール（alias 保持）**: MDX に存在しない alias/synonym keywords（例: `"クリッカブル"`, `"CTA"` 等）が既存の keywords に含まれている場合、削除しないこと。自然言語検索用に意図的に追加されたものである

@@ -86,4 +86,25 @@ describe('generateLismScss', () => {
     const result = compileWithBridge(outDir);
     expect(result.css).toContain('myz');
   });
+
+  test('lism.config.ts（TS構文）の追加 prop が jiti 経由で CSS 出力へ反映される', async () => {
+    const root = tmpDir();
+    // 型注釈を含む TS 構文。jiti が型を取り除いて評価できることを確認する。
+    fs.writeFileSync(
+      path.join(root, 'lism.config.ts'),
+      [
+        'interface ExtraConfig { props: { myts: { prop: string; utils: Record<string, string> } } }',
+        'const config: ExtraConfig = { props: { myts: { prop: "zIndex", utils: { "9": "9" } } } };',
+        'export default config;',
+        '',
+      ].join('\n')
+    );
+    const { outDir, userConfigPath, configFile } = await generateLismScss({ projectRoot: root });
+
+    expect(userConfigPath).toBe(path.join(root, 'lism.config.ts'));
+    expect(fs.readFileSync(configFile, 'utf8')).toContain("'myts'");
+
+    const result = compileWithBridge(outDir);
+    expect(result.css).toContain('myts');
+  });
 });

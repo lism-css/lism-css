@@ -28,6 +28,26 @@ pnpm screenshot:patterns:compare cta          # 比較対象の絞り込み
 ```
 
 
+## 言語別（ja / en）スクショ
+
+パターンプレビューは`ja`（デフォルト）と`en`の2言語に対応する。`generate-screenshots.ts` / `compare-screenshots.ts`は`--lang=en` / `--lang=ja`で対象言語を絞り込める（省略時は全言語を撮影・比較する）。`update-screenshots.ts`には`--lang`オプションが無く、`_screenshots/diff/`配下のディレクトリ構成（`en/`などの言語ディレクトリの有無）から対象言語を自動判定する。
+
+```bash
+npx tsx scripts/generate-screenshots.ts --lang=en             # 英語版のみ新規撮影
+npx tsx scripts/compare-screenshots.ts --lang=ja               # 日本語版のみ比較
+npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=en    # パターン指定 + 言語指定
+```
+
+保存先は`ja`がプレフィックスなし、`en`は`en/`サブディレクトリに分かれる。公開用サムネ（`public/screenshots/patterns/`）・比較用ベースライン（`_screenshots/baseline/`）のどちらも同じ規則。
+
+| 言語 | 公開用サムネの例 | ベースラインの例 | 撮影URL |
+|---|---|---|---|
+| `ja`（デフォルト） | `public/screenshots/patterns/cta/cta001.png` | `_screenshots/baseline/cta/cta001.png` | `/preview/patterns/cta/cta001/` |
+| `en` | `public/screenshots/patterns/en/cta/cta001.png` | `_screenshots/baseline/en/cta/cta001.png` | `/preview/patterns/cta/cta001/en/` |
+
+`en`撮影時はプレビューページのURL末尾に`/en/`が付く（プレビュー側が言語別ルートを持つため）。
+
+
 ## サムネイル撮影（screenshot:patterns:new / screenshot:patterns:force）
 
 Playwright で各パターンのプレビューページを撮影し、`public/screenshots/patterns/` に保存する。
@@ -97,8 +117,12 @@ apps/docs/
     update-screenshots.ts      # 差分パターンの更新スクリプト
   public/
     screenshots/patterns/     # サイト表示用サムネイル（Git管理）
+      cta/cta001.png            #   ja（デフォルト、プレフィックスなし）
+      en/cta/cta001.png         #   en（言語別サブディレクトリ）
   _screenshots/
     baseline/                  # 比較用ベースライン（Git管理）
-    diff/                      # 差分画像の出力先（Git管理外）
+      cta/cta001.png            #   ja
+      en/cta/cta001.png         #   en
+    diff/                      # 差分画像の出力先（Git管理外、言語構成は baseline と同様）
     temp/                      # 比較時の一時ファイル（自動削除）
 ```

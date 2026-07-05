@@ -2,19 +2,14 @@
 
 直下のコンテンツ幅を一括制御するクラス。`max-width` とセンタリングを担い、記事・セクションのコンテンツ幅の統一に使います。
 
-## 基本情報
-
-- クラス名: `is--wrapper`
-- コンポーネント: `<Wrapper>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/is/_wrapper.scss
-- 公式ドキュメント: https://lism-css.com/docs/trait-class/is--wrapper.md
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/trait-class/is--wrapper.md
 
 ## 使い方
 
 `<Wrapper>` は `<Lism isWrapper>` のエイリアスです。`isWrapper` Prop は他のコンポーネントにも使用できます（例: `<Flow isWrapper>`）。
 
 | 指定 | 出力 |
-|------|------|
+| --- | --- |
 | `isWrapper` | `is--wrapper` |
 | `isWrapper="s"` | `is--wrapper -contentSize:s` |
 | `isWrapper="m"` | `is--wrapper -contentSize:m` |
@@ -25,61 +20,13 @@
 ## 専用Props
 
 | Prop | 説明 |
-|------|------|
+| --- | --- |
 | `contentSize` | コンテンツサイズ。`s` / `m` / `l` / `xl` / トークン / 任意値 |
 
 ```jsx
 // 下記の ① と ② は同じ結果
 <Flow isWrapper="s" isContainer>...</Flow>
 <Wrapper contentSize="s" layout="flow" isContainer>...</Wrapper>
-```
-
-## Usage
-
-### `layout` との組み合わせ
-
-```jsx
-<Wrapper layout="flow" p="20">
-  <p>Content</p>
-  <p>Content</p>
-</Wrapper>
-```
-
-```html
-<div class="l--flow is--wrapper -p:20">
-  <p>Content</p>
-  <p>Content</p>
-</div>
-```
-
-### `contentSize` 指定
-
-```jsx
-<Wrapper contentSize="s" layout="flow" p="20">
-  <p>Content</p>
-  <p>Content</p>
-</Wrapper>
-```
-
-```html
-<div class="l--flow is--wrapper -contentSize:s -p:20">
-  <p>Content</p>
-  <p>Content</p>
-</div>
-```
-
-### 任意値のコンテンツ幅
-
-```jsx
-<Lism isWrapper="20rem" p="20">
-  <div>Contents...</div>
-</Lism>
-```
-
-```html
-<div class="is--wrapper -p:20" style="--contentSize: 20rem">
-  <div>Contents...</div>
-</div>
 ```
 
 ## 直下の子要素の挙動

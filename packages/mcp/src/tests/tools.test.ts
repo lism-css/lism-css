@@ -91,7 +91,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     const data = JSON.parse(text);
-    expect(data.error).toContain('見つかりません');
+    expect(data.message).toContain('No prop matches');
     expect(data.availableProps).toBeDefined();
   });
 
@@ -111,7 +111,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     expect(text).toContain('# l--flex / `<Flex>`');
-    expect(text).toContain('SCSSソース:');
+    expect(text).toContain('https://lism-css.com/docs/primitives/l--flex.md');
     expect(text).toContain('## 関連プリミティブ');
   });
 
@@ -129,14 +129,14 @@ describe('MCP Tools (integration)', () => {
     expect(texts[0]).toContain('# l--flex / `<Flex>`');
   });
 
-  it('get_component で Container (Trait Primitive) が primitives/is--container.md を返す', async () => {
+  it('get_component で Container (Trait Primitive) が trait-class/is--container.md を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'Container' } });
     expect(result.isError).toBeFalsy();
 
     const text = getText(result);
     expect(text).toContain('# is--container / `<Container>`');
-    expect(text).toContain('SCSSソース:');
+    expect(text).toContain('https://lism-css.com/docs/trait-class/is--container.md');
   });
 
   it('get_component で Icon (Atomic Primitive) が primitives/a--icon.md を返す', async () => {
@@ -146,7 +146,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     expect(text).toContain('# a--icon / `<Icon>`');
-    expect(text).toContain('SCSSソース:');
+    expect(text).toContain('https://lism-css.com/docs/primitives/a--icon.md');
   });
 
   it('get_component で Lism を検索すると該当セクションの Markdown が返る', async () => {
@@ -172,7 +172,7 @@ describe('MCP Tools (integration)', () => {
 
     const text = getText(result);
     const data = JSON.parse(text);
-    expect(data.error).toContain('not found');
+    expect(data.message).toContain('not found');
   });
 
   it('get_guide で tokens トピックが Markdown を返す', async () => {
@@ -194,6 +194,23 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('md');
   });
 
+  it('get_guide で property-class トピックが分冊（all-props / bd / hov / max-sz）を含む Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'property-class' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    // 本体
+    expect(text).toContain('Property Class');
+    // all-props.md の全 Prop 表（本体には存在しない行）
+    expect(text).toContain('`mt`');
+    expect(text).toContain('margin-top');
+    // bd.md / hov.md / max-sz.md
+    expect(text).toContain('-bd-');
+    expect(text).toContain('-hov:');
+    expect(text).toContain('-max-sz:bleed');
+  });
+
   it('get_guide で antipatterns トピックが NG/OK カタログの Markdown を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'antipatterns' } });
@@ -205,6 +222,46 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('OK');
   });
 
+  it('get_guide で antipatterns-layout トピックが構造・レイアウト系カタログの Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'antipatterns-layout' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('アンチパターン');
+    expect(text).toContain('レスポンシブ');
+    expect(text).toContain('NG');
+    expect(text).toContain('OK');
+  });
+
+  it('get_guide で trait-class トピックが Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'trait-class' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('Trait クラス');
+    expect(text).toContain('is--');
+  });
+
+  it('get_guide で naming トピックが Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'naming' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('命名規則');
+  });
+
+  it('get_guide で customize トピックが Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'customize' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('カスタマイズ');
+  });
+
   it('search_docs が正常にデータを返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'search_docs', arguments: { query: 'Box' } });
@@ -214,6 +271,8 @@ describe('MCP Tools (integration)', () => {
     const data = JSON.parse(text);
     expect(data.query).toBe('Box');
     expect(data.results).toBeDefined();
+    expect(result.structuredContent).toBeDefined();
+    expect((result.structuredContent as { query: string }).query).toBe('Box');
   });
 
   it('ツール一覧が7つ登録されている', async () => {

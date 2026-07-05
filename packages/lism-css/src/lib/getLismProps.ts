@@ -20,6 +20,7 @@ import { type CustomPropRegistry } from './types/CustomPropRegistry';
 import { type CustomTraitRegistry } from './types/CustomTraitRegistry';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
 import { type AtomicType, type AtomicProps } from './types/AtomicProps';
+import { type BreakpointKey } from '../../config/defaults/breakpoints';
 export { type LayoutType, type AtomicType };
 
 // PropConfig interface based on config/defaults/props.ts
@@ -33,7 +34,7 @@ interface PropConfig {
   shorthands?: Record<string, string>;
   isVar?: number;
   // 0 / 1（有効BPすべて）/ ['sm','md'] 等（出力する BP の明示リスト）
-  bp?: 0 | 1 | readonly ('xs' | 'sm' | 'md' | 'lg' | 'xl')[];
+  bp?: 0 | 1 | readonly BreakpointKey[];
   alwaysVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;

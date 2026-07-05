@@ -35,6 +35,7 @@ const entries = {
 
   // full.css 用 preset。@lism-css/plugin が dist から読むため単独エントリとして出力する
   'config/default-config': resolve(__dirname, 'config/default-config.ts'),
+  'config/types': resolve(__dirname, 'config/types.ts'),
   'config/helper': resolve(__dirname, 'config/helper.ts'),
   'config/defaults/token-scope': resolve(__dirname, 'config/defaults/token-scope.ts'),
   'config/presets/props-full': resolve(__dirname, 'config/presets/props-full.ts'),
@@ -88,13 +89,7 @@ export default defineConfig({
     },
     rollupOptions: {
       plugins: [],
-      external: [
-        'react',
-        'react-dom',
-        'react/jsx-runtime',
-        'lism-css/config.js',
-        /^node:/,
-      ],
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js', /^node:/],
       output: {
         dir: 'dist',
         // exports: 'named',

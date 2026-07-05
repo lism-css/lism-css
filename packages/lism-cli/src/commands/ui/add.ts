@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { confirm, select } from '@inquirer/prompts';
-import { configExists, readConfig } from '../../config.js';
+import { findConfigFile, readConfig, renderUiSnippet, DEFAULT_CONFIG_FILENAME } from '../../config.js';
 import {
   fetchCatalog,
   fetchComponent,
@@ -12,7 +12,7 @@ import {
   type RegistryFile,
 } from './fetcher.js';
 import { resolveHelperPlaceholder } from '../../transform.js';
-import { runInit } from './init.js';
+import { promptUiConfig } from './promptUiConfig.js';
 import { logger } from '../../logger.js';
 import { normalizeComponentName } from './normalize.js';
 import type { LismCliConfig } from '../../config.js';
@@ -22,19 +22,22 @@ interface AddOptions {
   overwrite: boolean;
   all: boolean;
   ref?: string;
+  uiFramework?: LismCliConfig['framework'];
+  uiDir?: string;
 }
 
 /** 上書き方針 */
 type OverwritePolicy = 'all' | 'none' | 'per-component';
 
 export async function addCommand(names: string[], options: AddOptions): Promise<void> {
-  let config: LismCliConfig;
+  // 設定読み込み・プロンプトのエラー（Ctrl+C 中断含む）はエントリポイントで一括処理する。#500
+  let config = await readConfig();
+  let needsGuidance = false;
 
-  if (configExists()) {
-    config = await readConfig();
-  } else {
+  if (!config) {
+    needsGuidance = true;
     logger.info(t('ui.add.noConfig'));
-    config = await runInit();
+    config = await promptUiConfig({ framework: options.uiFramework, dir: options.uiDir });
     console.log();
   }
 
@@ -103,6 +106,11 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     if (helperFailed) hasFailure = true;
   }
 
+  if (needsGuidance) {
+    const filename = findConfigFile()?.filename ?? DEFAULT_CONFIG_FILENAME;
+    logger.info(t('ui.add.snippetGuide', { filename, snippet: renderUiSnippet(config) }));
+  }
+
   if (hasFailure) {
     logger.error(t('ui.add.someFailed'));
     process.exit(1);
@@ -148,8 +156,9 @@ async function writeComponent(
 
   // component.name は registry-index.json 由来で PascalCase が保持されている
   const componentDirName = component.name;
-  const componentDir = path.resolve(process.cwd(), config.componentsDir, componentDirName);
-  const helperDir = path.resolve(process.cwd(), config.helperDir);
+  const componentDir = path.resolve(process.cwd(), config.dir, componentDirName);
+  // helper の配置先は個別設定させず、常に UI ディレクトリ直下の _helper に固定する
+  const helperDir = path.resolve(process.cwd(), config.dir, '_helper');
 
   // コンポーネント単位の上書き判定
   let shouldWrite: boolean;

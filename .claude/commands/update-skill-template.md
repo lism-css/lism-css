@@ -1,6 +1,6 @@
 # Skill Template Update
 
-`skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` サブフォルダ配下のプリミティブ詳細ファイルを、最新ソースに合わせて更新してください。
+`skills/lism-css-guide/` 配下のルートファイル＋サブフォルダ（`primitives/` / `trait-class/` / `property-class/`）配下の詳細ファイルを、最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
@@ -14,7 +14,7 @@
 | `set-class.md` | `set--`クラス (`set--plain`,`set--revert`,`set--bxsh`,`set--hov`,`set--bdrsInner`) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
 | `primitive-class.md` | Primitive クラス (`is--`, `l--`, `a--`) と Component クラス (`c--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/primitives/`, `packages/lism-ui/src/`（c-- 系） |
 | `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
-| `property-class.md` | Property Class (`-{prop}:{value}`)の一覧、記法と出力の解説、特殊Prop（ボーダー・ホバー） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
+| `property-class.md` | Property Class (`-{prop}:{value}`) の記法と出力の解説、Prop早見リスト、分冊へのリンク一覧（全Prop表・特殊Propの詳細は `property-class/` 配下に分冊済み） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
 | `responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
 | `components-core.md` | コアコンポーネント — セマンティック・Lism Props・getLismProps。Atomic/Trait/Layout の対応表には `primitives/*.md` への詳細リンクを保持する（※個別 Props・仕様の詳細は `primitives/*.md` 側に移管済み） | `packages/lism-css/src/components/`, 各パッケージの exports |
 | `components-ui.md` | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | `packages/lism-ui/src/`, 各パッケージの exports |
@@ -23,7 +23,18 @@
 | `naming.md` | 命名規則 — CSS変数名・クラス名・Property Class の `{prop}` / `{value}` 省略ルール | `packages/lism-css/config/defaults/props.ts`, `apps/docs/src/content/ja/naming.mdx` |
 | `customize.md` | カスタマイズ — @layerオフ・SCSS変数上書き・lism.config.js・CLIビルド | `packages/lism-css/src/scss/`, `packages/lism-css/lism.config.js`, `apps/docs/src/content/ja/customize.mdx` |
 
-### `primitives/` サブフォルダ配下の Primitive 詳細ファイル
+### `property-class/` サブフォルダ配下の分冊ファイル
+
+`property-class.md` から分冊された詳細ファイル。本体と分冊の間で内容の重複・矛盾が生じないよう、セットで照合すること。
+
+| ファイル | 更新内容 | 主なソース参照先 |
+|----------|----------|-----------------|
+| `property-class/all-props.md` | 全 Prop 一覧の詳細表（プリセット値クラス・BP 対応） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss` |
+| `property-class/bd.md` | ボーダー（`bd` 系）の詳細 | `packages/lism-css/src/scss/props/_border.scss`, `apps/docs/src/content/ja/property-class/bd.mdx` |
+| `property-class/hov.md` | ホバー（`hov` 系）の詳細 | `packages/lism-css/src/scss/props/_hover.scss`, `apps/docs/src/content/ja/property-class/hov.mdx` |
+| `property-class/max-sz.md` | `-max-sz:full` / `-max-sz:bleed` 等の特殊クラスの詳細 | `packages/lism-css/src/scss/props/_size.scss`, `apps/docs/src/content/ja/property-class/max-sz.mdx` |
+
+### `primitives/` / `trait-class/` サブフォルダ配下の Primitive 詳細ファイル
 
 各 Primitive に 1 ファイル。クラス名は camelCase のまま（例: `l--withSide.md`, `l--tileGrid.md`, `is--boxLink.md`）、MDX 側は lowercase（`l--withside.mdx` 等）であることに注意。
 
@@ -150,7 +161,7 @@
 
 ### 1. 現在のテンプレートとバージョン情報の取得
 
-- `skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` 配下の全ファイルを読み取る
+- `skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` / `trait-class/` / `property-class/` 配下の全ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
 - `primitives/` 配下の存在チェック: `packages/lism-css/src/scss/primitives/{layout,trait,atomic}/` 配下の SCSS と `primitives/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「プリミティブ単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
 

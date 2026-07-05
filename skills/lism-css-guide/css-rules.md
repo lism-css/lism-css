@@ -3,7 +3,7 @@
 ## TOC
 
 - [CSS Layer 構造](#css-layer-構造)
-- [プレフィックスとクラス分類](#プレフィックスとクラス分類)
+- [クラス分類とプレフィックス](#クラス分類とプレフィックス)
 - [Component Class（`c--`）](#component-classc--)
 - [カスタムCSS を追加する場合](#カスタムcss-を追加する場合)
 - [独自プレフィックス](#独自プレフィックス)
@@ -34,7 +34,6 @@ Settings（トークン定義）
   → Property Class（レイヤー外 — 最も詳細度が高い）
 ```
 
-
 ## クラス分類とプレフィックス
 
 [詳細](https://lism-css.com/docs/naming.md)
@@ -42,7 +41,7 @@ Settings（トークン定義）
 Lism CSSで定義されるクラスは、その役割とレイヤーの所属が決まっており、その分類によってプレフィックスが定められています。
 
 | 分類 | 役割 | プレフィックス | 例 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Set Class | ベーススタイル上書き・変数提供 | `set--` | `set--plain`, `set--revert`, `set--hov`, `set--bxsh` |
 | Layout Primitive | レイアウトの構成単位となる Primitive | `l--` | `l--grid`, `l--flex`, `l--stack` |
 | Atomic Primitive | レイアウトの最小単位となる Primitive | `a--` | `a--icon`, `a--divider` |
@@ -53,20 +52,18 @@ Lism CSSで定義されるクラスは、その役割とレイヤーの所属が
 | Property Class | 単一プロパティの制御 | `-` | `-fz:l`, `-p:20`, `-d:none` |
 
 **併用ルール:**
+
 - `l--` と `c--` は併用OK（例: `<div class="l--flex c--nav">`）
 - 同カテゴリ内の Primitive 併用は不可（例: `l--flex` と `l--grid`、`a--icon` と `a--divider` は同要素に付けない）
 - `l--` × `a--` は非推奨（役割的に同居しない想定）
 - `is--` / `has--` 同士は併用OK（Trait は複数併用できる）
 - `is--` / `has--` × `l--` / `a--` も併用OK
-- `c--` の Block 同士の併用（`.c--xxx.c--yyy`）は基本 NG。ただし以下は許容:
-  - Block と自身の Modifier: `.c--button.c--button--outline`
-  - Block と他 Block の Element: `.c--xxx.c--yyy_elem`
-- 子要素: `c--card_header`, `c--card_body`（`c--` のみ Element を持つ。`_` 一つ区切り）
+- `c--` 同士の併用ルールとBEM構造は[Component Class（`c--`）](#component-classc--)を参照
 
 **`is--` と `has--` の判定軸:**
 
 |  | `is--` | `has--` |
-|---|---|---|
+| --- | --- | --- |
 | 意味 | 〜である（役割・存在の宣言） | 〜を持つ（機能の付与） |
 | CSS 変数 | 必須ではない | 必須（カスタマイズポイントを提供） |
 
@@ -78,7 +75,7 @@ class 属性にクラスを直接記述する場合は、以下の順序で並�
 ```
 
 | # | 区分 | 例 |
-|---|---|---|
+| --- | --- | --- |
 | 1 | 独自クラス（`customClass`） | `z--header`, `hoge` |
 | 2 | Component（`c--`） | `c--box`, `c--box--primary` |
 | 3 | Atomic Primitive（`a--`） | `a--icon`, `a--divider` |
@@ -99,7 +96,6 @@ class 属性にクラスを直接記述する場合は、以下の順序で並�
 
 なお、`class` 属性内の並び順は CSS の適用結果（詳細度・カスケード順）には影響しません。この順序はあくまで可読性と一貫性のための整理です。
 
-
 ## Component Class（`c--`）
 
 `c--` プレフィックスで定義する **Component クラス** は、Primitive を組み合わせて作られた具体的な UI 部品です。`@layer lism-component` に配置され、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
@@ -107,7 +103,7 @@ class 属性にクラスを直接記述する場合は、以下の順序で並�
 `c--` クラスは BEM 構造（Block / Modifier / Element）を持つことができ、それぞれ次の形式で定義します。
 
 | 分類 | 形式 | 例 |
-|---|---|---|
+| --- | --- | --- |
 | Block | `c--{name}` | `c--button`, `c--card` |
 | Modifier | `c--{name}--{modifier}` | `c--button--outline` |
 | Element | `c--{name}_{element}` | `c--card_header`, `c--card_body` |
@@ -121,33 +117,17 @@ class 属性にクラスを直接記述する場合は、以下の順序で並�
 
 `c--` を使った独自コンポーネントを使う場合でも、他の Primitive クラス（`l--`, `is--`）や Property Class（`-{prop}:{value}`）との組み合わせを前提とした設計にすることで CSS の記述量を削減できます。`c--` クラスにスタイルが全くなく、HTML 側での可視性を高める名前付けのためだけに利用しても構いません。
 
-
 ### 作成例
 
-`l--stack` と併用する前提でのカスタムクラス例:
-
-```css
-@layer lism-component {
-  .c--myCard {
-    gap: var(--s20);
-    padding: var(--s30);
-    border-radius: var(--bdrs--20);
-    box-shadow: var(--bxsh--20);
-    border: 1px solid currentColor;
-    /* ... */
-  }
-}
-```
+`c--*`は意味名として残し、レイアウトと単一プロパティ値はPrimitive/Property Classへ寄せます。CSSへ残すのは、擬似要素・子孫セレクタ・状態セレクタなど、Props/Property Classで表現できないものだけです。
 
 ```html
-<div class="c--myCard l--stack">
-  ...
-</div>
+<!-- HTMLで書く場合も、意味名 + Primitive + Property Class を優先 -->
+<div class="c--myCard l--stack -g:20 -p:30 -bdrs:20 -bxsh:20 -bd">...</div>
 ```
 
-素の HTML サイトではこのように `c--` クラスに CSS を書いてスタイリングしても問題ありませんが、React などでコンポーネントを作成できる場合は、特別な理由がない限り Property Class を活用してください。
-
 ```jsx
+// React/AstroコンポーネントではPropsを優先
 export default function MyCard(props) {
   return <Stack className="c--myCard" g="20" p="30" bdrs="20" bxsh="20" bd {...props} />;
 }
@@ -155,12 +135,13 @@ export default function MyCard(props) {
 
 ```css
 @layer lism-component {
-  .c--myCard {
-    /* 複雑なスタイルがあれば css で書く */
+  .c--myCard::before {
+    /* 擬似要素など、Props/Property Classで表せないものだけを書く */
   }
 }
 ```
 
+CSSが空になる場合は、CSSファイル側に`.c--myCard {}`を書かず、マークアップ上の意味名として`c--myCard`だけ残して構いません。
 
 ## カスタムCSS を追加する場合
 
@@ -169,53 +150,39 @@ export default function MyCard(props) {
 ```css
 /* カスタムコンポーネント → lism-component に追加 */
 @layer lism-component {
-  .c--my-card {
-    border: 1px solid var(--brand);
-    border-radius: var(--bdrs--20);
-    padding: var(--s30);
+  .c--myCard[data-is-active]::before {
+    border-color: var(--brand);
   }
 }
 
 /* ベーススタイルの拡張 → lism-base に追加 */
 @layer lism-base {
-  .set--my-theme {
+  .set--myTheme {
     --brand: #c00;
   }
 }
 ```
 
-カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。
+カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。ただし、`padding`/`border-radius`/`font-size`/`color`などProperty Class/Propsへ移せる宣言は、CSSに書く前にマークアップ側へ移します（NG→OK例は[antipatterns.md](./antipatterns.md#property-class-で書けるのに-css-で書く)を参照）。
 
-```css
-/* NG */
-.c--my-card { padding: 24px; border-radius: 8px; }
-
-/* OK */
-.c--my-card { padding: var(--s30); border-radius: var(--bdrs--20); }
-```
-
-ただし、明確にその数値に意図がある場合は、生のCSS値を使用しても構いません。
+明確にその数値に意図があり、トークン化・丸め・Property Class化ができない場合だけ、生のCSS値を例外として使用できます。その場合は実装プランに理由を残します。
 
 **レイヤー外に書く場合:**
 `@layer` の外（レイヤーなし）でカスタムCSSを書くのは、**Property Class（`-{prop}:{value}`）を拡張する場合のみ**としてください。それ以外のカスタムスタイルは必ずいずれかの `@layer` 内に記述します。
 
 ```css
-/* OK: Property Class の拡張はレイヤー外 */
+/* Property Class の拡張のみレイヤー外に書ける */
 .-myProp\:myValue { ... }
-
-/* NG: コンポーネントやユーティリティをレイヤー外に書かない */
-.c--my-card { ... }
 ```
 
-
-### 独自プレフィックス
+## 独自プレフィックス
 
 Lism CSS の既存プレフィックス（`set--` / `is--` / `has--` / `l--` / `a--` / `c--` / `u--` / `-`）のどれにも該当しないクラスは、独自プレフィックスを付けても、プレフィックスなしで命名しても構いません。
 
 代表的な例：
 
 | 分類 | 形式 | 例 |
-|---|---|---|
+| --- | --- | --- |
 | ゾーニング（サイトの大まかな領域） | `z--{zoneName}` または `{zoneName}` | `z--header`, `z--main`, `z--sidebar`, `z--footer` |
 | ページ分類 | `p--{type}-{id\|slug}` または `{slug}Page` | `p--front`, `p--page--{slug}` |
 
@@ -223,11 +190,27 @@ Lism CSS の既存プレフィックス（`set--` / `is--` / `has--` / `l--` / `
 
 ```css
 @layer lism-custom {
-  .z--header { /* ... */ }
-  .p--front { /* ... */ }
+  .z--header {
+    /* ... */
+  }
+  .p--front {
+    /* ... */
+  }
 }
 ```
 
+### `z--`/`p--`/`c--`の使い分け
+
+| 用途 | 推奨 | 理由 |
+| --- | --- | --- |
+| 再利用可能なUI部品 | `c--featureCard` | componentとして再利用され、Block/Element/Modifier構造を持てる |
+| サイトの大まかな領域 | `z--header`/`z--main`/`z--footer` | 再利用UIではなくゾーニングなので`c--`にしない |
+| ページ固有の領域 | `p--frontHero`/`p--postBody` | ページ依存の見た目をcomponent命名から分離する |
+| 外部JS・CMS・E2Eが参照するclass | 既存名を維持、または⏸ | 外部契約なのでrenameはユーザー確認が必要 |
+
+`c--header`や`c--sidebar`のような命名は、UI部品として再利用する意図がある場合だけ使います。サイト構造の領域名なら`z--header`、ページ限定なら`p--*`を優先してください。
+
+公開API、CMS出力、外部JS、E2Eセレクタ、ドキュメントで案内済みのclass名を変える場合は、内部参照を全更新できる場合でも⏸としてユーザー確認します。CSSだけrenameしてJS/テスト/HTML生成側を漏らさないでください。
 
 ## CSS の配置場所
 

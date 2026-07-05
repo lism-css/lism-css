@@ -5,32 +5,32 @@
 [![npm version](https://img.shields.io/npm/v/lism-css.svg)](https://www.npmjs.com/package/lism-css)
 [![License: MIT](https://img.shields.io/npm/l/lism-css.svg)](https://github.com/lism-css/lism-css/blob/main/LICENSE)
 
-## lism-css とは？
+## lism-cssとは？
 
-Lism CSS は、WEBサイトのレイアウトを素早く、かつ美しく構築するための軽量な **CSS設計フレームワーク**です。
+Lism CSSは、Webサイトのレイアウトを素早く、かつ美しく構築するための軽量な **CSS設計フレームワーク**です。
 
 [Every Layout](https://every-layout.dev/) のレイアウトプリミティブやハーモニックモジュラースケーリング、[Tailwind CSS](https://tailwindcss.com/) のCSSプロパティ単位でのユーティリティファーストなアプローチから着想を得て、独自のCSS設計を組み立てました。
 
-ビルドステップや設定は不要です。CDN 経由で CSS ファイルを読み込むか、npm からインポートするだけですぐに使い始められます。  
-React / Astro 向けのコンポーネントも提供しており、propsを通じてCSSクラスとカスタムプロパティに変換されるため、ランタイムでのスタイル生成なしにコンポーネントベースの開発が可能です。
+ビルドステップや設定は不要です。CDN経由でCSSファイルを読み込むか、npmからインポートするだけですぐに使い始められます。  
+React / Astro向けのコンポーネントも提供しており、propsを通じてCSSクラスとカスタムプロパティに変換されるため、ランタイムでのスタイル生成なしにコンポーネントベースの開発が可能です。
 
 ## 特徴
 
-- **軽量** - CSS バンドル全体で約 30 KB（gzip 圧縮時 約 8 KB）と、軽量です。
-- **ゼロビルドフレームワーク** — CSS ファイルを読み込むだけで、プレーン HTML でも動作します。ビルドツール、プリプロセッサ、設定は不要。CDN または npm で利用可能。
-- **レイアウト優先のプリミティブアーキテクチャ** — レイアウトプリミティブ（`l--flex`、`l--stack`、`l--grid`、`l--columns`、`l--center`、`l--withSide` など）で、カスタム CSS を書かずに一般的なレイアウトパターンを組み立てられます。
-- **CSS レイヤー構造** — `@layer`（lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-trait` は `is--` / `has--` の Trait クラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-component` は BEM 構造の `c--` コンポーネント用レイヤー、`lism-custom` はユーザー独自プレフィックスのクラス用レイヤーです。詳細度の衝突を最小限に抑えます。
-- **デザイントークン** — カラー、余白、フォントサイズ、シャドウ、ボーダー半径を CSS カスタムプロパティで管理。変数を上書きするだけで簡単にカスタマイズできます。
-- **柔軟なプロップクラス** — `-{prop}:{value}` の命名規則（例: `-p:20`、`-bgc:base-2`、`-fz:l`）で CSS プロパティをユーティリティクラスにマッピングし、素早く読みやすいスタイリングを実現します。
-- **レスポンシブシステム** — ブレークポイント固有のクラスと CSS 変数（例: `-p_sm`、`-p_md`）にデフォルトでコンテナクエリを採用し、親要素ベースのレスポンシブデザインを実現。メディアクエリへの切り替えも可能。
-- **React & Astro コンポーネント** — React と Astro の両方に対応した専用コンポーネントが、props を Lism CSS のクラスと変数に自動変換します。`class="l--stack -g:20"` の代わりに `<Stack g="20">` と書けます。
+- **軽量** - CSSバンドル全体で約30 KB（gzip圧縮時約8 KB）と、軽量です。
+- **ゼロビルドフレームワーク** — CSSファイルを読み込むだけで、プレーンHTMLでも動作します。ビルドツール、プリプロセッサ、設定は不要。CDNまたはnpmで利用可能。
+- **レイアウト優先のプリミティブアーキテクチャ** — レイアウトプリミティブ（`l--flex`、`l--stack`、`l--grid`、`l--columns`、`l--center`、`l--withSide` など）で、カスタムCSSを書かずに一般的なレイアウトパターンを組み立てられます。
+- **CSSレイヤー構造** — `@layer`（lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-component` はBEM構造の `c--` コンポーネント用レイヤー、`lism-custom` はユーザー独自プレフィックスのクラス用レイヤーです。詳細度の衝突を最小限に抑えます。
+- **デザイントークン** — カラー、余白、フォントサイズ、シャドウ、ボーダー半径をCSSカスタムプロパティで管理。変数を上書きするだけで簡単にカスタマイズできます。
+- **柔軟なProperty Class** — `-{prop}:{value}` の命名規則（例: `-p:20`、`-bgc:base-2`、`-fz:l`）でCSSプロパティをユーティリティクラスにマッピングし、素早く読みやすいスタイリングを実現します。
+- **レスポンシブシステム** — ブレークポイント固有のクラスとCSS変数（例: `-p_sm`、`-p_md`）にデフォルトでコンテナクエリを採用し、親要素ベースのレスポンシブデザインを実現。メディアクエリへの切り替えも可能。
+- **React & Astroコンポーネント** — ReactとAstroの両方に対応した専用コンポーネントが、propsをLism CSSのクラスと変数に自動変換します。`class="l--stack -g:20"` の代わりに `<Stack g="20">` と書けます。
 
 ## インストール
 
 ### CDN（ビルド不要）
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.24.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -47,15 +47,15 @@ pnpm add lism-css
 
 ## セットアップ
 
-グローバルスタイルとして CSS をインポートします:
+グローバルスタイルとしてCSSをインポートします:
 
 ```js
 import 'lism-css/main.css';
 ```
 
-**Next.js** の場合は、`layout.js`（App Router）または `_app.js`（Pages Router）で読み込みます。
+**Next.js**の場合は、`layout.js`（App Router）または `_app.js`（Pages Router）で読み込みます。
 
-**Astro** の場合は、`node_modules` から `.astro` コンポーネントをインポートできるよう、`astro.config.js` に以下を追加します:
+**Astro**の場合は、`node_modules` から `.astro` コンポーネントをインポートできるよう、`astro.config.js` に以下を追加します:
 
 ```js
 export default defineConfig({
@@ -107,7 +107,7 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 </Stack>
 ```
 
-### HTML（CSS のみ）
+### HTML（CSSのみ）
 
 ```html
 <div class="l--stack -g:20">
@@ -125,37 +125,38 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 
 ## コアコンポーネント
 
-Lism CSS は以下の React / Astro コンポーネントを提供します:
+Lism CSSは以下の React / Astroコンポーネントを提供します:
 
 **レイアウトコンポーネント:**
-Lism, Box, Flow, Flex, Cluster, Stack, Grid, AutoColumns, SwitchColumns, WithSide, Center, Columns, Frame
+Lism, Box, Flow, Flex, Cluster, Stack, Grid, AutoColumns, SwitchColumns, WithSide, Center, Columns, Frame, TileGrid
 
 **構造コンポーネント:**
 Container, Wrapper, Layer, BoxLink
 
 **コンテンツコンポーネント:**
-Text, Heading, Inline, Link, Group, List
+Text, Heading, Inline, Link, Group, List, Media
 
 **アトミックコンポーネント:**
-Icon, Media, Decorator, Divider, Spacer
+Icon, Decorator, Divider, Spacer
 
-すべてのコンポーネントは Lism props（例: `p`、`m`、`g`、`fz`、`bgc`、`bdrs`）を受け取り、CSS クラスと変数に自動的にマッピングされます。
+すべてのコンポーネントはLism props（例: `p`、`m`、`g`、`fz`、`bgc`、`bdrs`）を受け取り、CSSクラスと変数に自動的にマッピングされます。
 
-## CSS クラスシステム
+## CSSクラスシステム
 
-Lism CSS は構造化された命名規則を CSS クラスに使用しています:
+Lism CSSは構造化された命名規則をCSSクラスに使用しています:
 
 | タイプ | パターン | 例 |
 |--------|---------|-----|
 | レイアウトプリミティブ | `l--{name}` | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
-| トレイトプリミティブ | `is--{name}` | `is--wrapper`, `is--container`, `is--layer` |
-| プロップクラス | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
+| Trait Class（役割） | `is--{name}` | `is--wrapper`, `is--container`, `is--layer`, `is--boxLink` |
+| Trait Class（機能） | `has--{name}` | `has--transition`, `has--gutter`, `has--snap` |
+| Property Class | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | ブレークポイント | `-{prop}_{bp}` | `-p_sm`, `-g_md`, `-fz_lg` |
 | ユーティリティクラス | `u--{name}` | `u--cbox` |
 
 ## レスポンシブシステム
 
-レスポンシブ値は、ブレークポイント固有のクラスと CSS 変数を使って設定します:
+レスポンシブ値は、ブレークポイント固有のクラスとCSS変数を使って設定します:
 
 **HTML:**
 
@@ -177,36 +178,36 @@ Lism CSS は構造化された命名規則を CSS クラスに使用していま
 
 ## デザイントークン
 
-Lism CSS は一貫したデザインのための CSS カスタムプロパティを提供します:
+Lism CSSは一貫したデザインのためのCSSカスタムプロパティを提供します:
 
-- **カラー:** `--base`、`--base-2`、`--text`、`--text-2`、`--link`、`--divider`、`--brand`、`--accent`、パレットカラー（`--red`、`--blue`、`--green` など）
-- **余白:** `--s5`, `--s10`, `--s15`, `--s20`, `--s25`, `--s30`, `--s35`, `--s40` … `--s80`（rem 値にマッピング）
+- **カラー:** `--base`、`--base-2`、`--text`、`--text-2`、`--link`、`--divider`、`--brand`、`--accent`、`--neutral`、パレットカラー（`--red`、`--blue`、`--green` など）
+- **余白:** `--s5`, `--s10`, `--s15`, `--s20`, `--s25`, `--s30`, `--s35`, `--s40` … `--s80`（rem値にマッピング）
 - **フォントサイズ:** `--fz--2xs` 〜 `--fz--5xl`
 - **ボーダー半径:** `--bdrs--10`（0.25rem）〜 `--bdrs--99`（99rem）
 - **シャドウ:** `--bxsh--10` 〜 `--bxsh--50`（シャドウカラー設定可能）
 - **コンテナサイズ:** `--sz--xs`（400px）、`--sz--s`（640px）、`--sz--m`（880px）、`--sz--l`（1200px）、`--sz--xl`（1600px）
 
-## UI コンポーネント
+## UIコンポーネント
 
-インタラクティブな UI コンポーネント（Accordion、Modal、Tabs、Alert、Avatar、Badge、Button など）については、別パッケージの [@lism-css/ui](https://www.npmjs.com/package/@lism-css/ui) を参照してください。
+インタラクティブなUIコンポーネント（Accordion、Modal、Tabs、Alert、Avatar、Badge、Buttonなど）については、別パッケージの [@lism-css/ui](https://www.npmjs.com/package/@lism-css/ui) を参照してください。
 
 ```bash
 npm i @lism-css/ui
 ```
 
-## AI ツール連携
+## AIツール連携
 
 ### llms.txt
 
-AI アシスタントや LLM ベースのツール向けに、機械可読なドキュメントインデックスを提供しています:
+AIアシスタントやLLMベースのツール向けに、機械可読なドキュメントインデックスを提供しています:
 
 ```
 https://lism-css.com/llms.txt
 ```
 
-### MCP サーバー
+### MCPサーバー
 
-AI コーディングツール向けの MCP（Model Context Protocol）サーバーが利用可能です:
+AIコーディングツール向けのMCP（Model Context Protocol）サーバーが利用可能です:
 
 **Claude Code:**
 
@@ -249,7 +250,7 @@ claude mcp add lism-css -- npx -y @lism-css/mcp
 
 ## コミュニティ
 
-フィードバックや質問は、[Lism CSS Discord サーバー](https://discord.gg/6PMcFHvc4h)までお気軽にどうぞ。
+フィードバックや質問は、[Lism CSS Discordサーバー](https://discord.gg/6PMcFHvc4h)までお気軽にどうぞ。
 
 ## クレジット
 

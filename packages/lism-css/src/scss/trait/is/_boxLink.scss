@@ -11,7 +11,8 @@
 }
 
 // リンクをクリック可能にするためにz-indexあげる
-.is--boxLink a {
+// :where() で詳細度を 0 にし、no_layer ビルドでもユーティリティ等で上書きしやすくする。
+.is--boxLink :where(a:not(.is--coverLink)) {
   position: relative;
   z-index: 2; // .is--coverLink::before + 1
 }

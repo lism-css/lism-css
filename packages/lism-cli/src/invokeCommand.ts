@@ -17,13 +17,13 @@ export function getInvokeCommand(): string {
 
   const inLocalDependency =
     isInProjectNodeModules(normalizedScriptPath) &&
-    (/\/node_modules\/\.bin\/lism(?:\.(?:cmd|ps1))?$/.test(normalizedScriptPath) ||
-      /\/node_modules\/lism-cli\/bin\/lism\.mjs$/.test(normalizedScriptPath));
+    (/\/node_modules\/\.bin\/lism-cli(?:\.(?:cmd|ps1))?$/.test(normalizedScriptPath) ||
+      /\/node_modules\/lism-cli\/bin\/lism-cli\.mjs$/.test(normalizedScriptPath));
 
   if (inDlxCache) return getDlxInvokeCommand(userAgent);
   if (inLocalDependency) return getLocalInvokeCommand(userAgent);
 
-  return 'lism';
+  return 'lism-cli';
 }
 
 function getDlxInvokeCommand(userAgent: string): string {
@@ -34,9 +34,9 @@ function getDlxInvokeCommand(userAgent: string): string {
 }
 
 function getLocalInvokeCommand(userAgent: string): string {
-  if (userAgent.startsWith('pnpm/')) return 'pnpm exec lism';
-  if (userAgent.startsWith('yarn/')) return 'yarn lism';
-  if (userAgent.startsWith('bun/')) return 'bun run lism';
+  if (userAgent.startsWith('pnpm/')) return 'pnpm exec lism-cli';
+  if (userAgent.startsWith('yarn/')) return 'yarn lism-cli';
+  if (userAgent.startsWith('bun/')) return 'bun run lism-cli';
   return 'npx lism-cli';
 }
 

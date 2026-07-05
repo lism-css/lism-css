@@ -2,34 +2,14 @@
 
 複数の要素を横方向に並べ、数が多ければ自動的に折り返すクラス。タグリスト・ボタングループなどに使います。
 
-## 基本情報
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--cluster.md
 
-- クラス名: `l--cluster`
-- コンポーネント: `<Cluster>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_cluster.scss
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--cluster.md
+## 既定の挙動
 
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Cluster g="15">
-  <Lism bd px="10" bdrs="10">Lorem</Lism>
-  <Lism bd px="10" bdrs="10">ipsum</Lism>
-  <Lism bd px="10" bdrs="10">Dolor</Lism>
-  <Lism bd px="10" bdrs="10">Sit amet</Lism>
-</Cluster>
-```
-
-```html
-<div class="l--cluster -g:15">
-  <span class="-bd -px:10 -bdrs:10">Lorem</span>
-  <span class="-bd -px:10 -bdrs:10">ipsum</span>
-  <span class="-bd -px:10 -bdrs:10">Dolor</span>
-  <span class="-bd -px:10 -bdrs:10">Sit amet</span>
-</div>
-```
+- `display:flex`。
+- `flex-wrap:wrap`で折り返しを有効化済み。
+- `align-items:center`でstretchを解除済み。
+- `gap`は既定で持たないため、間隔は`g`/`-g:*`で指定します。通常`fxw="wrap"`や`ai="center"`は足しません。
 
 ## 関連プリミティブ
 

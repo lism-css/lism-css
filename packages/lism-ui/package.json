@@ -29,7 +29,13 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "!**/*.test.ts",
+    "!**/*.test.tsx",
+    "!**/*.test.d.ts",
+    "!**/*.stories.ts",
+    "!**/*.stories.tsx",
+    "!**/*.stories.d.ts"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -154,11 +160,13 @@
     "@lism-css/plugin": "workspace:*",
     "@rollup/plugin-babel": "^6.1.0",
     "@storybook/react-vite": "^10.3.3",
+    "@testing-library/jest-dom": "^6.9.1",
     "@types/node": "^25.5.0",
     "@vitejs/plugin-react-swc": "^3.11.0",
     "astro": "^6.1.9",
     "eslint": "^9.39.4",
     "glob": "^13.0.6",
+    "jsdom": "^27.4.0",
     "rollup": "^4.59.0",
     "rollup-plugin-preserve-directives": "^0.4.0",
     "storybook": "^10.3.3",
@@ -167,7 +175,8 @@
     "typescript": "^5.8.3",
     "unplugin-dts": "1.0.0-beta.6",
     "vite": "^7.3.1",
-    "vite-plugin-lib-inject-css": "^2.2.2"
+    "vite-plugin-lib-inject-css": "^2.2.2",
+    "vitest": "^4.1.0"
   },
   "peerDependencies": {
     "@types/react": "*",

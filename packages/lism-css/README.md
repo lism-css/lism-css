@@ -29,7 +29,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 ### CDN (no build required)
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.24.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -127,16 +127,16 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 Lism CSS provides the following React and Astro components:
 
 **Layout Components:**
-Lism, Box, Flow, Flex, Cluster, Stack, Grid, AutoColumns, SwitchColumns, WithSide, Center, Columns, Frame
+Lism, Box, Flow, Flex, Cluster, Stack, Grid, AutoColumns, SwitchColumns, WithSide, Center, Columns, Frame, TileGrid
 
 **Structure Components:**
 Container, Wrapper, Layer, BoxLink
 
 **Content Components:**
-Text, Heading, Inline, Link, Group, List
+Text, Heading, Inline, Link, Group, List, Media
 
 **Atomic Components:**
-Icon, Media, Decorator, Divider, Spacer
+Icon, Decorator, Divider, Spacer
 
 All components accept Lism props (e.g., `p`, `m`, `g`, `fz`, `bgc`, `bdrs`) that automatically map to CSS classes and variables.
 
@@ -179,7 +179,7 @@ Default breakpoints: `sm` = 480px, `md` = 800px, `lg` = 1120px (container querie
 
 Lism CSS provides CSS custom properties for consistent design:
 
-- **Colors:** `--base`, `--base-2`, `--text`, `--text-2`, `--link`, `--divider`, `--brand`, `--accent`, plus palette colors (`--red`, `--blue`, `--green`, etc.)
+- **Colors:** `--base`, `--base-2`, `--text`, `--text-2`, `--link`, `--divider`, `--brand`, `--accent`, `--neutral`, plus palette colors (`--red`, `--blue`, `--green`, etc.)
 - **Spacing:** `--s5`, `--s10`, `--s15`, `--s20`, `--s25`, `--s30`, `--s35`, `--s40` … `--s80` (mapped to rem values)
 - **Font Sizes:** `--fz--2xs` through `--fz--5xl`
 - **Border Radius:** `--bdrs--10` (0.25rem) through `--bdrs--99` (99rem)
