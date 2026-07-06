@@ -67,7 +67,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 |`type`|`keycolor`と`icon`の組み合わせを呼び出すキーワードを指定できます。初期値:`"alert"`|
 |`icon`| [`Icon`](/docs/primitives/a--icon/)コンポーネントに渡すアイコンを指定できます。|
 |`keycolor`| キーカラーを指定します。|
-|`flow`|コンテンツを囲む`Flow`要素の`flow`プロパティに渡されます|
+|`flow`|コンテンツを囲む`Flow`要素の`flow`プロパティに渡されます。初期値:`"s"`|
 |`layout`|レイアウトプリミティブを切り替えます。初期値:`"flex"`|
 {/* | `iconProps` | アイコン（`<Icon>`）に渡すpropsを指定できます。| */}
 {/* - `variant`: `'fill'` | `'outline'` ? */}
@@ -133,8 +133,11 @@ import { Button } from '@lism-css/ui/astro/Button';
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Alert type="check" layout="withSide">
-      <p>画面が狭くなるとアイコン・テキスト・ボタンが縦並びになります。</p>
+    <Alert type="info" fxd={["column","row"]}>
+      <Flex ai="center" jc="between" fxd={["column","row"]} g="15">
+        <p>画面が狭くなるとアイコン・テキスト・ボタンが縦並びになります。</p>
+        <Button href="#" bdrs="10" fxsh="0" fz="s" bgc="link">Button</Button>
+      </Flex>
     </Alert>
     ```
   </PreviewCode>

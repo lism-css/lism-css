@@ -31,7 +31,7 @@ Examples of decorative boxes built with Lism.
       </Box>
       <Decorator size="1.25em" bd-l bdc="current" mr="auto" style={{ rotate: '-45deg', transformOrigin: 'left top' }} />
     </Grid>
-    <Grid as={Grid}>
+    <Grid>
       <Decorator size="1.25em" bd-r bdc="current" ml="auto" style={{ rotate: '-45deg', transformOrigin: 'right bottom' }} />
       <Box p="20" ml="auto">
         <DummyText length="xs" />
@@ -39,7 +39,7 @@ Examples of decorative boxes built with Lism.
       <Decorator size="1.25em" bd-r bdc="current" ml="auto" style={{ rotate: '45deg', transformOrigin: 'right top' }} />
     </Grid>
     <Spacer h="10" />
-    <Flex variant="ltr" jc="center" ta="center">
+    <Flex className="l--flex--ltr" jc="center" ta="center">
       <Decorator fxsh="0" size="1.25em" bd-t bdc="current" style={{ rotate: '-45deg', transformOrigin: 'right top' }} />
 
       <Box px="15" py="5">
@@ -48,7 +48,7 @@ Examples of decorative boxes built with Lism.
       <Decorator fxsh="0" size="1.25em" bd-t bdc="current" style={{ rotate: '45deg', transformOrigin: 'left top' }} />
     </Flex>
     <Spacer h="10" />
-    <Flex variant="ltr" jc="center" ai="flex-end" ta="center">
+    <Flex className="l--flex--ltr" jc="center" ai="flex-end" ta="center">
       <Decorator fxsh="0" size="1.25em" bd-b bdc="current" style={{ rotate: '45deg', transformOrigin: 'right bottom' }} />
       <Box px="15" py="5" fxg="">
         <DummyText length="s" />
@@ -77,7 +77,7 @@ Examples of decorative boxes built with Lism.
         style={{'rotate':'-45deg','transformOrigin':'left top'}}
       />
     </Grid>
-    <Grid as={Grid}>
+    <Grid>
       <Decorator
         size="1.25em"
         bd-r
@@ -97,7 +97,7 @@ Examples of decorative boxes built with Lism.
       />
     </Grid>
     <Spacer h="10" />
-    <Flex variant="ltr" jc="center" ta="center">
+    <Flex className="l--flex--ltr" jc="center" ta="center">
       <Decorator
         fxsh="0"
         size="1.25em"
@@ -118,7 +118,7 @@ Examples of decorative boxes built with Lism.
     </Flex>
     <Spacer h="10" />
     <Flex
-      variant="ltr"
+      className="l--flex--ltr"
       jc="center"
        ai="flex-end"
       ta="center"
@@ -213,10 +213,9 @@ Examples of decorative boxes built with Lism.
         w="50%"
         max-w="12em"
         h="1rem"
-        ml="auto"
-        mt="auto"
+        pslf="end"
         z="-1"
-        bgc="hsl(var(--sh-hsl) / 0.25)"
+        bgc="rgb(0 0 0 / 0.2)"
         style={{ filter: 'blur(4px)', rotate: '4deg', transformOrigin: 'left bottom', translate: '-4px -4px' }}
       />
     </Grid>
