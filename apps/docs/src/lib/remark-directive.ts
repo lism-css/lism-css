@@ -126,7 +126,7 @@ export function remarkDirectiveHandler() {
                 children: child.children,
               } as unknown as RootContent;
             }
-            return child as RootContent;
+            return child;
           });
 
           // MDXJsxFlowElementに変換（AST ノードを直接書き換え）
@@ -157,7 +157,7 @@ function extractText(nodes: RootContent[]): string {
         return node.value;
       }
       if ('children' in node) {
-        return extractText(node.children as RootContent[]);
+        return extractText(node.children);
       }
       return '';
     })

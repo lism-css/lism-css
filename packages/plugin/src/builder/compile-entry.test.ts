@@ -6,13 +6,12 @@ import { objDeepMerge } from 'lism-css/config/helper';
 import { computeBuildConfigs } from './load-config';
 import { createCssCompiler, listCssEntries, type CssCompiler } from './compile-entry';
 import { scssDir } from './paths';
-import type { BuildConfig } from './serialize';
 
 const objMerge = objDeepMerge as (a: Record<string, unknown>, b: Record<string, unknown>) => Record<string, unknown>;
 
 function configs(userConfig: Record<string, unknown>) {
   return computeBuildConfigs({
-    defaultConfig: defaultConfig as unknown as BuildConfig,
+    defaultConfig,
     propsFull,
     userConfig,
     objDeepMerge: objMerge,

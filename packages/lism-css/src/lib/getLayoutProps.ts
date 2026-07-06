@@ -56,7 +56,7 @@ export default function getLayoutProps<P extends InputProps>(layout: LayoutType 
 }
 
 function getWithSideProps({ sideW, mainW, style, ...props }: InputProps): BaseProps {
-  const newStyle: StyleWithCustomProps = { ...style } as StyleWithCustomProps;
+  const newStyle: StyleWithCustomProps = { ...style };
   if (null != sideW) newStyle['--sideW'] = getMaybeCssVar(sideW, 'sz');
   if (null != mainW) newStyle['--mainW'] = getMaybeCssVar(mainW, 'sz');
 
@@ -64,7 +64,7 @@ function getWithSideProps({ sideW, mainW, style, ...props }: InputProps): BasePr
 }
 
 function getAutoColumnsProps({ autoFit, style, ...props }: InputProps): BaseProps {
-  if (autoFit) return { ...props, style: { ...style, '--autoMode': 'auto-fit' } as StyleWithCustomProps };
+  if (autoFit) return { ...props, style: { ...style, '--autoMode': 'auto-fit' } };
   return { ...props, style };
 }
 
@@ -79,13 +79,13 @@ function getFlowProps({ flow, style, primitiveClass, ...props }: InputProps): Ba
     return {
       ...props,
       primitiveClass: pushPrimitive(primitiveClass, `-flow:`),
-      style: { ...style, '--flow': getMaybeCssVar(flow, 'space') } as StyleWithCustomProps,
+      style: { ...style, '--flow': getMaybeCssVar(flow, 'space') },
     };
   }
   return { ...props, primitiveClass, style };
 }
 
 function getSwitchColumnsProps({ breakSize, style, ...props }: InputProps): BaseProps {
-  if (breakSize) return { ...props, style: { ...style, '--breakSize': getMaybeCssVar(breakSize, 'sz') } as StyleWithCustomProps };
+  if (breakSize) return { ...props, style: { ...style, '--breakSize': getMaybeCssVar(breakSize, 'sz') } };
   return { ...props, style };
 }

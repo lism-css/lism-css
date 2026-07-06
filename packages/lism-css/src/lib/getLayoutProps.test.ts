@@ -239,7 +239,7 @@ describe('getLayoutProps', () => {
     });
 
     test('その他のpropsはそのまま維持される', () => {
-      const result = getLayoutProps('tileGrid', { style: { color: 'red' } } as Parameters<typeof getLayoutProps>[1]);
+      const result = getLayoutProps('tileGrid', { style: { color: 'red' } });
       expect(result.style?.color).toBe('red');
     });
   });

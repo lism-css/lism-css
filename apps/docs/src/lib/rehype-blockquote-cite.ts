@@ -154,7 +154,7 @@ export function rehypeBlockquoteCite() {
               tagName: 'a',
               properties: { href: citeInfo.url },
               children: [{ type: 'text', value: citeInfo.text }],
-            } as Element,
+            },
           ]
         : [{ type: 'text', value: citeInfo.text }];
 
@@ -169,14 +169,14 @@ export function rehypeBlockquoteCite() {
             tagName: 'blockquote',
             properties: citeInfo.url ? { cite: citeInfo.url } : {},
             children: blockquoteChildren,
-          } as Element,
+          },
           { type: 'text', value: '\n' },
           {
             type: 'element',
             tagName: 'figcaption',
             properties: {},
             children: figcaptionChildren,
-          } as Element,
+          },
         ],
       };
 
