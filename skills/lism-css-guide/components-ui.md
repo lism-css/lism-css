@@ -186,6 +186,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | Prop | 対象 | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- | --- |
 | `as` | Title | `string` | `'span'` | Title の HTML タグ |
+| `open` | Root | `boolean` | — | 初期展開状態（`details` 要素の `open` 属性） |
 | `--duration` | Root | `string` | — | 展開アニメーションの秒数（style 経由で指定） |
 
 ```jsx
@@ -267,6 +268,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `tabId` | Root | `string` | — | タブを特定するための ID 文字列 |
 | `defaultIndex` | Root | `number` | `1` | 初期アクティブタブ（1始まり） |
 | `listProps` | Root | `object` | — | タブボタンリスト要素へ渡す props |
+| `variant` | Root | `string` | — | バリエーション。`c--tabs--{variant}` クラスが出力 |
 
 ```jsx
 <Tabs.Root>

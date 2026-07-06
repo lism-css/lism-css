@@ -171,7 +171,7 @@ hover効果は`-hov:*`、`hov={{}}`、`set--hov`、`has--transition`を優先す
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `.c--button:hover { box-shadow: var(--bxsh--20); }` | `<Button hov="-bxsh:20" hasTransition>` | hover用Property Classを使う |
+| `.c--button:hover { box-shadow: var(--bxsh--20); }` | `<Button hov={{ bxsh: '20' }} hasTransition>` | hover用Property Classを使う |
 | `.c--card:hover { background: var(--base-2); }` | `<Box hov={{ bgc: 'base-2' }} hasTransition>` | hover時の値はPropsで宣言できる |
 | `.c--link:hover { --keycolor: var(--brand); }` | `set--hov`や`hov={{ ... }}`を検討 | hover変数の仕組みに寄せる |
 

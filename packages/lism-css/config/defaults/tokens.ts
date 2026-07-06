@@ -115,7 +115,7 @@ export default {
   },
 
   // flow: lang スコープ上書きありのため手書き SCSS。
-  flow: { s: '-', l: '-' },
+  flow: { s: '-' },
 
   // content-size
   sz: { xs: '400px', s: '640px', m: '880px', l: '1200px', xl: '1600px' },
