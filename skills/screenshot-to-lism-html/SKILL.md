@@ -32,11 +32,12 @@ VLM（視覚言語モデル）は、LP 全体の画像から「よくある LP �
 
 ## 事前準備
 
+以下のコマンド例にある `<skill-dir>` は、本スキルのディレクトリ（この SKILL.md が置かれている場所）を指します。インストール環境によってパスが異なるため（例: `.claude/skills/screenshot-to-lism-html`、`.cursor/skills/screenshot-to-lism-html`）、実行時に読み替えてください。
+
 初回実行時は、スクリプトの依存関係をインストールしてください。
 
 ```bash
-cd .cursor/skills/screenshot-to-lism-html/scripts
-npm install
+npm install --prefix <skill-dir>/scripts
 ```
 
 ## ワークフロー
@@ -46,10 +47,9 @@ npm install
 ### Phase 0: 画像のセクション分割
 
 1. ユーザーが提供した画像（例: `input.jpg`）をセクションごとに分割します。
-2. Shell ツールで以下を実行：
+2. Shell ツールでプロジェクトルートから以下を実行（入力・出力パスはカレントディレクトリ基準で解決されます）：
    ```bash
-   cd .cursor/skills/screenshot-to-lism-html/scripts
-   npm run split -- ../../../../<入力画像パス> ../../../../<出力先ディレクトリ>/sections
+   node <skill-dir>/scripts/split_image.js <入力画像パス> <出力先ディレクトリ>/sections
    ```
    *※ 自動分割がうまくいかない場合は、VLM 自身が Y 座標を推測して手動で切るか、ユーザーに相談してください。*
 
@@ -83,10 +83,9 @@ npm install
 ### Phase 4: Visual Critique（自己検証）
 
 1. `visual-critique-loop.md` を読み込みます。
-2. プレビュースクリプトで生成 HTML のスクリーンショットを撮ります：
+2. プレビュースクリプトで生成 HTML のスクリーンショットを撮ります（プロジェクトルートから実行）：
    ```bash
-   cd .cursor/skills/screenshot-to-lism-html/scripts
-   npm run capture -- ../../../../<出力先ディレクトリ>/index.html ../../../../<出力先ディレクトリ>/preview.png
+   node <skill-dir>/scripts/capture_preview.js <出力先ディレクトリ>/index.html <出力先ディレクトリ>/preview.png
    ```
 3. `preview.png` と元の画像を並べて「間違い探し」を行い、CSS（および必要に応じて HTML）を修正します。
 4. 修正 → 撮影のループを **最大 3 回**繰り返し、視覚的に一致したら完了します。

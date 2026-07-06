@@ -6,11 +6,11 @@
 ## 前提作業 (スクリプトの実行)
 
 LLM（あなた）は、Terminalツールを使用して以下のコマンドを実行し、プレビュー画像を生成します。
+`<skill-dir>` は本スキルのディレクトリです（SKILL.md の「事前準備」を参照）。プロジェクトルートから実行し、パスはカレントディレクトリ基準で指定します。
 （HTMLのファイルパスが `output/index.html` の場合）
 
 ```bash
-cd .cursor/skills/screenshot-to-lism-html/scripts
-npm run capture -- ../../../../output/index.html ../../../../output/preview.png
+node <skill-dir>/scripts/capture_preview.js output/index.html output/preview.png
 ```
 
 ## プロンプト指示: 間違い探しと修正 (Visual Critique)
