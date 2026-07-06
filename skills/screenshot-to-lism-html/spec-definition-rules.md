@@ -12,7 +12,7 @@ LLM（VLM）がセクション画像を読み取り、Lism CSS で実装する**
 - **カラーパレット（Color Palette）**
   - `primary`, `secondary`, `text`, `background`, `border`, `accent` などの役割ごとに HEX / RGB を推測。
   - 記述例: `primary: #3498db（推測）`。
-  - Phase 3 の実装時に、Lism の `--base-*` / `--accent-*` / `--keycolor` 等のカラートークン（`lism-css-guide/tokens.md`）へマッピング／上書きを検討します。
+  - Phase 3 の実装時に、Lism の `--base` / `--base-2` / `--text` / `--accent` / `--keycolor` などのカラートークン（実在するトークン名は `lism-css-guide/tokens.md` のセマンティックカラー表を参照。`--base-3` や `--accent-2` のような連番トークンは存在しない）へマッピング／上書きを検討します。
 - **タイポグラフィ（Typography）**
   - 見出し（Heading）と本文（Body）のフォントファミリー分類（sans-serif / serif / monospace / 日本語明朝 / 日本語ゴシック 等）。
   - 見出しレベルごとの `font-size` の推測値（px）と、行間（`line-height`）。

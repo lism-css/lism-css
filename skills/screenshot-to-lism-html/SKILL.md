@@ -103,11 +103,11 @@ npm install --prefix <skill-dir>/scripts
 
 Phase 2 以降で必ず参照：
 
-- [lism-css-guide/SKILL.md](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide/SKILL.md) — 実装ルール全体
-- [lism-css-guide/primitive-class.md](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide/primitive-class.md) — プリミティブの一覧と使い分け
-- [lism-css-guide/tokens.md](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide/tokens.md) — デザイントークン
-- [lism-css-guide/property-class.md](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide/property-class.md) — Property Class
-- [lism-css-guide/antipatterns.md](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide/antipatterns.md) — 典型的な NG パターン
-- [lism-css-guide/responsive.md](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide/responsive.md) — レスポンシブ・ブレークポイント
+- [lism-css-guide/SKILL.md](https://github.com/lism-css/lism-css/blob/main/skills/lism-css-guide/SKILL.md) — 実装ルール全体
+- [lism-css-guide/primitive-class.md](https://github.com/lism-css/lism-css/blob/main/skills/lism-css-guide/primitive-class.md) — プリミティブの一覧と使い分け
+- [lism-css-guide/tokens.md](https://github.com/lism-css/lism-css/blob/main/skills/lism-css-guide/tokens.md) — デザイントークン
+- [lism-css-guide/property-class.md](https://github.com/lism-css/lism-css/blob/main/skills/lism-css-guide/property-class.md) — Property Class
+- [lism-css-guide/antipatterns.md](https://github.com/lism-css/lism-css/blob/main/skills/lism-css-guide/antipatterns.md) — 典型的な NG パターン
+- [lism-css-guide/responsive.md](https://github.com/lism-css/lism-css/blob/main/skills/lism-css-guide/responsive.md) — レスポンシブ・ブレークポイント
 
 プロジェクトによりローカルにインストール済みの場合はそちらを参照してください。

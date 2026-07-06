@@ -33,7 +33,7 @@
 | 画像パターン | 対応 | 補足 |
 |-------------|------|------|
 | **button**（クリッカブルなアクション） | `@lism-css/ui` の `Button` または `is--boxLink` / `<BoxLink>` | ホバー変化を必ず定義（`-hov:*` 系。詳細 `lism-css-guide/property-class/hov.md`） |
-| **card**（境界／影／背景で囲まれた情報の塊） | `l--box` / `<Box>` を土台に、内部を `l--stack` などで組む | リンク全体クリック可なら `is--boxLink`。ホバー影・浮き上げは `-hov:*` |
+| **card**（境界／影／背景で囲まれた情報の塊） | `l--box` / `<Box>` を土台に、内部を `l--stack` などで組む | リンク全体クリック可なら `is--boxLink`。ホバーの影変化は `-hov:-bxsh`。浮き上げ（`translateY`）は `-hov:*` にプリセットがないためカスタム CSS で対応（`lism-css-guide/property-class/hov.md`） |
 | **tag / badge**（小さなラベル） | `@lism-css/ui` の `Badge` またはカスタム `c--tag`（Property Class で書く） | `c--*` の CSS に残す宣言は `lism-css-guide/antipatterns.md`「Property Class で書けるのに CSS で書く」と `lism-css-guide/SKILL.md` の C7「CSSに書くもの/Propsに移すもの」に従う |
 | **accordion / modal / tabs / callout** | `@lism-css/ui` の同名コンポーネント | `lism-css-guide/components-ui.md` を参照 |
 | **icon / divider / spacer / decorator** | `<Icon>` / `<Divider>` / `<Spacer>` / `<Decorator>`（`a--*`） | 装飾要素はまずこれで置き換えられないかを検討 |
