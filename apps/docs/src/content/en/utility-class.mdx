@@ -55,10 +55,9 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Lism util="cbox" keycolor="blue" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
-    <Lism util="cbox" keycolor="red" bd p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
-    <Lism util="cbox" keycolor="purple" bd bdc="keycolor:base:25%" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
-    <Lism util="cbox" keycolor="#688f04" bd-s bdw="4px" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="red" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="bxsh" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-s bdw="4px" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
     ```
   </PreviewCode>
 </Preview>
@@ -91,21 +90,27 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="u--cbox -p:20" style="--keycolor: var(--blue)">...</div>
-    <div class="u--cbox -bd -p:20" style="--keycolor: var(--red)">...</div>
-    <div class="u--cbox -bd -p:20" style="--keycolor: var(--purple); --bdc: color-mix(in srgb, var(--keycolor) 25%, var(--base))">...</div>
-    <div class="u--cbox -bd-s -p:20" style="--keycolor: #688f04; --bdw: 4px">...</div>
+    <div class="l--cluster -g:10">
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--red)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--green)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--blue)">Badge</span>
+    </div>
+    <div class="l--cluster -g:10" style="--cbox-cPct: 76%; --cbox-bdPct: 20%">
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--red)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--green)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--blue)">Badge</span>
+    </div>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Lism layout="cluster" g="10">
-      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
       <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
       <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>
     <Lism layout="cluster" g="10" style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
-      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
       <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
       <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>

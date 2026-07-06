@@ -4,7 +4,6 @@ description: 'Documentation for the Details component provided by @lism-css/ui.'
 ---
 
 import { Divider, Stack, Center, Flex, Icon } from 'lism-css/astro';
-import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Details } from '@lism-css/ui/astro/Details';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 
@@ -42,7 +41,7 @@ Unlike [`Accordion`](/en/docs/ui/Accordion/), this component is implemented with
     ```html
     <details class="c--details -bd">
       <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:-bgc">
-        <span class="c--details_title -fx:1">Details Title</span>
+        <span class="c--details_title set--plain -fx:1">Details Title</span>
         <span class="c--details_icon a--icon" aria-hidden="true"></span>
       </summary>
       <div class="c--details_body">
@@ -180,8 +179,8 @@ For local adjustments, override the `--duration` variable. For global adjustment
   <PreviewArea p="20">
     <Details.Root bd style={{ '--duration': '.4s' }}>
       <Details.Summary p="20" bgc="base-2" hov="-bgc">
-        <Details.Icon />
         <Details.Title as="h3">Details Title</Details.Title>
+        <Details.Icon />
       </Details.Summary>
       <Details.Content p="20">
         <p>Content goes here.</p>

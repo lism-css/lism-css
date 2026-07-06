@@ -4,7 +4,7 @@ description: 'Example implementation of FAQ (Q&A) layouts using Lism CSS.'
 ---
 
 
-import { Lism, Flex, Stack, Icon, Decorator, Divider } from 'lism-css/react'
+import { Lism, Flex, Stack, Icon, Decorator, Divider } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 
 Examples of FAQ / Q&A layouts built with Lism.
@@ -144,7 +144,8 @@ Examples of FAQ / Q&A layouts built with Lism.
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Accordion.Root class="c--faq" bgc="base-2" bdrs="10">
+    <Stack g="15">
+      <Accordion.Root class="c--faq" bgc="base-2" bdrs="10">
         <Accordion.Item>
           <Accordion.Heading>
             <Accordion.Button p="20" layout="flex" ai="center" g="10" fw="bold">

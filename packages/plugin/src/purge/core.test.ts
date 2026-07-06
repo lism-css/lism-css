@@ -122,16 +122,16 @@ describe('purgeLismCss', () => {
   });
 
   test('Lism 以外のカスタムクラスセレクタは保持する', () => {
-    const css = `.z--minimal-headerNav_subMenu{visibility:hidden;opacity:0}`;
+    const css = `.z--side{visibility:hidden;opacity:0}`;
     const out = purgeLismCss(css, { used: used() });
-    expect(out).toContain('z--minimal-headerNav_subMenu');
+    expect(out).toContain('z--side');
     expect(out).toContain('visibility:hidden');
   });
 
   test('カスタムクラスを含む複合セレクタは保持する', () => {
-    const css = `.z--minimal-headerNav:has(.z--minimal-headerNav_subMenuButton:hover,.z--minimal-headerNav_subMenu:hover) .z--minimal-headerNav_subMenu{visibility:visible}`;
+    const css = `.z--side:has(.z--sideButton:hover,.z--sideMenu:hover) .z--sideMenu{visibility:visible}`;
     const out = purgeLismCss(css, { used: used() });
-    expect(out).toContain('z--minimal-headerNav:has');
+    expect(out).toContain('z--side:has');
     expect(out).toContain('visibility:visible');
   });
 
