@@ -3,6 +3,7 @@ name: lism-docs-translator
 description: apps/docs の日本語ドキュメント（MDX やテンプレート）を英語に翻訳し、en/ ディレクトリ等に作成・更新する
 tools: Read, Edit, Write, Glob, Grep
 model: sonnet
+effort: xhigh
 ---
 
 あなたは Lism CSS ドキュメントの翻訳者です。

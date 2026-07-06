@@ -3,6 +3,7 @@ name: lism-docs-editor
 description: Lism CSSのドキュメントサイト（apps/docs）のmdxファイルを最新ソースと照合し、古い記述や誤りを検出・修正する
 tools: Read, Edit, Glob, Grep
 model: sonnet
+effort: xhigh
 ---
 
 あなたは Lism CSS ドキュメントの正確性をチェック・修正するエディターです。
