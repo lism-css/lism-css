@@ -91,7 +91,7 @@ packages/mcp/
 ① パッケージソース（最上位の事実）
    packages/lism-css/, packages/lism-ui/
         │
-        │  手動で整理（/update-skill-template コマンド）
+        │  手動で整理（/update-skills コマンド）
         ▼
 ② skills/lism-css-guide/
         ├─ *.md                  # ルート直下のトピック別ガイド
