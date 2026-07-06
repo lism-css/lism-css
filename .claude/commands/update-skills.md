@@ -43,29 +43,27 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 
 各 Primitive に 1 ファイル。ファイル名はクラス名そのままの camelCase（例: `l--withSide.md`, `l--tileGrid.md`, `is--boxLink.md`）。MDX 情報源（`apps/docs/src/content/ja/` 配下）も同じ camelCase ファイル名。
 
-ファイルの対応関係は SCSS と 1:1。カテゴリ別の更新内容は以下：
+ファイルの対応関係は原則 SCSS と 1:1。ただし例外があり、`l--box` / `a--decorator` は対応する `_{name}.scss` を持たない。逆に `_coverLink.scss`（`is--coverLink`）は独立した詳細ファイルがなく、 `is--boxLink.md` 内で扱う（後述の「注意事項」参照）。カテゴリ別の更新内容は以下：
 
 | カテゴリ | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
-| Layout（`primitives/l--*.md`） | クラス名 / 対応コンポーネント / SCSS raw URL / 専用 Props / Usage（基本パターン + 応用）/ 関連プリミティブ | `packages/lism-css/src/scss/primitives/layout/`, `apps/docs/src/content/ja/primitives/l--*.mdx` |
+| Layout（`primitives/l--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / 使い方・既定の挙動 / 関連プリミティブ | `packages/lism-css/src/scss/primitives/layout/`, `apps/docs/src/content/ja/primitives/l--*.mdx` |
 | Trait（`trait-class/is--*.md` / `has--*.md`） | 同上 + Trait 固有の挙動（`href` → `<a>`、`contentSize`、`@sm`/`@md` バリエーション等） | `packages/lism-css/src/scss/trait/`, `apps/docs/src/content/ja/trait-class/is--*.mdx`（`has--*` は個別 MDX 未作成のため `trait-class.mdx` を参照） |
-| Atomic（`primitives/a--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / Usage / HTML 出力構造 | `packages/lism-css/src/scss/primitives/atomic/`, `apps/docs/src/content/ja/primitives/a--*.mdx` |
+| Atomic（`primitives/a--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / HTML 出力構造 / 関連プリミティブ | `packages/lism-css/src/scss/primitives/atomic/`, `apps/docs/src/content/ja/primitives/a--*.mdx` |
 
-各 `primitives/*.md` / `trait-class/*.md` は以下の構成を維持すること（Phase 2 で確定したテンプレート）：
+各 `primitives/*.md` / `trait-class/*.md` は以下の構成を維持すること：
 
 - Front matter なし、`# {クラス名} / <Component>` の h1 で開始
-- `## 基本情報`（クラス名 / コンポーネント / SCSSソース / ドキュメント）。URL は以下の形式を維持し、誤って書き換えないこと：
-    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/{primitives/{layout|atomic}|trait/{is|has}}/_{name}.scss`
-        - **SCSS ファイルが存在する Primitive / Trait のみ記載する**。`l--box` や `a--decorator` のように対応する `_{name}.scss` を持たない場合は、この行自体を省略する
-        - Trait は `is--`/`has--` プレフィックスを除いた値を `{name}` として使う（例: `is--container` → `trait/is/_container.scss`、`has--transition` → `trait/has/_transition.scss`）
-    - 公式ドキュメント: 個別ページが存在する場合は URL もクラス名そのまま（camelCase を維持）
+    - 対応コンポーネントを持たない `has--*` は h1 を `# {クラス名}` のみとし、概要文の後に `- Lism props: hasXxx（<Lism hasXxx> 等）` の行を置く
+- 概要文（1〜2文）の後に、見出しを付けず `公式ドキュメント（使い方・コード例）: {URL}` の1行リンクを置く。URL は以下の形式を維持し、誤って書き換えないこと：
+    - 個別ページが存在する場合は URL もクラス名そのまま（camelCase を維持）
         - Layout / Atomic（`l--*` / `a--*`）: `https://lism-css.com/docs/primitives/{class}.md`（例: `l--withSide.md`）
         - Trait（`is--*` / `has--*`）: `https://lism-css.com/docs/trait-class/{class}.md`（例: `is--boxLink.md`）
-        - 個別ページが未作成の場合は、一覧ページのアンカーを指す: `https://lism-css.com/docs/trait-class.md#{class}`（現状 `has--*` 系はすべて個別ページが未作成のためこの形式を使う。例: `trait-class.md#has--transition`）
-- `## 専用Props`（該当プリミティブのみ）
-- `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
-- 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）
-- `## 関連プリミティブ`（3〜4個に絞る）
+    - 個別ページが未作成の場合は、一覧ページのアンカーを指す: `https://lism-css.com/docs/trait-class.md#{class}`（現状 `has--*` 系はすべて個別ページが未作成のためこの形式を使う。例: `trait-class.md#has--transition`）
+    - SCSS raw URL の行は置かない（SCSS ソースの参照先は本指示書の「ソースの参照先マップ」を使う）
+- 以降は必要に応じたセクション（`## 既定の挙動`、`## 専用Props`、`## 使い方`、HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、`has--*` の `## SCSS 定義` / `## CSS 変数` など）
+- 末尾は `## 関連プリミティブ`（`has--*` は `## 関連`。3〜4個に絞る）
+- コード例は専用の Usage セクションを設けず、解説に必要な箇所へ JSX / HTML / SCSS コードブロックで記載する（MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
 - コード例で使う要素・クラス・コンポーネントは `lism-css` パッケージに含まれるものだけに限定する（`@lism-css/ui` のコンポーネント解説を除く）
 
 ### 限定チェック対象ファイル
@@ -178,7 +176,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 
 - `skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` / `trait-class/` / `property-class/` 配下の全ファイルを読み取る（限定チェック対象の `antipatterns*.md` / `references/` 配下も読む）
 - `packages/lism-css/package.json` と `packages/lism-ui/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記（`lism-css@x.y.z` / `@lism-css/ui@x.y.z`）と比較する
-- `primitives/` / `trait-class/` 配下の存在チェック: `packages/lism-css/src/scss/primitives/{layout,atomic}/` および `packages/lism-css/src/scss/trait/{is,has}/` 配下の SCSS と `primitives/*.md` / `trait-class/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「クラス単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
+- `primitives/` / `trait-class/` 配下の存在チェック: `packages/lism-css/src/scss/primitives/{layout,atomic}/` および `packages/lism-css/src/scss/trait/{is,has}/` 配下の SCSS と `primitives/*.md` / `trait-class/*.md` が 1:1 対応しているか（例外は「注意事項」参照）、さらに `SKILL.md` の「クラス単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
 
 ### 2. ソースコードの読み取りと照合
 
@@ -190,7 +188,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 3. **存在確認**: テンプレートに記載されているが、ソースから削除された項目がないか
 4. **コード例の正確性**: JSX / HTML のコード例が現在の API で動作するか
 5. **バージョン情報**: SKILL.md のバージョン表記が最新か
-6. **プリミティブ詳細ファイルの整合性**: `primitives/*.md` の専用 Props・SCSS raw URL・ドキュメント URL・関連プリミティブ相互リンク先が現在のソース構成と一致しているか
+6. **プリミティブ詳細ファイルの整合性**: `primitives/*.md` の専用 Props・ドキュメント URL・関連プリミティブ相互リンク先が現在のソース構成と一致しているか
 7. **ファイル行数**: 各ファイルが 260 行以下の目安（CLAUDE.md の注意事項）に収まっているか。超過ファイルは本コマンドでは分割せず、分割候補として差分サマリーで報告する
 
 ### 3. テンプレートの更新
@@ -217,4 +215,4 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 - スキルファイル内のソースコードへのリンクは、必ず raw URL 形式（`https://raw.githubusercontent.com/lism-css/lism-css/main/{path}`）を使用すること。`https://github.com/lism-css/lism-css/blob/main/...` 形式は使わない。ディレクトリへのリンク（`tree/`）はそのまま GitHub URL で可
 - スキルファイル内の公式ドキュメント (`https://lism-css.com/...`) へのリンクは AI が直接読み込めるよう `.md` 版を使用する（例: `https://lism-css.com/docs/primitives/l--box.md`）。ただし `.md` 版が存在しない URL（`/demo/...`、`/ui/` トップ等）は対象外として現状の HTML URL のまま維持する
 - `primitives/*.md` / `trait-class/*.md` と MDX 情報源は、いずれもクラス名そのままの camelCase ファイル名（例: `l--withSide.md` ↔ `l--withSide.mdx`）
-- `is--skipFlow` / `is--side` は独立した `primitives/*.md` を作らず、それぞれ `l--flow.md` / `l--withSide.md` 内で言及する方針を維持する
+- `is--skipFlow` / `is--side` / `is--coverLink` は独立した詳細ファイルを作らず、それぞれ `l--flow.md` / `l--withSide.md` / `is--boxLink.md` 内で言及する方針を維持する（`is--coverLink` は `_coverLink.scss` が存在するが独立ファイル化しない）
