@@ -9,6 +9,34 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.24.0 (2026.07.06)
+
+- Derive config values (utils / presets / token) into component-side autocompletion (#505)
+- Add `LismConfig` type for authoring `lism.config` (#472)
+- Add `display: flow-root` to `body` to prevent extra vertical scrolling caused by margin collapse
+- Change default styles for `pre` (removed `background-color` / `padding`) (#477)
+- Exclude coverLink inside boxLink and adjust stacking order
+
+### AI skills overhaul (#459)
+
+- Enhanced and streamlined `lism-css-guide`, and added a new `lism-css-refactor` skill for refactoring
+- Improved implementation accuracy: separated verification into subagents and structurally prevented check skipping (#469, #473)
+- Expanded the antipatterns collection (#488)
+
+### `@lism-css/plugin` v.0.4.0 (2026.07.06)
+
+- Support loading `lism.config.ts` (TypeScript config files) (#461)
+- Derive types from config values (utils / presets / token) for component-side autocompletion (#505)
+- purge: scan and rewrite references in server output for Astro SSR / hybrid setups (#495)
+- purge: stricter hash detection and byte-accurate size reports (#503)
+
+### `@lism-css/ui` v.0.24.0 (2026.07.06)
+
+- Follow-up release for lism-css v0.24.0 (no functional changes to components)
+- Added unit tests for Accordion / Modal / Tabs (#365)
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.23.0 (2026.06.19)
 
 This release contains **breaking changes**.

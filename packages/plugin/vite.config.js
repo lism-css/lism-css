@@ -34,7 +34,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: [/^node:/, 'lism-css', /^lism-css\//, 'sass', 'postcss', 'autoprefixer', 'cssnano', 'glob', 'vite', 'astro'],
+      external: [/^node:/, 'lism-css', /^lism-css\//, 'sass', 'postcss', 'autoprefixer', 'cssnano', 'glob', 'jiti', 'vite', 'astro'],
       output: {
         dir: 'dist',
         preserveModules: true,

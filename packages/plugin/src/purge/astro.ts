@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { readdir, readFile, stat, unlink, writeFile } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
@@ -15,8 +16,10 @@ const SCAN_EXT = /\.(html?|js|mjs|cjs)$/;
 const CSS_EXT = /\.css$/;
 // 参照更新の対象拡張子: HTML / JS / JSON manifest / sourcemap / RSS など、文字列で参照を持ち得るもの
 const REF_EXT = /\.(html?|js|mjs|cjs|json|txt|xml|map)$/;
-// `<name>.<hash>.css` 形式のハッシュ部を判定する。Astro / Vite 既定では 8 文字英数字。
-const HASHED_CSS_NAME = /^(.+)\.([A-Za-z0-9_-]{6,})\.css$/;
+// `<name>.<hash>.css` 形式のハッシュ部を判定する。Astro / Vite 既定・本プラグインの shortContentHash は
+// いずれも 8 文字英数字なので 8 文字ちょうどに限定する。緩い判定だと `theme.mobile.css` の `.mobile` 等を
+// 誤ってハッシュ扱いしてしまう（#496）。
+const HASHED_CSS_NAME = /^(.+)\.([A-Za-z0-9_-]{8})\.css$/;
 
 async function* walk(dir: string): AsyncGenerator<string> {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -77,8 +80,8 @@ async function purgeCssFiles(
     if (purged === source && !hasCssSourceMappingUrl(source)) continue;
     const output = stripCssSourceMappingUrl(purged);
 
-    beforeBytes += source.length;
-    afterBytes += output.length;
+    beforeBytes += Buffer.byteLength(source);
+    afterBytes += Buffer.byteLength(output);
 
     const oldBase = basename(file);
     const match = HASHED_CSS_NAME.exec(oldBase);
@@ -104,49 +107,67 @@ async function purgeCssFiles(
   return { renames, beforeBytes, afterBytes };
 }
 
-async function updateReferences(distPath: string, renames: RenameInfo[]): Promise<void> {
+async function updateReferences(distPaths: string[], renames: RenameInfo[]): Promise<void> {
   if (renames.length === 0) return;
-  for await (const file of walk(distPath)) {
-    if (!REF_EXT.test(file)) continue;
-    let content = await readFile(file, 'utf8');
-    let changed = false;
-    for (const { oldBase, newBase } of renames) {
-      if (content.includes(oldBase)) {
-        content = content.split(oldBase).join(newBase);
-        changed = true;
+  for (const distPath of distPaths) {
+    for await (const file of walk(distPath)) {
+      if (!REF_EXT.test(file)) continue;
+      let content = await readFile(file, 'utf8');
+      let changed = false;
+      for (const { oldBase, newBase } of renames) {
+        if (content.includes(oldBase)) {
+          content = content.split(oldBase).join(newBase);
+          changed = true;
+        }
       }
+      if (changed) await writeFile(file, content, 'utf8');
     }
-    if (changed) await writeFile(file, content, 'utf8');
   }
 }
 
 export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegration {
   const safelist: SafelistEntry[] | undefined = options.safelist;
   const report = options.report ?? false;
+  // server ビルド時の server 出力ディレクトリ。`astro:config:done` で確定する。
+  let serverDir: URL | undefined;
 
   return {
     name: 'lism-css:purge',
     hooks: {
+      'astro:config:done': ({ config, buildOutput }) => {
+        // server ビルド（`output: 'server'` または `prerender = false` ルートあり）では、
+        // `astro:build:done` の `dir` が `config.build.client` のみを指す。
+        // オンデマンドページのクラス名は server 側チャンクにしか現れず、SSR ページへ
+        // `<link>` を注入する manifest も server 側にあるため、server 出力も走査対象に含める（#492）。
+        // buildOutput はルート解析後に確定してからこのフックへ渡されるので、hybrid 構成でも正しく判定できる。
+        if (buildOutput === 'server') serverDir = config.build.server;
+      },
       // Astro の SSG では HTML 生成が Vite build より後に走るため、Vite plugin 経由では
       // 最終 HTML のクラスを拾えない。`astro:build:done` で dist を直接走査し、
       // CSS を purge した上で内容ベースの hash を再計算して参照側も同期更新する。
       'astro:build:done': async ({ dir, logger }) => {
         // known は build 実行時に解決する（関数形式の遅延解決にも対応）。
         const known = resolveKnownSelectors(options.known);
-        const distPath = fileURLToPath(dir);
+        const distPaths = [fileURLToPath(dir)];
+        if (serverDir) {
+          const serverPath = fileURLToPath(serverDir);
+          if (!distPaths.includes(serverPath)) distPaths.push(serverPath);
+        }
         const used = new Set<string>();
         const cssFiles: string[] = [];
 
-        for await (const file of walk(distPath)) {
-          if (SCAN_EXT.test(file)) {
-            extractLismClasses(await readFile(file, 'utf8'), used);
-          } else if (CSS_EXT.test(file)) {
-            cssFiles.push(file);
+        for (const distPath of distPaths) {
+          for await (const file of walk(distPath)) {
+            if (SCAN_EXT.test(file)) {
+              extractLismClasses(await readFile(file, 'utf8'), used);
+            } else if (CSS_EXT.test(file)) {
+              cssFiles.push(file);
+            }
           }
         }
 
         const { renames, beforeBytes, afterBytes } = await purgeCssFiles(cssFiles, used, safelist, known);
-        await updateReferences(distPath, renames);
+        await updateReferences(distPaths, renames);
 
         if (report && beforeBytes > 0) {
           logger.info(formatReport(beforeBytes, afterBytes));

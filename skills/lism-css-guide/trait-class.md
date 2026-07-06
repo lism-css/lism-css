@@ -6,8 +6,8 @@ Lism CSS では、要素に対して宣言的に「役割」や「機能」を�
 ## TOC
 
 - [プレフィックス一覧](#プレフィックス一覧)
-- [`is--` Trait（役割宣言）](#is-- trait役割宣言)
-- [`has--` Trait（機能付与）](#has-- trait機能付与)
+- [`is--` Trait（役割宣言）](#is---trait役割宣言)
+- [`has--` Trait（機能付与）](#has---trait機能付与)
 
 [詳細](https://lism-css.com/docs/trait-class.md)
 
@@ -16,11 +16,11 @@ Lism CSS では、要素に対して宣言的に「役割」や「機能」を�
 ## プレフィックス一覧
 
 | プレフィックス | 種類 | レイヤー | 役割 |
-|--------------|------|---------|------|
+| --- | --- | --- | --- |
 | `is--` | Trait（役割宣言） | `lism-trait` | 要素に「〜である」という役割・存在を宣言する |
 | `has--` | Trait（機能付与） | `lism-trait` | 要素に「〜を持つ」という単一機能を付与する。CSS 変数でカスタマイズ可能 |
 
-併用ルールおよび `is--` / `has--` の判定軸は [css-rules.md](./css-rules.md#プレフィックスとクラス分類) を参照してください。
+併用ルールおよび `is--` / `has--` の判定軸は [css-rules.md](./css-rules.md#クラス分類とプレフィックス) を参照してください。
 
 
 ## `is--` Trait（役割宣言）
@@ -28,7 +28,7 @@ Lism CSS では、要素に対して宣言的に「役割」や「機能」を�
 要素に**役割・存在の宣言**を付与するクラスです。他の Primitive / Component と自由に組み合わせられます。
 
 | クラス | 用途 |
-|--------|------|
+| --- | --- |
 | `is--container` | コンテナクエリの基準要素を定義する（`container-type: inline-size`を付与する）。Lism のレスポンシブ機能の判定基準となるラッパーに付与する |
 | `is--wrapper` | 直下の子要素のコンテンツ幅を一括で制限する。`-contentSize:s` / `-contentSize:m` / `-contentSize:l` / `-contentSize:xl` で事前定義したプリセットサイズを指定可能（デフォルト: `--sz--m`）。セクション・ヘッダー・フッター・記事コンテンツなどで、共通したコンテンツ幅を使用する |
 | `is--layer` | 親要素全体に被さる絶対配置レイヤー（`position: absolute; inset: 0;`）。背景画像・カラーオーバーレイ・フィルターレイヤー・コンテンツ等を重ねて表示する |
@@ -51,7 +51,7 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 要素に**単一機能の trait を付与**するクラスです。CSS 変数によりカスタマイズポイントを提供します。
 
 | クラス | 用途 | 主な CSS 変数 |
-|--------|------|--------------|
+| --- | --- | --- |
 | `has--transition` | transition プロパティをまとめてセット。主に hoverクラス（`-hov:*`）と組み合わせて使用 | `--transitionProps`, `--duration`, `--ease`, `--delay`（グローバル上書きは `--transition-duration`） |
 | `has--gutter` | コンテンツの左右に統一した余白（gutter）を設定する | `--gutter`（基準値: `--gutter--base`、初期値 `var(--s30)`） |
 | `has--snap` | `scroll-snap-` 系プロパティを CSS 変数経由でセットできるようにする | `--snapType`, `--snapAlign` 等 |
@@ -68,8 +68,8 @@ Lism コンポーネントでは `hasTransition`, `hasGutter`, `hasSnap`, `hasMa
 
 ## `is--` と `has--` の判断軸
 
-| | `is--` | `has--` |
-|---|---|---|
+|  | `is--` | `has--` |
+| --- | --- | --- |
 | 意味 | 〜である（役割・存在の宣言） | 〜を持つ（機能の付与） |
 | CSS 変数 | 必須ではない | 必須（カスタマイズポイント） |
 

@@ -7,9 +7,9 @@
 
 ## @lism-css/ui とは？
 
-`@lism-css/ui` は、[lism-css](https://www.npmjs.com/package/lism-css) の上に構築されたインタラクティブな UI コンポーネントライブラリです。アコーディオン、モーダル、タブなど、よく使う UI パターンの React / Astro コンポーネントを提供します。
+`@lism-css/ui` は、[lism-css](https://www.npmjs.com/package/lism-css) の上に構築されたインタラクティブなUIコンポーネントライブラリです。アコーディオン、モーダル、タブなど、よく使うUIパターンの React / Astroコンポーネントを提供します。
 
-すべてのコンポーネントは Lism CSS のレイアウトシステムとデザイントークンを前提としています。
+すべてのコンポーネントはLism CSSのレイアウトシステムとデザイントークンを前提としています。
 
 ## 利用可能なコンポーネント
 
@@ -21,31 +21,31 @@
 | **Badge** | 小さなステータスラベルやカウンター |
 | **Button** | バリエーションとサイズ付きのスタイル付きボタン |
 | **Callout** | ヒント、警告、注意書き用のハイライトコンテンツブロック |
-| **Chat** | 会話形式のレイアウト用チャットバブル UI |
+| **Chat** | 会話形式のレイアウト用チャットバブルUI |
 | **Details** | スタイル付きネイティブ `<details>` / `<summary>` 要素 |
 | **Modal** | バックドロップ付きダイアログオーバーレイ |
 | **NavMenu** | ネストアイテム対応のナビゲーションメニュー |
-| **ShapeDivider** | SVG シェイプによる装飾的なセクションディバイダー |
+| **ShapeDivider** | SVGシェイプによる装飾的なセクションディバイダー |
 | **Tabs** | タブ付きコンテンツパネル |
 | **DummyText** | プロトタイピング用のプレースホルダーテキスト |
 
 ## インストール
 
 ```bash
-npm i @lism-css/ui lism-css
+npm i @lism-css/ui
 ```
 
 または
 
 ```bash
-pnpm add @lism-css/ui lism-css
+pnpm add @lism-css/ui
 ```
 
-> `lism-css` は必須のピア依存関係です。
+> `lism-css` は `@lism-css/ui` の通常の依存関係（dependencies）なので、別途インストールする必要はありません。
 
 ## セットアップ
 
-グローバルスタイルとして CSS をインポートします:
+グローバルスタイルとしてCSSをインポートします:
 
 ```js
 import 'lism-css/main.css';
@@ -66,9 +66,9 @@ export default defineConfig({
 
 ## 使い方
 
-各コンポーネントは個別の deep path（`@lism-css/ui/{react,astro}/<Component>`）から import するのを推奨しています。実際に使うコンポーネントだけが bundle に含まれるよう、確実に絞り込めるためです。
+各コンポーネントは個別のパス（deep path、例: `@lism-css/ui/{react,astro}/<Component>`）から import するのを推奨しています。実際に使うコンポーネントだけが成果物（バンドル）に含まれるよう、確実に絞り込めるためです。
 
-互換のため `@lism-css/ui/react` / `@lism-css/ui/astro` からの一括 import (barrel) も利用できますが、本番ビルドでは以下のように個別 import を使用してください。
+互換のため `@lism-css/ui/react` / `@lism-css/ui/astro` からの一括 import（バレルエクスポート）も利用できますが、本番ビルドでは以下のように個別 import を使用してください。
 
 ### React
 
@@ -118,18 +118,18 @@ import { Text } from 'lism-css/astro';
 </Button>
 ```
 
-## lism-css との関係
+## lism-cssとの関係
 
-Lism CSS は2つのパッケージで構成されています:
+このパッケージは、コアとなる CSS パッケージの上に構築されています。ここで登場する主なパッケージは次の2つです:
 
-- **[lism-css](https://www.npmjs.com/package/lism-css)** — レイアウトコンポーネント（Box、Flex、Stack、Grid など）、デザイントークン、プロップクラス、レスポンシブシステムを提供するコア CSS フレームワーク。
-- **@lism-css/ui**（このパッケージ）— コアのレイアウトシステムを拡張し、すぐに使えるインターフェースパターン（Accordion、Modal、Tabs など）を提供するインタラクティブ UI コンポーネント。
+- **[lism-css](https://www.npmjs.com/package/lism-css)** — レイアウトコンポーネント（Box、Flex、Stack、Gridなど）、デザイントークン、Property Class、レスポンシブシステムを提供するコアCSSフレームワーク。
+- **@lism-css/ui**（このパッケージ）— コアのレイアウトシステムを拡張し、すぐに使えるインターフェースパターン（Accordion、Modal、Tabsなど）を提供するインタラクティブUIコンポーネント。
 
-`@lism-css/ui` を使用するには `lism-css` のインストールが必要です。
+`lism-css` は `@lism-css/ui` の通常の依存関係（dependencies）なので、自動的にインストールされます。
 
-## AI ツール連携
+## AIツール連携
 
-AI コーディングツールが Lism CSS のドキュメントを参照するための MCP サーバーが利用可能です:
+AIコーディングツールがLism CSSのドキュメントを参照するためのMCPサーバーが利用可能です:
 
 ```bash
 claude mcp add lism-css -- npx -y @lism-css/mcp

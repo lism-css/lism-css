@@ -6,7 +6,7 @@
  * - 各コンポーネント内のファイルを読んで helper 依存（`../../helper/xxx`）を抽出
  * - `src/helper/*` から helper 一覧を抽出（テスト / 内部ファイルは除外）
  *
- * 出力は CLI の `lism ui list` / `--all` が giget で fetch して利用する。
+ * 出力は CLI の `lism-cli ui list` / `--all` が giget で fetch して利用する。
  */
 
 import fs from 'node:fs';

@@ -1,36 +1,61 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadMarkdown } from '../lib/load-markdown.js';
-import { markdownResponse, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
+import { markdownResponse, loadFailureError, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
+// files に複数指定したトピックは結合して返す。
+// MCP クライアントは Markdown 内の相対リンクを辿れないため、分冊ファイルは本体に結合する。
 const GUIDE_TOPICS = {
-  overview: { file: 'SKILL.md', label: 'Framework overview, packages, implementation rules' },
-  tokens: { file: 'tokens.md', label: 'Design tokens (spacing, colors, font sizes, etc.)' },
-  'property-class': { file: 'property-class.md', label: 'Property Class system, all props reference table' },
+  overview: { files: ['SKILL.md'], label: 'Framework overview, packages, implementation rules' },
+  tokens: { files: ['tokens.md'], label: 'Design tokens (spacing, colors, font sizes, etc.)' },
+  'property-class': {
+    files: ['property-class.md', 'property-class/all-props.md', 'property-class/bd.md', 'property-class/hov.md', 'property-class/max-sz.md'],
+    label: 'Property Class system, all props reference table, border (bd) / hover (hov) / max-sz details',
+  },
   'components-core': {
-    file: 'components-core.md',
+    files: ['components-core.md'],
     label: 'Core component system (Lism, Box, Flex, Stack, Grid, etc.)',
   },
   'components-ui': {
-    file: 'components-ui.md',
+    files: ['components-ui.md'],
     label: 'UI components (Accordion, Modal, Tabs, Button, etc.)',
   },
-  'base-styles': { file: 'base-styles.md', label: 'Base styling, reset CSS, HTML element styles' },
-  'set-class': { file: 'set-class.md', label: 'Set classes (set--plain, set--bxsh, set--hov, etc.)' },
+  'base-styles': { files: ['base-styles.md'], label: 'Base styling, reset CSS, HTML element styles' },
+  'set-class': { files: ['set-class.md'], label: 'Set classes (set--plain, set--bxsh, set--hov, etc.)' },
   'primitive-class': {
-    file: 'primitive-class.md',
+    files: ['primitive-class.md'],
     label: 'Primitive class prefixes (is--, l--, a--) and Component class (c--), with column-layout primitive selection guide',
   },
-  'utility-class': { file: 'utility-class.md', label: 'Utility classes (u--trim, u--cbox, etc.)' },
-  'css-rules': { file: 'css-rules.md', label: 'CSS methodology, layer structure, naming conventions' },
-  responsive: { file: 'responsive.md', label: 'Responsive design, breakpoints, container queries' },
+  'trait-class': {
+    files: ['trait-class.md'],
+    label: 'Trait classes (is--, has--): declarative role/feature classes in the lism-trait layer',
+  },
+  'utility-class': { files: ['utility-class.md'], label: 'Utility classes (u--trim, u--cbox, etc.)' },
+  'css-rules': { files: ['css-rules.md'], label: 'CSS methodology, layer structure, naming conventions' },
+  naming: {
+    files: ['naming.md'],
+    label: 'Naming conventions: CSS variable / class naming rules, {prop} and {value} abbreviation rules',
+  },
+  responsive: { files: ['responsive.md'], label: 'Responsive design, breakpoints, container queries' },
+  customize: {
+    files: ['customize.md'],
+    label: 'Customization: @layer opt-out, SCSS settings, lism.config.js, CSS purge',
+  },
   antipatterns: {
-    file: 'antipatterns.md',
-    label: 'AI code-generation antipatterns: token typos, prop type mistakes, layout choice errors, responsive omissions',
+    files: ['antipatterns.md'],
+    label: 'AI code-generation antipatterns (values / style declarations): px hardcoding, token typos, keycolor misuse, prop type mistakes',
+  },
+  'antipatterns-layout': {
+    files: ['antipatterns-layout.md'],
+    label:
+      'AI code-generation antipatterns (structure / layout / responsive): layout choice errors, responsive omissions, is-- misuse, naming mistakes',
   },
 } as const;
 
 type GuideTopic = keyof typeof GUIDE_TOPICS;
+
+/** get_guide が受理するトピックキーの集合。search.ts の nextTool 判定で利用する。 */
+export const GUIDE_TOPIC_KEYS: ReadonlySet<string> = new Set(Object.keys(GUIDE_TOPICS));
 
 const TOPIC_DESCRIPTION = Object.entries(GUIDE_TOPICS)
   .map(([key, { label }]) => `- ${key}: ${label}`)
@@ -52,12 +77,10 @@ export function registerGetGuide(server: McpServer): void {
     },
     ({ topic }) => {
       try {
-        const { file } = GUIDE_TOPICS[topic];
-        return markdownResponse(loadMarkdown(file));
+        const { files } = GUIDE_TOPICS[topic];
+        return markdownResponse(files.map((file) => loadMarkdown(file)).join('\n\n'));
       } catch (e) {
-        return error(
-          `Failed to load guide "${topic}": ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
-        );
+        return loadFailureError(`guide "${topic}"`, e);
       }
     }
   );

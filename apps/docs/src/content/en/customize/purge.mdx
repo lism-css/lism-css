@@ -89,7 +89,9 @@ export default defineConfig({
 </PreviewCode>
 </Preview>
 
-The Vite plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens during `vite dev`. Unused selectors are stripped only when you run `vite build`. The Astro integration hooks into `astro:build:done`, scans HTML / JS under `dist/`, and rewrites the CSS files in place.
+The Vite plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens during `vite dev`. Unused selectors are stripped only when you run `vite build`. The Astro integration hooks into `astro:build:done`, scans HTML / JS under the build output, and rewrites the CSS files in place.
+
+In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender = false`), the server output (`dist/server/`) is also scanned and reference-rewritten in addition to the client output (`dist/client/`). This ensures that classes used only on on-demand rendered pages are preserved correctly.
 
 
 ## Pairing with full.css
@@ -157,3 +159,5 @@ CSS: 28100 → 13200 bytes (-14900 / -53.0%)
 - Only CSS emitted by Lism CSS is purged. Your own CSS and styles from other libraries are left untouched.
 - The plugin runs independently of other framework purgers such as Tailwind CSS.
 - CSS sourcemaps are not supported. Purge removes rules, so an existing sourcemap no longer lines up. To avoid stale mappings, purge strips `sourceMappingURL` comments from processed CSS and removes old `.css.map` files. Disable purge if you need CSS sourcemaps.
+- With the Vite plugin, when purging changes a CSS file name (its content hash), the file names of JS chunks that reference the CSS are not recalculated — chunk names are finalized before the purge step runs. The chunk contents are rewritten to point to the new CSS name, but since the chunk file name stays the same, a stale chunk cached by a CDN with file-name-based immutable caching may keep referencing an old CSS file name that no longer exists, resulting in a 404. Invalidate the CDN cache on deploy if this applies to your setup.
+- A purged CSS file is treated as hash-named and renamed to a content-based hash when the last segment of its file name is exactly 8 alphanumeric characters (`<name>.xxxxxxxx.css`, and also `<name>-xxxxxxxx.css` with the Vite plugin). Non-hash names such as `app-critical.css` also match this pattern, so avoid file names whose last segment is exactly 8 alphanumeric characters if you reference an output CSS file directly by a fixed name from outside the build output.

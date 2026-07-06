@@ -19,6 +19,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 - [Trait Components](#trait-components)
 - [Layout Primitives](#layout-primitives)
 - [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
+- [AstroでのラップコンポーネントのProps型](#astroでのラップコンポーネントのprops型)
 
 [詳細](https://lism-css.com/docs/core-components/lism-props.md)
 
@@ -49,7 +50,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 すべての Lism コンポーネントで使えるpropsです。
 
 | Prop | 説明 | 例 |
-|------|------|-----|
+| --- | --- | --- |
 | `as` | レンダリングする HTML 要素または外部コンポーネントを指定（デフォルト: `"div"`） | `as="section"`, `as={Image}` |
 | `layout` | レイアウトプリミティブ（`l--{layout}`）を指定 | `layout="flow"` |
 | `atomic` | アトミックプリミティブ（`a--{atomic}`）を指定。`'divider'` / `'spacer'` / `'decorator'` が利用可能（`'icon'` は内部用） | `atomic="divider"` |
@@ -109,14 +110,14 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 `prop={value}`で指定した値(`value`)によって、基本的な出力は以下のように分類されます。
 
 | 値 | 出力形式 | 例 |
-|------|------|-----|
+| --- | --- | --- |
 | トークン値・プリセット値 | `-{prop}:{value}` クラスのみ | `fz='l'` → `class="-fz:l"` |
 | `true` | `-{prop}` クラスのみ（変数なし） | `bd` / `bd={true}` → `class="-bd"` |
 | `:` で始まる値 | 強制的にクラス化 | `p=':hoge'` → `class="-p:hoge"` |
 | その他の値（レスポンシブ対応プロパティ） | `-{prop}` + `--{prop}` | `fz='20px'` → `class="-fz"` + `style="--fz:20px"` |
 | その他の値（レスポンシブ非対応プロパティ） | `style` 属性に直接出力 | `o='0.7'` → `style="opacity:0.7"` |
 | その他の値（変数プロパティ） | `--{prop}` | `bdw='2px'` → `style="--bdw:2px"` (`border-width`としては出力されない) |
-| レスポンシブ指定値 | 上記いずれかのベース出力 + `-{prop}_{bp}` + `--{prop}_{bp}` | `p={[10,20]}` → `class="-p:10 -p_sm"` + `style="--p_sm:var(--s20)"`|
+| レスポンシブ指定値 | 上記いずれかのベース出力 + `-{prop}_{bp}` + `--{prop}_{bp}` | `p={[10,20]}` → `class="-p:10 -p_sm"` + `style="--p_sm:var(--s20)"` |
 
 補足:
 - **レスポンシブ対応プロパティ**かどうかは、 `props.ts`で`bp: 1`がセットされているかどうかで分かります。
@@ -178,7 +179,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ群です。
 
 | Prop | 出力クラス |
-|------|-----------|
+| --- | --- |
 | `isWrapper` | `is--wrapper` |
 | `isWrapper="{s\|m\|l\|xl}"` | `is--wrapper` + `-contentSize:{s\|m\|l\|xl}` |
 | `isWrapper="{value}"` | `is--wrapper` + `-contentSize` + `--contentSize:{value}` |
@@ -208,7 +209,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 `Lism` の `as` エイリアスとして機能するコンポーネント群です。layout クラスは付与されず、HTML のセマンティクスを表現するために使います。
 
 | コンポーネント | デフォルト要素 | 許容タグ |
-|-------------|-------------|---------|
+| --- | --- | --- |
 | `<Text>` | `<p>` | `p`, `div`, `blockquote`, `address`, `figcaption`, `pre` |
 | `<Heading>` | `<h2>` | `h1`〜`h6`（`level` prop で指定） |
 | `<Inline>` | `<span>` | `span`, `em`, `strong`, `small`, `code`, `time`, `i`, `b`, `mark`, `abbr`, `cite`, `kbd`, `label` |
@@ -232,7 +233,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 ## Atomic Primitives
 
 | コンポーネント | 出力クラス | 用途 |
-|-------------|-----------|------|
+| --- | --- | --- |
 | `<Icon>` | `a--icon` | SVG アイコン・アイコンフォント |
 | `<Spacer>` | `a--spacer` | 空白要素 |
 | `<Divider>` | `a--divider` | 区切り線 |
@@ -247,7 +248,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 `<Lism isXxx>`のエイリアスコンポーネントです。`is--*` クラスを出力します。
 
 | コンポーネント | 内部処理 | 出力クラス |
-|-------------|------------|-----------|
+| --- | --- | --- |
 | `<Container>` | `isContainer` | `is--container` |
 | `<Wrapper>` | `isWrapper` | `is--wrapper` |
 | `<Layer>` | `isLayer` | `is--layer` |
@@ -261,7 +262,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 内部で `layout` prop が固定されており、対応する `l--{layout}` クラスが自動で出力されます。各コンポーネントの専用 Props（`cols`, `rows`, `breakSize`, `sideW`/`mainW`, `flow` など）は、それぞれの詳細ファイルを参照してください。
 
 | コンポーネント | 出力クラス |
-|-------------|-----------|
+| --- | --- |
 | `<Box>` | `l--box` |
 | `<Flex>` | `l--flex` |
 | `<Stack>` | `l--stack` |
@@ -293,3 +294,20 @@ function MyComponent({ children }) {
   return <div {...lismProps}>{children}</div>;
 }
 ```
+
+## AstroでのラップコンポーネントのProps型
+
+Astroで`<Lism>`をラップする独自コンポーネントのProps型は、`interface extends`ではなく交差型（`&`）で合成する。`Lism`のProps型は`layout`による discriminated union を含むため、`interface extends`はTSエラーになる。
+
+```ts
+import { Lism } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
+
+// NG: interface Props extends LismProps { class?: string } → TSエラー
+// OK: 交差型で合成
+type Props = LismProps & { class?: string };
+```
+
+この制約は`<Lism>`に限らず、`<Text>`や`<Wrapper>`など layout Prop を受け取れるコンポーネント全般に共通する。`<Cluster>`など layout 固定のレイアウトコンポーネントのみ union を含まず`interface extends`も通るが、交差型に統一する。

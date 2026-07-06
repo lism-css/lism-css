@@ -14,7 +14,7 @@ function readPackageMeta(packageJsonPath: string): PackageMeta {
   return JSON.parse(readFileSync(resolve(__dirname, packageJsonPath), 'utf-8')) as PackageMeta;
 }
 
-// `lism create` の workspace:* 置換用に、公開パッケージごとの現在バージョンを埋め込む
+// `lism-cli create` の workspace:* 置換用に、公開パッケージごとの現在バージョンを埋め込む
 const packageVersions = Object.fromEntries(
   ['../lism-css/package.json', '../lism-ui/package.json', '../plugin/package.json'].map((packageJsonPath) => {
     const pkg = readPackageMeta(packageJsonPath);

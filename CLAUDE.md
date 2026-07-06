@@ -17,7 +17,7 @@ pnpm workspaces と Turbo を使用したモノレポ構造。lint 系設定フ�
 ### packages（npm 公開）
 - `packages/lism-css/`: コア CSS + React / Astro レイアウトコンポーネント — [CLAUDE.md](packages/lism-css/CLAUDE.md)
 - `packages/lism-ui/`: インタラクティブ UI コンポーネント（Accordion, Modal, Tabs 等）— [CLAUDE.md](packages/lism-ui/CLAUDE.md)
-- `packages/lism-cli/`: `lism` コマンド本体（`create` / `ui` / `skill` サブコマンド）
+- `packages/lism-cli/`: `lism-cli` コマンド本体（`create` / `ui` / `skill` サブコマンド）
 - `packages/create-lism/`: `pnpm create lism` 規約のラッパー（`lism-cli` を bundle で内包）
 - `packages/mcp/`: AI コーディングツール向け MCP サーバー
 
@@ -26,8 +26,8 @@ pnpm workspaces と Turbo を使用したモノレポ構造。lint 系設定フ�
 - `apps/catalog/`: コンポーネントカタログ
 
 ### その他のディレクトリ
-- `skills/lism-css-guide/`: `lism skill add` および skills.sh の配信元
-- `templates/`: `lism create` のテンプレート（`package.json` に `"private": true` 必須）
+- `skills/lism-css-guide/`: `lism-cli skill add` および skills.sh の配信元
+- `templates/`: `lism-cli create` のテンプレート（`package.json` に `"private": true` 必須）
 - `documents/`: 運営者向けの運用ノート（CLI ガイド・docs / mcp 更新手順 等）
 
 各ワークスペースの詳細な実装やアーキテクチャについては、それぞれの CLAUDE.md や README.md を参照。
@@ -70,3 +70,7 @@ README やドキュメント等で公式サイトへのリンクを記載する�
 - `lism-css-guide` スキルに関しては、`lism-css`パッケージ本体を編集中の場合は明示的に指示がない限り読み込まないこと。
 - ただし、`templates/*`の編集時は、`lism-css-guide` スキルを読み込んでから作業すること。
 - `templates/*` を新規追加する際は、`package.json` に `"private": true` を必ず付与すること（npm への誤公開防止）。
+- `skills/lism-css-guide/` を更新する時の注意事項
+  - 失敗例を単純に `SKILL.md` 冒頭へ積み増さないこと。具体例は `antipatterns.md`、実装プランの判断手順は `references/authoring.md`、命名は `naming.md` など、既存の詳細ファイルへ最小追記すること。
+  - skillからMCPの案内はしない。
+  - 各ファイルは260行以下を目安に分割し、違反頻度の高い節は先頭200行以内に置くこと（AIエージェントがファイル先頭の一定行数しか読まないことへの対策。#471）。

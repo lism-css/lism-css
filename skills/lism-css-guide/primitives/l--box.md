@@ -2,27 +2,7 @@
 
 コンテンツをグループ化するだけのシンプルなクラス。汎用的な箱として、パディング・ボーダー・背景色などの指定に使います。
 
-## 基本情報
-
-- クラス名: `l--box`
-- コンポーネント: `<Box>`
-- 公式ドキュメント: https://lism-css.com/docs/primitives/l--box.md
-
-## Usage
-
-### 基本的な使い方
-
-```jsx
-<Box p="30" bgc="base-2" bxsh="10" bdrs="10">
-  <p>コンテンツ...</p>
-</Box>
-```
-
-```html
-<div class="l--box -p:30 -bgc:base-2 -bxsh:10 -bdrs:10">
-  <p>コンテンツ...</p>
-</div>
-```
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/primitives/l--box.md
 
 ## 関連プリミティブ
 

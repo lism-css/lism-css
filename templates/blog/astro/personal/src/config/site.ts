@@ -3,7 +3,7 @@
  * タイトル・キャッチコピー・ページネーション等、表示に関わる値はここで管理する。
  *
  * 画面に出る文言（aria-label・404・アーカイブ説明等）は `uiText` に集約している。
- * 言語別テンプレート（`lism create --lang en`）はこのファイルごと差し替えるため、
+ * 言語別テンプレート（`lism-cli create --lang en`）はこのファイルごと差し替えるため、
  * 各コンポーネント／ページは文言をハードコードせず `siteConfig.uiText.*` を参照する。
  */
 export const siteConfig = {

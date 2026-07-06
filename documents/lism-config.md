@@ -1,7 +1,7 @@
 # lism.config.js メモ
 
 `lism.config.js`は、Lism CSSのユーザー設定をまとめるプロジェクトルートの設定ファイル。
-CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI設定を同じファイルに同居できる。
+CSS出力、React/Astroコンポーネントの実行時設定、`lism-cli ui`系CLI設定を同じファイルに同居できる。
 
 
 ## できること
@@ -16,7 +16,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism ui`系CLI
 | `breakpoints` | `xs`/`xl`などの有効化や、BPサイズを上書きする |
 | `isFullMode` | コンポーネント側のprops設定も`full.css`寄りにする |
 | `defaultImportant` | Property Classにデフォルトで`!important`を付与する（Sassの`$default_important`相当のビルド時設定） |
-| `cli` | `lism ui add`などの出力先設定。旧`lism-ui.json`の後継 |
+| `ui` | `lism-cli ui add`などの出力先設定。旧`cli`キーも互換読込される（deprecation警告あり） |
 
 ```js
 // lism.config.js
@@ -57,15 +57,35 @@ export default {
     isHoge: 'is--hoge',
   },
 
-  cli: {
+  ui: {
     framework: 'react',
-    componentsDir: 'src/components/ui',
-    helperDir: 'src/components/ui/_helper',
+    dir: 'src/components/ui', // helper は常に {dir}/_helper に配置される
   },
 };
 ```
 
-`.js`/`.mjs`が対象。現状`lism.config.ts`は未対応。
+`.ts`/`.mjs`/`.js`が対象（`lism.config.ts`→`lism.config.mjs`→`lism.config.js`の順で探索し、最初に見つかったものを読む）。
+
+### 型サポート（`lism-css/config-types`）
+
+設定ファイルの執筆時に型チェック・補完を効かせるには、`lism-css/config-types`の`LismConfig`型を使う。
+`.ts`は`satisfies LismConfig`、`.js`はJSDoc`@type`を付ける。ジェネリクスの`defineConfig`ヘルパーは提供しない（`satisfies`が literal 保持・typo検出・エラーメッセージすべてで優れるため）。
+
+```ts
+// lism.config.ts
+import type { LismConfig } from 'lism-css/config-types';
+export default { /* ... */ } satisfies LismConfig;
+```
+
+```js
+// lism.config.js
+/** @type {import('lism-css/config-types').LismConfig} */
+export default { /* ... */ };
+```
+
+- `LismConfig`/`PropConfig`/`BreakpointKey`を公開。`config/types.ts`が実体で、副作用のある`config/index.ts`には依存しない。
+- ビルド時生成物の`lism-env.d.ts`（コンポーネント側のprop/trait解禁）とは別レイヤー。
+- `PropConfig`は`@lism-css/plugin`のSCSS直列化（`serialize.ts`）でも同じ型をre-exportして共有する（型の二重管理を解消）。
 
 
 ## プラグインは必要か
@@ -119,7 +139,7 @@ npx lism-css build
 pnpm exec lism-css build
 ```
 
-このコマンドはプロジェクトルートの`lism.config.js`を直接読み、config反映済みCSSを生成する。
+このコマンドはプロジェクトルートの設定ファイルを探索順（`.ts`→`.mjs`→`.js`）で直接読み、config反映済みCSSを生成する。
 そのため、CSSを事前生成するだけならVite/Astroプラグインは不要。
 `--full`を付けると`full.css`/`full_no_layer.css`も生成対象になる。
 
@@ -129,12 +149,13 @@ pnpm exec lism-css build
 Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供する。
 
 - `@lism-css/plugin/webpack`の`withLismWebpack(config, opts)`: webpack主導バンドラ（`@wordpress/scripts`等）向けの汎用プリミティブ。`{ css, config, typegen, watch }`で挙動を切り替える（`css:false`でCSS事前生成・CSS aliasをno-op、`config:true`で`lism-css/config.js`をユーザー設定へalias、`watch:true`で`lism.config.js`を`fileDependencies`へ登録）。WP/テーマ固有ロジックは持たず消費側の責務とする。
+- `@lism-css/plugin/next`の`withLism(nextConfig, opts)`: Next.js（16以降）向けの統合エントリ。Next.jsにはVite/Astroのようなbare CSS importをオンザフライで横取りする口が無いため、config反映済みCSSを`<projectRoot>/.lism-css/css/*`へ事前生成し、`lism-css/<entry>.css`をその生成物へaliasで差し替える方式を取る。Turbopackが主経路（`turbopack.resolveAlias`にproject-relativeパスで注入）、`next dev --webpack`/`next build --webpack`のfallback用にwebpack `resolve.alias`へも絶対パスで同等aliasを注入する。`lism-css/config.js`のユーザー設定alias、`lism-env.d.ts`生成（`opts.typegen`、既定true）も併せて行う。返り値は`(phase, ctx) => config`の非同期config関数で、`next.config`の default exportへ`export default withLism(nextConfig, opts)`のように渡す。devフェーズでは`lism.config.js`の変更を`fs.watch`ベースで監視し、変更時にCSS/型を再生成する。
 - `@lism-css/plugin/builder`の`generateLismScss({ projectRoot, outDir? })`: 自前SCSSビルド構成向けに、config適用済みsettingのbridgeを`_lism-config.gen.scss`・`lism-setting.scss`（既定outDir=`<projectRoot>/.lism-css/scss`）へ生成する。消費側は`loadPaths:['.lism-css/scss']`+`NodePackageImporter`で、`@use 'lism-setting'`→`@use 'pkg:lism-css/scss/main_no_layer'`の順に読む（settingをconfig付きで先にロードする必要があるため順序依存）。
 
 
 ## 処理フロー
 
-1. Vite/Astro起動時に、プロジェクトルートから`lism.config.js`→`lism.config.mjs`の順で探す。
+1. Vite/Astro起動時に、プロジェクトルートから`lism.config.ts`→`lism.config.mjs`→`lism.config.js`の順で探す。
    `configPath`指定時はそのファイルだけを見る。
 2. `lism-css/config.js`をユーザーの`lism.config.js`へaliasする。
    これでReact/Astroコンポーネント側の`CONFIG`もユーザー設定を読む。
@@ -143,8 +164,8 @@ Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供�
 4. `isFullMode:true`の場合、`main.css`系で使う設定もfull preset適用済みに寄せる。
 5. `import 'lism-css/main.css'`などのCSS importをViteプラグインが捕捉し、設定反映済みCSSをその場でコンパイルして返す。
    `node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して生成SCSS（`_prop-config.gen.scss`/`_tokens.gen.scss`）だけ差し替える。
-6. `breakpoints`で`xs`/`xl`などが有効なら、`lism-env.d.ts`を自動生成して型側にも反映する。
-   生成対象は主にbreakpointsで、props/tokens全体の型拡張までは追従しない。
+6. `breakpoints`の追加BP、`props`/`traits`の追加キー、`isFullMode`のいずれかがあれば、`lism-env.d.ts`を自動生成して型側にも反映する（`generateLismEnvDts`）。
+   反映対象はbreakpoints・追加props・追加traits・isFullModeの4種類で、`tokens`は型拡張の対象外（値マップの実行時登録のみ）。
 7. `purge:true`時は、設定反映済みの`full.css`からknown selectorを作る。
    configで追加したクラスもpurge対象として扱える。
 

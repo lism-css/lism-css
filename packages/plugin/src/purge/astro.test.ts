@@ -21,6 +21,12 @@ function getBuildDoneHook(integration: ReturnType<typeof lismPurgeAstro>) {
   return hook;
 }
 
+function getConfigDoneHook(integration: ReturnType<typeof lismPurgeAstro>) {
+  const hook = integration.hooks['astro:config:done'];
+  if (!hook) throw new Error('astro:config:done hook not found');
+  return hook;
+}
+
 async function fileExists(path: string): Promise<boolean> {
   try {
     await stat(path);
@@ -124,6 +130,33 @@ describe('lismPurgeAstro (Astro)', () => {
     }
   });
 
+  test('8 文字未満の末尾を持つファイル名はハッシュ扱いせず in-place で上書きされる（リネームなし）', async () => {
+    const dir = await setupDist({
+      'theme.mobile.css': `.l--stack{display:flex}.l--unused{display:grid}`,
+      'index.html': `<div class="l--stack"></div>`,
+    });
+    try {
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack', 'l--unused']), attrs: new Set() },
+      });
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+
+      expect(await fileExists(join(dir, 'theme.mobile.css'))).toBe(true);
+      const cssAfter = await readFile(join(dir, 'theme.mobile.css'), 'utf8');
+      expect(cssAfter).toContain('l--stack');
+      expect(cssAfter).not.toContain('l--unused');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
   test('JS / manifest 内の CSS ファイル参照もリネームに同期する', async () => {
     const cssOriginal = `.l--grid{display:grid}.l--unused{display:flex}`;
     const dir = await setupDist({
@@ -189,6 +222,86 @@ describe('lismPurgeAstro (Astro)', () => {
       expect(cssAfter).not.toContain('sourceMappingURL');
       expect(entries.some((f) => f.endsWith('.css.map'))).toBe(false);
       expect(await fileExists(join(dir, '_astro/main.AAAA1111.css.map'))).toBe(false);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  test('server ビルドでは server 出力も走査され、SSR ページのみのクラスが保持・参照書き換えされる', async () => {
+    // serverビルドを模倣: dir(=client) には prerender 済み HTML、server にはオンデマンドページのチャンク
+    const cssOriginal = `.l--stack{display:flex}.l--switch{display:grid}.l--unused{display:block}`;
+    const dir = await setupDist({
+      'client/_astro/main.AAAA1111.css': cssOriginal,
+      'client/index.html': `<link rel="stylesheet" href="/_astro/main.AAAA1111.css"><div class="l--stack"></div>`,
+      'server/chunks/ssr-page.mjs': `const $$Ssr = '<div class="l--switch"></div>';`,
+      'server/chunks/manifest.mjs': `const assets = ["/_astro/main.AAAA1111.css"];`,
+    });
+    try {
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack', 'l--switch', 'l--unused']), attrs: new Set() },
+      });
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await getConfigDoneHook(integration)({
+        config: { build: { server: pathToFileURL(join(dir, 'server') + '/') } },
+        buildOutput: 'server',
+        logger,
+      } as never);
+      await getBuildDoneHook(integration)({
+        dir: pathToFileURL(join(dir, 'client') + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+
+      const entries = await readdir(join(dir, 'client/_astro'));
+      const newName = entries.filter((f) => f.endsWith('.css'))[0];
+      expect(newName).not.toBe('main.AAAA1111.css');
+
+      // server チャンクのみで使われる l--switch が保持される（over-purge しない）
+      const cssAfter = await readFile(join(dir, 'client/_astro', newName), 'utf8');
+      expect(cssAfter).toContain('l--stack');
+      expect(cssAfter).toContain('l--switch');
+      expect(cssAfter).not.toContain('l--unused');
+
+      // server 側 manifest の CSS 参照も新ファイル名に更新される（CSS 404 を防ぐ）
+      const manifestAfter = await readFile(join(dir, 'server/chunks/manifest.mjs'), 'utf8');
+      expect(manifestAfter).toContain(newName);
+      expect(manifestAfter).not.toContain('main.AAAA1111.css');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  test('static ビルドでは server 出力は走査されない', async () => {
+    // buildOutput が 'static' なら config.build.server 配下にファイルがあっても対象外（従来挙動の維持）
+    const dir = await setupDist({
+      'client/_astro/main.AAAA1111.css': `.l--stack{display:flex}.l--switch{display:grid}`,
+      'client/index.html': `<link rel="stylesheet" href="/_astro/main.AAAA1111.css"><div class="l--stack"></div>`,
+      'server/chunks/leftover.mjs': `const html = '<div class="l--switch"></div>';`,
+    });
+    try {
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack', 'l--switch']), attrs: new Set() },
+      });
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await getConfigDoneHook(integration)({
+        config: { build: { server: pathToFileURL(join(dir, 'server') + '/') } },
+        buildOutput: 'static',
+        logger,
+      } as never);
+      await getBuildDoneHook(integration)({
+        dir: pathToFileURL(join(dir, 'client') + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+
+      // server/ は走査されないため、l--switch は unused として削除される
+      const entries = await readdir(join(dir, 'client/_astro'));
+      const newName = entries.filter((f) => f.endsWith('.css'))[0];
+      const cssAfter = await readFile(join(dir, 'client/_astro', newName), 'utf8');
+      expect(cssAfter).toContain('l--stack');
+      expect(cssAfter).not.toContain('l--switch');
     } finally {
       await rm(dir, { recursive: true, force: true });
     }

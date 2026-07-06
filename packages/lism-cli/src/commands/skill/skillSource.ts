@@ -3,15 +3,15 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { downloadTemplate } from 'giget';
-import { DEFAULT_SKILL_REF, SKILL_SOURCE_PATH, SOURCE_REPO } from '../../constants.js';
+import { DEFAULT_SKILL_REF, SKILL_SOURCE_BASE, SOURCE_REPO, type SkillName } from '../../constants.js';
 
 /**
- * 指定 ref のスキルをリモートから取得し、展開先ディレクトリパスを返す。
+ * 指定スキル・ref をリモート（`skills/{name}`）から取得し、展開先ディレクトリパスを返す。
  * 呼び出し側は使用後に `cleanupTempDir` で削除する責務を持つ。
  */
-export async function fetchSkillSource(ref: string = DEFAULT_SKILL_REF): Promise<{ dir: string; ref: string }> {
+export async function fetchSkillSource(skillName: SkillName, ref: string = DEFAULT_SKILL_REF): Promise<{ dir: string; ref: string }> {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-skill-'));
-  await downloadTemplate(`github:${SOURCE_REPO}/${SKILL_SOURCE_PATH}#${ref}`, {
+  await downloadTemplate(`github:${SOURCE_REPO}/${SKILL_SOURCE_BASE}/${skillName}#${ref}`, {
     dir: tmpDir,
     force: true,
     forceClean: true,

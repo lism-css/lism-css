@@ -3,7 +3,7 @@ title: 'lism.config.js でのカスタマイズ'
 description: 'lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。'
 ---
 
-プロジェクトのルートディレクトリ直下に `lism.config.js`（または `lism.config.mjs`）を用意することで、スタイルではなくコンポーネントの挙動をカスタマイズすることができます。
+プロジェクトのルートディレクトリ直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を用意することで、スタイルではなくコンポーネントの挙動をカスタマイズすることができます。
 
 
 ## Vite / Astro プラグインの登録（必須）
@@ -45,7 +45,7 @@ export default defineConfig({
 Next.js では Vite / Astro プラグインの代わりに、`@lism-css/plugin/next` の `withLism()` を使います。セットアップ手順は[インストールの「Next.js での導入」](/docs/installation/#nextjs-での導入)を参照してください。
 :::
 
-プラグインはプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所のファイルを使う場合は `configPath` オプションでパスを指定できます。
+プラグインはプロジェクトルートから `lism.config.ts` → `lism.config.mjs` → `lism.config.js` の順で自動検出します。別の場所のファイルを使う場合は `configPath` オプションでパスを指定できます。
 
 ```js
 integrations: [lismCss({ configPath: './config/lism.config.js' })],
@@ -73,6 +73,43 @@ export default {
   },
 };
 ```
+
+
+## 型サポート（LismConfig）
+
+`lism-css/config-types` から `LismConfig` 型を読み込むと、設定ファイルのキー名や値の形をエディタが補完・チェックしてくれます。`props` を `porps` とタイプミスした、といった間違いをその場で見つけられます。
+
+`lism.config.ts` では `satisfies LismConfig` を付けるのがおすすめです。型チェックが効きつつ、書いた内容（追加した prop / token のキーなど）の具体的な型はそのまま保たれます。
+
+```ts
+// lism.config.ts
+import type { LismConfig } from 'lism-css/config-types';
+
+export default {
+  props: {
+    filter: { utils: { blur: 'blur(3px)' } },
+  },
+  breakpoints: {
+    xs: '360px',
+  },
+} satisfies LismConfig;
+```
+
+`lism.config.js`（JavaScript）でも、JSDoc の `@type` を付ければ同じように補完・チェックが効きます。
+
+```js
+// lism.config.js
+/** @type {import('lism-css/config-types').LismConfig} */
+export default {
+  props: {
+    filter: { utils: { blur: 'blur(3px)' } },
+  },
+};
+```
+
+:::note[`lism-env.d.ts` とは別物です]
+ここで使う `LismConfig` は「**設定ファイルを書くとき**」の型です。統合プラグインが生成する `lism-env.d.ts`（追加した prop / trait を**コンポーネント側の props**で解禁する型）とは役割が異なります。両方を併用することで、設定ファイルの執筆時とコンポーネント利用時の両方で型の恩恵を受けられます。
+:::
 
 <Preview>
   <PreviewTitle>デフォルト値</PreviewTitle>

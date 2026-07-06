@@ -1,14 +1,16 @@
 import { Command } from 'commander';
 import { createUiCommand } from './commands/ui/index.js';
+import { applyUiSectionOptions } from './commands/ui/uiSectionOptions.js';
 import { createSkillCommand } from './commands/skill/index.js';
 import { createCommand } from './commands/create.js';
+import { initCommand } from './commands/init.js';
 import { CLI_VERSION } from './version.js';
 import { setLang, t } from './i18n.js';
 
-/** `lism` エントリの CLI プログラムを構築して返す（parse は呼ばない）。 */
+/** `lism-cli` エントリの CLI プログラムを構築して返す（parse は呼ばない）。 */
 export function createLismProgram(): Command {
   const program = new Command();
-  program.name('lism').description(t('cli.description')).version(CLI_VERSION).option('--lang <code>', t('cli.opt.lang'));
+  program.name('lism-cli').description(t('cli.description')).version(CLI_VERSION).option('--lang <code>', t('cli.opt.lang'));
 
   // `--lang` が指定されたら各コマンド実行直前に言語を切り替える。
   // commander は --lang をルートプログラムで解釈するため、サブコマンドからも opts() で取れる。
@@ -25,6 +27,9 @@ export function createLismProgram(): Command {
     .option('-t, --template <name>', t('cli.create.opt.template'))
     .option('-f, --force', t('cli.create.opt.force'), false)
     .action(createCommand);
+
+  const init = program.command('init').description(t('cli.init.description'));
+  applyUiSectionOptions(init).action(initCommand);
 
   program.addCommand(createUiCommand());
   program.addCommand(createSkillCommand());

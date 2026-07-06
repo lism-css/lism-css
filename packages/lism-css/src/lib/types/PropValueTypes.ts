@@ -2,6 +2,7 @@ import { TOKENS, PROPS } from '../../../config/index';
 import type { WithArbitraryString, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 import type { MakeResponsive } from './ResponsiveProps';
 import type { FullModeRegistry } from './FullModeRegistry';
+import type { CustomPropValueRegistry } from './CustomPropValueRegistry';
 
 type PropsConfig = typeof PROPS;
 type TokensConfig = typeof TOKENS;
@@ -58,17 +59,26 @@ type ExtractTokenValues<T> =
  */
 type ExtractPropValues<T> = ExtractArrayValues<T, 'presets'> | ExtractObjectKeys<T, 'utils'> | ExtractTokenValues<T>;
 
+/**
+ * lism.config.js で既定 prop へ追加された値（{@link CustomPropValueRegistry} の拡張分）を取得。
+ * 拡張が無い prop は never（defaults 由来の型のまま）。
+ */
+type UserPropValues<K> = K extends keyof CustomPropValueRegistry ? Extract<CustomPropValueRegistry[K], string> : never;
+
 // ============================================================
 // プロパティ値の型決定
 // ============================================================
 
 /**
  * プロパティの設定から値の型を決定
- * - presets/utils/token がある場合: 具体的な値 + 任意文字列 + number | boolean | null
+ * - presets/utils/token（+ user 追加分）がある場合: 具体的な値 + 任意文字列 + number | boolean | null
  * - ない場合: string | number（フォールバック）
+ *
+ * `[X] extends [never]` の tuple ラップで ExtraValues（naked 型パラメータ）の分配を防ぐ。
  */
-type PropValueType<T> =
-  ExtractPropValues<T> extends never ? string | number | boolean : WithArbitraryString<ExtractPropValues<T>> | number | boolean | null;
+type PropValueType<T, ExtraValues = never> = [ExtractPropValues<T> | ExtraValues] extends [never]
+  ? string | number | boolean
+  : WithArbitraryString<ExtractPropValues<T> | ExtraValues> | number | boolean | null;
 
 // ============================================================
 // ブレイクポイント対応の判定
@@ -106,14 +116,14 @@ type PropsWithoutBreakpoint = Exclude<AllPropKeys, PropsWithBreakpoint>;
  * bp が有効なプロパティの型（レスポンシブ対応あり）
  */
 export type ResponsivePropValueTypes = {
-  [K in PropsWithBreakpoint]?: PropValueType<PropsConfig[K]>;
+  [K in PropsWithBreakpoint]?: PropValueType<PropsConfig[K], UserPropValues<K>>;
 };
 
 /**
  * bp が無効なプロパティの型（レスポンシブ対応なし）
  */
 export type NonResponsivePropValueTypes = {
-  [K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
+  [K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K], UserPropValues<K>>;
 };
 
 /** defaults 由来の Props 型（full モード未適用時のデフォルト） */
@@ -148,9 +158,9 @@ type FullPropsWithoutBreakpoint = Exclude<AllPropKeys, FullPropsWithBreakpoint>;
 
 /** full モード適用時の Props 型（isVar 系を除く全 props がレスポンシブ） */
 type FullPropValueTypes = MakeResponsive<{
-  [K in FullPropsWithBreakpoint]?: PropValueType<PropsConfig[K]>;
+  [K in FullPropsWithBreakpoint]?: PropValueType<PropsConfig[K], UserPropValues<K>>;
 }> & {
-  [K in FullPropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
+  [K in FullPropsWithoutBreakpoint]?: PropValueType<PropsConfig[K], UserPropValues<K>>;
 };
 
 /**

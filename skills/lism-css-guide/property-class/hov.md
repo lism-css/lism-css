@@ -2,17 +2,15 @@
 
 hover 時の挙動を制御する Property Class。`:hover` 擬似クラスで動作する系と、親の `set--hov` に連動する系の 2 系統に分かれる。
 
-## 基本情報
-
 - クラス名: `-hov:-{prop}` / `-hov:{preset}` / `-hov:in:{preset}`
 - Lism props: `hov`（`<Lism hov="-c">` / `<Box hov={{ bgc: 'brand' }}>` 等）
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/props/_hover.scss
-- 公式ドキュメント: https://lism-css.com/docs/property-class/hov.md
+
+公式ドキュメント（使い方・コード例）: https://lism-css.com/docs/property-class/hov.md
 
 ## 3 つの形式
 
 | 形式 | 役割 |
-|------|------|
+| --- | --- |
 | `-hov:-{prop}` | `--hov-{prop}` 変数を受け取り、hover 時に該当プロパティを変化させる |
 | `-hov:{preset}` | hover 時のスタイルセットをプリセット名でまとめて適用する |
 | `-hov:in:{preset}` | 親要素の `set--hov` を起点に、子要素のスタイルを変化させる |
@@ -27,7 +25,7 @@ hover 時の挙動を制御する Property Class。`:hover` 擬似クラスで�
 `:hover` で直接動作する。クラスを付けるだけで初期値で変化する。
 
 | クラス | 変化するプロパティ | 初期値 |
-|--------|----------------------|--------|
+| --- | --- | --- |
 | `-hov:-c` | `color` | `var(--hov-c, var(--link))` |
 | `-hov:-bdc` | `border-color` | `var(--hov-bdc, currentColor)` |
 | `-hov:-bgc` | `background-color` | `var(--hov-bgc, var(--hov-bgc--default, color-mix(in srgb, var(--bgc, var(--base)), var(--neutral) 25%)))` |
@@ -40,101 +38,44 @@ hover 時の挙動を制御する Property Class。`:hover` 擬似クラスで�
 
 プロジェクト全体で `-hov:-bgc` のデフォルト値を差し替えたい場合は、`:root` 等で `--hov-bgc--default` を定義する。フォールバック順は `--hov-bgc`（要素ごとの明示指定）→ `--hov-bgc--default`（プロジェクト全体）→ `color-mix(...)`（フレームワーク既定）の 3 段。
 
-```html
-<!-- 初期値のまま使用 -->
-<a class="is--boxLink -hov:-o -bgc:base-2 -bd -p:20" href="###">...</a>
-
-<!-- 任意値を指定 -->
-<a class="is--boxLink -hov:-bgc -hov:-c -bgc:base-2 -p:20"
-   style="--hov-bgc: var(--brand); --hov-c: var(--white)" href="###">...</a>
-```
-
 ## `-hov:{preset}` — プリセット
 
 hover 時のスタイルセットをプリセット名でまとめて適用する。
 
 | クラス | 内容 |
-|--------|------|
+| --- | --- |
 | `-hov:underline` | テキストに下線を表示 |
 
-プロジェクト固有のプリセットは、以下のように自作して追加できる。
-
-```scss
-@media (any-hover: hover) {
-  .-hov\:shadowUp:hover {
-    box-shadow: var(--bxsh--40);
-    translate: 0 -3px;
-  }
-}
-```
+プロジェクト固有のプリセットを自作して追加することもできる（実装例は公式ドキュメント参照）。
 
 ## `-hov:in:{preset}` — 親連動
 
 親要素に `set--hov` を付けると、`--_isHov` / `--_notHov` 変数が hover 状態に応じて切り替わる。`-hov:in:*` はこの変数を参照する仕組み。
 
 | クラス | 効果 | 仕組み |
-|--------|------|--------|
+| --- | --- | --- |
 | `-hov:in:hide` | 親 hover 時にフェードアウト | `opacity: var(--_isHov, 0)` |
 | `-hov:in:show` | 親 hover 時にフェードイン | `opacity: var(--_notHov, 0)` / `visibility: var(--_notHov, hidden)` |
 | `-hov:in:zoom` | 親 hover 時にズーム | `scale: var(--_isHov, 1.1)` |
-
-```jsx
-<Frame set="hov" isBoxLink href="#" ar="16/9">
-  <Media isLayer hasTransition hov="in:zoom" src="..." />
-  <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)">...</Layer>
-</Frame>
-```
 
 ## `<Lism>` コンポーネントでの `hov` 指定
 
 `<Lism>`（およびその継承コンポーネント）の `hov` prop は、文字列・オブジェクトの 2 通りで指定できる。
 
-### 文字列指定
-
-入力した文字列がそのまま `-hov:{入力文字列}` クラスとして出力される。カンマ区切りで複数指定可能。**自動変換は行われない**（`"c"` → `-hov:-c` のような省略はサポートしない）。
-
-```jsx
-<Lism hov="-o">...</Lism>
-// → <div class="-hov:-o">...</div>
-
-<Lism hov="shadowUp">...</Lism>
-// → <div class="-hov:shadowUp">...</div>
-
-<Lism hov="-c,-bxsh">...</Lism>
-// → <div class="-hov:-c -hov:-bxsh">...</div>
-```
-
-### オブジェクト指定
-
-主に `-hov:-{prop}` に任意の値を渡す用途。`hov={{ prop: value }}` で `-hov:-{prop}` クラス + `--hov-{prop}` 変数を出力。
+- **文字列指定**: 入力した文字列がそのまま `-hov:{入力文字列}` クラスとして出力される。カンマ区切りで複数指定可。**自動変換は行われない**（`"c"` → `-hov:-c` のような省略はサポートしない）。
+- **オブジェクト指定**: 主に `-hov:-{prop}` へ任意の値を渡す用途。`hov={{ prop: value }}` で `-hov:-{prop}` クラス + `--hov-{prop}` 変数を出力。値に `true` を指定すると `-hov:{key}` クラスのみ出力され、任意値プロップとプリセット／自作クラスを同時に指定できる。
 
 ```jsx
-<Lism hov={{ c: 'red' }}>...</Lism>
-// → <div class="-hov:-c" style="--hov-c: var(--red)">...</div>
-```
-
-値に `true` を指定すると `-hov:{key}` クラスのみ出力される。任意値プロップとプリセット／自作クラスを**同時に**指定したい時に使う。
-
-```jsx
-<Lism hov={{ shadowUp: true }}>...</Lism>
-// → <div class="-hov:shadowUp">...</div>
-
-<Lism hov={{ c: 'red', shadowUp: true }}>...</Lism>
-// → <div class="-hov:-c -hov:shadowUp" style="--hov-c: var(--red)">...</div>
+// 文字列指定（自動変換なし）
+<Lism hov="-c,-bxsh">  // → <div class="-hov:-c -hov:-bxsh">
+// オブジェクト指定（任意値 → クラス + 変数）
+<Lism hov={{ c: 'red', shadowUp: true }}>
+// → <div class="-hov:-c -hov:shadowUp" style="--hov-c: var(--red)">
 ```
 
 ## `has--transition` との併用
 
 `-hov:*` による変化は即時に切り替わる。なめらかなトランジションを付けたい場合は `has--transition` を併用し、`--duration` で所要時間を調整する。
-
-```jsx
-<BoxLink href="###" hasTransition bxsh="10" hov={{ bxsh: '40' }} bd p="20">...</BoxLink>
-// → <a class="is--boxLink has--transition -bxsh:10 -hov:-bxsh -bd -p:20"
-//      style="--hov-bxsh: var(--bxsh--40)" href="###">...</a>
-
-<BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd p="20"
-         style={{ '--duration': '.5s' }}>...</BoxLink>
-```
 
 ## 関連
 

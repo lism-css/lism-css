@@ -23,118 +23,118 @@ describe('getInvokeCommand', () => {
   describe('ローカル dependency からの実行', () => {
     it('npm/npx が解決したローカル node_modules/.bin から起動 → npx lism-cli', () => {
       setCwd('/Users/me/project');
-      setScriptPath('/Users/me/project/node_modules/.bin/lism');
+      setScriptPath('/Users/me/project/node_modules/.bin/lism-cli');
       vi.stubEnv('npm_config_user_agent', 'npm/10.2.4 node/v20.11.0 darwin x64');
       expect(getInvokeCommand()).toBe('npx lism-cli');
     });
 
     it('Windows 形式のローカル node_modules/.bin から起動 → npx lism-cli', () => {
       setCwd('C:\\Users\\me\\project');
-      setScriptPath('C:\\Users\\me\\project\\node_modules\\.bin\\lism');
+      setScriptPath('C:\\Users\\me\\project\\node_modules\\.bin\\lism-cli');
       expect(getInvokeCommand()).toBe('npx lism-cli');
     });
 
-    it('pnpm exec 経由のローカル起動 → pnpm exec lism', () => {
+    it('pnpm exec 経由のローカル起動 → pnpm exec lism-cli', () => {
       setCwd('/Users/me/project');
-      setScriptPath('/Users/me/project/node_modules/.bin/lism');
+      setScriptPath('/Users/me/project/node_modules/.bin/lism-cli');
       vi.stubEnv('npm_config_user_agent', 'pnpm/9.0.0 npm/? node/v20.0.0 darwin x64');
-      expect(getInvokeCommand()).toBe('pnpm exec lism');
+      expect(getInvokeCommand()).toBe('pnpm exec lism-cli');
     });
 
-    it('Windows で pnpm exec 経由に多い .mjs 直接起動 → pnpm exec lism', () => {
-      // Windows の .cmd シムは node_modules/lism-cli/bin/lism.mjs を直接呼ぶ
+    it('Windows で pnpm exec 経由に多い .mjs 直接起動 → pnpm exec lism-cli', () => {
+      // Windows の .cmd シムは node_modules/lism-cli/bin/lism-cli.mjs を直接呼ぶ
       setCwd('C:\\Users\\me\\project');
-      setScriptPath('C:\\Users\\me\\project\\node_modules\\lism-cli\\bin\\lism.mjs');
+      setScriptPath('C:\\Users\\me\\project\\node_modules\\lism-cli\\bin\\lism-cli.mjs');
       vi.stubEnv('npm_config_user_agent', 'pnpm/9.0.0 npm/? node/v20.0.0 win32 x64');
-      expect(getInvokeCommand()).toBe('pnpm exec lism');
+      expect(getInvokeCommand()).toBe('pnpm exec lism-cli');
     });
 
-    it('yarn 経由のローカル起動 → yarn lism', () => {
+    it('yarn 経由のローカル起動 → yarn lism-cli', () => {
       setCwd('/Users/me/project');
-      setScriptPath('/Users/me/project/node_modules/.bin/lism');
+      setScriptPath('/Users/me/project/node_modules/.bin/lism-cli');
       vi.stubEnv('npm_config_user_agent', 'yarn/4.0.0 npm/? node/v20.0.0 darwin x64');
-      expect(getInvokeCommand()).toBe('yarn lism');
+      expect(getInvokeCommand()).toBe('yarn lism-cli');
     });
 
-    it('bun 経由のローカル起動 → bun run lism', () => {
+    it('bun 経由のローカル起動 → bun run lism-cli', () => {
       setCwd('/Users/me/project');
-      setScriptPath('/Users/me/project/node_modules/.bin/lism');
+      setScriptPath('/Users/me/project/node_modules/.bin/lism-cli');
       vi.stubEnv('npm_config_user_agent', 'bun/1.1.0 npm/? node/v20.0.0 darwin x64');
-      expect(getInvokeCommand()).toBe('bun run lism');
+      expect(getInvokeCommand()).toBe('bun run lism-cli');
     });
 
     it('ローカル起動で PM 情報が取れない場合は npx lism-cli にフォールバック', () => {
       setCwd('/Users/me/project');
-      setScriptPath('/Users/me/project/node_modules/lism-cli/bin/lism.mjs');
+      setScriptPath('/Users/me/project/node_modules/lism-cli/bin/lism-cli.mjs');
       expect(getInvokeCommand()).toBe('npx lism-cli');
     });
 
-    it('ワークスペース配下のサブディレクトリから親の node_modules を参照したローカル起動 → pnpm exec lism', () => {
+    it('ワークスペース配下のサブディレクトリから親の node_modules を参照したローカル起動 → pnpm exec lism-cli', () => {
       setCwd('/Users/me/project/packages/app');
-      setScriptPath('/Users/me/project/node_modules/.bin/lism');
+      setScriptPath('/Users/me/project/node_modules/.bin/lism-cli');
       vi.stubEnv('npm_config_user_agent', 'pnpm/9.0.0 npm/? node/v20.0.0 darwin x64');
-      expect(getInvokeCommand()).toBe('pnpm exec lism');
+      expect(getInvokeCommand()).toBe('pnpm exec lism-cli');
     });
   });
 
   describe('グローバル install', () => {
-    it('PM 情報なし、dlx キャッシュでもローカル dependency でもない → lism', () => {
-      setScriptPath('/usr/local/bin/lism');
-      expect(getInvokeCommand()).toBe('lism');
+    it('PM 情報なし、dlx キャッシュでもローカル dependency でもない → lism-cli', () => {
+      setScriptPath('/usr/local/bin/lism-cli');
+      expect(getInvokeCommand()).toBe('lism-cli');
     });
 
-    it('ua=pnpm でもパスがローカル dependency / dlx でない → lism', () => {
-      setScriptPath('/Users/me/.local/share/pnpm/lism');
+    it('ua=pnpm でもパスがローカル dependency / dlx でない → lism-cli', () => {
+      setScriptPath('/Users/me/.local/share/pnpm/lism-cli');
       vi.stubEnv('npm_config_user_agent', 'pnpm/9.0.0 npm/? node/v20.0.0 darwin x64');
-      expect(getInvokeCommand()).toBe('lism');
+      expect(getInvokeCommand()).toBe('lism-cli');
     });
 
-    it('グローバル格納先の node_modules/lism-cli/bin/lism.mjs 直接起動 → lism', () => {
+    it('グローバル格納先の node_modules/lism-cli/bin/lism-cli.mjs 直接起動 → lism-cli', () => {
       setCwd('/Users/me/project');
-      setScriptPath('/usr/local/lib/node_modules/lism-cli/bin/lism.mjs');
-      expect(getInvokeCommand()).toBe('lism');
+      setScriptPath('/usr/local/lib/node_modules/lism-cli/bin/lism-cli.mjs');
+      expect(getInvokeCommand()).toBe('lism-cli');
     });
   });
 
   describe('一時実行（npx / dlx / bunx）', () => {
     it('npm の npx（macOS の _npx キャッシュ）→ npx lism-cli', () => {
-      setScriptPath('/Users/me/.npm/_npx/abc123/node_modules/lism-cli/bin/lism.mjs');
+      setScriptPath('/Users/me/.npm/_npx/abc123/node_modules/lism-cli/bin/lism-cli.mjs');
       vi.stubEnv('npm_config_user_agent', 'npm/10.2.4 node/v20.11.0 darwin x64');
       expect(getInvokeCommand()).toBe('npx lism-cli');
     });
 
     it('npm の npx（Windows の _npx キャッシュ）→ npx lism-cli', () => {
-      setScriptPath('C:\\Users\\me\\AppData\\Local\\npm-cache\\_npx\\abc123\\node_modules\\lism-cli\\bin\\lism.mjs');
+      setScriptPath('C:\\Users\\me\\AppData\\Local\\npm-cache\\_npx\\abc123\\node_modules\\lism-cli\\bin\\lism-cli.mjs');
       vi.stubEnv('npm_config_user_agent', 'npm/10.2.4 node/v20.11.0 win32 x64');
       expect(getInvokeCommand()).toBe('npx lism-cli');
     });
 
     it('pnpm dlx（dlx-xxx ディレクトリ + ua=pnpm）→ pnpm dlx lism-cli', () => {
-      setScriptPath('/Users/me/Library/Caches/pnpm/dlx-abc123/node_modules/lism-cli/bin/lism.mjs');
+      setScriptPath('/Users/me/Library/Caches/pnpm/dlx-abc123/node_modules/lism-cli/bin/lism-cli.mjs');
       vi.stubEnv('npm_config_user_agent', 'pnpm/9.0.0 npm/? node/v20.0.0 darwin x64');
       expect(getInvokeCommand()).toBe('pnpm dlx lism-cli');
     });
 
     it('pnpm dlx（Windows パス）→ pnpm dlx lism-cli', () => {
-      setScriptPath('C:\\Users\\me\\AppData\\Local\\pnpm\\store\\v3\\dlx-xyz\\node_modules\\lism-cli\\bin\\lism.mjs');
+      setScriptPath('C:\\Users\\me\\AppData\\Local\\pnpm\\store\\v3\\dlx-xyz\\node_modules\\lism-cli\\bin\\lism-cli.mjs');
       vi.stubEnv('npm_config_user_agent', 'pnpm/9.0.0 npm/? node/v20.0.0 win32 x64');
       expect(getInvokeCommand()).toBe('pnpm dlx lism-cli');
     });
 
     it('yarn berry dlx → yarn dlx lism-cli', () => {
-      setScriptPath('/Users/me/project/.yarn/berry/cache/lism-cli-npm-0.3.0/node_modules/lism-cli/bin/lism.mjs');
+      setScriptPath('/Users/me/project/.yarn/berry/cache/lism-cli-npm-0.3.0/node_modules/lism-cli/bin/lism-cli.mjs');
       vi.stubEnv('npm_config_user_agent', 'yarn/4.0.0 npm/? node/v20.0.0 darwin x64');
       expect(getInvokeCommand()).toBe('yarn dlx lism-cli');
     });
 
     it('bunx（.bun/install/cache 配下 + ua=bun）→ bunx lism-cli', () => {
-      setScriptPath('/Users/me/.bun/install/cache/lism-cli@0.3.0/bin/lism.mjs');
+      setScriptPath('/Users/me/.bun/install/cache/lism-cli@0.3.0/bin/lism-cli.mjs');
       vi.stubEnv('npm_config_user_agent', 'bun/1.1.0 npm/? node/v20.0.0 darwin x64');
       expect(getInvokeCommand()).toBe('bunx lism-cli');
     });
 
     it('dlx キャッシュ配下だが ua が取れない場合は npx lism-cli にフォールバック', () => {
-      setScriptPath('/Users/me/.npm/_npx/abc123/node_modules/lism-cli/bin/lism.mjs');
+      setScriptPath('/Users/me/.npm/_npx/abc123/node_modules/lism-cli/bin/lism-cli.mjs');
       expect(getInvokeCommand()).toBe('npx lism-cli');
     });
   });

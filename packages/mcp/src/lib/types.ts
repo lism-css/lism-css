@@ -1,23 +1,6 @@
-export interface MetaInfo {
-  generatedAt: string;
-  sourceCommit: string;
-  docsVersion: string;
-}
+import type { z } from 'zod';
+import type { MetaInfoSchema, DocsEntrySchema, SearchResultSchema } from './schemas.js';
 
-export interface SearchResult {
-  sourcePath: string;
-  url: string;
-  heading: string;
-  snippet: string;
-  score: number;
-}
-
-export interface DocsEntry {
-  sourcePath: string;
-  title: string;
-  description: string;
-  category: string;
-  headings: string[];
-  keywords: string[];
-  snippet: string;
-}
+export type MetaInfo = z.infer<typeof MetaInfoSchema>;
+export type SearchResult = z.infer<typeof SearchResultSchema>;
+export type DocsEntry = z.infer<typeof DocsEntrySchema>;

@@ -44,7 +44,7 @@ import 'lism-css/main_no_layer.css';
 ### 上書き可能な変数
 
 | 変数 | 用途 | デフォルト |
-|------|------|-----------|
+| --- | --- | --- |
 | `$breakpoints` | ブレイクポイント数値の定義（`0` は無効＝クエリを出力しない） | `('xs': 0, 'sm': '480px', 'md': '800px', 'lg': '1120px', 'xl': 0)` |
 | `$is_container_query` | コンテナクエリで出力するか（`1` = container query, `0` = media query） | `1` |
 | `$default_important` | Property Class にデフォルトで `!important` を付与するか | `0` |
@@ -102,7 +102,9 @@ SCSS を直接読み込む構成では、コンパイル時に `lism-css` 本体
 
 ## `lism.config.js` でのカスタマイズ
 
-プロジェクトのルート直下に `lism.config.js`（または `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
+プロジェクトのルート直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
+
+設定ファイルの型チェック・補完には `lism-css/config-types` の `LismConfig` 型を使います。`.ts` は `export default { ... } satisfies LismConfig`、`.js` は `/** @type {import('lism-css/config-types').LismConfig} */` を付けると、キー名の typo や値の形をエディタが検出します（コンポーネント側の prop/trait を解禁する生成物 `lism-env.d.ts` とは別物）。
 
 ### Vite / Astro プラグインの登録（推奨セットアップ）
 
@@ -138,7 +140,7 @@ export default defineConfig({
 - **動的CSSビルド**: `import 'lism-css/main.css'` 等を捕捉し、`lism.config.js` を反映済みの CSS をその場で生成する（props / tokens を追加すると CSS に自動反映される）
 - **型の自動生成**: 有効化したブレイクポイント・追加した props / traits を反映した `lism-env.d.ts` を起動時に自動生成する
 
-`lism.config.js` はプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所に置く場合は `configPath` で指定できます。
+設定ファイルはプロジェクトルートから `lism.config.ts` → `lism.config.mjs` → `lism.config.js` の順で自動検出します。別の場所に置く場合は `configPath` で指定できます。
 
 ```js
 // Vite
@@ -240,7 +242,7 @@ export default {
 これによってコンポーネント側で次のような挙動が追加されます：
 
 | 入力 | 出力されるクラス |
-|------|----------------|
+| --- | --- |
 | `ta="justify"` | `-ta:justify` |
 | `p="box"` | `-p:box` |
 | `filter="blur"` | `-filter:blur` |
@@ -254,7 +256,7 @@ export default {
 
 ### 追加した prop / trait の型解禁
 
-統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した **prop / trait も `lism-env.d.ts` 経由で型側に自動解禁**されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
+統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した **prop / trait も `lism-env.d.ts` 経由で型側に自動解禁**されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です。
 
 なお、既存 prop への値追加（`ta="justify"` 等）はもともと任意の文字列を受け付けるため、型エラーにはなりません（ただし補完候補には出ません）。
 

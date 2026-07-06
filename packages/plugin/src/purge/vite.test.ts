@@ -117,6 +117,22 @@ describe('lismPurge (Vite)', () => {
     expect((bundle['assets/app.js'] as { code: string }).code).not.toContain('main-AAAA1111.css');
   });
 
+  test('ハッシュ無し CSS asset はリネームされない（8 文字未満の末尾はハッシュ扱いしない）', async () => {
+    const plugin = lismPurge({ known });
+    const bundle: Record<string, unknown> = {
+      'assets/my-styles.css': {
+        type: 'asset',
+        fileName: 'assets/my-styles.css',
+        source: '.-p\\:20{padding:var(--s20)}.-m\\:10{margin:var(--s10)}',
+      },
+    };
+    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
+
+    expect(bundle['assets/my-styles.css']).toBeDefined();
+    expect((bundle['assets/my-styles.css'] as { fileName: string }).fileName).toBe('assets/my-styles.css');
+  });
+
   test('リネーム時に chunk.viteMetadata.importedCss と manifest.json の参照も同期する', async () => {
     const plugin = lismPurge({ known });
     const importedCss = new Set<string>(['assets/main-AAAA1111.css']);

@@ -10,6 +10,9 @@ const skillsDir = resolve(__dirname, '..', '..', '..', '..', 'skills', 'lism-css
 const distDir = resolve(__dirname, '..', 'data', 'guides');
 const guidesDir = existsSync(skillsDir) ? skillsDir : distDir;
 
+/** skills/ を直接参照しているか（= モノレポ開発時）。npm 配布物（dist/data/guides/）を使っている場合は false。 */
+export const isRunningFromSource = guidesDir === skillsDir;
+
 const cache = new Map<string, string>();
 
 /** guides/ ディレクトリから Markdown ファイルを読み込む（キャッシュ付き）。
@@ -20,6 +23,16 @@ export function loadMarkdown(filename: string): string {
   const content = readFileSync(filePath, 'utf-8');
   cache.set(filename, content);
   return content;
+}
+
+// Prop 検索・変換で参照するファイル群。
+// 全 Prop の実テーブルは property-class/all-props.md に分冊されているため、
+// property-class.md 単体では bd 系などの一部しか拾えない（#474）。
+const PROP_SOURCE_FILES = ['property-class.md', 'property-class/all-props.md'];
+
+/** Prop 検索用の Markdown（property-class.md + 分冊の all-props.md）を結合して返す */
+export function loadPropsMarkdown(): string {
+  return PROP_SOURCE_FILES.map((filename) => loadMarkdown(filename)).join('\n\n');
 }
 
 /** guidesDir 配下を再帰的に走査し、`.md` ファイルの相対パス（posix 区切り）を返す */

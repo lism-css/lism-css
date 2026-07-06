@@ -58,3 +58,37 @@ import { Lism, Media } from 'lism-css/astro';
 `<Lism>`が受け取る Lism CSS 専用プロパティ（**Lism Props**）については、別ページで詳しく解説しています。
 
 <DocsLink path="/docs/core-components/lism-props/" />
+
+
+## Astroで`<Lism>`をラップする際のProps型
+
+Astroで`<Lism>`をラップした独自コンポーネントを作る場合、Props型は`interface extends`ではなく**交差型（`&`）**で合成してください。
+
+```ts
+import { Lism } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
+
+// OK: 交差型で合成する
+type Props = LismProps & {
+  class?: string;
+};
+```
+
+`Lism`のProps型には、`layout`の値によって受け取れるプロパティが切り替わるユニオン型が含まれています。そのため、`interface extends`で拡張しようとすると次のようなTypeScriptエラーになります。
+
+```ts
+// NG: interface extends はエラーになる
+interface Props extends LismProps {
+  class?: string;
+}
+// エラー: インターフェイスが拡張できるのは、オブジェクト型または
+// 静的な既知のメンバーを持つオブジェクト型の積集合のみです。
+```
+
+:::note
+この制約は`<Lism>`だけのものではありません。`<Text>`や`<Wrapper>`など、`layout` Propを受け取れるコンポーネントのProps型にも同じユニオン型が含まれるため、これらをラップする場合も同様に交差型で合成してください。
+
+一方、`<Cluster>`や`<Stack>`など`layout`が固定されているレイアウトコンポーネントのProps型にはユニオン型が含まれないため、`interface extends`でも書けます。ただし、どのコンポーネントでも同じように書けるよう、交差型での合成をおすすめします。
+:::

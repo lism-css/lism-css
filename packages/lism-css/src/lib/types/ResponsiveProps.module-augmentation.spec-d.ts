@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import 'lism-css';
-import type { CustomPropValue, CustomTraitValue } from 'lism-css';
+import type { CustomPropValue, CustomTraitValue, Responsive } from 'lism-css';
 import type { LismPropsBase } from '../getLismProps';
 import type { PropValueTypes } from './PropValueTypes';
 
@@ -10,7 +10,12 @@ declare module 'lism-css' {
   }
 
   interface CustomPropRegistry {
-    filter?: CustomPropValue;
+    filter?: CustomPropValue<'blur' | 'grayscale'>;
+  }
+
+  interface CustomPropValueRegistry {
+    ta: 'justify';
+    bg: 'primary';
   }
 
   interface CustomTraitRegistry {
@@ -45,6 +50,21 @@ describe('BreakpointRegistry module augmentation', () => {
 
     expectTypeOf(simple).toExtend<LismPropsBase>();
     expectTypeOf(responsive).toExtend<LismPropsBase>();
+  });
+
+  it('CustomPropValue のジェネリクスで新規 prop の値リテラルが補完される（#450）', () => {
+    expectTypeOf<LismPropsBase['filter']>().toEqualTypeOf<CustomPropValue<'blur' | 'grayscale'>>();
+  });
+
+  it('CustomPropValueRegistry 拡張で既定 prop の値ユニオンに user 追加分が合成される（#450）', () => {
+    // FullModeRegistry 有効のため Responsive でラップされる。defaults の presets（center/left/right）に justify が加わる。
+    expectTypeOf<PropValueTypes['ta']>().toEqualTypeOf<
+      Responsive<'center' | 'left' | 'right' | 'justify' | (string & {}) | number | boolean | null | undefined>
+    >();
+  });
+
+  it('値なしフォールバックだった既定 prop も、user 追加分があれば値ユニオン型へ切り替わる（#450）', () => {
+    expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<Responsive<'primary' | (string & {}) | number | boolean | null | undefined>>();
   });
 
   it('CustomTraitRegistry 拡張で新規 trait が解禁される', () => {

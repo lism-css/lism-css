@@ -2,9 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { checkbox, confirm } from '@inquirer/prompts';
 import { logger } from '../../logger.js';
-import { ALL_SKILL_TOOLS, SKILL_PATHS, TOOL_MARKERS, type SkillTool } from './paths.js';
+import { ALL_SKILL_TOOLS, SKILL_PATHS, TOOL_MARKERS, skillDestDir, type SkillTool } from './paths.js';
 import { cleanupTempDir, compareSkillDirs, copyDirRecursive, fetchSkillSource, hasDiff } from './skillSource.js';
-import { DEFAULT_SKILL_REF } from '../../constants.js';
+import { DEFAULT_SKILL_REF, SKILL_NAMES, type SkillName } from '../../constants.js';
 import { t } from '../../i18n.js';
 
 export interface SkillAddOptions {
@@ -33,8 +33,20 @@ function autoDetectTools(cwd: string): SkillTool[] {
   return ALL_SKILL_TOOLS.filter((tool) => TOOL_MARKERS[tool].some((marker) => fs.existsSync(path.resolve(cwd, marker))));
 }
 
-export async function skillAddCommand(options: SkillAddOptions): Promise<void> {
+/** positional 引数を配布対象スキルへ解決。未指定なら全スキル、未知の名前なら null（呼び出し側でエラー表示） */
+function resolveSkills(skillArg: string | undefined): SkillName[] | null {
+  if (skillArg === undefined) return [...SKILL_NAMES];
+  return (SKILL_NAMES as readonly string[]).includes(skillArg) ? [skillArg as SkillName] : null;
+}
+
+export async function skillAddCommand(skillArg: string | undefined, options: SkillAddOptions): Promise<void> {
   const cwd = process.cwd();
+
+  const skills = resolveSkills(skillArg);
+  if (skills === null) {
+    logger.error(t('skill.unknownSkill', { name: skillArg!, list: SKILL_NAMES.join(', ') }));
+    process.exit(1);
+  }
 
   let targets = resolveExplicitTools(options);
 
@@ -59,26 +71,30 @@ export async function skillAddCommand(options: SkillAddOptions): Promise<void> {
   }
 
   const ref = options.ref ?? DEFAULT_SKILL_REF;
-  logger.info(t('skill.add.fetching', { ref }));
-  const { dir: srcDir } = await fetchSkillSource(ref);
 
-  try {
-    for (const tool of targets) {
-      await deploySkillTo(srcDir, tool, options);
+  // スキルごとにリモートを 1 度だけ取得し、選択された全ツールへ配置する
+  for (const skill of skills) {
+    logger.info(t('skill.add.fetching', { skill, ref }));
+    const { dir: srcDir } = await fetchSkillSource(skill, ref);
+    try {
+      for (const tool of targets) {
+        await deploySkillTo(srcDir, skill, tool, options);
+      }
+    } finally {
+      cleanupTempDir(srcDir);
     }
-    logger.success(t('common.done'));
-  } finally {
-    cleanupTempDir(srcDir);
   }
+  logger.success(t('common.done'));
 }
 
-async function deploySkillTo(srcDir: string, tool: SkillTool, options: SkillAddOptions): Promise<void> {
-  const destDir = path.resolve(process.cwd(), SKILL_PATHS[tool]);
+async function deploySkillTo(srcDir: string, skill: SkillName, tool: SkillTool, options: SkillAddOptions): Promise<void> {
+  const relDest = skillDestDir(tool, skill);
+  const destDir = path.resolve(process.cwd(), relDest);
   const existing = fs.existsSync(destDir);
 
   if (existing && !options.overwrite) {
     const diff = compareSkillDirs(destDir, srcDir);
-    const label = `${tool} (${SKILL_PATHS[tool]})`;
+    const label = `${tool} (${relDest})`;
 
     if (!hasDiff(diff)) {
       logger.log(t('skill.add.skippedSame', { label }));
@@ -95,7 +111,7 @@ async function deploySkillTo(srcDir: string, tool: SkillTool, options: SkillAddO
     }
 
     const go = await confirm({
-      message: t('skill.add.confirmOverwrite', { path: SKILL_PATHS[tool] }),
+      message: t('skill.add.confirmOverwrite', { path: relDest }),
       default: false,
     });
     if (!go) {
