@@ -27,7 +27,7 @@ describe('getLismProps', () => {
       const result = getLismProps({
         className: 'c--foo',
         class: 'user-class c--foo',
-      } as LismProps & Record<string, unknown>);
+      });
       const cls = result.className as string;
       expect(cls).toContain('c--foo');
       expect(cls).toContain('user-class');

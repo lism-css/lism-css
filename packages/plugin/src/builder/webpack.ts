@@ -178,7 +178,7 @@ export async function withLismWebpack<T extends Record<string, any>>(webpackConf
       alias: { ...existingResolve?.alias, ...alias },
     },
     plugins,
-  } as T;
+  };
 }
 
 export default withLismWebpack;

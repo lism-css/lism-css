@@ -447,5 +447,5 @@ export default function getLismProps(props: LismProps): LismOutputProps {
       style: filterEmptyObj(propObj.styles as Record<string, unknown>),
     }),
     ...propObj.attrs, // data-* などHTMLの標準属性はそのまま渡す
-  } as LismOutputProps;
+  };
 }
