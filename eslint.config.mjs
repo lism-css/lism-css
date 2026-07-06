@@ -111,6 +111,15 @@ export default defineConfig(
   },
   ...storybook.configs['flat/recommended'],
   {
+    // lism-ui の React コンポーネントには `{...(props as object)}` 等の意図的なアサーションがある。
+    // これは tsc の TS2590（union 型が複雑すぎる）回避のためのもので、
+    // typescript-eslint >=8.62 の no-unnecessary-type-assertion は「不要」と誤検知するため無効化する。
+    files: ['packages/lism-ui/src/components/**/react/*.tsx'],
+    rules: {
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+    },
+  },
+  {
     files: ['packages/lism-ui/src/**/astro/**/*.ts', 'packages/lism-ui/src/components/astro.ts'],
     extends: [tseslint.configs.disableTypeChecked],
     languageOptions: {

@@ -114,7 +114,7 @@ export function withLism<T extends Record<string, any>>(nextConfig?: T, opts?: W
         c.resolve.alias = { ...c.resolve.alias, ...wpAlias };
         return c;
       },
-    } as T;
+    };
   };
 }
 

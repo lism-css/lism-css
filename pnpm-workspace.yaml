@@ -8,10 +8,12 @@ overrides:
   '@vitest/expect': $vitest
   '@vitest/spy': $vitest
   # セキュリティ: Dependabot alert 対応（推移的依存の patch 更新）
-  'vite@<6.4.2': '^6.4.2' # GHSA: Arbitrary File Read / Path Traversal (#81, #88)
-  'vite@>=7 <7.3.2': '^7.3.2' # GHSA: Arbitrary File Read / fs.deny bypass / Path Traversal (#78, #79, #80)
-  'hono@<4.12.14': '^4.12.14' # GHSA: HTML injection / cookie / IP / path traversal 等 (#83-#89)
+  'vite@<6.4.3': '^6.4.3' # GHSA: fs.deny bypass / launch-editor NTLMv2 hash disclosure (#119-#122)
+  'vite@>=7 <7.3.5': '^7.3.5' # GHSA: fs.deny bypass / launch-editor NTLMv2 hash disclosure (#119-#122)
+  'hono@<4.12.25': '^4.12.25' # GHSA: CORS wildcard credentials / bodyLimit bypass / Set-Cookie injection 等 (#93-#99, #109-#112, #124-#128)
   '@hono/node-server@<1.19.13': '^1.19.13' # GHSA: Middleware bypass via repeated slashes (#82)
+  'postcss@<8.5.10': '^8.5.10' # GHSA: XSS via Unescaped </style> in Stringify Output (#91)。next@16 が 8.4.31 を固定ピンしているため override が必要
+  'esbuild@>=0.27.3 <0.28.1': '^0.28.1' # GHSA: dev server での arbitrary file read on Windows (#113)。astro/tsup が ^0.27 系要求のため override が必要
 
 # ビルドスクリプトの実行を許可するパッケージ (pnpm 10 で必要になった)
 onlyBuiltDependencies:

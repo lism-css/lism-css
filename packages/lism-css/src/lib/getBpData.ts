@@ -47,9 +47,9 @@ export default function getBpData(propVal: BpDataInput): BpData {
   // オブジェクトの場合: BP指定オブジェクトか方向オブジェクトかを判定（xs を含む BREAK_POINTS_OBJ で判定）
   if (hasSomeKeys(propVal, BREAK_POINTS_OBJ)) {
     // 'sm', 'md' などがある場合はbp指定のオブジェクトとみなす
-    return filterEmptyObj(propVal as Record<string, BpValue>);
+    return filterEmptyObj(propVal);
   }
 
   // 方向オブジェクト(sides props)の場合
-  return filterEmptyObj({ base: propVal as BpValue });
+  return filterEmptyObj({ base: propVal });
 }
