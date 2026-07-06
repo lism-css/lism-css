@@ -74,8 +74,8 @@ npm install --prefix <skill-dir>/scripts
 1. `generation-prompts.md` の Phase 3 に従います。
 2. `index.html` に対し、Lism CSS の Property Class（`-fz:*`, `-p:*`, `-g:*`, `-bgc:*` など）と、必要に応じたカスタム CSS を当てていきます。**分割されたセクション画像を 1 枚ずつ順番に**参照しながら、上から下へ実装します。一気に全体を書きません。
 3. **Lism CSS の記法・命名・トークン・カスタム CSS を書く条件は、すべて `lism-css-guide` に従います。** 特に：
-   - **プリフライト・トークン照合**（`lism-css-guide/SKILL.md`）を Phase 1 の生値に対して実施。デザイン値とトークンの差分は表で提示し、`lism-css-guide` の「デザインデータ取り込み時のフロー」（A: px 直書き / B: 最寄りトークン / C: 基準値上書き）で**ユーザーに方針を確認してから**実装に進む。
-   - `set--*` / `u--*` / Property Class で書けるものは CSS ではなくマークアップで表現する（`lism-css-guide` の「プリフライト・c-- 定義時の分解」）。
+   - **値・トークン照合**（`lism-css-guide/SKILL.md` の C5）を Phase 1 の生値に対して実施。差分表の作り方・確認の要否・提示する選択肢は `lism-css-guide` の `references/authoring.md`「デザインデータ取り込みフロー」に従う（選択肢の定義の正本はガイド側。本スキルで再定義しない）。本スキルの入力は画像なので、既定動作は「最寄りトークンへ丸める。実測 px をそのまま書かない」。
+   - `set--*` / `u--*` / Property Class で書けるものは CSS ではなくマークアップで表現する（`lism-css-guide/antipatterns.md`「Property Class で書けるのに CSS で書く」、`lism-css-guide/SKILL.md` の C7「CSSに書くもの/Propsに移すもの」）。
    - `c--*` を新設する場合も同 SKILL のルールに従い、CSS に残すのは擬似クラス・状態切替・子孫セレクタなど「CSS でしか書けない宣言」のみ。
    - レスポンシブは Lism の Property Class の `_{bp}` サフィックスやコンテナクエリを使う。`<Grid gtc="repeat(3, 1fr)">` のような PC 固定は避ける。
 4. `pattern-catalog.md` のパターン → プリミティブ対応表と、`lism-css-guide/primitive-class.md` の使い分けガイドを突き合わせながら実装します。

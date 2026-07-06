@@ -12,7 +12,7 @@
 
 | 画像パターン | 見た目の判定基準 | 対応する Lism プリミティブ／クラス | 補足 |
 |-------------|-----------------|-----------------------------------|------|
-| **container**（コンテンツ幅制限） | セクション内で左右に均等な余白があり、コンテンツ幅が一定 | `is--container` / `<Container>` | サイズは `-max-sz:*` トークン（`lism-css-guide/tokens.md`） |
+| **container**（コンテンツ幅制限） | セクション内で左右に均等な余白があり、コンテンツ幅が一定 | `is--wrapper` / `<Wrapper>` | サイズは `contentSize` Prop（`-contentSize:s/m/l/xl`。詳細 `lism-css-guide/trait-class/is--wrapper.md`）。`is--container` はコンテナクエリの基準宣言で、幅制限はしない点に注意 |
 | **stack**（縦積み） | 要素が縦方向に等間隔で並ぶ | `l--stack` / `<Stack>` | `gap` は Lism の spacing トークンに寄せる |
 | **inline-row / cluster**（横並び・折返し可） | タグ列・ナビリンク・ボタン群のように横に並ぶ | `l--cluster` / `<Cluster>` | `flex-wrap: wrap` 前提。ヘッダーナビはモバイルでハンバーガー置換 |
 | **flex-row**（横並び・折返し無し想定） | ロゴ＋ボタンなど 2〜3 要素の一列 | `l--flex` / `<Flex>` | 折り返しが要る場合は `Cluster` |
@@ -34,7 +34,7 @@
 |-------------|------|------|
 | **button**（クリッカブルなアクション） | `@lism-css/ui` の `Button` または `is--boxLink` / `<BoxLink>` | ホバー変化を必ず定義（`-hov:*` 系。詳細 `lism-css-guide/property-class/hov.md`） |
 | **card**（境界／影／背景で囲まれた情報の塊） | `l--box` / `<Box>` を土台に、内部を `l--stack` などで組む | リンク全体クリック可なら `is--boxLink`。ホバー影・浮き上げは `-hov:*` |
-| **tag / badge**（小さなラベル） | `@lism-css/ui` の `Badge` またはカスタム `c--tag`（Property Class で書く） | `lism-css-guide/SKILL.md` の `c--*` 分解ルールに従う |
+| **tag / badge**（小さなラベル） | `@lism-css/ui` の `Badge` またはカスタム `c--tag`（Property Class で書く） | `c--*` の CSS に残す宣言は `lism-css-guide/antipatterns.md`「Property Class で書けるのに CSS で書く」と `lism-css-guide/SKILL.md` の C7「CSSに書くもの/Propsに移すもの」に従う |
 | **accordion / modal / tabs / callout** | `@lism-css/ui` の同名コンポーネント | `lism-css-guide/components-ui.md` を参照 |
 | **icon / divider / spacer / decorator** | `<Icon>` / `<Divider>` / `<Spacer>` / `<Decorator>`（`a--*`） | 装飾要素はまずこれで置き換えられないかを検討 |
 
@@ -52,6 +52,6 @@ VLM が画像の詳細を見ずに「よくある LP」に丸めてしまいが�
 
 ## 4. パターン適用ルール
 
-- 独自の複雑なレイアウトを見つけても、可能な限り `l--stack` / `l--columns` / `l--flex` / `l--withSide` / `l--frame` などのプリミティブの組み合わせに分解します。プリミティブを使わず `<div>` + Property Class でゴリ押すのは NG（`lism-css-guide/SKILL.md` 「プリフライト・プリミティブ選定」）。
+- 独自の複雑なレイアウトを見つけても、可能な限り `l--stack` / `l--columns` / `l--flex` / `l--withSide` / `l--frame` などのプリミティブの組み合わせに分解します。プリミティブを使わず `<div>` + Property Class でゴリ押すのは NG（`lism-css-guide/SKILL.md` の C1「構造・セマンティクス選定」、`lism-css-guide/primitive-class.md` の使い分けガイド）。
 - レスポンシブ挙動（BP による列数・折返し・非表示化・順序反転）は、原則として Lism の Property Class の `_{bp}` サフィックスまたは各プリミティブの Props で表現します。詳細は `lism-css-guide/responsive.md`。
 - Property Class の記法・命名の省略ルール（`bgc`, `fz`, `bdrs` など）は `lism-css-guide/naming.md` を参照。本ファイルには書きません。

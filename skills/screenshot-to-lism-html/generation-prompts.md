@@ -52,12 +52,12 @@ Phase 2 の HTML 骨格 + 元のセクション画像
 > 骨格 HTML と元の画像を元に、**Lism CSS の Property Class ／トークン**を使ってデザインを完全に再現してください。
 >
 > **手順:**
-> 1. **プリフライト・トークン照合を必ず実施**（`lism-css-guide/SKILL.md` 「プリフライト・トークン照合」）。Phase 1 で記録した色・スペーシング・フォントサイズ・角丸・影の生値をリストアップし、`lism-css-guide/tokens.md` の値と突き合わせて差分表を出す。
-> 2. デザイン値とトークンにズレがある場合、`lism-css-guide/SKILL.md` 「デザインデータ取り込み時のフロー」の 3 択（A: px 直書き / B: 最寄りトークンに丸める / C: トークンの基準値を上書き）から方針を **ユーザーに確認する**。確認せずに実装に進まない。
-> 3. 承認された方針に沿って、上から下へセクションごとに Property Class を付けていく。
+> 1. **値・トークン照合を必ず実施**（`lism-css-guide/SKILL.md` の C5「値・トークン照合」）。Phase 1 で記録した色・スペーシング・フォントサイズ・角丸・影の生値をリストアップし、`lism-css-guide/tokens.md` の値と突き合わせて差分表を出す。
+> 2. デザイン値とトークンにズレがある場合の扱いは、`lism-css-guide` の `references/authoring.md`「デザインデータ取り込みフロー」に従う。画像入力の既定動作は「最寄りトークンへ丸める（実測 px をそのまま書かない）」。確認が必要な値（任意色・ブランド色など）は、ガイド側で定義された選択肢を提示して **ユーザーに確認する**。
+> 3. 決まった方針に沿って、上から下へセクションごとに Property Class を付けていく。
 >
 > **ルール:**
-> - Property Class（`-fz:*` / `-p:*` / `-g:*` / `-bgc:*` / `-c:*` / `-bdrs:*` / `-hov:*` 等）で書ける宣言は **CSS ではなくマークアップに書く**（`lism-css-guide/SKILL.md`「プリフライト・c-- 定義時の分解」）。
+> - Property Class（`-fz:*` / `-p:*` / `-g:*` / `-bgc:*` / `-c:*` / `-bdrs:*` / `-hov:*` 等）で書ける宣言は **CSS ではなくマークアップに書く**（`lism-css-guide/antipatterns.md`「Property Class で書けるのに CSS で書く」、`lism-css-guide/SKILL.md` の C7）。
 > - CSS ファイル側に書くのは、擬似クラス／擬似要素／状態切替／子孫セレクタ／計算式など **CSS でしか書けない宣言のみ**。
 > - 同じ Property Class の組み合わせが 3 箇所以上で繰り返されるなら、`c--{name}` として意味づけを与える（CSS に中身が無くてもクラス名は残す）。
 > - レスポンシブは Property Class の `_{bp}` サフィックスや各プリミティブの Props で表現する。`<Grid gtc="repeat(3, 1fr)">` のような PC 固定は NG（`lism-css-guide/antipatterns.md`）。
