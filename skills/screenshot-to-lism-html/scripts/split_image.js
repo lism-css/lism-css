@@ -33,6 +33,11 @@ async function main() {
   const inputPath = args[0];
   const outputDir = args[1] || path.join(path.dirname(inputPath), 'sections');
 
+  if (!fs.existsSync(inputPath)) {
+    console.error(`Error: Input image not found at ${inputPath}`);
+    process.exit(1);
+  }
+
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
@@ -52,8 +57,10 @@ async function main() {
     // 行ごとの色分散を計算して境界を探す簡易ロジック
     // （実際にはより高度なエッジ検出やVLM連携が必要な場合もあります）
     for (let y = 0; y < height; y++) {
-      let rowR = 0, rowG = 0, rowB = 0;
-      
+      let rowR = 0,
+        rowG = 0,
+        rowB = 0;
+
       // 行の平均色を計算
       for (let x = 0; x < width; x++) {
         const idx = (y * width + x) * 3;
@@ -75,12 +82,12 @@ async function main() {
 
       // 分散が非常に低い（＝横一線の無地）かつ、前の境界から一定の距離がある場合、境界とする
       // ※ より精度を上げる場合は、前後の行との色の変化（エッジ）を検出します。
-      const isSolidLine = variance < 50; 
-      
-      if (isSolidLine && (y - lastBoundary) > MIN_SECTION_HEIGHT) {
+      const isSolidLine = variance < 50;
+
+      if (isSolidLine && y - lastBoundary > MIN_SECTION_HEIGHT) {
         // 色の急激な変化があるかどうか（前の行の平均色と比較）など、
         // さらに条件を絞り込むことができますが、ここではシンプルな無地行を境界とします。
-        
+
         // 境界として登録
         boundaries.push(y);
         lastBoundary = y;
@@ -99,18 +106,16 @@ async function main() {
       const sectionHeight = bottom - top;
 
       const outputPath = path.join(outputDir, `section_${String(i + 1).padStart(2, '0')}.png`);
-      
-      await sharp(inputPath)
-        .extract({ left: 0, top: top, width: width, height: sectionHeight })
-        .toFile(outputPath);
-      
+
+      await sharp(inputPath).extract({ left: 0, top: top, width: width, height: sectionHeight }).toFile(outputPath);
+
       console.log(`Saved: ${outputPath} (Height: ${sectionHeight}px)`);
     }
 
     console.log('Image splitting complete.');
-
   } catch (error) {
     console.error('Error processing image:', error);
+    process.exit(1);
   }
 }
 
