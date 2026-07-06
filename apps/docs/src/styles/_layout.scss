@@ -1,8 +1,9 @@
 :root {
-  --sz--m: 55rem;
+  --sz--m: 55rem; // 880px
+  // --sz--header: 26.25rem; // 420px
 
   // レイアウト
-  --header-h: 60px;
+  --header-h: 3.125rem; // 50px
   --sidebar-w: 240px;
   --toc-w: 240px;
 }
@@ -26,13 +27,12 @@ html {
 
 .z--header {
   /* grid-area: header; */
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: var(--s30);
   z-index: 100;
-  border-bottom: 1px solid var(--divider);
   min-height: var(--header-h);
-  background-color: color-mix(in srgb, var(--base) 25%, transparent);
-  backdrop-filter: blur(16px);
+  width: 100%;
+  padding-inline: var(--s20);
 }
 
 .z--main {
