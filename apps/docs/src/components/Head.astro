@@ -152,6 +152,8 @@ const enableGA = !isDev && siteConfig.publish;
     href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
     rel="stylesheet"
   />
+  {/* ⌘（U+2318）は Google Fonts の Inter サブセットに含まれないため、text= で個別に読み込む */}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&text=%E2%8C%98&display=swap" rel="stylesheet" />
 
   {/* 追加のhead要素用スロット */}
   <slot />
