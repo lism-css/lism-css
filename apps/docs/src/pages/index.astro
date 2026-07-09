@@ -116,7 +116,7 @@ const presets = [
 
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="HomePage" excludeFromSearch>
   {/* 背景動画：スクロールしても固定表示 */}
-  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" ov="hidden" aria-hidden="true" style={{ mixBlendMode: 'darken' }}>
+  <!-- <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" ov="hidden" aria-hidden="true" style={{ mixBlendMode: 'darken' }}>
     <Frame h="100%" ar="16/9">
       <video autoplay loop muted playsinline>
         <source src="/video/video-kv.mp4" type="video/mp4" />
@@ -135,6 +135,39 @@ const presets = [
         ))
       }
     </Flex>
+  </Box> -->
+  <Box
+    pos="fixed"
+    i-x="0"
+    t="0"
+    h="100vh"
+    z="-1"
+    ov="hidden"
+    aria-hidden="true"
+    style={{ mixBlendMode: 'darken', transform: 'translate3d(0, 0, 0)' }}
+  >
+    <Frame h="100%" ar="16/9">
+      <video autoplay loop muted playsinline>
+        <source src="/video/video-kv.mp4" type="video/mp4" />
+      </video>
+    </Frame>
+    <Box pos="absolute" i="0" style={{ backdropFilter: 'blur(90px)' }} />
+    <Box pos="absolute" i="0" style={{ mixBlendMode: 'overlay' }}>
+      <Flex pos="absolute" i="0" jc="center">
+        {
+          stripes.map(() => (
+            <Box
+              w="80px"
+              h="100%"
+              fxsh="0"
+              bd-l
+              bdc="rgba(255, 255, 255, 0.05)"
+              bg="linear-gradient(90deg, rgba(255, 255, 255, 0.30) 0%, rgba(34, 34, 34, 0.30) 60%, rgba(0, 0, 0, 0.30) 70%, rgba(34, 34, 34, 0.30) 80%, rgba(255, 255, 255, 0.30) 100%)"
+            />
+          ))
+        }
+      </Flex>
+    </Box>
   </Box>
   <Lism as="section" isWrapper="l" px="20">
     <Stack as="div" ai="center" pbs={{ base: '9rem', md: '14rem' }} pbe={{ md: '60' }}>
