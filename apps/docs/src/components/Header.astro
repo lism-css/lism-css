@@ -41,13 +41,15 @@ const searchText = t(currentLang, 'search');
       px={{ base: '0', md: '10' }}
       py={{ base: '0', md: '5' }}
       ms={{ base: '15', md: '20' }}
+      bd="none"
+      bgc="transparent"
       g="5"
       bdrs="10"
       hov={{ bgc: 'base-2' }}
       aria-label={searchText.title}
       data-modal-open="search-modal"
     >
-      <Icon icon="search" fz={{ base: 'xl', md: 'l' }} />
+      <Icon icon="search" fz={{ base: 'm', md: '1.25rem' }} />
       <Lism
         as="kbd"
         class="c--searchTrigger_shortcut"
@@ -120,26 +122,15 @@ const searchText = t(currentLang, 'search');
   }
 
   /* 検索トリガーボタン */
-
   .c--menuTrigger {
     padding: 0.5em;
   }
   .c--searchTrigger {
-    background: transparent;
-    border: none;
-
-    .a--icon {
-      font-size: 20px;
-    }
-
     @container (min-width: 800px) {
       & {
         /* Figma の Stroke: Inside 相当 */
         box-shadow: inset 0 0 0 1px #eee;
         background: #f6f6f6;
-      }
-      .a--icon {
-        font-size: 16px;
       }
     }
   }
