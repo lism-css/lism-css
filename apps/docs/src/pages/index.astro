@@ -170,23 +170,26 @@ const presets = [
         あなたはもう、CSS設計に悩む必要はありません。
       </Text>
       <Flex g={{ base: '15', md: '20' }} ai="center" jc="center" mt="40" w="100%">
-        <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" fw="500" lh="1.5" px="10" g="0">
+        <Button href="/docs/installation" bdrs="var(--bdrs--15)" bd="none" bgc="var(--gray-hi-c)" fw="500" lh="1.5" px="10" g="0">
           <Lism as="span" px={{ base: '6px', md: '10' }}>Get Started</Lism>
           <Icon icon="caret-right" size="16" style={{ scale: '1' }} />
         </Button>
-        <Box pos="relative" max-w={{ base: '11.5625rem', md: '16.6875rem' }} w="100%">
+        <Box pos="relative" max-w={{ base: '11.5625rem', md: '16.6875rem' }} w="100%" bd="none">
           <input id="kv-search" class="c--kv-search c--shadow-box" type="text" placeholder="Search documentation..." autocomplete="off" />
           <Lism
             as="button"
             type="button"
             class="c--searchTrigger"
             px="10"
-            py="5"
+            py="0.125rem"
+            h="fit-content"
+            bd="none"
+            bgc="transparent"
             g="5"
             bdrs="10"
             pos="absolute"
             r="10"
-            i-y="10"
+            i-y="0"
             d={{ base: 'none', md: 'flex' }}
             hov={{ bgc: 'base-2' }}
             data-modal-open="search-modal"
@@ -295,7 +298,7 @@ const presets = [
       <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75" max-w="35rem">
         デザインのベースとして活用することも、必要な部分だけをコピー&ペーストしてプロジェクトにすぐ洗練されたレイアウトを追加することも可能です。
       </Text>
-      <Button href="#" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5" px="10" g="0">
+      <Button href="#" bdrs="var(--bdrs--15)" bd="none" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5" px="10" g="0">
         <Lism as="span" px={{ base: '6px', md: '10' }}>View More</Lism>
         <Icon icon="caret-right" size="16" style={{ scale: '1' }} />
       </Button>
@@ -325,7 +328,7 @@ const presets = [
         <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75">
           ビルドプロセスもセットアップも不要。<br />Lism CSSは1つのCSSファイルを読み込むだけで導入できます。
         </Text>
-        <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5" px="10" g="0">
+        <Button href="/docs/installation" bdrs="var(--bdrs--15)" bd="none" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5" px="10" g="0">
           <Lism as="span" px={{ base: '6px', md: '10' }}>Get Started</Lism>
           <Icon icon="caret-right" size="16" style={{ scale: '1' }} />
         </Button>
@@ -362,15 +365,24 @@ const presets = [
 
   .c--kv-search {
     padding: var(--s10);
-    background: white;
     font-size: var(--fz--m);
     width: 100%;
     outline: none;
+    border: none;
+    line-height: 1.5;
   }
   .c--kv-search:hover {
     background-color: var(--base-2);
   }
   .c--kv-search:focus {
     border-color: var(--brand);
+  }
+
+  /* 検索トリガーボタン */
+  .c--searchTrigger {
+    /* Figma の Stroke: Inside 相当 */
+    box-shadow: inset 0 0 0 1px #eee;
+    background: #f6f6f6;
+    align-self: center;
   }
 </style>
