@@ -220,7 +220,7 @@ const presets = [
       <Columns cols={{ base: 1, md: 3 }} g="10" mbs={{ base: '50', md: '60' }}>
         {
           features.map((card) => (
-            <Stack class="c--shadow-box" px="3rem" py={{ base: '2.25rem', lg: '3rem' }}>
+            <Stack class="c--shadow-box" p="40">
               <Text fw="700" lh="1.5" c="var(--gray-hi-c)" lts="-0.01em" fz={{ base: 'base', lg: '1.5rem' }}>
                 {card.title}
               </Text>
@@ -242,7 +242,7 @@ const presets = [
       pos="absolute"
       w={{ base: '121.875rem', md: '162.5rem' }}
       l="50%"
-      t={{ base: '-2rem', md: '-2.625rem' }}
+      t="clamp(-2.625rem, calc(-2rem - 1.25vw), -2rem)"
       ms={{ base: '-60.9375rem', md: '-81.25rem' }}
       z="-1"
       max-w="none"
