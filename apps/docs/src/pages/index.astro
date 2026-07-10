@@ -162,16 +162,16 @@ const presets = [
   </Box>
   <Lism as="section" isWrapper="l" px="20">
     <Stack as="div" ai="center" pbs={{ base: '9rem', md: '14rem' }} pbe={{ md: '60' }}>
-      <Heading ta="center" level="1" fw="700" fz={{ base: '3xl', md: '5xl' }} lh="1.25" c="var(--gray-hi-c)">
+      <Heading ta="center" level="1" fw="700" fz={{ base: '3xl', md: '5xl' }} lh="1.25" c="var(--gray-hi-c)" lts="-0.01em">
         The CSS Design <Lism as="br" d={{ base: 'inherit', md: 'none' }} />Framework<br />for AI and Humans
       </Heading>
-      <Text fz="m" c="#333" mt="30">
+      <Text class="c--line-height" fz={{ base: 's', md: 'l' }} c="#333" mt="30" style={{ '--lh--base': '1.5', '--lh--l': '1.75' }}>
         軽量でビルド不要。どのサイトにも導入できます。<br />
         あなたはもう、CSS設計に悩む必要はありません。
       </Text>
       <Flex g={{ base: '15', md: '20' }} ai="center" jc="center" mt="40" w="100%">
         <Button href="/docs/installation" bdrs="var(--bdrs--15)" bd="none" bgc="var(--gray-hi-c)" fw="500" lh="1.5" px="10" g="0">
-          <Lism as="span" px={{ base: '6px', md: '10' }}>Get Started</Lism>
+          <Lism as="span" px={{ base: '0.375rem', md: '10' }} fz={{ base: 's', md: 'base' }}>Get Started</Lism>
           <Icon icon="caret-right" size="16" style={{ scale: '1' }} />
         </Button>
         <Box pos="relative" max-w={{ base: '11.5625rem', md: '16.6875rem' }} w="100%" bd="none">
@@ -210,7 +210,7 @@ const presets = [
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g="15">
         <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Features</Text>
-        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">洗練された設計理論</Heading>
+        <Heading level="2" ta="center" fz={{ base: '2xl', md: '3rem' }} fw="700" lh="1.5" c="var(--gray-hi-c)">洗練された設計理論</Heading>
       </Stack>
       <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'l' }} lh="1.75" max-w="52.5rem">
         Lism
@@ -220,14 +220,15 @@ const presets = [
       <Columns cols={{ base: 1, md: 3 }} g="10" mbs={{ base: '50', md: '60' }}>
         {
           features.map((card) => (
-            <Stack class="c--shadow-box" p="40">
-              <Text fw="bold" lh="1.5" fz={{ base: 'base', lg: '2xl' }}>
+            <Stack class="c--shadow-box" px="3rem" py={{ base: '2.25rem', lg: '3rem' }}>
+              <Text fw="700" lh="1.5" c="var(--gray-hi-c)" lts="-0.01em" fz={{ base: 'base', lg: '1.5rem' }}>
                 {card.title}
               </Text>
-              <Text fz="s" c="text-2" hl="s" mt="20" fxg="1">
+              <Text fz={{ base: 's', md: 'base' }} lh="1.75" mt="20" fxg="1">
                 {card.desc}
               </Text>
-              <Media src={card.src} alt="" width="336" height="200" mx="auto" mt="50" ar="336/200" w={{ base: '15.75rem', md: '21rem' }} />
+              {/* TODO: 画像の比率をそれぞれに合わせる。mapで出力しなおし */}
+              <Media src={card.src} alt="" width="336" height="200" mx="auto" mt="3rem" ar="336/200" w={{ base: '15.75rem', md: '21rem' }} />
             </Stack>
           ))
         }
@@ -252,7 +253,7 @@ const presets = [
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g="15">
         <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Artificial Intelligence</Text>
-        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">AI ツール連携</Heading>
+        <Heading level="2" ta="center" fz={{ base: '2xl', md: '3rem' }} fw="700" lh="1.5" c="var(--gray-hi-c)">AI ツール連携</Heading>
       </Stack>
       <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'l' }} lh="1.75" max-w="52.5rem">
         Lism CSSはAIエージェントとの親和性を重視して設計されています。MCPサーバーとSkills、そして機械可読なドキュメントを提供することで、 Claude
@@ -265,10 +266,10 @@ const presets = [
         {
           tools.map((item) => (
             <Stack class="c--shadow-box" p="40">
-              <Text fw="600" fz={{ base: 'base', md: '2xl' }} lh="1.5">
+              <Text c="var(--gray-hi-c)" fw="700" fz={{ base: 'base', md: '1.5rem' }} lh="1.5" lts="-0.01em">
                 {item.title}
               </Text>
-              <Text fz={{ base: 's', md: 'base' }} c="text-2" lh="1.75" mt="20" max-w={{ base: '100%', md: '30rem' }} fxg="1">
+              <Text fz={{ base: 's', md: 'base' }} lh="1.75" mt="20" max-w={{ base: '100%', md: '30rem' }} fxg="1">
                 {item.body}
               </Text>
               <Media
@@ -293,13 +294,15 @@ const presets = [
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g="15">
         <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Templates</Text>
-        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS プリセット</Heading>
+        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)" lts="-0.01em"
+          >Lism CSS プリセット</Heading
+        >
       </Stack>
       <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75" max-w="35rem">
         デザインのベースとして活用することも、必要な部分だけをコピー&ペーストしてプロジェクトにすぐ洗練されたレイアウトを追加することも可能です。
       </Text>
       <Button href="#" bdrs="var(--bdrs--15)" bd="none" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5" px="10" g="0">
-        <Lism as="span" px={{ base: '6px', md: '10' }}>View More</Lism>
+        <Lism as="span" px={{ base: '0.375rem', md: '10' }} fz={{ base: 's', md: 'base' }}>View More</Lism>
         <Icon icon="caret-right" size="16" style={{ scale: '1' }} />
       </Button>
       <Box
@@ -323,13 +326,22 @@ const presets = [
       <Center class="c--shadow-box" ai="center" w="100%" max-w="l" h="35rem" px={{ base: '15', md: '40' }} py="40">
         <Stack ai="center" g="15">
           <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Get Started</Text>
-          <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS、どこでも使える</Heading>
+          <Heading
+            level="2"
+            ta="center"
+            fz={{ base: '2xl', md: '4xl' }}
+            fw="700"
+            lh="1.5"
+            c="var(--gray-hi-c)"
+            lts="-0.01em"
+            style={{ fontFeatureSettings: '"palt" on' }}>Lism CSS、どこでも使える</Heading
+          >
         </Stack>
-        <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75">
+        <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75" lts="-0.01em">
           ビルドプロセスもセットアップも不要。<br />Lism CSSは1つのCSSファイルを読み込むだけで導入できます。
         </Text>
         <Button href="/docs/installation" bdrs="var(--bdrs--15)" bd="none" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5" px="10" g="0">
-          <Lism as="span" px={{ base: '6px', md: '10' }}>Get Started</Lism>
+          <Lism as="span" px={{ base: '6px', md: '10' }} fz={{ base: 's', md: 'base' }}>Get Started</Lism>
           <Icon icon="caret-right" size="16" style={{ scale: '1' }} />
         </Button>
       </Center>

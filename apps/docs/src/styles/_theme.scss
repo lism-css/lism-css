@@ -19,13 +19,13 @@
 
     // コアと命名が被る場合は、dを付与する。例: --s10d
     // packages/lism-css/src/scss/base/tokens/_space.scss
-    --s36: calc(var(--s-unit) * 4.5); // ≒ 36px
-    --s48: calc(var(--s-unit) * 6); // ≒ 48px
-    --s60d: calc(var(--s-unit) * 7.5); // ≒ 60px
-    --s84: calc(var(--s-unit) * 10.5); // ≒ 84px
-    --s96: calc(var(--s-unit) * 12); // ≒ 96px
-    --s120: calc(var(--s-unit) * 15); // ≒ 120px
-    --s180: calc(var(--s-unit) * 22.5); // ≒ 180px
+    // --s36: calc(var(--s-unit) * 4.5); // ≒ 36px
+    // --s48: calc(var(--s-unit) * 6); // ≒ 48px
+    // --s60d: calc(var(--s-unit) * 7.5); // ≒ 60px
+    // --s84: calc(var(--s-unit) * 10.5); // ≒ 84px
+    // --s96: calc(var(--s-unit) * 12); // ≒ 96px
+    // --s120: calc(var(--s-unit) * 15); // ≒ 120px
+    // --s180: calc(var(--s-unit) * 22.5); // ≒ 180px
 
     --bdrs--15: 0.375rem; // ≒ 6px
 
@@ -72,6 +72,14 @@
     background-color: white;
     box-shadow: var(--bxsh--base);
     backdrop-filter: blur(32px);
+  }
+
+  .c--line-height {
+    line-height: var(--lh--base);
+
+    @container (min-width: 800px) {
+      line-height: var(--lh--l);
+    }
   }
 
   :root[data-theme='dark'] {

@@ -17,28 +17,28 @@ const show = (key: IconKey) => icons.includes(key);
   {
     show('x') && (
       <a href={siteConfig.author.twitter} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Xへのリンク">
-        <Icon icon="logo-x" size="1.0625em" />
+        <Icon icon="logo-x" />
       </a>
     )
   }
   {
     show('github') && (
       <a href={siteConfig.author.github} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="GitHubへのリンク">
-        <Icon icon="logo-github" size="1.0625em" />
+        <Icon icon="logo-github" />
       </a>
     )
   }
   {
     show('discord') && (
       <a href={siteConfig.author.discord} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Discordへのリンク">
-        <Icon icon="logo-discord" size="1.0625em" />
+        <Icon icon="logo-discord" />
       </a>
     )
   }
   {
     show('lang') && (
       <a href="/en/" target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="言語切替">
-        <Icon viewBox="0 0 20 20" fill="none" label="言語切替" size="1.0625em">
+        <Icon viewBox="0 0 20 20" fill="none" label="言語切替">
           <g clip-path="url(#language-switcher-clip)">
             <path
               d="M1.66675 10C1.66675 14.6025 5.39758 18.3334 10.0001 18.3334C14.6026 18.3334 18.3334 14.6025 18.3334 10C18.3334 5.39752 14.6026 1.66669 10.0001 1.66669C5.39758 1.66669 1.66675 5.39752 1.66675 10Z"
@@ -74,6 +74,11 @@ const show = (key: IconKey) => icons.includes(key);
     align-items: center;
     justify-content: center;
     width: 1.25rem;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
   .c--iconBtn:hover {
     color: var(--link);
