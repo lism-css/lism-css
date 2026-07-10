@@ -29,7 +29,7 @@ const searchText = t(currentLang, 'search');
       </Link>
     </Group>
 
-    <Link href="/docs/" c="text" fw="500" lh="1.25" lts="-0.02em" td="none" ml="auto">Docs</Link>
+    <Link href="/docs/" c="text" fw="500" lh="1.25" lts="var(--lts--tighter)" td="none" ml="auto">Docs</Link>
 
     <SNSLinks d="flex" ms={{ base: '30', md: '35' }} />
 
@@ -60,7 +60,7 @@ const searchText = t(currentLang, 'search');
         fz="base"
         ff="base"
         lh="1.25"
-        lts="-0.02em">⌘K</Lism
+        lts="var(--lts--tighter)">⌘K</Lism
       >
     </Lism>
 
@@ -128,9 +128,8 @@ const searchText = t(currentLang, 'search');
   .c--searchTrigger {
     @container (min-width: 800px) {
       & {
-        /* Figma の Stroke: Inside 相当 */
-        box-shadow: inset 0 0 0 1px #eee;
-        background: #f6f6f6;
+        box-shadow: var(--bxsh--search-border);
+        background: var(--search-button-c);
       }
     }
   }

@@ -224,7 +224,9 @@ const presets = [
             hov={{ bgc: 'base-2' }}
             data-modal-open="search-modal"
           >
-            <Lism as="kbd" class="c--searchTrigger_shortcut" p="0" bxsh="none" bd="none" fz="base" ff="base" lh="1.25" lts="-0.02em">⌘K</Lism>
+            <Lism as="kbd" class="c--searchTrigger_shortcut" p="0" bxsh="none" bd="none" fz="base" ff="base" lh="1.25" lts="var(--lts--tighter)"
+              >⌘K</Lism
+            >
           </Lism>
         </Box>
       </Flex>
@@ -427,9 +429,8 @@ const presets = [
 
   /* 検索トリガーボタン */
   .c--searchTrigger {
-    /* Figma の Stroke: Inside 相当 */
-    box-shadow: inset 0 0 0 1px #eee;
-    background: #f6f6f6;
+    box-shadow: var(--bxsh--search-border);
+    background: var(--search-button-c);
     align-self: center;
   }
 </style>
