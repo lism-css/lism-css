@@ -20,7 +20,7 @@ const searchText = t(currentLang, 'search');
 
 <Container as="header" class="z--header" layout="flex" ai="center">
   {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
-  <Flex ai="center" w="100%" mx="auto" max-w="28.5rem" p="20" class="c--shadow-box">
+  <Flex ai="center" w="100%" mx="auto" max-w={{ base: 'fit-content', md: '28.5rem' }} p="20" class="c--shadow-box">
     <Group me="auto">
       <Link href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none">
         <img class="u--onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
@@ -29,7 +29,7 @@ const searchText = t(currentLang, 'search');
       </Link>
     </Group>
 
-    <Link href="/docs/" c="text" fw="500" lh="1.25" lts="var(--lts--tighter)" td="none" ml="auto">Docs</Link>
+    <Link href="/docs/" c="text" fw="500" lh="1.25" lts="var(--lts--tighter)" td="none" ms={{ base: '30', md: 'auto' }}>Docs</Link>
 
     <SNSLinks d="flex" ms={{ base: '30', md: '35' }} />
 
