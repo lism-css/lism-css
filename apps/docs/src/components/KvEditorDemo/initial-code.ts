@@ -8,7 +8,7 @@ export const INITIAL_HTML = `<h1 class="-fw:bold -fz:5xl -ta:center">
   for AI and Humans
 </h1>
 <p class="-fz:m -ta:center -mbs:30">
-  軽量でビルド不要。どのサイトにも導入できます。
+  軽量でビルド不要。どんなサイトにも導入できます。
   <br />
   あなたはもう、CSS設計に悩む必要はありません。
 </p>
