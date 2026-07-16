@@ -1,0 +1,485 @@
+// トップページ KV：ライブコードエディター + AIデモパネル
+// エディターウィンドウはサイトテーマに関わらず常時ダーク（デザインモックアップ準拠）。
+// ブレークポイントは lism-css の md（800px）に合わせている。
+
+@layer lism-component {
+  /* ----------------------------------------
+      ヒーロー出力エリア（エディターの描画結果）
+   ---------------------------------------- */
+  .c--kvHero {
+    width: 100%;
+
+    // エディター内容が消えた時に高さが完全に潰れてガタつかないよう最低限の高さだけ確保
+    min-height: 2rem;
+
+    // fzトークンは em ベースなので、コンテナの font-size を絞ると
+    // BPクラスなしでヒーロー全体が縮む（エディター内容にレスポンシブ指定を持ち込まない）
+    @media not (min-width: 800px) {
+      font-size: 0.7em;
+    }
+  }
+
+  /* ----------------------------------------
+      エディターウィンドウ + AIパネル
+   ---------------------------------------- */
+  .c--kvDemo {
+    --kvDemo-bgc: #26292c; // ウィンドウ全体の背景（Figmaモックアップ準拠のフラット構成）
+    --kvDemo-surface: rgba(255, 255, 255, 0.08); // タブ・パネル・入力欄の面（白8%オーバーレイ）
+    --kvDemo-snackbar-bgc: #1d2126;
+    --kvDemo-text: #e1e4e8; // コード既定色は github-dark に合わせる（ハイライト色は現行維持）
+    --kvDemo-text-dim: #bfbfbf;
+    --kvDemo-warning: #e3b341; // 警告色（github-dark の yellow 系。致命的でない通知に使う）
+
+    // textarea の縮小率（= エディターの見た目のフォントサイズ ÷ 16px）。
+    // iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームするため、
+    // textarea だけ font-size: 16px にして scale で pre レイヤーと同じ見た目に縮小する
+    --kvDemo-input-scale: 0.875; // = 14 / 16
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 12.6875rem;
+    width: 100%;
+    max-width: 56.4375rem;
+    height: 25rem; // 400px
+    margin-block-start: 3.5rem;
+    overflow: hidden;
+    border-radius: 0.625rem;
+    background-color: var(--kvDemo-bgc);
+    box-shadow: var(--bxsh--code);
+    color: var(--kvDemo-text);
+
+    @media not (min-width: 800px) {
+      --kvDemo-input-scale: 0.75; // = 12 / 16
+
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) 9.125rem;
+      height: 33.5625rem;
+      margin-block-start: 2.5rem;
+    }
+  }
+
+  .c--kvDemo_window {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  /* ウィンドウバー（信号ドット + タブ）。背景はウィンドウと同一（バーの色分けなし） */
+  .c--kvDemo_bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding: 0.6rem 0.75rem 0.6rem 1rem;
+  }
+
+  .c--kvDemo_dots {
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background-color: #ed6a5e;
+    box-shadow:
+      1.25rem 0 0 #f6be4f,
+      2.5rem 0 0 #62c554;
+    // ドット2つ分の box-shadow がバーの幅に含まれないため余白で確保
+    margin-inline-end: 2.5rem;
+  }
+
+  .c--kvDemo_tabs {
+    display: flex;
+  }
+
+  .c--kvDemo_tab {
+    width: 4rem; // 64px 固定（モックアップ準拠）
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 2px;
+    background: transparent;
+    color: #fff;
+    font-family: var(--ff--mono);
+    font-size: 0.875rem;
+    line-height: 1.25;
+    cursor: pointer;
+
+    @media not (min-width: 800px) {
+      font-size: 0.75rem;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+    &[aria-selected='true'] {
+      background-color: var(--kvDemo-surface);
+    }
+    // JSXが不正な間の控えめなインジケーター（スナックバーと同じ warning トーン）
+    &[data-invalid] {
+      color: var(--kvDemo-warning);
+    }
+  }
+
+  /* ----------------------------------------
+      エディター（textarea + ハイライトpre の重ね）
+   ---------------------------------------- */
+  .c--kvDemo_editor {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+
+  // 両レイヤーで完全に同一のフォントメトリクスを使う（1pxでもズレると caret 位置が狂う）
+  .c--kvDemo_pre pre,
+  .c--kvDemo_pre .fallback,
+  .c--kvDemo_input {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border: none;
+    font-family: var(--ff--mono);
+    font-size: 0.875rem;
+    line-height: 1.25; // モックアップ準拠（初期コード19行が400pxにちょうど収まる）
+    letter-spacing: normal;
+    tab-size: 2;
+    white-space: pre;
+    overflow-wrap: normal;
+    word-break: normal;
+
+    @media not (min-width: 800px) {
+      font-size: 0.75rem;
+    }
+  }
+
+  // lism-base の `* { line-height: calc(1em + var(--hl) * 2) }` が
+  // shiki の code / span にも直接当たり textarea とズレるため、子孫は必ず親から継承させる
+  .c--kvDemo_pre pre * {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+
+  .c--kvDemo_pre {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    pre {
+      background-color: transparent !important; // shiki の inline 背景を打ち消す
+      min-width: max-content;
+    }
+    code {
+      display: block;
+    }
+    // ハイライター読み込み前のプレーンテキスト表示
+    .fallback {
+      display: block;
+      color: var(--kvDemo-text);
+      min-width: max-content;
+    }
+  }
+
+  // textarea のスクロールに transform で追従するレイヤー
+  .c--kvDemo_preInner {
+    width: max-content;
+    min-width: 100%;
+    will-change: transform;
+  }
+
+  .c--kvDemo_input {
+    position: absolute;
+    inset: 0;
+    // iOS の自動ズーム回避のため 16px とし、scale で pre レイヤーと同じ見た目に縮小する。
+    // 寸法・余白（共通メトリクスの 0.5rem 1rem）は縮小率の逆数で拡大して視覚上一致させる。
+    // 文字自体は透明なので、pre レイヤーと合うべきは caret・選択範囲の位置だけ
+    font-size: 16px;
+    transform: scale(var(--kvDemo-input-scale));
+    transform-origin: 0 0;
+    width: calc(100% / var(--kvDemo-input-scale));
+    height: calc(100% / var(--kvDemo-input-scale));
+    // lism-css の reset（@layer reset）にある textarea { max-inline-size: 100% } が
+    // 拡大した width をクランプしてしまうため解除する
+    max-inline-size: none;
+    padding: calc(0.5rem / var(--kvDemo-input-scale)) calc(1rem / var(--kvDemo-input-scale));
+    background: transparent;
+    color: transparent;
+    caret-color: var(--kvDemo-text);
+    resize: none;
+    outline: none;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
+
+    &::selection {
+      background-color: rgba(56, 139, 253, 0.4);
+      color: transparent;
+    }
+  }
+
+  /* スナックバー風の通知（エディター右下・自動クローズ）。
+     動作は継続する非致命的な通知のため、赤ではなく warning トーンで表示する */
+  .c--kvDemo_snackbar {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: calc(100% - 1.5rem);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--kvDemo-warning), transparent 65%);
+    border-radius: 0.5rem;
+    background-color: var(--kvDemo-snackbar-bgc);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    color: var(--kvDemo-text);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    pointer-events: none; // エディター操作を妨げない
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+
+    // 警告アイコン（octicon alert の三角形を mask で描画）
+    &::before {
+      content: '';
+      flex-shrink: 0;
+      width: 0.875rem;
+      height: 0.875rem;
+      background-color: var(--kvDemo-warning);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'/%3E%3C/svg%3E")
+        no-repeat center / contain;
+    }
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s linear 0.2s;
+
+    &.is--show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    // ボタン付きの提案 variant（例: 空になった時のリセット提案）。
+    // 警告ではないため info トーンにし、クリックできるよう pointer-events を戻す
+    &.is--action {
+      pointer-events: auto;
+      border-color: rgba(255, 255, 255, 0.12);
+
+      &::before {
+        background-color: var(--kvDemo-text-dim);
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z'/%3E%3C/svg%3E");
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* アクションボタン（スナックバーの Restore と中断ステータス行の Resume で共用） */
+  .c--kvDemo_snackbar_btn,
+  .c--kvDemo_statusBtn {
+    flex-shrink: 0;
+    padding: 0.25rem 0.625rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.375rem;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--kvDemo-text);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  /* ----------------------------------------
+      AIパネル
+   ---------------------------------------- */
+  .c--kvDemo_panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    // グリッドアイテムのデフォルト min-height:auto を打ち消す。
+    // これが無いとパネルが内容の高さまで伸び、メッセージ領域の overflow スクロールが効かない
+    min-height: 0;
+    padding: 1rem;
+    background-color: var(--kvDemo-surface);
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.2);
+
+    @media not (min-width: 800px) {
+      // SPは下段に全幅表示（境界は背景差のみ・ボーダーなし）
+      border-inline-start: none;
+    }
+  }
+
+  /* 空状態: グラデーションの円形ロゴ + プレースホルダー文 */
+  .c--kvDemo_placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+
+    &[hidden] {
+      display: none;
+    }
+
+    @media not (min-width: 800px) {
+      justify-content: start;
+    }
+  }
+
+  .c--kvDemo_orb {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    // Figmaモックアップのグラデーション（teal → blue → purple）
+    background: linear-gradient(211deg, #89f9e1 0%, #87caf7 36%, #af8cff 100%);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .c--kvDemo_placeholderText {
+    margin: 0;
+    color: var(--kvDemo-text-dim);
+    font-size: 0.75rem;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .c--kvDemo_messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 0;
+    overflow-y: auto;
+    // スクロールバーの有無で幅がガタつかないよう、常に溝を確保する
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    padding-block-end: 1em;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .c--kvDemo_msg {
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.5rem;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+
+    &.is--user {
+      align-self: flex-end;
+      max-width: 90%;
+      background-color: var(--kvDemo-surface);
+    }
+    &.is--ai {
+      align-self: stretch;
+      color: var(--kvDemo-text);
+      padding-inline-start: 0;
+    }
+  }
+
+  /* 再生中断時のステータス行（"Interrupted" + Resume ボタン）。吹き出しではないシステム表示 */
+  .c--kvDemo_status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 0;
+    color: var(--kvDemo-text-dim);
+  }
+
+  /* 中断ステータスの「Interrupted」ラベルのみ斜体にする */
+  .c--kvDemo_statusLabel {
+    font-style: italic;
+  }
+
+  /* 「Ask AI to edit...」トリガー（入力欄風のボタン。右下に送信矢印の矩形） */
+  .c--kvDemo_ask {
+    flex-shrink: 0;
+    // プレースホルダーが隠れ、かつ messages がまだ空（:empty で非表示）の間も
+    // パネル上端にジャンプしないよう、常に下端へ固定する
+    margin-block-start: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    padding: 0.375rem;
+    border: none;
+    border-radius: 2px;
+    background-color: var(--kvDemo-surface);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    @media not (min-width: 800px) {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  .c--kvDemo_askText {
+    flex: 1;
+    width: 100%;
+    color: var(--kvDemo-text-dim);
+    font-size: 0.75rem;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    text-align: left;
+
+    /* シナリオ再生中のタイピング表示（プレースホルダー色 → 通常テキスト + 点滅キャレット） */
+    &.is--typing {
+      color: var(--kvDemo-text);
+
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 1em;
+        margin-inline-start: 1px;
+        vertical-align: -0.125em;
+        background-color: currentColor;
+        animation: kvDemo-caret-blink 1s steps(2, jump-none) infinite;
+      }
+    }
+  }
+
+  .c--kvDemo_askArrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 2px;
+    background-color: #373a3d;
+    color: #fff;
+    font-size: 0.5625rem; // 9px
+    line-height: 1;
+  }
+}
+
+// 入力欄トリガーのキャレット点滅（is--typing は reduced-motion 時には付与されない）
+@keyframes kvDemo-caret-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

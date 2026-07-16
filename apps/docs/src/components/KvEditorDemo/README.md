@@ -1,0 +1,452 @@
+# KvEditorDemo — 仕組みの解説
+
+トップページ KV の「ライブコードエディター + AI デモパネル」の実装ドキュメント。コードレビュー用に、設計判断の理由も含めて記載する。
+
+## 概要
+
+トップページの KV（キービジュアル）を、Lism を実際に触れるライブデモにした実装。1 つのエディターウィンドウに HTML / JSX の 2 表記を切り替えられるコードエディターと、AI アシスタント風のデモパネルを備え、**ヒーローエリア自体がエディターの描画結果**になっている。エディターを編集するとヒーローがその場で変わり、AI パネルの再生ボタンを押すと「AI に依頼 → コードが書き換わる → ヒーローが変わる」という Lism の体験を全 3 ステップ連続で自動デモする。
+
+実装は次の原則に集約される。詳細は後続の各セクションで解説する。
+
+1. **単一モデル・単方向データフロー** — アプリの状態は HTML 文字列 1 本（`state.html`）。HTML タブ・JSX タブ・ヒーロー・シナリオ再生はすべてこのモデルへの入力またはモデルから導出されるビューであり、どこから変更しても「モデル更新 → 派生ビュー再描画」の一方向で流れる。状態の二重管理が生む同期バグを構造的に排除する。
+2. **ビューは変換で導出する** — JSX タブは独立した状態ではなく、モデルからの双方向変換（`convert.ts`）で導出する。変換できない入力（編集途中の不正な JSX）の間はモデルを last-good に保ち、表示だけを追従させる。
+3. **SSR ファースト** — 初期表示（ヒーロー・ハイライト済みコード）はビルド時に生成し、JS はあとから段階的に機能を足す。shiki 本体（最大の依存）はアイドル時の遅延ロードで、初期表示のパフォーマンスに影響させない。
+4. **演出も本物の編集** — AI デモは動画やスクリーンキャプチャではなく、シナリオデータ（`scenario.ts`）を再生エンジン（`player.ts`）が本物のエディター API に流し込んで動かす。だからユーザーはいつでも再生に割り込んで、続きを自分で編集できる。
+5. **フットプリント最小** — ランタイムに React は載せない（素の `<script>` + data 属性。プロジェクト方針で `SearchModal.astro` 等の既存パターンに準拠）。追加依存は `apps/docs` のみで、公開パッケージには一切変更がない。
+
+## コンセプトと全体像
+
+**ヒーローエリアはエディターの描画結果そのもの**。エディターの HTML を編集するとヒーローが変わり、全削除するとヒーローも消える（消えた場合はリセット提案が出る）。AI パネルは事前定義シナリオを再生し、エディター → ヒーローを連動して書き換える。
+
+```
+                        ┌─────────────────────────────┐
+                        │  .c--kvHero（ヒーロー出力） │ ← innerHTML = sanitize(html)
+                        └─────────────△───────────────┘
+                                      │ ライブ反映（rAFスロットル）
+┌───────────────────────────────────────────────────────┐
+│ state.html（唯一のモデル・常にHTML表記）              │
+└──△──────────────────△────────────────────△────────────┘
+   │ そのまま         │ jsxToHtml()        │ setCode() / setViewText()
+┌──┴─────────┐  ┌─────┴───────┐      ┌─────┴────────┐
+│ HTMLタブ   │  │ JSXタブ     │      │ player.ts    │
+│ (textarea) │  │ (textarea)  │      │ シナリオ再生 │
+└────────────┘  └─────────────┘      └──────────────┘
+```
+
+- データフローは単方向：入力（どのタブでも / プレイヤーでも）→ `state.html` 更新 → ヒーロー描画 + ハイライト再描画
+- textarea は 1 つだけで、タブ切替時に中身（各タブの生テキスト）を差し替える。ハイライトは textarea の背面ではなく**前面に重ねた `pre` レイヤー**（`pointer-events: none`）で表示し、textarea 側は文字を透明にして caret だけ見せる
+- React は使わない（プロジェクト方針）。すべて素の `<script>` + data 属性
+
+## 追加パッケージ
+
+すべて `apps/docs/package.json` にのみ追加(公開パッケージには変更なし)。
+
+### dependencies（shiki 一式・すべて `^4.0.2`）
+
+| パッケージ | 概要 | なぜ必要か |
+|---|---|---|
+| `@shikijs/core` | shiki の本体（`createHighlighterCore`）。言語・テーマ・エンジンを外部から注入する最小コア | エディターのハイライトのすべての土台。ビルド時 SSR（初期表示）とクライアント（編集時の再ハイライト）の両方で使う |
+| `@shikijs/engine-javascript` | TextMate 文法を純 JS の正規表現で実行するエンジン | デフォルトの Oniguruma エンジンは WASM（数百KB + 初期化コスト）が必要。ブラウザで軽く動かすため JS エンジンを採用。`forgiving: true` で一部非互換の文法パターンをエラーにせずスキップする |
+| `@shikijs/langs` | TextMate 文法定義集。`@shikijs/langs/html` と `@shikijs/langs/jsx` のみをサブパス import | HTML タブ / JSX タブそれぞれのハイライトに必要。この2つだけを取り込むことでバンドルを絞っている（それでも html 文法が JS/CSS 文法を内包するため gzip 約110KB。アイドル時の遅延ロードで初期表示への影響はなし） |
+| `@shikijs/themes` | テーマ定義集。`@shikijs/themes/github-dark` のみをサブパス import | エディターの配色。github-dark の背景 `#24292e` が docs の `--codeBlock-bgc` と同一で、サイト内のコードブロックと色が揃う |
+
+### 解説: Astro に shiki が入っているのに、なぜ追加が必要だったか
+
+shiki 自体は Node でもブラウザでも動く isomorphic なライブラリで、「サーバーサイド専用」なわけではない。それでも追加が必要だったのは、次の 2 つの独立した理由による。
+
+**1. Astro の shiki は内部依存（transitive dependency）で、アプリからは import できない**
+
+`astro` は Markdown / MDX のコードブロックや `<Code>` コンポーネントのハイライトのために shiki v4 に依存しているが、これは Astro の内部実装の都合であって、apps/docs に公開されているものではない。pnpm は isolated な node_modules 構造のため、自分の `package.json` に宣言していないパッケージはそもそも解決できない。仮に import できる構造だったとしても、宣言なしの間接依存への依存（phantom dependency）は Astro 側の依存変更で突然壊れるアンチパターンになる。
+
+そこで `@shikijs/*` を直接依存として追加した。バージョンを Astro 内部の shiki と同じ `^4.0.2` に揃えているため、pnpm は同一インスタンスに解決（dedupe）し、node_modules 上の実質的な追加コストはほぼない。
+
+**2. Astro が shiki を使うのはビルド時だけで、クライアント向け API は存在しない**
+
+Astro のハイライトはすべてビルド時（SSG）に完結し、ハイライト済みの HTML が出力されるだけで shiki のコードは 1 バイトもブラウザへ配信されない。「Astro の shiki をブラウザで再利用する」ための公開 API は存在しないため、クライアントでライブハイライトするには自前で import する必要があった。
+
+**3.（補足）ブラウザで使う場合の実際のハードルはサイズ**
+
+`shiki` メタパッケージをそのまま import すると全言語文法 + 全テーマ + Oniguruma（WASM）エンジンが含まれて非常に重い。そのため上記の表のとおり fine-grained 構成（コア + 2 文法 + 1 テーマ + JS エンジン）とし、gzip 約 110KB の非同期チャンクに抑えた上でアイドル時に遅延ロードしている。
+
+## ファイル構成
+
+```
+KvEditorDemo/
+├── KvEditorDemo.astro   # マークアップ + ビルド時SSR
+├── initial-code.ts      # 初期HTML（single source of truth）
+├── scenario.ts          # AIシナリオ定義（データのみ）
+├── README.md            # このドキュメント
+└── lib/
+    ├── editor.ts        # コントローラ（状態・タブ・ヒーロー連動・スクロール追従・入力上限）
+    ├── player.ts        # シナリオ再生エンジン
+    ├── diff.ts          # 再生アニメ用のdiff計算（行ハンク + 文字単位）
+    ├── convert.ts       # HTML ⇔ JSX 双方向変換
+    ├── sanitize.ts      # ヒーロー描画前の無害化
+    ├── validate.ts      # 入力上限値 + HTMLタグバランスチェック
+    ├── snackbar.ts      # エディター右下の通知・提案表示
+    └── highlight.ts     # shiki ラッパー（ビルド時 + クライアント共用）
+
+styles: src/styles/_kv-demo.scss（main.scss から @use）
+組み込み: src/pages/index.astro（旧ヒーロー・kv-search・ダミーSVGを置換）
+```
+
+モジュール間の依存は一方向に保っている: `editor.ts`（DOM を握るコントローラ）が各 lib を束ね、`player.ts` は `EditorApi` インターフェース越しにのみエディターへ触る。`convert.ts` / `diff.ts` / `sanitize.ts` / `validate.ts` は DOM イベントに依存しない純粋な関数群になっている。
+
+## initial-code.ts — 唯一の情報源
+
+`INITIAL_HTML` は次の 4 箇所で共用される。1 箇所にまとめることで SSR とクライアントの初期状態が必ず一致する。
+
+1. ヒーローの SSR（`set:html`）→ SEO 用に h1 がページソースに含まれる
+2. エディター（textarea）の初期値
+3. ハイライト済み `<pre>` のビルド時 SSR（初期表示のフラッシュ防止）
+4. シナリオ再生のリセット時の戻し先
+
+**制約**: `convert.ts` のプリンタ出力と同じ整形ルール（後述: 2 スペースインデント・単一テキスト子は 80 字以内でインライン化）で書くこと。ズレると HTML → JSX → HTML の往復でコードが勝手に書き換わる。自動テストは置いていないため、変更したら JSX タブへ切り替えて HTML タブへ戻り、コードが書き換わらないことを手動確認すること。
+
+内容はヒーローの見出し（h1）・リード文（p）・2 つのボタン風リンク（`l--flex`）で構成し、`data-modal-open="search-modal"` 付きの検索アンカー（⌘K チップ入り）を含む。なお、デザインモックアップ（SVG）記載のクラスの一部（`-g:8` / `-bg:base-2` / `-fw:medium` 等）は Lism に実在しないため、ビルド済み `main.css` に存在するクラスだけで再構成している。
+
+## KvEditorDemo.astro — SSR とマークアップ
+
+frontmatter で `await highlight(INITIAL_HTML, 'html')` を実行し、ハイライト済み `<pre>` もビルド時に埋め込む。JS 読み込み前から「色付きのコード + ヒーロー」が完全表示され、JS が動き出すと編集・再生機能が段階的に足される（プログレッシブエンハンスメント）。
+
+```
+.c--kvHero[data-kv-hero]      … ヒーロー出力（set:html={INITIAL_HTML} で SSR）
+
+.c--kvDemo[data-kv-demo]      … grid: エディター 1fr + パネル 12.6875rem。md未満は縦積み（エディター + 下段パネル 146px）
+├── .c--kvDemo_window
+│   ├── .c--kvDemo_bar        … 信号ドット + HTML/JSX タブ（role="tablist"。背景はウィンドウと同一）
+│   └── .c--kvDemo_editor     … 重ねレイヤー（下記）
+│       ├── .c--kvDemo_pre[aria-hidden]      … 表示用（pointer-events: none）
+│       │   └── .c--kvDemo_preInner          … ★transform でスクロール追従
+│       │       └── shiki の <pre><code>
+│       ├── textarea.c--kvDemo_input         … 入力用（文字は透明・caret のみ表示）
+│       └── .c--kvDemo_snackbar[role="status"] … エラー通知・リセット提案
+└── aside.c--kvDemo_panel     … AIパネル（SPでは下段に全幅表示）
+    ├── .c--kvDemo_placeholder … 空状態: グラデーション円形ロゴ（orb）+ "Just ask. The code writes itself."
+    ├── .c--kvDemo_messages[aria-live="polite"] … 吹き出し・中断ステータス行の追記先（空の間は非表示）
+    └── button.c--kvDemo_ask[data-kv-play]   … 入力欄風トリガー（"Ask AI to edit..." + 右下に ↑ 矢印の矩形）
+```
+
+マークアップ上の細かい配慮:
+
+- textarea には `spellcheck="false"` / `autocomplete` / `autocapitalize` / `autocorrect` off と `wrap="off"`（折り返さず横スクロール。`pre` レイヤーの `white-space: pre` と一致させる）を指定
+- textarea の中身は Astro が自動エスケープする。閉じタグ直前に空白を入れない（入れると初期値に混入する）
+- タブは `role="tablist"` / `role="tab"` / `aria-selected` で表現。ハイライトレイヤーは `aria-hidden`（読み上げ対象は textarea 側のみ）
+- `data-kv-*` 属性が JS のフックで、クラス名はスタイル専用（フックと見た目の分離）
+
+## editor.ts — コントローラ
+
+`initKvEditorDemo()` が DOM 要素を集めて全機能を配線する。必須要素（hero / demo / textarea / preInner）が見つからなければ何もせず終了する。
+
+### 状態モデル
+
+```ts
+const state = {
+  html: INITIAL_HTML,                      // 唯一のモデル（常にHTML表記）
+  activeTab: 'html' as EditorLang,
+  tabText: { html: INITIAL_HTML, jsx: '' }, // 各タブの生テキスト
+  stale: { html: false, jsx: true },        // モデルから再生成が必要か
+};
+```
+
+`tabText` を分けて持つのは**ユーザーの整形を保持する**ため。HTML タブを編集しても、JSX タブに切り替えるまで JSX テキストは再生成しない（`stale` フラグで遅延評価）。逆に JSX タブでの編集も、HTML タブへ戻るまで HTML テキストの再整形を遅延する。切替時に `stale` なタブだけ `htmlToJsx()` / モデルそのまま で再生成する。
+
+### 入力フロー（`processInput`）
+
+- **HTMLタブ**: `state.html = textarea.value` → ヒーロー描画 + ハイライト。JSX 側を stale に
+- **JSXタブ**: `jsxToHtml()` を試行。
+  - 成功 → モデル更新・ヒーロー反映・HTML 側を stale に
+  - 失敗（編集途中の不正な JSX）→ **last-good なモデルを維持**し、JSX タブに `data-invalid` 属性（CSS で warning 色のインジケーター）。ハイライトだけは生テキストで更新
+
+### ヒーロー描画
+
+`hero.innerHTML = sanitize(state.html)` を **rAF でスロットル**（フラグ 1 本で 1 フレーム 1 回に制限）。再生中のタイピングアニメは十数 ms 間隔で `setViewText` が呼ばれるため、毎回 DOM を書き換えないための措置。
+
+ブラウザの HTML パーサーは寛容なので、再生中断などで閉じタグが欠けた状態でも描画は破綻しない（仕様として許容）。エディターを空にするとヒーローも空になるが、`.c--kvHero` に `min-height` を持たせてレイアウトが完全に潰れてガタつくことは防いでいる。
+
+### シンタックスハイライト（遅延ロード + 同期実行）
+
+- 初期表示は SSR 済みなので、shiki 本体（非同期チャンク・gzip 約110KB）は `requestIdleCallback`（未対応ブラウザは 1.5 秒後の `setTimeout`）で遅延ロード
+- ロード完了後は **`highlightSync()`（同期 API）で入力のたびに即時再描画**。非同期 + debounce だと textarea とハイライトが一瞬ズレるため
+- ロード前に編集された場合は `.fallback`（同一フォントメトリクスのプレーンテキスト）に退避。エスケープは自前の `escapeHtml` で行う
+
+`padTrailingNewline`: コード末尾が改行のとき、`pre` 側では最終空行が高さを持たず textarea とズレるため、空白 1 文字を足してから描画する。
+
+### スクロール追従（transform 方式）
+
+**スクロールするのは textarea だけ**。ハイライトレイヤーは scroll イベント（`passive: true`）で
+
+```ts
+preInner.style.transform = `translate3d(${-scrollLeft * scale}px, ${-scrollTop * scale}px, 0)`;
+```
+
+を適用して 1:1 追従する。`scale` は textarea の computed transform（`DOMMatrixReadOnly`）から読み取る縮小率（後述の iOS ズーム対策で textarea は scale されており、`scrollTop / scrollLeft` は変形前のローカル座標で返るため、視覚上の移動量へ換算する必要がある）。`scrollTop` 代入による同期を使わない理由：
+
+1. `overflow: hidden` 要素へのスクロール代入はスクロール可能量でクランプされ、レイヤー間の寸法差があるとズレる
+2. `innerHTML` 差し替えでスクロール位置がリセットされる事故が起きる（transform は `preInner` 自体に付くので、その中身を差し替えても保持される）
+
+さらに `renderHighlight()` の最後で必ず `syncScroll()` を呼び、描画更新とスクロール位置を常に一致させる。スクロールバーは textarea 自身のものなので、つまみの位置・サイズとコンテンツは常に正確に対応する。
+
+### 入力上限の強制（巻き戻し方式）
+
+大量入力によるクラッシュ / フリーズ防止（毎キー入力でハイライト・変換・ヒーロー描画が走るため）。上限は `MAX_CODE_LENGTH = 10,000` 字。
+
+- **超過する入力は受け付けない**: `beforeinput` 時点（変更前）の値とカーソル位置をスナップショットしておき、`input` で超過を検知したら値・選択範囲ごと巻き戻す。「貼り付けたら末尾が黙って消えた」という切り捨て事故が起きない
+- **IME 対応**: 変換中（`isComposing`）の巻き戻しは入力が壊れるため、`compositionstart` でスナップショットを取り、`compositionend` でまとめて判定・巻き戻す
+- タブ切替・`setCode()`・`setViewText()` 後にもスナップショットを更新し、巻き戻し先が古い状態にならないようにしている
+- プレイヤーの書き込みは上限チェックの対象外（シナリオ・初期コードは上限内に収めて書くこと）
+
+### 構文チェック・空チェック（デバウンス評価）
+
+`<div` と打っている途中は常に「不正」なので、**入力が止まって 800ms 後に評価**する。タイピング継続中はスナックバーが出ない。
+
+- **HTML タブ**: `findHtmlIssue()`（後述）でタグバランスを検査。検知してもヒーローは従来どおり寛容に描画し続ける（警告のみ）
+- **JSX タブ**: `processInput` での `jsxToHtml()` 即時判定結果を `jsxInvalidNow` に控えておき、デバウンス発火時に再パースせず流用する。タブの warning 色インジケーターは即時、スナックバーはデバウンス後
+- 表示は「正常 → 不正への遷移時」に 1 回だけ（`syntaxReported` フラグ。不正のまま編集を続けても連発しない）
+- **空チェック**: エディターが空（trim して空文字）のままデバウンス評価を迎えると、リセット提案（後述のアクション付きスナックバー）を表示。空提案の表示中に入力が再開されたらデバウンスを待たず即座に閉じる
+- タブ切替・`setCode()` 時は評価タイマーを破棄して非表示に（古いメッセージの誤表示防止）
+
+### 検索モーダルのデリゲーション
+
+lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-modal-open]')` で**要素へ直接バインド**するため、ヒーローを innerHTML で書き換えるとリスナーが消える。対策として、ヒーローコンテナに委譲リスナーを置き、`[data-modal-open]` のクリックを**ヒーロー外の常設トリガー（ヘッダーの検索ボタン）へ `.click()` で転送**する。`openDialog()` 側に連打ガードがあるため、初回ロード時（SSR 直後は直接バインドも生きている）の二重発火も無害。
+
+### プレイヤー向け API（`EditorApi`）
+
+プレイヤーはこのインターフェース越しにのみエディターへ触る:
+
+- `setCode(code, viewText?)` … コード全文の確定的な置き換え。モデル・ヒーロー・ハイライトを更新し、構文チェックをリセット。JSX タブがアクティブなら `viewText`（JSX 表記）を表示に使う
+- `setViewText(text)` … タイピングアニメの 1 フレーム反映。HTML タブは部分的な HTML でも描画できるため**モデル・ヒーローも同期**し、JSX タブはタイピング途中が不正な JSX になるため**表示のみ**更新する（モデルの確定は `setCode` で行う）
+- `revealPosition(line, linePrefix)` … 編集位置を可視範囲へスクロールする（再生アニメ用）。行位置は行番号 × line-height、横位置は `linePrefix`（行内の先行テキスト）を canvas の `measureText` で実測して求める（等幅前提にしないので日本語混在でも正確）。textarea 内部のスクロールに加え、編集行がページのビューポート外にある場合は window 側もスクロールする（SP でエディター下の AI パネルを見ている間に編集箇所が画面外、というケースへの対策）。スクロールが発生したら true を返す（プレイヤー側が「間」を挟む判断に使う）。`prefers-reduced-motion` では smooth ではなく即時スクロール。scrollTop / clientWidth / フォント計測はすべて scale 変形前のローカル座標系で一貫しているためそのまま計算できる
+- `getCode()` / `getActiveTab()` / `getViewText()` … 読み取り
+- `textarea` / `tabButtons` … 中断トリガー（focus / pointerdown / タブクリック）のイベント登録用
+
+## convert.ts — HTML ⇔ JSX 双方向変換
+
+デモ専用の軽量実装。lism-css の実行ロジックは import せず、**`lism-css/config` の `PROPS` テーブル（純データ、React 非依存）だけ**を参照する。これにより「どの属性名が Lism prop か」の判定は本物の定義と一致しつつ、クライアントバンドルに React が入らない。
+
+### アーキテクチャ: パーサー 2 つ + 共通プリンタ
+
+両方向とも「入力をパースして中間表現（`PrintableNode` ツリー: 出力タグ名・変換済み属性・子）に落とし、共通のプリンタで文字列化する」構成。**両方向が同じプリンタで整形するからこそ往復（ラウンドトリップ）が安定する**。
+
+- HTML → JSX: `<template>` の innerHTML パース（寛容）→ `htmlElementToJsx()` で要素ごとに変換
+- JSX → HTML: `DOMParser` の XML パース（厳密）→ `jsxElementToHtml()` で要素ごとに変換
+
+### 変換ルール
+
+| HTML | JSX | 備考 |
+|---|---|---|
+| `-fz:5xl` などの class | `fz="5xl"` などの prop | `-{key}:{val}` 形式で key が `PROPS` に存在するもの。**機械的変換** |
+| `-hov:-o` などの class | `hov="-o"` prop | `hov` は `PROPS` 外の特別扱い prop（本物は `getLismProps` 内で分岐）。文字列形式のみ対応で、複数トークンはカンマ結合（`hov="-o,up"`） |
+| `l--stack` / `l--flex` / `l--box` | `<Stack>` / `<Flex>` / `<Box>` | タグが div 以外なら `as="tag"` を付与 |
+| `h1`〜`h6` | `<Heading level="n">` | Heading のデフォルト（level=2, タグ=`h{level}`）に準拠 |
+| `p` | `<Text>` | Text のデフォルトタグ = p |
+| prop クラスを持つその他のタグ（a, span 等） | `<Lism as="tag" …>` | Lism のデフォルトタグ = div |
+| prop クラスを持たないタグ | そのまま（小文字タグ） | |
+| 変換できないクラス | `className="…"` として保持 | 往復しても失われない |
+| その他の属性（href, data-* 等） | そのまま引き継ぎ（順序保持） | |
+
+属性の出力順も規則化している: `level` / `as` → Lism props → `className` → その他の属性、の順。JSX → HTML では `class` を先頭（レイアウトクラス → props 由来 → className 由来の順で連結）に出す。順序が決定的だから往復で属性が並び替わらない。
+
+### JSX のパース
+
+`DOMParser` の **XML モード**でパースする（複数ルート対応のため `<jsx-root>` でラップ）。
+
+- XML は厳密なので、閉じタグ漏れ・`{}` 式・引用符なし属性は**パースエラー → `null` を返す**。呼び出し側の「不正な間は last-good 維持」がこれだけで成立する
+- タグ名の大文字小文字が保持される（HTML パーサーだと小文字化されてコンポーネント名が壊れる）
+- 未知の大文字コンポーネント・不正な `level`（1〜6 以外）は明示的に `JsxConvertError` を投げ、`jsxToHtml()` が catch して `null` に変換する（それ以外の例外は握り潰さず再 throw）
+
+### 対応範囲の制限（仕様）
+
+- `{}` 式（`g={8}` 等）は非対応 → XML パースエラーになり last-good 動作
+- レスポンシブ props（`fz={{base,md}}`）は非対応。Lism の実装ではレスポンシブ値はクラスでなく inline CSS 変数になるため機械的往復ができない。デモコンテンツには BP 指定を入れない方針（SP対応は後述の CSS 側で吸収）
+- `hov` は文字列形式（`hov="-bgc"`）のみ。boolean 形式（値なしの `-hov` クラス）と オブジェクト形式（`hov={{bgc:'red'}}` — inline CSS 変数が絡む）は非対応で、`-hov` は className として保持される
+- prop 名の認識は本物と同期する一方、値の変換は `-prop:val` クラスへの機械変換のみ。本物の Lism がクラスでなく inline CSS 変数にする値（トークン外の任意値: `mbs="3.5rem"` 等）は、クラスにしてもビルド済み CSS に存在せず見た目には効かない
+- コメントノードは両方向とも無視（出力に含めない）
+
+### プリンタ（整形ルール）
+
+- 要素・テキストは 1 行ずつ、2 スペースインデント
+- 単一テキスト子で行長 80 字以内（インデント込み）なら 1 行にまとめる（例: `<span …>⌘ K</span>`）
+- void 要素は `<br />`。空要素は JSX では `<Tag />`、HTML では `<div></div>`（`<div />` は不正な HTML のため）
+- 複数行テキストは行ごとに分割し、各行を trim して出力。空白のみのテキストノードは整形由来と見なして捨てる
+- テキストは `& < >`、属性値はさらに `"` をエスケープする
+
+## sanitize.ts — 無害化
+
+脅威モデルは **self-XSS のみ**（エディターの入力者 = 閲覧者。入力が保存・共有されることはない）。「安全なものだけ許可する」ホワイトリスト方式ではなく、「実行経路になるものだけ除去する」ブラックリスト方式で十分と判断した。`<template>` にパースして:
+
+- 実行経路になる要素を除去: `script, style, link, meta, base, iframe, object, embed, form`
+- `on*` 属性を除去（大文字小文字不問）
+- `href/src/srcset/xlink:href` の `javascript:` / `data:text/html` スキームを除去（U+0000〜U+0020 の制御文字・空白を取り除いて正規化してから判定するので、`java\nscript:` のような偽装も検知する）
+
+初期 SSR（`set:html={INITIAL_HTML}`）は開発者が書く信頼済みコンテンツなのでサニタイズしない。クライアントでの再描画は常にサニタイズを通す。
+
+## validate.ts — 入力上限値とタグバランスチェック
+
+- `MAX_CODE_LENGTH = 10_000`: エディターの最大入力文字数（editor.ts の巻き戻し処理が参照する定数）
+- `findHtmlIssue(code)`: スタック式の軽量タグバランスチェック。ブラウザの HTML パーサーは寛容で「不正」を返さないため、よくあるミスだけを自前で検知する
+  - 検知対象: 閉じ漏れ（`unclosed <div>`）/ 対応しない閉じタグ（`stray closing </div>`）/ 書きかけタグ（`incomplete tag`）/ 未終了コメント（`unterminated comment`）
+  - 誤検知しないための処理: 属性値内の `>` は引用符を追跡して無視、`a < b` のような地の文の `<` はタグとして扱わない（直後が英字・`/`・`!` のときだけタグ開始と見なす。ブラウザと同じ挙動）、void 要素・自己終了タグ・doctype はスタックに積まない
+  - 戻り値の詳細メッセージは内部・デバッグ用で、表示側は一律 `Invalid HTML syntax` を使う（後述）
+
+## snackbar.ts — 通知・提案の表示
+
+エディター右下（absolute 配置の `.c--kvDemo_snackbar`）に出すスナックバー風の通知。`role="status"` でスクリーンリーダーにも通知され、表示 / 非表示は opacity + translateY のトランジション（`prefers-reduced-motion` では無効）。2 つの variant を持つ:
+
+**通知型（`show`）** — 上限超過・構文エラー用
+
+- メッセージは**端的な英語**: `Invalid HTML syntax` / `Invalid JSX syntax` / `Character limit reached (10,000)`
+- すべて **4 秒で自動クローズ**（再表示でタイマーリセット）。構文エラーの永続的な手がかりは JSX タブの warning 色が担う
+- 見た目は **warning トーン**（動作は継続する非致命的な通知のため、赤ではなくアンバー）: 警告アイコン（octicon alert を CSS mask で描画）+ アンバーのボーダー。色は `--kvDemo-warning`（github-dark の yellow 系）で、JSX タブのインジケーターと共通
+- `pointer-events: none` でエディター操作を妨げない
+
+**提案型（`showAction`）** — エディターが空になった時のリセット提案
+
+- エディターが空のままデバウンス評価を迎えると、`The editor is empty.` + `Restore initial code` ボタンを表示
+- **自動クローズしない**。入力の再開（即時に消える）か Restore ボタンで閉じる
+- Restore は `INITIAL_HTML` に復元（JSX タブなら JSX 表記に変換して復元）し、フォーカスをエディターへ戻す（`preventScroll: true` でページのスクロール位置は動かさない）
+- この variant のみ `pointer-events: auto`（ボタンをクリックできる）。見た目は警告ではないため warning ではなく **info トーン**（ⓘ アイコン + ニュートラルなボーダー）
+
+## highlight.ts — shiki の最小構成
+
+- `@shikijs/core` + JS 正規表現エンジン（`forgiving: true`）+ `html`/`jsx` 文法 + `github-dark` テーマのみの fine-grained bundle
+- ハイライターの生成は 1 回だけ（Promise をモジュールスコープにキャッシュ）。ビルド時（frontmatter）とクライアントで同じモジュールを使う
+- shiki が出力する `pre` の背景は CSS で打ち消し、ウィンドウ背景は Figma モックアップ準拠の `#26292c` を使う（トークンの配色 = ハイライト色は github-dark のまま）
+- API は 3 つ:
+  - `highlight()` … async。ビルド時（frontmatter）と初期化用
+  - `preloadHighlighter()` … クライアントでの事前初期化
+  - `highlightSync()` … 初期化後の同期ハイライト（入力のたびに呼ぶ。未初期化なら `null` を返し、呼び出し側がプレーン表示にフォールバック）
+- transformer で shiki 出力の `tabindex` を削除（`aria-hidden` レイヤー内にフォーカス可能要素を置かないため）
+
+## player.ts — シナリオ再生エンジン
+
+### ステートマシン
+
+```
+idle ──click──▶ playing ──全ステップ完遂──▶ done ──click──▶ (リセットして) playing
+                  │ ▲
+   textareaにfocus/ │ │ Resume ボタン or click
+   pointerdown /   ▼ │ （中断ステップの開始コードへスナップして頭から残りを再生）
+   タブ切替      interrupted（チャットに "Interrupted" + Resume を表示）
+```
+
+- **1 クリック = 全ステップ連続再生**: 「Ask AI to edit...」のクリックで全ステップを順に一気に再生する。ステップの切り替わりには少し長めの「間」（`PAUSE_BETWEEN_STEPS`）を挟む（最後のステップの後には置かず、完遂した瞬間に done になる）
+- **再生はアクティブタブの表記で行う**: シナリオは HTML で持ち、JSX タブでは `htmlToJsx()` で変換した文字列をタイピングする（AI 吹き出しも `aiMessageJsx` に切り替え）
+- **再生開始時にコードをスナップしない**: コード書き換えは「現在のエディター内容 → `resultCode`」の diff タイピングなので、再生前にユーザーが編集していても、その状態を出発点として目標コードへ書き換える動きになる（done 後のリスタートだけは初期コードへ戻す）
+- **中断**: 再生中に textarea へ `focus` / `pointerdown`、またはタブクリックで**その場で即中断**。エディターは書きかけの状態をそのまま残し（仕様）、入力欄トリガーはプレースホルダー表示（`Ask AI to edit...`）へ戻し、チャット末尾にステータス行（"Interrupted" + Resume ボタン）を追加する。`AbortController` + abort 対応 `sleep()` で実装し、非同期ループは `AbortedError` で脱出する（それ以外の例外は再 throw）
+- **再開**: Resume ボタンまたは「Ask AI to edit...」のクリック（どちらも同じ処理）。中断ステップの吹き出しとステータス行（`currentStepBubbles` で追跡）を削除し、`stepStartCode(i)`（= 前ステップの `resultCode`、i=0 なら初期コード）へスナップしてから、そのステップの頭から**残りのステップを続けて**再生する。ユーザーが中断中に編集していても上書きする（仕様）。中断後にタブを切り替えていた場合も、スナップ処理（`snapTo`）が現在のタブの表記で復元する
+- **全ステップ完遂後（done）の再クリック**: チャットをクリアし初期コードへ戻して最初から
+
+### 1 ステップの流れ
+
+1. **ユーザー発話**: 入力欄トリガー（`.c--kvDemo_ask`）に 1 文字ずつタイピング（`is--typing` クラスで文字色を通常色にし、点滅キャレットを表示）→ 短いポーズ → 送信演出（プレースホルダーへ戻し、ユーザー吹き出しに全文一括表示）
+2. **AI 発話**: AI 吹き出しへ 1 文字ずつタイピング。メッセージ領域は追記のたびに末尾へ自動スクロール
+3. **コード書き換え**: 後述の diff タイピング。完了したらステップ間の「間」を挟んで次のステップへ
+
+吹き出しは `<p class="c--kvDemo_msg is--user / is--ai">` を `[data-kv-messages]`（`aria-live="polite"`）へ追記する。中断時のステータス行も同じ領域へ `<p class="c--kvDemo_status">`（"Interrupted" のラベル + `.c--kvDemo_statusBtn` の Resume ボタン）として追記するので、`aria-live` によりスクリーンリーダーへも中断が通知される。
+
+タイピング・ポーズの速度はモジュール先頭の定数に集約している（ms）: ユーザー入力 30 / AI 発話 22 / コード削除 12（2 文字ずつ）/ コード挿入 18（1 文字ずつ）、送信前 300 / AI 応答前 400 / コード書き換え前 500 / ハンク間 350 / 編集位置へのスクロール後 300 / ステップ間 1400（reduced-motion 時は 900）。
+
+### コード書き換えアニメ（ハンク単位の diff タイピング）
+
+全文置換ではなく、行単位の LCS（`lib/diff.ts` の `diffLineHunks()`）で**変更された行のまとまり（ハンク）**を検出し、上から順に 1 ハンクずつ書き換える。`<Flex>` → `<Stack>` のように開始タグと閉じタグが離れて変わるケースでも、間の無変更な子要素を巻き込んで再タイプしない。ハンク間には短いポーズ（`PAUSE_BETWEEN_EDITS`）を挟み、編集箇所を移動している演出にする。適用済みハンクで行数が増減するため、行番号のズレ（`lineShift`）を補正しながら順に適用する。
+
+各ハンクの書き換え前に、編集開始位置（`diffCode()` の共通 prefix `head` の末尾）を `editor.revealPosition()` で可視範囲へスクロールする。モバイルでは編集箇所が textarea のスクロール範囲外（横に長い行）やページのビューポート外にあり演出が見えないことがあるための措置で、スクロールが発生した場合は短い「間」（`PAUSE_AFTER_REVEAL`）を挟んでから書き換えを始める。
+
+各ハンク内はさらに文字単位で共通 prefix / suffix を除き（`diffCode()`）、実際に変わる文字だけを:
+
+1. 削除フェーズ: 後ろから数文字ずつ削る
+2. 挿入フェーズ: 新しい文字列を 1 文字ずつタイプ
+
+フレームの反映は `editor.setViewText()` を毎ティック呼ぶ。HTML タブではモデル・ヒーローも同期するが、JSX タブではタイピング途中が不正な JSX になるため**表示のみ**更新し、ステップ完了時に `snapTo()`（内部で `editor.setCode(html, jsxText)`）でモデル（＝ヒーロー）を確定する。ヒーローは rAF スロットル・ハイライトは同期実行なので負荷は問題にならない。
+
+### reduced-motion
+
+`prefers-reduced-motion: reduce` の場合、タイピング演出（入力欄・吹き出し・コード）を省略して即時適用し、ステップ間の「間」も短め（900ms）にする。判定は `matchMedia` を都度参照するので、再生中の設定変更にも追従する。
+
+## diff.ts — 再生アニメ用の diff 計算
+
+player.ts から使う純粋関数 2 つ。対象は高々数十行のデモコードなので、実装は簡潔さを優先している。
+
+- `diffCode(from, to)` … 文字単位で共通の先頭（`head`）・末尾（`tail`）を除き、実際に変わる部分（`removed` / `inserted`）だけを返す。ハンク内のタイピング範囲を最小化する
+- `diffLineHunks(fromLines, toLines)` … 行単位の LCS（動的計画法・O(m×n)）で「`fromLines[fromStart, fromEnd)` を `toLines[toStart, toEnd)` に置き換える」ハンクの列を返す。一致行はスキップし、不一致の連続区間を 1 ハンクにまとめる（ハンクを順に適用すると必ず `to` が復元できる）
+
+## scenario.ts — シナリオデータ
+
+```ts
+interface ScenarioStep {
+  userMessage: string;    // ユーザー側吹き出し（表記非依存）
+  aiMessage: string;      // AI側吹き出し（HTMLタブ再生時）
+  aiMessageJsx?: string;  // AI側吹き出し（JSXタブ再生時。省略時は aiMessage で代用）
+  resultCode: string;     // ステップ完了時のエディター全文・HTML表記（差分ではない）
+}
+```
+
+- `resultCode` は**全文かつ累積**（前ステップの結果を含む）。全文にしているのは、中断→再開のスナップ先・diff 計算の目標として一意に定まるようにするため
+- **`initial-code.ts` を変更したら、全ステップの `resultCode` にも同じ変更を波及させること**。漏れると再生時の diff が「初期コードへの変更を取り消す編集」としてタイピングされてしまう（スナップショット方式のトレードオフ）
+- 各 `resultCode` も `initial-code.ts` と同じくプリンタの整形ルールで書くこと（変更時は JSX タブとの往復で壊れないことを手動確認）
+- `aiMessage` / `aiMessageJsx` は表記の違い（`-c:brand` クラス vs `c="brand"` props 等）を文言にも反映するためのペア
+- 現在は仮の 3 ステップ: ①見出しに `-c:brand` ②ボタンを `-bdrs:99` + `-px:20` ③ラッパーを `l--flex` → `l--stack`（JSX タブで Flex → Stack の対応も見せられる）
+
+## _kv-demo.scss — スタイルの要点
+
+`@layer lism-component` に記述（lism-base のベーススタイルより優先させるため）。
+
+### ウィンドウ全体
+
+- **常時ダーク・フラット構成**: サイトテーマに関わらずエディターウィンドウは常にダーク。全体が単一の `#26292c`（バーの色分けなし）で、タブのアクティブ・AIパネル・入力欄風トリガーはすべて「白8%オーバーレイ」（`--kvDemo-surface`）で面を作る（Figma モックアップ準拠）。色は `--kvDemo-*` のローカル変数（bgc / surface / snackbar-bgc / text / text-dim / warning）に集約
+- レイアウトは grid: エディター `minmax(0, 1fr)` + パネル `12.6875rem`（203px）、全体 `max-width: 56.4375rem`（903px）× `height: 25rem`（400px）。md 未満は縦積み（エディター 1fr + 下段パネル `9.125rem` = 146px、全体 537px）
+- ウィンドウバーの信号ドットは span 1 つ + box-shadow 2 つで 3 色を描画。タブは幅 4rem（64px）固定（モックアップ準拠）
+
+### エディター（重ねレイヤー）
+
+- **フォントメトリクスの視覚上の完全統一**: `pre` / `.fallback` は 14px（SP 12px）・line-height 1.25（初期コード 19 行が 400px にちょうど収まる）・padding `0.5rem 1rem` 等を共通ルールで適用。1px でもズレると caret 位置が狂う
+- **iOS の自動ズーム対策（textarea の scale 縮小）**: iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームする。これを避けるため textarea だけ `font-size: 16px` とし、`transform: scale(var(--kvDemo-input-scale))`（`0.875` = 14/16、SP は `0.75` = 12/16）で pre レイヤーと同じ見た目に縮小する。width / height / padding は縮小率の逆数（`calc(… / var(--kvDemo-input-scale))`）で拡大して視覚上一致させる。このとき lism-css の reset（`@layer reset`）にある `textarea { max-inline-size: 100% }` が拡大後の width をクランプしてしまう（スクロールバーが内側に寄る）ため、`max-inline-size: none` で解除している。textarea の文字自体は透明なので pre レイヤーと合うべきは caret・選択範囲の位置だけであり、等幅フォントの字送りはサイズに対して線形（16px × 0.75 = 12px の字送りと厳密一致）なのでズレない。スクロール座標の換算は editor.ts の `syncScroll` が行う（前述）
+- **`.c--kvDemo_pre pre *` への強制継承**: lism-css のベースに `* { line-height: calc(1em + var(--hl) * 2) }` という全要素対象ルールがあり、shiki の `code` / `.line` スパンに直接当たって textarea とズレる。これを打ち消すため子孫全部に `inherit` を明示（lism-component レイヤーは lism-base より強い）
+- textarea は文字を透明（`color: transparent`）にして caret（`caret-color`）だけ表示。選択範囲も `::selection` で色を敷きつつ文字は透明のまま
+- `preInner` は `width: max-content` + `will-change: transform`（横スクロール時にハイライトが切れず、transform 追従を合成レイヤーで行う）
+
+### AI パネル
+
+- 白8% + 左ボーダー白20%（SP では下段全幅・境界は背景差のみでボーダーなし）
+- パネルとメッセージ領域に `min-height: 0` を指定（グリッド / フレックスアイテムのデフォルト `min-height: auto` を打ち消さないと、メッセージ領域の overflow スクロールが効かない）
+- メッセージ領域は `scrollbar-gutter: stable`（スクロールバーの出現で幅がガタつかない）、`:empty` で非表示
+- 中断ステータス行（`.c--kvDemo_status`）は吹き出しと違い背景なしの控えめな表示（dim 色・ラベルとボタンを両端揃え）。Resume ボタン（`.c--kvDemo_statusBtn`）はスナックバーの Restore ボタンとスタイルを共用（セレクタを連結して定義）
+- 空状態はグラデーションの円形ロゴ（`#89f9e1 → #87caf7 → #af8cff`）+ プレースホルダー文
+- 入力欄風トリガー（`.c--kvDemo_ask`）は `margin-block-start: auto` で常にパネル下端へ固定（プレースホルダーが消えてメッセージがまだ空の間もジャンプしない）。右下に `↑` 入りの 12px 矩形（`#373a3d`）。再生中のタイピング表示は `.is--typing` で文字色を通常色に切り替え、`::after` の点滅キャレット（1px 幅・steps アニメ）を付ける
+
+### レスポンシブ
+
+- **SPのヒーロー縮小**: Lism の `fz` トークンは em ベースの calc なので、`.c--kvHero` の `font-size` を md 未満で `0.7em` に絞るだけで全体が調和的に縮む。**エディター内容に BP クラスを持ち込まない**ための設計
+- ブレークポイントは Lism の `md`（800px）に統一。`@media not (min-width: 800px)` 表記
+
+## index.astro の変更
+
+- ヒーロー（旧 Heading / Text / Button / kv-search 入力）と TODO のダミー SVG `<Group>` を `<KvEditorDemo />` に置換
+- 旧 `#kv-search` の inline script（Enter で検索モーダルを開いて入力を転送する処理）と `.c--kv-search` スタイルを削除（検索はモックアップ準拠のアンカー + ⌘K チップに置き換わり、クリックでモーダルが開く）
+- `main.scss` に `@use './kv-demo'` を追加
+- 背景動画・後続セクションは変更なし
+
+## 既知の制限・今後の調整ポイント
+
+- JSX タブは `{}` 式・レスポンシブ props 非対応（仕様）。編集途中は last-good 維持で、タブの warning 色とデバウンス後のスナックバー以外のエラー表示はない
+- sanitize は self-XSS 前提の軽量実装。入力の保存・共有機能を将来足す場合は DOMPurify 等への差し替えを検討
+- 初期コード・シナリオの文言、ヒーローの色味・余白は仮。デザイン照合して調整予定
+- shiki チャンクは gzip 約110KB（html 文法が JS/CSS 文法を内包するため）。アイドル時ロードなので初期表示には影響しない
+
+## 検証方法
+
+このコンポーネントに自動テストは置いていない（プロジェクトの慣行に合わせ、UI まわりの検証は手動で行う）。
+
+```bash
+nr dev:docs                       # 手動確認
+pnpm --filter lism-docs typecheck # 型チェック
+```
+
+手動確認の要点:
+
+- **ラウンドトリップ安定性**: JSX タブへ切り替えて HTML タブへ戻り、コードが 1 文字も書き換わらないこと。`initial-code.ts`・`scenario.ts` の `resultCode`・`convert.ts` のいずれかを変更したら必ず確認する
+- ライブ編集（ヒーロー連動・ハイライト・スクロール追従・caret 位置）
+- 再生・中断（Interrupted + Resume）・再開・done 後のリスタート
+- 上限超過・構文エラー・空エディターのスナックバー表示
+- ⌘K（検索モーダル）/ reduced-motion / SP 表示 / ダークモード
