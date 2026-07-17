@@ -315,7 +315,10 @@ export function initKvEditorDemo(): void {
     if (!trigger || !hero.contains(trigger)) return;
     const modalId = trigger.getAttribute('data-modal-open');
     if (!modalId) return;
-    const persistent = [...document.querySelectorAll<HTMLElement>(`[data-modal-open="${modalId}"]`)].find((el) => !hero.contains(el));
+    // modalId はユーザー入力由来なのでセレクタ文字列へ埋め込まず、走査して値で突き合わせる
+    const persistent = [...document.querySelectorAll<HTMLElement>('[data-modal-open]')].find(
+      (el) => el.getAttribute('data-modal-open') === modalId && !hero.contains(el)
+    );
     if (!persistent) return;
     e.preventDefault();
     persistent.click();
