@@ -357,12 +357,17 @@
   }
 
   .c--kvDemo_messages {
+    // スクロール可能な方向を示す上下端のフェード高さ（scroll-hint.ts がスクロール位置に応じて更新）
+    --kvDemo-mask-top: 0px;
+    --kvDemo-mask-bottom: 0px;
+
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     min-height: 0;
     overflow-y: auto;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 var(--kvDemo-mask-top), #000 calc(100% - var(--kvDemo-mask-bottom)), transparent 100%);
     // スクロールバーの有無で幅がガタつかないよう、常に溝を確保する
     scrollbar-gutter: stable;
     scrollbar-width: thin;

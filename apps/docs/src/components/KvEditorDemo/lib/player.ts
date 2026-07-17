@@ -13,6 +13,7 @@ import { SCENARIO } from '../scenario';
 import { htmlToJsx } from './convert';
 import { diffCode, diffLineHunks } from './diff';
 import type { EditorApi } from './editor';
+import { initScrollHint } from './scroll-hint';
 
 // idle は初期状態（未再生）。全ステップを再生し終えると done になる
 type PlayerStatus = 'idle' | 'playing' | 'interrupted' | 'done';
@@ -91,8 +92,13 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     return bubble;
   };
 
+  // スクロール余地を示す上下端のフェード。手動スクロールは scroll イベントで追従する
+  const updateScrollHint = initScrollHint(messages);
+
   const scrollMessages = (): void => {
     messages.scrollTop = messages.scrollHeight;
+    // 既に末尾にいる状態でコンテンツが増えると scroll イベントが発火しないため明示的に更新する
+    updateScrollHint();
   };
 
   /** 入力欄トリガーに1文字ずつタイピングする（送信前の演出） */
@@ -285,6 +291,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     if (status === 'done') {
       // 全ステップ完了後: チャットをクリアし初期コードへ戻して最初から
       messages.innerHTML = '';
+      updateScrollHint(); // クリアでフェード高さを 0 に戻す（前回分の残留を防ぐ）
       snapTo(INITIAL_HTML);
       void run(0);
       return;
