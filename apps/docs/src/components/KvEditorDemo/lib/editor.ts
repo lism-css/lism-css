@@ -43,6 +43,24 @@ export function initKvEditorDemo(): void {
   const preInner = demo?.querySelector<HTMLElement>('[data-kv-pre-inner]') ?? null;
   if (!hero || !demo || !textarea || !preInner) return;
 
+  // ---- ヒーローの高さ保持（レイアウトシフト防止） --------------------------
+  // エディター内容を全削除してもヒーローが潰れず、下のエディターがジャンプしないよう
+  // 自然高さを min-height として固定する。高さは em ベースで幅（ブレークポイント）に依存するため、
+  // 幅が変わった時だけ再測定する（入力による高さ変化は幅が変わらないので無視される）
+  const lockHeroHeight = (): void => {
+    hero.style.minHeight = '';
+    hero.style.minHeight = `${hero.offsetHeight}px`;
+  };
+  lockHeroHeight();
+  // Webフォント読み込みで初期測定がズレることがあるため、読み込み完了後に再測定する
+  document.fonts.ready.then(lockHeroHeight).catch(() => {});
+  let lastHeroWidth = hero.offsetWidth;
+  new ResizeObserver(() => {
+    if (hero.offsetWidth === lastHeroWidth) return;
+    lastHeroWidth = hero.offsetWidth;
+    lockHeroHeight();
+  }).observe(hero);
+
   const snackbarEl = demo.querySelector<HTMLElement>('[data-kv-snackbar]');
   const snackbar = snackbarEl ? createSnackbar(snackbarEl) : null;
 
