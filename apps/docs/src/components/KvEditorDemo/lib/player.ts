@@ -6,7 +6,7 @@
 //   ただしエディターが空のときは、初期コード全文のタイピングは冗長なため INITIAL_HTML へ即時復元してから再生する
 // - 再生中にエディターへ focus / pointerdown / タブ切替 → その場で即中断（書きかけのまま残す）し、チャットに "Interrupted" + Resume ボタンを表示
 // - Resume ボタン（または再生トリガー）→ 中断したステップの開始コードにスナップして、そのステップ頭から残りのステップを再生
-// - 全ステップ完了後の再クリック → チャットをクリアし初期コードへ戻して最初から
+// - 全ステップ完了 → チャット末尾に "Done" ステータス行を表示。再クリックでチャットをクリアし初期コードへ戻して最初から
 // - prefers-reduced-motion: タイピングを省略し、結果を即時適用する
 import { INITIAL_HTML } from '../initial-code';
 import { SCENARIO } from '../scenario';
@@ -219,20 +219,28 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   // NOTE: 実体は後段で定義（run と相互参照のため）。呼び出しは常にユーザー操作時なので初期化済み
   let onPlayClick: () => void = () => {};
 
-  /** 中断ステータス行（"Interrupted" + Resume ボタン）をチャット末尾に追加する */
-  const showInterrupted = (): void => {
+  /** ステータス行（吹き出しではないシステム表示）をチャット末尾に追加する */
+  const appendStatusRow = (labelText: string): HTMLElement => {
     const row = document.createElement('p');
     row.className = 'c--kvDemo_status';
     const label = document.createElement('span');
     label.className = 'c--kvDemo_statusLabel';
-    label.textContent = 'Interrupted';
+    label.textContent = labelText;
+    row.appendChild(label);
+    messages.appendChild(row);
+    return row;
+  };
+
+  /** 中断ステータス行（"Interrupted" + Resume ボタン）をチャット末尾に追加する */
+  const showInterrupted = (): void => {
+    const row = appendStatusRow('Interrupted');
+    row.classList.add('is--interrupted');
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'c--kvDemo_statusBtn';
     button.textContent = 'Resume';
     button.addEventListener('click', () => onPlayClick());
-    row.append(label, button);
-    messages.appendChild(row);
+    row.appendChild(button);
     // 再開時に中断ステップの吹き出しと一緒に取り除く
     currentStepBubbles.push(row);
     scrollMessages();
@@ -252,6 +260,9 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
         await playStep(i, signal);
       }
       currentStepBubbles = [];
+      // 完了の明示。done 後の再クリックでチャットごとクリアされる
+      appendStatusRow('Done');
+      scrollMessages();
       status = 'done';
     } catch (e) {
       if (!(e instanceof AbortedError)) throw e;

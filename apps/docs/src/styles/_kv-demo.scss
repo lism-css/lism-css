@@ -226,7 +226,7 @@
     align-items: center;
     gap: 0.5rem;
     max-width: calc(100% - 1.5rem);
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.75rem;
     border: 1px solid color-mix(in srgb, var(--kvDemo-warning), transparent 65%);
     border-radius: 0.5rem;
     background-color: var(--kvDemo-snackbar-bgc);
@@ -399,7 +399,7 @@
     }
   }
 
-  /* 再生中断時のステータス行（"Interrupted" + Resume ボタン）。吹き出しではないシステム表示 */
+  /* ステータス行（中断時の "Interrupted" + Resume ボタン / 完了時の "Done"）。吹き出しではないシステム表示 */
   .c--kvDemo_status {
     display: flex;
     align-items: center;
@@ -409,8 +409,12 @@
     color: var(--kvDemo-text-dim);
   }
 
-  /* 中断ステータスの「Interrupted」ラベルのみ斜体にする */
   .c--kvDemo_statusLabel {
+    line-height: 1.25;
+  }
+
+  /* 中断ステータス行の「Interrupted」ラベルのみ斜体にする（"Done" は通常書体） */
+  .c--kvDemo_status.is--interrupted .c--kvDemo_statusLabel {
     font-style: italic;
   }
 
