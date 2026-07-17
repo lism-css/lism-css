@@ -3,6 +3,7 @@
 // - 各ステップ: ユーザー発話（入力欄でタイピング → 送信で吹き出しに一括表示）→ AI発話（タイピング）→ コード書き換え（変更行のハンクごとの diffタイピング）
 // - アクティブタブの表記で再生する（シナリオの resultCode は HTML。JSXタブでは htmlToJsx で変換してタイピング）
 // - コードは「現在のエディター内容 → resultCode」の diff で書き換えるため、再生開始時にスナップしない（再生前のユーザー編集が出発点になる）
+//   ただしエディターが空のときは、初期コード全文のタイピングは冗長なため INITIAL_HTML へ即時復元してから再生する
 // - 再生中にエディターへ focus / pointerdown / タブ切替 → その場で即中断（書きかけのまま残す）し、チャットに "Interrupted" + Resume ボタンを表示
 // - Resume ボタン（または再生トリガー）→ 中断したステップの開始コードにスナップして、そのステップ頭から残りのステップを再生
 // - 全ステップ完了後の再クリック → チャットをクリアし初期コードへ戻して最初から
@@ -291,6 +292,10 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
 
     // idle（初回）: 最初から一気に再生する。
     // コードはスナップせず、現在のエディター内容から resultCode へ diff タイピングする
+    // （ただしエディターが空のときは、全文タイピングの冗長さを避けるため初期コードへ即時復元してから再生する）
+    if (editor.getViewText().trim() === '') {
+      snapTo(INITIAL_HTML);
+    }
     void run(0);
   };
   for (const button of playButtons) {
