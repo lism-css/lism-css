@@ -13,7 +13,7 @@ const { icons = ['x', 'github', 'discord', 'lang'], ...props } = Astro.props;
 const show = (key: IconKey) => icons.includes(key);
 ---
 
-<Cluster class="c--snsLinks" jc="center" g={['15', null, '20']} {...props}>
+<Cluster class="c--snsLinks" jc="center" {...props}>
   {
     show('x') && (
       <a href={siteConfig.author.twitter} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Xへのリンク">
@@ -67,16 +67,34 @@ const show = (key: IconKey) => icons.includes(key);
 </Cluster>
 
 <style>
+  /* アイコン間の間隔（インラインstyleの --snsLinks-space 指定で上書き可能） */
+  .c--snsLinks {
+    --snsLinks-space: var(--s15);
+  }
+  @container (min-width: 800px) {
+    .c--snsLinks {
+      --snsLinks-space: var(--s20);
+    }
+  }
+
   .c--iconBtn {
     border-radius: 0.25em;
-    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
+    /* アイコン間の間隔は gap ではなく padding で確保（アイコン間にホバーできない隙間を作らない） */
+    padding-inline: calc(var(--snsLinks-space) / 2);
   }
   .c--iconBtn:hover {
     color: var(--link);
+  }
+  /* 両端の padding 分を打ち消して、gap 時代と外側の位置を揃える */
+  .c--snsLinks > :first-child {
+    margin-inline-start: calc(var(--snsLinks-space) / -2);
+  }
+  .c--snsLinks > :last-child {
+    margin-inline-end: calc(var(--snsLinks-space) / -2);
   }
 
   :global(.c--modal .c--snsLinks) {

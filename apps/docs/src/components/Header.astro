@@ -29,11 +29,20 @@ const searchText = t(currentLang, 'search');
       </Link>
     </Group>
 
-    <Link href="/docs/" class="c--docsLink" c="text" fw="500" lh="1.25" lts="var(--lts--tighter)" td="none" hov="-c" ms={{ base: '30', md: 'auto' }}
-      >Docs</Link
+    {/* ms は c--docsLink / c--iconBtn の padding-inline 分を差し引いて、見た目の間隔を維持 */}
+    <Link
+      href="/docs/"
+      class="c--docsLink"
+      c="text"
+      fw="500"
+      lh="1.25"
+      lts="var(--lts--tighter)"
+      td="none"
+      hov="-c"
+      ms={{ base: 'calc(var(--s30) - var(--s15) / 2)', md: 'auto' }}>Docs</Link
     >
 
-    <SNSLinks d="flex" ms={{ base: '30', md: '35' }} />
+    <SNSLinks d="flex" ms={{ base: 'calc(var(--s30) - var(--s15) / 2)', md: '30' }} />
 
     <!-- 検索トリガーボタン -->
     <Lism
@@ -121,6 +130,17 @@ const searchText = t(currentLang, 'search');
   .siteTitle > img {
     width: clamp(6rem, 15vw, 7.1875rem);
     height: auto;
+  }
+
+  /* Docs リンク：アイコンと同様に padding でホバー領域を連続させる */
+  .c--docsLink {
+    padding-inline: calc(var(--s15) / 2);
+
+    @container (min-width: 800px) {
+      & {
+        padding-inline: calc(var(--s20) / 2);
+      }
+    }
   }
 
   /* 検索トリガーボタン */
