@@ -146,7 +146,8 @@ const presets = [
 
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="HomePage" excludeFromSearch>
   {/* 背景動画：スクロールしても固定表示 */}
-  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" ov="hidden" aria-hidden="true" style={{ mixBlendMode: 'darken' }}>
+  {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
+  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" ov="hidden" inert aria-hidden="true" style={{ mixBlendMode: 'darken' }}>
     <Frame h="100%" ar="16/9">
       <video autoplay loop muted playsinline>
         <source src="/video/video-kv.mp4" type="video/mp4" />
@@ -186,6 +187,7 @@ const presets = [
           bdrs="var(--bdrs--15)"
           bd="none"
           bgc="var(--gray-hi-c)"
+          hov={{ bgc: 'var(--link)' }}
           fw="500"
           lh="1.5"
           px="10"
@@ -211,7 +213,7 @@ const presets = [
             r="10"
             i-y="0"
             d={{ base: 'none', md: 'flex' }}
-            hov={{ bgc: 'base-2' }}
+            hov="-c"
             data-modal-open="search-modal"
           >
             <Lism as="kbd" class="c--searchTrigger_shortcut" p="0" bxsh="none" bd="none" fz="base" ff="base" lh="1.25" lts="var(--lts--tighter)"
@@ -337,6 +339,7 @@ const presets = [
         bdrs="var(--bdrs--15)"
         bd="none"
         bgc="var(--gray-hi-c)"
+        hov={{ bgc: 'var(--link)' }}
         mt="40"
         fw="500"
         lh="1.5"
@@ -384,6 +387,7 @@ const presets = [
           bdrs="var(--bdrs--15)"
           bd="none"
           bgc="var(--gray-hi-c)"
+          hov={{ bgc: 'var(--link)' }}
           mt="40"
           fw="500"
           lh="1.5"
@@ -429,19 +433,12 @@ const presets = [
     font-size: var(--fz--s);
     width: 100%;
     height: 100%;
-    outline: none;
     border: none;
     line-height: 1.5;
     @container (min-width: 800px) {
       padding-left: var(--s20);
       font-size: var(--fz--base);
     }
-  }
-  .c--kv-search:hover {
-    background-color: var(--base-2);
-  }
-  .c--kv-search:focus {
-    border-color: var(--brand);
   }
 
   /* 検索トリガーボタン */

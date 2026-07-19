@@ -60,6 +60,16 @@
 }
 
 @layer lism-component {
+  // ホバーエフェクト（文字色・背景色）のトランジション
+  .c--iconBtn,
+  .c--searchTrigger,
+  .c--docsLink,
+  .c--button {
+    transition:
+      color 0.15s,
+      background-color 0.15s;
+  }
+
   .c--shadow-box {
     border-radius: var(--bdrs--15);
     background-color: white;

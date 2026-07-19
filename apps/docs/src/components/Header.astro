@@ -29,7 +29,9 @@ const searchText = t(currentLang, 'search');
       </Link>
     </Group>
 
-    <Link href="/docs/" c="text" fw="500" lh="1.25" lts="var(--lts--tighter)" td="none" ms={{ base: '30', md: 'auto' }}>Docs</Link>
+    <Link href="/docs/" class="c--docsLink" c="text" fw="500" lh="1.25" lts="var(--lts--tighter)" td="none" hov="-c" ms={{ base: '30', md: 'auto' }}
+      >Docs</Link
+    >
 
     <SNSLinks d="flex" ms={{ base: '30', md: '35' }} />
 
@@ -45,7 +47,7 @@ const searchText = t(currentLang, 'search');
       bgc="transparent"
       g="5"
       bdrs="10"
-      hov={{ bgc: 'base-2' }}
+      hov="-c"
       aria-label={searchText.title}
       data-modal-open="search-modal"
     >
