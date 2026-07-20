@@ -1,6 +1,7 @@
 ---
-import { Cluster, Icon } from 'lism-css/astro';
+import { Cluster, Icon, Lism, ListItem } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
+import { getAlternateUrls, getLangFromUrl, getLangLabel, t } from '@/lib/i18n';
 
 // phosphor icons icon: https://phosphoricons.com/?weight=fill&q=github
 
@@ -11,76 +12,226 @@ interface Props {
 }
 const { icons = ['x', 'github', 'discord', 'lang'], ...props } = Astro.props;
 const show = (key: IconKey) => icons.includes(key);
+
+// 言語切替ドロップダウン用
+const currentLang = getLangFromUrl(Astro.url);
+const alternateUrls = getAlternateUrls(Astro.url);
+const langSelectText = t(currentLang, 'langSelect');
+
+// ドロップダウン項目の共通プロップ
+const langItemProps = {
+  d: 'block',
+  p: '0.25em',
+  fz: 's',
+  fw: '500',
+  lh: '1.5',
+  td: 'none',
+  bdrs: 'calc(var(--bdrs--10) - 0.125em)',
+  role: 'menuitem',
+} as const;
 ---
 
-<Cluster class="c--snsLinks" jc="center" g={['15', null, '20']} {...props}>
+<Cluster class="c--snsLinks" jc="center" {...props}>
   {
     show('x') && (
       <a href={siteConfig.author.twitter} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Xへのリンク">
-        <Icon icon="logo-x" size="1.0625em" />
+        <Icon icon="logo-x" />
       </a>
     )
   }
   {
     show('github') && (
       <a href={siteConfig.author.github} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="GitHubへのリンク">
-        <Icon icon="logo-github" size="1.0625em" />
+        <Icon icon="logo-github" />
       </a>
     )
   }
   {
     show('discord') && (
       <a href={siteConfig.author.discord} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Discordへのリンク">
-        <Icon icon="logo-discord" size="1.0625em" />
+        <Icon icon="logo-discord" />
       </a>
     )
   }
   {
     show('lang') && (
-      <a href="/en/" target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="言語切替">
-        <Icon viewBox="0 0 20 20" fill="none" label="言語切替" size="1.0625em">
-          <g clip-path="url(#language-switcher-clip)">
-            <path
-              d="M1.66675 10C1.66675 14.6025 5.39758 18.3334 10.0001 18.3334C14.6026 18.3334 18.3334 14.6025 18.3334 10C18.3334 5.39752 14.6026 1.66669 10.0001 1.66669C5.39758 1.66669 1.66675 5.39752 1.66675 10Z"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M10.8333 1.70836C10.8333 1.70836 13.3333 5.00003 13.3333 10C13.3333 15 10.8333 18.2917 10.8333 18.2917M9.16665 18.2917C9.16665 18.2917 6.66665 15 6.66665 10C6.66665 5.00003 9.16665 1.70836 9.16665 1.70836M2.19165 12.9167H17.8083M2.19165 7.08336H17.8083"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </g>
-          <defs>
-            <clipPath id="language-switcher-clip">
-              <rect width="20" height="20" fill="white" />
-            </clipPath>
-          </defs>
-        </Icon>
-      </a>
+      <div class="c--langMenu -pos:relative">
+        <Lism
+          as="button"
+          type="button"
+          class="c--iconBtn c--langMenu_trigger"
+          c="inherit"
+          bd="none"
+          bgc="transparent"
+          title={langSelectText.ariaLabel}
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-label={langSelectText.ariaLabel}
+        >
+          <Icon viewBox="0 0 20 20" fill="none">
+            <g clip-path="url(#language-switcher-clip)">
+              <path
+                d="M1.66675 10C1.66675 14.6025 5.39758 18.3334 10.0001 18.3334C14.6026 18.3334 18.3334 14.6025 18.3334 10C18.3334 5.39752 14.6026 1.66669 10.0001 1.66669C5.39758 1.66669 1.66675 5.39752 1.66675 10Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10.8333 1.70836C10.8333 1.70836 13.3333 5.00003 13.3333 10C13.3333 15 10.8333 18.2917 10.8333 18.2917M9.16665 18.2917C9.16665 18.2917 6.66665 15 6.66665 10C6.66665 5.00003 9.16665 1.70836 9.16665 1.70836M2.19165 12.9167H17.8083M2.19165 7.08336H17.8083"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+            <defs>
+              <clipPath id="language-switcher-clip">
+                <rect width="20" height="20" fill="white" />
+              </clipPath>
+            </defs>
+          </Icon>
+        </Lism>
+        <Lism
+          as="ul"
+          class="c--langMenu_menu"
+          pos="absolute"
+          r="0"
+          z="100"
+          min-w="6rem"
+          p="0.5em"
+          bgc="var(--white)"
+          bdrs="10"
+          bxsh="30"
+          role="menu"
+          aria-label={langSelectText.menuAriaLabel}
+        >
+          {alternateUrls.map(({ lang, url }) => (
+            <ListItem role="none">
+              {lang === currentLang ? (
+                <Lism as="span" class="c--langMenu_item -current" c="text-2" o="pp" aria-disabled="true" lang={lang} {...langItemProps}>
+                  {getLangLabel(lang)}
+                </Lism>
+              ) : (
+                <Lism as="a" class="c--langMenu_item" c="inherit" hov="-c" href={url} lang={lang} hreflang={lang} {...langItemProps}>
+                  {getLangLabel(lang)}
+                </Lism>
+              )}
+            </ListItem>
+          ))}
+        </Lism>
+      </div>
     )
   }
 </Cluster>
 
 <style>
+  /* アイコン間の間隔（インラインstyleの --snsLinks-space 指定で上書き可能） */
+  .c--snsLinks {
+    --snsLinks-space: var(--s15);
+  }
+  @container (min-width: 800px) {
+    .c--snsLinks {
+      --snsLinks-space: var(--s20);
+    }
+  }
+
   .c--iconBtn {
     border-radius: 0.25em;
-    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1.25rem;
+    font-size: 1.25rem;
+    /* アイコン間の間隔は gap ではなく padding で確保（アイコン間にホバーできない隙間を作らない） */
+    padding-inline: calc(var(--snsLinks-space) / 2);
   }
   .c--iconBtn:hover {
     color: var(--link);
-    background-color: var(--base-2);
+  }
+  /* 両端の padding 分を打ち消して、gap 時代と外側の位置を揃える */
+  .c--snsLinks > :first-child {
+    margin-inline-start: calc(var(--snsLinks-space) / -2);
+  }
+  .c--snsLinks > :last-child {
+    margin-inline-end: calc(var(--snsLinks-space) / -2);
   }
 
   :global(.c--modal .c--snsLinks) {
     margin-inline-end: auto;
   }
+
+  /* 言語切替ドロップダウン（配置・状態などプロップで表現できないもののみ記述） */
+  .c--langMenu_menu {
+    top: calc(100% + 0.5em);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.25em);
+    transition:
+      opacity 0.15s,
+      visibility 0.15s,
+      transform 0.15s;
+  }
+  .c--langMenu[data-open] .c--langMenu_menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  /* PCではアイコン（グリフ左端）と左揃えで表示 */
+  @container (min-width: 800px) {
+    .c--langMenu_menu {
+      right: auto;
+      left: -0.25em;
+    }
+  }
+
+  .c--langMenu_item {
+    transition: color 0.15s;
+  }
+  /* 現在の言語（グレーアウト自体は c="text-2" o="pp" プロップで指定） */
+  .c--langMenu_item.-current {
+    cursor: default;
+  }
+
+  /* モーダル内では下端で見切れないよう上方向に展開 */
+  :global(.c--modal) .c--langMenu_menu {
+    top: auto;
+    bottom: calc(100% + 0.25em);
+    transform: translateY(0.25em);
+  }
+  :global(.c--modal) .c--langMenu[data-open] .c--langMenu_menu {
+    transform: translateY(0);
+  }
 </style>
+
+<script>
+  // 言語切替ドロップダウンのトグル動作
+  document.querySelectorAll('.c--langMenu').forEach((menu) => {
+    const trigger = menu.querySelector('.c--langMenu_trigger');
+    if (!trigger) return;
+
+    const close = () => {
+      menu.removeAttribute('data-open');
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+
+    // クリックでメニュー開閉
+    trigger.addEventListener('click', () => {
+      if (menu.hasAttribute('data-open')) {
+        close();
+      } else {
+        menu.setAttribute('data-open', '');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // 外側クリックで閉じる
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target as Node)) close();
+    });
+
+    // Escキーで閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  });
+</script>
