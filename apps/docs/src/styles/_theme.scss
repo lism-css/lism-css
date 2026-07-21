@@ -14,23 +14,16 @@
     --text: #111;
     --eyebrow-c: #0073ff;
     --gray-hi-c: #222;
+    --search-button-c: #f6f6f6;
 
-    --sz--l: 79rem; // 1264px
-
-    // コアと命名が被る場合は、dを付与する。例: --s10d
-    // packages/lism-css/src/scss/base/tokens/_space.scss
-    --s36: calc(var(--s-unit) * 4.5); // ≒ 36px
-    --s48: calc(var(--s-unit) * 6); // ≒ 48px
-    --s60d: calc(var(--s-unit) * 7.5); // ≒ 60px
-    --s84: calc(var(--s-unit) * 10.5); // ≒ 84px
-    --s96: calc(var(--s-unit) * 12); // ≒ 96px
-    --s120: calc(var(--s-unit) * 15); // ≒ 120px
-    --s180: calc(var(--s-unit) * 22.5); // ≒ 180px
+    --lts--tighter: -0.02em;
+    --lts--tight: -0.01em;
 
     --bdrs--15: 0.375rem; // ≒ 6px
 
     --bxsh--base: 0 1px 4px 0 rgba(0, 0, 0, 0.03), 0 2px 16px 0 rgba(0, 0, 0, 0.05);
     --bxsh--code: 0 10px 50px 0 rgba(0, 0, 0, 0.2), 0 20px 30px 0 rgba(0, 0, 0, 0.3);
+    --bxsh--search-border: inset 0 0 0 1px #eee;
   }
 
   // .u--cbox {
@@ -67,11 +60,29 @@
 }
 
 @layer lism-component {
+  // ホバーエフェクト（文字色・背景色）のトランジション
+  .c--iconBtn,
+  .c--searchTrigger,
+  .c--docsLink,
+  .c--button {
+    transition:
+      color 0.15s,
+      background-color 0.15s;
+  }
+
   .c--shadow-box {
     border-radius: var(--bdrs--15);
     background-color: white;
     box-shadow: var(--bxsh--base);
     backdrop-filter: blur(32px);
+  }
+
+  .c--line-height {
+    line-height: var(--lh--base);
+
+    @container (min-width: 800px) {
+      line-height: var(--lh--l);
+    }
   }
 
   :root[data-theme='dark'] {
