@@ -27,12 +27,38 @@ html {
 
 .z--header {
   /* grid-area: header; */
-  position: fixed;
-  top: var(--s30);
-  z-index: 100;
   min-height: var(--header-h);
   width: 100%;
   padding-inline: var(--s20);
+
+  /* 下層ページ: フル幅・フラットなヘッダー（デフォルト） */
+  .c--shadow-box {
+    max-width: none;
+  }
+  .c--docsLink {
+    display: none;
+  }
+}
+
+/* トップページ: フローティングデザインを維持 */
+.p--front {
+  .z--header {
+    position: fixed;
+    top: var(--s30);
+    z-index: 100;
+
+    .c--shadow-box {
+      max-width: fit-content;
+
+      @container (min-width: 800px) {
+        max-width: 28.5rem;
+      }
+    }
+
+    .c--docsLink {
+      display: block;
+    }
+  }
 }
 
 .z--main {

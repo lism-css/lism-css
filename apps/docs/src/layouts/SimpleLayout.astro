@@ -44,7 +44,9 @@ const { title = siteConfig.name, description, ogImage, lang = getRootLang(), sch
   </Head>
   <body data-pagefind-ignore>
     <Lism layout="stack" class="is--container" min-h="100svh">
-      <Header />
+      <Lism class="p--front">
+        <Header />
+      </Lism>
       <Lism as="main">
         <slot />
       </Lism>
