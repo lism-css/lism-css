@@ -155,11 +155,11 @@ function getPostUrl(slug: string): string {
 ---
 
 <Stack as="nav" class="siteNav set--cqUnit set--s" g="10" fx="1" min-h="0">
-  {/* トップレベルリンク（グラデーション枠で囲んだ集約ボタン） */}
+  {/* トップレベルリンク */}
   {
     topLevelLinks.length > 0 && (
       <div class="siteNav_toplinks c--shadow-box">
-        <Stack class="siteNav_toplinks_inner" g="0">
+        <Stack class="siteNav_toplinks_inner" g="0" my="-0.1875rem">
           {topLevelLinks.map((item) => {
             // 言語対応のパスを生成
             const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
@@ -170,7 +170,7 @@ function getPostUrl(slug: string): string {
             const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
             return (
               <Link href={itemPath} class="siteNav_toplink" data-active={isActive} set="plain hov" hl="s">
-                <Inline layout="flex" g="5" ai="center" py="10" px="15">
+                <Inline layout="flex" g="5" ai="center" py="0.1875rem" fz="xs" lh="1.5" lts="var(--lts--tight)">
                   {item.icon && <Icon icon={item.icon} />}
                   {itemLabel}
                 </Inline>
@@ -290,9 +290,6 @@ function getPostUrl(slug: string): string {
 <style>
   /* サイドバーナビのトップレベルリンク（グラデーション枠でまとめた集約ボタン） */
   .siteNav_toplinks {
-    /* background-image: linear-gradient(120deg, var(--grad_01), var(--grad_02));
-    border-radius: var(--bdrs--20);
-    padding: 2px; */
     padding: var(--s30) var(--s20);
   }
   .siteNav_toplinks_inner {
@@ -300,19 +297,14 @@ function getPostUrl(slug: string): string {
     border-radius: calc(var(--bdrs--20) - 2px);
     overflow: hidden;
     gap: 3px;
-    /* padding: 3px; */
   }
   .siteNav_toplink {
-    border-radius: calc(var(--bdrs--20) - 4px);
-    color: var(--_isHov, var(--text)) var(--_notHov, var(--text-2));
-    background-color: var(--_isHov, var(--base));
+    color: var(--text-2);
 
+    &:hover,
     &[data-active='true'] {
-      /* background-color: var(--text);
-    color: var(--base); */
-      color: var(--text);
-      background-color: var(--base);
-      box-shadow: var(--bxsh--10);
+      color: var(--eyebrow-c);
+      font-weight: 500;
     }
   }
   .siteNav_list > [data-nested] {
