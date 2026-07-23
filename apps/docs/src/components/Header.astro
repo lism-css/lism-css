@@ -9,6 +9,12 @@ import LanguageSelect from './LanguageSelect.astro';
 import ThemeSwitch from './ThemeSwitch.astro';
 import { getLangFromUrl, getLocalizedUrl, t } from '@/lib/i18n';
 
+interface Props {
+  hasMobileMenu?: boolean;
+}
+
+const { hasMobileMenu = true } = Astro.props;
+
 // 現在の言語を取得
 const currentLang = getLangFromUrl(Astro.url);
 // サイトトップへのリンク（言語対応）
@@ -77,38 +83,47 @@ const headerText = t(currentLang, 'header');
 
     <SearchModal />
 
-    {/* ハンバーガーメニューボタン（モバイルのみ表示） */}
-    <Modal.OpenBtn
-      modalId="site-nav"
-      class="c--menuTrigger l--center set--plain -bd -bdrs:10"
-      d={['grid', null, 'none']}
-      bgc="base"
-      bdrs="10"
-      hov={{ bgc: 'base-2' }}
-      aria-labelledby="menu-open-label"
-    >
-      <Icon icon="menu" fz={['xl', null, 'l']} viewBox="0 0 256 256">
-        <path
-          d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z"
-        ></path>
-      </Icon>
-      <Inline d="none" id="menu-open-label">{headerText.openMenu}</Inline>
-    </Modal.OpenBtn>
+    {/* ハンバーガーメニューボタン（モバイルのみ表示・hasMobileMenu が false なら出力しない） */}
+    {
+      hasMobileMenu && (
+        <Modal.OpenBtn
+          modalId="site-nav"
+          class="c--menuTrigger l--center set--plain -bd -bdrs:10"
+          d={['grid', null, 'none']}
+          bgc="base"
+          bdrs="10"
+          hov={{ bgc: 'base-2' }}
+          aria-labelledby="menu-open-label"
+        >
+          <Icon icon="menu" fz={['xl', null, 'l']} viewBox="0 0 256 256">
+            <path d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z" />
+          </Icon>
+          <Inline d="none" id="menu-open-label">
+            {headerText.openMenu}
+          </Inline>
+        </Modal.OpenBtn>
+      )
+    }
   </Flex>
 
-  <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
-    <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="20" pbs="30" bdrs="20" bxsh="40">
-      <Modal.CloseBtn modalId="site-nav" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" bxsh="10" bdrs="10" bgc="base-2" />
-      <Modal.Body layout="stack" g="40" px="30" pbs="40" ov-y="auto" z="0">
-        <SiteNav />
-      </Modal.Body>
-      <Cluster g="10" fz="l" bd-t pbs="20" px="30">
-        <SNSLinks />
-        <LanguageSelect />
-        <ThemeSwitch />
-      </Cluster>
-    </Modal.Inner>
-  </Modal.Root>
+  {/* ハンバーガーメニューボタン（モバイルのみ表示・hasMobileMenu が false 出力しない） */}
+  {
+    hasMobileMenu && (
+      <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
+        <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="20" pbs="30" bdrs="20" bxsh="40">
+          <Modal.CloseBtn modalId="site-nav" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" bxsh="10" bdrs="10" bgc="base-2" />
+          <Modal.Body layout="stack" g="40" px="30" pbs="40" ov-y="auto" z="0">
+            <SiteNav />
+          </Modal.Body>
+          <Cluster g="10" fz="l" bd-t pbs="20" px="30">
+            <SNSLinks />
+            <LanguageSelect />
+            <ThemeSwitch />
+          </Cluster>
+        </Modal.Inner>
+      </Modal.Root>
+    )
+  }
 </Container>
 <style>
   /* logo */
