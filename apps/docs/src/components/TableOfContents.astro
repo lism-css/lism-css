@@ -8,14 +8,15 @@ import type { Responsive } from 'lism-css/lib/types/ResponsiveProps';
 interface Props {
   toc: TocItem[];
   px?: Responsive<string | number>;
+  py?: Responsive<string | number>;
 }
 
-const { toc, px } = Astro.props;
+const { toc, px, py } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const tocText = t(lang, 'toc');
 ---
 
-<Stack fx="1" class="c--toc set--cqUnit set--s" g="20" ov-y="auto" px={px}>
+<Stack fx="1" class="c--toc c--scroll set--cqUnit set--s" g="20" px={px} py={py}>
   <Heading level="3" fz="l">{tocText.title}</Heading>
   <Stack as="ul" class="c--toc_list" g="0">
     {toc.map((item) => <TocItemComponent item={item} />)}
@@ -23,9 +24,9 @@ const tocText = t(lang, 'toc');
 </Stack>
 
 <style is:global>
-  .z--toc :is(.c--toc, .c--shareBtns) {
+  /* .z--toc :is(.c--toc, .c--shareBtns) {
     padding-inline-start: 0;
-  }
+  } */
   .c--toc_list ul {
     padding-inline-start: 0.875em;
   }
