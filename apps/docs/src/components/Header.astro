@@ -1,5 +1,5 @@
 ---
-import { Flex, Cluster, Container, Icon, Lism, Group, Link } from 'lism-css/astro';
+import { Flex, Cluster, Container, Icon, Lism, Group, Link, Inline } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 import { siteConfig } from '@/config/site';
 import SearchModal from './SearchModal.astro';
@@ -15,7 +15,7 @@ const currentLang = getLangFromUrl(Astro.url);
 const homeUrl = getLocalizedUrl('/', currentLang);
 // 翻訳テキスト
 const searchText = t(currentLang, 'search');
-// const headerText = t(currentLang, 'header');
+const headerText = t(currentLang, 'header');
 ---
 
 <Container as="header" class="z--header" layout="flex" ai="center">
@@ -78,7 +78,7 @@ const searchText = t(currentLang, 'search');
     <SearchModal />
 
     {/* ハンバーガーメニューボタン（モバイルのみ表示） */}
-    <!-- <Modal.OpenBtn
+    <Modal.OpenBtn
       modalId="site-nav"
       class="c--menuTrigger l--center set--plain -bd -bdrs:10"
       d={['grid', null, 'none']}
@@ -93,7 +93,7 @@ const searchText = t(currentLang, 'search');
         ></path>
       </Icon>
       <Inline d="none" id="menu-open-label">{headerText.openMenu}</Inline>
-    </Modal.OpenBtn> -->
+    </Modal.OpenBtn>
   </Flex>
 
   <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
