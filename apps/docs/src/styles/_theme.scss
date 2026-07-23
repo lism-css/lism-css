@@ -14,9 +14,7 @@
     --text: #111;
     --eyebrow-c: #0073ff;
     --gray-hi-c: #222;
-    --search-button-c: #f6f6f6;
-
-    --lts--tighter: -0.02em;
+    --search-button-c: #f6f6f6 --lts--tighter: -0.02em;
     --lts--tight: -0.01em;
 
     --bdrs--15: 0.375rem; // ≒ 6px
@@ -56,6 +54,9 @@
     /* // color mix */
     --cbox-cPct: 4%;
     --cbox-bgPct: 6%;
+
+    // 下層コンテンツ背景色
+    --docs-bg: var(--base-2);
   }
 }
 
@@ -72,7 +73,7 @@
 
   .c--shadow-box {
     border-radius: var(--bdrs--15);
-    background-color: white;
+    background-color: var(--base);
     box-shadow: var(--bxsh--base);
     backdrop-filter: blur(32px);
   }

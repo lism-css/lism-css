@@ -23,7 +23,7 @@ import FixedToc from '../components/FixedToc.astro';
 import ShareBtns from '../components/ShareBtns.astro';
 import type { TocItem } from '../lib/generateToc';
 import type { SchemaType } from '../lib/jsonLd';
-import { Grid, Stack, Container } from 'lism-css/astro';
+import { Grid, Stack, Container, Box } from 'lism-css/astro';
 
 interface Props {
   title: string;
@@ -61,14 +61,13 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
     {schemaType && <JsonLd schemaType={schemaType} title={title} description={description} lang={lang} date={date} />}
   </Head>
   <body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
-    <div class="is--container">
+    <Box class="is--container" bgc="var(--docs-bg)">
       <Header />
       <Grid
         class={`z--wrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
         gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
         gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
         min-h="100svh"
-        bgc="#FAFAFA"
         px="10"
         pb="10"
         mt="20"
@@ -88,7 +87,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
           )
         }
       </Grid>
-    </div>
+    </Box>
     {
       toc && (
         <FixedToc>
