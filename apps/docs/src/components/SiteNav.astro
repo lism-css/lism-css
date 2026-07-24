@@ -184,7 +184,7 @@ function getPostUrl(slug: string): string {
 
   {/* 通常のナビゲーションセクション */}
   <Stack class="c--shadow-box" px="20" py="30" fx="1" min-h="0">
-    <Stack class="c--scroll" fx="1">
+    <Stack class="c--scroll" fx="1" g="30">
       {
         sectionItems.map((section) => {
           // セクションラベルを現在の言語で取得
@@ -201,11 +201,11 @@ function getPostUrl(slug: string): string {
           return (
             <Stack class="siteNav_group" g="5">
               {/* セクションのラベル（見出し） */}
-              <Heading class="siteNav_title" level="3" fz="xs" fw="normal" py="5" o="p" tt="upper">
+              <Heading level="3" class="siteNav_title" fz="0.6625rem" fw="normal" o="p" tt="upper" lh="1.5" c="var(--nav-title-c)">
                 {sectionLabel}
               </Heading>
 
-              <List class="siteNav_list" ps="10" bd-s>
+              <List class="siteNav_list" mbs="10" bd-s>
                 {hasDirProperty(section)
                   ? // dir指定の場合：ディレクトリ内の記事を自動取得
                     postsByCategory[section.dir]?.map((post) => {
@@ -220,7 +220,11 @@ function getPostUrl(slug: string): string {
                       // ネスト深度を計算（サブディレクトリにある記事）
                       const nestedDepth = getDirNestedDepth(post.id, section.dir);
                       return (
-                        <ListItem class={isDraft ? '_draft' : undefined} data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
+                        <ListItem
+                          class={isDraft ? '_draft' : undefined}
+                          data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                          style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                        >
                           <NavLink href={postPath} isActive={isActive}>
                             {navLabel}
                           </NavLink>
@@ -231,7 +235,8 @@ function getPostUrl(slug: string): string {
                     section.items.map((item) => {
                       // セパレータの場合は区切り線を表示
                       if (isSeparator(item)) {
-                        return <ListItem class="c--nav_separator" role="separator" mx="5" my="10" aria-hidden="true" />;
+                        // return <ListItem class="c--nav_separator" role="separator" mx="5" my="10" aria-hidden="true" />;
+                        return null;
                       }
 
                       // 文字列の場合はURLとして扱い、MDXのフロントマターからラベルを取得
@@ -252,7 +257,11 @@ function getPostUrl(slug: string): string {
                         const rootPath = 'rootPath' in section ? section.rootPath : undefined;
                         const nestedDepth = rootPath ? getNestedDepth(item, rootPath) : 0;
                         return (
-                          <ListItem class={isDraft ? '_draft' : undefined} data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
+                          <ListItem
+                            class={isDraft ? '_draft' : undefined}
+                            data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                            style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                          >
                             <NavLink href={itemPath} isActive={isActive}>
                               {navLabel}
                             </NavLink>
@@ -271,7 +280,10 @@ function getPostUrl(slug: string): string {
                       const rootPath = 'rootPath' in section ? section.rootPath : undefined;
                       const nestedDepth = rootPath ? getNestedDepth(item.link, rootPath) : 0;
                       return (
-                        <ListItem data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
+                        <ListItem
+                          data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                          style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                        >
                           <NavLink href={itemPath} isActive={isActive}>
                             {itemLabel}
                           </NavLink>
@@ -308,6 +320,7 @@ function getPostUrl(slug: string): string {
     }
   }
   .siteNav_list > [data-nested] {
-    padding-inline-start: var(--s20);
+    /* padding-inline-start: var(--s20); */
+    padding-inline-start: calc(var(--nestedDepth, 0) * var(--s20));
   }
 </style>
