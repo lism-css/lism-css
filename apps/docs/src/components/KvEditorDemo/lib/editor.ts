@@ -4,7 +4,9 @@
 // - shiki は遅延ロードし、読み込み前はプレーンテキストにフォールバック
 // - スクロールは textarea だけが行い、ハイライトレイヤーは transform で 1:1 追従する
 //   （scrollTop の同期はクランプや innerHTML 差し替え時のリセットでズレるため使わない）
-import { INITIAL_HTML } from '../initial-code';
+import { getRootLang, isValidLang } from '@/lib/i18n';
+import { INITIAL_HTML_BY_LANG, type DemoLang } from '../initial-code';
+import { SCENARIO_BY_LANG } from '../scenario';
 import { htmlToJsx, jsxToHtml } from './convert';
 import { sanitize } from './sanitize';
 import { MAX_CODE_LENGTH, findHtmlIssue } from './validate';
@@ -43,6 +45,12 @@ export function initKvEditorDemo(): void {
   const preInner = demo?.querySelector<HTMLElement>('[data-kv-pre-inner]') ?? null;
   if (!hero || !demo || !textarea || !preInner) return;
 
+  // SSR側（KvEditorDemo.astro）が決めた言語を DOM 経由で受け取る（このスクリプトは全ページ共通バンドル）。
+  // siteConfig.langs を情報源とする isValidLang で判定するため、言語追加時にここの修正は不要
+  const langAttr = demo.dataset.kvLang ?? '';
+  const lang: DemoLang = isValidLang(langAttr) ? langAttr : getRootLang();
+  const initialHtml = INITIAL_HTML_BY_LANG[lang];
+
   // ---- ヒーローの高さ保持（レイアウトシフト防止） --------------------------
   // エディター内容を全削除してもヒーローが潰れず、下のエディターがジャンプしないよう
   // 自然高さを min-height として固定する。高さは em ベースで幅（ブレークポイント）に依存するため、
@@ -69,10 +77,10 @@ export function initKvEditorDemo(): void {
 
   // ---- 状態 --------------------------------------------------------------
   const state = {
-    html: INITIAL_HTML, // 唯一のモデル（常にHTML表記）
+    html: initialHtml, // 唯一のモデル（常にHTML表記）
     activeTab: 'html' as EditorLang,
     // 各タブの生テキスト（ユーザーの整形を保持する）。stale = モデルから再生成が必要
-    tabText: { html: INITIAL_HTML, jsx: '' },
+    tabText: { html: initialHtml, jsx: '' },
     stale: { html: false, jsx: true },
   };
 
@@ -373,7 +381,7 @@ export function initKvEditorDemo(): void {
   // NOTE: scheduleSyntaxCheck から参照されるが、呼び出しは常に初期化完了後（デバウンス発火時）
   restoreInitialCode = (): void => {
     // JSXタブで空にした場合は、初期コードのJSX表記で表示を復元する
-    setCode(INITIAL_HTML, state.activeTab === 'jsx' ? htmlToJsx(INITIAL_HTML) : undefined);
+    setCode(initialHtml, state.activeTab === 'jsx' ? htmlToJsx(initialHtml) : undefined);
     // フォーカスを非表示になったボタンに残さず、編集を続けられるようエディターへ戻す
     textarea.focus({ preventScroll: true });
   };
@@ -395,6 +403,6 @@ export function initKvEditorDemo(): void {
   const askText = demo.querySelector<HTMLElement>('[data-kv-ask-text]');
   const playButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-kv-play]')];
   if (messages && placeholder && askText && playButtons.length > 0) {
-    createPlayer({ editor: editorApi, messages, placeholder, askText, playButtons });
+    createPlayer({ editor: editorApi, messages, placeholder, askText, playButtons, initialHtml, scenario: SCENARIO_BY_LANG[lang] });
   }
 }

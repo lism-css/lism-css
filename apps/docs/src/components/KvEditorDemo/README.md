@@ -71,9 +71,9 @@ Astro のハイライトはすべてビルド時（SSG）に完結し、ハイ�
 
 ```
 KvEditorDemo/
-├── KvEditorDemo.astro   # マークアップ + ビルド時SSR
-├── initial-code.ts      # 初期HTML（single source of truth）
-├── scenario.ts          # AIシナリオ定義（データのみ）
+├── KvEditorDemo.astro   # マークアップ + ビルド時SSR（lang prop で言語選択）
+├── initial-code.ts      # 言語別の初期HTML（single source of truth）
+├── scenario.ts          # AIシナリオ定義（データのみ。メッセージは言語別・edits は言語共有）
 ├── README.md            # このドキュメント
 └── lib/
     ├── editor.ts        # コントローラ（状態・タブ・ヒーロー連動・スクロール追従・入力上限）
@@ -86,14 +86,25 @@ KvEditorDemo/
     └── highlight.ts     # shiki ラッパー（ビルド時 + クライアント共用）
 
 styles: src/styles/_kv-demo.scss（main.scss から @use）
-組み込み: src/pages/index.astro（旧ヒーロー・kv-search・ダミーSVGを置換）
+組み込み: src/pages/index.astro（ja・旧ヒーロー・kv-search・ダミーSVGを置換）
+        src/pages/[lang]/index.astro（en・`<KvEditorDemo lang={lang} />` で英語版を表示）
 ```
 
 モジュール間の依存は一方向に保っている: `editor.ts`（DOM を握るコントローラ）が各 lib を束ね、`player.ts` は `EditorApi` インターフェース越しにのみエディターへ触る。`convert.ts` / `diff.ts` / `sanitize.ts` / `validate.ts` は DOM イベントに依存しない純粋な関数群になっている。
 
+## i18n（言語対応）
+
+日本語トップ（`/`）と英語トップ（`/en/`）で同じコンポーネントを使う。仕組みは次のとおり:
+
+- **SSR 側**: `KvEditorDemo.astro` が `lang` prop（省略時は root 言語 = ja。`SimpleLayout` と同じパターン）を受け取り、`INITIAL_HTML_BY_LANG[lang]` でヒーロー SSR・textarea 初期値・ビルド時ハイライトを選択。aria-label は `translations.ts` の `kvDemo` カテゴリから取得
+- **クライアント側**: `.astro` の `<script>` は**サイト全体で 1 バンドル共有**（hoisted module）のため、ビルド時 props では言語分岐できない。`data-kv-lang` 属性を `[data-kv-demo]` に出力し、`editor.ts` が実行時に読み取って `INITIAL_HTML_BY_LANG` / `SCENARIO_BY_LANG` から選択する。`player.ts` は言語を知らず、`initialHtml` / `scenario` をオプションとして注入される
+- **言語で変わるのはリード 2 行と href プレフィックスのみ**。マークアップ構造・クラス属性は言語間で必ず揃える（scenario の `edits` がクラス属性への文字列置換で全言語に効く前提）。`edits` の from/to にリード文・href など言語で変わる文字列を含めないこと
+- **言語差のスタイル**（英語トップの行間・見出しサイズ等）はエディター内容に持ち込まず、`_kv-demo.scss` の `html[lang='en'] .c--kvHero` ブロックで吸収する
+- パネル内 UI 文言（"Ask AI to edit..." / Interrupted / Resume / Done / スナックバー）は両言語とも英語で共通
+
 ## initial-code.ts — 唯一の情報源
 
-`INITIAL_HTML` は次の 4 箇所で共用される。1 箇所にまとめることで SSR とクライアントの初期状態が必ず一致する。
+言語別の初期 HTML（`INITIAL_HTML_BY_LANG[lang]`）は次の 4 箇所で共用される。1 箇所にまとめることで SSR とクライアントの初期状態が必ず一致する。共有テンプレート関数から各言語を生成するため、整形ルール・クラス属性が言語間でズレることはない。
 
 1. ヒーローの SSR（`set:html`）→ SEO 用に h1 がページソースに含まれる
 2. エディター（textarea）の初期値
@@ -106,12 +117,12 @@ styles: src/styles/_kv-demo.scss（main.scss から @use）
 
 ## KvEditorDemo.astro — SSR とマークアップ
 
-frontmatter で `await highlight(INITIAL_HTML, 'html')` を実行し、ハイライト済み `<pre>` もビルド時に埋め込む。JS 読み込み前から「色付きのコード + ヒーロー」が完全表示され、JS が動き出すと編集・再生機能が段階的に足される（プログレッシブエンハンスメント）。
+frontmatter で `await highlight(initialHtml, 'html')` を実行し、ハイライト済み `<pre>` もビルド時に埋め込む。JS 読み込み前から「色付きのコード + ヒーロー」が完全表示され、JS が動き出すと編集・再生機能が段階的に足される（プログレッシブエンハンスメント）。
 
 ```
-.c--kvHero[data-kv-hero]      … ヒーロー出力（set:html={INITIAL_HTML} で SSR）
+.c--kvHero[data-kv-hero]      … ヒーロー出力（set:html={initialHtml} で SSR）
 
-.c--kvDemo[data-kv-demo]      … grid: エディター 1fr + パネル 12.6875rem。md未満は縦積み（エディター + 下段パネル 146px）
+.c--kvDemo[data-kv-demo][data-kv-lang] … grid: エディター 1fr + パネル 12.6875rem。md未満は縦積み（エディター + 下段パネル 146px）
 ├── .c--kvDemo_window
 │   ├── .c--kvDemo_bar        … 信号ドット + HTML/JSX タブ（role="tablist"。背景はウィンドウと同一）
 │   └── .c--kvDemo_editor     … 重ねレイヤー（下記）
@@ -141,9 +152,9 @@ frontmatter で `await highlight(INITIAL_HTML, 'html')` を実行し、ハイラ
 
 ```ts
 const state = {
-  html: INITIAL_HTML,                      // 唯一のモデル（常にHTML表記）
+  html: initialHtml,                      // 唯一のモデル（常にHTML表記）
   activeTab: 'html' as EditorLang,
-  tabText: { html: INITIAL_HTML, jsx: '' }, // 各タブの生テキスト
+  tabText: { html: initialHtml, jsx: '' }, // 各タブの生テキスト
   stale: { html: false, jsx: true },        // モデルから再生成が必要か
 };
 ```
@@ -303,7 +314,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 - エディターが空のままデバウンス評価を迎えると、`The editor is empty.` + `Restore initial code` ボタンを表示
 - **自動クローズしない**。入力の再開（即時に消える）か Restore ボタンで閉じる
-- Restore は `INITIAL_HTML` に復元（JSX タブなら JSX 表記に変換して復元）し、フォーカスをエディターへ戻す（`preventScroll: true` でページのスクロール位置は動かさない）
+- Restore は初期コード（`initialHtml`）に復元（JSX タブなら JSX 表記に変換して復元）し、フォーカスをエディターへ戻す（`preventScroll: true` でページのスクロール位置は動かさない）
 - この variant のみ `pointer-events: auto`（ボタンをクリックできる）。見た目は警告ではないため warning ではなく **info トーン**（ⓘ アイコン + ニュートラルなボーダー）
 
 ## highlight.ts — shiki の最小構成
@@ -331,7 +342,7 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 
 - **1 クリック = 全ステップ連続再生**: 「Ask AI to edit...」のクリックで全ステップを順に一気に再生する。ステップの切り替わりには少し長めの「間」（`PAUSE_BETWEEN_STEPS`）を挟む（最後のステップの後には置かず、完遂した瞬間に done になる）
 - **再生はアクティブタブの表記で行う**: シナリオは HTML で持ち、JSX タブでは `htmlToJsx()` で変換した文字列をタイピングする（AI 吹き出しも `aiMessageJsx` に切り替え）
-- **再生開始時にコードをスナップしない**: コード書き換えは「現在のエディター内容 → `resultCode`」の diff タイピングなので、再生前にユーザーが編集していても、その状態を出発点として目標コードへ書き換える動きになる（done 後のリスタートだけは初期コードへ戻す）。**例外はエディターが空のとき**: 空から始めると初期コード全文のタイピングになり冗長なため、`INITIAL_HTML` へ即時復元してから再生する（失う編集がない場合のみの復元なので、上記の設計と両立する）
+- **再生開始時にコードをスナップしない**: コード書き換えは「現在のエディター内容 → `resultCode`」の diff タイピングなので、再生前にユーザーが編集していても、その状態を出発点として目標コードへ書き換える動きになる（done 後のリスタートだけは初期コードへ戻す）。**例外はエディターが空のとき**: 空から始めると初期コード全文のタイピングになり冗長なため、初期コード（`initialHtml`）へ即時復元してから再生する（失う編集がない場合のみの復元なので、上記の設計と両立する）
 - **中断**: 再生中に textarea へ `focus` / `pointerdown`、またはタブクリックで**その場で即中断**。エディターは書きかけの状態をそのまま残し（仕様）、入力欄トリガーはプレースホルダー表示（`Ask AI to edit...`）へ戻し、チャット末尾にステータス行（"Interrupted" + Resume ボタン）を追加する。`AbortController` + abort 対応 `sleep()` で実装し、非同期ループは `AbortedError` で脱出する（それ以外の例外は再 throw）
 - **再開**: Resume ボタンまたは「Ask AI to edit...」のクリック（どちらも同じ処理）。中断ステップの吹き出しとステータス行（`currentStepBubbles` で追跡）を削除し、`stepStartCode(i)`（= 前ステップの `resultCode`、i=0 なら初期コード）へスナップしてから、そのステップの頭から**残りのステップを続けて**再生する。ユーザーが中断中に編集していても上書きする（仕様）。中断後にタブを切り替えていた場合も、スナップ処理（`snapTo`）が現在のタブの表記で復元する
 - **全ステップ完遂（done）**: チャット末尾にステータス行（"Done"）を表示する。再クリックでチャットをクリアし初期コードへ戻して最初から
@@ -382,8 +393,9 @@ interface ScenarioStep {
 ```
 
 - `resultCode` は**全文かつ累積**（前ステップの結果を含む）。全文にしているのは、中断→再開のスナップ先・diff 計算の目標として一意に定まるようにするため
-- **ソース上は全文を重複して持たない**: 各ステップは「前ステップのコードへの文字列置換」（`edits: [from, to][]`）として定義し、`resultCode` はモジュール初期化時に `INITIAL_HTML` から順に適用して導出する。これにより `initial-code.ts` の変更は自動で全ステップへ波及する（かつては全文スナップショットを 3 つ持っており、初期コードの変更を波及し忘れると再生時の diff が「変更を取り消す編集」をタイピングするバグがあった）
-- **fail-fast**: `edits` の置換前文字列がちょうど 1 回現れない場合（初期コード変更とのズレ・曖昧な指定）はモジュール初期化時に例外を投げる。沈黙して壊れず、開発中に必ず気づける
+- **言語対応**: `userMessage` / `aiMessage` / `aiMessageJsx` は `Record<DemoLang, string>` で定義し、`edits` は言語共有。`SCENARIO_BY_LANG` として各言語の `resultCode` を言語別初期コードから導出する（`edits` はクラス属性のみを対象にすること — 前述の i18n セクション参照）
+- **ソース上は全文を重複して持たない**: 各ステップは「前ステップのコードへの文字列置換」（`edits: [from, to][]`）として定義し、`resultCode` はモジュール初期化時に言語別初期コードから順に適用して導出する。これにより `initial-code.ts` の変更は自動で全ステップへ波及する（かつては全文スナップショットを 3 つ持っており、初期コードの変更を波及し忘れると再生時の diff が「変更を取り消す編集」をタイピングするバグがあった）
+- **fail-fast**: `edits` の置換前文字列がちょうど 1 回現れない場合（初期コード変更とのズレ・曖昧な指定）はモジュール初期化時に例外を投げる。沈黙して壊れず、開発中に必ず気づける。全言語を eager に導出するため、どの言語のズレも初期化時に検知される
 - `edits` はプリンタの整形ルールを保つ範囲で書くこと（変更時は JSX タブとの往復で壊れないことを手動確認）
 - `aiMessage` / `aiMessageJsx` は表記の違い（`-c:brand` クラス vs `c="brand"` props 等）を文言にも反映するためのペア
 - 現在は仮の 3 ステップ: ①見出しに `-c:brand` ②ボタンを `-bdrs:99` + `-px:20` ③ラッパーを `l--flex` → `l--stack`（JSX タブで Flex → Stack の対応も見せられる）
@@ -420,12 +432,21 @@ interface ScenarioStep {
 - **SPのヒーロー縮小**: Lism の `fz` トークンは em ベースの calc なので、`.c--kvHero` の `font-size` を md 未満で `0.7em` に絞るだけで全体が調和的に縮む。**エディター内容に BP クラスを持ち込まない**ための設計
 - ブレークポイントは Lism の `md`（800px）に統一。`@media not (min-width: 800px)` 表記
 
-## index.astro の変更
+### 英語トップ専用の調整（`html[lang='en'] .c--kvHero`）
+
+置き換え前の `[lang]/index.astro` 静的ヒーローのスタイルを尊重するための言語差分。エディター内容は言語間で構造を揃え、言語差はすべて CSS 側で吸収する:
+
+- 見出しの `letter-spacing: var(--lts--tight)`、リード文の `line-height: 1.75`（SP は `1.5`）はレイヤー内で指定
+- SP の見出しサイズは言語共通の `0.7em` 縮小（前述）に任せる。旧静的ヒーローの SP サイズ（`2.25rem`）を CSS で固定する案は、非レイヤールールが必要になりユーザーがエディターで打った `-fz:*` を上書きしてしまうため不採用
+- Get Started ボタンのセレクタは href のプレフィックスが言語で変わるため後方一致（`a[href$='/docs/installation/']`）
+
+## index.astro / [lang]/index.astro の変更
 
 - ヒーロー（旧 Heading / Text / Button / kv-search 入力）と TODO のダミー SVG `<Group>` を `<KvEditorDemo />` に置換
 - 旧 `#kv-search` の inline script（Enter で検索モーダルを開いて入力を転送する処理）と `.c--kv-search` スタイルを削除（検索はモックアップ準拠のアンカー + ⌘K チップに置き換わり、クリックでモーダルが開く）
 - `main.scss` に `@use './kv-demo'` を追加
 - 背景動画・後続セクションは変更なし
+- `[lang]/index.astro`（en）も同様の置換を実施（`<KvEditorDemo lang={lang} />`）。ページ側の `:global(html) { --fz-mol: 8 }`（トップページのフォントスケールを ja と統一するオーバーライド）は維持している。旧英語ヒーローのみが使っていた `_theme.scss` の `.c--line-height` は削除済み
 
 ## 既知の制限・今後の調整ポイント
 

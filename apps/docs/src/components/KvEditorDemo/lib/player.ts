@@ -3,13 +3,12 @@
 // - 各ステップ: ユーザー発話（入力欄でタイピング → 送信で吹き出しに一括表示）→ AI発話（タイピング）→ コード書き換え（変更行のハンクごとの diffタイピング）
 // - アクティブタブの表記で再生する（シナリオの resultCode は HTML。JSXタブでは htmlToJsx で変換してタイピング）
 // - コードは「現在のエディター内容 → resultCode」の diff で書き換えるため、再生開始時にスナップしない（再生前のユーザー編集が出発点になる）
-//   ただしエディターが空のときは、初期コード全文のタイピングは冗長なため INITIAL_HTML へ即時復元してから再生する
+//   ただしエディターが空のときは、初期コード全文のタイピングは冗長なため初期コード（initialHtml）へ即時復元してから再生する
 // - 再生中にエディターへ focus / pointerdown / タブ切替 → その場で即中断（書きかけのまま残す）し、チャットに "Interrupted" + Resume ボタンを表示
 // - Resume ボタン（または再生トリガー）→ 中断したステップの開始コードにスナップして、そのステップ頭から残りのステップを再生
 // - 全ステップ完了 → チャット末尾に "Done" ステータス行を表示。再クリックでチャットをクリアし初期コードへ戻して最初から
 // - prefers-reduced-motion: タイピングを省略し、結果を即時適用する
-import { INITIAL_HTML } from '../initial-code';
-import { SCENARIO } from '../scenario';
+import type { ScenarioStep } from '../scenario';
 import { htmlToJsx } from './convert';
 import { diffCode, diffLineHunks } from './diff';
 import type { EditorApi } from './editor';
@@ -38,6 +37,9 @@ interface PlayerOptions {
   placeholder: HTMLElement;
   askText: HTMLElement;
   playButtons: HTMLButtonElement[];
+  // 言語別のデータは editor.ts が解決して注入する（このモジュールは言語を知らない）
+  initialHtml: string;
+  scenario: ScenarioStep[];
 }
 
 class AbortedError extends Error {}
@@ -63,7 +65,7 @@ const sleep = (ms: number, signal: AbortSignal): Promise<void> =>
 const joinBlocks = (before: string[], middle: string, after: string[]): string =>
   [...before, ...(middle === '' ? [] : [middle]), ...after].join('\n');
 
-export function createPlayer({ editor, messages, placeholder, askText, playButtons }: PlayerOptions): void {
+export function createPlayer({ editor, messages, placeholder, askText, playButtons, initialHtml, scenario }: PlayerOptions): void {
   let status: PlayerStatus = 'idle';
   let currentStep = 0;
   let controller: AbortController | null = null;
@@ -77,7 +79,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   const isJsxTab = (): boolean => editor.getActiveTab() === 'jsx';
 
   /** ステップ i 開始時点のコード（i=0 は初期コード。常にHTML表記） */
-  const stepStartCode = (i: number): string => (i === 0 ? INITIAL_HTML : SCENARIO[i - 1].resultCode);
+  const stepStartCode = (i: number): string => (i === 0 ? initialHtml : scenario[i - 1].resultCode);
 
   /** HTMLモデルとアクティブタブの表示を同時に確定する */
   const snapTo = (html: string): void => {
@@ -192,7 +194,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   };
 
   const playStep = async (stepIndex: number, signal: AbortSignal): Promise<void> => {
-    const step = SCENARIO[stepIndex];
+    const step = scenario[stepIndex];
     currentStepBubbles = [];
 
     // ユーザー発話: 入力欄でタイピング → 送信（プレースホルダーに戻し、吹き出しへ全文一括表示）
@@ -253,7 +255,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     placeholder.hidden = true;
 
     try {
-      for (let i = fromStep; i < SCENARIO.length; i++) {
+      for (let i = fromStep; i < scenario.length; i++) {
         // ステップの切り替わりに「間」を置く（最後のステップの後には置かない）
         if (i > fromStep) await sleep(prefersReducedMotion() ? PAUSE_REDUCED_MOTION : PAUSE_BETWEEN_STEPS, signal);
         currentStep = i;
@@ -303,7 +305,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       // 全ステップ完了後: チャットをクリアし初期コードへ戻して最初から
       messages.innerHTML = '';
       updateScrollHint(); // クリアでフェード高さを 0 に戻す（前回分の残留を防ぐ）
-      snapTo(INITIAL_HTML);
+      snapTo(initialHtml);
       void run(0);
       return;
     }
@@ -312,7 +314,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     // コードはスナップせず、現在のエディター内容から resultCode へ diff タイピングする
     // （ただしエディターが空のときは、全文タイピングの冗長さを避けるため初期コードへ即時復元してから再生する）
     if (editor.getViewText().trim() === '') {
-      snapTo(INITIAL_HTML);
+      snapTo(initialHtml);
     }
     void run(0);
   };

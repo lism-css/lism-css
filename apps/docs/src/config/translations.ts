@@ -20,6 +20,7 @@ type TranslationKeys = {
   translationNotice: 'title' | 'description';
   demo: 'openNewTab' | 'lismNote';
   preview: 'resize';
+  kvDemo: 'tablistAriaLabel' | 'editorAriaLabel';
 };
 
 /**
@@ -77,6 +78,10 @@ export const translations: Record<LangCode, UITranslations> = {
     preview: {
       resize: 'リサイズ',
     },
+    kvDemo: {
+      tablistAriaLabel: 'コード表記の切り替え',
+      editorAriaLabel: 'ライブコードエディター',
+    },
   },
   en: {
     toc: {
@@ -121,6 +126,10 @@ export const translations: Record<LangCode, UITranslations> = {
     },
     preview: {
       resize: 'Resize',
+    },
+    kvDemo: {
+      tablistAriaLabel: 'Switch code format',
+      editorAriaLabel: 'Live code editor',
     },
   },
 };

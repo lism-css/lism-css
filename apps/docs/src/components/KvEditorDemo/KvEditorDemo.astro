@@ -6,20 +6,30 @@
  * 初期状態は SEO のためサーバーサイドでレンダリングし、
  * クライアントではエディターの編集・AIシナリオ再生に応じて innerHTML を書き換える。
  */
-import { INITIAL_HTML } from './initial-code';
+import { getRootLang, t, type LangCode } from '@/lib/i18n';
+import { INITIAL_HTML_BY_LANG } from './initial-code';
 import { highlight } from './lib/highlight';
 
+interface Props {
+  /** 表示言語。省略時は root 言語（ja）。クライアント側へは data-kv-lang で受け渡す */
+  lang?: LangCode;
+}
+
+const { lang = getRootLang() } = Astro.props;
+const initialHtml = INITIAL_HTML_BY_LANG[lang];
+const kvDemoT = t(lang, 'kvDemo');
+
 // エディターの初期表示もビルド時にハイライトしておく（表示フラッシュ防止）
-const highlighted = await highlight(INITIAL_HTML, 'html');
+const highlighted = await highlight(initialHtml, 'html');
 ---
 
-<div class="c--kvHero" data-kv-hero set:html={INITIAL_HTML} />
+<div class="c--kvHero" data-kv-hero set:html={initialHtml} />
 
-<div class="c--kvDemo" data-kv-demo>
+<div class="c--kvDemo" data-kv-demo data-kv-lang={lang}>
   <div class="c--kvDemo_window">
     <div class="c--kvDemo_bar">
       <span class="c--kvDemo_dots" aria-hidden="true"></span>
-      <div class="c--kvDemo_tabs" role="tablist" aria-label="コード表記の切り替え">
+      <div class="c--kvDemo_tabs" role="tablist" aria-label={kvDemoT.tablistAriaLabel}>
         <button class="c--kvDemo_tab" type="button" role="tab" aria-selected="true" data-kv-tab="html">HTML</button>
         <button class="c--kvDemo_tab" type="button" role="tab" aria-selected="false" data-kv-tab="jsx">JSX</button>
       </div>
@@ -38,7 +48,7 @@ const highlighted = await highlight(INITIAL_HTML, 'html');
         autocapitalize="off"
         autocorrect="off"
         wrap="off"
-        aria-label="ライブコードエディター">{INITIAL_HTML}</textarea
+        aria-label={kvDemoT.editorAriaLabel}>{initialHtml}</textarea
       >
       {/* 通知スタック（上限超過・構文エラー・空提案）。子要素を縦に積み重ねて表示する */}
       <div class="c--kvDemo_snackbarStack" data-kv-snackbar role="status"></div>

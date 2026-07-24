@@ -42,7 +42,8 @@
     // "Get Started" ボタンの背景とホバー。更新前は Button の bgc=var(--gray-hi-c)（#222）で、
     // ホバーで var(--link)（青）へ変わる仕様だった。どちらも Lism トークンクラス／往復可能な
     // 形では表現できない任意色なので、色・影・検索と同様ここで当てる（-hov:-o は初期HTMLから削除）。
-    a[href='/docs/installation/'] {
+    // href は言語でプレフィックスが変わる（en は /en/docs/installation/）ため後方一致で当てる
+    a[href$='/docs/installation/'] {
       background-color: var(--gray-hi-c);
       // 更新前の Button に効いていたホバーの遷移
       transition:
@@ -58,7 +59,7 @@
     // SVG を INITIAL_HTML に直接書くと path の d 属性が Lism の d=display prop と衝突して
     // 往復（HTML⇔JSX）が壊れるため、Phosphor caret-right を mask で疑似要素として当てる。
     // currentColor で文字色（-c:base）を継承。フレックスの gap（-g:10）で本文との間隔が付く。
-    a[href='/docs/installation/']::after {
+    a[href$='/docs/installation/']::after {
       content: '';
       inline-size: 1em;
       block-size: 1em;
@@ -66,6 +67,20 @@
       $caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z'/%3E%3C/svg%3E");
       mask: $caret center / contain no-repeat;
       -webkit-mask: $caret center / contain no-repeat;
+    }
+  }
+
+  // 英語トップ専用の調整（置き換え前の [lang]/index.astro 静的ヒーロー準拠）。
+  // エディター内容（INITIAL_HTML_BY_LANG）は言語間で構造を揃え、言語差のスタイルはここで吸収する
+  html[lang='en'] .c--kvHero {
+    h1 {
+      letter-spacing: var(--lts--tight);
+    }
+    p {
+      line-height: 1.75; // 旧ヒーローの --lh--l 相当（≥800px）
+      @media not (min-width: 800px) {
+        line-height: 1.5; // 旧ヒーローの --lh--base 相当
+      }
     }
   }
 
