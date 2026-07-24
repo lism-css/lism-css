@@ -40,8 +40,8 @@ const highlighted = await highlight(INITIAL_HTML, 'html');
         wrap="off"
         aria-label="ライブコードエディター">{INITIAL_HTML}</textarea
       >
-      {/* エラー通知（上限超過・構文エラー）。自動クローズ・非インタラクティブ */}
-      <div class="c--kvDemo_snackbar" data-kv-snackbar role="status"></div>
+      {/* 通知スタック（上限超過・構文エラー・空提案）。子要素を縦に積み重ねて表示する */}
+      <div class="c--kvDemo_snackbarStack" data-kv-snackbar role="status"></div>
     </div>
   </div>
   <aside class="c--kvDemo_panel">

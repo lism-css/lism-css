@@ -218,14 +218,19 @@ export function initKvEditorDemo(): void {
   // 実体は後段で定義（setCode に依存するため）。呼び出しはデバウンス発火時なので初期化済み
   let restoreInitialCode: () => void = () => {};
 
+  // 空提案（ボタン付き・入力再開かリセットまで表示）。タブ切替でも維持するため関数化
+  const showEmptyPrompt = (): void => {
+    snackbar?.showAction('The editor is empty.', 'Restore initial code', () => restoreInitialCode());
+    emptyPromptShown = true;
+    syntaxReported = false;
+  };
+
   const scheduleSyntaxCheck = (): void => {
     clearTimeout(syntaxTimer);
     syntaxTimer = setTimeout(() => {
       // 空になったらリセット提案（ボタン付き・入力再開かリセットまで表示）
       if (textarea.value.trim() === '') {
-        snackbar?.showAction('The editor is empty.', 'Restore initial code', () => restoreInitialCode());
-        emptyPromptShown = true;
-        syntaxReported = false;
+        showEmptyPrompt();
         return;
       }
       // 表示は端的に（findHtmlIssue の詳細理由はテスト・デバッグ用で、表示には使わない）
@@ -294,6 +299,8 @@ export function initKvEditorDemo(): void {
     textarea.value = state.tabText[tab];
     setJsxInvalid(false);
     resetSyntaxCheck();
+    // 空のままタブを切り替えた場合は、空提案を消さずに引き継ぐ（入力があるまで常時表示）
+    if (textarea.value.trim() === '') showEmptyPrompt();
     saveSnapshot();
 
     for (const button of tabButtons) {

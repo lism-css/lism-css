@@ -18,6 +18,55 @@
     @media not (min-width: 800px) {
       font-size: 0.7em;
     }
+
+    // 見出し色・本文色・行間は Lism のトークンクラスに無い任意値なので、
+    // エディター内容（INITIAL_HTML）ではなくここで既定として当てる。
+    // Property Class（-c:* 等）は非レイヤーでこの指定より強いため、
+    // シナリオが後から付ける -c:brand などは正しく上書きされる。
+    h1 {
+      color: var(--gray-hi-c);
+      line-height: 1.25;
+    }
+    p {
+      color: #333;
+    }
+
+    // 検索ボックスの色と影。どちらも Lism トークンクラスでは表現できない任意値なので、
+    // エディター内容ではなくここで当てる（color は更新前の input プレースホルダー相当の薄いグレー、
+    // box-shadow は docsローカルの --bxsh--base）。
+    a[data-modal-open] {
+      color: #757575;
+      box-shadow: var(--bxsh--base);
+    }
+
+    // "Get Started" ボタンの背景とホバー。更新前は Button の bgc=var(--gray-hi-c)（#222）で、
+    // ホバーで var(--link)（青）へ変わる仕様だった。どちらも Lism トークンクラス／往復可能な
+    // 形では表現できない任意色なので、色・影・検索と同様ここで当てる（-hov:-o は初期HTMLから削除）。
+    a[href='/docs/installation/'] {
+      background-color: var(--gray-hi-c);
+      // 更新前の Button に効いていたホバーの遷移
+      transition:
+        color 0.15s,
+        background-color 0.15s;
+
+      &:hover {
+        background-color: var(--link);
+      }
+    }
+
+    // "Get Started" ボタンの caret-right アイコン。
+    // SVG を INITIAL_HTML に直接書くと path の d 属性が Lism の d=display prop と衝突して
+    // 往復（HTML⇔JSX）が壊れるため、Phosphor caret-right を mask で疑似要素として当てる。
+    // currentColor で文字色（-c:base）を継承。フレックスの gap（-g:10）で本文との間隔が付く。
+    a[href='/docs/installation/']::after {
+      content: '';
+      inline-size: 1em;
+      block-size: 1em;
+      background-color: currentColor;
+      $caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z'/%3E%3C/svg%3E");
+      mask: $caret center / contain no-repeat;
+      -webkit-mask: $caret center / contain no-repeat;
+    }
   }
 
   /* ----------------------------------------
@@ -40,8 +89,9 @@
     grid-template-columns: minmax(0, 1fr) 12.6875rem;
     width: 100%;
     max-width: 56.4375rem;
-    height: 25rem; // 400px
+    height: 28rem;
     margin-block-start: 3.5rem;
+    margin-inline: auto; // ラッパー幅がウィンドウ最大幅を超える場合も中央寄せ（ヒーローの中央揃えと揃える）
     overflow: hidden;
     border-radius: 0.625rem;
     background-color: var(--kvDemo-bgc);
@@ -216,16 +266,45 @@
     }
   }
 
-  /* スナックバー風の通知（エディター右下・自動クローズ）。
-     動作は継続する非致命的な通知のため、赤ではなく warning トーンで表示する */
-  .c--kvDemo_snackbar {
+  /* 通知スタック（エディター右下）。複数の通知を新しいものが下（角側）に来るよう縦積みする。
+     コンテナ自体はクリックを透過し、アクション付き通知だけ pointer-events を戻す */
+  .c--kvDemo_snackbarStack {
     position: absolute;
     right: 0.75rem;
     bottom: 0.75rem;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-width: calc(100% - 1.5rem);
+    pointer-events: none; // エディター操作を妨げない（子の is--action だけ auto に戻す）
+  }
+
+  /* 折りたたみ用のラッパー。出入り時は height だけをアニメーションさせる。
+     スタック間の隙間は内側カードの margin-top で持たせる（overflow:hidden で BFC を作り
+     この margin をラッパー高さに内包させる）。ラッパー自身は padding を持たないため
+     height:0 が本当に 0 まで縮み、「カード＋隙間」を1つの height トランジションで畳める。
+     ※ padding で隙間を持たせると border-box では padding が下限として残り、
+        height アニメーション後に隙間だけ instant に消えてカクつく。 */
+  .c--kvDemo_snackbarRow {
+    max-width: 100%;
+    min-height: 0; // flex アイテムの既定 min-height:auto を外し height:0 を効かせる
+    overflow: hidden; // 折りたたみ時に中身をクリップ＋BFC 化でカード margin を内包
+    transition: height 0.2s ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* スナックバー風の通知（自動クローズ）。
+     動作は継続する非致命的な通知のため、赤ではなく warning トーンで表示する */
+  .c--kvDemo_snackbar {
+    display: flex;
     align-items: center;
     gap: 0.5rem;
-    max-width: calc(100% - 1.5rem);
+    max-width: 100%;
+    // スタック間の隙間。ラッパー(overflow:hidden)内なので height 折りたたみに含まれる
+    margin-top: 0.5rem;
     padding: 0.5rem 0.5rem 0.5rem 0.75rem;
     border: 1px solid color-mix(in srgb, var(--kvDemo-warning), transparent 65%);
     border-radius: 0.5rem;
@@ -249,6 +328,7 @@
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'/%3E%3C/svg%3E")
         no-repeat center / contain;
     }
+    // カードはフェード（opacity/transform）のみ担当。高さの折りたたみはラッパーが担う
     transition:
       opacity 0.2s ease,
       transform 0.2s ease,

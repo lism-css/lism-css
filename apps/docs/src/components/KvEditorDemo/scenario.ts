@@ -26,7 +26,7 @@ interface ScenarioStepDef extends Omit<ScenarioStep, 'resultCode'> {
 
 const STEP_DEFS: ScenarioStepDef[] = [
   {
-    userMessage: 'キャッチコピーを目立たせて',
+    userMessage: 'キャッチコピーの色を変更して',
     aiMessage: '見出しにブランドカラーを適用します。-c:brand クラスを追加しますね。',
     aiMessageJsx: '見出しにブランドカラーを適用します。c="brand" props を追加しますね。',
     edits: [['-fz:5xl -ta:center"', '-fz:5xl -ta:center -c:brand"']],
@@ -36,7 +36,7 @@ const STEP_DEFS: ScenarioStepDef[] = [
     aiMessage: 'Get Started ボタンの角丸を -bdrs:99 に変更し、左右の余白を広げます。',
     aiMessageJsx: 'Get Started ボタンの角丸を bdrs="99" に変更し、左右の余白を広げます。',
     edits: [
-      ['-px:15 -py:10 -bgc:text', '-px:20 -py:10 -bgc:text'],
+      ['-px:10 -py:10 -c:base', '-px:20 -py:10 -c:base'],
       ['-bdrs:20 -fw:500', '-bdrs:99 -fw:500'],
     ],
   },
