@@ -38,14 +38,14 @@ export interface EditorApi {
   tabButtons: HTMLButtonElement[];
 }
 
-export function initKvEditorDemo(): void {
+export function initKvEditor(): void {
   const hero = document.querySelector<HTMLElement>('[data-kv-hero]');
-  const demo = document.querySelector<HTMLElement>('[data-kv-demo]');
+  const demo = document.querySelector<HTMLElement>('[data-kv-editor]');
   const textarea = demo?.querySelector<HTMLTextAreaElement>('[data-kv-input]') ?? null;
   const preInner = demo?.querySelector<HTMLElement>('[data-kv-pre-inner]') ?? null;
   if (!hero || !demo || !textarea || !preInner) return;
 
-  // SSR側（KvEditorDemo.astro）が決めた言語を DOM 経由で受け取る（このスクリプトは全ページ共通バンドル）。
+  // SSR側（KvEditor.astro）が決めた言語を DOM 経由で受け取る（このスクリプトは全ページ共通バンドル）。
   // siteConfig.langs を情報源とする isValidLang で判定するため、言語追加時にここの修正は不要
   const langAttr = demo.dataset.kvLang ?? '';
   const lang: DemoLang = isValidLang(langAttr) ? langAttr : getRootLang();
@@ -96,7 +96,7 @@ export function initKvEditorDemo(): void {
   };
 
   // ---- スクロール追従（textarea → ハイライトレイヤー） ----------------------
-  // textarea は iOS の自動ズーム回避のため font-size: 16px を scale で縮小している（_kv-demo.scss 参照）。
+  // textarea は iOS の自動ズーム回避のため font-size: 16px を scale で縮小している（_kv-editor.scss 参照）。
   // scrollTop / scrollLeft は変形前のローカル座標で返るため、
   // computed transform から縮小率を読み取り、視覚上の移動量へ換算して追従させる
   const syncScroll = (): void => {

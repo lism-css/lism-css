@@ -3,7 +3,7 @@
 // NOTE: convert.ts のプリンタ出力（2スペースインデント・単一テキスト子は80字以内でインライン）と
 //       同じ整形ルールで書くこと。ズレると HTML→JSX→HTML の往復でコードが書き換わってしまう。
 //       アイコン等は SVG をここに直接書かないこと（path の `d` 属性が Lism の d=display prop と
-//       衝突し往復が壊れる）。装飾アイコンは _kv-demo.scss の疑似要素 + mask で当てる。
+//       衝突し往復が壊れる）。装飾アイコンは _kv-editor.scss の疑似要素 + mask で当てる。
 // NOTE: 言語で変わるのはリード2行と href のプレフィックスのみ。マークアップ構造・クラス属性は
 //       言語間で必ず揃えること（scenario.ts の edits がクラス属性への文字列置換で両言語に効く前提）。
 import type { LangCode } from '@/config/site';

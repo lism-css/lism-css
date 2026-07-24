@@ -20,7 +20,7 @@ type TranslationKeys = {
   translationNotice: 'title' | 'description';
   demo: 'openNewTab' | 'lismNote';
   preview: 'resize';
-  kvDemo: 'tablistAriaLabel' | 'editorAriaLabel';
+  kvEditor: 'tablistAriaLabel' | 'editorAriaLabel';
 };
 
 /**
@@ -78,7 +78,7 @@ export const translations: Record<LangCode, UITranslations> = {
     preview: {
       resize: 'リサイズ',
     },
-    kvDemo: {
+    kvEditor: {
       tablistAriaLabel: 'コード表記の切り替え',
       editorAriaLabel: 'ライブコードエディター',
     },
@@ -127,7 +127,7 @@ export const translations: Record<LangCode, UITranslations> = {
     preview: {
       resize: 'Resize',
     },
-    kvDemo: {
+    kvEditor: {
       tablistAriaLabel: 'Switch code format',
       editorAriaLabel: 'Live code editor',
     },

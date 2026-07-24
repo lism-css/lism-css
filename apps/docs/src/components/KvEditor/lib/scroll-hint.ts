@@ -5,8 +5,8 @@ const FADE_MAX = 16; // フェードの最大高さ（px）
 
 /**
  * スクロールコンテナの上下端フェードを初期化する。
- * スクロール位置に応じて CSS 変数 --kvDemo-mask-top / --kvDemo-mask-bottom を更新する
- * （mask-image の定義は _kv-demo.scss 側）。
+ * スクロール位置に応じて CSS 変数 --kvEditor-mask-top / --kvEditor-mask-bottom を更新する
+ * （mask-image の定義は _kv-editor.scss 側）。
  * 戻り値は、スクロールを伴わないコンテンツ変更後に手動で呼ぶための更新関数
  */
 export function initScrollHint(el: HTMLElement): () => void {
@@ -14,8 +14,8 @@ export function initScrollHint(el: HTMLElement): () => void {
     const topRoom = el.scrollTop;
     const bottomRoom = el.scrollHeight - el.clientHeight - el.scrollTop;
     // サブピクセル誤差で端に達してもマスクが残らないよう 1px 未満は 0 に丸める
-    el.style.setProperty('--kvDemo-mask-top', `${topRoom < 1 ? 0 : Math.min(FADE_MAX, topRoom)}px`);
-    el.style.setProperty('--kvDemo-mask-bottom', `${bottomRoom < 1 ? 0 : Math.min(FADE_MAX, bottomRoom)}px`);
+    el.style.setProperty('--kvEditor-mask-top', `${topRoom < 1 ? 0 : Math.min(FADE_MAX, topRoom)}px`);
+    el.style.setProperty('--kvEditor-mask-bottom', `${bottomRoom < 1 ? 0 : Math.min(FADE_MAX, bottomRoom)}px`);
   };
   el.addEventListener('scroll', update, { passive: true });
   update();

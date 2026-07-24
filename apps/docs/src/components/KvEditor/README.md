@@ -1,4 +1,4 @@
-# KvEditorDemo — 仕組みの解説
+# KvEditor — 仕組みの解説
 
 トップページ KV の「ライブコードエディター + AI デモパネル」の実装ドキュメント。コードレビュー用に、設計判断の理由も含めて記載する。
 
@@ -20,7 +20,7 @@
 
 ```
                         ┌─────────────────────────────┐
-                        │  .c--kvHero（ヒーロー出力） │ ← innerHTML = sanitize(html)
+                        │  .c--kvEditorHero（ヒーロー出力） │ ← innerHTML = sanitize(html)
                         └─────────────△───────────────┘
                                       │ ライブ反映（rAFスロットル）
 ┌───────────────────────────────────────────────────────┐
@@ -70,8 +70,8 @@ Astro のハイライトはすべてビルド時（SSG）に完結し、ハイ�
 ## ファイル構成
 
 ```
-KvEditorDemo/
-├── KvEditorDemo.astro   # マークアップ + ビルド時SSR（lang prop で言語選択）
+KvEditor/
+├── KvEditor.astro   # マークアップ + ビルド時SSR（lang prop で言語選択）
 ├── initial-code.ts      # 言語別の初期HTML（single source of truth）
 ├── scenario.ts          # AIシナリオ定義（データのみ。メッセージは言語別・edits は言語共有）
 ├── README.md            # このドキュメント
@@ -85,9 +85,9 @@ KvEditorDemo/
     ├── snackbar.ts      # エディター右下の通知・提案表示
     └── highlight.ts     # shiki ラッパー（ビルド時 + クライアント共用）
 
-styles: src/styles/_kv-demo.scss（main.scss から @use）
+styles: src/styles/_kv-editor.scss（main.scss から @use）
 組み込み: src/pages/index.astro（ja・旧ヒーロー・kv-search・ダミーSVGを置換）
-        src/pages/[lang]/index.astro（en・`<KvEditorDemo lang={lang} />` で英語版を表示）
+        src/pages/[lang]/index.astro（en・`<KvEditor lang={lang} />` で英語版を表示）
 ```
 
 モジュール間の依存は一方向に保っている: `editor.ts`（DOM を握るコントローラ）が各 lib を束ね、`player.ts` は `EditorApi` インターフェース越しにのみエディターへ触る。`convert.ts` / `diff.ts` / `sanitize.ts` / `validate.ts` は DOM イベントに依存しない純粋な関数群になっている。
@@ -96,10 +96,10 @@ styles: src/styles/_kv-demo.scss（main.scss から @use）
 
 日本語トップ（`/`）と英語トップ（`/en/`）で同じコンポーネントを使う。仕組みは次のとおり:
 
-- **SSR 側**: `KvEditorDemo.astro` が `lang` prop（省略時は root 言語 = ja。`SimpleLayout` と同じパターン）を受け取り、`INITIAL_HTML_BY_LANG[lang]` でヒーロー SSR・textarea 初期値・ビルド時ハイライトを選択。aria-label は `translations.ts` の `kvDemo` カテゴリから取得
-- **クライアント側**: `.astro` の `<script>` は**サイト全体で 1 バンドル共有**（hoisted module）のため、ビルド時 props では言語分岐できない。`data-kv-lang` 属性を `[data-kv-demo]` に出力し、`editor.ts` が実行時に読み取って `INITIAL_HTML_BY_LANG` / `SCENARIO_BY_LANG` から選択する。`player.ts` は言語を知らず、`initialHtml` / `scenario` をオプションとして注入される
+- **SSR 側**: `KvEditor.astro` が `lang` prop（省略時は root 言語 = ja。`SimpleLayout` と同じパターン）を受け取り、`INITIAL_HTML_BY_LANG[lang]` でヒーロー SSR・textarea 初期値・ビルド時ハイライトを選択。aria-label は `translations.ts` の `kvEditor` カテゴリから取得
+- **クライアント側**: `.astro` の `<script>` は**サイト全体で 1 バンドル共有**（hoisted module）のため、ビルド時 props では言語分岐できない。`data-kv-lang` 属性を `[data-kv-editor]` に出力し、`editor.ts` が実行時に読み取って `INITIAL_HTML_BY_LANG` / `SCENARIO_BY_LANG` から選択する。`player.ts` は言語を知らず、`initialHtml` / `scenario` をオプションとして注入される
 - **言語で変わるのはリード 2 行と href プレフィックスのみ**。マークアップ構造・クラス属性は言語間で必ず揃える（scenario の `edits` がクラス属性への文字列置換で全言語に効く前提）。`edits` の from/to にリード文・href など言語で変わる文字列を含めないこと
-- **言語差のスタイル**（英語トップの行間・見出しサイズ等）はエディター内容に持ち込まず、`_kv-demo.scss` の `html[lang='en'] .c--kvHero` ブロックで吸収する
+- **言語差のスタイル**（英語トップの行間・見出しサイズ等）はエディター内容に持ち込まず、`_kv-editor.scss` の `html[lang='en'] .c--kvEditorHero` ブロックで吸収する
 - パネル内 UI 文言（"Ask AI to edit..." / Interrupted / Resume / Done / スナックバー）は両言語とも英語で共通
 
 ## initial-code.ts — 唯一の情報源
@@ -115,26 +115,26 @@ styles: src/styles/_kv-demo.scss（main.scss から @use）
 
 内容はヒーローの見出し（h1）・リード文（p）・2 つのボタン風リンク（`l--flex`）で構成し、`data-modal-open="search-modal"` 付きの検索アンカー（⌘K チップ入り）を含む。なお、デザインモックアップ（SVG）記載のクラスの一部（`-g:8` / `-bg:base-2` / `-fw:medium` 等）は Lism に実在しないため、ビルド済み `main.css` に存在するクラスだけで再構成している。
 
-## KvEditorDemo.astro — SSR とマークアップ
+## KvEditor.astro — SSR とマークアップ
 
 frontmatter で `await highlight(initialHtml, 'html')` を実行し、ハイライト済み `<pre>` もビルド時に埋め込む。JS 読み込み前から「色付きのコード + ヒーロー」が完全表示され、JS が動き出すと編集・再生機能が段階的に足される（プログレッシブエンハンスメント）。
 
 ```
-.c--kvHero[data-kv-hero]      … ヒーロー出力（set:html={initialHtml} で SSR）
+.c--kvEditorHero[data-kv-hero]      … ヒーロー出力（set:html={initialHtml} で SSR）
 
-.c--kvDemo[data-kv-demo][data-kv-lang] … grid: エディター 1fr + パネル 12.6875rem。md未満は縦積み（エディター + 下段パネル 146px）
-├── .c--kvDemo_window
-│   ├── .c--kvDemo_bar        … 信号ドット + HTML/JSX タブ（role="tablist"。背景はウィンドウと同一）
-│   └── .c--kvDemo_editor     … 重ねレイヤー（下記）
-│       ├── .c--kvDemo_pre[aria-hidden]      … 表示用（pointer-events: none）
-│       │   └── .c--kvDemo_preInner          … ★transform でスクロール追従
+.c--kvEditor[data-kv-editor][data-kv-lang] … grid: エディター 1fr + パネル 12.6875rem。md未満は縦積み（エディター + 下段パネル 146px）
+├── .c--kvEditor_window
+│   ├── .c--kvEditor_bar        … 信号ドット + HTML/JSX タブ（role="tablist"。背景はウィンドウと同一）
+│   └── .c--kvEditor_editor     … 重ねレイヤー（下記）
+│       ├── .c--kvEditor_pre[aria-hidden]      … 表示用（pointer-events: none）
+│       │   └── .c--kvEditor_preInner          … ★transform でスクロール追従
 │       │       └── shiki の <pre><code>
-│       ├── textarea.c--kvDemo_input         … 入力用（文字は透明・caret のみ表示）
-│       └── .c--kvDemo_snackbar[role="status"] … エラー通知・リセット提案
-└── aside.c--kvDemo_panel     … AIパネル（SPでは下段に全幅表示）
-    ├── .c--kvDemo_placeholder … 空状態: グラデーション円形ロゴ（orb）+ "Just ask. The code writes itself."
-    ├── .c--kvDemo_messages[aria-live="polite"] … 吹き出し・中断ステータス行の追記先（空の間は非表示）
-    └── button.c--kvDemo_ask[data-kv-play]   … 入力欄風トリガー（"Ask AI to edit..." + 右下に ↑ 矢印の矩形）
+│       ├── textarea.c--kvEditor_input         … 入力用（文字は透明・caret のみ表示）
+│       └── .c--kvEditor_snackbar[role="status"] … エラー通知・リセット提案
+└── aside.c--kvEditor_panel     … AIパネル（SPでは下段に全幅表示）
+    ├── .c--kvEditor_placeholder … 空状態: グラデーション円形ロゴ（orb）+ "Just ask. The code writes itself."
+    ├── .c--kvEditor_messages[aria-live="polite"] … 吹き出し・中断ステータス行の追記先（空の間は非表示）
+    └── button.c--kvEditor_ask[data-kv-play]   … 入力欄風トリガー（"Ask AI to edit..." + 右下に ↑ 矢印の矩形）
 ```
 
 マークアップ上の細かい配慮:
@@ -146,7 +146,7 @@ frontmatter で `await highlight(initialHtml, 'html')` を実行し、ハイラ�
 
 ## editor.ts — コントローラ
 
-`initKvEditorDemo()` が DOM 要素を集めて全機能を配線する。必須要素（hero / demo / textarea / preInner）が見つからなければ何もせず終了する。
+`initKvEditor()` が DOM 要素を集めて全機能を配線する。必須要素（hero / demo / textarea / preInner）が見つからなければ何もせず終了する。
 
 ### 状態モデル
 
@@ -172,7 +172,7 @@ const state = {
 
 `hero.innerHTML = sanitize(state.html)` を **rAF でスロットル**（フラグ 1 本で 1 フレーム 1 回に制限）。再生中のタイピングアニメは十数 ms 間隔で `setViewText` が呼ばれるため、毎回 DOM を書き換えないための措置。
 
-ブラウザの HTML パーサーは寛容なので、再生中断などで閉じタグが欠けた状態でも描画は破綻しない（仕様として許容）。エディターを空にするとヒーローも空になるが、`.c--kvHero` に `min-height` を持たせてレイアウトが完全に潰れてガタつくことは防いでいる。
+ブラウザの HTML パーサーは寛容なので、再生中断などで閉じタグが欠けた状態でも描画は破綻しない（仕様として許容）。エディターを空にするとヒーローも空になるが、`.c--kvEditorHero` に `min-height` を持たせてレイアウトが完全に潰れてガタつくことは防いでいる。
 
 ### シンタックスハイライト（遅延ロード + 同期実行）
 
@@ -301,13 +301,13 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 ## snackbar.ts — 通知・提案の表示
 
-エディター右下（absolute 配置の `.c--kvDemo_snackbar`）に出すスナックバー風の通知。`role="status"` でスクリーンリーダーにも通知され、表示 / 非表示は opacity + translateY のトランジション（`prefers-reduced-motion` では無効）。2 つの variant を持つ:
+エディター右下（absolute 配置の `.c--kvEditor_snackbar`）に出すスナックバー風の通知。`role="status"` でスクリーンリーダーにも通知され、表示 / 非表示は opacity + translateY のトランジション（`prefers-reduced-motion` では無効）。2 つの variant を持つ:
 
 **通知型（`show`）** — 上限超過・構文エラー用
 
 - メッセージは**端的な英語**: `Invalid HTML syntax` / `Invalid JSX syntax` / `Character limit reached (10,000)`
 - すべて **4 秒で自動クローズ**（再表示でタイマーリセット）。構文エラーの永続的な手がかりは JSX タブの warning 色が担う
-- 見た目は **warning トーン**（動作は継続する非致命的な通知のため、赤ではなくアンバー）: 警告アイコン（octicon alert を CSS mask で描画）+ アンバーのボーダー。色は `--kvDemo-warning`（github-dark の yellow 系）で、JSX タブのインジケーターと共通
+- 見た目は **warning トーン**（動作は継続する非致命的な通知のため、赤ではなくアンバー）: 警告アイコン（octicon alert を CSS mask で描画）+ アンバーのボーダー。色は `--kvEditor-warning`（github-dark の yellow 系）で、JSX タブのインジケーターと共通
 - `pointer-events: none` でエディター操作を妨げない
 
 **提案型（`showAction`）** — エディターが空になった時のリセット提案
@@ -349,11 +349,11 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 
 ### 1 ステップの流れ
 
-1. **ユーザー発話**: 入力欄トリガー（`.c--kvDemo_ask`）に 1 文字ずつタイピング（`is--typing` クラスで文字色を通常色にし、点滅キャレットを表示）→ 短いポーズ → 送信演出（プレースホルダーへ戻し、ユーザー吹き出しに全文一括表示）
+1. **ユーザー発話**: 入力欄トリガー（`.c--kvEditor_ask`）に 1 文字ずつタイピング（`is--typing` クラスで文字色を通常色にし、点滅キャレットを表示）→ 短いポーズ → 送信演出（プレースホルダーへ戻し、ユーザー吹き出しに全文一括表示）
 2. **AI 発話**: AI 吹き出しへ 1 文字ずつタイピング。メッセージ領域は追記のたびに末尾へ自動スクロール
 3. **コード書き換え**: 後述の diff タイピング。完了したらステップ間の「間」を挟んで次のステップへ
 
-吹き出しは `<p class="c--kvDemo_msg is--user / is--ai">` を `[data-kv-messages]`（`aria-live="polite"`）へ追記する。中断時（"Interrupted" のラベル + `.c--kvDemo_statusBtn` の Resume ボタン）・完了時（"Done" のラベルのみ）のステータス行も同じ領域へ `<p class="c--kvDemo_status">` として追記するので、`aria-live` によりスクリーンリーダーへも中断・完了が通知される。
+吹き出しは `<p class="c--kvEditor_msg is--user / is--ai">` を `[data-kv-messages]`（`aria-live="polite"`）へ追記する。中断時（"Interrupted" のラベル + `.c--kvEditor_statusBtn` の Resume ボタン）・完了時（"Done" のラベルのみ）のステータス行も同じ領域へ `<p class="c--kvEditor_status">` として追記するので、`aria-live` によりスクリーンリーダーへも中断・完了が通知される。
 
 タイピング・ポーズの速度はモジュール先頭の定数に集約している（ms）: ユーザー入力 30 / AI 発話 22 / コード削除 12（2 文字ずつ）/ コード挿入 18（1 文字ずつ）、送信前 300 / AI 応答前 400 / コード書き換え前 500 / ハンク間 350 / 編集位置へのスクロール後 300 / ステップ間 1400（reduced-motion 時は 900）。
 
@@ -400,21 +400,21 @@ interface ScenarioStep {
 - `aiMessage` / `aiMessageJsx` は表記の違い（`-c:brand` クラス vs `c="brand"` props 等）を文言にも反映するためのペア
 - 現在は仮の 3 ステップ: ①見出しに `-c:brand` ②ボタンを `-bdrs:99` + `-px:20` ③ラッパーを `l--flex` → `l--stack`（JSX タブで Flex → Stack の対応も見せられる）
 
-## _kv-demo.scss — スタイルの要点
+## _kv-editor.scss — スタイルの要点
 
 `@layer lism-component` に記述（lism-base のベーススタイルより優先させるため）。
 
 ### ウィンドウ全体
 
-- **常時ダーク・フラット構成**: サイトテーマに関わらずエディターウィンドウは常にダーク。全体が単一の `#26292c`（バーの色分けなし）で、タブのアクティブ・AIパネル・入力欄風トリガーはすべて「白8%オーバーレイ」（`--kvDemo-surface`）で面を作る（Figma モックアップ準拠）。色は `--kvDemo-*` のローカル変数（bgc / surface / snackbar-bgc / text / text-dim / warning）に集約
+- **常時ダーク・フラット構成**: サイトテーマに関わらずエディターウィンドウは常にダーク。全体が単一の `#26292c`（バーの色分けなし）で、タブのアクティブ・AIパネル・入力欄風トリガーはすべて「白8%オーバーレイ」（`--kvEditor-surface`）で面を作る（Figma モックアップ準拠）。色は `--kvEditor-*` のローカル変数（bgc / surface / snackbar-bgc / text / text-dim / warning）に集約
 - レイアウトは grid: エディター `minmax(0, 1fr)` + パネル `12.6875rem`（203px）、全体 `max-width: 56.4375rem`（903px）× `height: 25rem`（400px）。md 未満は縦積み（エディター 1fr + 下段パネル `9.125rem` = 146px、全体 537px）
 - ウィンドウバーの信号ドットは span 1 つ + box-shadow 2 つで 3 色を描画。タブは幅 4rem（64px）固定（モックアップ準拠）
 
 ### エディター（重ねレイヤー）
 
 - **フォントメトリクスの視覚上の完全統一**: `pre` / `.fallback` は 14px（SP 12px）・line-height 1.25（初期コード 19 行が 400px にちょうど収まる）・padding `0.5rem 1rem` 等を共通ルールで適用。1px でもズレると caret 位置が狂う
-- **iOS の自動ズーム対策（textarea の scale 縮小）**: iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームする。これを避けるため textarea だけ `font-size: 16px` とし、`transform: scale(var(--kvDemo-input-scale))`（`0.875` = 14/16、SP は `0.75` = 12/16）で pre レイヤーと同じ見た目に縮小する。width / height / padding は縮小率の逆数（`calc(… / var(--kvDemo-input-scale))`）で拡大して視覚上一致させる。このとき lism-css の reset（`@layer reset`）にある `textarea { max-inline-size: 100% }` が拡大後の width をクランプしてしまう（スクロールバーが内側に寄る）ため、`max-inline-size: none` で解除している。textarea の文字自体は透明なので pre レイヤーと合うべきは caret・選択範囲の位置だけであり、等幅フォントの字送りはサイズに対して線形（16px × 0.75 = 12px の字送りと厳密一致）なのでズレない。スクロール座標の換算は editor.ts の `syncScroll` が行う（前述）
-- **`.c--kvDemo_pre pre *` への強制継承**: lism-css のベースに `* { line-height: calc(1em + var(--hl) * 2) }` という全要素対象ルールがあり、shiki の `code` / `.line` スパンに直接当たって textarea とズレる。これを打ち消すため子孫全部に `inherit` を明示（lism-component レイヤーは lism-base より強い）
+- **iOS の自動ズーム対策（textarea の scale 縮小）**: iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームする。これを避けるため textarea だけ `font-size: 16px` とし、`transform: scale(var(--kvEditor-input-scale))`（`0.875` = 14/16、SP は `0.75` = 12/16）で pre レイヤーと同じ見た目に縮小する。width / height / padding は縮小率の逆数（`calc(… / var(--kvEditor-input-scale))`）で拡大して視覚上一致させる。このとき lism-css の reset（`@layer reset`）にある `textarea { max-inline-size: 100% }` が拡大後の width をクランプしてしまう（スクロールバーが内側に寄る）ため、`max-inline-size: none` で解除している。textarea の文字自体は透明なので pre レイヤーと合うべきは caret・選択範囲の位置だけであり、等幅フォントの字送りはサイズに対して線形（16px × 0.75 = 12px の字送りと厳密一致）なのでズレない。スクロール座標の換算は editor.ts の `syncScroll` が行う（前述）
+- **`.c--kvEditor_pre pre *` への強制継承**: lism-css のベースに `* { line-height: calc(1em + var(--hl) * 2) }` という全要素対象ルールがあり、shiki の `code` / `.line` スパンに直接当たって textarea とズレる。これを打ち消すため子孫全部に `inherit` を明示（lism-component レイヤーは lism-base より強い）
 - textarea は文字を透明（`color: transparent`）にして caret（`caret-color`）だけ表示。選択範囲も `::selection` で色を敷きつつ文字は透明のまま
 - `preInner` は `width: max-content` + `will-change: transform`（横スクロール時にハイライトが切れず、transform 追従を合成レイヤーで行う）
 
@@ -423,16 +423,16 @@ interface ScenarioStep {
 - 白8% + 左ボーダー白20%（SP では下段全幅・境界は背景差のみでボーダーなし）
 - パネルとメッセージ領域に `min-height: 0` を指定（グリッド / フレックスアイテムのデフォルト `min-height: auto` を打ち消さないと、メッセージ領域の overflow スクロールが効かない）
 - メッセージ領域は `scrollbar-gutter: stable`（スクロールバーの出現で幅がガタつかない）、`:empty` で非表示
-- 中断ステータス行（`.c--kvDemo_status`）は吹き出しと違い背景なしの控えめな表示（dim 色・ラベルとボタンを両端揃え）。Resume ボタン（`.c--kvDemo_statusBtn`）はスナックバーの Restore ボタンとスタイルを共用（セレクタを連結して定義）
+- 中断ステータス行（`.c--kvEditor_status`）は吹き出しと違い背景なしの控えめな表示（dim 色・ラベルとボタンを両端揃え）。Resume ボタン（`.c--kvEditor_statusBtn`）はスナックバーの Restore ボタンとスタイルを共用（セレクタを連結して定義）
 - 空状態はグラデーションの円形ロゴ（`#89f9e1 → #87caf7 → #af8cff`）+ プレースホルダー文
-- 入力欄風トリガー（`.c--kvDemo_ask`）は `margin-block-start: auto` で常にパネル下端へ固定（プレースホルダーが消えてメッセージがまだ空の間もジャンプしない）。右下に `↑` 入りの 12px 矩形（`#373a3d`）。再生中のタイピング表示は `.is--typing` で文字色を通常色に切り替え、`::after` の点滅キャレット（1px 幅・steps アニメ）を付ける
+- 入力欄風トリガー（`.c--kvEditor_ask`）は `margin-block-start: auto` で常にパネル下端へ固定（プレースホルダーが消えてメッセージがまだ空の間もジャンプしない）。右下に `↑` 入りの 12px 矩形（`#373a3d`）。再生中のタイピング表示は `.is--typing` で文字色を通常色に切り替え、`::after` の点滅キャレット（1px 幅・steps アニメ）を付ける
 
 ### レスポンシブ
 
-- **SPのヒーロー縮小**: Lism の `fz` トークンは em ベースの calc なので、`.c--kvHero` の `font-size` を md 未満で `0.7em` に絞るだけで全体が調和的に縮む。**エディター内容に BP クラスを持ち込まない**ための設計
+- **SPのヒーロー縮小**: Lism の `fz` トークンは em ベースの calc なので、`.c--kvEditorHero` の `font-size` を md 未満で `0.7em` に絞るだけで全体が調和的に縮む。**エディター内容に BP クラスを持ち込まない**ための設計
 - ブレークポイントは Lism の `md`（800px）に統一。`@media not (min-width: 800px)` 表記
 
-### 英語トップ専用の調整（`html[lang='en'] .c--kvHero`）
+### 英語トップ専用の調整（`html[lang='en'] .c--kvEditorHero`）
 
 置き換え前の `[lang]/index.astro` 静的ヒーローのスタイルを尊重するための言語差分。エディター内容は言語間で構造を揃え、言語差はすべて CSS 側で吸収する:
 
@@ -442,11 +442,11 @@ interface ScenarioStep {
 
 ## index.astro / [lang]/index.astro の変更
 
-- ヒーロー（旧 Heading / Text / Button / kv-search 入力）と TODO のダミー SVG `<Group>` を `<KvEditorDemo />` に置換
+- ヒーロー（旧 Heading / Text / Button / kv-search 入力）と TODO のダミー SVG `<Group>` を `<KvEditor />` に置換
 - 旧 `#kv-search` の inline script（Enter で検索モーダルを開いて入力を転送する処理）と `.c--kv-search` スタイルを削除（検索はモックアップ準拠のアンカー + ⌘K チップに置き換わり、クリックでモーダルが開く）
-- `main.scss` に `@use './kv-demo'` を追加
+- `main.scss` に `@use './kv-editor'` を追加
 - 背景動画・後続セクションは変更なし
-- `[lang]/index.astro`（en）も同様の置換を実施（`<KvEditorDemo lang={lang} />`）。ページ側の `:global(html) { --fz-mol: 8 }`（トップページのフォントスケールを ja と統一するオーバーライド）は維持している。旧英語ヒーローのみが使っていた `_theme.scss` の `.c--line-height` は削除済み
+- `[lang]/index.astro`（en）も同様の置換を実施（`<KvEditor lang={lang} />`）。ページ側の `:global(html) { --fz-mol: 8 }`（トップページのフォントスケールを ja と統一するオーバーライド）は維持している。旧英語ヒーローのみが使っていた `_theme.scss` の `.c--line-height` は削除済み
 
 ## 既知の制限・今後の調整ポイント
 

@@ -88,7 +88,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
 
   const appendBubble = (kind: 'user' | 'ai'): HTMLElement => {
     const bubble = document.createElement('p');
-    bubble.className = `c--kvDemo_msg is--${kind}`;
+    bubble.className = `c--kvEditor_msg is--${kind}`;
     messages.appendChild(bubble);
     currentStepBubbles.push(bubble);
     return bubble;
@@ -224,9 +224,9 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   /** ステータス行（吹き出しではないシステム表示）をチャット末尾に追加する */
   const appendStatusRow = (labelText: string): HTMLElement => {
     const row = document.createElement('p');
-    row.className = 'c--kvDemo_status';
+    row.className = 'c--kvEditor_status';
     const label = document.createElement('span');
-    label.className = 'c--kvDemo_statusLabel';
+    label.className = 'c--kvEditor_statusLabel';
     label.textContent = labelText;
     row.appendChild(label);
     messages.appendChild(row);
@@ -239,7 +239,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     row.classList.add('is--interrupted');
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'c--kvDemo_statusBtn';
+    button.className = 'c--kvEditor_statusBtn';
     button.textContent = 'Resume';
     button.addEventListener('click', () => onPlayClick());
     row.appendChild(button);

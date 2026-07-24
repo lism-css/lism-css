@@ -6,7 +6,7 @@
 // 「空のときのリセット提案（永続）」の上に「上限到達の警告（自動クローズ）」が
 // 積まれても、提案が上書きで消えず Restore 手段が失われない。
 //
-// スタックの出入りは「折りたたみラッパー（.c--kvDemo_snackbarRow）」の height だけを
+// スタックの出入りは「折りたたみラッパー（.c--kvEditor_snackbarRow）」の height だけを
 // アニメーションさせる。隙間（gap）はラッパーの padding-top で height に内包しているため、
 // margin を触らずに「カード＋隙間」を1つの height トランジションで滑らかに畳める。
 
@@ -69,9 +69,9 @@ export function createSnackbar(container: HTMLElement): Snackbar {
 
   const createEl = (message: string, button?: HTMLButtonElement): Item => {
     const row = document.createElement('div');
-    row.className = 'c--kvDemo_snackbarRow';
+    row.className = 'c--kvEditor_snackbarRow';
     const card = document.createElement('div');
-    card.className = 'c--kvDemo_snackbar';
+    card.className = 'c--kvEditor_snackbar';
     const text = document.createElement('span');
     text.textContent = message;
     card.appendChild(text);
@@ -119,7 +119,7 @@ export function createSnackbar(container: HTMLElement): Snackbar {
     }
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'c--kvDemo_snackbar_btn';
+    button.className = 'c--kvEditor_snackbar_btn';
     button.textContent = buttonLabel;
     button.addEventListener('click', onAction);
     const item = createEl(message, button);
