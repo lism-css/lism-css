@@ -26,6 +26,7 @@
     h1 {
       color: var(--gray-hi-c);
       line-height: 1.25;
+      letter-spacing: var(--lts--tight);
     }
     p {
       color: #333;
@@ -70,12 +71,24 @@
     }
   }
 
+  // ダークモード時のヒーロー配色。#333 / #757575 などトークン化されていない
+  // 任意色のみここで上書きする（h1 とボタン背景は --gray-hi-c のダーク値で自動対応）
+  :root[data-theme='dark'] .c--kvEditorHero {
+    p {
+      color: var(--text-2);
+    }
+
+    // 検索ボックス：ダーク背景では --bxsh--base の影がほぼ見えないため、
+    // ヘッダー検索ボタンの --bxsh--search-border と同様に境界線で輪郭を出す
+    a[data-modal-open] {
+      color: hsl(220, 4%, 60%); // プレースホルダー相当の薄いグレー（ダーク用）
+      box-shadow: inset 0 0 0 1px var(--divider);
+    }
+  }
+
   // 英語トップ専用の調整（置き換え前の [lang]/index.astro 静的ヒーロー準拠）。
   // エディター内容（INITIAL_HTML_BY_LANG）は言語間で構造を揃え、言語差のスタイルはここで吸収する
   html[lang='en'] .c--kvEditorHero {
-    h1 {
-      letter-spacing: var(--lts--tight);
-    }
     p {
       line-height: 1.75; // 旧ヒーローの --lh--l 相当（≥800px）
       @media not (min-width: 800px) {
