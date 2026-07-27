@@ -5,7 +5,8 @@
 // - コードは「現在のエディター内容 → resultCode」の diff で書き換えるため、再生開始時にスナップしない（再生前のユーザー編集が出発点になる）
 //   ただしエディターが空のときは、初期コード全文のタイピングは冗長なため初期コード（initialHtml）へ即時復元してから再生する
 // - 再生中にエディターへ focus / pointerdown / タブ切替 → その場で即中断（書きかけのまま残す）し、チャットに "Interrupted" + Resume ボタンを表示
-// - Resume ボタン（または再生トリガー）→ 中断したステップの開始コードにスナップして、そのステップ頭から残りのステップを再生
+// - Resume ボタン（または再生トリガー）→ 中断した瞬間の続きから再生する（吹き出しの途中テキスト・書きかけコードをそのまま残し、
+//   AI発話は止まった文字位置から続け、コードは現在のビュー → 目標コードの差分で残りを書き換える）
 // - 全ステップ完了 → チャット末尾に "Done" ステータス行を表示。再クリックでチャットをクリアし初期コードへ戻して最初から
 // - prefers-reduced-motion: タイピングを省略し、結果を即時適用する
 import type { ScenarioStep } from '../scenario';
@@ -16,6 +17,9 @@ import { initScrollHint } from './scroll-hint';
 
 // idle は初期状態（未再生）。全ステップを再生し終えると done になる
 type PlayerStatus = 'idle' | 'playing' | 'interrupted' | 'done';
+
+// ステップ内のフェーズ。中断→再開で「止まった瞬間」の続きから再生するために使う
+type StepPhase = 'user' | 'ai' | 'code';
 
 // タイピング・ポーズの速度設定（ms）
 const USER_TYPE_INTERVAL = 30;
@@ -69,17 +73,19 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   let status: PlayerStatus = 'idle';
   let currentStep = 0;
   let controller: AbortController | null = null;
-  // 中断時に取り除く「再生中ステップの吹き出し」を追跡する
-  let currentStepBubbles: HTMLElement[] = [];
+  // 中断時にどのフェーズにいたか（再開はここから続ける）
+  let resumePhase: StepPhase = 'user';
+  // 中断→再開で継続する吹き出し（新規生成か途中継続かを判断するために参照を保持）
+  let userBubble: HTMLElement | null = null;
+  let aiBubble: HTMLElement | null = null;
+  // "Interrupted" ステータス行。再開時にこの行だけを取り除く
+  let interruptedRow: HTMLElement | null = null;
   // 入力欄トリガーのプレースホルダー文言（送信・中断時にここへ戻す）
   const askPlaceholder = askText.textContent ?? '';
 
   const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const isJsxTab = (): boolean => editor.getActiveTab() === 'jsx';
-
-  /** ステップ i 開始時点のコード（i=0 は初期コード。常にHTML表記） */
-  const stepStartCode = (i: number): string => (i === 0 ? initialHtml : scenario[i - 1].resultCode);
 
   /** HTMLモデルとアクティブタブの表示を同時に確定する */
   const snapTo = (html: string): void => {
@@ -90,7 +96,6 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     const bubble = document.createElement('p');
     bubble.className = `c--kvEditor_msg is--${kind}`;
     messages.appendChild(bubble);
-    currentStepBubbles.push(bubble);
     return bubble;
   };
 
@@ -125,8 +130,10 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       scrollMessages();
       return;
     }
-    for (const char of text) {
-      bubble.textContent += char;
+    // 既存テキストが目標の先頭一致なら続き（中断からの再開）、不一致（タブ切替等）なら打ち直す
+    if (!text.startsWith(bubble.textContent ?? '')) bubble.textContent = '';
+    for (let i = (bubble.textContent ?? '').length; i < text.length; i++) {
+      bubble.textContent += text[i];
       scrollMessages();
       await sleep(interval, signal);
     }
@@ -193,27 +200,42 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     snapTo(targetHtml);
   };
 
-  const playStep = async (stepIndex: number, signal: AbortSignal): Promise<void> => {
+  // resume: このステップをどのフェーズから始めるか。中断→再開で「止まった瞬間」の続きを再生する
+  const playStep = async (stepIndex: number, signal: AbortSignal, resume: StepPhase): Promise<void> => {
     const step = scenario[stepIndex];
-    currentStepBubbles = [];
 
-    // ユーザー発話: 入力欄でタイピング → 送信（プレースホルダーに戻し、吹き出しへ全文一括表示）
-    if (!prefersReducedMotion()) {
-      await typeIntoAsk(step.userMessage, signal);
-      await sleep(PAUSE_BEFORE_SEND, signal);
-      resetAsk();
+    // ユーザー発話フェーズ: 入力欄でタイピング → 送信（プレースホルダーに戻し、吹き出しへ全文一括表示）
+    // 再開が 'ai' / 'code' の場合は既に完了済みなのでスキップし、吹き出しはそのまま残す
+    if (resume === 'user') {
+      userBubble = null;
+      aiBubble = null;
+      if (!prefersReducedMotion()) {
+        await typeIntoAsk(step.userMessage, signal);
+        await sleep(PAUSE_BEFORE_SEND, signal);
+        resetAsk();
+      }
+      userBubble = appendBubble('user');
+      userBubble.textContent = step.userMessage;
+      scrollMessages();
+      // ユーザー吹き出しを出した時点で user フェーズは完了。以降のポーズ中の中断は ai から再開する
+      // （ポーズ後に更新すると、ポーズ中の中断で user 吹き出しを二重生成してしまう）
+      resumePhase = 'ai';
+      await sleep(PAUSE_BEFORE_AI, signal);
     }
-    const userBubble = appendBubble('user');
-    userBubble.textContent = step.userMessage;
-    scrollMessages();
-    await sleep(PAUSE_BEFORE_AI, signal);
 
-    // AI発話はタブの表記に合わせた文言を使う（JSX版が未定義ならHTML版で代用）
-    const aiBubble = appendBubble('ai');
-    const aiText = isJsxTab() ? (step.aiMessageJsx ?? step.aiMessage) : step.aiMessage;
-    await typeMessage(aiBubble, aiText, AI_TYPE_INTERVAL, signal);
-    await sleep(PAUSE_BEFORE_CODE, signal);
+    // AI発話フェーズ: タブの表記に合わせた文言を使う（JSX版が未定義ならHTML版で代用）
+    if (resume === 'user' || resume === 'ai') {
+      // 中断で途中まで打った吹き出しがあれば再利用し、なければ生成する
+      aiBubble ??= appendBubble('ai');
+      const aiText = isJsxTab() ? (step.aiMessageJsx ?? step.aiMessage) : step.aiMessage;
+      await typeMessage(aiBubble, aiText, AI_TYPE_INTERVAL, signal);
+      // AI発話を打ち終えた時点で ai フェーズは完了。以降のポーズ中の中断は code から再開する
+      resumePhase = 'code';
+      await sleep(PAUSE_BEFORE_CODE, signal);
+    }
 
+    // コード書き換えフェーズ: animateCode は「現在のビュー → 目標コード」の差分で書き換えるため、
+    // 中断で残った部分コードから呼び直すだけで続きから再生される（snapTo で巻き戻さない）
     await animateCode(step.resultCode, signal);
   };
 
@@ -243,12 +265,12 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     button.textContent = 'Resume';
     button.addEventListener('click', () => onPlayClick());
     row.appendChild(button);
-    // 再開時に中断ステップの吹き出しと一緒に取り除く
-    currentStepBubbles.push(row);
+    // 再開時にこの行だけを取り除く（吹き出し・書きかけコードは残す）
+    interruptedRow = row;
     scrollMessages();
   };
 
-  const run = async (fromStep: number): Promise<void> => {
+  const run = async (fromStep: number, fromPhase: StepPhase): Promise<void> => {
     controller = new AbortController();
     const { signal } = controller;
     status = 'playing';
@@ -256,12 +278,18 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
 
     try {
       for (let i = fromStep; i < scenario.length; i++) {
-        // ステップの切り替わりに「間」を置く（最後のステップの後には置かない）
-        if (i > fromStep) await sleep(prefersReducedMotion() ? PAUSE_REDUCED_MOTION : PAUSE_BETWEEN_STEPS, signal);
+        // 位置は「間」の前に確定する。ステップ間ポーズ中に中断しても、再開時に次ステップ i を保持するため
         currentStep = i;
-        await playStep(i, signal);
+        if (i === fromStep) {
+          // 再開する最初のステップは中断フェーズから続ける
+          resumePhase = fromPhase;
+        } else {
+          // 次ステップは頭から。間の中断に備えて先にフェーズを確定してからポーズを置く
+          resumePhase = 'user';
+          await sleep(prefersReducedMotion() ? PAUSE_REDUCED_MOTION : PAUSE_BETWEEN_STEPS, signal);
+        }
+        await playStep(i, signal, resumePhase);
       }
-      currentStepBubbles = [];
       // 完了の明示。done 後の再クリックでチャットごとクリアされる
       appendStatusRow('Done');
       scrollMessages();
@@ -292,12 +320,11 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     if (status === 'playing') return;
 
     if (status === 'interrupted') {
-      // 中断したステップの吹き出し・ステータス行を取り除き、開始コードへスナップして
-      // そのステップの頭から残りのステップを再生する
-      // （中断後にタブを切り替えていた場合も、snapTo が現在のタブの表記で復元する）
-      for (const bubble of currentStepBubbles) bubble.remove();
-      snapTo(stepStartCode(currentStep));
-      void run(currentStep);
+      // "Interrupted" 行だけを取り除き、吹き出し・書きかけコードは残したまま
+      // 中断したフェーズの続きから再生する（止まった瞬間から再開）
+      interruptedRow?.remove();
+      interruptedRow = null;
+      void run(currentStep, resumePhase);
       return;
     }
 
@@ -306,7 +333,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       messages.innerHTML = '';
       updateScrollHint(); // クリアでフェード高さを 0 に戻す（前回分の残留を防ぐ）
       snapTo(initialHtml);
-      void run(0);
+      void run(0, 'user');
       return;
     }
 
@@ -316,7 +343,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     if (editor.getViewText().trim() === '') {
       snapTo(initialHtml);
     }
-    void run(0);
+    void run(0, 'user');
   };
   for (const button of playButtons) {
     button.addEventListener('click', onPlayClick);
