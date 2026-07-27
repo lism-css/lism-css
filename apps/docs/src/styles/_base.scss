@@ -1,3 +1,5 @@
+@use 'lism-css/scss/query' as query;
+
 @layer lism-base {
   html {
     // text-spacing-trim: trim-start;
@@ -61,22 +63,44 @@
     }
 
     table:is(&) {
-      font-size: 0.95em;
-      max-inline-size: 100%;
-      border: none;
+      // max-inline-size: 100%;
+      border-block-end: solid 1px #ccc;
 
       /* memo: oveflow の指定によっては separate にしないとborderが表示されない場合があるので横スクロール時には注意。 */
       border-collapse: collapse;
       border-spacing: 0;
       isolation: isolate;
 
-      :where(td, th) {
-        border-block: 1px solid var(--divider);
+      :where(thead) {
+        border-block: solid 1px #ccc;
       }
-      thead {
-        border-block-end: solid 2px;
+      :where(th) {
+        padding: var(--s15);
+        text-align: left;
+        &:first-child {
+          padding-inline-end: var(--s25);
+        }
       }
-
+      :where(td) {
+        padding-inline: var(--s15);
+        @include query.bp-down('md') {
+          min-width: 10em;
+        }
+        &:first-child {
+          padding-inline-end: var(--s25);
+        }
+        code {
+          @include query.bp-down('md') {
+            white-space: nowrap;
+          }
+        }
+        &:is(tbody > tr:first-child > *) {
+          padding-block-start: var(--s15);
+        }
+        &:is(tbody > tr:last-child > *) {
+          padding-block-end: var(--s15);
+        }
+      }
       small {
         color: var(--text-2);
         font-size: var(--fz--xs);
