@@ -300,6 +300,7 @@ export function initKvEditor(): void {
     state.activeTab = tab;
 
     // モデルから再生成が必要なタブはここで変換する
+    const regenerated = state.stale[tab];
     if (state.stale[tab]) {
       state.tabText[tab] = tab === 'jsx' ? htmlToJsx(state.html) : state.html;
       state.stale[tab] = false;
@@ -307,6 +308,12 @@ export function initKvEditor(): void {
     textarea.value = state.tabText[tab];
     setJsxInvalid(false);
     resetSyntaxCheck();
+    // JSXタブへ戻ったとき、保持していた生テキストが不正なままなら warning 表示を復元する
+    // （モデルから再生成した JSX は常に有効なので再評価不要。resetSyntaxCheck 後に行うこと）
+    if (tab === 'jsx' && !regenerated && jsxToHtml(textarea.value) === null) {
+      jsxInvalidNow = true;
+      setJsxInvalid(true);
+    }
     // 空のままタブを切り替えた場合は、空提案を消さずに引き継ぐ（入力があるまで常時表示）
     if (textarea.value.trim() === '') showEmptyPrompt();
     saveSnapshot();
