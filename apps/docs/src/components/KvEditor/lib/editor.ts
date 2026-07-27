@@ -333,6 +333,8 @@ export function initKvEditor(): void {
   // ヒーローを innerHTML で書き換えるとリスナーが失われる。
   // クリックをヒーロー外の常設トリガー（ヘッダー）へ転送して機能を維持する。
   hero.addEventListener('click', (e) => {
+    // 修飾キー付きクリック（新規タブで開く等）はブラウザ標準の挙動（href への遷移）に任せる
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const trigger = (e.target as HTMLElement).closest<HTMLElement>('[data-modal-open]');
     if (!trigger || !hero.contains(trigger)) return;
     const modalId = trigger.getAttribute('data-modal-open');
