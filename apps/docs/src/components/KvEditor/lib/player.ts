@@ -295,11 +295,15 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       scrollMessages();
       status = 'done';
     } catch (e) {
-      if (!(e instanceof AbortedError)) throw e;
       // 中断: エディターは書きかけの状態をそのまま残す（仕様）。
-      // 入力欄はプレースホルダーへ戻し、チャットへ Resume の導線を出す
+      // 入力欄はプレースホルダーへ戻し、チャットへ Resume の導線を出す。
+      // 想定外の例外でも同様に復旧させる（status が 'playing' のままだと
+      // 再生ボタンも Resume も効かず UI がロックされるため）。Resume で再試行できる
       resetAsk();
       showInterrupted();
+      status = 'interrupted';
+      // 想定外の例外は握り潰さず再 throw する（開発中にバグへ気づけるようにする）
+      if (!(e instanceof AbortedError)) throw e;
     }
   };
 
