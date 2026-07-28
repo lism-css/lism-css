@@ -4,7 +4,7 @@
 // - アクティブタブの表記で再生する（シナリオの resultCode は HTML。JSXタブでは htmlToJsx で変換してタイピング）
 // - コードは「現在のエディター内容 → resultCode」の diff で書き換えるため、再生開始時にスナップしない（再生前のユーザー編集が出発点になる）
 //   ただしエディターが空のときは、初期コード全文のタイピングは冗長なため初期コード（initialHtml）へ即時復元してから再生する
-// - 再生中にエディターへ focus / pointerdown / タブ切替 → その場で即中断（書きかけのまま残す）し、チャットに "Interrupted" + Resume ボタンを表示
+// - 再生中にエディターへ focus / pointerdown / タブ切替 / Ask ボタンのクリック → その場で即中断（書きかけのまま残す）し、チャットに "Interrupted" + Resume ボタンを表示
 // - Resume ボタン（または再生トリガー）→ 中断した瞬間の続きから再生する（吹き出しの途中テキスト・書きかけコードをそのまま残し、
 //   AI発話は止まった文字位置から続け、コードは現在のビュー → 目標コードの差分で残りを書き換える）
 // - 全ステップ完了 → チャット末尾に "Done" ステータス行を表示。再クリックでチャットをクリアし初期コードへ戻して最初から
@@ -98,13 +98,17 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     });
   };
 
-  // 再生中は入力欄風トリガーを実質無効として伝える（disabled はフォーカス順から消すため使わない）
-  const setPlayButtonsDisabled = (disabled: boolean): void => {
+  // 再生中の Ask ボタンはクリックで「停止（中断）」として機能するため、
+  // aria-label を切り替えて実態を伝える（機能し続けるボタンなので aria-disabled は不正確で使わない）。
+  // 元のラベルは初期化時に控えておき、再生を抜けたら復元する
+  const defaultPlayLabels = new Map(playButtons.map((button) => [button, button.getAttribute('aria-label')]));
+  const setPlayButtonsStopLabel = (playing: boolean): void => {
     for (const button of playButtons) {
-      if (disabled) {
-        button.setAttribute('aria-disabled', 'true');
+      const label = playing ? 'Stop the AI demo' : defaultPlayLabels.get(button);
+      if (label == null) {
+        button.removeAttribute('aria-label');
       } else {
-        button.removeAttribute('aria-disabled');
+        button.setAttribute('aria-label', label);
       }
     }
   };
@@ -348,7 +352,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     controller = new AbortController();
     const { signal } = controller;
     status = 'playing';
-    setPlayButtonsDisabled(true);
+    setPlayButtonsStopLabel(true);
     placeholder.hidden = true;
 
     try {
@@ -369,7 +373,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       appendStatusRow('Done');
       scrollMessages();
       status = 'done';
-      setPlayButtonsDisabled(false);
+      setPlayButtonsStopLabel(false);
       announce('Done');
     } catch (e) {
       // 中断: エディターは書きかけの状態をそのまま残す（仕様）。
@@ -379,7 +383,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       resetAsk();
       showInterrupted();
       status = 'interrupted';
-      setPlayButtonsDisabled(false);
+      setPlayButtonsStopLabel(false);
       announce('Interrupted');
       // 想定外の例外は握り潰さず再 throw する（開発中にバグへ気づけるようにする）
       if (!(e instanceof AbortedError)) throw e;
@@ -392,7 +396,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     status = 'interrupted';
   };
 
-  // 再生中のエディター操作・タブ切替で即中断する
+  // 再生中のエディター操作・タブ切替で即中断する（Ask ボタンのクリックは onPlayClick 側で停止として扱う）
   editor.textarea.addEventListener('pointerdown', interrupt);
   editor.textarea.addEventListener('focus', interrupt);
   for (const button of editor.tabButtons) {
@@ -400,7 +404,12 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   }
 
   onPlayClick = (): void => {
-    if (status === 'playing') return;
+    // 再生中のクリックは「停止」として扱う（textarea フォーカス・タブ切替と同じ即中断）。
+    // abort → catch 節の復旧処理で "Interrupted" 行 + Resume の導線が出る
+    if (status === 'playing') {
+      interrupt();
+      return;
+    }
 
     if (status === 'interrupted') {
       // "Interrupted" 行だけを取り除き、吹き出し・書きかけコードは残したまま
