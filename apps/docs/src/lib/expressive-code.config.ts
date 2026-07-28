@@ -4,9 +4,10 @@ import type { AstroExpressiveCodeOptions } from 'astro-expressive-code';
 export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
   // 行番号表示プラグインを有効化
   // plugins: [pluginLineNumbers()],
-  themes: ['github-light', 'github-dark'],
+  themes: ['github-dark'],
+  // themes: ['github-light', 'github-dark'],
   // data-theme属性に連動してテーマを切り替え
-  themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
+  // themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
 
   useThemedScrollbars: false,
 
