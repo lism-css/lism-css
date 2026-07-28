@@ -82,7 +82,8 @@ KvEditor/
     ├── convert.ts       # HTML ⇔ JSX 双方向変換
     ├── sanitize.ts      # ヒーロー描画前の無害化
     ├── validate.ts      # 入力上限値 + HTMLタグバランスチェック
-    ├── snackbar.ts      # エディター右下の通知・提案表示
+    ├── snackbar.ts      # エディター右下の通知・提案表示（スタック式）
+    ├── scroll-hint.ts   # AIパネルのメッセージ領域の上下端フェード制御（CSS変数 --kvEditor-mask-top / --kvEditor-mask-bottom を更新）
     └── highlight.ts     # shiki ラッパー（ビルド時 + クライアント共用）
 
 styles: src/styles/_kv-editor.scss（main.scss から @use）
@@ -130,7 +131,7 @@ frontmatter で `await highlight(initialHtml, 'html')` を実行し、ハイラ�
 │       │   └── .c--kvEditor_preInner          … ★transform でスクロール追従
 │       │       └── shiki の <pre><code>
 │       ├── textarea.c--kvEditor_input         … 入力用（文字は透明・caret のみ表示）
-│       └── .c--kvEditor_snackbar[role="status"] … エラー通知・リセット提案
+│       └── .c--kvEditor_snackbarStack[data-kv-snackbar][role="status"] … 通知スタック（JS が折りたたみラッパー + カードを動的追記）
 └── aside.c--kvEditor_panel     … AIパネル（SPでは下段に全幅表示）
     ├── .c--kvEditor_placeholder … 空状態: グラデーション円形ロゴ（orb）+ "Just ask. The code writes itself."
     ├── .c--kvEditor_messages[aria-live="polite"] … 吹き出し・中断ステータス行の追記先（空の間は非表示）
@@ -172,7 +173,7 @@ const state = {
 
 `hero.innerHTML = sanitize(state.html)` を **rAF でスロットル**（フラグ 1 本で 1 フレーム 1 回に制限）。再生中のタイピングアニメは十数 ms 間隔で `setViewText` が呼ばれるため、毎回 DOM を書き換えないための措置。
 
-ブラウザの HTML パーサーは寛容なので、再生中断などで閉じタグが欠けた状態でも描画は破綻しない（仕様として許容）。エディターを空にするとヒーローも空になるが、`.c--kvEditorHero` に `min-height` を持たせてレイアウトが完全に潰れてガタつくことは防いでいる。
+ブラウザの HTML パーサーは寛容なので、再生中断などで閉じタグが欠けた状態でも描画は破綻しない（仕様として許容）。エディターを空にするとヒーローも空になるが、初期化時に初期表示の自然高さをインラインの `min-height` として固定し（高さは em ベースで幅に依存するため、ResizeObserver で幅が変わった時だけ再測定）、レイアウトが潰れて下のエディターがジャンプすることは防いでいる。JS 初期化前は CSS の `min-height: 2rem` がフォールバック。
 
 ### シンタックスハイライト（遅延ロード + 同期実行）
 
@@ -214,7 +215,7 @@ preInner.style.transform = `translate3d(${-scrollLeft * scale}px, ${-scrollTop *
 - **JSX タブ**: `processInput` での `jsxToHtml()` 即時判定結果を `jsxInvalidNow` に控えておき、デバウンス発火時に再パースせず流用する。タブの warning 色インジケーターは即時、スナックバーはデバウンス後
 - 表示は「正常 → 不正への遷移時」に 1 回だけ（`syntaxReported` フラグ。不正のまま編集を続けても連発しない）
 - **空チェック**: エディターが空（trim して空文字）のままデバウンス評価を迎えると、リセット提案（後述のアクション付きスナックバー）を表示。空提案の表示中に入力が再開されたらデバウンスを待たず即座に閉じる
-- タブ切替・`setCode()` 時は評価タイマーを破棄して非表示に（古いメッセージの誤表示防止）
+- タブ切替・`setCode()` 時は評価タイマーを破棄して非表示に（古いメッセージの誤表示防止）。ただし空のままのタブ切替では、リセット提案を出し直して引き継ぐ（入力があるまで常時表示）
 
 ### 検索モーダルのデリゲーション
 
@@ -301,21 +302,24 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 ## snackbar.ts — 通知・提案の表示
 
-エディター右下（absolute 配置の `.c--kvEditor_snackbar`）に出すスナックバー風の通知。`role="status"` でスクリーンリーダーにも通知され、表示 / 非表示は opacity + translateY のトランジション（`prefers-reduced-motion` では無効）。2 つの variant を持つ:
+エディター右下（absolute 配置のコンテナ `.c--kvEditor_snackbarStack`。`role="status"` でスクリーンリーダーにも通知）に出すスナックバー風の通知。一般的なスナックバー同様、**複数の通知を縦にスタック表示**する。これにより、例えば「空のときのリセット提案（永続）」の上に「上限到達の警告（自動クローズ）」が積まれても、提案が上書きで消えず Restore の手段が失われない。2 つの variant を持つ:
 
 **通知型（`show`）** — 上限超過・構文エラー用
 
 - メッセージは**端的な英語**: `Invalid HTML syntax` / `Invalid JSX syntax` / `Character limit reached (10,000)`
-- すべて **4 秒で自動クローズ**（再表示でタイマーリセット）。構文エラーの永続的な手がかりは JSX タブの warning 色が担う
+- すべて **4 秒で自動クローズ**。**同一文言は積み増さず**、既存カードを末尾（最前面）へ寄せてタイマーを延長する。構文エラーの永続的な手がかりは JSX タブの warning 色が担う
 - 見た目は **warning トーン**（動作は継続する非致命的な通知のため、赤ではなくアンバー）: 警告アイコン（octicon alert を CSS mask で描画）+ アンバーのボーダー。色は `--kvEditor-warning`（github-dark の yellow 系）で、JSX タブのインジケーターと共通
-- `pointer-events: none` でエディター操作を妨げない
+- `pointer-events: none` でエディター操作を妨げない（コンテナ自体もクリックを透過する）
 
 **提案型（`showAction`）** — エディターが空になった時のリセット提案
 
 - エディターが空のままデバウンス評価を迎えると、`The editor is empty.` + `Restore initial code` ボタンを表示
 - **自動クローズしない**。入力の再開（即時に消える）か Restore ボタンで閉じる
+- スタック内に**常に 1 つだけのシングルトン**（再表示は既存の提案を即時差し替える）
 - Restore は初期コード（`initialHtml`）に復元（JSX タブなら JSX 表記に変換して復元）し、フォーカスをエディターへ戻す（`preventScroll: true` でページのスクロール位置は動かさない）
 - この variant のみ `pointer-events: auto`（ボタンをクリックできる）。見た目は警告ではないため warning ではなく **info トーン**（ⓘ アイコン + ニュートラルなボーダー）
+
+**スタックの出入りアニメーション**: カードを直接ではなく、**折りたたみラッパー（`.c--kvEditor_snackbarRow`）の height だけ**をアニメーションさせる。カード間の隙間はカード（`.c--kvEditor_snackbar`）の margin-top で持たせ、ラッパーの `overflow: hidden`（BFC 化）で height に内包させるため、「カード + 隙間」が 1 つの height トランジションで滑らかに畳める（ラッパーの padding で隙間を持たせると、border-box では height: 0 まで縮まずカクつく）。カード自体は opacity + translateY のフェードのみを担当する（`prefers-reduced-motion` ではどちらのトランジションも無効）。height トランジションの完了待ちは `transitionend` + タイムアウトのフォールバックで、reduced-motion 等で発火しないケースにも対処している。
 
 ## highlight.ts — shiki の最小構成
 
@@ -336,7 +340,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 idle ──click──▶ playing ──全ステップ完遂──▶ done ──click──▶ (リセットして) playing
                   │ ▲
    textareaにfocus/ │ │ Resume ボタン or click
-   pointerdown /   ▼ │ （中断ステップの開始コードへスナップして頭から残りを再生）
+   pointerdown /   ▼ │ （"Interrupted" 行だけ取り除き、中断したフェーズの続きから残りを再生）
    タブ切替      interrupted（チャットに "Interrupted" + Resume を表示）
 ```
 
@@ -344,13 +348,13 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 - **再生はアクティブタブの表記で行う**: シナリオは HTML で持ち、JSX タブでは `htmlToJsx()` で変換した文字列をタイピングする（AI 吹き出しも `aiMessageJsx` に切り替え）
 - **再生開始時にコードをスナップしない**: コード書き換えは「現在のエディター内容 → `resultCode`」の diff タイピングなので、再生前にユーザーが編集していても、その状態を出発点として目標コードへ書き換える動きになる（done 後のリスタートだけは初期コードへ戻す）。**例外はエディターが空のとき**: 空から始めると初期コード全文のタイピングになり冗長なため、初期コード（`initialHtml`）へ即時復元してから再生する（失う編集がない場合のみの復元なので、上記の設計と両立する）
 - **中断**: 再生中に textarea へ `focus` / `pointerdown`、またはタブクリックで**その場で即中断**。エディターは書きかけの状態をそのまま残し（仕様）、入力欄トリガーはプレースホルダー表示（`Ask AI to edit...`）へ戻し、チャット末尾にステータス行（"Interrupted" + Resume ボタン）を追加する。`AbortController` + abort 対応 `sleep()` で実装し、非同期ループは `AbortedError` で脱出する（それ以外の例外は再 throw）
-- **再開**: Resume ボタンまたは「Ask AI to edit...」のクリック（どちらも同じ処理）。中断ステップの吹き出しとステータス行（`currentStepBubbles` で追跡）を削除し、`stepStartCode(i)`（= 前ステップの `resultCode`、i=0 なら初期コード）へスナップしてから、そのステップの頭から**残りのステップを続けて**再生する。ユーザーが中断中に編集していても上書きする（仕様）。中断後にタブを切り替えていた場合も、スナップ処理（`snapTo`）が現在のタブの表記で復元する
+- **再開**: Resume ボタンまたは「Ask AI to edit...」のクリック（どちらも同じ処理）。ステップの頭へ巻き戻さず、**中断した瞬間のフェーズ（`resumePhase`: user / ai / code）の続きから**再生する。"Interrupted" ステータス行（`interruptedRow`）だけを取り除き、吹き出し・書きかけのコードはそのまま残す。AI 吹き出しは途中まで打ったテキストが目標文言の先頭一致なら続きの文字から打ち（不一致 — 中断後のタブ切替等 — なら打ち直す）、コードは「現在のビュー → 目標コード」の diff で残りを書き換える。したがって中断中のユーザー編集もスナップで上書きされず、そこを出発点に目標コードへ書き換わる。`resumePhase` は各フェーズの完了時点（後続ポーズの前）に更新するため、ポーズ中に中断しても再開時に吹き出しを二重生成しない
 - **全ステップ完遂（done）**: チャット末尾にステータス行（"Done"）を表示する。再クリックでチャットをクリアし初期コードへ戻して最初から
 
 ### 1 ステップの流れ
 
 1. **ユーザー発話**: 入力欄トリガー（`.c--kvEditor_ask`）に 1 文字ずつタイピング（`is--typing` クラスで文字色を通常色にし、点滅キャレットを表示）→ 短いポーズ → 送信演出（プレースホルダーへ戻し、ユーザー吹き出しに全文一括表示）
-2. **AI 発話**: AI 吹き出しへ 1 文字ずつタイピング。メッセージ領域は追記のたびに末尾へ自動スクロール
+2. **AI 発話**: AI 吹き出しへ 1 文字ずつタイピング。メッセージ領域は追記のたびに末尾へ自動スクロール（スクロールイベントが発火しない末尾追記でも上下端フェードがズレないよう、`scroll-hint.ts` の更新関数を明示的に呼ぶ）
 3. **コード書き換え**: 後述の diff タイピング。完了したらステップ間の「間」を挟んで次のステップへ
 
 吹き出しは `<p class="c--kvEditor_msg is--user / is--ai">` を `[data-kv-messages]`（`aria-live="polite"`）へ追記する。中断時（"Interrupted" のラベル + `.c--kvEditor_statusBtn` の Resume ボタン）・完了時（"Done" のラベルのみ）のステータス行も同じ領域へ `<p class="c--kvEditor_status">` として追記するので、`aria-live` によりスクリーンリーダーへも中断・完了が通知される。
@@ -392,7 +396,7 @@ interface ScenarioStep {
 }
 ```
 
-- `resultCode` は**全文かつ累積**（前ステップの結果を含む）。全文にしているのは、中断→再開のスナップ先・diff 計算の目標として一意に定まるようにするため
+- `resultCode` は**全文かつ累積**（前ステップの結果を含む）。全文にしているのは、中断→再開を含むどの時点からでも diff 計算の目標として一意に定まるようにするため
 - **言語対応**: `userMessage` / `aiMessage` / `aiMessageJsx` は `Record<DemoLang, string>` で定義し、`edits` は言語共有。`SCENARIO_BY_LANG` として各言語の `resultCode` を言語別初期コードから導出する（`edits` はクラス属性のみを対象にすること — 前述の i18n セクション参照）
 - **ソース上は全文を重複して持たない**: 各ステップは「前ステップのコードへの文字列置換」（`edits: [from, to][]`）として定義し、`resultCode` はモジュール初期化時に言語別初期コードから順に適用して導出する。これにより `initial-code.ts` の変更は自動で全ステップへ波及する（かつては全文スナップショットを 3 つ持っており、初期コードの変更を波及し忘れると再生時の diff が「変更を取り消す編集」をタイピングするバグがあった）
 - **fail-fast**: `edits` の置換前文字列がちょうど 1 回現れない場合（初期コード変更とのズレ・曖昧な指定）はモジュール初期化時に例外を投げる。沈黙して壊れず、開発中に必ず気づける。全言語を eager に導出するため、どの言語のズレも初期化時に検知される
@@ -407,12 +411,13 @@ interface ScenarioStep {
 ### ウィンドウ全体
 
 - **常時ダーク・フラット構成**: サイトテーマに関わらずエディターウィンドウは常にダーク。全体が単一の `#26292c`（バーの色分けなし）で、タブのアクティブ・AIパネル・入力欄風トリガーはすべて「白8%オーバーレイ」（`--kvEditor-surface`）で面を作る（Figma モックアップ準拠）。色は `--kvEditor-*` のローカル変数（bgc / surface / snackbar-bgc / text / text-dim / warning）に集約
-- レイアウトは grid: エディター `minmax(0, 1fr)` + パネル `12.6875rem`（203px）、全体 `max-width: 56.4375rem`（903px）× `height: 25rem`（400px）。md 未満は縦積み（エディター 1fr + 下段パネル `9.125rem` = 146px、全体 537px）
+- **ヒーロー側はサイトテーマに追従**: トークン化されていない任意色（リード文の `#333`・検索ボックスの文字色 / 輪郭）のみ `:root[data-theme='dark'] .c--kvEditorHero` で上書きする。見出し色・ボタン背景は `--gray-hi-c` 変数のダーク値で自動対応
+- レイアウトは grid: エディター `minmax(0, 1fr)` + パネル `12.6875rem`（203px）、全体 `max-width: 56.4375rem`（903px）× `height: 28rem`（448px）。md 未満は縦積み（エディター 1fr + 下段パネル `9.125rem` = 146px、全体 537px）
 - ウィンドウバーの信号ドットは span 1 つ + box-shadow 2 つで 3 色を描画。タブは幅 4rem（64px）固定（モックアップ準拠）
 
 ### エディター（重ねレイヤー）
 
-- **フォントメトリクスの視覚上の完全統一**: `pre` / `.fallback` は 14px（SP 12px）・line-height 1.25（初期コード 19 行が 400px にちょうど収まる）・padding `0.5rem 1rem` 等を共通ルールで適用。1px でもズレると caret 位置が狂う
+- **フォントメトリクスの視覚上の完全統一**: `pre` / `.fallback` は 14px（SP 12px）・line-height 1.25（初期コード 21 行がエディターに縦スクロールなしで収まる）・padding `0.5rem 1rem` 等を共通ルールで適用。1px でもズレると caret 位置が狂う
 - **iOS の自動ズーム対策（textarea の scale 縮小）**: iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームする。これを避けるため textarea だけ `font-size: 16px` とし、`transform: scale(var(--kvEditor-input-scale))`（`0.875` = 14/16、SP は `0.75` = 12/16）で pre レイヤーと同じ見た目に縮小する。width / height / padding は縮小率の逆数（`calc(… / var(--kvEditor-input-scale))`）で拡大して視覚上一致させる。このとき lism-css の reset（`@layer reset`）にある `textarea { max-inline-size: 100% }` が拡大後の width をクランプしてしまう（スクロールバーが内側に寄る）ため、`max-inline-size: none` で解除している。textarea の文字自体は透明なので pre レイヤーと合うべきは caret・選択範囲の位置だけであり、等幅フォントの字送りはサイズに対して線形（16px × 0.75 = 12px の字送りと厳密一致）なのでズレない。スクロール座標の換算は editor.ts の `syncScroll` が行う（前述）
 - **`.c--kvEditor_pre pre *` への強制継承**: lism-css のベースに `* { line-height: calc(1em + var(--hl) * 2) }` という全要素対象ルールがあり、shiki の `code` / `.line` スパンに直接当たって textarea とズレる。これを打ち消すため子孫全部に `inherit` を明示（lism-component レイヤーは lism-base より強い）
 - textarea は文字を透明（`color: transparent`）にして caret（`caret-color`）だけ表示。選択範囲も `::selection` で色を敷きつつ文字は透明のまま
@@ -423,6 +428,7 @@ interface ScenarioStep {
 - 白8% + 左ボーダー白20%（SP では下段全幅・境界は背景差のみでボーダーなし）
 - パネルとメッセージ領域に `min-height: 0` を指定（グリッド / フレックスアイテムのデフォルト `min-height: auto` を打ち消さないと、メッセージ領域の overflow スクロールが効かない）
 - メッセージ領域は `scrollbar-gutter: stable`（スクロールバーの出現で幅がガタつかない）、`:empty` で非表示
+- メッセージ領域の上下端には、スクロール余地を示すグラデーションフェード（`mask-image`）を敷く。フェード高さの CSS 変数 `--kvEditor-mask-top` / `--kvEditor-mask-bottom` は `scroll-hint.ts` がスクロール位置に応じて更新し、端までの残り距離に比例して伸縮させるため、transition なしでも端に近づくにつれて滑らかに消える
 - 中断ステータス行（`.c--kvEditor_status`）は吹き出しと違い背景なしの控えめな表示（dim 色・ラベルとボタンを両端揃え）。Resume ボタン（`.c--kvEditor_statusBtn`）はスナックバーの Restore ボタンとスタイルを共用（セレクタを連結して定義）
 - 空状態はグラデーションの円形ロゴ（`#89f9e1 → #87caf7 → #af8cff`）+ プレースホルダー文
 - 入力欄風トリガー（`.c--kvEditor_ask`）は `margin-block-start: auto` で常にパネル下端へ固定（プレースホルダーが消えてメッセージがまだ空の間もジャンプしない）。右下に `↑` 入りの 12px 矩形（`#373a3d`）。再生中のタイピング表示は `.is--typing` で文字色を通常色に切り替え、`::after` の点滅キャレット（1px 幅・steps アニメ）を付ける
