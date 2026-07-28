@@ -74,6 +74,7 @@ export function initKvEditor(): void {
 
   const tabButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-kv-tab]')];
   const jsxTabButton = tabButtons.find((b) => b.dataset.kvTab === 'jsx') ?? null;
+  const tabPanel = demo.querySelector<HTMLElement>('#kv-editor-panel');
 
   // ---- 状態 --------------------------------------------------------------
   const state = {
@@ -196,6 +197,15 @@ export function initKvEditor(): void {
     }
   };
 
+  // 構文エラーの invalid 状態を入力要素自体にも紐付ける（タブの warning 色・スナックバーは視覚のみのため）
+  const setTextareaInvalid = (invalid: boolean): void => {
+    if (invalid) {
+      textarea.setAttribute('aria-invalid', 'true');
+    } else {
+      textarea.removeAttribute('aria-invalid');
+    }
+  };
+
   // ---- 入力上限（直前の状態へ巻き戻して受け付けない） ------------------------
   // beforeinput 時点（＝変更前）の値とカーソル位置を控えておき、超過したら復元する
   let snapshot = { value: textarea.value, selStart: 0, selEnd: 0 };
@@ -238,6 +248,7 @@ export function initKvEditor(): void {
     syntaxTimer = setTimeout(() => {
       // 空になったらリセット提案（ボタン付き・入力再開かリセットまで表示）
       if (textarea.value.trim() === '') {
+        setTextareaInvalid(false); // 空は構文エラーではない
         showEmptyPrompt();
         return;
       }
@@ -245,6 +256,8 @@ export function initKvEditor(): void {
       let issue: string | null = null;
       if (state.activeTab === 'html') {
         issue = findHtmlIssue(textarea.value) ? 'Invalid HTML syntax' : null;
+        // HTMLタブの invalid 状態はデバウンス評価が唯一の判定箇所（JSXタブは processInput で即時判定済み）
+        setTextareaInvalid(issue !== null);
       } else {
         issue = jsxInvalidNow ? 'Invalid JSX syntax' : null;
       }
@@ -258,6 +271,7 @@ export function initKvEditor(): void {
     syntaxReported = false;
     jsxInvalidNow = false;
     emptyPromptShown = false;
+    setTextareaInvalid(false);
     snackbar?.hide();
   };
 
@@ -280,10 +294,12 @@ export function initKvEditor(): void {
       if (converted === null) {
         // 不正なJSXの間は last-good モデルを維持する
         setJsxInvalid(true);
+        setTextareaInvalid(true);
         renderHighlight();
         return;
       }
       setJsxInvalid(false);
+      setTextareaInvalid(false);
       state.html = converted;
       state.stale.html = true;
     }
@@ -313,19 +329,44 @@ export function initKvEditor(): void {
     if (tab === 'jsx' && !regenerated && jsxToHtml(textarea.value) === null) {
       jsxInvalidNow = true;
       setJsxInvalid(true);
+      setTextareaInvalid(true);
     }
     // 空のままタブを切り替えた場合は、空提案を消さずに引き継ぐ（入力があるまで常時表示）
     if (textarea.value.trim() === '') showEmptyPrompt();
     saveSnapshot();
 
     for (const button of tabButtons) {
-      button.setAttribute('aria-selected', String(button.dataset.kvTab === tab));
+      const selected = button.dataset.kvTab === tab;
+      button.setAttribute('aria-selected', String(selected));
+      // roving tabindex: 選択タブだけを Tab キーのフォーカス順に含める
+      button.tabIndex = selected ? 0 : -1;
+      if (selected) tabPanel?.setAttribute('aria-labelledby', button.id);
     }
     renderHighlight();
     syncScroll();
   };
   for (const button of tabButtons) {
     button.addEventListener('click', () => switchTab(button.dataset.kvTab as EditorLang));
+    // ARIAタブパターンの矢印キー操作（automatic activation: フォーカス移動と同時に切替）。
+    // switchTab を直接呼ばず .click() を経由することで、player.ts の中断リスナー等の
+    // クリックにぶら下がる既存処理もすべて発火させる
+    button.addEventListener('keydown', (e) => {
+      const index = tabButtons.indexOf(button);
+      let target: HTMLButtonElement | undefined;
+      if (e.key === 'ArrowLeft') {
+        target = tabButtons[(index - 1 + tabButtons.length) % tabButtons.length];
+      } else if (e.key === 'ArrowRight') {
+        target = tabButtons[(index + 1) % tabButtons.length];
+      } else if (e.key === 'Home') {
+        target = tabButtons[0];
+      } else if (e.key === 'End') {
+        target = tabButtons[tabButtons.length - 1];
+      }
+      if (!target) return;
+      e.preventDefault();
+      target.focus();
+      target.click();
+    });
   }
 
   // ---- 検索モーダルのデリゲーション ----------------------------------------
@@ -411,7 +452,9 @@ export function initKvEditor(): void {
   const placeholder = demo.querySelector<HTMLElement>('[data-kv-placeholder]');
   const askText = demo.querySelector<HTMLElement>('[data-kv-ask-text]');
   const playButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-kv-play]')];
+  // SR向けの隠しライブリージョン（確定文言のみを告知する）。無くても再生自体は動く
+  const liveRegion = demo.querySelector<HTMLElement>('[data-kv-live]');
   if (messages && placeholder && askText && playButtons.length > 0) {
-    createPlayer({ editor: editorApi, messages, placeholder, askText, playButtons, initialHtml, scenario: SCENARIO_BY_LANG[lang] });
+    createPlayer({ editor: editorApi, messages, placeholder, askText, playButtons, liveRegion, initialHtml, scenario: SCENARIO_BY_LANG[lang] });
   }
 }

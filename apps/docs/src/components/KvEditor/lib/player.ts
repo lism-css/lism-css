@@ -42,6 +42,8 @@ interface PlayerOptions {
   placeholder: HTMLElement;
   askText: HTMLElement;
   playButtons: HTMLButtonElement[];
+  // SR向けの隠しライブリージョン。null でも再生は動く（告知だけがスキップされる）
+  liveRegion: HTMLElement | null;
   // 言語別のデータは editor.ts が解決して注入する（このモジュールは言語を知らない）
   initialHtml: string;
   scenario: ScenarioStep[];
@@ -70,7 +72,7 @@ const sleep = (ms: number, signal: AbortSignal): Promise<void> =>
 const joinBlocks = (before: string[], middle: string, after: string[]): string =>
   [...before, ...(middle === '' ? [] : [middle]), ...after].join('\n');
 
-export function createPlayer({ editor, messages, placeholder, askText, playButtons, initialHtml, scenario }: PlayerOptions): void {
+export function createPlayer({ editor, messages, placeholder, askText, playButtons, liveRegion, initialHtml, scenario }: PlayerOptions): void {
   let status: PlayerStatus = 'idle';
   let currentStep = 0;
   let controller: AbortController | null = null;
@@ -85,6 +87,27 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   const askPlaceholder = askText.textContent ?? '';
 
   const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // SRへの告知。タイピング演出の途中経過は流さず、確定した文言だけをここから告知する。
+  // 一度空にしてから rAF で本文を設定することで、連続して同一文言でも読み上げられる
+  const announce = (text: string): void => {
+    if (!liveRegion) return;
+    liveRegion.textContent = '';
+    requestAnimationFrame(() => {
+      liveRegion.textContent = text;
+    });
+  };
+
+  // 再生中は入力欄風トリガーを実質無効として伝える（disabled はフォーカス順から消すため使わない）
+  const setPlayButtonsDisabled = (disabled: boolean): void => {
+    for (const button of playButtons) {
+      if (disabled) {
+        button.setAttribute('aria-disabled', 'true');
+      } else {
+        button.removeAttribute('aria-disabled');
+      }
+    }
+  };
 
   const isJsxTab = (): boolean => editor.getActiveTab() === 'jsx';
 
@@ -262,6 +285,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       userBubble = appendBubble('user');
       userBubble.textContent = step.userMessage;
       scrollMessages();
+      announce(step.userMessage);
       // ユーザー吹き出しを出した時点で user フェーズは完了。以降のポーズ中の中断は ai から再開する
       // （ポーズ後に更新すると、ポーズ中の中断で user 吹き出しを二重生成してしまう）
       resumePhase = 'ai';
@@ -274,6 +298,8 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       aiBubble ??= appendBubble('ai');
       const aiText = isJsxTab() ? (step.aiMessageJsx ?? step.aiMessage) : step.aiMessage;
       await typeMessage(aiBubble, aiText, AI_TYPE_INTERVAL, signal);
+      // タイピング完了（reduced-motion の即時表示も含む）後に全文を告知する（途中経過は流さない）
+      announce(aiText);
       // AI発話を打ち終えた時点で ai フェーズは完了。以降のポーズ中の中断は code から再開する
       resumePhase = 'code';
       await sleep(PAUSE_BEFORE_CODE, signal);
@@ -322,6 +348,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     controller = new AbortController();
     const { signal } = controller;
     status = 'playing';
+    setPlayButtonsDisabled(true);
     placeholder.hidden = true;
 
     try {
@@ -342,6 +369,8 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       appendStatusRow('Done');
       scrollMessages();
       status = 'done';
+      setPlayButtonsDisabled(false);
+      announce('Done');
     } catch (e) {
       // 中断: エディターは書きかけの状態をそのまま残す（仕様）。
       // 入力欄はプレースホルダーへ戻し、チャットへ Resume の導線を出す。
@@ -350,6 +379,8 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       resetAsk();
       showInterrupted();
       status = 'interrupted';
+      setPlayButtonsDisabled(false);
+      announce('Interrupted');
       // 想定外の例外は握り潰さず再 throw する（開発中にバグへ気づけるようにする）
       if (!(e instanceof AbortedError)) throw e;
     }
