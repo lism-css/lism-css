@@ -62,8 +62,8 @@ export const translations: Record<LangCode, UITranslations> = {
       copied: 'コードをコピーしました',
     },
     postNav: {
-      prev: '← 前の記事',
-      next: '次の記事 →',
+      prev: '前の記事',
+      next: '次の記事',
       ariaLabel: '記事ナビゲーション',
     },
     translationNotice: {
@@ -107,8 +107,8 @@ export const translations: Record<LangCode, UITranslations> = {
       copied: 'Code copied!',
     },
     postNav: {
-      prev: '← Previous',
-      next: 'Next →',
+      prev: 'Previous',
+      next: 'Next',
       ariaLabel: 'Post navigation',
     },
     translationNotice: {
