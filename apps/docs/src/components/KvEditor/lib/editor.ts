@@ -228,6 +228,126 @@ export function initKvEditor(): void {
     if (enforceLimit()) processInput();
   });
 
+  // ---- Tabキーでのインデント操作（キーボードトラップ回避付き） ---------------
+  // コードエディターとして Tab で 2 スペース（プリンタの整形ルールと同じ）を挿入し、
+  // Shift+Tab でアウトデント（各行の行頭から先頭のスペースを最大 2 つ削除）する。
+  // WCAG 2.1.2（キーボードトラップ禁止）のための脱出手段:
+  // Esc → 直後の Tab / Shift+Tab は既定のフォーカス移動に任せる
+  let tabCaptureEnabled = true;
+
+  const insertIndent = (): void => {
+    // undo 履歴を保持するため execCommand を優先する。成功すれば beforeinput / input が発火し、
+    // 既存のスナップショット・上限チェック・processInput のパイプラインがそのまま機能する
+    if (typeof document.execCommand === 'function' && document.execCommand('insertText', false, '  ')) return;
+    // フォールバック: input イベントが発火しないため、上限チェック・反映・スナップショットを手動で行う
+    const nextLength = textarea.value.length - (textarea.selectionEnd - textarea.selectionStart) + 2;
+    if (nextLength > MAX_CODE_LENGTH) {
+      snackbar?.show(`Character limit reached (${MAX_CODE_LENGTH.toLocaleString('en-US')})`);
+      return;
+    }
+    textarea.setRangeText('  ', textarea.selectionStart, textarea.selectionEnd, 'end');
+    processInput();
+    saveSnapshot();
+  };
+
+  // 選択範囲に触れる各行の行頭位置を昇順で返す（選択なしならキャレット行のみ）。
+  // 選択があり selectionEnd がちょうど行頭にある場合、その行は含めない（一般的なエディターの慣習）
+  const getSelectedLineStarts = (): number[] => {
+    const value = textarea.value;
+    const { selectionStart: selStart, selectionEnd: selEnd } = textarea;
+    const effectiveEnd = selEnd > selStart && value[selEnd - 1] === '\n' ? selEnd - 1 : selEnd;
+    const starts: number[] = [selStart <= 0 ? 0 : value.lastIndexOf('\n', selStart - 1) + 1];
+    for (let nl = value.indexOf('\n', starts[0]); nl !== -1 && nl < effectiveEnd; nl = value.indexOf('\n', nl + 1)) {
+      starts.push(nl + 1);
+    }
+    return starts;
+  };
+
+  // 複数行選択時の Tab: 選択を置換せず、選択範囲に触れる各行の行頭に 2 スペースを挿入する
+  const indentSelectedLines = (): void => {
+    const { selectionStart: selStart, selectionEnd: selEnd } = textarea;
+    const lineStarts = getSelectedLineStarts();
+    // 上限チェックは追加合計（2 × 対象行数）で行い、超えるなら中止する
+    if (textarea.value.length + lineStarts.length * 2 > MAX_CODE_LENGTH) {
+      snackbar?.show(`Character limit reached (${MAX_CODE_LENGTH.toLocaleString('en-US')})`);
+      return;
+    }
+    // undo 履歴を保持するため execCommand を優先する（複数行の編集が行ごとの undo ステップに分かれるのは許容）。
+    // 行オフセットがずれないよう、最後の行から先頭行へ逆順に処理する
+    let fellBack = false;
+    for (let i = lineStarts.length - 1; i >= 0; i--) {
+      const ls = lineStarts[i];
+      textarea.setSelectionRange(ls, ls);
+      if (typeof document.execCommand === 'function' && document.execCommand('insertText', false, '  ')) continue;
+      // フォールバック: input イベントが発火しないため、ループ後にまとめて反映する
+      fellBack = true;
+      textarea.setRangeText('  ', ls, ls, 'end');
+    }
+    if (fellBack) processInput();
+    // 選択範囲を論理的に同じ位置へ復元する（先頭行の挿入分 +2 を始点に、全行の挿入合計を終点に加算）
+    textarea.setSelectionRange(selStart + 2, selEnd + lineStarts.length * 2);
+    saveSnapshot();
+  };
+
+  // Shift+Tab のアウトデント: 選択範囲に触れる各行（選択なしならキャレット行）の行頭から
+  // 先頭のスペースを最大 2 つ削除する。削除するものがない行はスキップする
+  const outdentSelectedLines = (): void => {
+    const value = textarea.value;
+    const { selectionStart: selStart, selectionEnd: selEnd } = textarea;
+    const lineStarts = getSelectedLineStarts();
+    const removeCounts: number[] = lineStarts.map((ls) => (value.startsWith('  ', ls) ? 2 : value[ls] === ' ' ? 1 : 0));
+    const removedTotal = removeCounts.reduce((sum, n) => sum + n, 0);
+    // 全行に削除対象がなければ何もしない（preventDefault 済みなのでフォーカスは移動しない = 挙動の予測可能性を保つ）
+    if (removedTotal === 0) return;
+    // undo 履歴を保持するため execCommand を優先する（複数行の編集が行ごとの undo ステップに分かれるのは許容）。
+    // 行オフセットがずれないよう、最後の行から先頭行へ逆順に処理する
+    let fellBack = false;
+    for (let i = lineStarts.length - 1; i >= 0; i--) {
+      if (removeCounts[i] === 0) continue;
+      const ls = lineStarts[i];
+      textarea.setSelectionRange(ls, ls + removeCounts[i]);
+      if (typeof document.execCommand === 'function' && document.execCommand('delete')) continue;
+      // フォールバック: input イベントが発火しないため、ループ後にまとめて反映する
+      fellBack = true;
+      textarea.setRangeText('', ls, ls + removeCounts[i], 'end');
+    }
+    if (fellBack) processInput();
+    // 選択範囲を論理的に同じ位置へ復元する。削除範囲の内側にあった端点が
+    // その行の（削除後の）行頭より前へ行かないようクランプする
+    const newSelStart = Math.max(lineStarts[0], selStart - removeCounts[0]);
+    const lastLineNewStart = lineStarts[lineStarts.length - 1] - (removedTotal - removeCounts[removeCounts.length - 1]);
+    const newSelEnd = Math.max(newSelStart, lastLineNewStart, selEnd - removedTotal);
+    textarea.setSelectionRange(newSelStart, newSelEnd);
+    saveSnapshot();
+  };
+
+  textarea.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      // Esc でキャプチャを解除する（直後の Tab / Shift+Tab は既定のフォーカス移動 = 脱出手段）
+      tabCaptureEnabled = false;
+      return;
+    }
+    if (e.key === 'Tab') {
+      if (e.isComposing || !tabCaptureEnabled) return;
+      e.preventDefault();
+      if (e.shiftKey) {
+        outdentSelectedLines();
+      } else if (textarea.value.slice(textarea.selectionStart, textarea.selectionEnd).includes('\n')) {
+        // 複数行にまたがる選択は選択を置換せず、行単位のインデントにする（一般的なコードエディターの動き）
+        indentSelectedLines();
+      } else {
+        insertIndent();
+      }
+      return;
+    }
+    // 修飾キー単独以外のキーが押されたら再アーム（Esc で解除した後に入力を続けた場合）
+    if (!['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) tabCaptureEnabled = true;
+  });
+  // フォーカスが戻ってきたら再アーム（解除状態を持ち越さない）
+  textarea.addEventListener('focus', () => {
+    tabCaptureEnabled = true;
+  });
+
   // ---- 構文チェック・空チェック（デバウンス評価 → スナックバー） -------------
   let syntaxTimer: ReturnType<typeof setTimeout> | undefined;
   let jsxInvalidNow = false; // onInput での即時判定結果（デバウンス時に再パースしないため）
