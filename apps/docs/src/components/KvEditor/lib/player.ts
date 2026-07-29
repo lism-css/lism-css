@@ -14,6 +14,7 @@ import { htmlToJsx } from './convert';
 import { diffCode, diffLineHunks, type LineHunk } from './diff';
 import type { EditorApi } from './editor';
 import { initScrollHint } from './scroll-hint';
+import { STRINGS } from './strings';
 
 // idle は初期状態（未再生）。全ステップを再生し終えると done になる
 type PlayerStatus = 'idle' | 'playing' | 'interrupted' | 'done';
@@ -79,7 +80,6 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   // 中断時にどのフェーズにいたか（再開はここから続ける）
   let resumePhase: StepPhase = 'user';
   // 中断→再開で継続する吹き出し（新規生成か途中継続かを判断するために参照を保持）
-  let userBubble: HTMLElement | null = null;
   let aiBubble: HTMLElement | null = null;
   // "Interrupted" ステータス行。再開時にこの行だけを取り除く
   let interruptedRow: HTMLElement | null = null;
@@ -106,7 +106,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   const defaultPlayLabels = new Map(playButtons.map((button) => [button, button.getAttribute('aria-label')]));
   const setPlayButtonsStopLabel = (playing: boolean): void => {
     for (const button of playButtons) {
-      const label = playing ? 'Stop the AI demo' : defaultPlayLabels.get(button);
+      const label = playing ? STRINGS.stopDemo : defaultPlayLabels.get(button);
       if (label == null) {
         button.removeAttribute('aria-label');
       } else {
@@ -281,14 +281,13 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     // ユーザー発話フェーズ: 入力欄でタイピング → 送信（プレースホルダーに戻し、吹き出しへ全文一括表示）
     // 再開が 'ai' / 'code' の場合は既に完了済みなのでスキップし、吹き出しはそのまま残す
     if (resume === 'user') {
-      userBubble = null;
       aiBubble = null;
       if (!prefersReducedMotion()) {
         await typeIntoAsk(step.userMessage, signal);
         await sleep(PAUSE_BEFORE_SEND, signal);
         resetAsk();
       }
-      userBubble = appendBubble('user');
+      const userBubble = appendBubble('user');
       userBubble.textContent = step.userMessage;
       scrollMessages();
       announce(step.userMessage);
@@ -337,12 +336,12 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
 
   /** 中断ステータス行（"Interrupted" + Resume ボタン）をチャット末尾に追加する */
   const showInterrupted = (): void => {
-    const row = appendStatusRow('Interrupted');
+    const row = appendStatusRow(STRINGS.interrupted);
     row.classList.add('is--interrupted');
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'c--kvEditor_statusBtn';
-    button.textContent = 'Resume';
+    button.textContent = STRINGS.resume;
     button.addEventListener('click', () => onPlayClick());
     row.appendChild(button);
     // 再開時にこの行だけを取り除く（吹き出し・書きかけコードは残す）
@@ -372,11 +371,11 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
         await playStep(i, signal, resumePhase);
       }
       // 完了の明示。done 後の再クリックでチャットごとクリアされる
-      appendStatusRow('Done');
+      appendStatusRow(STRINGS.done);
       scrollMessages();
       status = 'done';
       setPlayButtonsStopLabel(false);
-      announce('Done');
+      announce(STRINGS.done);
     } catch (e) {
       // 中断: エディターは書きかけの状態をそのまま残す（仕様）。
       // 入力欄はプレースホルダーへ戻し、チャットへ Resume の導線を出す。
@@ -386,7 +385,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
       showInterrupted();
       status = 'interrupted';
       setPlayButtonsStopLabel(false);
-      announce('Interrupted');
+      announce(STRINGS.interrupted);
       // 想定外の例外は握り潰さず再 throw する（開発中にバグへ気づけるようにする）
       if (!(e instanceof AbortedError)) throw e;
     }

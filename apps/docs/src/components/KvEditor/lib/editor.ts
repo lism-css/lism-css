@@ -11,6 +11,7 @@ import { htmlToJsx, jsxToHtml } from './convert';
 import { sanitize } from './sanitize';
 import { MAX_CODE_LENGTH, findHtmlIssue } from './validate';
 import { createSnackbar } from './snackbar';
+import { STRINGS } from './strings';
 import type { EditorLang, highlightSync as HighlightSyncFn } from './highlight';
 import { createPlayer } from './player';
 
@@ -56,6 +57,9 @@ export function initKvEditor(): void {
   // 自然高さを min-height として固定する。高さは em ベースで幅（ブレークポイント）に依存するため、
   // 幅が変わった時だけ再測定する（入力による高さ変化は幅が変わらないので無視される）
   const lockHeroHeight = (): void => {
+    // エディターが空でヒーローに要素がない間は再測定しない（フォールバックの 2rem まで縮んで
+    // 高さ保持の意図が崩れるため、直前の min-height を維持する）。初期呼び出し時は SSR コンテンツがあるので必ず測定される
+    if (hero.childElementCount === 0) return;
     hero.style.minHeight = '';
     hero.style.minHeight = `${hero.offsetHeight}px`;
   };
@@ -226,7 +230,7 @@ export function initKvEditor(): void {
     if (textarea.value.length <= MAX_CODE_LENGTH) return false;
     textarea.value = snapshot.value;
     textarea.setSelectionRange(snapshot.selStart, snapshot.selEnd);
-    snackbar?.show(`Character limit reached (${MAX_CODE_LENGTH.toLocaleString('en-US')})`);
+    snackbar?.show(STRINGS.characterLimit(MAX_CODE_LENGTH));
     return true;
   };
   textarea.addEventListener('beforeinput', (e) => {
@@ -252,7 +256,7 @@ export function initKvEditor(): void {
     // フォールバック: input イベントが発火しないため、上限チェック・反映・スナップショットを手動で行う
     const nextLength = textarea.value.length - (textarea.selectionEnd - textarea.selectionStart) + 2;
     if (nextLength > MAX_CODE_LENGTH) {
-      snackbar?.show(`Character limit reached (${MAX_CODE_LENGTH.toLocaleString('en-US')})`);
+      snackbar?.show(STRINGS.characterLimit(MAX_CODE_LENGTH));
       return;
     }
     textarea.setRangeText('  ', textarea.selectionStart, textarea.selectionEnd, 'end');
@@ -279,7 +283,7 @@ export function initKvEditor(): void {
     const lineStarts = getSelectedLineStarts();
     // 上限チェックは追加合計（2 × 対象行数）で行い、超えるなら中止する
     if (textarea.value.length + lineStarts.length * 2 > MAX_CODE_LENGTH) {
-      snackbar?.show(`Character limit reached (${MAX_CODE_LENGTH.toLocaleString('en-US')})`);
+      snackbar?.show(STRINGS.characterLimit(MAX_CODE_LENGTH));
       return;
     }
     // undo 履歴を保持するため execCommand を優先する（複数行の編集が行ごとの undo ステップに分かれるのは許容）。
@@ -368,7 +372,7 @@ export function initKvEditor(): void {
 
   // 空提案（ボタン付き・入力再開かリセットまで表示）。タブ切替でも維持するため関数化
   const showEmptyPrompt = (): void => {
-    snackbar?.showAction('The editor is empty.', 'Restore initial code', () => restoreInitialCode());
+    snackbar?.showAction(STRINGS.emptyEditor, STRINGS.restoreInitialCode, () => restoreInitialCode());
     emptyPromptShown = true;
     syntaxReported = false;
   };
@@ -385,11 +389,11 @@ export function initKvEditor(): void {
       // 表示は端的に（findHtmlIssue の詳細理由はテスト・デバッグ用で、表示には使わない）
       let issue: string | null = null;
       if (state.activeTab === 'html') {
-        issue = findHtmlIssue(textarea.value) ? 'Invalid HTML syntax' : null;
+        issue = findHtmlIssue(textarea.value) ? STRINGS.invalidHtml : null;
         // HTMLタブの invalid 状態はデバウンス評価が唯一の判定箇所（JSXタブは processInput で即時判定済み）
         setTextareaInvalid(issue !== null);
       } else {
-        issue = jsxInvalidNow ? 'Invalid JSX syntax' : null;
+        issue = jsxInvalidNow ? STRINGS.invalidJsx : null;
       }
       if (issue && !syntaxReported) snackbar?.show(issue);
       syntaxReported = issue !== null;

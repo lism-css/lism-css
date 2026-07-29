@@ -7,8 +7,9 @@
 // 積まれても、提案が上書きで消えず Restore 手段が失われない。
 //
 // スタックの出入りは「折りたたみラッパー（.c--kvEditor_snackbarRow）」の height だけを
-// アニメーションさせる。隙間（gap）はラッパーの padding-top で height に内包しているため、
-// margin を触らずに「カード＋隙間」を1つの height トランジションで滑らかに畳める。
+// アニメーションさせる。隙間（gap）はカード側の margin-top で持たせ、ラッパーの
+// overflow: hidden（BFC 化）で height に内包しているため、「カード＋隙間」を
+// 1つの height トランジションで滑らかに畳める（詳細は _kv-editor.scss のコメント参照）。
 
 const AUTO_HIDE_MS = 4000;
 // height トランジション（0.2s）完了を待つ処理のフォールバック。
@@ -27,6 +28,7 @@ interface Item {
   row: HTMLElement; // 折りたたみラッパー（height をアニメーション）
   card: HTMLElement; // 見た目のカード（opacity/transform でフェード）
   timer?: ReturnType<typeof setTimeout>;
+  enterRaf?: number; // createEl が予約した入場アニメの rAF id（発火前に row を取り除く場合はキャンセルする）
 }
 
 export function createSnackbar(container: HTMLElement): Snackbar {
@@ -56,14 +58,16 @@ export function createSnackbar(container: HTMLElement): Snackbar {
     const item = items.get(key);
     if (!item) return;
     clearTimeout(item.timer);
+    // 入場 rAF が未発火なら取り消す（発火すると height を再設定して一瞬ゾンビ化するため）
+    if (item.enterRaf !== undefined) cancelAnimationFrame(item.enterRaf);
     items.delete(key);
     const { row, card } = item;
-    // 現在の高さ（隙間の padding-top 込み）を固定してから 0 へ折りたたむ。
+    // 現在の高さ（隙間の margin 込み）を固定してから 0 へ折りたたむ。
     // これで上のスナックバーが一気に落ちず、隙間ごと滑らかに詰まる。
     row.style.height = `${row.getBoundingClientRect().height}px`;
     void row.offsetHeight; // 固定した height を確定させてから遷移を開始
     card.classList.remove('is--show'); // カードはフェード＆スライドアウト
-    row.style.height = '0'; // ラッパーは高さを 0 へ（隙間 padding-top ごと畳む）
+    row.style.height = '0'; // ラッパーは高さを 0 へ（カードの margin ごと畳む）
     onHeightSettled(row, () => row.remove());
   };
 
@@ -84,7 +88,9 @@ export function createSnackbar(container: HTMLElement): Snackbar {
     const target = row.getBoundingClientRect().height;
     row.style.height = '0';
     void row.offsetHeight; // height 0 を確定
-    requestAnimationFrame(() => {
+    const item: Item = { row, card };
+    // rAF id を控え、発火前に row を取り除く側（remove / showAction の差し替え）がキャンセルできるようにする
+    item.enterRaf = requestAnimationFrame(() => {
       card.classList.add('is--show');
       row.style.height = `${target}px`;
       // 遷移後は auto へ戻し、内容の折り返し変化に追従できるようにする
@@ -92,7 +98,7 @@ export function createSnackbar(container: HTMLElement): Snackbar {
         row.style.height = '';
       });
     });
-    return { row, card };
+    return item;
   };
 
   const show = (message: string): void => {
@@ -114,6 +120,8 @@ export function createSnackbar(container: HTMLElement): Snackbar {
     const existing = items.get(ACTION_KEY);
     if (existing) {
       clearTimeout(existing.timer);
+      // 入場 rAF が未発火なら取り消してから取り除く（発火すると height を再設定して一瞬ゾンビ化するため）
+      if (existing.enterRaf !== undefined) cancelAnimationFrame(existing.enterRaf);
       existing.row.remove();
       items.delete(ACTION_KEY);
     }
