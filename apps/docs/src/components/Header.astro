@@ -24,7 +24,7 @@ const searchText = t(currentLang, 'search');
 const headerText = t(currentLang, 'header');
 ---
 
-<Container as="header" class="z--header" layout="flex" ai="center">
+<Container as="header" class:list={['z--header', hasMobileMenu && '-subPage']} layout="flex" ai="center">
   {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
   <Flex ai="center" w="100%" mx="auto" p="20" class="c--shadow-box">
     <Group me="auto">
@@ -88,16 +88,19 @@ const headerText = t(currentLang, 'header');
       hasMobileMenu && (
         <Modal.OpenBtn
           modalId="site-nav"
-          class="c--menuTrigger l--center set--plain -bd -bdrs:10"
+          class="c--menuTrigger l--center set--plain"
           d={['grid', null, 'none']}
-          bgc="base"
+          w="1.75rem"
+          min-h="1.75rem"
           bdrs="10"
+          ms="10"
           hov={{ bgc: 'base-2' }}
           aria-labelledby="menu-open-label"
         >
-          <Icon icon="menu" fz={['xl', null, 'l']} viewBox="0 0 256 256">
+          {/* <Icon icon="menu" fz={['xl', null, 'l']} viewBox="0 0 256 256">
             <path d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z" />
-          </Icon>
+          </Icon> */}
+          <Icon icon="menu" fz={['xl', null, 'l']} />
           <Inline d="none" id="menu-open-label">
             {headerText.openMenu}
           </Inline>
@@ -106,7 +109,7 @@ const headerText = t(currentLang, 'header');
     }
   </Flex>
 
-  {/* ハンバーガーメニューボタン（モバイルのみ表示・hasMobileMenu が false 出力しない） */}
+  {/* モーダル（モバイルのみ表示・hasMobileMenu が false 出力しない） */}
   {
     hasMobileMenu && (
       <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
@@ -159,14 +162,28 @@ const headerText = t(currentLang, 'header');
   }
 
   /* 検索トリガーボタン */
-  .c--menuTrigger {
+  /* .c--menuTrigger {
     padding: 0.5em;
-  }
+  } */
   .c--searchTrigger {
     @container (min-width: 800px) {
       & {
         box-shadow: var(--bxsh--search-border);
         background: var(--search-button-c);
+      }
+    }
+
+    .-subPage & {
+      box-shadow: var(--bxsh--search-border);
+      background: var(--search-button-c);
+
+      @container (max-width: 799px) {
+        padding-block: 6px;
+        padding-inline: var(--s10);
+      }
+
+      .a--icon {
+        font-size: var(--s20);
       }
     }
   }
