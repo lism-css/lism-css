@@ -5,7 +5,7 @@
 //   よくあるミスだけを自前で検知してスナックバー表示に使う（描画は止めない）。
 
 /** エディターの最大入力文字数 */
-export const MAX_CODE_LENGTH = 10_000;
+export const MAX_CODE_LENGTH = 2_000;
 
 const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'source', 'track', 'wbr']);
 

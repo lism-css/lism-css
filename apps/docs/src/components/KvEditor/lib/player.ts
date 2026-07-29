@@ -86,7 +86,9 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   // 入力欄トリガーのプレースホルダー文言（送信・中断時にここへ戻す）
   const askPlaceholder = askText.textContent ?? '';
 
-  const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // MediaQueryList は 1 回だけ生成して使い回す（.matches は live なので再生中の設定変更にも追従する）
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const prefersReducedMotion = (): boolean => reducedMotionQuery.matches;
 
   // SRへの告知。タイピング演出の途中経過は流さず、確定した文言だけをここから告知する。
   // 一度空にしてから rAF で本文を設定することで、連続して同一文言でも読み上げられる

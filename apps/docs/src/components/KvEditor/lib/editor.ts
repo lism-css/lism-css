@@ -99,18 +99,28 @@ export function initKvEditor(): void {
   // ---- スクロール追従（textarea → ハイライトレイヤー） ----------------------
   // textarea は iOS の自動ズーム回避のため font-size: 16px を scale で縮小している（_kv-editor.scss 参照）。
   // scrollTop / scrollLeft は変形前のローカル座標で返るため、
-  // computed transform から縮小率を読み取り、視覚上の移動量へ換算して追従させる
+  // computed transform から縮小率を読み取り、視覚上の移動量へ換算して追従させる。
+  // 縮小率（--kvEditor-input-scale）は md ブレークポイントでしか変わらないため、
+  // 毎スクロールで computed style を読まずにキャッシュし、境界を跨いだ時だけ再取得する
+  let inputScale = 1;
   const syncScroll = (): void => {
-    const transform = getComputedStyle(textarea).transform;
-    const scale = transform === 'none' ? 1 : new DOMMatrixReadOnly(transform).a;
-    preInner.style.transform = `translate3d(${-textarea.scrollLeft * scale}px, ${-textarea.scrollTop * scale}px, 0)`;
+    preInner.style.transform = `translate3d(${-textarea.scrollLeft * inputScale}px, ${-textarea.scrollTop * inputScale}px, 0)`;
   };
+  const updateInputScale = (): void => {
+    const transform = getComputedStyle(textarea).transform;
+    inputScale = transform === 'none' ? 1 : new DOMMatrixReadOnly(transform).a;
+    syncScroll();
+  };
+  updateInputScale();
+  window.matchMedia('(min-width: 800px)').addEventListener('change', updateInputScale);
   textarea.addEventListener('scroll', syncScroll, { passive: true });
 
   // ---- 再生アニメの編集位置を可視範囲へスクロール ---------------------------
   // モバイルでは書き換え箇所がスクロール範囲外にあり演出が見えないことがあるため、
   // プレイヤーがハンクの書き換え前に呼ぶ。scrollTop/Left・clientWidth/Height・
   // フォント計測はすべて scale 変形前のローカル座標系で一貫しているのでそのまま計算できる
+  // MediaQueryList は 1 回だけ生成して使い回す（.matches は live なので設定変更にも追従する）
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let measureCtx: CanvasRenderingContext2D | null = null;
   const measureTextWidth = (text: string): number => {
     if (text === '') return 0;
@@ -127,7 +137,7 @@ export function initKvEditor(): void {
     const lineHeight = parseFloat(cs.lineHeight);
     const x = parseFloat(cs.paddingLeft) + measureTextWidth(linePrefix);
     const y = parseFloat(cs.paddingTop) + line * lineHeight;
-    const behavior: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    const behavior: ScrollBehavior = reducedMotionQuery.matches ? 'auto' : 'smooth';
 
     // 縦: 上下2行分の余裕を持って見えていなければ、編集行が画面の上1/3に来る位置へ
     let top = textarea.scrollTop;
