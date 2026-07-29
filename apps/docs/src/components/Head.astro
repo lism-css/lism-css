@@ -78,15 +78,17 @@ const enableGA = !isDev && siteConfig.publish;
     // ちらつきを防ぐため、 head内でテーマセットする
     (function () {
       var stored = localStorage.getItem('theme');
+      var mode = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
       var theme;
-      if (stored === 'light' || stored === 'dark') {
-        theme = stored;
+      if (mode === 'light' || mode === 'dark') {
+        theme = mode;
       } else if (defaultTheme === 'light' || defaultTheme === 'dark') {
         theme = defaultTheme;
       } else {
         theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-theme-mode', mode);
     })();
   </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

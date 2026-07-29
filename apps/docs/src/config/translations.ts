@@ -12,7 +12,7 @@ type TranslationKeys = {
   toc: 'title' | 'open';
   search: 'title' | 'devMessage';
   header: 'openMenu';
-  themeSwitch: 'ariaLabel';
+  themeSwitch: 'ariaLabel' | 'system' | 'light' | 'dark';
   langSelect: 'ariaLabel' | 'menuAriaLabel';
   share: 'share' | 'copy' | 'copied';
   copyCode: 'copy' | 'copied';
@@ -47,6 +47,9 @@ export const translations: Record<LangCode, UITranslations> = {
     },
     themeSwitch: {
       ariaLabel: 'カラーテーマを切り替える',
+      system: 'システムに従う',
+      light: 'ライトモード',
+      dark: 'ダークモード',
     },
     langSelect: {
       ariaLabel: '言語を選択',
@@ -92,6 +95,9 @@ export const translations: Record<LangCode, UITranslations> = {
     },
     themeSwitch: {
       ariaLabel: 'Toggle color theme',
+      system: 'Follow system',
+      light: 'Light mode',
+      dark: 'Dark mode',
     },
     langSelect: {
       ariaLabel: 'Select language',

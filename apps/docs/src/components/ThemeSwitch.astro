@@ -9,27 +9,27 @@ const themeSwitch = t(lang, 'themeSwitch');
 const themeModes = [
   {
     id: 'system',
-    label: 'システムに従う',
+    label: themeSwitch.system,
     iconPath: `
-      <path d="M13.334 2H2.66732C1.93094 2 1.33398 2.59695 1.33398 3.33333V10C1.33398 10.7364 1.93094 11.3333 2.66732 11.3333H13.334C14.0704 11.3333 14.6673 10.7364 14.6673 10V3.33333C14.6673 2.59695 14.0704 2 13.334 2Z" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-      <path d="M5.33398 14H10.6673" stroke="#111111" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
-      <path d="M8 11.3335V14.0002" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M13.334 2H2.66732C1.93094 2 1.33398 2.59695 1.33398 3.33333V10C1.33398 10.7364 1.93094 11.3333 2.66732 11.3333H13.334C14.0704 11.3333 14.6673 10.7364 14.6673 10V3.33333C14.6673 2.59695 14.0704 2 13.334 2Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M5.33398 14H10.6673" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M8 11.3335V14.0002" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
     `,
   },
   {
     id: 'light',
-    label: 'ライトモード',
+    label: themeSwitch.light,
     iconPath: `
       <g clip-path="url(#clip0_5430_1751)">
-        <path d="M7.99935 11.3332C9.8403 11.3332 11.3327 9.84079 11.3327 7.99984C11.3327 6.15889 9.8403 4.6665 7.99935 4.6665C6.1584 4.6665 4.66602 6.15889 4.66602 7.99984C4.66602 9.84079 6.1584 11.3332 7.99935 11.3332Z" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M8 0.666504V1.99984" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M8 14V15.3333" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M2.8125 2.81348L3.75917 3.76014" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M12.2402 12.2402L13.1869 13.1869" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M0.666016 8H1.99935" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M14 8H15.3333" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M2.8125 13.1869L3.75917 12.2402" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M12.2402 3.76014L13.1869 2.81348" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M7.99935 11.3332C9.8403 11.3332 11.3327 9.84079 11.3327 7.99984C11.3327 6.15889 9.8403 4.6665 7.99935 4.6665C6.1584 4.6665 4.66602 6.15889 4.66602 7.99984C4.66602 9.84079 6.1584 11.3332 7.99935 11.3332Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M8 0.666504V1.99984" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M8 14V15.3333" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M2.8125 2.81348L3.75917 3.76014" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M12.2402 12.2402L13.1869 13.1869" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M0.666016 8H1.99935" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M14 8H15.3333" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M2.8125 13.1869L3.75917 12.2402" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M12.2402 3.76014L13.1869 2.81348" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
       </g>
       <defs>
         <clipPath id="clip0_5430_1751"><rect width="16" height="16" fill="white"></rect></clipPath>
@@ -38,9 +38,9 @@ const themeModes = [
   },
   {
     id: 'dark',
-    label: 'ダークモード',
+    label: themeSwitch.dark,
     iconPath: `
-      <path d="M13.9999 8.52667C13.8951 9.66147 13.4692 10.7429 12.7721 11.6445C12.075 12.5461 11.1356 13.2305 10.0637 13.6177C8.99188 14.0049 7.83192 14.0787 6.7196 13.8307C5.60728 13.5827 4.5886 13.023 3.78275 12.2172C2.97691 11.4113 2.41723 10.3927 2.16921 9.28033C1.92118 8.16801 1.99508 7.00806 2.38224 5.9362C2.7694 4.86434 3.45382 3.92491 4.35541 3.22784C5.257 2.53076 6.33846 2.10487 7.47327 2C6.80888 2.89884 6.48917 4.0063 6.57229 5.12094C6.65541 6.23559 7.13584 7.28337 7.9262 8.07373C8.71656 8.86409 9.76435 9.34452 10.879 9.42764C11.9936 9.51077 13.1011 9.19106 13.9999 8.52667Z" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M13.9999 8.52667C13.8951 9.66147 13.4692 10.7429 12.7721 11.6445C12.075 12.5461 11.1356 13.2305 10.0637 13.6177C8.99188 14.0049 7.83192 14.0787 6.7196 13.8307C5.60728 13.5827 4.5886 13.023 3.78275 12.2172C2.97691 11.4113 2.41723 10.3927 2.16921 9.28033C1.92118 8.16801 1.99508 7.00806 2.38224 5.9362C2.7694 4.86434 3.45382 3.92491 4.35541 3.22784C5.257 2.53076 6.33846 2.10487 7.47327 2C6.80888 2.89884 6.48917 4.0063 6.57229 5.12094C6.65541 6.23559 7.13584 7.28337 7.9262 8.07373C8.71656 8.86409 9.76435 9.34452 10.879 9.42764C11.9936 9.51077 13.1011 9.19106 13.9999 8.52667Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
     `,
   },
 ];
@@ -48,14 +48,14 @@ const themeModes = [
 
 <Flex jc="center" ai="center" mx="auto" p="0.1875rem" bgc="#F6F6F6" bdrs="0.375rem" w="fit-content" class="c--themeModeSwitch">
   {
-    themeModes.map((mode, i) => (
+    themeModes.map((mode) => (
       <Lism
         as="button"
         type="button"
         p="0.375rem"
         h="1.75rem"
         bd="none"
-        class={`c--themeModeSwitch_btn${i === 0 ? ' -selected' : ''}`}
+        class="c--themeModeSwitch_btn"
         aria-label={mode.label}
         data-theme-mode={mode.id}
       >
@@ -100,7 +100,9 @@ const themeModes = [
     cursor: pointer;
     border-radius: 0.25rem;
   }
-  .c--themeModeSwitch_btn.-selected {
+  :global(html[data-theme-mode='system']) .c--themeModeSwitch_btn[data-theme-mode='system'],
+  :global(html[data-theme-mode='light']) .c--themeModeSwitch_btn[data-theme-mode='light'],
+  :global(html[data-theme-mode='dark']) .c--themeModeSwitch_btn[data-theme-mode='dark'] {
     background-color: #fff;
   }
 </style>
@@ -117,10 +119,19 @@ const themeModes = [
   });
   */
 
-  document.querySelectorAll('.c--themeModeSwitch_btn').forEach((btn) => {
+  document.querySelectorAll<HTMLButtonElement>('.c--themeModeSwitch_btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.c--themeModeSwitch_btn').forEach((b) => b.classList.remove('-selected'));
-      btn.classList.add('-selected');
+      const mode = btn.dataset.themeMode!;
+      const theme = mode === 'light' || mode === 'dark' ? mode : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-theme-mode', mode);
+      localStorage.setItem('theme', mode);
     });
+  });
+
+  // システムモード選択中は、OS側のテーマ変更にリアルタイムで追従する
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (document.documentElement.getAttribute('data-theme-mode') !== 'system') return;
+    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
   });
 </script>
