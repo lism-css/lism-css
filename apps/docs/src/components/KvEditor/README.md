@@ -83,6 +83,7 @@ KvEditor/
     ├── sanitize.ts      # ヒーロー描画前の無害化
     ├── validate.ts      # 入力上限値 + HTMLタグバランスチェック
     ├── snackbar.ts      # エディター右下の通知・提案表示（スタック式）
+    ├── strings.ts       # パネル・スナックバーの UI 文言定数（両言語とも英語で共通）
     ├── scroll-hint.ts   # AIパネルのメッセージ領域の上下端フェード制御（CSS変数 --kvEditor-mask-top / --kvEditor-mask-bottom を更新）
     └── highlight.ts     # shiki ラッパー（ビルド時 + クライアント共用）
 
@@ -125,16 +126,17 @@ frontmatter で `await highlight(initialHtml, 'html')` を実行し、ハイラ�
 
 .c--kvEditor[data-kv-editor][data-kv-lang] … grid: エディター 1fr + パネル 12.6875rem。md未満は縦積み（エディター + 下段パネル 146px）
 ├── .c--kvEditor_window
-│   ├── .c--kvEditor_bar        … 信号ドット + HTML/JSX タブ（role="tablist"。背景はウィンドウと同一）
-│   └── .c--kvEditor_editor     … 重ねレイヤー（下記）
+│   ├── .c--kvEditor_bar        … 信号ドット + HTML/JSX タブ（role="tablist"。各タブは id="kv-tab-html/jsx" + aria-controls="kv-editor-panel"。背景はウィンドウと同一）
+│   └── .c--kvEditor_editor[role="tabpanel"][id="kv-editor-panel"] … 重ねレイヤー（下記）。両タブ共有の 1 パネルで、aria-labelledby はアクティブタブの id
 │       ├── .c--kvEditor_pre[aria-hidden]      … 表示用（pointer-events: none）
 │       │   └── .c--kvEditor_preInner          … ★transform でスクロール追従
 │       │       └── shiki の <pre><code>
 │       ├── textarea.c--kvEditor_input         … 入力用（文字は透明・caret のみ表示）
-│       └── .c--kvEditor_snackbarStack[data-kv-snackbar][role="status"] … 通知スタック（JS が折りたたみラッパー + カードを動的追記）
+│       └── .c--kvEditor_snackbarStack[id="kv-editor-notices"][data-kv-snackbar][role="status"] … 通知スタック（JS が折りたたみラッパー + カードを動的追記）
 └── aside.c--kvEditor_panel     … AIパネル（SPでは下段に全幅表示）
     ├── .c--kvEditor_placeholder … 空状態: グラデーション円形ロゴ（orb）+ "Just ask. The code writes itself."
-    ├── .c--kvEditor_messages[aria-live="polite"] … 吹き出し・中断ステータス行の追記先（空の間は非表示）
+    ├── .c--kvEditor_messages[data-kv-messages] … 吹き出し・中断ステータス行の追記先（空の間は非表示）
+    ├── p.u--srOnly[data-kv-live][aria-live="polite"] … SR向けの隠しライブリージョン（player.ts が確定文言のみを告知する）
     └── button.c--kvEditor_ask[data-kv-play]   … 入力欄風トリガー（"Ask AI to edit..." + 右下に ↑ 矢印の矩形）
 ```
 
@@ -142,7 +144,10 @@ frontmatter で `await highlight(initialHtml, 'html')` を実行し、ハイラ�
 
 - textarea には `spellcheck="false"` / `autocomplete` / `autocapitalize` / `autocorrect` off と `wrap="off"`（折り返さず横スクロール。`pre` レイヤーの `white-space: pre` と一致させる）を指定
 - textarea の中身は Astro が自動エスケープする。閉じタグ直前に空白を入れない（入れると初期値に混入する）
-- タブは `role="tablist"` / `role="tab"` / `aria-selected` で表現。ハイライトレイヤーは `aria-hidden`（読み上げ対象は textarea 側のみ）
+- タブは ARIA タブパターンを完全実装: `role="tablist"` / `role="tab"` / `aria-selected` に加え、`aria-controls` で共有 tabpanel（`.c--kvEditor_editor`）を参照し、roving tabindex（選択タブのみ `tabindex="0"`）+ ArrowLeft / ArrowRight / Home / End の矢印キー操作（automatic activation）に対応。キー操作は対象タブの `.focus()` + `.click()` を経由し、再生中断リスナー等のクリック処理も発火させる。ハイライトレイヤーは `aria-hidden`（読み上げ対象は textarea 側のみ）
+- 「Ask AI to edit...」トリガーは `aria-label="Ask AI to edit... (play the AI demo)"` でデモ再生ボタンであることを明示（可視テキスト先頭・WCAG 2.5.3 準拠。タイピング演出で中身が変わってもアクセシブルネームが安定する）。再生中はクリックが「停止（中断）」として機能するため、`aria-label` を `Stop the AI demo` に切り替え、再生を抜けたら元のラベルへ戻す（機能し続けるボタンなので `aria-disabled` は使わない）
+- textarea 内では Tab キーで 2 スペース（プリンタの整形ルールと同じ）のインデントを挿入する。選択が複数行にまたがる場合は選択を置換せず、選択範囲に触れる各行の行頭へ 2 スペースを挿入する（一般的なコードエディターの動き）。Shift+Tab はアウトデント（選択範囲に触れる各行の行頭から先頭のスペースを最大 2 つ削除。削除対象がない場合も既定のフォーカス移動はさせない）。キーボードトラップにならないよう（WCAG 2.1.2）、Esc → 直後の Tab / Shift+Tab が既定のフォーカス移動になり脱出できる。複数行の一括処理中は行ごとの再変換・再ハイライトを抑止し、完了後に 1 回だけ反映する（行数ぶんの同期全文ハイライトで固まらないため）
+- textarea は構文エラー時に `aria-invalid="true"` が付き、`aria-describedby="kv-editor-notices"` でスナックバー（通知スタック）を常設参照する
 - `data-kv-*` 属性が JS のフックで、クラス名はスタイル専用（フックと見た目の分離）
 
 ## editor.ts — コントローラ
@@ -178,7 +183,7 @@ const state = {
 ### シンタックスハイライト（遅延ロード + 同期実行）
 
 - 初期表示は SSR 済みなので、shiki 本体（非同期チャンク・gzip 約110KB）は `requestIdleCallback`（未対応ブラウザは 1.5 秒後の `setTimeout`）で遅延ロード
-- ロード完了後は **`highlightSync()`（同期 API）で入力のたびに即時再描画**。非同期 + debounce だと textarea とハイライトが一瞬ズレるため
+- ロード完了後は **`highlightSync()`（同期 API）で入力のたびに即時再描画**。非同期 + debounce だと textarea とハイライトが一瞬ズレるため。入力上限が 2,000 字（後述）なので同期ハイライトの最悪コストは十分小さく、rAF スロットル等は入れない（caret とのズレを 1 フレームも生まないことを優先）
 - ロード前に編集された場合は `.fallback`（同一フォントメトリクスのプレーンテキスト）に退避。エスケープは自前の `escapeHtml` で行う
 
 `padTrailingNewline`: コード末尾が改行のとき、`pre` 側では最終空行が高さを持たず textarea とズレるため、空白 1 文字を足してから描画する。
@@ -191,7 +196,7 @@ const state = {
 preInner.style.transform = `translate3d(${-scrollLeft * scale}px, ${-scrollTop * scale}px, 0)`;
 ```
 
-を適用して 1:1 追従する。`scale` は textarea の computed transform（`DOMMatrixReadOnly`）から読み取る縮小率（後述の iOS ズーム対策で textarea は scale されており、`scrollTop / scrollLeft` は変形前のローカル座標で返るため、視覚上の移動量へ換算する必要がある）。`scrollTop` 代入による同期を使わない理由：
+を適用して 1:1 追従する。`scale` は textarea の computed transform（`DOMMatrixReadOnly`）から読み取る縮小率（後述の iOS ズーム対策で textarea は scale されており、`scrollTop / scrollLeft` は変形前のローカル座標で返るため、視覚上の移動量へ換算する必要がある）。縮小率は md ブレークポイントでしか変わらないため、毎スクロールで computed style を読まずにキャッシュし、`matchMedia('(min-width: 800px)')` の change で境界を跨いだ時だけ再取得する。`scrollTop` 代入による同期を使わない理由：
 
 1. `overflow: hidden` 要素へのスクロール代入はスクロール可能量でクランプされ、レイヤー間の寸法差があるとズレる
 2. `innerHTML` 差し替えでスクロール位置がリセットされる事故が起きる（transform は `preInner` 自体に付くので、その中身を差し替えても保持される）
@@ -200,10 +205,11 @@ preInner.style.transform = `translate3d(${-scrollLeft * scale}px, ${-scrollTop *
 
 ### 入力上限の強制（巻き戻し方式）
 
-大量入力によるクラッシュ / フリーズ防止（毎キー入力でハイライト・変換・ヒーロー描画が走るため）。上限は `MAX_CODE_LENGTH = 10,000` 字。
+大量入力によるクラッシュ / フリーズ防止（毎キー入力でハイライト・変換・ヒーロー描画が走るため）。上限は `MAX_CODE_LENGTH = 2,000` 字（デモ用途の上限。初期コードは最大 800 字弱で、約 2.5 倍の編集余地を残している）。
 
 - **超過する入力は受け付けない**: `beforeinput` 時点（変更前）の値とカーソル位置をスナップショットしておき、`input` で超過を検知したら値・選択範囲ごと巻き戻す。「貼り付けたら末尾が黙って消えた」という切り捨て事故が起きない
 - **IME 対応**: 変換中（`isComposing`）の巻き戻しは入力が壊れるため、`compositionstart` でスナップショットを取り、`compositionend` でまとめて判定・巻き戻す
+- **超過状態からの脱出**: タブ切替の変換（HTML ⇔ JSX の整形で長さが変わる）で表示テキストが上限を超えることがあるため、長さが増えない編集（削除・同長置換）は超過中でも受け付ける（削除まで巻き戻されて上限内へ戻れなくなるのを防ぐ）
 - タブ切替・`setCode()`・`setViewText()` 後にもスナップショットを更新し、巻き戻し先が古い状態にならないようにしている
 - プレイヤーの書き込みは上限チェックの対象外（シナリオ・初期コードは上限内に収めて書くこと）
 
@@ -225,7 +231,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 プレイヤーはこのインターフェース越しにのみエディターへ触る:
 
-- `setCode(code, viewText?)` … コード全文の確定的な置き換え。モデル・ヒーロー・ハイライトを更新し、構文チェックをリセット。JSX タブがアクティブなら `viewText`（JSX 表記）を表示に使う
+- `setCode(code)` … コード全文の確定的な置き換え。モデル・ヒーロー・ハイライトを更新し、構文チェックをリセット。JSX タブがアクティブなら `htmlToJsx()` で変換した表記を表示する（表示テキストの決定は呼び出し側へ委ねず `setCode` 内で行い、表示とモデルの乖離を作らない）
 - `setViewText(text)` … タイピングアニメの 1 フレーム反映。HTML タブは部分的な HTML でも描画できるため**モデル・ヒーローも同期**し、JSX タブはタイピング途中が不正な JSX になるため**表示のみ**更新する（モデルの確定は `setCode` で行う）
 - `revealPosition(line, linePrefix)` … 編集位置を可視範囲へスクロールする（再生アニメ用）。行位置は行番号 × line-height、横位置は `linePrefix`（行内の先行テキスト）を canvas の `measureText` で実測して求める（等幅前提にしないので日本語混在でも正確）。textarea 内部のスクロールに加え、編集行がページのビューポート外にある場合は window 側もスクロールする（SP でエディター下の AI パネルを見ている間に編集箇所が画面外、というケースへの対策）。スクロールが発生したら true を返す（プレイヤー側が「間」を挟む判断に使う）。`prefers-reduced-motion` では smooth ではなく即時スクロール。scrollTop / clientWidth / フォント計測はすべて scale 変形前のローカル座標系で一貫しているためそのまま計算できる
 - `getCode()` / `getActiveTab()` / `getViewText()` … 読み取り
@@ -272,6 +278,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 - レスポンシブ props（`fz={{base,md}}`）は非対応。Lism の実装ではレスポンシブ値はクラスでなく inline CSS 変数になるため機械的往復ができない。デモコンテンツには BP 指定を入れない方針（SP対応は後述の CSS 側で吸収）
 - `hov` は文字列形式（`hov="-bgc"`）のみ。boolean 形式（値なしの `-hov` クラス）と オブジェクト形式（`hov={{bgc:'red'}}` — inline CSS 変数が絡む）は非対応で、`-hov` は className として保持される
 - prop 名の認識は本物と同期する一方、値の変換は `-prop:val` クラスへの機械変換のみ。本物の Lism がクラスでなく inline CSS 変数にする値（トークン外の任意値: `mbs="3.5rem"` 等）は、クラスにしてもビルド済み CSS に存在せず見た目には効かない
+- 名前付き文字実体は XML 定義済みの `&amp; &lt; &gt; &quot; &apos;` のみ対応。`&nbsp;` 等の XML 定義外の実体は JSX タブでは XML パースエラーになり last-good 動作
 - コメントノードは両方向とも無視（出力に含めない）
 
 ### プリンタ（整形ルール）
@@ -294,10 +301,11 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 ## validate.ts — 入力上限値とタグバランスチェック
 
-- `MAX_CODE_LENGTH = 10_000`: エディターの最大入力文字数（editor.ts の巻き戻し処理が参照する定数）
+- `MAX_CODE_LENGTH = 2_000`: エディターの最大入力文字数（editor.ts の巻き戻し処理が参照する定数）
 - `findHtmlIssue(code)`: スタック式の軽量タグバランスチェック。ブラウザの HTML パーサーは寛容で「不正」を返さないため、よくあるミスだけを自前で検知する
   - 検知対象: 閉じ漏れ（`unclosed <div>`）/ 対応しない閉じタグ（`stray closing </div>`）/ 書きかけタグ（`incomplete tag`）/ 未終了コメント（`unterminated comment`）
   - 誤検知しないための処理: 属性値内の `>` は引用符を追跡して無視、`a < b` のような地の文の `<` はタグとして扱わない（直後が英字・`/`・`!` のときだけタグ開始と見なす。ブラウザと同じ挙動）、void 要素・自己終了タグ・doctype はスタックに積まない
+  - 既知の限界: `<p>a<p>b` や `<li>` のような暗黙の終了タグ（ブラウザは自動で閉じる）は unclosed として誤検知し、`<style>` / `<script>` 等の raw text 要素の中身（`a < b` など）はタグとして解釈してしまう。「よくあるミスだけを検知する」軽量チェックの範囲内として許容している
   - 戻り値の詳細メッセージは内部・デバッグ用で、表示側は一律 `Invalid HTML syntax` を使う（後述）
 
 ## snackbar.ts — 通知・提案の表示
@@ -306,7 +314,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 **通知型（`show`）** — 上限超過・構文エラー用
 
-- メッセージは**端的な英語**: `Invalid HTML syntax` / `Invalid JSX syntax` / `Character limit reached (10,000)`
+- メッセージは**端的な英語**: `Invalid HTML syntax` / `Invalid JSX syntax` / `Character limit reached (2,000)`
 - すべて **4 秒で自動クローズ**。**同一文言は積み増さず**、既存カードを末尾（最前面）へ寄せてタイマーを延長する。構文エラーの永続的な手がかりは JSX タブの warning 色が担う
 - 見た目は **warning トーン**（動作は継続する非致命的な通知のため、赤ではなくアンバー）: 警告アイコン（octicon alert を CSS mask で描画）+ アンバーのボーダー。色は `--kvEditor-warning`（github-dark の yellow 系）で、JSX タブのインジケーターと共通
 - `pointer-events: none` でエディター操作を妨げない（コンテナ自体もクリックを透過する）
@@ -341,15 +349,16 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
                   │ ▲
    textareaにfocus/ │ │ Resume ボタン or click
    pointerdown /   ▼ │ （"Interrupted" 行だけ取り除き、中断したフェーズの続きから残りを再生）
-   タブ切替      interrupted（チャットに "Interrupted" + Resume を表示）
+   タブ切替 /    interrupted（チャットに "Interrupted" + Resume を表示）
+   Askボタンクリック
 ```
 
 - **1 クリック = 全ステップ連続再生**: 「Ask AI to edit...」のクリックで全ステップを順に一気に再生する。ステップの切り替わりには少し長めの「間」（`PAUSE_BETWEEN_STEPS`）を挟む（最後のステップの後には置かず、完遂した瞬間に done になる）
 - **再生はアクティブタブの表記で行う**: シナリオは HTML で持ち、JSX タブでは `htmlToJsx()` で変換した文字列をタイピングする（AI 吹き出しも `aiMessageJsx` に切り替え）
-- **再生開始時にコードをスナップしない**: コード書き換えは「現在のエディター内容 → `resultCode`」の diff タイピングなので、再生前にユーザーが編集していても、その状態を出発点として目標コードへ書き換える動きになる（done 後のリスタートだけは初期コードへ戻す）。**例外はエディターが空のとき**: 空から始めると初期コード全文のタイピングになり冗長なため、初期コード（`initialHtml`）へ即時復元してから再生する（失う編集がない場合のみの復元なので、上記の設計と両立する）
-- **中断**: 再生中に textarea へ `focus` / `pointerdown`、またはタブクリックで**その場で即中断**。エディターは書きかけの状態をそのまま残し（仕様）、入力欄トリガーはプレースホルダー表示（`Ask AI to edit...`）へ戻し、チャット末尾にステータス行（"Interrupted" + Resume ボタン）を追加する。`AbortController` + abort 対応 `sleep()` で実装し、非同期ループは `AbortedError` で脱出する（それ以外の例外は再 throw）
+- **再生開始時にコードをスナップしない**: コード書き換えは「現在のエディター内容 → `resultCode`」の diff タイピングなので、再生前にユーザーが編集していても、その状態を出発点として目標コードへ書き換える動きになる（done 後のリスタートだけは初期コードへ戻す）。**例外はエディターが空のとき**: 空から始めると初期コード全文のタイピングになり冗長なため、初期コード（`initialHtml`）へ即時復元してから再生する（失う編集がない場合のみの復元なので、上記の設計と両立する）。**もう 1 つの例外は書き換えアニメの想定所要時間が上限（`MAX_CODE_ANIM_MS`）を超えるとき**（上限いっぱいの巨大な貼り付け・空にしてからの Resume 等）: そのステップの開始コード（前ステップの `resultCode`。最初のステップは初期コード）へ即時復元してから再生する。復元後の diff はシナリオが意図した小さな編集そのものになるため、チャット文言と書き換えの動きが常に一致し、アニメ時間に上限が付く。復元でヒーローが縮んでエディターがビューポート外へ出た場合は、エディターウィンドウを `scrollIntoView` でビューポートの上下中央へ戻す（done 後のリスタート等のリセット系スナップも同様）
+- **中断**: 再生中に textarea へ `focus` / `pointerdown`、タブクリック、または「Ask AI to edit...」トリガーの再クリック（再生中は停止ボタンとして機能する）で**その場で即中断**。エディターは書きかけの状態をそのまま残し（仕様）、入力欄トリガーはプレースホルダー表示（`Ask AI to edit...`）へ戻し、チャット末尾にステータス行（"Interrupted" + Resume ボタン）を追加する。`AbortController` + abort 対応 `sleep()` で実装し、非同期ループは `AbortedError` で脱出する（それ以外の例外は再 throw）
 - **再開**: Resume ボタンまたは「Ask AI to edit...」のクリック（どちらも同じ処理）。ステップの頭へ巻き戻さず、**中断した瞬間のフェーズ（`resumePhase`: user / ai / code）の続きから**再生する。"Interrupted" ステータス行（`interruptedRow`）だけを取り除き、吹き出し・書きかけのコードはそのまま残す。AI 吹き出しは途中まで打ったテキストが目標文言の先頭一致なら続きの文字から打ち（不一致 — 中断後のタブ切替等 — なら打ち直す）、コードは「現在のビュー → 目標コード」の diff で残りを書き換える。したがって中断中のユーザー編集もスナップで上書きされず、そこを出発点に目標コードへ書き換わる。`resumePhase` は各フェーズの完了時点（後続ポーズの前）に更新するため、ポーズ中に中断しても再開時に吹き出しを二重生成しない
-- **全ステップ完遂（done）**: チャット末尾にステータス行（"Done"）を表示する。再クリックでチャットをクリアし初期コードへ戻して最初から
+- **全ステップ完遂（done）**: チャット末尾にステータス行（"Done"）を表示する。再クリックでチャットをクリアし初期コードへ戻して最初から。初期コードへ戻す（編集を破棄する）のは設計判断: `resultCode` は累積のため、最終状態（やその上への編集）から step 1 を再生すると「後続ステップの変更を取り消す diff」がタイピングされる undo→redo の壊れた演出になる。リプレイは初期コードへのリセットが前提（仕様として編集は破棄する）
 
 ### 1 ステップの流れ
 
@@ -357,13 +366,15 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 2. **AI 発話**: AI 吹き出しへ 1 文字ずつタイピング。メッセージ領域は追記のたびに末尾へ自動スクロール（スクロールイベントが発火しない末尾追記でも上下端フェードがズレないよう、`scroll-hint.ts` の更新関数を明示的に呼ぶ）
 3. **コード書き換え**: 後述の diff タイピング。完了したらステップ間の「間」を挟んで次のステップへ
 
-吹き出しは `<p class="c--kvEditor_msg is--user / is--ai">` を `[data-kv-messages]`（`aria-live="polite"`）へ追記する。中断時（"Interrupted" のラベル + `.c--kvEditor_statusBtn` の Resume ボタン）・完了時（"Done" のラベルのみ）のステータス行も同じ領域へ `<p class="c--kvEditor_status">` として追記するので、`aria-live` によりスクリーンリーダーへも中断・完了が通知される。
+吹き出しは `<p class="c--kvEditor_msg is--user / is--ai">` を `[data-kv-messages]` へ追記する。中断時（"Interrupted" のラベル + `.c--kvEditor_statusBtn` の Resume ボタン）・完了時（"Done" のラベルのみ）のステータス行も同じ領域へ `<p class="c--kvEditor_status">` として追記する。スクリーンリーダーへの通知は可視のチャット領域ではなく、隠しライブリージョン（`u--srOnly` + `[data-kv-live]`・`aria-live="polite"`）へ `announce()` で流す。1 文字ずつのタイピング途中は告知せず、確定した文言のみ（ユーザー吹き出しの表示時・AI 発話のタイピング完了時・中断時 "Interrupted"・完了時 "Done"）を告知する。連続して同一文言でも読み上げられるよう、一度空にしてから rAF で本文を設定する。
 
 タイピング・ポーズの速度はモジュール先頭の定数に集約している（ms）: ユーザー入力 30 / AI 発話 22 / コード削除 12（2 文字ずつ）/ コード挿入 18（1 文字ずつ）、送信前 300 / AI 応答前 400 / コード書き換え前 500 / ハンク間 350 / 編集位置へのスクロール後 300 / ステップ間 1400（reduced-motion 時は 900）。
 
 ### コード書き換えアニメ（ハンク単位の diff タイピング）
 
 全文置換ではなく、行単位の LCS（`lib/diff.ts` の `diffLineHunks()`）で**変更された行のまとまり（ハンク）**を検出し、上から順に 1 ハンクずつ書き換える。`<Flex>` → `<Stack>` のように開始タグと閉じタグが離れて変わるケースでも、間の無変更な子要素を巻き込んで再タイプしない。ハンク間には短いポーズ（`PAUSE_BETWEEN_EDITS`）を挟み、編集箇所を移動している演出にする。適用済みハンクで行数が増減するため、行番号のズレ（`lineShift`）を補正しながら順に適用する。
+
+アニメ開始前にハンク列から想定所要時間（削除・挿入のティック数 × 各インターバル + ハンク間ポーズ）を見積もり、上限（`MAX_CODE_ANIM_MS` = 8 秒）を超える場合はステップ開始コードへ即時復元してから diff を取り直して再生する（前述のステートマシン節の例外を参照）。
 
 各ハンクの書き換え前に、編集開始位置（`diffCode()` の共通 prefix `head` の末尾）を `editor.revealPosition()` で可視範囲へスクロールする。モバイルでは編集箇所が textarea のスクロール範囲外（横に長い行）やページのビューポート外にあり演出が見えないことがあるための措置で、スクロールが発生した場合は短い「間」（`PAUSE_AFTER_REVEAL`）を挟んでから書き換えを始める。
 
@@ -372,7 +383,7 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 1. 削除フェーズ: 後ろから数文字ずつ削る
 2. 挿入フェーズ: 新しい文字列を 1 文字ずつタイプ
 
-フレームの反映は `editor.setViewText()` を毎ティック呼ぶ。HTML タブではモデル・ヒーローも同期するが、JSX タブではタイピング途中が不正な JSX になるため**表示のみ**更新し、ステップ完了時に `snapTo()`（内部で `editor.setCode(html, jsxText)`）でモデル（＝ヒーロー）を確定する。ヒーローは rAF スロットル・ハイライトは同期実行なので負荷は問題にならない。
+フレームの反映は `editor.setViewText()` を毎ティック呼ぶ。HTML タブではモデル・ヒーローも同期するが、JSX タブではタイピング途中が不正な JSX になるため**表示のみ**更新し、ステップ完了時に `snapTo()`（内部で `editor.setCode(html)`）でモデル（＝ヒーロー）を確定する。ヒーローは rAF スロットル・ハイライトは同期実行なので負荷は問題にならない。
 
 ### reduced-motion
 
