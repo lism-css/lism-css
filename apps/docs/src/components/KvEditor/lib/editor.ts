@@ -25,8 +25,8 @@ const padTrailingNewline = (code: string): string => (code.endsWith('\n') ? `${c
 
 /** プレイヤーから操作するためのエディターAPI */
 export interface EditorApi {
-  /** コード全文を置き換える（ヒーロー・ハイライトも更新）。viewText は JSXタブに表示する表記（HTMLタブでは不要） */
-  setCode(code: string, viewText?: string): void;
+  /** コード全文を置き換える（ヒーロー・ハイライトも更新）。JSXタブ表示中は htmlToJsx で変換した表記を表示する */
+  setCode(code: string): void;
   getCode(): string;
   getActiveTab(): EditorLang;
   /** アクティブタブに表示中の生テキスト */
@@ -228,6 +228,9 @@ export function initKvEditor(): void {
   };
   const enforceLimit = (): boolean => {
     if (textarea.value.length <= MAX_CODE_LENGTH) return false;
+    // 上限超過でも、長さが増えない編集（削除・同長置換）は受け付ける。
+    // タブ切替の変換で表示テキストが上限を超えた場合に、削除で上限内へ戻る脱出手段を残すため
+    if (textarea.value.length <= snapshot.value.length) return false;
     textarea.value = snapshot.value;
     textarea.setSelectionRange(snapshot.selStart, snapshot.selEnd);
     snackbar?.show(STRINGS.characterLimit(MAX_CODE_LENGTH));
@@ -248,6 +251,11 @@ export function initKvEditor(): void {
   // WCAG 2.1.2（キーボードトラップ禁止）のための脱出手段:
   // Esc → 直後の Tab / Shift+Tab は既定のフォーカス移動に任せる
   let tabCaptureEnabled = true;
+
+  // 複数行の execCommand ループ中は input イベントごとの処理（変換・全文ハイライト）を抑止する。
+  // 行数ぶんの同期全文ハイライトが 1 回の Tab 押下で走ってメインスレッドが固まるのを防ぐため、
+  // ループ完了後に 1 回だけ processInput を呼ぶ
+  let suppressInputEvents = false;
 
   const insertIndent = (): void => {
     // undo 履歴を保持するため execCommand を優先する。成功すれば beforeinput / input が発火し、
@@ -288,16 +296,19 @@ export function initKvEditor(): void {
     }
     // undo 履歴を保持するため execCommand を優先する（複数行の編集が行ごとの undo ステップに分かれるのは許容）。
     // 行オフセットがずれないよう、最後の行から先頭行へ逆順に処理する
-    let fellBack = false;
-    for (let i = lineStarts.length - 1; i >= 0; i--) {
-      const ls = lineStarts[i];
-      textarea.setSelectionRange(ls, ls);
-      if (typeof document.execCommand === 'function' && document.execCommand('insertText', false, '  ')) continue;
-      // フォールバック: input イベントが発火しないため、ループ後にまとめて反映する
-      fellBack = true;
-      textarea.setRangeText('  ', ls, ls, 'end');
+    suppressInputEvents = true;
+    try {
+      for (let i = lineStarts.length - 1; i >= 0; i--) {
+        const ls = lineStarts[i];
+        textarea.setSelectionRange(ls, ls);
+        if (typeof document.execCommand === 'function' && document.execCommand('insertText', false, '  ')) continue;
+        // フォールバック: input イベントは発火しないが、反映はループ後の processInput で同様に行われる
+        textarea.setRangeText('  ', ls, ls, 'end');
+      }
+    } finally {
+      suppressInputEvents = false;
     }
-    if (fellBack) processInput();
+    processInput();
     // 選択範囲を論理的に同じ位置へ復元する（先頭行の挿入分 +2 を始点に、全行の挿入合計を終点に加算）
     textarea.setSelectionRange(selStart + 2, selEnd + lineStarts.length * 2);
     saveSnapshot();
@@ -315,17 +326,20 @@ export function initKvEditor(): void {
     if (removedTotal === 0) return;
     // undo 履歴を保持するため execCommand を優先する（複数行の編集が行ごとの undo ステップに分かれるのは許容）。
     // 行オフセットがずれないよう、最後の行から先頭行へ逆順に処理する
-    let fellBack = false;
-    for (let i = lineStarts.length - 1; i >= 0; i--) {
-      if (removeCounts[i] === 0) continue;
-      const ls = lineStarts[i];
-      textarea.setSelectionRange(ls, ls + removeCounts[i]);
-      if (typeof document.execCommand === 'function' && document.execCommand('delete')) continue;
-      // フォールバック: input イベントが発火しないため、ループ後にまとめて反映する
-      fellBack = true;
-      textarea.setRangeText('', ls, ls + removeCounts[i], 'end');
+    suppressInputEvents = true;
+    try {
+      for (let i = lineStarts.length - 1; i >= 0; i--) {
+        if (removeCounts[i] === 0) continue;
+        const ls = lineStarts[i];
+        textarea.setSelectionRange(ls, ls + removeCounts[i]);
+        if (typeof document.execCommand === 'function' && document.execCommand('delete')) continue;
+        // フォールバック: input イベントは発火しないが、反映はループ後の processInput で同様に行われる
+        textarea.setRangeText('', ls, ls + removeCounts[i], 'end');
+      }
+    } finally {
+      suppressInputEvents = false;
     }
-    if (fellBack) processInput();
+    processInput();
     // 選択範囲を論理的に同じ位置へ復元する。削除範囲の内側にあった端点が
     // その行の（削除後の）行頭より前へ行かないようクランプする
     const newSelStart = Math.max(lineStarts[0], selStart - removeCounts[0]);
@@ -441,6 +455,8 @@ export function initKvEditor(): void {
     renderHighlight();
   };
   textarea.addEventListener('input', (e) => {
+    // 複数行インデントの execCommand ループ中は抑止（ループ側が完了後に 1 回だけ処理する）
+    if (suppressInputEvents) return;
     if (!e.isComposing && enforceLimit()) return;
     processInput();
   });
@@ -524,20 +540,20 @@ export function initKvEditor(): void {
   });
 
   // ---- コードのプログラム的な書き換え --------------------------------------
-  // viewText: JSXタブがアクティブなときに表示する JSX 表記（HTMLタブでは code をそのまま表示する）
-  const setCode = (code: string, viewText?: string): void => {
+  // アクティブタブの表示テキストも同時に確定する。JSXタブなら htmlToJsx で変換した表記を表示する
+  //（表示テキストの決定は呼び出し側へ委ねず、ここで一括して行う。表示とモデルの乖離を作らないため）
+  const setCode = (code: string): void => {
     state.html = code;
     state.tabText.html = code;
     state.stale.html = false;
-    if (state.activeTab === 'jsx' && viewText !== undefined) {
+    if (state.activeTab === 'jsx') {
+      const viewText = htmlToJsx(code);
       state.tabText.jsx = viewText;
       state.stale.jsx = false;
       textarea.value = viewText;
     } else {
       state.stale.jsx = true;
-      if (state.activeTab === 'html') {
-        textarea.value = code;
-      }
+      textarea.value = code;
     }
     setJsxInvalid(false);
     resetSyntaxCheck();
@@ -564,8 +580,7 @@ export function initKvEditor(): void {
   // 空提案スナックバーの「Restore initial code」ボタン
   // NOTE: scheduleSyntaxCheck から参照されるが、呼び出しは常に初期化完了後（デバウンス発火時）
   restoreInitialCode = (): void => {
-    // JSXタブで空にした場合は、初期コードのJSX表記で表示を復元する
-    setCode(initialHtml, state.activeTab === 'jsx' ? htmlToJsx(initialHtml) : undefined);
+    setCode(initialHtml);
     // フォーカスを非表示になったボタンに残さず、編集を続けられるようエディターへ戻す
     textarea.focus({ preventScroll: true });
   };

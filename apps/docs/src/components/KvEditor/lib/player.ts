@@ -133,9 +133,9 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
     });
   };
 
-  /** HTMLモデルとアクティブタブの表示を同時に確定する */
+  /** HTMLモデルとアクティブタブの表示を同時に確定する（JSXタブの表記変換は setCode 側で行われる） */
   const snapTo = (html: string): void => {
-    editor.setCode(html, isJsxTab() ? htmlToJsx(html) : undefined);
+    editor.setCode(html);
   };
 
   const appendBubble = (kind: 'user' | 'ai'): HTMLElement => {
