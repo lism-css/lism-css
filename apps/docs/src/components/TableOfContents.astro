@@ -55,6 +55,9 @@ const tocText = t(lang, 'toc');
 
     if (headings.length === 0) return;
 
+    // main列がデスクトップ幅で内部スクロールする場合のスクロールコンテナ
+    const mainScrollEl = document.querySelector('.z--main');
+
     // 現在アクティブな目次リンクを更新
     function setActiveLink(slug: string) {
       tocLinks.forEach((link) => {
@@ -92,13 +95,15 @@ const tocText = t(lang, 'toc');
     headings.forEach((heading) => observer.observe(heading));
 
     // スクロールが一番上の場合、最初の見出しをアクティブに
+    // window.scrollY ではなく見出しの実座標で判定（mainが内部スクロールする場合にも対応するため）
     function checkTopScroll() {
-      if (window.scrollY < 100 && headings.length > 0) {
+      if (headings[0].getBoundingClientRect().top > 100) {
         setActiveLink(headings[0].id);
       }
     }
     checkTopScroll();
     window.addEventListener('scroll', checkTopScroll, { passive: true });
+    mainScrollEl?.addEventListener('scroll', checkTopScroll, { passive: true });
   }
 
   // DOMContentLoaded で初期化

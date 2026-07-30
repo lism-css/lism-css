@@ -67,13 +67,12 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         class={`z--wrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
         gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
         gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
-        min-h="100svh"
         px="10"
         pb="10"
         mt="20"
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="z--main c--shadow-box">
+        <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="z--main c--shadow-box c--scroll" ov-y="auto">
           <span class="u--srOnly" id="_top" aria-hidden="true"></span>
           <slot />
           <Footer />
