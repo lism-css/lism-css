@@ -46,7 +46,7 @@ const themeModes = [
 ];
 ---
 
-<Flex jc="center" ai="center" p="0.1875rem" bgc="#F6F6F6" bdrs="var(--bdrs--15)" w="fit-content" class="c--themeModeSwitch">
+<Flex jc="center" ai="center" p="0.1875rem" bgc="var(--themeModeSwitch-bgc)" bdrs="var(--bdrs--15)" w="fit-content" class="c--themeModeSwitch">
   {
     themeModes.map((mode) => (
       <Lism
@@ -104,6 +104,7 @@ const themeModes = [
   :global(html[data-theme-mode='light']) .c--themeModeSwitch_btn[data-theme-mode='light'],
   :global(html[data-theme-mode='dark']) .c--themeModeSwitch_btn[data-theme-mode='dark'] {
     background-color: #fff;
+    color: var(--themeModeSwitch-btn);
   }
 </style>
 
