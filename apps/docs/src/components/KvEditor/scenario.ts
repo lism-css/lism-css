@@ -43,7 +43,9 @@ const STEP_DEFS: ScenarioStepDef[] = [
       ja: '見出しにブランドカラーを適用します。c="brand" props を追加しますね。',
       en: 'I\'ll apply the brand color to the heading by adding the c="brand" prop.',
     },
-    edits: [['-fz:5xl -ta:center"', '-fz:5xl -ta:center -c:brand"']],
+    // 末尾の引用符まで含めて h1 の class 属性にだけ一致させる（リード p も -fz_md を持つが、
+    // p の class は -mbs:30 で終わるため衝突しない）
+    edits: [['-fz_md -ta:center"', '-fz_md -ta:center -c:brand"']],
   },
   {
     userMessage: {
@@ -51,17 +53,14 @@ const STEP_DEFS: ScenarioStepDef[] = [
       en: 'Make the buttons pill-shaped',
     },
     aiMessage: {
-      ja: 'Get Started ボタンの角丸を -bdrs:99 に変更し、左右の余白を広げます。',
-      en: "I'll round the Get Started button with -bdrs:99 and widen its horizontal padding.",
+      ja: 'Get Started ボタンの角丸を -bdrs:99 に変更します。',
+      en: "I'll round the Get Started button with -bdrs:99.",
     },
     aiMessageJsx: {
-      ja: 'Get Started ボタンの角丸を bdrs="99" に変更し、左右の余白を広げます。',
-      en: 'I\'ll round the Get Started button with bdrs="99" and widen its horizontal padding.',
+      ja: 'Get Started ボタンの角丸を bdrs="99" に変更します。',
+      en: 'I\'ll round the Get Started button with bdrs="99".',
     },
-    edits: [
-      ['-px:10 -py:10 -c:base', '-px:20 -py:10 -c:base'],
-      ['-bdrs:20 -fw:500', '-bdrs:99 -fw:500'],
-    ],
+    edits: [['-bdrs:20 -fw:500', '-bdrs:99 -fw:500']],
   },
   {
     userMessage: {
