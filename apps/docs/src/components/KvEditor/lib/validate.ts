@@ -3,11 +3,41 @@
 // - findHtmlIssue: スタック式の軽量タグバランスチェック。
 //   ブラウザの HTML パーサーは寛容で「不正」を返さないため、閉じ漏れ等の
 //   よくあるミスだけを自前で検知してスナックバー表示に使う（描画は止めない）。
+//   WHATWG の省略可能な終了タグ（<p>a<p>b 等の暗黙クローズ）は valid として扱う。
 
 /** エディターの最大入力文字数 */
 export const MAX_CODE_LENGTH = 2_000;
 
 const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'source', 'track', 'wbr']);
+
+// 中身をタグとして解釈しない raw text 要素（<textarea> 内の a < b 等を誤検知しないよう閉じタグまでスキップする）
+const RAW_TEXT_TAGS = new Set(['script', 'style', 'textarea', 'title']);
+
+// WHATWG の省略可能な終了タグ（optional end tags）のうち「次の開始タグで暗黙に閉じる」ルール:
+// スタックトップの要素が開いたままでも、IMPLIED_BY_START.get(トップ) に含まれる開始タグが
+// 来たら暗黙で閉じられたと見なす（<p>a<p>b / <li>a<li>b 等をブラウザと同様に valid とする）。
+// キーの参照はユーザー入力のタグ名なので、プロトタイプ汚染を避けるため Record ではなく Map を使う
+const IMPLIED_BY_START = new Map<string, ReadonlySet<string>>([
+  // prettier-ignore
+  ['p', new Set(['address', 'article', 'aside', 'blockquote', 'details', 'div', 'dl', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul'])],
+  ['li', new Set(['li'])],
+  ['dt', new Set(['dt', 'dd'])],
+  ['dd', new Set(['dt', 'dd'])],
+  ['option', new Set(['option', 'optgroup'])],
+  ['optgroup', new Set(['optgroup'])],
+  ['tr', new Set(['tr'])],
+  ['td', new Set(['td', 'th', 'tr'])],
+  ['th', new Set(['td', 'th', 'tr'])],
+  ['thead', new Set(['tbody', 'tfoot'])],
+  ['tbody', new Set(['tbody', 'tfoot'])],
+  ['rt', new Set(['rt', 'rp'])],
+  ['rp', new Set(['rt', 'rp'])],
+]);
+
+// 親要素の終了タグ・入力末尾に到達したとき、終了タグを省略したまま暗黙で閉じてよい要素
+// （<div><p>a</div> や、<p>hello で終わる入力を valid とする）
+// prettier-ignore
+const OMITTABLE_AT_END = new Set(['p', 'li', 'dt', 'dd', 'option', 'optgroup', 'tr', 'td', 'th', 'thead', 'tbody', 'tfoot', 'caption', 'colgroup', 'rt', 'rp']);
 
 /** 引用符内の `>` を無視してタグの終わりを探す */
 const findTagEnd = (code: string, from: number): number => {
@@ -68,18 +98,36 @@ export function findHtmlIssue(code: string): string | null {
     const tag = nameMatch[1].toLowerCase();
 
     if (isClose) {
-      if (stack.length > 0 && stack[stack.length - 1] === tag) {
+      if (!stack.includes(tag)) return `stray closing </${tag}>`;
+      // 対応する開始タグまでの間にある、終了タグを省略できる要素は暗黙で閉じる（<div><p>a</div> 等）
+      while (stack[stack.length - 1] !== tag) {
+        if (!OMITTABLE_AT_END.has(stack[stack.length - 1])) return `unclosed <${stack[stack.length - 1]}>`;
         stack.pop();
-      } else if (stack.includes(tag)) {
-        return `unclosed <${stack[stack.length - 1]}>`;
-      } else {
-        return `stray closing </${tag}>`;
       }
-    } else if (!raw.endsWith('/') && !VOID_TAGS.has(tag)) {
-      stack.push(tag);
+      stack.pop();
+      continue;
     }
+
+    // 開始タグ: 開いたままの要素がこのタグで暗黙に閉じるなら閉じる（<p>a<p>b / <table><tr><td>a<tr> 等は連鎖）。
+    // <hr> 等の void 要素も <p> を閉じるため、push の要否より先に評価する
+    while (stack.length > 0 && IMPLIED_BY_START.get(stack[stack.length - 1])?.has(tag)) {
+      stack.pop();
+    }
+    if (raw.endsWith('/') || VOID_TAGS.has(tag)) continue;
+    if (RAW_TEXT_TAGS.has(tag)) {
+      // raw text 要素の中身はタグとして解釈せず、対応する閉じタグまでスキップする
+      const close = new RegExp(`</${tag}\\b`, 'i').exec(code.slice(i));
+      if (!close) return `unclosed <${tag}>`;
+      const closeGt = code.indexOf('>', i + close.index);
+      if (closeGt === -1) return 'incomplete tag';
+      i = closeGt + 1;
+      continue;
+    }
+    stack.push(tag);
   }
 
-  if (stack.length > 0) return `unclosed <${stack[stack.length - 1]}>`;
+  // 終了タグを省略できる要素（p, li 等）は入力末尾まで開いたままでも valid
+  const unclosed = stack.filter((tag) => !OMITTABLE_AT_END.has(tag));
+  if (unclosed.length > 0) return `unclosed <${unclosed[unclosed.length - 1]}>`;
   return null;
 }
