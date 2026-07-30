@@ -20,7 +20,7 @@ import Footer from '../components/Footer.astro';
 import Sidebar from '../components/Sidebar.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import FixedToc from '../components/FixedToc.astro';
-import ShareBtns from '../components/ShareBtns.astro';
+// import ShareBtns from '../components/ShareBtns.astro';
 import type { TocItem } from '../lib/generateToc';
 import type { SchemaType } from '../lib/jsonLd';
 import { Grid, Stack, Container, Box } from 'lism-css/astro';
@@ -82,7 +82,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
           toc && (
             <Stack as="aside" class="z--toc c--shadow-box" isContainer g="15" d={['none', null, null, 'flex']} ov-y="auto" pb="10">
               <TableOfContents toc={toc} px="20" py="30" />
-              <ShareBtns url={canonicalUrl} title={title} px="15" />
+              {/* <ShareBtns url={canonicalUrl} title={title} px="15" /> */}
             </Stack>
           )
         }
@@ -92,7 +92,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
       toc && (
         <FixedToc>
           <TableOfContents toc={toc} px="30" />
-          <ShareBtns url={canonicalUrl} title={title} px="30" />
+          {/* <ShareBtns url={canonicalUrl} title={title} px="30" /> */}
         </FixedToc>
       )
     }

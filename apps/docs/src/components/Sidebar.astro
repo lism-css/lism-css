@@ -1,18 +1,18 @@
 ---
-import { Flex, Stack } from 'lism-css/astro';
+import { Stack } from 'lism-css/astro';
 import SiteNav from './SiteNav.astro';
-import ThemeSwitch from './ThemeSwitch.astro';
-import LanguageSelect from './LanguageSelect.astro';
+// import ThemeSwitch from './ThemeSwitch.astro';
+// import LanguageSelect from './LanguageSelect.astro';
 ---
 
 <Stack as="aside" class="z--sidebar" isContainer g="10" pb="10" {...Astro.props}>
   <Stack class="z--sidebar__nav" fx="1" min-h="0">
     <SiteNav />
   </Stack>
-  <Flex jc="between" g="5" px="15">
+  <!-- <Flex jc="between" g="5" px="15">
     <LanguageSelect />
     <ThemeSwitch />
-  </Flex>
+  </Flex> -->
 </Stack>
 
 <script>

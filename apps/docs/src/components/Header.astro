@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site';
 import SearchModal from './SearchModal.astro';
 import SiteNav from './SiteNav.astro';
 import SNSLinks from './SNSLinks.astro';
-import LanguageSelect from './LanguageSelect.astro';
+// import LanguageSelect from './LanguageSelect.astro';
 import ThemeSwitch from './ThemeSwitch.astro';
 import { getLangFromUrl, getLocalizedUrl, t } from '@/lib/i18n';
 
@@ -120,7 +120,7 @@ const headerText = t(currentLang, 'header');
           </Modal.Body>
           <Cluster g="10" fz="l" bd-t pbs="20" px="30">
             <SNSLinks />
-            <LanguageSelect />
+            {/* <LanguageSelect /> */}
             <ThemeSwitch />
           </Cluster>
         </Modal.Inner>
