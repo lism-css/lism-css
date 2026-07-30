@@ -271,6 +271,7 @@ const presets = [
   <Lism as="section" isWrapper="l" hasGutter pos="relative">
     {/* AIツール連携セクション背景画像 */}
     <Group
+      class="c--ai-bg"
       pos="absolute"
       w={{ base: '121.875rem', md: '162.5rem' }}
       l="50%"
@@ -446,5 +447,11 @@ const presets = [
     box-shadow: var(--bxsh--search-border);
     background: var(--lightgray-hi);
     align-self: center;
+  }
+
+  .c--ai-bg {
+    :global([data-theme='dark']) & {
+      mix-blend-mode: soft-light;
+    }
   }
 </style>
