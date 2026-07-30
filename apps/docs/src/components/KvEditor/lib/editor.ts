@@ -77,6 +77,7 @@ export function initKvEditor(): void {
   const snackbar = snackbarEl ? createSnackbar(snackbarEl) : null;
 
   const tabButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-kv-tab]')];
+  const htmlTabButton = tabButtons.find((b) => b.dataset.kvTab === 'html') ?? null;
   const jsxTabButton = tabButtons.find((b) => b.dataset.kvTab === 'jsx') ?? null;
   const tabPanel = demo.querySelector<HTMLElement>('#kv-editor-panel');
 
@@ -202,14 +203,17 @@ export function initKvEditor(): void {
   }
 
   // ---- 入力・タブ切替 -----------------------------------------------------
-  const setJsxInvalid = (invalid: boolean): void => {
-    if (!jsxTabButton) return;
+  // 構文エラー中のタブに warning 色のインジケーターを付ける（data-invalid 属性。CSS は両タブ共通）
+  const setTabInvalid = (button: HTMLButtonElement | null, invalid: boolean): void => {
+    if (!button) return;
     if (invalid) {
-      jsxTabButton.setAttribute('data-invalid', '');
+      button.setAttribute('data-invalid', '');
     } else {
-      jsxTabButton.removeAttribute('data-invalid');
+      button.removeAttribute('data-invalid');
     }
   };
+  const setHtmlInvalid = (invalid: boolean): void => setTabInvalid(htmlTabButton, invalid);
+  const setJsxInvalid = (invalid: boolean): void => setTabInvalid(jsxTabButton, invalid);
 
   // 構文エラーの invalid 状態を入力要素自体にも紐付ける（タブの warning 色・スナックバーは視覚のみのため）
   const setTextareaInvalid = (invalid: boolean): void => {
@@ -396,7 +400,9 @@ export function initKvEditor(): void {
     syntaxTimer = setTimeout(() => {
       // 空になったらリセット提案（ボタン付き・入力再開かリセットまで表示）
       if (textarea.value.trim() === '') {
-        setTextareaInvalid(false); // 空は構文エラーではない
+        // 空は構文エラーではない
+        setTextareaInvalid(false);
+        setHtmlInvalid(false);
         showEmptyPrompt();
         return;
       }
@@ -404,8 +410,10 @@ export function initKvEditor(): void {
       let issue: string | null = null;
       if (state.activeTab === 'html') {
         issue = findHtmlIssue(textarea.value) ? STRINGS.invalidHtml : null;
-        // HTMLタブの invalid 状態はデバウンス評価が唯一の判定箇所（JSXタブは processInput で即時判定済み）
+        // HTMLタブの invalid 状態はデバウンス評価が唯一の判定箇所（JSXタブは processInput で即時判定済み）。
+        // スナックバーは遷移時の1回だが、タブの warning 色は不正な間は付き続ける（永続的な手がかり）
         setTextareaInvalid(issue !== null);
+        setHtmlInvalid(issue !== null);
       } else {
         issue = jsxInvalidNow ? STRINGS.invalidJsx : null;
       }
@@ -420,6 +428,7 @@ export function initKvEditor(): void {
     jsxInvalidNow = false;
     emptyPromptShown = false;
     setTextareaInvalid(false);
+    setHtmlInvalid(false);
     snackbar?.hide();
   };
 
@@ -474,11 +483,15 @@ export function initKvEditor(): void {
     textarea.value = state.tabText[tab];
     setJsxInvalid(false);
     resetSyntaxCheck();
-    // JSXタブへ戻ったとき、保持していた生テキストが不正なままなら warning 表示を復元する
-    // （モデルから再生成した JSX は常に有効なので再評価不要。resetSyntaxCheck 後に行うこと）
+    // 元のタブへ戻ったとき、保持していた生テキストが不正なままなら warning 表示を復元する
+    // （モデルから再生成したテキストは常に有効＝プリンタ出力なので再評価不要。resetSyntaxCheck 後に行うこと）
     if (tab === 'jsx' && !regenerated && jsxToHtml(textarea.value) === null) {
       jsxInvalidNow = true;
       setJsxInvalid(true);
+      setTextareaInvalid(true);
+    }
+    if (tab === 'html' && !regenerated && findHtmlIssue(textarea.value)) {
+      setHtmlInvalid(true);
       setTextareaInvalid(true);
     }
     // 空のままタブを切り替えた場合は、空提案を消さずに引き継ぐ（入力があるまで常時表示）
