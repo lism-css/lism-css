@@ -35,7 +35,7 @@ const PAUSE_BETWEEN_EDITS = 350; // 離れた編集箇所（ハンク）へ移�
 const PAUSE_AFTER_REVEAL = 300; // 編集位置へのスクロールを見せてから書き換え始めるまでの間
 const PAUSE_BETWEEN_STEPS = 1400; // ステップ間の「間」（最後のステップの後には置かない）
 const PAUSE_REDUCED_MOTION = 900; // reduced-motion 時のステップ間の「間」
-const MAX_CODE_ANIM_MS = 8000; // 書き換えアニメの想定所要時間の上限。超える場合はステップ開始コードへ復元してから再生する
+const MAX_CODE_ANIM_MS = 3000; // 書き換えアニメの想定所要時間の上限。超える場合はステップ開始コードへ復元してから再生する
 
 interface PlayerOptions {
   editor: EditorApi;
