@@ -80,8 +80,8 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         </Container>
         {
           toc && (
-            <Stack as="aside" class="z--toc c--shadow-box" isContainer g="15" d={['none', null, null, 'flex']} ov-y="auto" pb="10">
-              <TableOfContents toc={toc} px="20" py="30" />
+            <Stack as="aside" class="z--toc c--shadow-box" isContainer g="15" d={['none', null, null, 'flex']} ov-y="auto" px="20" py="30">
+              <TableOfContents toc={toc} />
               {/* <ShareBtns url={canonicalUrl} title={title} px="15" /> */}
             </Stack>
           )
