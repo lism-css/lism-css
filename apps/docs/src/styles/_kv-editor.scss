@@ -315,7 +315,6 @@
   .c--kvEditor_snackbarRow {
     max-width: 100%;
     min-height: 0; // flex アイテムの既定 min-height:auto を外し height:0 を効かせる
-    overflow: hidden; // 折りたたみ時に中身をクリップ＋BFC 化でカード margin を内包
     transition: height 0.2s ease;
 
     @media (prefers-reduced-motion: reduce) {
@@ -518,17 +517,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    margin: 0;
+    margin: 0 0 1em;
     color: var(--kvEditor-text-dim);
+    font-style: italic;
   }
 
   .c--kvEditor_statusLabel {
     line-height: 1.25;
-  }
-
-  /* 中断ステータス行の「Interrupted」ラベルのみ斜体にする（"Done" は通常書体） */
-  .c--kvEditor_status.is--interrupted .c--kvEditor_statusLabel {
-    font-style: italic;
   }
 
   /* 「Ask AI to edit...」トリガー（入力欄風のボタン。右下に送信矢印の矩形） */
