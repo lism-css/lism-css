@@ -47,10 +47,12 @@ const { title = siteConfig.name, description, ogImage, lang = getRootLang(), sch
       <Box class="p--front">
         <Header hasMobileMenu={false} />
       </Box>
-      <Lism as="main">
-        <slot />
-      </Lism>
-      <Footer />
+      <Box bgc="var(--docs-bg)" pos="relative" z="1">
+        <Lism as="main">
+          <slot />
+        </Lism>
+        <Footer />
+      </Box>
     </Lism>
   </body>
 </html>
