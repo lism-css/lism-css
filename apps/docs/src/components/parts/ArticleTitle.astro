@@ -1,0 +1,28 @@
+---
+/**
+ * 記事タイトル（eyebrow + title）
+ * docs/ui 記事詳細ページで共通利用
+ */
+import { Heading, Inline } from 'lism-css/astro';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+
+type Props = AstroLismBaseProps & {
+  title: string;
+  eyebrow?: string;
+};
+
+const { title, eyebrow, ...props } = Astro.props;
+---
+
+<Heading level="1" d="flex" fxd="column" rg="10" fz="base" pbe="35" bd-be bdw="1px" bdc="#ddd" {...props}>
+  {
+    eyebrow && (
+      <Inline aria-hidden="true" c="var(--gray-lo-c)" fz="xs" fw="400" lh="1.17">
+        {eyebrow}
+      </Inline>
+    )
+  }
+  <Inline c="var(--gray-hi-c)" fz="4xl" fw="700" lh="1.19">
+    {title}
+  </Inline>
+</Heading>
