@@ -72,7 +72,16 @@ const ogImage = `/${lang}/docs/og/${slug}.png`;
     }
 
     {/* 記事タイトル */}
-    <Heading level="1" class="articleTitle">{entry.data.title}</Heading>
+    <Heading level="1" class="articleTitle">
+      {
+        entry.data.eyebrow && (
+          <span class="eyebrow" aria-hidden="true">
+            {entry.data.eyebrow}
+          </span>
+        )
+      }
+      <span class="title">{entry.data.title}</span>
+    </Heading>
 
     {/* 記事本文 */}
     <Flow class="articleContent" mbs="40">

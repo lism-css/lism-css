@@ -76,7 +76,16 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
     {isFallback && <TranslationNotice lang={lang} />}
 
     {/* 記事タイトル */}
-    <Heading level="1" class="articleTitle">{entry.data.title}</Heading>
+    <Heading level="1" class="articleTitle">
+      {
+        entry.data.eyebrow && (
+          <span class="eyebrow" aria-hidden="true">
+            {entry.data.eyebrow}
+          </span>
+        )
+      }
+      <span class="title">{entry.data.title}</span>
+    </Heading>
 
     <Lism class="u--cbox" keycolor="yellow" p="20" my="40" bdrs="10" bd>
       <Lism layout="flex" ai="center" g="10" fw="bold">
