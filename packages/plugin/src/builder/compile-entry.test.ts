@@ -116,6 +116,24 @@ describe('createCssCompiler', () => {
     expect(fullCss).not.toContain('360px');
   });
 
+  test('full エントリでは border ショートハンドは BP 化されず、サブプロパティの BP クラスが出力される（#513）', async () => {
+    const c = makeCompiler();
+    const { mainConfig, fullConfig } = configs({});
+    const fullCss = await c.compile('full', mainConfig, fullConfig);
+
+    // 汎用ベースルール .-bd { border: var(--bd) } は _border.scss の特殊実装と競合するため出力されない
+    expect(fullCss).not.toMatch(/\.-bd\s*\{\s*border:/);
+    // border ショートハンド系の BP クラスも出力されない
+    expect(fullCss).not.toContain('.-bd_sm');
+    expect(fullCss).not.toContain('.-bd-x_sm');
+    // 代わりに border サブプロパティの BP クラス（変数上書き）が出力される
+    expect(fullCss).toContain('.-bds_sm');
+    expect(fullCss).toContain('.-bdc_sm');
+    expect(fullCss).toContain('.-bdw_sm');
+    // _border.scss の特殊実装（--bds 参照）は維持される
+    expect(fullCss).toContain('border-style: var(--bds)');
+  });
+
   test('同一 config・同一エントリはキャッシュされ同一結果を返す', async () => {
     const c = makeCompiler();
     const { mainConfig, fullConfig } = configs({});
