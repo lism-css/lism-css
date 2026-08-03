@@ -90,6 +90,49 @@ describe('initCommand', () => {
     await expect(initCommand(target, { force: false })).rejects.toThrow(/README\.md[\s\S]*tokens\.json/);
   });
 
+  it('aborts without writing anything when a parent path is a regular file', async () => {
+    const target = path.join(tmpDir, 'mock');
+    await mkdir(target, { recursive: true });
+    // `pages/` を作れないので、AGENTS.md 等を書いてから失敗する状態を作る。
+    await writeFile(path.join(target, 'pages'), 'not a directory\n');
+
+    await expect(initCommand(target, { force: false })).rejects.toThrow(/already exist as something else[\s\S]*- pages/);
+
+    expect(await readFile(path.join(target, 'pages'), 'utf-8')).toBe('not a directory\n');
+    for (const relative of EXPECTED_FILES) {
+      expect(await exists(path.join(target, relative)), `${relative} should not be created`).toBe(false);
+    }
+  });
+
+  it('keeps refusing a non-directory parent path with --force', async () => {
+    const target = path.join(tmpDir, 'mock');
+    await mkdir(target, { recursive: true });
+    await writeFile(path.join(target, 'pages'), 'not a directory\n');
+
+    await expect(initCommand(target, { force: true })).rejects.toThrow(/not even with --force/);
+
+    expect(await readFile(path.join(target, 'pages'), 'utf-8')).toBe('not a directory\n');
+    expect(await exists(path.join(target, 'AGENTS.md'))).toBe(false);
+  });
+
+  it('aborts when an output file path is a directory, even with --force', async () => {
+    const target = path.join(tmpDir, 'mock');
+    await mkdir(path.join(target, 'README.md'), { recursive: true });
+
+    await expect(initCommand(target, { force: true })).rejects.toThrow(/already exist as something else[\s\S]*- README\.md/);
+
+    expect(await exists(path.join(target, 'AGENTS.md'))).toBe(false);
+  });
+
+  it('aborts when the target directory itself is a regular file', async () => {
+    const target = path.join(tmpDir, 'mock');
+    await writeFile(target, 'occupied\n');
+
+    await expect(initCommand(target, { force: true })).rejects.toThrow(/already exist as something else[\s\S]*- \./);
+
+    expect(await readFile(target, 'utf-8')).toBe('occupied\n');
+  });
+
   it('overwrites existing files with --force', async () => {
     const target = path.join(tmpDir, 'mock');
     await mkdir(path.join(target, 'pages'), { recursive: true });

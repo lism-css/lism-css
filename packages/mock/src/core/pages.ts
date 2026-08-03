@@ -9,7 +9,7 @@ import path from 'node:path';
 
 import { MOCK_CONFIG_FILENAME } from './data-dir.js';
 import { isInsideDir, safeRealpath } from './paths.js';
-import { MockContractError, type MockConfigFile, type PageEntry } from './types.js';
+import { MockContractError, type MockConfigFile, type MockConfigPageMeta, type PageEntry } from './types.js';
 
 export const PAGES_DIRNAME = 'pages';
 export const PAGE_EXTENSIONS = ['.jsx', '.tsx'] as const;
@@ -80,6 +80,10 @@ export function discoverPages(dataDir: string, config: MockConfigFile): PageEntr
   }
 
   const meta = config.pages ?? {};
+  // `meta[id]` を直接引くと、`toString` や `constructor` という id のページで
+  // Object.prototype 側の値を拾ってしまうため、own key のときだけ参照する。
+  const metaOf = (pageId: string): MockConfigPageMeta | undefined => (Object.hasOwn(meta, pageId) ? meta[pageId] : undefined);
+
   for (const pageId of Object.keys(meta)) {
     if (!byId.has(pageId)) {
       throw new MockContractError(
@@ -90,9 +94,10 @@ export function discoverPages(dataDir: string, config: MockConfigFile): PageEntr
   }
 
   const pages: PageEntry[] = [...byId.entries()].map(([id, file]) => {
-    const entry: PageEntry = { id, file, label: meta[id]?.label ?? id };
-    if (meta[id]?.category !== undefined) entry.category = meta[id].category;
-    if (meta[id]?.order !== undefined) entry.order = meta[id].order;
+    const pageMeta = metaOf(id);
+    const entry: PageEntry = { id, file, label: pageMeta?.label ?? id };
+    if (pageMeta?.category !== undefined) entry.category = pageMeta.category;
+    if (pageMeta?.order !== undefined) entry.order = pageMeta.order;
     return entry;
   });
 

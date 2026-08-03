@@ -171,6 +171,10 @@ describe('dev サーバー', () => {
 
   test('watcher が tokens.json の変更を拾って作り直す', async () => {
     writeFiles(dataDir, { 'tokens.json': JSON.stringify({ color: { canvas: '#123456' } }) });
+    // OS のファイルイベント配送は環境依存（サンドボックスや CI では届かないことがある）ため、
+    // chokidar が発火するはずの change イベントを直接 emit し、
+    // 分類 → デバウンス → config/CSS 再生成という自前のパイプラインを決定的に検証する。
+    server.watcher.emit('change', path.join(dataDir, 'tokens.json'));
 
     await vi.waitFor(
       () => {

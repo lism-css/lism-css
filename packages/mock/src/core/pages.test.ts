@@ -60,6 +60,29 @@ describe('discoverPages', () => {
     expect(() => discoverPages(dir, config)).toThrow(/references an unknown page id "dashboard"/);
   });
 
+  test('実在しない pageId が __proto__ でもエラー（prototype 由来キーで検証を抜けない）', () => {
+    const dir = createDataDir({ 'pages/home.jsx': PAGE });
+    const config = { schemaVersion: 1, pages: JSON.parse('{ "__proto__": { "label": "Ghost" } }') } as MockConfigFile;
+
+    expect(() => discoverPages(dir, config)).toThrow(/references an unknown page id "__proto__"/);
+  });
+
+  test('page id が prototype のプロパティ名でもメタデータを取り違えない', () => {
+    const dir = createDataDir({ 'pages/toString.jsx': PAGE, 'pages/constructor.jsx': PAGE });
+
+    expect(discoverPages(dir, CONFIG).map((page) => ({ id: page.id, label: page.label }))).toEqual([
+      { id: 'constructor', label: 'constructor' },
+      { id: 'toString', label: 'toString' },
+    ]);
+  });
+
+  test('__proto__ という page id のメタデータを正しくマージする', () => {
+    const dir = createDataDir({ 'pages/__proto__.jsx': PAGE });
+    const config = { schemaVersion: 1, pages: JSON.parse('{ "__proto__": { "label": "Proto", "order": 1 } }') } as MockConfigFile;
+
+    expect(discoverPages(dir, config)[0]).toMatchObject({ id: '__proto__', label: 'Proto', order: 1 });
+  });
+
   test('pages/ 内のシンボリックリンクでデータディレクトリ外は参照できない', () => {
     const outside = createTempDir();
     fs.writeFileSync(path.join(outside, 'secret.jsx'), PAGE, 'utf-8');

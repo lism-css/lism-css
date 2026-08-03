@@ -52,9 +52,12 @@ export function validateTokens(raw: unknown, defaultTokens: Record<string, unkno
     });
   }
 
-  const tokens: MockTokens = {};
+  // ユーザー入力のキーを持たせる器は必ず null プロトタイプにする。
+  // 素の `{}` だと `__proto__` などの予約キーが own key として保持されず、検証結果と実データがずれる。
+  const tokens = Object.create(null) as MockTokens;
   for (const [group, values] of Object.entries(raw)) {
-    if (!(group in defaultTokens)) {
+    // `in` は `constructor` / `toString` / `__proto__` まで既知グループ扱いにしてしまうため hasOwn で判定する。
+    if (!Object.hasOwn(defaultTokens, group)) {
       throw new MockContractError(`${TOKENS_FILENAME}: unknown token group "${group}". Available groups: ${Object.keys(defaultTokens).join(', ')}.`, {
         file,
       });
@@ -64,7 +67,7 @@ export function validateTokens(raw: unknown, defaultTokens: Record<string, unkno
     }
 
     const knownKeys = defaultTokenKeys(defaultTokens[group]);
-    const entry: Record<string, string | number> = {};
+    const entry = Object.create(null) as Record<string, string | number>;
     for (const [key, value] of Object.entries(values)) {
       if (!knownKeys.includes(key) && !NEW_KEY_ALLOWED_TOKENS.has(group)) {
         throw new MockContractError(

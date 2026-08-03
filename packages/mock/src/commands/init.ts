@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs';
+import { existsSync, lstatSync, statSync } from 'node:fs';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,11 +36,70 @@ async function collectTemplateFiles(root: string, relative = ''): Promise<string
 }
 
 /**
+ * Whether `target` currently is a directory: `true`, `false` (exists as
+ * something else) or `undefined` (does not exist). Symlinks are followed, so a
+ * broken link counts as an existing non-directory.
+ */
+function directoryState(target: string): boolean | undefined {
+  try {
+    const link = lstatSync(target, { throwIfNoEntry: false });
+    if (!link) return undefined;
+    if (!link.isSymbolicLink()) return link.isDirectory();
+    // A broken or non-directory symlink still occupies the path.
+    return statSync(target, { throwIfNoEntry: false })?.isDirectory() ?? false;
+  } catch {
+    // Unreadable path: treat it as occupied instead of failing mid-write.
+    return false;
+  }
+}
+
+/**
+ * Every directory that has to exist before the scaffold can be written, as a
+ * POSIX-style path relative to the target directory (`.` is the target itself).
+ */
+function requiredDirectories(templateFiles: string[]): string[] {
+  const directories = new Set<string>(['.']);
+
+  for (const relative of templateFiles) {
+    const segments = relative.split('/');
+    segments.pop();
+
+    let current = '';
+    for (const segment of segments) {
+      current = current ? `${current}/${segment}` : segment;
+      directories.add(current);
+    }
+  }
+
+  return [...directories];
+}
+
+/**
+ * Paths whose type clashes with the scaffold layout: a parent that is not a
+ * directory, or an output file that is a directory. Neither can be fixed by
+ * `--force`, so both are reported before anything is written.
+ */
+function collectLayoutConflicts(targetDir: string, templateFiles: string[]): string[] {
+  const conflicts = new Set<string>();
+
+  for (const relative of requiredDirectories(templateFiles)) {
+    const absolute = relative === '.' ? targetDir : path.join(targetDir, relative);
+    if (directoryState(absolute) === false) conflicts.add(relative);
+  }
+  for (const relative of templateFiles) {
+    if (directoryState(path.join(targetDir, relative)) === true) conflicts.add(relative);
+  }
+
+  return [...conflicts].sort((a, b) => a.localeCompare(b));
+}
+
+/**
  * Scaffold a data directory (sample pages + contract guide).
  *
  * Existing files are never touched without `--force`: the whole file list is
  * checked up front and a single collision aborts the command before anything is
- * written.
+ * written. The parent directories of every output are checked too, so a known
+ * collision can never leave a half-written directory behind.
  */
 export async function initCommand(dir: string, options: InitOptions): Promise<void> {
   const targetDir = path.resolve(dir);
@@ -53,6 +112,20 @@ export async function initCommand(dir: string, options: InitOptions): Promise<vo
   }
   if (templateFiles.length === 0) {
     throw new Error(`Scaffold templates are missing from the installed package (expected in ${TEMPLATES_DIR}). Reinstall @lism-css/mock.`);
+  }
+
+  // Checked even with `--force`, because writing would otherwise fail halfway
+  // through: `mkdir(targetDir/pages)` only errors after `AGENTS.md` and friends
+  // have already been written.
+  const layoutConflicts = collectLayoutConflicts(targetDir, templateFiles);
+  if (layoutConflicts.length > 0) {
+    throw new Error(
+      [
+        `${layoutConflicts.length} path(s) in ${targetDir} already exist as something else than the scaffold needs. Nothing was written.`,
+        ...layoutConflicts.map((relative) => `  - ${relative}`),
+        'lism-mock init never replaces a file with a directory (or the other way around), not even with --force. Remove or rename them, or pick another directory.',
+      ].join('\n')
+    );
   }
 
   if (!options.force) {

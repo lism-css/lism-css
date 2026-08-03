@@ -67,7 +67,7 @@ export function readMockConfig(dataDir: string): MockConfigFile {
     );
   }
 
-  if (!('schemaVersion' in raw)) {
+  if (!Object.hasOwn(raw, 'schemaVersion')) {
     throw new MockContractError(`${MOCK_CONFIG_FILENAME} is missing "schemaVersion". Add \`"schemaVersion": ${SCHEMA_VERSION}\`.`, {
       file,
     });
@@ -95,7 +95,10 @@ function readPagesMeta(value: unknown, file: string): Record<string, MockConfigP
     throw new MockContractError(`${MOCK_CONFIG_FILENAME}: "pages" must be an object keyed by page id.`, { file });
   }
 
-  const pages: Record<string, MockConfigPageMeta> = {};
+  // ページ id はユーザー入力なので null プロトタイプの器へ入れる。
+  // 素の `{}` だと `pages["__proto__"] = entry` が own key にならず、
+  // 実在しないページ id の検証（discoverPages）をすり抜けてしまう。
+  const pages = Object.create(null) as Record<string, MockConfigPageMeta>;
   for (const [pageId, meta] of Object.entries(value)) {
     if (!isPlainObject(meta)) {
       throw new MockContractError(`${MOCK_CONFIG_FILENAME}: "pages.${pageId}" must be an object.`, { file });

@@ -36,6 +36,25 @@ describe('validateTokens', () => {
     expect(() => validateTokens({ shadow: { s: '0 0 0' } }, defaultTokens, 'tokens.json')).toThrow(/unknown token group "shadow"/);
   });
 
+  test('prototype 由来のキーを種別名にしても既知グループ扱いしない', () => {
+    for (const group of ['__proto__', 'constructor', 'toString', 'hasOwnProperty']) {
+      // 空オブジェクトだと「既存トークンではない」チェックが1件も走らないため、素通りしないことを確かめる。
+      expect(() => validateTokens(JSON.parse(`{ "${group}": {} }`), defaultTokens, 'tokens.json')).toThrow(
+        new RegExp(`unknown token group "${group}"`)
+      );
+      expect(() => validateTokens(JSON.parse(`{ "${group}": { "brand": "#fff" } }`), defaultTokens, 'tokens.json')).toThrow(/unknown token group/);
+    }
+  });
+
+  test('検証結果は null プロトタイプで、予約キーも own key として保持する', () => {
+    const tokens = validateTokens(JSON.parse('{ "color": { "__proto__": "#fff" } }'), defaultTokens, 'tokens.json');
+
+    expect(Object.getPrototypeOf(tokens)).toBe(null);
+    expect(Object.getPrototypeOf(tokens.color)).toBe(null);
+    expect(Object.hasOwn(tokens.color, '__proto__')).toBe(true);
+    expect(Object.keys(tokens.color)).toEqual(['__proto__']);
+  });
+
   test('値は string / number のみ', () => {
     expect(() => validateTokens({ color: { brand: { light: '#fff' } } }, defaultTokens, 'tokens.json')).toThrow(/must be a string or a number/);
   });
@@ -59,6 +78,11 @@ describe('loadTokens', () => {
   test('契約違反は警告ではなくエラー', async () => {
     const dir = createDataDir({ 'tokens.json': JSON.stringify({ fz: { giant: '10rem' } }) });
     await expect(loadTokens(dir)).rejects.toThrow(/is not an existing token/);
+  });
+
+  test('tokens.json に prototype 由来の種別名を書いてもエラーになる', async () => {
+    const dir = createDataDir({ 'tokens.json': '{ "toString": {}, "constructor": {} }' });
+    await expect(loadTokens(dir)).rejects.toThrow(/unknown token group "toString"/);
   });
 });
 

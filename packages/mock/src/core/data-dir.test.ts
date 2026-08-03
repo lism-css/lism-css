@@ -74,6 +74,24 @@ describe('readMockConfig', () => {
     expect(() => readMockConfig(badOrder)).toThrow(/"pages.home.order" must be a number/);
   });
 
+  test('pages の予約キーも own key として保持する（検証すり抜け防止）', () => {
+    const dir = createDataDir({
+      'mock.config.json': '{ "schemaVersion": 1, "pages": { "__proto__": { "label": "Ghost" }, "home": { "label": "Home" } } }',
+    });
+
+    const pages = readMockConfig(dir).pages ?? {};
+    expect(Object.getPrototypeOf(pages)).toBe(null);
+    expect(Object.keys(pages).sort()).toEqual(['__proto__', 'home']);
+    expect(Object.hasOwn(pages, '__proto__')).toBe(true);
+    // prototype が差し替わっていないので、実在しないキーは undefined のまま。
+    expect(pages.label).toBeUndefined();
+  });
+
+  test('トップレベルの __proto__ は未知キーとしてエラー', () => {
+    const dir = createDataDir({ 'mock.config.json': '{ "schemaVersion": 1, "__proto__": { "title": "x" } }' });
+    expect(() => readMockConfig(dir)).toThrow(/unknown key\(s\): "__proto__"/);
+  });
+
   test('契約違反は MockContractError（対象ファイル付き）で投げる', () => {
     const dir = createDataDir({ 'mock.config.json': '{ "schemaVersion": 9 }' });
     try {
