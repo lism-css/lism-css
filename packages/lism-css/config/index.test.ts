@@ -38,6 +38,20 @@ describe('isFullMode', () => {
     expect(props.cols.tokenClass).toBeUndefined();
   });
 
+  test('isFullMode でも border ショートハンド系は bp 対象外、bds / bdc は bp:1 になる（#513）', async () => {
+    const { PROPS } = await importConfig({ isFullMode: true });
+    const props = PROPS as unknown as LoosePropConfig;
+
+    // border ショートハンド系は _border.scss の特殊実装と競合するため bp 拡張から除外される
+    expect(props.bd.bp).toBeUndefined();
+    expect(props['bd-x'].bp).toBeUndefined();
+    expect(props['bd-be'].bp).toBeUndefined();
+    // 代わりにサブプロパティ（isVar 系）が full 限定で bp:1 になる
+    expect(props.bds.bp).toBe(1);
+    expect(props.bdc.bp).toBe(1);
+    expect(props.bdw.bp).toBe(1); // defaults で対応済み
+  });
+
   test('ユーザー設定の props 上書きが full preset より優先される（opt-out 可能）', async () => {
     const { PROPS } = await importConfig({ isFullMode: true, props: { pl: { bp: 0 } } });
     const props = PROPS as unknown as LoosePropConfig;

@@ -96,7 +96,7 @@ In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender 
 
 ## Pairing with full.css
 
-`lism-css/full.css` is an **everything-included build** that adds breakpoint-aware classes for every Property Class except variable-only (`isVar`) ones (`sm` / `md` / `lg`), plus `SPACE` token utilities for spacing properties. It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
+`lism-css/full.css` is an **everything-included build** that adds breakpoint-aware classes (`sm` / `md` / `lg`) for every Property Class except variable-only (`isVar`) ones and border shorthands (the `bd` family), plus `SPACE` token utilities for spacing properties. It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
 
 ```js
 // Load full.css instead of main.css
