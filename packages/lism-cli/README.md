@@ -91,12 +91,13 @@ pnpm dlx lism-cli ui add accordion --ref dev
 
 同梱スキル（`SKILL.md` ほか一式）を各種AIツールの所定ディレクトリへ展開します。
 
-同梱スキルは以下の2つです：
+同梱スキルは以下の3つです：
 
 | スキル | 説明 |
 |--------|------|
 | `lism-css-guide` | Lism CSSでUI・ページを実装・修正する時に使う実装ガイド |
 | `lism-css-refactor` | 既存の Lism CSSコードを、見た目や挙動を変えずにLismらしい書き方へ整理するリファクタガイド |
+| `lism-mock-guide` | `@lism-css/mock`でデザインモックを組む時のワークフローとデータ契約のガイド（`lism-css-guide`併用前提） |
 
 ```bash
 # 対話モード（使用中のツールを自動検出）
