@@ -1,0 +1,46 @@
+import type { ViewerPage } from 'virtual:lism-mock/pages';
+
+/** A nav group in the sidebar. */
+export interface PageGroup {
+  /** Stable React key. Uses a reserved key for the default group. */
+  key: string;
+  /** Heading shown above the group. */
+  label: string;
+  pages: ViewerPage[];
+}
+
+/** Key used for pages that do not declare a `category`. */
+const DEFAULT_GROUP_KEY = '__lism-mock:default__';
+
+/** Heading shown for pages without a `category`. */
+export const DEFAULT_GROUP_LABEL = 'Pages';
+
+/**
+ * Groups pages by `category`, keeping the incoming order.
+ *
+ * `pages` arrives already sorted for display (order ascending, then id), so
+ * relying on insertion order keeps `mock.config.json`'s `order` meaningful both
+ * between and inside groups. Pages without a category share one default group.
+ */
+export function groupPages(pages: ViewerPage[]): PageGroup[] {
+  const groups = new Map<string, PageGroup>();
+
+  for (const page of pages) {
+    const category = page.category?.trim();
+    const key = category ? category : DEFAULT_GROUP_KEY;
+
+    const existing = groups.get(key);
+    if (existing) {
+      existing.pages.push(page);
+      continue;
+    }
+
+    groups.set(key, {
+      key,
+      label: category ? category : DEFAULT_GROUP_LABEL,
+      pages: [page],
+    });
+  }
+
+  return [...groups.values()];
+}

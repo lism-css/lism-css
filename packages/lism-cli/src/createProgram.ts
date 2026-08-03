@@ -4,6 +4,7 @@ import { applyUiSectionOptions } from './commands/ui/uiSectionOptions.js';
 import { createSkillCommand } from './commands/skill/index.js';
 import { createCommand } from './commands/create.js';
 import { initCommand } from './commands/init.js';
+import { mockCommand } from './commands/mock.js';
 import { CLI_VERSION } from './version.js';
 import { setLang, t } from './i18n.js';
 
@@ -33,5 +34,8 @@ export function createLismProgram(): Command {
 
   program.addCommand(createUiCommand());
   program.addCommand(createSkillCommand());
+
+  program.command('mock').description(t('cli.mock.description')).allowExcessArguments().action(mockCommand);
+
   return program;
 }

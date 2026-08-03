@@ -1,0 +1,27 @@
+/*
+ * Page-scoped CSS for pages/admin/settings.jsx.
+ *
+ * Only put declarations here that Property Class / Lism props cannot express:
+ * pseudo-elements, descendant selectors and attribute-based state selectors.
+ * Padding, gap, font size, color and radius belong on the markup as props.
+ *
+ * Component (`c--*`) rules must live inside `@layer lism-component`.
+ */
+@layer lism-component {
+  /* Required-field marker: a pseudo-element, so it has to be CSS. */
+  .c--fieldLabel[data-required]::after {
+    content: '*';
+    margin-inline-start: var(--s5);
+    color: var(--accent);
+  }
+
+  /* `success` is a color key added in tokens.json. New color keys get a CSS
+     variable but no Property Class, so reference them as `var(--success)`. */
+  .c--saveStatus[data-state='saved']::before {
+    content: '';
+    inline-size: var(--s10);
+    block-size: var(--s10);
+    border-radius: var(--bdrs--99);
+    background-color: var(--success);
+  }
+}

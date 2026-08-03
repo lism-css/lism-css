@@ -22,6 +22,7 @@ import { loadDefaultKnownSelectors } from '../purge/shared';
 import { buildConfigAwareKnown, resolvePurge, type LismCssOptions } from './shared';
 
 export type { LismCssOptions } from './shared';
+export { lismConfigAlias, type LismConfigAliasOptions } from './vite-config-alias';
 
 /**
  * Vite 用の統合プラグイン配列を返す。
