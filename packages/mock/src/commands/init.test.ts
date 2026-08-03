@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -121,6 +121,36 @@ describe('initCommand', () => {
 
     await expect(initCommand(target, { force: true })).rejects.toThrow(/already exist as something else[\s\S]*- README\.md/);
 
+    expect(await exists(path.join(target, 'AGENTS.md'))).toBe(false);
+  });
+
+  it('never writes through a symlinked parent directory', async () => {
+    const target = path.join(tmpDir, 'mock');
+    const outside = path.join(tmpDir, 'outside');
+    await mkdir(target, { recursive: true });
+    await mkdir(outside, { recursive: true });
+    await symlink(outside, path.join(target, 'pages'), 'dir');
+
+    await expect(initCommand(target, { force: false })).rejects.toThrow(/- pages \(symlink\)/);
+
+    // Nothing leaked outside the target directory, and nothing was written inside it.
+    expect(await readdir(outside)).toEqual([]);
+    for (const relative of EXPECTED_FILES) {
+      expect(await exists(path.join(target, relative)), `${relative} should not be created`).toBe(false);
+    }
+  });
+
+  it('never overwrites a symlinked output file, even with --force', async () => {
+    const target = path.join(tmpDir, 'mock');
+    const outsideFile = path.join(tmpDir, 'outside.md');
+    await mkdir(target, { recursive: true });
+    await writeFile(outsideFile, 'keep me\n');
+    await symlink(outsideFile, path.join(target, 'README.md'));
+
+    await expect(initCommand(target, { force: true })).rejects.toThrow(/- README\.md \(symlink\)/);
+
+    expect(await readFile(outsideFile, 'utf-8')).toBe('keep me\n');
+    // AGENTS.md sorts before README.md, so it would already be written without the up-front check.
     expect(await exists(path.join(target, 'AGENTS.md'))).toBe(false);
   });
 

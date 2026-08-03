@@ -35,30 +35,43 @@ async function collectTemplateFiles(root: string, relative = ''): Promise<string
   return files;
 }
 
-/**
- * Whether `target` currently is a directory: `true`, `false` (exists as
- * something else) or `undefined` (does not exist). Symlinks are followed, so a
- * broken link counts as an existing non-directory.
- */
-function directoryState(target: string): boolean | undefined {
+/** What occupies a path, without following the last symlink. */
+type PathKind = 'missing' | 'directory' | 'file' | 'symlink';
+
+function pathKind(target: string): PathKind {
   try {
     const link = lstatSync(target, { throwIfNoEntry: false });
-    if (!link) return undefined;
-    if (!link.isSymbolicLink()) return link.isDirectory();
-    // A broken or non-directory symlink still occupies the path.
-    return statSync(target, { throwIfNoEntry: false })?.isDirectory() ?? false;
+    if (!link) return 'missing';
+    if (link.isSymbolicLink()) return 'symlink';
+    return link.isDirectory() ? 'directory' : 'file';
   } catch {
     // Unreadable path: treat it as occupied instead of failing mid-write.
-    return false;
+    return 'file';
+  }
+}
+
+/**
+ * Whether the target directory itself is usable. Unlike the paths below it, the
+ * target (and its ancestors, e.g. macOS `/tmp` → `/private/tmp`) may legitimately
+ * be a symlink, so this one follows links.
+ */
+function targetDirIsBlocked(targetDir: string): boolean {
+  try {
+    const link = lstatSync(targetDir, { throwIfNoEntry: false });
+    if (!link) return false;
+    // A broken or non-directory symlink still occupies the path.
+    return !(statSync(targetDir, { throwIfNoEntry: false })?.isDirectory() ?? false);
+  } catch {
+    return true;
   }
 }
 
 /**
  * Every directory that has to exist before the scaffold can be written, as a
- * POSIX-style path relative to the target directory (`.` is the target itself).
+ * POSIX-style path relative to the target directory.
  */
 function requiredDirectories(templateFiles: string[]): string[] {
-  const directories = new Set<string>(['.']);
+  const directories = new Set<string>();
 
   for (const relative of templateFiles) {
     const segments = relative.split('/');
@@ -76,21 +89,46 @@ function requiredDirectories(templateFiles: string[]): string[] {
 
 /**
  * Paths whose type clashes with the scaffold layout: a parent that is not a
- * directory, or an output file that is a directory. Neither can be fixed by
- * `--force`, so both are reported before anything is written.
+ * directory, an output file that is a directory, or any symlink below the
+ * target directory. Symlinks are refused outright — following one would write
+ * outside the target — and none of these can be fixed by `--force`, so they are
+ * all reported before anything is written.
  */
 function collectLayoutConflicts(targetDir: string, templateFiles: string[]): string[] {
-  const conflicts = new Set<string>();
+  const conflicts = new Map<string, string>();
+  const add = (relative: string, reason: string): void => {
+    if (!conflicts.has(relative)) conflicts.set(relative, reason);
+  };
+
+  // Everything below is unreachable while the target itself is occupied, so report only that.
+  if (targetDirIsBlocked(targetDir)) return ['. (not a directory)'];
 
   for (const relative of requiredDirectories(templateFiles)) {
-    const absolute = relative === '.' ? targetDir : path.join(targetDir, relative);
-    if (directoryState(absolute) === false) conflicts.add(relative);
+    const kind = pathKind(path.join(targetDir, relative));
+    if (kind === 'symlink') add(relative, 'symlink');
+    else if (kind === 'file') add(relative, 'not a directory');
   }
   for (const relative of templateFiles) {
-    if (directoryState(path.join(targetDir, relative)) === true) conflicts.add(relative);
+    const kind = pathKind(path.join(targetDir, relative));
+    if (kind === 'symlink') add(relative, 'symlink');
+    else if (kind === 'directory') add(relative, 'directory');
   }
 
-  return [...conflicts].sort((a, b) => a.localeCompare(b));
+  return [...conflicts.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([relative, reason]) => `${relative} (${reason})`);
+}
+
+/**
+ * Last-line defence for the gap between the check above and the write: refuse to
+ * write through a symlink that appeared in the meantime.
+ */
+function assertNoSymlinkOnPath(targetDir: string, relative: string): void {
+  let current = '';
+  for (const segment of relative.split('/')) {
+    current = current ? `${current}/${segment}` : segment;
+    if (pathKind(path.join(targetDir, current)) === 'symlink') {
+      throw new Error(`"${current}" is a symlink. The scaffold is never written through a symlink.`);
+    }
+  }
 }
 
 /**
@@ -122,8 +160,8 @@ export async function initCommand(dir: string, options: InitOptions): Promise<vo
     throw new Error(
       [
         `${layoutConflicts.length} path(s) in ${targetDir} already exist as something else than the scaffold needs. Nothing was written.`,
-        ...layoutConflicts.map((relative) => `  - ${relative}`),
-        'lism-mock init never replaces a file with a directory (or the other way around), not even with --force. Remove or rename them, or pick another directory.',
+        ...layoutConflicts.map((conflict) => `  - ${conflict}`),
+        'lism-mock init never swaps a file for a directory (or the other way around) and never writes through a symlink, not even with --force. Remove or rename them, or pick another directory.',
       ].join('\n')
     );
   }
@@ -145,7 +183,12 @@ export async function initCommand(dir: string, options: InitOptions): Promise<vo
   try {
     for (const relative of templateFiles) {
       const destination = path.join(targetDir, relative);
+      // Re-checked around `mkdir` so a symlink created after the layout check
+      // can neither host new directories nor receive the file (`w` would follow
+      // it; `wx` already fails on its own).
+      assertNoSymlinkOnPath(targetDir, relative);
       await mkdir(path.dirname(destination), { recursive: true });
+      assertNoSymlinkOnPath(targetDir, relative);
       // `wx` keeps the no-overwrite guarantee even if a file appears between the
       // collision check above and this write.
       await writeFile(destination, await readFile(path.join(TEMPLATES_DIR, relative)), {
