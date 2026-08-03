@@ -89,7 +89,7 @@ lism-cli skill check --ref dev
 npx skills add lism-css/lism-css
 ```
 
-配信元は`lism-cli skill add`と同じ`skills/lism-css-guide/`・`skills/lism-css-refactor/`・`skills/lism-mock-guide/`。詳細は[Skillsドキュメント](https://lism-css.com/en/docs/skills/)を参照。
+配信元は`lism-cli skill add`と同じ`skills/lism-css-guide/`・`skills/lism-css-refactor/`・`skills/lism-mock-guide/`。詳細は[Skillsドキュメント](https://lism-css.com/docs/skills/)を参照。
 
 ---
 
