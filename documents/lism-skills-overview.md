@@ -2,19 +2,20 @@
 
 Lism CSSが配布するAIエージェント向けskillについて、何ができるのか、どう導入するのか、内部でどういう処理の流れになっているのかを整理する運営者向けメモ。
 
-PR459で、それまで「読むだけの資料」だった`lism-css-guide`を「AIに手順を踏ませる実行ガイド」へ作り変え、リファクタ専用の`lism-css-refactor`を新設し、CLIを複数skill配布へ一般化した。以下は現行仕様に基づく整理。
+PR459で、それまで「読むだけの資料」だった`lism-css-guide`を「AIに手順を踏ませる実行ガイド」へ作り変え、リファクタ専用の`lism-css-refactor`を新設し、CLIを複数skill配布へ一般化した。その後、#514で`@lism-css/mock`（デザインモック用プレビューCLI）向けの`lism-mock-guide`を追加した。以下は現行仕様に基づく整理。
 
 
 ## 配布しているskill
 
-配布対象は以下の2つ。実体はリポジトリの`skills/{name}`配下、配信元は`packages/lism-cli/src/constants.ts`の`SKILL_NAMES`で管理する。
+配布対象は以下の3つ。実体はリポジトリの`skills/{name}`配下、配信元は`packages/lism-cli/src/constants.ts`の`SKILL_NAMES`で管理する。
 
 | skill | 役割 | 起動する場面 |
 |---|---|---|
 | `lism-css-guide` | 新規実装、UI作成、ページ作成、コンポーネント作成の前向き作業 | 要件・デザインからコードを書くとき |
 | `lism-css-refactor` | 既存コードの監査・整理・リファクタの後ろ向き作業 | ユーザーがリファクタ・監査・整理を明示したとき |
+| `lism-mock-guide` | `@lism-css/mock`のデータディレクトリとしてデザインモックを組む作業 | `lism-mock`（`@lism-css/mock`）でモックを作成・修正するとき |
 
-`lism-css-refactor`は、token値やPrimitive選定などの一般知識を自分で重複保持しない。判断に迷ったら同階層の`lism-css-guide`へrouteする設計で、知識の正典は常にguide側に置く。`lism-css-refactor`のSKILL.md冒頭にも「`lism-css-guide`が同じ階層に入っていることを前提にする」と明記されている。
+`lism-css-refactor`と`lism-mock-guide`は、token値やPrimitive選定などの一般知識を自分で重複保持しない。判断に迷ったら同階層の`lism-css-guide`へrouteする設計で、知識の正典は常にguide側に置く。両skillのSKILL.md冒頭にも「`lism-css-guide`が同じ階層に入っていることを前提にする」と明記されている。`lism-mock-guide`はこれに加えて、モックのデータ契約（ファイル構成・スキーマ・import規則）の正典を`lism-mock init`が生成する契約説明書（`packages/mock/templates/README.md`）に置き、skill本文は要約とワークフロー（init→実装→check→dev）に徹する。
 
 ---
 
@@ -28,9 +29,10 @@ PR459で、それまで「読むだけの資料」だった`lism-css-guide`を�
 # 対話モード（プロジェクト直下の .claude / .agents / .cursor 等のマーカーから使用中ツールを自動検出し、選択式で導入先を決める）
 pnpm dlx lism-cli skill add
 
-# skill名を指定して個別に導入（未指定なら全skill = lism-css-guide + lism-css-refactor）
+# skill名を指定して個別に導入（未指定なら全skill = lism-css-guide + lism-css-refactor + lism-mock-guide）
 pnpm dlx lism-cli skill add lism-css-guide
 pnpm dlx lism-cli skill add lism-css-refactor
+pnpm dlx lism-cli skill add lism-mock-guide
 
 # 導入先ツールを明示指定
 pnpm dlx lism-cli skill add --claude --cursor
@@ -87,7 +89,7 @@ lism-cli skill check --ref dev
 npx skills add lism-css/lism-css
 ```
 
-配信元は`lism-cli skill add`と同じ`skills/lism-css-guide/`・`skills/lism-css-refactor/`。詳細は[Skillsドキュメント](https://lism-css.com/en/docs/skills/)を参照。
+配信元は`lism-cli skill add`と同じ`skills/lism-css-guide/`・`skills/lism-css-refactor/`・`skills/lism-mock-guide/`。詳細は[Skillsドキュメント](https://lism-css.com/docs/skills/)を参照。
 
 ---
 
@@ -178,6 +180,23 @@ Pass10の見直し（評価サブエージェントへの委任を含む）の�
 
 ---
 
+## `lism-mock-guide`の処理の流れ
+
+`skills/lism-mock-guide/SKILL.md`に定義されたワークフロー（厳守）:
+
+```txt
+1. init（データディレクトリが無ければ npx @lism-css/mock init から始める）
+2. 契約確認（生成されたREADME.md＝契約説明書とサンプルページを読む）
+3. 実装（ここからは lism-css-guide の実装フローに従う）
+4. 自己検証（npx @lism-css/mock check。非0のうちは完成と報告しない）
+5. ブラウザ確認（devサーバーは常駐。バックグラウンド起動またはユーザー起動。目視はユーザーの役割）
+6. 完了報告（checkはrender時エラーを検出しないため、目視確認の依頼を添える）
+```
+
+判定記号は定義しない（マークアップの判断はすべて`lism-css-guide`の記号・フローを使う）。skill本文が持つのはモック固有のデータ契約の要約 — ページID規則・`mock.config.json`/`tokens.json`スキーマ・import許可リスト・`check`の保証範囲 — だけで、契約の正典は`packages/mock`側（パッケージREADMEと`init`生成の契約説明書）にある。
+
+---
+
 ## 判定記号の注意（skill間の違い）
 
 同じ記号でも、`lism-css-guide`（forward系）と`lism-css-refactor`（refactor系）では意味・使用可能な記号セットが異なる。
@@ -240,7 +259,7 @@ SKILL_NAMES × ALL_SKILL_TOOLS の全組から、配置先に SKILL.md がある
 
 ## まとめ
 
-- 配布skillは`lism-css-guide`（新規実装）と`lism-css-refactor`（既存コード整理）の2つ。知識の正典はguideに集約し、refactorはPass手順で棚卸しに専念する。
+- 配布skillは`lism-css-guide`（新規実装）・`lism-css-refactor`（既存コード整理）・`lism-mock-guide`（`@lism-css/mock`でのデザインモック作成）の3つ。知識の正典はguideに集約し、refactorはPass手順での棚卸しに、mock-guideはデータ契約とinit→check→devのワークフローに専念する。
 - 導入経路は`lism-cli skill add/check/update`（bin: `lism-cli`）と、skills.sh経由の`npx skills add lism-css/lism-css`の2系統。どちらも実体は`skills/{name}`が配信元。
-- どちらのskillも、実装/リファクタの各ステップに`✅`/`🔁`/`⏸`/`🔧`/`⬜`のいずれかの判定記号を付けて進行を管理し、ユーザー確認が必要な項目（⏸）を明示する。値照合や洗い出し表など重い成果物は`.lism/plan.md`・`.lism/review.md`として保存し、サブエージェントへの検証委任も定義されている。
+- `lism-css-guide`と`lism-css-refactor`は、実装/リファクタの各ステップに`✅`/`🔁`/`⏸`/`🔧`/`⬜`のいずれかの判定記号を付けて進行を管理し、ユーザー確認が必要な項目（⏸）を明示する。値照合や洗い出し表など重い成果物は`.lism/plan.md`・`.lism/review.md`として保存し、サブエージェントへの検証委任も定義されている。
 - CLI側は`--ref`で取得元ブランチを切り替えられるが、CLIが認識するskill一覧自体は実行しているCLI本体のバージョンに依存する点に注意する。

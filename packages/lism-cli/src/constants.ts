@@ -58,7 +58,7 @@ export const SKILL_SOURCE_BASE = 'skills';
  * `lism-cli skill check` も全スキルを対象に差分確認する。`lism-cli skill add [name]` で個別指定も可。
  * リポジトリ内の実体は `skills/{name}`、配置先は `.{tool}/skills/{name}`。
  */
-export const SKILL_NAMES = ['lism-css-guide', 'lism-css-refactor'] as const;
+export const SKILL_NAMES = ['lism-css-guide', 'lism-css-refactor', 'lism-mock-guide'] as const;
 
 /** 配布対象スキル名 */
 export type SkillName = (typeof SKILL_NAMES)[number];

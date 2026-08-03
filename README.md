@@ -151,7 +151,7 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 npx lism-cli skill add
 ```
 
-This installs the bundled skills (`lism-css-guide` and `lism-css-refactor`) into your AI tool's skill directory (e.g. `.claude/skills/` for Claude Code). Pass a skill name like `npx lism-cli skill add lism-css-guide` to install a single skill. Run without tool flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
+This installs the bundled skills (`lism-css-guide`, `lism-css-refactor` and `lism-mock-guide`) into your AI tool's skill directory (e.g. `.claude/skills/` for Claude Code). Pass a skill name like `npx lism-cli skill add lism-css-guide` to install a single skill. Run without tool flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
 
 You can also fetch the `lism-css-guide` skill via [skills.sh](https://skills.sh):
 

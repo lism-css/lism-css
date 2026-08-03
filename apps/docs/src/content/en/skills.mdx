@@ -4,14 +4,15 @@ description: 'Place a SKILL.md file in your project to communicate Lism CSS desi
 ---
 By placing a SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
 
-There are two skills available:
+There are three skills available:
 
 | Skill | Purpose |
 |---|---|
 | `lism-css-guide` | Design rules, Props, tokens, and naming conventions for new implementations (design/requirements → code) |
 | `lism-css-refactor` | Refactors existing Lism CSS code into more idiomatic Lism style without changing its appearance or behavior |
+| `lism-mock-guide` | Workflow and data contract for building design mocks with [`@lism-css/mock`](https://github.com/lism-css/lism-css/tree/main/packages/mock) (requires `lism-css-guide` alongside) |
 
-GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor)
+GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor) / [lism-css/skills/lism-mock-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-mock-guide)
 
 
 ## Setup
@@ -51,12 +52,13 @@ If you use the [GitHub CLI](https://cli.github.com/), you can also fetch a skill
 ```bash frame="none"
 gh skill install lism-css/lism-css lism-css-guide@main
 gh skill install lism-css/lism-css lism-css-refactor@main
+gh skill install lism-css/lism-css lism-mock-guide@main
 ```
 
 
 ### Via lism-cli
 
-You can also fetch the same skills with `lism-cli skill add`. It only supports installing into the project directory, but it offers the `skill check` command to compare the bundled skill with your local files. Running it without arguments targets both `lism-css-guide` and `lism-css-refactor`.
+You can also fetch the same skills with `lism-cli skill add`. It only supports installing into the project directory, but it offers the `skill check` command to compare the bundled skill with your local files. Running it without arguments targets all bundled skills (`lism-css-guide` / `lism-css-refactor` / `lism-mock-guide`).
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
@@ -84,7 +86,7 @@ You can also fetch the same skills with `lism-cli skill add`. It only supports i
 In interactive mode, the CLI detects project-root markers (`.claude/`, `.cursor/`, etc.) and pre-checks matching destinations. To target tools non-interactively, pass the flags directly:
 
 ```bash frame="none"
-# Install into a single tool (defaults to both lism-css-guide / lism-css-refactor when omitted)
+# Install into a single tool (defaults to all bundled skills when the skill name is omitted)
 npx lism-cli skill add --claude
 
 # Multiple tools at once
@@ -99,7 +101,7 @@ npx lism-cli skill add lism-css-refactor --claude
 
 #### Destinations
 
-Destinations shown here use `lism-css-guide` as an example. For `lism-css-refactor`, only the directory name changes (e.g. `.claude/skills/lism-css-refactor`).
+Destinations shown here use `lism-css-guide` as an example. For the other skills, only the directory name changes (e.g. `.claude/skills/lism-css-refactor`).
 
 | Flag | Destination |
 |------|-------------|
