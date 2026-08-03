@@ -41,6 +41,7 @@ Lism CSSは、Webサイトのレイアウトを素早く、かつ美しく構築
 | [@lism-css/mcp](https://www.npmjs.com/package/@lism-css/mcp) | AIコーディングツール向けMCPサーバー |
 | [lism-cli](https://www.npmjs.com/package/lism-cli) | プロジェクト生成・UIコンポーネント追加・AIスキル配置を行うCLI |
 | [create-lism](https://www.npmjs.com/package/create-lism) | `pnpm create lism` / `npm create lism` 用のラッパー（`lism-cli` を内包） |
+| [@lism-css/mockup](https://www.npmjs.com/package/@lism-css/mockup) | Lism CSSで画面モックアップを作成・検証・プレビューするためのCLI |
 | [@lism-css/plugin](https://www.npmjs.com/package/@lism-css/plugin) | Lism CSS向けのBuild / Vite / Astro / purgeプラグイン |
 
 ## クイックスタート
@@ -151,7 +152,7 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 npx lism-cli skill add
 ```
 
-同梱スキル（`lism-css-guide`・`lism-css-refactor`・`lism-mock-guide`）を、使用しているAIツールのスキルディレクトリ（例: Claude Codeなら `.claude/skills/`）へ配置します。`npx lism-cli skill add lism-css-guide` のようにスキル名を指定すると個別に配置できます。ツールフラグなしで実行すると対話モードになり、`--claude`、`--cursor` などのフラグでツールを個別指定することもできます。
+同梱スキル（`lism-css-guide`・`lism-css-refactor`・`lism-mockup-guide`）を、使用しているAIツールのスキルディレクトリ（例: Claude Codeなら `.claude/skills/`）へ配置します。`npx lism-cli skill add lism-css-guide` のようにスキル名を指定すると個別に配置できます。ツールフラグなしで実行すると対話モードになり、`--claude`、`--cursor` などのフラグでツールを個別指定することもできます。
 
 [skills.sh](https://skills.sh) 経由で `lism-css-guide` スキルを取得することもできます。
 

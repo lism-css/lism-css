@@ -32,8 +32,8 @@ export default defineConfig(
       '**/next.config.*',
       '**/lism.config.*',
       '**/__*',
-      // mock パッケージのテスト用 fixture ビューア（tsconfig の project service 対象外）
-      'packages/mock/src/test-helpers/viewer/**',
+      // mockup パッケージのテスト用 fixture ビューア（tsconfig の project service 対象外）
+      'packages/mockup/src/test-helpers/viewer/**',
     ],
   },
   eslintConfigPrettier,

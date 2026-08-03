@@ -3,7 +3,7 @@ name: lism-css-guide
 description: 'Lism CSSでUIやページを実装・修正する時に使う実装ガイド。Primitive選定・トークン照合・Property Class/Lism Props活用・レスポンシブ設計・アンチパターンセルフチェックを行う。c--*, l--*, a--*, is--*, has--*, set--*, u--*, -prop:value形式のクラスやトークンの逆引きにも使う。'
 ---
 
-# Lism CSS実装ガイド
+# Lism CSS 実装ガイド
 
 Lism CSSでUI・ページ・コンポーネントを実装する時の判断の起点です。単なるリファレンスではなく、まず変更規模から「事前チェック実行レベル」を判定し、そのレベルに応じて**実装前チェック→実装→提出前セルフチェック**を通すことで、Primitive・トークン・Property Class・レスポンシブ設計の取りこぼしを防ぎます。
 

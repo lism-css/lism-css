@@ -10,9 +10,9 @@ description: 'プロジェクトにSKILL.mdファイルを配置して、AIエ�
 |---|---|
 | `lism-css-guide` | 新規実装（デザイン/要件→コード）向けの設計ルール・Props・トークン・命名規則 |
 | `lism-css-refactor` | 既存のLism CSSコードを、見た目や挙動を変えずにLismらしい書き方へ整理するリファクタ用 |
-| `lism-mock-guide` | [`@lism-css/mock`](https://github.com/lism-css/lism-css/tree/main/packages/mock)でデザインモックを組むためのワークフローとデータ契約（`lism-css-guide`併用前提） |
+| `lism-mockup-guide` | [`@lism-css/mockup`](https://github.com/lism-css/lism-css/tree/main/packages/mockup)で画面モックアップを組むためのワークフローとデータ契約（`lism-css-guide`併用前提） |
 
-GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor) / [lism-css/skills/lism-mock-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-mock-guide)
+GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor) / [lism-css/skills/lism-mockup-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-mockup-guide)
 
 
 ## セットアップ
@@ -52,13 +52,13 @@ GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/t
 ```bash frame="none"
 gh skill install lism-css/lism-css lism-css-guide@main
 gh skill install lism-css/lism-css lism-css-refactor@main
-gh skill install lism-css/lism-css lism-mock-guide@main
+gh skill install lism-css/lism-css lism-mockup-guide@main
 ```
 
 
 ### lism-cli 経由
 
-`lism-cli skill add` からも同じスキルを取得できます。プロジェクト直下への配置のみ対応していますが、`skill check` コマンドで同梱スキルとローカルの差分を確認できるのが特徴です。引数なしで実行すると同梱スキルすべて（`lism-css-guide` / `lism-css-refactor` / `lism-mock-guide`）が対象になります。
+`lism-cli skill add` からも同じスキルを取得できます。プロジェクト直下への配置のみ対応していますが、`skill check` コマンドで同梱スキルとローカルの差分を確認できるのが特徴です。引数なしで実行すると同梱スキルすべて（`lism-css-guide` / `lism-css-refactor` / `lism-mockup-guide`）が対象になります。
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
