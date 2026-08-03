@@ -3,6 +3,21 @@
 > 状態: Ready
 > 対象Issue: [#514](https://github.com/lism-css/lism-css/issues/514)
 
+> **注記（実装後の改称）**
+> このプランは実装当時の記録です。実装後に名称を「Lism Mockup」へ統一したため、本文中の旧名称は現在それぞれ次に読み替えてください。
+>
+> | プラン本文の表記 | 現在の名称 |
+> | --- | --- |
+> | `@lism-css/mock` | `@lism-css/mockup` |
+> | `lism-mock`（bin） | `lism-mockup` |
+> | `lism-cli mock` | `lism-cli mockup` |
+> | `lism-mock-guide` | `lism-mockup-guide` |
+> | `packages/mock/` | `packages/mockup/` |
+> | `mock.config.json` | `mockup.config.json` |
+> | `virtual:lism-mock/*` | `virtual:lism-mockup/*` |
+>
+> 呼称も「デザインモック」ではなく「画面モックアップ（モックアップ）」に統一しています。
+
 ## 概要 / ゴール
 
 「AIエージェントに最初からLismベースでデザインモックを組ませる」ための仕組みを作る。構成要素は3つ。

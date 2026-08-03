@@ -13,6 +13,7 @@ lism-cli create [targetDir] [--template <name|category>] [--lang <ja|en>]  # tem
 lism-cli init  [--ui-framework <react|astro>] [--ui-dir <path>]  # lism.config ファイルの新規生成
 lism-cli ui    { add <names...> | list }                    # Lism UI コンポーネントの追加
 lism-cli skill { add [skill] | check | update }             # AI エージェント向け SKILL.md 配置
+lism-cli mockup                                             # 画面モックアップ作成の案内
 ```
 
 ## 使い方
@@ -97,7 +98,7 @@ pnpm dlx lism-cli ui add accordion --ref dev
 |--------|------|
 | `lism-css-guide` | Lism CSSでUI・ページを実装・修正する時に使う実装ガイド |
 | `lism-css-refactor` | 既存の Lism CSSコードを、見た目や挙動を変えずにLismらしい書き方へ整理するリファクタガイド |
-| `lism-mock-guide` | `@lism-css/mock`でデザインモックを組む時のワークフローとデータ契約のガイド（`lism-css-guide`併用前提） |
+| `lism-mockup-guide` | `@lism-css/mockup`で画面モックアップを組む時のワークフローとデータ契約のガイド（`lism-css-guide`併用前提） |
 
 ```bash
 # 対話モード（使用中のツールを自動検出）
@@ -133,6 +134,24 @@ pnpm dlx lism-cli skill update --claude
 | `--copilot` | `.github/skills/<skill>` |
 | `--gemini` | `.gemini/skills/<skill>` |
 | `--junie` | `.junie/skills/<skill>` |
+
+### 画面モックアップの案内
+
+`lism-cli mockup` は、画面モックアップを作成するCLI [`@lism-css/mockup`](https://www.npmjs.com/package/@lism-css/mockup) の使い方を表示するだけのコマンドです。`lism-cli` 自体はモックアップ機能を持ちません。
+
+```bash
+pnpm dlx lism-cli mockup
+```
+
+モックアップの作成・検証・プレビューは `@lism-css/mockup` を直接実行してください。
+
+```bash
+npx @lism-css/mockup init [dir]    # ひな形＋契約説明書の生成
+npx @lism-css/mockup check [dir]   # 非対話の検証
+npx @lism-css/mockup dev [dir]     # devサーバー起動（ブラウザ確認用）
+```
+
+AIエージェントにモックアップを作らせる場合は、`lism-mockup-guide` スキル（前述の `skill add`）も併せて導入してください。
 
 ## lism.config.js
 
