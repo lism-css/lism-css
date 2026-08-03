@@ -1,0 +1,39 @@
+/*
+ * Viewer chrome styles.
+ *
+ * Deliberately tiny: anything expressible with Lism Props / Property Classes is
+ * written in the TSX files instead, so this file only holds the dark theme
+ * token overrides that cannot be expressed on an element.
+ *
+ * These rules are intentionally written OUTSIDE of `@layer`. The token CSS built
+ * from the mock's `tokens.json` (`virtual:lism-mock/tokens.css`) is emitted as
+ * unlayered `:root { ... }` declarations, and unlayered rules always win over
+ * layered ones. A `.set--dark` placed in `@layer lism-base` would therefore lose
+ * against any mock that defines its own `--base` / `--text` tokens.
+ * `:root.set--dark` also outranks the plain `:root` selector on specificity, so
+ * the theme wins regardless of stylesheet order.
+ */
+
+:root {
+  color-scheme: light;
+}
+
+/*
+ * Dark theme. Only the neutral tokens are overridden — a mock's own
+ * `--brand` / `--accent` / `--link` values keep working in both themes.
+ */
+:root.set--dark {
+  color-scheme: dark;
+
+  /* Palette base: lift lightness / chroma so the OKLCH palette stays readable. */
+  --L: 72%;
+  --C: 0.25;
+
+  --base: hsl(228 10% 8%);
+  --base-2: hsl(228 8% 20%);
+  --text: hsl(48 12% 95%);
+  --text-2: hsl(48 8% 84%);
+  --divider: hsl(224 4% 24%);
+  --neutral: hsl(220 2% 40%);
+  --shadow: hsl(215 40% 76% / 5%);
+}

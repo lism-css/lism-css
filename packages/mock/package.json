@@ -1,0 +1,65 @@
+{
+  "name": "@lism-css/mock",
+  "version": "0.1.0",
+  "description": "Design mock preview CLI for Lism CSS. Bundled viewer + data-file contract (pages / tokens.json / mock.config.json).",
+  "author": {
+    "name": "ddryo",
+    "url": "https://github.com/ddryo"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "keywords": [
+    "css-framework",
+    "cli",
+    "mock",
+    "preview"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p viewer/tsconfig.json",
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "lint": "eslint 'src/**/*.{ts,tsx}' 'viewer/src/**/*.{ts,tsx}'",
+    "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
+  },
+  "bin": {
+    "lism-mock": "./bin/lism-mock.mjs"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "viewer",
+    "templates"
+  ],
+  "type": "module",
+  "homepage": "https://lism-css.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lism-css/lism-css/tree/main/packages/mock"
+  },
+  "bugs": {
+    "url": "https://github.com/lism-css/lism-css/issues"
+  },
+  "dependencies": {
+    "@lism-css/plugin": "workspace:*",
+    "@lism-css/ui": "workspace:*",
+    "@vitejs/plugin-react": "^4.7.0",
+    "commander": "^13.1.0",
+    "lism-css": "workspace:*",
+    "lucide-react": "^0.577.0",
+    "picocolors": "^1.1.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "vite": "^7.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.4",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
+  }
+}
