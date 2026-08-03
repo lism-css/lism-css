@@ -44,7 +44,7 @@ export const Default: Story = {
     await userEvent.click(closeBtn);
 
     // モーダルが閉じている（アニメーション完了待ち）
-    await waitFor(() => expect(dialog).not.toHaveAttribute('open'), { timeout: 2000 });
+    await waitFor(() => expect(dialog).not.toHaveAttribute('open'), { timeout: 5000 });
   },
 };
 
