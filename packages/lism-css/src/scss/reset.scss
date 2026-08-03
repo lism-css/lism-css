@@ -118,6 +118,9 @@
     font: inherit;
     color: inherit;
 
+    /* UAスタイルの letter-spacing: normal を打ち消して本文から継承する ( font ショートハンドには含まれないため個別指定 ) */
+    letter-spacing: inherit;
+
     /* iOSで入力時の拡大を防ぐ. ( button には必要ないが、フォーム全体のフォントサイズを揃えるために一括で適用する ) */
     font-size: max(16px, 1em);
   }
