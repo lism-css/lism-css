@@ -9,6 +9,15 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.24.1 (2026.08.04)
+
+- Fixed a conflict that prevented border Property Classes (`.-bd` etc.) from working in `full.css`. (#513)
+- Fixed an issue where UA-derived `text-align` (button) and `letter-spacing` (form elements) were not being reset. (#516)
+- Removed the `l` value from the `flow` token in `tokens.ts`, as it was not implemented in CSS.
+- Updated dependencies and cleaned up internal type definitions. (No API changes)
+
+<Divider bds="dashed" my="40" />
+
 ## @lism-css/plugin v.0.4.1 (2026.08.04)
 
 - Export `lismConfigAlias` from `@lism-css/plugin/vite` (#521)
