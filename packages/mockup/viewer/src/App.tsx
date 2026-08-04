@@ -2,7 +2,7 @@
  * Viewer shell and view switching.
  *
  * The URL decides what is on screen (see lib/useViewerRoute):
- *   - gallery (no parameters) … every page at once, one iframe each
+ *   - gallery (no parameters) … every screen at once, one iframe each
  *   - `?view=tokens`          … the generated token list
  *   - `?page=<id>`            … one page, full size, inside the shell
  *   - `?page=<id>&embed=1`    … the same page with no shell at all
@@ -22,6 +22,7 @@ import PageView from './components/PageView';
 import TokensView, { TOKENS_VIEW_LABEL } from './components/TokensView';
 import ViewerHeader from './components/ViewerHeader';
 import ViewerNav from './components/ViewerNav';
+import { splitPinnedPage } from './lib/pinnedPage';
 import { useViewerRoute } from './lib/useViewerRoute';
 import { useTheme } from './lib/useTheme';
 
@@ -38,6 +39,11 @@ export default function App() {
   const { isDark, toggleTheme } = useTheme();
   const [isNavOpen, setIsNavOpen] = useState(true);
   const mainRef = useRef<HTMLElement>(null);
+
+  // The pinned page documents the mockup instead of being one of its screens, so
+  // it gets its own nav entry and stays out of the gallery. It is still a normal
+  // page otherwise: `?page=` opens it like any other.
+  const { pinned: pinnedPage, screens } = splitPinnedPage(pages);
 
   // `find` returns the element from `pages`, so the identity stays stable across
   // renders and can safely be used as an effect dependency.
@@ -69,7 +75,7 @@ export default function App() {
     // With no pages there is nothing to put in the gallery, so the hint that
     // explains how to add one takes its place.
     if (route.view === 'gallery') {
-      return pages.length > 0 ? <GalleryView pages={pages} onOpenPage={openPage} /> : <EmptyState pages={pages} requestedPageId={null} />;
+      return screens.length > 0 ? <GalleryView pages={screens} onOpenPage={openPage} /> : <EmptyState pages={screens} requestedPageId={null} />;
     }
     return currentPage ? <PageView page={currentPage} /> : <EmptyState pages={pages} requestedPageId={route.pageId} />;
   };
@@ -99,7 +105,8 @@ export default function App() {
         <ViewerNav
           id={NAV_ID}
           isOpen={isNavOpen}
-          pages={pages}
+          pages={screens}
+          pinnedPage={pinnedPage}
           route={route}
           onOpenGallery={openGallery}
           onOpenTokens={openTokens}

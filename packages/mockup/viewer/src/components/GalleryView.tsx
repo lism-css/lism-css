@@ -20,18 +20,8 @@ const EMBED_HEIGHT = 800;
 /** Width a card keeps before the grid drops a column. */
 const CARD_MIN_WIDTH = '280px';
 
-/**
- * DOM id of the card for `pageId`.
- *
- * `ViewerNav` scrolls to it while the gallery is open, so the format is shared
- * through this function instead of being spelled out twice. The id is read with
- * `getElementById`, so the encoded value never has to be a valid CSS selector.
- */
-export function galleryCardId(pageId: string): string {
-  return `mockupGalleryCard--${encodeURIComponent(pageId)}`;
-}
-
 interface GalleryViewProps {
+  /** The mockup's own screens. The pinned page is not one of them — see `lib/pinnedPage`. */
   pages: ViewerPage[];
   /** Opens the single page view — the same destination the card links point at. */
   onOpenPage: (pageId: string) => void;
@@ -83,7 +73,7 @@ function GalleryCard({ page, onOpenPage }: GalleryCardProps) {
   };
 
   return (
-    <Stack id={galleryCardId(page.id)} g="10">
+    <Stack g="10">
       <Flex as="a" href={href} onClick={handleClick} ai="baseline" g="10" fxw="wrap" fz="s" fw="bold" td="none" hov="underline" ovw="anywhere">
         {page.label}
         <Inline fz="2xs" fw="normal" c="text-2" ff="mono">

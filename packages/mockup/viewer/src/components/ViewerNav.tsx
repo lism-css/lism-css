@@ -6,7 +6,6 @@ import type { ViewerPage } from 'virtual:lism-mockup/pages';
 import { groupPages } from '../lib/groupPages';
 import { isModifiedClick } from '../lib/isModifiedClick';
 import { buildGalleryHref, buildPageHref, buildTokensHref, type ViewerRoute } from '../lib/useViewerRoute';
-import { galleryCardId } from './GalleryView';
 import { TOKENS_VIEW_LABEL } from './TokensView';
 
 /** Heading of the group holding the viewer's own screens. */
@@ -16,7 +15,10 @@ interface ViewerNavProps {
   id: string;
   /** When false the sidebar is hidden but stays mounted. */
   isOpen: boolean;
+  /** The mockup's own screens, without the pinned page. */
   pages: ViewerPage[];
+  /** Listed in the viewer group instead of with the screens. See `lib/pinnedPage`. */
+  pinnedPage: ViewerPage | null;
   route: ViewerRoute;
   onOpenGallery: () => void;
   onOpenTokens: () => void;
@@ -24,22 +26,11 @@ interface ViewerNavProps {
 }
 
 /** Sidebar listing the viewer's own screens plus every page of the mockup. */
-export default function ViewerNav({ id, isOpen, pages, route, onOpenGallery, onOpenTokens, onOpenPage }: ViewerNavProps) {
+export default function ViewerNav({ id, isOpen, pages, pinnedPage, route, onOpenGallery, onOpenTokens, onOpenPage }: ViewerNavProps) {
   const groups = groupPages(pages);
 
-  /**
-   * While the gallery is open every page is already on screen, so a page link
-   * scrolls to its card instead of navigating. No history entry is pushed: the
-   * `href` still points at the single page view, so opening the link in a new tab
-   * (or any modified click) keeps working as before.
-   */
-  const handlePageClick = (pageId: string) => {
-    if (route.view !== 'gallery') {
-      onOpenPage(pageId);
-      return;
-    }
-    document.getElementById(galleryCardId(pageId))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+  /** True while `pageId` is the page on screen. */
+  const isCurrentPage = (pageId: string) => route.view === 'page' && pageId === route.pageId;
 
   return (
     <Stack
@@ -58,11 +49,16 @@ export default function ViewerNav({ id, isOpen, pages, route, onOpenGallery, onO
       <Stack g="5">
         <NavGroupLabel>{VIEWER_GROUP_LABEL}</NavGroupLabel>
         <NavMenu.Root itemP="15">
-          <NavLink href={buildGalleryHref()} isCurrent={route.view === 'gallery'} onSelect={onOpenGallery}>
-            All pages
-          </NavLink>
           <NavLink href={buildTokensHref()} isCurrent={route.view === 'tokens'} onSelect={onOpenTokens}>
             {TOKENS_VIEW_LABEL}
+          </NavLink>
+          {pinnedPage && (
+            <NavLink href={buildPageHref(pinnedPage.id)} isCurrent={isCurrentPage(pinnedPage.id)} onSelect={() => onOpenPage(pinnedPage.id)}>
+              {pinnedPage.label}
+            </NavLink>
+          )}
+          <NavLink href={buildGalleryHref()} isCurrent={route.view === 'gallery'} onSelect={onOpenGallery}>
+            All pages
           </NavLink>
         </NavMenu.Root>
       </Stack>
@@ -71,12 +67,7 @@ export default function ViewerNav({ id, isOpen, pages, route, onOpenGallery, onO
           <NavGroupLabel>{group.label}</NavGroupLabel>
           <NavMenu.Root itemP="15">
             {group.pages.map((page) => (
-              <NavLink
-                key={page.id}
-                href={buildPageHref(page.id)}
-                isCurrent={route.view === 'page' && page.id === route.pageId}
-                onSelect={() => handlePageClick(page.id)}
-              >
+              <NavLink key={page.id} href={buildPageHref(page.id)} isCurrent={isCurrentPage(page.id)} onSelect={() => onOpenPage(page.id)}>
                 {page.label}
               </NavLink>
             ))}

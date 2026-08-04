@@ -4,8 +4,13 @@
  * A hand maintained index of the UI parts this mockup uses. The viewer lists pages
  * and design tokens on its own, but it cannot know which parts a mockup settled on,
  * so keep this page in sync yourself: when a screen introduces a shared part, add
- * it here too. It is a convention, not part of the contract — rename or delete the
- * page if a mockup does not need it.
+ * it here too.
+ *
+ * "components" is the one page id the viewer treats specially: it is listed with the
+ * viewer's own screens (as the `label` from `mockup.config.json`, "UI Parts" here)
+ * and left out of the gallery, because it documents the mockup instead of being one
+ * of its screens. Delete the file if a mockup does not need the list; renaming it
+ * turns it back into an ordinary page.
  */
 import { Cluster, Columns, Group, Heading, Icon, Inline, Link, List, Stack, Text, Wrapper } from 'lism-css/react';
 import { Alert } from '@lism-css/ui/react/Alert';
@@ -56,7 +61,7 @@ export default function ComponentsPage() {
         <Stack g="50">
           <Stack g="10">
             <Heading level="1" fz="2xl">
-              Components
+              UI Parts
             </Heading>
             <Text fz="s" c="text-2">
               The parts used across the Acme Console screens. Reuse them instead of inventing a new variant.
