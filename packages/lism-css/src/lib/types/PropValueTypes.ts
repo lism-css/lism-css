@@ -1,4 +1,5 @@
 import { TOKENS, PROPS } from '../../../config/index';
+import type { FullBpExcludedKey, FullBpIsVarKey } from '../../../config/presets/props-full';
 import type { WithArbitraryString, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 import type { MakeResponsive } from './ResponsiveProps';
 import type { FullModeRegistry } from './FullModeRegistry';
@@ -147,11 +148,23 @@ type IsVarProp<T> = 1 extends ExtractPropertyValue<T, 'isVar'> ? true : false;
 
 /**
  * full モードでレスポンシブになる prop のキー。
- * - isVar 系以外: full preset が bp:1 にするため常にレスポンシブ
- * - isVar 系: props-full.ts の対象外なのでデフォルトの bp 判定のまま
+ * - FullBpIsVarKey（bds / bdc）: isVar 系だが full preset が bp:1 を追加するためレスポンシブ
+ * - FullBpExcludedKey（border ショートハンド系）: full preset の対象外なのでデフォルトの bp 判定のまま（#513）
+ * - その他の isVar 系: props-full.ts の対象外なのでデフォルトの bp 判定のまま
+ * - 上記以外: full preset が bp:1 にするため常にレスポンシブ
  */
 type FullPropsWithBreakpoint = {
-  [K in AllPropKeys]: IsVarProp<PropsConfig[K]> extends true ? (HasBreakpointSupport<PropsConfig[K]> extends true ? K : never) : K;
+  [K in AllPropKeys]: K extends FullBpIsVarKey
+    ? K
+    : K extends FullBpExcludedKey
+      ? HasBreakpointSupport<PropsConfig[K]> extends true
+        ? K
+        : never
+      : IsVarProp<PropsConfig[K]> extends true
+        ? HasBreakpointSupport<PropsConfig[K]> extends true
+          ? K
+          : never
+        : K;
 }[AllPropKeys];
 
 type FullPropsWithoutBreakpoint = Exclude<AllPropKeys, FullPropsWithBreakpoint>;

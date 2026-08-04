@@ -41,6 +41,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 | [@lism-css/mcp](https://www.npmjs.com/package/@lism-css/mcp) | MCP server for AI coding tools |
 | [lism-cli](https://www.npmjs.com/package/lism-cli) | CLI for scaffolding projects, adding UI components, and installing AI skills |
 | [create-lism](https://www.npmjs.com/package/create-lism) | Wrapper for `pnpm create lism` / `npm create lism` (bundles `lism-cli`) |
+| [@lism-css/mockup](https://www.npmjs.com/package/@lism-css/mockup) | CLI for creating, validating, and previewing Lism CSS mockups |
 | [@lism-css/plugin](https://www.npmjs.com/package/@lism-css/plugin) | Build / Vite / Astro / purge plugins for Lism CSS |
 
 ## Quick Start
@@ -151,7 +152,7 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 npx lism-cli skill add
 ```
 
-This installs the bundled skills (`lism-css-guide` and `lism-css-refactor`) into your AI tool's skill directory (e.g. `.claude/skills/` for Claude Code). Pass a skill name like `npx lism-cli skill add lism-css-guide` to install a single skill. Run without tool flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
+This installs the bundled skills (`lism-css-guide`, `lism-css-refactor` and `lism-mockup-guide`) into your AI tool's skill directory (e.g. `.claude/skills/` for Claude Code). Pass a skill name like `npx lism-cli skill add lism-css-guide` to install a single skill. Run without tool flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
 
 You can also fetch the `lism-css-guide` skill via [skills.sh](https://skills.sh):
 

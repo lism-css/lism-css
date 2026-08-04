@@ -25,6 +25,7 @@
     "build:plugin": "turbo run build --filter=./packages/plugin",
     "build:ui": "turbo run build --filter=./packages/lism-ui",
     "build:mcp": "turbo run build --filter=./packages/mcp",
+    "build:mockup": "turbo run build --filter=./packages/mockup",
     "build:cli": "turbo run build --filter=./packages/lism-cli --filter=./packages/create-lism",
     "build:docs": "turbo run build --filter=./apps/docs",
     "build:templates": "turbo run build --filter=./templates/*/* --filter=./templates/*/*/*",
@@ -51,6 +52,7 @@
     "publish:plugin": "pnpm run build:plugin && pnpm --filter @lism-css/plugin publish --access public",
     "publish:ui": "pnpm run build:ui && pnpm --filter @lism-css/ui publish --access public",
     "publish:mcp": "pnpm run build:mcp && pnpm --filter @lism-css/mcp publish --access public",
+    "publish:mockup": "pnpm run build:mockup && pnpm --filter @lism-css/mockup publish --access public",
     "publish:cli": "pnpm run build:cli && pnpm --filter lism-cli publish && pnpm --filter create-lism publish",
     "sync:cdn-versions": "node scripts/sync-cdn-versions.mjs",
     "prepare": "husky"

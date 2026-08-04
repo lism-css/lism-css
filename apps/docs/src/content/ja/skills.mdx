@@ -4,14 +4,15 @@ description: 'プロジェクトにSKILL.mdファイルを配置して、AIエ�
 ---
 プロジェクトに SKILL.md ファイルを配置することで、AIエージェントに Lism CSS の設計ルール・Props・トークン・命名規則などを伝えることができます。
 
-配布しているスキルは次の2つです。
+配布しているスキルは次の3つです。
 
 | スキル名 | 用途 |
 |---|---|
 | `lism-css-guide` | 新規実装（デザイン/要件→コード）向けの設計ルール・Props・トークン・命名規則 |
 | `lism-css-refactor` | 既存のLism CSSコードを、見た目や挙動を変えずにLismらしい書き方へ整理するリファクタ用 |
+| `lism-mockup-guide` | [`@lism-css/mockup`](https://github.com/lism-css/lism-css/tree/main/packages/mockup)で画面モックアップを組むためのワークフローとデータ契約（`lism-css-guide`併用前提） |
 
-GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor)
+GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor) / [lism-css/skills/lism-mockup-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-mockup-guide)
 
 
 ## セットアップ
@@ -51,12 +52,13 @@ GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/t
 ```bash frame="none"
 gh skill install lism-css/lism-css lism-css-guide@main
 gh skill install lism-css/lism-css lism-css-refactor@main
+gh skill install lism-css/lism-css lism-mockup-guide@main
 ```
 
 
 ### lism-cli 経由
 
-`lism-cli skill add` からも同じスキルを取得できます。プロジェクト直下への配置のみ対応していますが、`skill check` コマンドで同梱スキルとローカルの差分を確認できるのが特徴です。引数なしで実行すると `lism-css-guide` / `lism-css-refactor` の両方が対象になります。
+`lism-cli skill add` からも同じスキルを取得できます。プロジェクト直下への配置のみ対応していますが、`skill check` コマンドで同梱スキルとローカルの差分を確認できるのが特徴です。引数なしで実行すると同梱スキルすべて（`lism-css-guide` / `lism-css-refactor` / `lism-mockup-guide`）が対象になります。
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
@@ -84,7 +86,7 @@ gh skill install lism-css/lism-css lism-css-refactor@main
 対話モードでは、プロジェクト直下のマーカー（`.claude/`, `.cursor/` 等）を検出して候補をチェック済みで表示します。非対話でツールを明示指定する場合は、以下のようなフラグを渡します。
 
 ```bash frame="none"
-# 単一ツールに配置（省略時は lism-css-guide / lism-css-refactor の両方）
+# 単一ツールに配置（スキル名の省略時は同梱スキルすべて）
 npx lism-cli skill add --claude
 
 # 複数ツールを同時に
@@ -99,7 +101,7 @@ npx lism-cli skill add lism-css-refactor --claude
 
 #### 配置先の対応表
 
-`lism-css-guide` を例にした配置先です。`lism-css-refactor` の場合はディレクトリ名だけが置き換わります（例: `.claude/skills/lism-css-refactor`）。
+`lism-css-guide` を例にした配置先です。他のスキルの場合はディレクトリ名だけが置き換わります（例: `.claude/skills/lism-css-refactor`）。
 
 | フラグ | 配置先 |
 |--------|--------|

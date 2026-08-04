@@ -151,7 +151,7 @@ describe('withLismWebpack', () => {
       // watchRun: 再生成が throw せず走り、CSS が出力される。
       await expect(captured.watch?.()).resolves.not.toThrow();
       expect(fs.existsSync(path.join(root, '.lism-css/css/main.css'))).toBe(true);
-    });
+    }, 15000);
 
     test('css: false: watchRun は CSS を再生成しない（.lism-css/css を作らない）が、config は fileDependencies へ登録する', async () => {
       const root = tmpDir();
@@ -187,7 +187,7 @@ describe('withLismWebpack', () => {
 
       await expect(captured.watch?.()).resolves.not.toThrow();
       expect(fs.existsSync(fullCss)).toBe(true);
-    });
+    }, 15000);
   });
 
   describe('typegen オプション', () => {

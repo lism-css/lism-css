@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    // リポジトリの他パッケージ（plugin / lism-ui / lism-cli）に合わせて bundler 解決を使う。
+    // NodeNext だと @lism-css/plugin の dist .d.ts（拡張子なしの相対 re-export）が解決できず、
+    // skipLibCheck に隠れて型が any になるため。emit する import 指定子は自前で .js を付ける。
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "types": ["node"]
+  },
+  "include": ["src"]
+}

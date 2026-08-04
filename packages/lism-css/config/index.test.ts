@@ -1,4 +1,5 @@
 import { describe, test, expect, afterEach, vi } from 'vitest';
+import { FULL_BP_EXCLUDED_KEYS, FULL_BP_ISVAR_KEYS } from './presets/props-full';
 
 // config/index.ts はモジュール初期化時に lism-css/config.js（= lism.config.js）を読むため、
 // doMock で差し替えてから resetModules + 動的 import する
@@ -36,6 +37,22 @@ describe('isFullMode', () => {
     // isVar 系は preset の対象外
     expect(props.cols.isVar).toBe(1);
     expect(props.cols.tokenClass).toBeUndefined();
+  });
+
+  test('isFullMode でも border ショートハンド系は bp 対象外、bds / bdc は bp:1 になる（#513）', async () => {
+    const { PROPS } = await importConfig({ isFullMode: true });
+    const props = PROPS as unknown as LoosePropConfig;
+
+    // border ショートハンド系11キーは _border.scss の特殊実装と競合するため bp 拡張から除外される
+    expect(FULL_BP_EXCLUDED_KEYS).toHaveLength(11);
+    for (const key of FULL_BP_EXCLUDED_KEYS) {
+      expect(props[key].bp, key).toBeUndefined();
+    }
+    // 代わりにサブプロパティ（isVar 系）が full 限定で bp:1 になる
+    for (const key of FULL_BP_ISVAR_KEYS) {
+      expect(props[key].bp, key).toBe(1);
+    }
+    expect(props.bdw.bp).toBe(1); // defaults で対応済み
   });
 
   test('ユーザー設定の props 上書きが full preset より優先される（opt-out 可能）', async () => {

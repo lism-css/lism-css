@@ -81,6 +81,7 @@ README やドキュメント等で公式サイトへのリンクを記載する�
 - `lism-css-guide` スキルに関しては、`lism-css`パッケージ本体を編集中の場合は明示的に指示がない限り読み込まないこと。
 - ただし、`templates/*`の編集時は、`lism-css-guide` スキルを読み込んでから作業すること。
 - `templates/*` を新規追加する際は、`package.json` に `"private": true` を必ず付与すること（npm への誤公開防止）。
+- `.claude/skills/` にローカルスキルを新規作成する際は、SKILL.md の frontmatter に `metadata.internal: true` を必ず付与すること（`npx skills add lism-css/lism-css` の配布対象から除外するため。配布用スキルは `skills/` 配下のみ）。
 - `skills/lism-css-guide/` を更新する時の注意事項
   - 失敗例を単純に `SKILL.md` 冒頭へ積み増さないこと。具体例は `antipatterns.md`、実装プランの判断手順は `references/authoring.md`、命名は `naming.md` など、既存の詳細ファイルへ最小追記すること。
   - skillからMCPの案内はしない。
