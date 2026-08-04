@@ -8,6 +8,7 @@
   "scripts": {
     "dev:docs": "cd apps/docs && pnpm run dev",
     "dev:catalog": "pnpm --filter @lism-css/catalog storybook",
+    "dev:mockup": "pnpm build:mockup && pnpm --dir packages/mockup exec node bin/lism-mockup.mjs dev __test__",
     "dev:template": "sh -c 'pnpm --filter \"$1\" dev' --",
     "test": "turbo run test",
     "start": "turbo run start",
@@ -26,6 +27,8 @@
     "build:ui": "turbo run build --filter=./packages/lism-ui",
     "build:mcp": "turbo run build --filter=./packages/mcp",
     "build:mockup": "turbo run build --filter=./packages/mockup",
+    "init:mockup": "pnpm build:mockup && (test -f packages/mockup/__test__/mockup.config.json || pnpm --dir packages/mockup exec node bin/lism-mockup.mjs init __test__)",
+    "check:mockup": "pnpm build:mockup && pnpm --dir packages/mockup exec node bin/lism-mockup.mjs check __test__",
     "build:cli": "turbo run build --filter=./packages/lism-cli --filter=./packages/create-lism",
     "build:docs": "turbo run build --filter=./apps/docs",
     "build:templates": "turbo run build --filter=./templates/*/* --filter=./templates/*/*/*",
