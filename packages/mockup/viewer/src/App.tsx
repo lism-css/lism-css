@@ -25,7 +25,6 @@ import ViewerNav from './components/ViewerNav';
 import { groupPages } from './lib/groupPages';
 import { splitPinnedPage } from './lib/pinnedPage';
 import { useViewerRoute } from './lib/useViewerRoute';
-import { useTheme } from './lib/useTheme';
 
 /** Fallback used when `mockup.config.json` does not declare a `title`. */
 const DEFAULT_TITLE = 'Lism Mockup';
@@ -47,7 +46,6 @@ export default function App() {
   const viewerTitle = title?.trim() ? title : DEFAULT_TITLE;
 
   const { route, openPage, openGallery, openTokens } = useViewerRoute();
-  const { isDark, toggleTheme } = useTheme();
   const [isNavOpen, setIsNavOpen] = useState(true);
   const mainRef = useRef<HTMLElement>(null);
 
@@ -97,8 +95,6 @@ export default function App() {
       <ViewerHeader
         title={viewerTitle}
         currentLabel={route.view === 'tokens' ? TOKENS_VIEW_LABEL : currentPage?.label}
-        isDark={isDark}
-        onToggleTheme={toggleTheme}
         isNavOpen={isNavOpen}
         onToggleNav={() => setIsNavOpen((open) => !open)}
         navId={NAV_ID}
