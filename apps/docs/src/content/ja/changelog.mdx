@@ -9,6 +9,15 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.24.1 (2026.08.04)
+
+- `full.css` で border 用の Property Class（`.-bd` 系）が効かなくなっていた競合を修正しました。(#513)
+- ブラウザ標準スタイル由来の `text-align`（button）と `letter-spacing`（フォーム要素）が打ち消されていなかった問題を修正しました。(#516)
+- CSSに実装されていなかった `flow` トークンの `l` を `tokens.ts` から削除しました。
+- 依存パッケージの更新と内部の型定義の整理を行いました。（APIの変更はありません）
+
+<Divider bds="dashed" my="40" />
+
 ## @lism-css/plugin v.0.4.1 (2026.08.04)
 
 - `@lism-css/plugin/vite` から `lismConfigAlias` をエクスポート (#521)
