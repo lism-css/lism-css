@@ -15,7 +15,7 @@ import { prepareMockRuntime, type MockupRuntime } from '../core/runtime.js';
 import { TOKENS_FILENAME } from '../core/tokens.js';
 import { MockupContractError } from '../core/types.js';
 import { createMockViteConfig } from '../vite/config.js';
-import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID } from '../vite/virtual-modules.js';
+import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIRTUAL_TOKENS_DATA_ID } from '../vite/virtual-modules.js';
 
 export interface DevCommandOptions {
   /** ビューアディレクトリの上書き（テスト用。既定は同梱ビューア）。 */
@@ -62,7 +62,9 @@ export async function applyDataChange(server: ViteDevServer, runtime: MockupRunt
   try {
     if (kind === 'tokens') {
       await runtime.refreshTokens();
+      // CSS とトークン一覧は同じ tokens.json から作るため、必ず両方を作り直させる。
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_CSS_ID);
+      invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_DATA_ID);
     } else {
       runtime.refreshPages();
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_PAGES_ID);

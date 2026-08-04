@@ -49,6 +49,22 @@ export function useTheme(): ThemeState {
     }
   }, [theme]);
 
+  useEffect(() => {
+    // The gallery runs a second copy of the viewer inside every preview iframe.
+    // `storage` fires in the *other* browsing contexts of the same origin, so
+    // toggling the theme in the parent is what keeps the previews in sync.
+    // A `clear()` reports `key: null`, in which case the stored value is gone and
+    // the current theme is kept.
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY) return;
+      const stored = readStoredTheme();
+      if (stored) setTheme(stored);
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
   const toggleTheme = useCallback(() => {
     setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
   }, []);

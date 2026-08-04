@@ -46,6 +46,27 @@ export interface PageEntry {
 /** `tokens.json` content: lism.config-compatible `tokens` object. */
 export type MockupTokens = Record<string, Record<string, string | number>>;
 
+/**
+ * One resolved design token for the viewer's tokens view.
+ * Mirrors `ViewerToken` in `viewer/src/virtual-modules.d.ts` — keep both in sync.
+ */
+export interface TokenEntry {
+  /** Token key inside its group (e.g. `brand`, `20`). */
+  key: string;
+  /** CSS custom property name (e.g. `--brand`). */
+  varName: string;
+  /** Value as it appears in the generated token CSS (numbers are stringified). */
+  value: string;
+  /** How the mockup's `tokens.json` affected this token. */
+  source: 'default' | 'overridden' | 'custom';
+}
+
+/** A token group in merged-config order (`virtual:lism-mockup/tokens`). */
+export interface TokenGroupEntry {
+  group: string;
+  tokens: TokenEntry[];
+}
+
 /** Fully validated data directory, shared by `dev` and `check`. */
 export interface MockupData {
   /** Absolute path to the data directory. */

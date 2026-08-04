@@ -4,7 +4,7 @@ import type { ViteDevServer } from 'vite';
 
 import type { MockupRuntime } from '../core/runtime.js';
 import { cleanupTempDirs, createTempDir, getFixtureViewerDir, writeFiles } from '../test-helpers/fixtures.js';
-import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID } from '../vite/virtual-modules.js';
+import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIRTUAL_TOKENS_DATA_ID } from '../vite/virtual-modules.js';
 import { classifyDataEvent, createMockDevServer } from './dev.js';
 
 const HOME_PAGE = `import { Box } from 'lism-css/react';
@@ -97,6 +97,25 @@ describe('dev サーバー', () => {
     expect(result?.code).toContain('--s30: 1.5rem');
   });
 
+  test('virtual:lism-mockup/tokens が tokens.json の反映結果を source 付きで供給する', async () => {
+    const result = await server.transformRequest(RESOLVED_VIRTUAL_TOKENS_DATA_ID);
+
+    expect(result?.code).toContain('export const tokenGroups = [');
+    // color の新キーは custom、既存キーの上書きは overridden。
+    expect(result?.code).toContain('"varName": "--canvas"');
+    expect(result?.code).toContain('"source": "custom"');
+    expect(result?.code).toContain('"varName": "--s30"');
+    expect(result?.code).toContain('"source": "overridden"');
+  });
+
+  test('ビューアからの仮想モジュール指定子は解決済み id へ解決される', async () => {
+    const importer = path.join(getFixtureViewerDir(), 'main.js');
+
+    // `tokens.css` と前方一致するが、完全一致比較なので取り違えない。
+    expect((await server.pluginContainer.resolveId('virtual:lism-mockup/tokens', importer))?.id).toBe(RESOLVED_VIRTUAL_TOKENS_DATA_ID);
+    expect((await server.pluginContainer.resolveId('virtual:lism-mockup/tokens.css', importer))?.id).toBe(RESOLVED_VIRTUAL_TOKENS_CSS_ID);
+  });
+
   test('ページからの react は @lism-css/mockup 側へ解決される（親の同名パッケージを見ない）', async () => {
     const resolved = await server.pluginContainer.resolveId('react', path.join(dataDir, 'pages/home.jsx'));
 
@@ -134,16 +153,27 @@ describe('dev サーバー', () => {
     expect(server.config.server.host).toBe('localhost');
   });
 
-  test('tokens.json を書き換えると config と CSS を作り直す', async () => {
+  test('tokens.json を書き換えると config と CSS とトークン一覧を作り直す', async () => {
     writeFiles(dataDir, { 'tokens.json': JSON.stringify({ color: { canvas: '#000000' } }) });
     await runtime.refreshTokens();
 
     expect(runtime.tokensCss).toContain('--canvas: #000000');
-    const mod = server.moduleGraph.getModuleById(RESOLVED_VIRTUAL_TOKENS_CSS_ID);
-    if (mod) server.moduleGraph.invalidateModule(mod);
+    expect(runtime.tokensData.find((entry) => entry.group === 'color')?.tokens).toContainEqual({
+      key: 'canvas',
+      varName: '--canvas',
+      value: '#000000',
+      source: 'custom',
+    });
+    // 上書きを消した space は default に戻る。
+    expect(runtime.tokensData.find((entry) => entry.group === 'space')?.tokens.every((token) => token.source === 'default')).toBe(true);
 
-    const result = await server.transformRequest(RESOLVED_VIRTUAL_TOKENS_CSS_ID);
-    expect(result?.code).toContain('--canvas: #000000');
+    for (const id of [RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIRTUAL_TOKENS_DATA_ID]) {
+      const mod = server.moduleGraph.getModuleById(id);
+      if (mod) server.moduleGraph.invalidateModule(mod);
+    }
+
+    expect((await server.transformRequest(RESOLVED_VIRTUAL_TOKENS_CSS_ID))?.code).toContain('--canvas: #000000');
+    expect((await server.transformRequest(RESOLVED_VIRTUAL_TOKENS_DATA_ID))?.code).toContain('"value": "#000000"');
   });
 
   test('watch 対象の分類', () => {
@@ -182,5 +212,8 @@ describe('dev サーバー', () => {
       },
       { timeout: 10_000, interval: 100 }
     );
+
+    // applyDataChange が CSS だけでなくトークン一覧の仮想モジュールも invalidate する。
+    expect((await server.transformRequest(RESOLVED_VIRTUAL_TOKENS_DATA_ID))?.code).toContain('"value": "#123456"');
   }, 20_000);
 });

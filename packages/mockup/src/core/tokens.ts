@@ -11,8 +11,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { loadBuildConfigs, serializeTokens } from '@lism-css/plugin/builder';
+import getTokenVarName from 'lism-css/lib/getTokenVarName';
 
-import { MockupContractError, type MockupTokens } from './types.js';
+import { MockupContractError, type MockupTokens, type TokenEntry, type TokenGroupEntry } from './types.js';
 
 export const TOKENS_FILENAME = 'tokens.json';
 /**
@@ -119,11 +120,62 @@ export function writeConfigModule(dir: string, tokens: MockupTokens): string {
 }
 
 /**
- * 生成 config を反映した CSS 変数定義を作る。
+ * マージ済みトークンを、ビューアのトークン一覧が読める形へ整理する。
+ *
+ * 一覧に出すのは「生成 CSS が実際に定義しているトークン」だけなので、
+ * 値の除外規則は `serializeTokens()` と揃える（`'-'` センチネル・空・null は出さない）。
+ *
+ * @param fullTokens    `fullConfig.tokens`（`tokens.json` 反映後のマージ結果）
+ * @param defaultTokens `defaultConfig.tokens`（既存キー判定の正）
+ * @param overrides     検証済み `tokens.json`（`source` 判定に使う）
+ */
+export function collectTokenGroups(
+  fullTokens: Record<string, unknown>,
+  defaultTokens: Record<string, unknown>,
+  overrides: MockupTokens
+): TokenGroupEntry[] {
+  const groups: TokenGroupEntry[] = [];
+
+  for (const [group, valueMap] of Object.entries(fullTokens)) {
+    // 配列カタログ（キーだけの登録）などは CSS 変数を持たないため、serializeTokens と同じ規則で飛ばす。
+    if (!isPlainObject(valueMap)) continue;
+
+    // 上書き元は null プロトタイプのユーザー入力なので、`in` ではなく hasOwn で own key だけを見る。
+    const overrideGroup = Object.hasOwn(overrides, group) && isPlainObject(overrides[group]) ? overrides[group] : null;
+    // 既存キー一覧は上書きがある種別でだけ必要（default しか無いなら判定に使わない）。
+    const knownKeys = overrideGroup ? defaultTokenKeys(defaultTokens[group]) : [];
+
+    const tokens: TokenEntry[] = [];
+    // 値は string | number 前提（default-config の定義と `validateTokens` の契約）。serializeTokens と同じ見なし方。
+    for (const [key, value] of Object.entries(valueMap as Record<string, string | number>)) {
+      if (value === '-' || value === '' || value == null) continue;
+
+      const isOverride = overrideGroup !== null && Object.hasOwn(overrideGroup, key);
+      const source: TokenEntry['source'] = isOverride ? (knownKeys.includes(key) ? 'overridden' : 'custom') : 'default';
+
+      tokens.push({ key, varName: getTokenVarName(group, key), value: String(value), source });
+    }
+
+    if (tokens.length > 0) groups.push({ group, tokens });
+  }
+
+  return groups;
+}
+
+/**
+ * 生成 config を反映した CSS 変数定義と、その内訳（ビューアのトークン一覧用）を作る。
  *
  * ビューアは `lism-css/full.css` を読むため、full 側の BuildConfig を直列化する。
+ * CSS と一覧は必ず同じ config から作る（`loadBuildConfigs()` は1回だけ呼び、両者のずれを防ぐ）。
  */
-export async function buildTokensCss(dataDir: string, configPath: string): Promise<string> {
-  const { fullConfig } = await loadBuildConfigs(dataDir, { configPath });
-  return serializeTokens(fullConfig);
+export async function buildTokensArtifacts(
+  dataDir: string,
+  configPath: string,
+  overrides: MockupTokens
+): Promise<{ css: string; groups: TokenGroupEntry[] }> {
+  const { fullConfig, defaultConfig } = await loadBuildConfigs(dataDir, { configPath });
+  return {
+    css: serializeTokens(fullConfig),
+    groups: collectTokenGroups(fullConfig.tokens, defaultConfig.tokens, overrides),
+  };
 }
