@@ -4,7 +4,7 @@ import { NavMenu } from '@lism-css/ui/react/NavMenu';
 import { ComponentIcon, GalleryVerticalEndIcon, PaletteIcon } from 'lucide-react';
 import type { ViewerPage } from 'virtual:lism-mockup/pages';
 
-import { groupPages } from '../lib/groupPages';
+import type { PageGroup } from '../lib/groupPages';
 import { isModifiedClick } from '../lib/isModifiedClick';
 import { buildGalleryHref, buildPageHref, buildTokensHref, type ViewerRoute } from '../lib/useViewerRoute';
 import { TOKENS_VIEW_LABEL } from './TokensView';
@@ -16,8 +16,8 @@ interface ViewerNavProps {
   id: string;
   /** When false the sidebar is hidden but stays mounted. */
   isOpen: boolean;
-  /** The mockup's own screens, without the pinned page. */
-  pages: ViewerPage[];
+  /** The mockup's own screens by category, without the pinned page. */
+  groups: PageGroup[];
   /** Listed in the viewer group instead of with the screens. See `lib/pinnedPage`. */
   pinnedPage: ViewerPage | null;
   route: ViewerRoute;
@@ -27,9 +27,7 @@ interface ViewerNavProps {
 }
 
 /** Sidebar listing the viewer's own screens plus every page of the mockup. */
-export default function ViewerNav({ id, isOpen, pages, pinnedPage, route, onOpenGallery, onOpenTokens, onOpenPage }: ViewerNavProps) {
-  const groups = groupPages(pages);
-
+export default function ViewerNav({ id, isOpen, groups, pinnedPage, route, onOpenGallery, onOpenTokens, onOpenPage }: ViewerNavProps) {
   /** True while `pageId` is the page on screen. */
   const isCurrentPage = (pageId: string) => route.view === 'page' && pageId === route.pageId;
 

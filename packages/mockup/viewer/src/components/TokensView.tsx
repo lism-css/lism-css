@@ -4,7 +4,7 @@ import { tokenGroups, type ViewerToken } from 'virtual:lism-mockup/tokens';
 
 import { useActiveSection } from '../lib/useActiveSection';
 import TokenOutline, { type OutlineItem } from './TokenOutline';
-import TokenPreview, { tokenPreviewIsWide, tokenPreviewNote, tokenPreviewPlacement } from './TokenPreview';
+import TokenPreview, { tokenGroupLayout } from './TokenPreview';
 
 /** Label of this view. Shared with the header, the nav and `document.title`. */
 export const TOKENS_VIEW_LABEL = 'Design tokens';
@@ -86,11 +86,9 @@ interface TokenGroupSectionProps {
 }
 
 function TokenGroupSection({ group, tokens }: TokenGroupSectionProps) {
-  const note = tokenPreviewNote(group);
   // A group whose preview needs the whole row needs the whole view with it, so
   // it opts out of the wrapper's content size instead of being centred in it.
-  const isBlockPreview = tokenPreviewPlacement(group) === 'block';
-  const isWide = tokenPreviewIsWide(group);
+  const { note, isBlock: isBlockPreview, isWide } = tokenGroupLayout(group);
 
   const rows = tokens.map((token, index) => (
     <TokenRow key={token.key} group={group} token={token} isBlockPreview={isBlockPreview} hasDivider={index > 0} />
@@ -152,39 +150,39 @@ interface TokenRowProps {
 function TokenRow({ group, token, isBlockPreview, hasDivider }: TokenRowProps) {
   const preview = <TokenPreview group={group} tokenKey={token.key} varName={token.varName} />;
 
-  const StatusBadge = (
-    <>
+  // Both layouts below show the same cells, so each one is built once here and
+  // only placed differently.
+  // The badge names the token, not its value, so it rides along with the key
+  // instead of taking a column of its own.
+  const keyCell = (
+    <Inline fz="s" fw="bold" ovw="anywhere" min-w="0">
+      {token.key}
       {token.source !== 'default' && (
-        <Badge util="cbox" keycolor={SOURCE_LABELS[token.source] === 'new' ? 'orange' : 'blue'} fz="2xs" hl="0" fxsh="0" px="10" bdrs="99" ms="10">
+        <Badge util="cbox" keycolor={token.source === 'custom' ? 'orange' : 'blue'} fz="2xs" hl="0" fxsh="0" px="10" bdrs="99" ms="10">
           {SOURCE_LABELS[token.source]}
         </Badge>
       )}
-    </>
+    </Inline>
   );
-  // The badge names the token, not its value, so it rides along with the CSS
-  // variable name instead of taking a column of its own.
-  const varMeta = (
-    <>
+  const varCell = (
+    <Flex ai="baseline" g="10" fxw="wrap" min-w="0">
       <Inline as="code" fz="2xs" ff="mono" c="text-2" ovw="anywhere">
         {token.varName}
       </Inline>
-    </>
+    </Flex>
   );
 
   // A block preview is too wide to sit next to the text, so it takes a band of
   // its own under it instead of a column beside it. Its group has no preview
-  // column to line up, so the row stays a plain wrapping flex.
+  // column to line up, so the row stays a plain wrapping flex, where the value
+  // has to claim the leftover space itself — the grid layout below gets that
+  // from its track instead.
   if (isBlockPreview) {
     return (
       <Stack as="li" g="10" py="10" bd-bs={hasDivider || undefined}>
         <Flex ai="center" g="25" fxw="wrap">
-          <Inline fz="s" fw="bold" ovw="anywhere" min-w="0">
-            {token.key}
-            {StatusBadge}
-          </Inline>
-          <Flex ai="baseline" g="10" fxw="wrap" min-w="0">
-            {varMeta}
-          </Flex>
+          {keyCell}
+          {varCell}
           <Inline fz="xs" ff="mono" fxg="1" min-w="0" ovw="anywhere">
             {token.value}
           </Inline>
@@ -202,13 +200,8 @@ function TokenRow({ group, token, isBlockPreview, hasDivider }: TokenRowProps) {
     // tracks line them up as a table.
     <Grid as="li" gtc="subgrid" gc="1/-1" ai="center" g="25" rg="10" py="15" bd-bs={hasDivider || undefined}>
       {preview}
-      <Inline fz="s" fw="bold" ovw="anywhere" min-w="0">
-        {token.key}
-        {StatusBadge}
-      </Inline>
-      <Flex ai="baseline" g="10" fxw="wrap" min-w="0">
-        {varMeta}
-      </Flex>
+      {keyCell}
+      {varCell}
       <Inline fz="xs" ff="mono" ovw="anywhere">
         {token.value}
       </Inline>

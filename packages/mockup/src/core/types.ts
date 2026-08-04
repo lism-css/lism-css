@@ -9,6 +9,16 @@
 /** Supported `mockup.config.json` schema version. Bump when the contract changes. */
 export const SCHEMA_VERSION = 1;
 
+/**
+ * Whether a parsed JSON value is an object the validators can walk key by key.
+ *
+ * Shared by every validator so `mockup.config.json` and `tokens.json` can never
+ * disagree about what counts as an object.
+ */
+export function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
 /** Per-page metadata overrides in `mockup.config.json` (`pages` field). */
 export interface MockupConfigPageMeta {
   label?: string;

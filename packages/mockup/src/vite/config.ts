@@ -10,7 +10,7 @@ import react from '@vitejs/plugin-react';
 import { lismConfigAlias } from '@lism-css/plugin/vite';
 import type { InlineConfig } from 'vite';
 
-import { getMockPackageRoot, safeRealpath } from '../core/paths.js';
+import { getMockPackageRoot, safeRealpath, walkAncestorDirs } from '../core/paths.js';
 import type { MockupRuntime } from '../core/runtime.js';
 import { buildImportAllowlist, type ImportAllowlist } from './allowlist.js';
 import { importBoundaryPlugin } from './boundary.js';
@@ -28,15 +28,11 @@ export interface MockupViteConfigOptions {
 /** `from` から親方向へ辿って見つかる node_modules ディレクトリ（`@lism-css/mockup` の依存ツリー）。 */
 function ancestorNodeModules(from: string): string[] {
   const found: string[] = [];
-  let dir = path.resolve(from);
-  for (;;) {
+  for (const dir of walkAncestorDirs(from)) {
     const candidate = path.join(dir, 'node_modules');
     if (fs.existsSync(candidate)) found.push(safeRealpath(candidate));
-
-    const parent = path.dirname(dir);
-    if (parent === dir) return found;
-    dir = parent;
   }
+  return found;
 }
 
 /**

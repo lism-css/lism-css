@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { getMockPackageRoot, safeRealpath } from '../core/paths.js';
+import { getMockPackageRoot, safeRealpath, walkAncestorDirs } from '../core/paths.js';
 
 /** ページからの bare import を許可するパッケージ。 */
 export const ALLOWED_PACKAGES = ['react', 'react-dom', 'lism-css', '@lism-css/ui', 'lucide-react'] as const;
@@ -37,15 +37,11 @@ export interface ImportAllowlist {
 
 /** `from` から親方向へ辿って `node_modules/<pkg>/package.json` を探す（Node の解決と同じ順序）。 */
 export function findPackageDir(pkgName: string, from: string): string | null {
-  let dir = path.resolve(from);
-  for (;;) {
+  for (const dir of walkAncestorDirs(from)) {
     const manifest = path.join(dir, 'node_modules', ...pkgName.split('/'), 'package.json');
     if (fs.existsSync(manifest)) return path.dirname(manifest);
-
-    const parent = path.dirname(dir);
-    if (parent === dir) return null;
-    dir = parent;
   }
+  return null;
 }
 
 /** `exports` オブジェクトがサブパスマップか（条件マップの糖衣ではないか）。 */

@@ -13,7 +13,7 @@ import path from 'node:path';
 import { loadBuildConfigs, serializeTokens } from '@lism-css/plugin/builder';
 import getTokenVarName from 'lism-css/lib/getTokenVarName';
 
-import { MockupContractError, type MockupTokens, type TokenEntry, type TokenGroupEntry } from './types.js';
+import { isPlainObject, MockupContractError, type MockupTokens, type TokenEntry, type TokenGroupEntry } from './types.js';
 
 export const TOKENS_FILENAME = 'tokens.json';
 /**
@@ -28,8 +28,15 @@ export const GENERATED_CONFIG_FILENAME = 'lism.config.js';
 /** 新しいキーの追加を許可するトークン種別。それ以外は既存キーの値上書きのみ。 */
 const NEW_KEY_ALLOWED_TOKENS = new Set(['color']);
 
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+/**
+ * `serializeTokens()` が CSS 変数として出力しない値か。
+ *
+ * 一覧に出すのは「生成 CSS が実際に定義しているトークン」だけなので、除外規則は
+ * `serializeTokens()` と揃える必要がある。片方だけ変わるズレを見つけやすいよう、
+ * 複製したルールはこの関数1つに閉じ込める。
+ */
+function isOmittedTokenValue(value: string | number | null | undefined): boolean {
+  return value === '-' || value === '' || value == null;
 }
 
 /** default-config の1トークン種別が持つ既存キー一覧（配列カタログにも対応）。 */
@@ -122,8 +129,7 @@ export function writeConfigModule(dir: string, tokens: MockupTokens): string {
 /**
  * マージ済みトークンを、ビューアのトークン一覧が読める形へ整理する。
  *
- * 一覧に出すのは「生成 CSS が実際に定義しているトークン」だけなので、
- * 値の除外規則は `serializeTokens()` と揃える（`'-'` センチネル・空・null は出さない）。
+ * 出すのは生成 CSS が実際に定義しているトークンだけ（`isOmittedTokenValue()` を参照）。
  *
  * @param mergedTokens  `mainConfig.tokens`（`tokens.json` 反映後のマージ結果）
  * @param defaultTokens `defaultConfig.tokens`（既存キー判定の正）
@@ -148,7 +154,7 @@ export function collectTokenGroups(
     const tokens: TokenEntry[] = [];
     // 値は string | number 前提（default-config の定義と `validateTokens` の契約）。serializeTokens と同じ見なし方。
     for (const [key, value] of Object.entries(valueMap as Record<string, string | number>)) {
-      if (value === '-' || value === '' || value == null) continue;
+      if (isOmittedTokenValue(value)) continue;
 
       const isOverride = overrideGroup !== null && Object.hasOwn(overrideGroup, key);
       const source: TokenEntry['source'] = isOverride ? (knownKeys.includes(key) ? 'overridden' : 'custom') : 'default';

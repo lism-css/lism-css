@@ -22,6 +22,7 @@ import PageView from './components/PageView';
 import TokensView, { TOKENS_VIEW_LABEL } from './components/TokensView';
 import ViewerHeader from './components/ViewerHeader';
 import ViewerNav from './components/ViewerNav';
+import { groupPages } from './lib/groupPages';
 import { splitPinnedPage } from './lib/pinnedPage';
 import { useViewerRoute } from './lib/useViewerRoute';
 import { useTheme } from './lib/useTheme';
@@ -37,6 +38,10 @@ const NAV_ID = 'mockupViewerNav';
 // otherwise: `?page=` opens it like any other. `pages` is a build-time constant,
 // so splitting it once here also keeps the page identities stable across renders.
 const { all: allPages, pinned: pinnedPage, screens } = splitPinnedPage(pages);
+
+// The sidebar and the gallery show the same categories, so the grouping is done
+// here once rather than by each of them on every render.
+const pageGroups = groupPages(screens);
 
 export default function App() {
   const viewerTitle = title?.trim() ? title : DEFAULT_TITLE;
@@ -76,7 +81,7 @@ export default function App() {
     // With no pages there is nothing to put in the gallery, so the hint that
     // explains how to add one takes its place.
     if (route.view === 'gallery') {
-      return screens.length > 0 ? <GalleryView pages={screens} onOpenPage={openPage} /> : <EmptyState pages={screens} requestedPageId={null} />;
+      return screens.length > 0 ? <GalleryView groups={pageGroups} onOpenPage={openPage} /> : <EmptyState pages={screens} requestedPageId={null} />;
     }
     return currentPage ? <PageView page={currentPage} /> : <EmptyState pages={allPages} requestedPageId={route.pageId} />;
   };
@@ -106,7 +111,7 @@ export default function App() {
         <ViewerNav
           id={NAV_ID}
           isOpen={isNavOpen}
-          pages={screens}
+          groups={pageGroups}
           pinnedPage={pinnedPage}
           route={route}
           onOpenGallery={openGallery}

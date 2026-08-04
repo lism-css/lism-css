@@ -18,7 +18,7 @@ export const PINNED_PAGE_ID = 'components';
  * viewer's own group, so `mockup.config.json` does not describe it at all and
  * any `label` / `category` / `order` written for it is ignored.
  */
-export const PINNED_PAGE_LABEL = 'UI Parts';
+const PINNED_PAGE_LABEL = 'UI Parts';
 
 export interface SplitPages {
   /** Every page, the pinned one carrying the label above. */

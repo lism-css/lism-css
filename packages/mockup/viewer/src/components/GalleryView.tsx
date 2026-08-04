@@ -2,7 +2,7 @@ import type { MouseEvent } from 'react';
 import { AutoColumns, Box, Flex, Heading, Inline, Layer, Stack } from 'lism-css/react';
 import type { ViewerPage } from 'virtual:lism-mockup/pages';
 
-import { groupPages } from '../lib/groupPages';
+import type { PageGroup } from '../lib/groupPages';
 import { isModifiedClick } from '../lib/isModifiedClick';
 import { useMeasuredWidth } from '../lib/useMeasuredWidth';
 import { buildEmbedSrc, buildPageHref } from '../lib/useViewerRoute';
@@ -21,8 +21,8 @@ const EMBED_HEIGHT = 800;
 const CARD_MIN_WIDTH = '280px';
 
 interface GalleryViewProps {
-  /** The mockup's own screens. The pinned page is not one of them — see `lib/pinnedPage`. */
-  pages: ViewerPage[];
+  /** The mockup's own screens by category. The pinned page is not one of them — see `lib/pinnedPage`. */
+  groups: PageGroup[];
   /** Opens the single page view — the same destination the card links point at. */
   onOpenPage: (pageId: string) => void;
 }
@@ -34,9 +34,7 @@ interface GalleryViewProps {
  * sections), so they cannot share a document. One iframe per page gives each of
  * them the isolated viewport it was written for.
  */
-export default function GalleryView({ pages, onOpenPage }: GalleryViewProps) {
-  const groups = groupPages(pages);
-
+export default function GalleryView({ groups, onOpenPage }: GalleryViewProps) {
   return (
     <Stack p="30" g="40">
       {groups.map((group) => (

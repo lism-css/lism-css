@@ -167,22 +167,24 @@ const PREVIEWS = new Map<string, PreviewSpec>([
   ],
 ]);
 
-/** Caption a group's preview needs to be read correctly, or undefined. */
-export function tokenPreviewNote(group: string): string | undefined {
-  return PREVIEWS.get(group)?.note;
+export interface TokenGroupLayout {
+  /** Caption the group's preview needs to be read correctly, if any. */
+  note?: string;
+  /** Whether the preview takes a band under the row instead of a column beside it. */
+  isBlock: boolean;
+  /** Whether the preview column is wide enough to delay the table layout. */
+  isWide: boolean;
 }
 
 /**
- * Whether the group's preview goes beside the row or under it.
- * Groups with no preview report `column`, which renders nothing at all.
+ * How a group's rows have to be laid out around its preview.
+ *
+ * A group with no preview gets the plain column layout, where `TokenPreview`
+ * renders nothing at all.
  */
-export function tokenPreviewPlacement(group: string): 'column' | 'block' {
-  return PREVIEWS.get(group)?.placement ?? 'column';
-}
-
-/** Whether the group's preview column is wide enough to delay the table layout. */
-export function tokenPreviewIsWide(group: string): boolean {
-  return PREVIEWS.get(group)?.isWide ?? false;
+export function tokenGroupLayout(group: string): TokenGroupLayout {
+  const spec = PREVIEWS.get(group);
+  return { note: spec?.note, isBlock: spec?.placement === 'block', isWide: spec?.isWide ?? false };
 }
 
 interface TokenPreviewProps {
