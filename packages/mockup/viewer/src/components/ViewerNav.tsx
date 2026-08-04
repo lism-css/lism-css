@@ -1,6 +1,7 @@
-import type { MouseEvent, ReactNode } from 'react';
-import { Stack, Text } from 'lism-css/react';
+import type { ElementType, MouseEvent, ReactNode } from 'react';
+import { Flex, Icon, Stack, Text } from 'lism-css/react';
 import { NavMenu } from '@lism-css/ui/react/NavMenu';
+import { ComponentIcon, GalleryVerticalEndIcon, PaletteIcon } from 'lucide-react';
 import type { ViewerPage } from 'virtual:lism-mockup/pages';
 
 import { groupPages } from '../lib/groupPages';
@@ -49,15 +50,20 @@ export default function ViewerNav({ id, isOpen, pages, pinnedPage, route, onOpen
       <Stack g="5">
         <NavGroupLabel>{VIEWER_GROUP_LABEL}</NavGroupLabel>
         <NavMenu.Root itemP="15">
-          <NavLink href={buildTokensHref()} isCurrent={route.view === 'tokens'} onSelect={onOpenTokens}>
+          <NavLink href={buildTokensHref()} icon={PaletteIcon} isCurrent={route.view === 'tokens'} onSelect={onOpenTokens}>
             {TOKENS_VIEW_LABEL}
           </NavLink>
           {pinnedPage && (
-            <NavLink href={buildPageHref(pinnedPage.id)} isCurrent={isCurrentPage(pinnedPage.id)} onSelect={() => onOpenPage(pinnedPage.id)}>
+            <NavLink
+              href={buildPageHref(pinnedPage.id)}
+              icon={ComponentIcon}
+              isCurrent={isCurrentPage(pinnedPage.id)}
+              onSelect={() => onOpenPage(pinnedPage.id)}
+            >
               {pinnedPage.label}
             </NavLink>
           )}
-          <NavLink href={buildGalleryHref()} isCurrent={route.view === 'gallery'} onSelect={onOpenGallery}>
+          <NavLink href={buildGalleryHref()} icon={GalleryVerticalEndIcon} isCurrent={route.view === 'gallery'} onSelect={onOpenGallery}>
             All pages
           </NavLink>
         </NavMenu.Root>
@@ -88,13 +94,15 @@ function NavGroupLabel({ children }: { children: ReactNode }) {
 
 interface NavLinkProps {
   href: string;
+  /** Decorative icon displayed for the viewer's primary navigation. */
+  icon?: ElementType;
   isCurrent: boolean;
   /** Runs on a plain click, after the default navigation has been cancelled. */
   onSelect: () => void;
   children: ReactNode;
 }
 
-function NavLink({ href, isCurrent, onSelect, children }: NavLinkProps) {
+function NavLink({ href, icon, isCurrent, onSelect, children }: NavLinkProps) {
   return (
     <NavMenu.Item>
       <NavMenu.Link
@@ -110,7 +118,14 @@ function NavLink({ href, isCurrent, onSelect, children }: NavLinkProps) {
           onSelect();
         }}
       >
-        {children}
+        {icon ? (
+          <Flex as="span" ai="center" g="10">
+            <Icon icon={{ as: icon, size: '1em' }} />
+            {children}
+          </Flex>
+        ) : (
+          children
+        )}
       </NavMenu.Link>
     </NavMenu.Item>
   );
