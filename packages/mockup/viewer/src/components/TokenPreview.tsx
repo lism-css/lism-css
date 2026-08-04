@@ -1,0 +1,224 @@
+import type { ReactNode } from 'react';
+import { Box, Flex, Inline } from 'lism-css/react';
+
+/**
+ * Visual preview of one design token, per token group.
+ *
+ * Previews use the token's Property Class where one exists. The remaining
+ * previews read `var(--x)` directly, so every shape still reflects the actual
+ * custom property, including runtime overrides.
+ */
+interface PreviewSpec {
+  /**
+   * Where the preview goes.
+   * - `column` … the first column of the row, which the group's rows share
+   *   through `subgrid`, so the previews line up and can be compared at a
+   *   glance. The column is as wide as the widest preview in the group — no
+   *   preview declares a width of its own.
+   * - `block` … a full-width band under the row, for previews too wide for a
+   *   column. Nothing lines up, but the token is shown at its real size.
+   */
+  placement?: 'column' | 'block';
+  /**
+   * Cap for a preview whose natural width would stretch the shared column too
+   * far. Only the groups that would otherwise blow up need one.
+   */
+  maxWidth?: string;
+  /**
+   * Set when the preview column is wide enough to crowd the rest of the row.
+   * Those rows wait for `md` before they line their cells up in columns, while
+   * every other group manages from `sm`.
+   */
+  isWide?: boolean;
+  /** Overflow behavior for previews whose content can exceed the column. */
+  overflow?: 'clip';
+  /** Shown next to the group heading when the preview needs a caveat. */
+  note?: string;
+  render: (tokenKey: string, varName: string) => ReactNode;
+}
+
+const SAMPLE_WORDS = ['Text', '文章'] as const;
+const INLINE_SAMPLE = 'Text';
+
+/** Colors are the one group whose value is worth showing as a filled square. */
+const SWATCH: PreviewSpec = {
+  // Bordered, because a swatch matching the page background would be invisible.
+  render: (_tokenKey, varName) => <Box w="2em" ar="1/1" bgc={`var(${varName})`} bd bdrs="10" />,
+};
+
+/** Bar used by the length-based groups. Longer bar = bigger token. */
+function Bar({ length }: { length: string }) {
+  return <Box sz={length} max-w="100%" h="0.5rem" bgc="text" bdrs="99" />;
+}
+
+const PREVIEWS = new Map<string, PreviewSpec>([
+  ['color', SWATCH],
+  ['palette', SWATCH],
+
+  [
+    'fz',
+    {
+      // The largest sizes would otherwise make the shared column several times
+      // wider than the rest of the previews need it to be.
+      maxWidth: '5rem',
+      overflow: 'clip',
+      // Font sizes are `em`-based, so this resolves against the row's own font
+      // size — the same base the page text has.
+      render: (tokenKey) => (
+        <Inline fz={tokenKey} whs="nowrap">
+          Aa
+        </Inline>
+      ),
+    },
+  ],
+  [
+    'ff',
+    {
+      render: (tokenKey) => (
+        <Inline ff={tokenKey} whs="nowrap">
+          {INLINE_SAMPLE}
+        </Inline>
+      ),
+    },
+  ],
+  [
+    'fw',
+    {
+      render: (tokenKey) => (
+        <Inline fw={tokenKey} whs="nowrap">
+          {INLINE_SAMPLE}
+        </Inline>
+      ),
+    },
+  ],
+  [
+    'lts',
+    {
+      render: (tokenKey) => (
+        <Inline lts={tokenKey} whs="nowrap">
+          {INLINE_SAMPLE}
+        </Inline>
+      ),
+    },
+  ],
+  [
+    'hl',
+    {
+      // The half-leading *is* the block height here: `* { line-height: calc(1em
+      // + var(--hl) * 2) }`, so filling the background makes the token visible.
+      render: (tokenKey) => (
+        <Box hl={tokenKey} fz="xs" bgc="base-2" bdrs="10">
+          {SAMPLE_WORDS[0]}
+          <br />
+          {SAMPLE_WORDS[1]}
+        </Box>
+      ),
+    },
+  ],
+  [
+    'o',
+    {
+      render: (tokenKey) => (
+        <Inline o={tokenKey} d="inline-flex" g="5" whs="nowrap">
+          <Inline w="1em" bgc="currentColor" bdrs="10" /> {SAMPLE_WORDS[0]}
+        </Inline>
+      ),
+    },
+  ],
+  [
+    'bdrs',
+    {
+      render: (tokenKey) => <Box w="3.5em" ar="1/1" bgc="base-2" bd bdrs={tokenKey} />,
+    },
+  ],
+  [
+    'bxsh',
+    {
+      // Drawn on the page background so the shadow is the only thing separating
+      // the square from it.
+      render: (tokenKey) => <Box w="3.5em" ar="1/1" bgc="base" bdrs="20" bxsh={tokenKey} />,
+    },
+  ],
+  [
+    'space',
+    {
+      // The bars run to `--s80` (272px), which leaves the value nowhere to go
+      // until the row is a good deal wider than the other groups need.
+      isWide: true,
+      render: (_tokenKey, varName) => <Bar length={`var(${varName})`} />,
+    },
+  ],
+  [
+    'sz',
+    {
+      // Content sizes run to 1600px, so they get the whole row width and are
+      // still shown at their real size — comparing them side by side in a
+      // column would mean scaling them down to something that is not the token.
+      placement: 'block',
+      note: 'shown at full size, cut off at the view width',
+      render: (_tokenKey, varName) => <Bar length={`var(${varName})`} />,
+    },
+  ],
+  [
+    'ar',
+    {
+      render: (tokenKey) => <Box h="2.5em" ar={tokenKey} bgc="base-2" bd bdrs="10" />,
+    },
+  ],
+]);
+
+/** Caption a group's preview needs to be read correctly, or undefined. */
+export function tokenPreviewNote(group: string): string | undefined {
+  return PREVIEWS.get(group)?.note;
+}
+
+/**
+ * Whether the group's preview goes beside the row or under it.
+ * Groups with no preview report `column`, which renders nothing at all.
+ */
+export function tokenPreviewPlacement(group: string): 'column' | 'block' {
+  return PREVIEWS.get(group)?.placement ?? 'column';
+}
+
+/** Whether the group's preview column is wide enough to delay the table layout. */
+export function tokenPreviewIsWide(group: string): boolean {
+  return PREVIEWS.get(group)?.isWide ?? false;
+}
+
+interface TokenPreviewProps {
+  /** Token group the preview shape is picked from. */
+  group: string;
+  /** Token key passed to Property Class-backed previews (e.g. `4xl`). */
+  tokenKey: string;
+  /** Custom property used when the preview has no compatible token class. */
+  varName: string;
+}
+
+/**
+ * Preview of one token.
+ *
+ * Groups with no preview shape render nothing, so a token group added to
+ * lism-css later still lists correctly — just without a picture.
+ */
+export default function TokenPreview({ group, tokenKey, varName }: TokenPreviewProps) {
+  const spec = PREVIEWS.get(group);
+  if (!spec) return null;
+
+  const isBlock = spec.placement === 'block';
+
+  return (
+    // Decorative: the key, the custom property and the value next to it already
+    // say everything the preview shows.
+    <Flex
+      aria-hidden="true"
+      fxsh={isBlock ? '0' : undefined}
+      ai="center"
+      w={isBlock ? '100%' : undefined}
+      max-w={spec.maxWidth}
+      min-h="1.5em"
+      ov={spec.overflow}
+    >
+      {spec.render(tokenKey, varName)}
+    </Flex>
+  );
+}

@@ -37,9 +37,9 @@ on it.
 - The viewer cannot know which UI parts a mockup settled on, so `pages/components.jsx`
   covers that as a page you maintain yourself: it lists the buttons, form controls,
   badges and cards this mockup uses. `components` is the one **reserved page id**: the
-  viewer lists it with its own screens and leaves it out of the gallery, because it
-  documents the mockup instead of being one of its screens. Delete the file if the list
-  is not wanted, and add newly shared parts to it when it is kept.
+  viewer lists it as **UI Parts** with its own screens and leaves it out of the gallery,
+  because it documents the mockup instead of being one of its screens. Delete the file
+  if the list is not wanted, and add newly shared parts to it when it is kept.
 
 ## Files
 
@@ -91,9 +91,9 @@ picture of a screen, not an app.
 - `title` (optional) is shown in the viewer.
 - `pages` (optional) only overrides display metadata: `label`, `category`, `order`.
   Default order is the page id, alphabetically.
-- `components` is a reserved page id (see [Viewer](#viewer)): the viewer pins it next
-  to its own screens, so its `category` and `order` are ignored. `label` still applies —
-  it is what the sidebar shows.
+- `components` is a reserved page id (see [Viewer](#viewer)). The viewer decides both
+  its name and its place, so it needs no entry here at all — a `label`, `category` or
+  `order` written for it is ignored.
 - Referencing a page id that does not exist on disk is an error (it usually means
   a typo or a leftover entry). Unknown top-level keys are an error too.
 

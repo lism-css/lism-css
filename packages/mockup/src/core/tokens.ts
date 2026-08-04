@@ -3,7 +3,7 @@
  *
  * 反映は2経路必要なので、検証済み tokens から生成した lism.config モジュール1本を両方の入口にする。
  * 1. React ランタイム（props → `var()` 変換）… `lismConfigAlias({ configPath })` で `lism-css/config.js` を差し替え
- * 2. CSS 変数定義 … `loadBuildConfigs(dataDir, { configPath }).fullConfig` を `serializeTokens()` へ
+ * 2. CSS 変数定義 … `loadBuildConfigs(dataDir, { configPath }).mainConfig` を `serializeTokens()` へ
  *
  * 契約違反は警告にせず必ずエラーにする（警告だと `check` 成功の意味が崩れるため）。
  */
@@ -125,18 +125,18 @@ export function writeConfigModule(dir: string, tokens: MockupTokens): string {
  * 一覧に出すのは「生成 CSS が実際に定義しているトークン」だけなので、
  * 値の除外規則は `serializeTokens()` と揃える（`'-'` センチネル・空・null は出さない）。
  *
- * @param fullTokens    `fullConfig.tokens`（`tokens.json` 反映後のマージ結果）
+ * @param mergedTokens  `mainConfig.tokens`（`tokens.json` 反映後のマージ結果）
  * @param defaultTokens `defaultConfig.tokens`（既存キー判定の正）
  * @param overrides     検証済み `tokens.json`（`source` 判定に使う）
  */
 export function collectTokenGroups(
-  fullTokens: Record<string, unknown>,
+  mergedTokens: Record<string, unknown>,
   defaultTokens: Record<string, unknown>,
   overrides: MockupTokens
 ): TokenGroupEntry[] {
   const groups: TokenGroupEntry[] = [];
 
-  for (const [group, valueMap] of Object.entries(fullTokens)) {
+  for (const [group, valueMap] of Object.entries(mergedTokens)) {
     // 配列カタログ（キーだけの登録）などは CSS 変数を持たないため、serializeTokens と同じ規則で飛ばす。
     if (!isPlainObject(valueMap)) continue;
 
@@ -165,7 +165,9 @@ export function collectTokenGroups(
 /**
  * 生成 config を反映した CSS 変数定義と、その内訳（ビューアのトークン一覧用）を作る。
  *
- * ビューアは `lism-css/full.css` を読むため、full 側の BuildConfig を直列化する。
+ * ビューアは Lism 標準の `lism-css/main.css` を読むため、main 側の BuildConfig を直列化する。
+ * React ランタイム（`lism.config.js` は `isFullMode` を持たない）も main 側の prop 設定で動くので、
+ * CSS・コンポーネント・トークン一覧の3つがすべて同じモードで揃う。
  * CSS と一覧は必ず同じ config から作る（`loadBuildConfigs()` は1回だけ呼び、両者のずれを防ぐ）。
  */
 export async function buildTokensArtifacts(
@@ -173,9 +175,9 @@ export async function buildTokensArtifacts(
   configPath: string,
   overrides: MockupTokens
 ): Promise<{ css: string; groups: TokenGroupEntry[] }> {
-  const { fullConfig, defaultConfig } = await loadBuildConfigs(dataDir, { configPath });
+  const { mainConfig, defaultConfig } = await loadBuildConfigs(dataDir, { configPath });
   return {
-    css: serializeTokens(fullConfig),
-    groups: collectTokenGroups(fullConfig.tokens, defaultConfig.tokens, overrides),
+    css: serializeTokens(mainConfig),
+    groups: collectTokenGroups(mainConfig.tokens, defaultConfig.tokens, overrides),
   };
 }

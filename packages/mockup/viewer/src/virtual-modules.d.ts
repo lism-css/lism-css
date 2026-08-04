@@ -56,5 +56,5 @@ declare module 'virtual:lism-mockup/tokens' {
   export const tokenGroups: ViewerTokenGroup[];
 }
 
-/** Plain CSS imports (`lism-css/full.css`, `@lism-css/ui/style.css`, local files). */
+/** Plain CSS imports (`lism-css/main.css`, `@lism-css/ui/style.css`, local files). */
 declare module '*.css';

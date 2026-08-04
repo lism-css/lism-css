@@ -32,6 +32,12 @@ const DEFAULT_TITLE = 'Lism Mockup';
 /** Id used to wire the header toggle to the sidebar (`aria-controls`). */
 const NAV_ID = 'mockupViewerNav';
 
+// The pinned page documents the mockup instead of being one of its screens, so it
+// gets its own nav entry and stays out of the gallery. It is still a normal page
+// otherwise: `?page=` opens it like any other. `pages` is a build-time constant,
+// so splitting it once here also keeps the page identities stable across renders.
+const { all: allPages, pinned: pinnedPage, screens } = splitPinnedPage(pages);
+
 export default function App() {
   const viewerTitle = title?.trim() ? title : DEFAULT_TITLE;
 
@@ -40,14 +46,9 @@ export default function App() {
   const [isNavOpen, setIsNavOpen] = useState(true);
   const mainRef = useRef<HTMLElement>(null);
 
-  // The pinned page documents the mockup instead of being one of its screens, so
-  // it gets its own nav entry and stays out of the gallery. It is still a normal
-  // page otherwise: `?page=` opens it like any other.
-  const { pinned: pinnedPage, screens } = splitPinnedPage(pages);
-
-  // `find` returns the element from `pages`, so the identity stays stable across
+  // `find` returns the element from `allPages`, so the identity stays stable across
   // renders and can safely be used as an effect dependency.
-  const currentPage = route.view === 'page' ? (pages.find((page) => page.id === route.pageId) ?? null) : null;
+  const currentPage = route.view === 'page' ? (allPages.find((page) => page.id === route.pageId) ?? null) : null;
 
   useEffect(() => {
     if (route.view === 'tokens') {
@@ -67,7 +68,7 @@ export default function App() {
   // iframes: no shell at all, so the page owns the whole viewport again and its
   // `position: fixed` / `100dvh` rules resolve against the iframe.
   if (route.view === 'page' && route.embed) {
-    return currentPage ? <PageView page={currentPage} /> : <EmptyState pages={pages} requestedPageId={route.pageId} />;
+    return currentPage ? <PageView page={currentPage} /> : <EmptyState pages={allPages} requestedPageId={route.pageId} />;
   }
 
   const renderMain = (): ReactNode => {
@@ -77,7 +78,7 @@ export default function App() {
     if (route.view === 'gallery') {
       return screens.length > 0 ? <GalleryView pages={screens} onOpenPage={openPage} /> : <EmptyState pages={screens} requestedPageId={null} />;
     }
-    return currentPage ? <PageView page={currentPage} /> : <EmptyState pages={pages} requestedPageId={route.pageId} />;
+    return currentPage ? <PageView page={currentPage} /> : <EmptyState pages={allPages} requestedPageId={route.pageId} />;
   };
 
   return (

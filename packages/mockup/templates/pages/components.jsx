@@ -6,11 +6,12 @@
  * so keep this page in sync yourself: when a screen introduces a shared part, add
  * it here too.
  *
- * "components" is the one page id the viewer treats specially: it is listed with the
- * viewer's own screens (as the `label` from `mockup.config.json`, "UI Parts" here)
- * and left out of the gallery, because it documents the mockup instead of being one
- * of its screens. Delete the file if a mockup does not need the list; renaming it
- * turns it back into an ordinary page.
+ * "components" is the one page id the viewer treats specially: it is listed as
+ * "UI Parts" with the viewer's own screens and left out of the gallery, because it
+ * documents the mockup instead of being one of its screens. Its name and its place
+ * are fixed by the viewer, so `mockup.config.json` says nothing about this page.
+ * Delete the file if a mockup does not need the list; renaming it turns it back into
+ * an ordinary page.
  */
 import { Cluster, Columns, Group, Heading, Icon, Inline, Link, List, Stack, Text, Wrapper } from 'lism-css/react';
 import { Alert } from '@lism-css/ui/react/Alert';

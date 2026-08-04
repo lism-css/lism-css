@@ -118,8 +118,8 @@ Required. Holds the schema version and display metadata only.
 - Default sort order is `order` ascending, then page id alphabetically. The
   default label is the page id.
 - `components` is a **reserved page id**: the viewer pins it next to its own
-  screens, so its `category` and `order` are ignored and it is left out of the
-  gallery. `label` still applies — it is what the sidebar shows.
+  screens as **UI Parts** and leaves it out of the gallery. It needs no entry
+  here at all — a `label`, `category` or `order` written for it is ignored.
 - A `pages` entry whose id does not exist on disk is a contract violation, not a
   warning: since discovery is the source of truth, a stale entry means a typo or
   a leftover.
