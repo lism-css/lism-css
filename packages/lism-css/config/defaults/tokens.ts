@@ -23,9 +23,11 @@ export default {
     // ライトモード・ダークモードのどちらでもブレンドして使えるようなニュートラルカラー。
     //  Memo: 黒からの変化の方がわかりづらいため、明るめにする。
     neutral: 'hsl(220, 2%, 80%)',
+    // shadow: 影の色。--shc（手書き SCSS）はこの変数の別名で、.set--bxsh から上書きされる。
+    shadow: 'hsl(220 4% 8% / 12%)',
   },
 
-  // パレットカラー: 基準の明度 --L / 彩度 --C（手書き SCSS の構造変数）を色相ごとに微調整して算出する。
+  // パレットカラー: 基準の明度 --L / 彩度 --C（vars グループの構造変数）を色相ごとに微調整して算出する。
   //  keycolor は :root に実値を持たないカタログ専用キー（prop 側で style 属性へ出力する）。
   palette: {
     red: 'oklch(var(--L) var(--C) 20)',
@@ -41,7 +43,7 @@ export default {
     keycolor: '-',
   },
 
-  // font-size: 倍音列でのスケーリング（--fz-mol は手書き SCSS の構造変数）。基準は --fz--base。
+  // font-size: 倍音列でのスケーリング（--fz-mol は vars グループの構造変数）。基準は --fz--base。
   fz: {
     base: '1rem',
     '5xl': 'calc(1em * var(--fz-mol) / (var(--fz-mol) - 6))',
@@ -75,7 +77,7 @@ export default {
   // font-weight
   fw: { light: '300', normal: '400', bold: '600' },
 
-  // half-leading: --hl-unit は手書き SCSS の構造変数。
+  // half-leading: --hl-unit は vars グループの構造変数。
   hl: {
     base: 'calc(var(--hl-unit) * 3)',
     xs: 'var(--hl-unit)',
@@ -95,7 +97,8 @@ export default {
   // border-radius: inner は .set 系の計算値（手書き SCSS）でカタログ専用。
   bdrs: { '10': '0.25rem', '20': '0.5rem', '30': '1rem', '40': '1.5rem', '99': '99rem', inner: '-' },
 
-  // box-shadow: 構造変数 --shsz--* / --shc（手書き SCSS）を合成。.set--bxsh で再宣言され影色 --shc を上書きできる。
+  // box-shadow: 構造変数 --shsz--*（手書き SCSS）と影色 --shc を合成。.set--bxsh で再宣言され影色 --shc を上書きできる。
+  //  Memo: --shc は color.shadow（--shadow）の別名（手書き SCSS で定義）。
   bxsh: {
     '10': 'var(--shsz--10) var(--shc)',
     '20': 'var(--shsz--20) var(--shc)',
@@ -107,7 +110,7 @@ export default {
   // aspect-ratio
   ar: { og: '1.91/1' },
 
-  // space: 構造変数 --s-unit（手書き SCSS）の倍数。フィボナッチ数列ベース。.set--s で --s-unit を em 化すると再ベースされる。
+  // space: 構造変数 --s-unit（vars グループ）の倍数。フィボナッチ数列ベース。.set--s で --s-unit を em 化すると再ベースされる。
   space: {
     '5': 'calc(var(--s-unit) * 0.5)', // ≒ 4px
     '10': 'var(--s-unit)', // ≒ 8px
@@ -128,4 +131,20 @@ export default {
 
   // content-size
   sz: { xs: '400px', s: '640px', m: '880px', l: '1200px', xl: '1600px' },
+
+  // 構造変数: 他トークンの計算式から参照される、出力専用のグループ。
+  //  - props からは参照されない（ユーティリティ生成・prop 受理の対象外）。
+  //  - キーがそのまま CSS 変数名になる（[[token-var-prefix]] の空プレフィックス）。
+  //  - lism.config の tokens.vars で既存キーの値を上書きする用途（新規キーの追加は想定しない）。
+  vars: {
+    // パレットカラーの基準の明度・彩度（赤基準。各色は palette 側の計算式で微調整）
+    '--L': '60%',
+    '--C': '0.2',
+    // フォントサイズ倍音列の分母（7~ に対応）
+    '--fz-mol': '8',
+    // ハーフレディングの計算単位 ≒ 2px
+    '--hl-unit': 'calc(var(--fz--base) * 0.125)',
+    // 余白の計算単位 ≒ 8px（フィボナッチ数列ベース）
+    '--s-unit': 'calc(var(--fz--base) * 0.5)',
+  },
 } as const;

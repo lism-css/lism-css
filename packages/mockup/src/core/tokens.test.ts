@@ -32,6 +32,13 @@ describe('validateTokens', () => {
     expect(validateTokens({ space: { '30': '1rem' } }, defaultTokens, 'tokens.json')).toEqual({ space: { '30': '1rem' } });
   });
 
+  test('vars は構造変数（既存キー）の上書きが通り、typo（新キー）は契約違反', () => {
+    expect(validateTokens({ vars: { '--L': '72%', '--C': '0.15' } }, defaultTokens, 'tokens.json')).toEqual({
+      vars: { '--L': '72%', '--C': '0.15' },
+    });
+    expect(() => validateTokens({ vars: { '--fz--mol': '9' } }, defaultTokens, 'tokens.json')).toThrow(/"vars.--fz--mol" is not an existing token/);
+  });
+
   test('未知のトークン種別は契約違反', () => {
     expect(() => validateTokens({ shadow: { s: '0 0 0' } }, defaultTokens, 'tokens.json')).toThrow(/unknown token group "shadow"/);
   });
