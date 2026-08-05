@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+import { acquireCacheDirLock, type CacheDirLock } from './cache-lock.js';
 import { readMockConfig, resolveDataDir } from './data-dir.js';
 import { discoverPages } from './pages.js';
 import { getMockPackageRoot, safeRealpath, toImportSpecifier } from './paths.js';
@@ -37,7 +38,7 @@ export interface MockupRuntime {
   refreshPages(): void;
   /** トークンファイルを読み直し、config モジュール・トークン CSS・トークン一覧を作り直す。 */
   refreshTokens(): Promise<void>;
-  /** 一時ディレクトリを削除する（`cacheDir` / `configDir` は次回起動のために残す）。 */
+  /** 一時ディレクトリを削除し、共有 cacheDir の使用権ロックを解放する（`cacheDir` / `configDir` 自体は次回起動のために残す）。 */
   cleanup(): void;
 }
 
@@ -82,9 +83,10 @@ function sharedDirRoot(): string {
  * `os.tmpdir()` 配下の安定した場所へ置いて起動間で使い回す（データディレクトリ側には書かないので、
  * 読み取り専用の配布物（npx キャッシュ等）から実行しても動く、という設計は維持できる）。
  *
- * 同じ入力で2つ同時に起動すると同じディレクトリを共有するが、vite 自身が `deps/_metadata.json` を
- * 見て再最適化の要否を判断するため、整合しないキャッシュをそのまま使うことはない（作り直しになるだけ）。
- * そのため、起動ごとにロックを取るような仕組みは持たない。
+ * 同じ入力で2つ同時に起動すると同じディレクトリを指すが、vite の依存最適化はキャッシュの
+ * commit（rename の連続）にプロセス間の排他を持たず、同時に書くと ENOTEMPTY / ENOENT で
+ * commit に失敗して負けた側が依存最適化を失う。そのため、書き込みを行う dev は
+ * `acquireCacheDirLock()` で使用権を取ってから使う（`prepareViteCacheDir()` 参照）。
  */
 export function resolveViteCacheDir(dataDir: string, imports: readonly string[] = []): string {
   return path.join(sharedDirRoot(), `lism-mockup-cache-${sharedDirKey(dataDir, imports)}`);
@@ -105,32 +107,47 @@ export function resolveViteCacheDir(dataDir: string, imports: readonly string[] 
  * 同じデータディレクトリで2つ同時に起動すると同じファイルを共有するが、内容は
  * そのデータディレクトリの `tokens.json` だけから決まる（キーにデータディレクトリを含むため、
  * 共有する2プロセスは必ず同じ `tokens.json` を読む）ので、書き込む中身は常に同一になる。
+ * 書き込み自体も `writeConfigModule()` が rename で原子的に置き換えるため、
+ * 相手プロセスの vite が書き込み途中の状態を読むことはない。
  */
 export function resolveGeneratedConfigDir(dataDir: string, imports: readonly string[] = []): string {
   return path.join(sharedDirRoot(), `lism-mockup-config-${sharedDirKey(dataDir, imports)}`);
 }
 
+interface PreparedViteCacheDir {
+  cacheDir: string;
+  /** 共有 cacheDir の使用権ロック（取っていない場合は null）。 */
+  lock: CacheDirLock | null;
+}
+
 /**
- * 共有 cacheDir の場所を決める。
+ * vite の `cacheDir` を用意する。
  *
  * ディレクトリ自体は作らない。事前バンドルを行う `dev` では vite が必要になった時点で作るため、
  * キャッシュを使わない `check`（build）が空ディレクトリを残さずに済む。
- * 既にある場合だけ書き込めるか確かめ、書けないならプロセス固有の一時ディレクトリへ退避する
- * （`os.tmpdir()` を複数ユーザーで共有する環境で他ユーザー所有のディレクトリに当たっても起動を止めない。
- * キャッシュの再利用を諦めるだけで動作は変わらない）。
+ *
+ * `exclusive`（依存の事前バンドルを書き込む dev）では、使用権ロックを取れたときだけ共有の場所を
+ * 使う。取れない（別プロセスが使用中）場合と、既にあるのに書き込めない場合（`os.tmpdir()` を
+ * 複数ユーザーで共有する環境で他ユーザー所有のディレクトリに当たった場合）は、プロセス固有の
+ * 一時ディレクトリへ退避して起動を止めない（キャッシュの再利用を諦めて毎回事前バンドルするだけで
+ * 動作は変わらない）。
  */
-function prepareViteCacheDir(dataDir: string, imports: readonly string[] | undefined, tempDir: string): string {
+function prepareViteCacheDir(dataDir: string, imports: readonly string[] | undefined, tempDir: string, exclusive: boolean): PreparedViteCacheDir {
   const shared = resolveViteCacheDir(dataDir, imports ?? []);
-  try {
-    if (fs.existsSync(shared)) fs.accessSync(shared, fs.constants.W_OK);
-    // 既にある場合に備えて realpath 化する（fs.allow の比較が realpath 基準のため）。
-    // 未作成なら safeRealpath はパスをそのまま返す。
-    return safeRealpath(shared);
-  } catch {
-    const fallback = path.join(tempDir, 'vite-cache');
-    fs.mkdirSync(fallback, { recursive: true });
-    return fallback;
+  const lock = exclusive ? acquireCacheDirLock(shared) : null;
+  if (!exclusive || lock) {
+    try {
+      if (fs.existsSync(shared)) fs.accessSync(shared, fs.constants.W_OK);
+      // 既にある場合に備えて realpath 化する（fs.allow の比較が realpath 基準のため）。
+      // 未作成なら safeRealpath はパスをそのまま返す。
+      return { cacheDir: safeRealpath(shared), lock };
+    } catch {
+      lock?.release();
+    }
   }
+  const fallback = path.join(tempDir, 'vite-cache');
+  fs.mkdirSync(fallback, { recursive: true });
+  return { cacheDir: fallback, lock: null };
 }
 
 /**
@@ -159,8 +176,17 @@ export async function loadMockData(dir: string): Promise<MockupData> {
   return { dataDir, config, pages, tokens, darkTokens };
 }
 
+export interface PrepareMockRuntimeOptions {
+  /**
+   * 共有 cacheDir を使用権ロック付きで使う（依存の事前バンドルを書き込む dev 用）。
+   * ロックを取れない場合はプロセス固有の一時ディレクトリへ退避する。
+   * 依存の事前バンドルを行わず cacheDir へ書き込まない check（build）では不要。
+   */
+  exclusiveViteCache?: boolean;
+}
+
 /** データディレクトリを検証し、vite を動かすための一時生成物まで用意する。 */
-export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
+export async function prepareMockRuntime(dir: string, options: PrepareMockRuntimeOptions = {}): Promise<MockupRuntime> {
   const data = await loadMockData(dir);
 
   // 読み取り専用の配布物（npx キャッシュ等）でも動くよう、生成物はすべて os.tmpdir() 配下へ置く。
@@ -168,7 +194,7 @@ export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
   const tempDir = safeRealpath(fs.mkdtempSync(path.join(os.tmpdir(), 'lism-mockup-')));
   // 依存の事前バンドルと生成 config だけは起動間で同じ場所に置く
   // （tempDir とは別。理由は resolveViteCacheDir / resolveGeneratedConfigDir 参照）。
-  const cacheDir = prepareViteCacheDir(data.dataDir, data.config.imports, tempDir);
+  const { cacheDir, lock: cacheDirLock } = prepareViteCacheDir(data.dataDir, data.config.imports, tempDir, options.exclusiveViteCache ?? false);
   const configDir = prepareGeneratedConfigDir(data.dataDir, data.config.imports, tempDir);
 
   const configPath = writeConfigModule(configDir, data.tokens);
@@ -211,6 +237,8 @@ export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
     },
 
     cleanup() {
+      // 共有 cacheDir の使用権ロックを返し、次の起動が共有キャッシュを使えるようにする。
+      cacheDirLock?.release();
       try {
         // 消すのは生成物の一時ディレクトリだけ。cacheDir / configDir は次回起動で事前バンドルを
         // 省くために残す（configDir を消すと同じ入力でも起動ごとに作り直しになり、

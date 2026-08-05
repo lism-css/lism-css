@@ -130,7 +130,8 @@ export function watchDataDir(server: ViteDevServer, runtime: MockupRuntime): voi
 
 /** dev サーバーを作る（listen は呼び出し側。統合テストからも使う）。 */
 export async function createMockDevServer(dir: string, options: DevCommandOptions = {}): Promise<{ server: ViteDevServer; runtime: MockupRuntime }> {
-  const runtime = await prepareMockRuntime(dir);
+  // dev は依存の事前バンドルを共有 cacheDir へ書き込むため、使用権ロック付きで使う。
+  const runtime = await prepareMockRuntime(dir, { exclusiveViteCache: true });
   try {
     // 許可リストは vite 設定でも使うため1回だけ作る（構築は node_modules の走査を伴う）。
     const allowlist = createImportAllowlist(runtime);

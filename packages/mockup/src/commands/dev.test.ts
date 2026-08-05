@@ -216,6 +216,39 @@ describe('dev サーバー', () => {
     for (const dir of [other.cacheDir, other.configDir]) fs.rmSync(dir, { recursive: true, force: true });
   });
 
+  test('共有 cacheDir は使用権ロック付きで使い、取れなければ tempDir 配下へ退避する', async () => {
+    // beforeAll の dev サーバーがこのデータディレクトリのロックを保持しているため、2つ目の dev は退避する。
+    const contended = await prepareMockRuntime(dataDir, { exclusiveViteCache: true });
+    expect(contended.cacheDir).toBe(path.join(contended.tempDir, 'vite-cache'));
+    contended.cleanup();
+
+    // ロックを取らない check（build）相当は、保持中でも共有の場所を指す（cacheDir を読みも書きもしないため）。
+    const shared = await prepareMockRuntime(dataDir);
+    expect(shared.cacheDir).toBe(runtime.cacheDir);
+    shared.cleanup();
+  });
+
+  test('cleanup がロックを解放すると、次の起動が共有 cacheDir を使える', async () => {
+    writeFiles(projectDir, {
+      'locked/mockup.config.json': JSON.stringify({ schemaVersion: 2 }),
+      'locked/pages/home.jsx': 'export default () => null;\n',
+    });
+    const lockedDir = path.join(projectDir, 'locked');
+
+    const first = await prepareMockRuntime(lockedDir, { exclusiveViteCache: true });
+    const second = await prepareMockRuntime(lockedDir, { exclusiveViteCache: true });
+    expect(second.cacheDir).toBe(path.join(second.tempDir, 'vite-cache'));
+    second.cleanup();
+
+    first.cleanup();
+    const third = await prepareMockRuntime(lockedDir, { exclusiveViteCache: true });
+    expect(third.cacheDir).toBe(first.cacheDir);
+    third.cleanup();
+
+    // 共有ディレクトリは一時ディレクトリの後片付け対象外なので、テストが作った分はここで消す。
+    for (const dir of [first.cacheDir, first.configDir]) fs.rmSync(dir, { recursive: true, force: true });
+  });
+
   test('server.fs.allow はデータディレクトリを含み、その親は含まない（localhost 限定）', () => {
     expect(server.config.server.fs.strict).toBe(true);
     expect(server.config.server.fs.allow).toContain(dataDir);
