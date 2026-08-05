@@ -13,8 +13,14 @@ const READING_LINE_PERCENT = 30;
  * entry is only delivered when a section *enters or leaves* the band, so a band
  * that ended near the content could be jumped over within a single frame (Home /
  * End, or a long smooth scroll from the outline) and that crossing would go
- * unnoticed. A half-plane cannot be jumped over — any scroll leaves the section
- * on one side of the line or the other, which is exactly what is being tracked.
+ * unnoticed. Reaching this far past the content makes such a jump-over
+ * impractical, which is what the bands rely on.
+ *
+ * It is an overshoot rather than a true half-plane, though, so "not
+ * intersecting" does not by itself say which side the section is on. Only the
+ * end band cares — a `hasStarted` that goes stale far above the reading line
+ * cannot change which section is the *last* one that started — and it reads the
+ * side off the entry's geometry instead.
  */
 const BAND_OVERSHOOT = '100000px';
 
@@ -122,7 +128,13 @@ export function useActiveSection(ids: readonly string[]): string | null {
       (entries) => {
         const entry = entries.at(-1);
         if (!entry) return;
-        isEndOnScreen = !entry.isIntersecting;
+        // Leaving the band means the end is on screen only when the section left
+        // it upwards. A section further below than the band reaches is also
+        // reported as not intersecting, so the side has to be read off the
+        // geometry the entry already carries (no layout is forced by this).
+        // `rootBounds` is null only when the root is unreachable, in which case
+        // there is nothing sensible to compare against and the end is not on screen.
+        isEndOnScreen = !entry.isIntersecting && entry.rootBounds !== null && entry.boundingClientRect.bottom <= entry.rootBounds.top;
         update();
       },
       { root, rootMargin: END_BAND_MARGIN }
