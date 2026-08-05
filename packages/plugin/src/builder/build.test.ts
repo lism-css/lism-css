@@ -115,6 +115,15 @@ describe('serializeTokens', () => {
     expect(scss).toContain('--white: #fff;');
   });
 
+  test('空プレフィックスのトークン（vars）はキーがそのまま変数名になる', () => {
+    const scss = serializeTokens({
+      tokens: { vars: { '--L': '72%', '--fz-mol': '9' } },
+      props: {},
+    });
+    expect(scss).toContain('--L: 72%;');
+    expect(scss).toContain('--fz-mol: 9;');
+  });
+
   test('TOKEN_SCOPE 登録トークン（space / bxsh）は :root, .set--* ブロックへ出力する', () => {
     const scss = serializeTokens({
       tokens: {
