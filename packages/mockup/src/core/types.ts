@@ -68,7 +68,7 @@ export interface PageEntry {
   order?: number;
 }
 
-/** `tokens.json` content: lism.config-compatible `tokens` object. */
+/** `tokens.json` / `tokens.dark.json` content: lism.config-compatible `tokens` object. */
 export type MockupTokens = Record<string, Record<string, string | number>>;
 
 /**
@@ -86,9 +86,22 @@ export interface TokenEntry {
   source: 'default' | 'overridden' | 'custom';
 }
 
-/** A token group in merged-config order (`virtual:lism-mockup/tokens`). */
+/**
+ * A token group section in merged-config order (`virtual:lism-mockup/tokens`).
+ *
+ * A dark section is a section of its own, listed right after the light one it
+ * mirrors, so `id` / `label` / `group` cannot be collapsed into a single field:
+ * two sections share a `group` but never an `id`.
+ */
 export interface TokenGroupEntry {
+  /** Unique key of the section: DOM id source and React key (e.g. `color`, `color--dark`). */
+  id: string;
+  /** Token group the section lists, which also picks the preview shape (e.g. `color`). */
   group: string;
+  /** Heading text (e.g. `color`, `color (dark)`). */
+  label: string;
+  /** Whether the section lists the dark values, and must render inside the dark scope. */
+  isDark?: boolean;
   tokens: TokenEntry[];
 }
 
@@ -100,6 +113,8 @@ export interface MockupData {
   /** Sorted for display: `order` ascending, then id lexicographic. */
   pages: PageEntry[];
   tokens: MockupTokens;
+  /** `tokens.dark.json` overrides. Empty when the mockup declares no dark theme. */
+  darkTokens: MockupTokens;
 }
 
 /**

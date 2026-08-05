@@ -61,6 +61,7 @@ A data directory looks like this:
 mockup/
 ├── mockup.config.json      # required
 ├── tokens.json             # optional
+├── tokens.dark.json        # optional, dark values
 └── pages/                  # required, at least one page
     ├── landing.jsx
     └── admin/
@@ -173,6 +174,63 @@ props or through the variable:
 
 Writing `className="-bgc:canvas"` produces a class that has no CSS behind it.
 
+### `tokens.dark.json`
+
+Optional. Holds the dark values only. It has the same shape as `tokens.json` — a
+Lism config compatible `tokens` object — and **the presence of the file is the
+dark support**: without it, no dark CSS is emitted at all.
+
+```json
+{
+  "color": {
+    "base": "oklch(24% 0.015 152)",
+    "text": "oklch(92% 0.01 152)",
+    "canvas": "oklch(20% 0.015 152)"
+  }
+}
+```
+
+These values are declared inside a `.set--dark` class — not `:root.set--dark` —
+so adding `className="set--dark"` anywhere (a whole page, a part of a page, any
+box) makes the dark values apply inside it:
+
+```jsx
+<Group className="set--dark" bgc="base" c="text">…</Group>
+```
+
+`@media (prefers-color-scheme: dark)` is never emitted. To follow the OS setting,
+write the condition that applies `.set--dark` in your own mockup CSS. The viewer
+has no color mode switch either, so a toggle is something the page provides.
+
+Rules:
+
+| Rule | Detail |
+| --- | --- |
+| Overrides of light tokens only | Only tokens that **the light side really has as a CSS variable** can be overridden. The source of truth is the merged light side: the Lism CSS defaults plus the keys `tokens.json` added. So `color.base` or `color.text` can be set here even when `tokens.json` never mentions them. |
+| No new keys | The new-key exception `tokens.json` grants to `color` does not apply here. A key that does not exist on the light side is an error. |
+| Keys without a CSS variable are out | Keys whose light value carries no real value (`lh.*`, `bdrs.inner`, `flow.s`, `palette.keycolor`, …) cannot be overridden and are an error — unless `tokens.json` gave that key a real value. |
+| No group restriction | Every group the light side has (`color`, `palette`, `space`, `fz`, `bxsh`, `vars`, …) may be overridden. |
+| Violations are errors | Like `tokens.json`, `dev` and `check` both exit non-zero. |
+
+**Overriding `vars` re-declares the tokens that reference it.** Change `--L` for
+dark, for example, and every light token built from it (`palette.*`, `space.*`,
+`fz.*`, `hl.*`, …) is re-declared into the same `.set--dark` block automatically.
+A CSS custom property `var()` resolves when the computed value of the declaring
+element is built, so `.set--dark { --L: 70% }` alone would leave the already
+resolved `--red: oklch(var(--L) …)` from `:root` untouched. Reference chains are
+followed too, so multi-step dependencies are covered as well.
+
+In the viewer's token list (`?view=tokens`), a group whose values change in dark
+gains a section such as `color (dark)` **right after** the light one (the outline
+lists it too). It contains what the `.set--dark` block defines: the tokens you
+declared plus the ones re-declared as dependencies. That section is drawn inside
+a `.set--dark` scoped box, so shadows and swatches close to the base color can be
+checked in a dark context. Rows in a dark section carry no `override` / `new`
+badge, since by definition all of them are diffs from light.
+
+`lism-mockup init` does not scaffold this file — create it when the mockup needs
+dark support.
+
 ### Imports
 
 Pages may import from an allowlist. Bare specifiers are checked against the real
@@ -225,10 +283,14 @@ are checked against the path in front of the query.
 `check` runs the same discovery, validation and import rules as `dev`, so the two
 can never disagree. It verifies:
 
-1. `mockup.config.json` and `tokens.json` schemas (including `schemaVersion`).
+1. `mockup.config.json`, `tokens.json` and `tokens.dark.json` schemas (including
+   `schemaVersion`).
 2. The import boundary described above.
 3. That every page bundles — syntax errors, unresolved imports and transform
    errors are reported with the offending file and reason.
+
+When a dark theme is declared, the output gains a `dark tokens: N override(s)`
+line.
 
 It does **not** render anything. Out of scope for `check`:
 
@@ -243,8 +305,8 @@ is well-formed and builds", not "this mockup is correct".
 
 `lism-mockup dev` runs a Vite dev server bound to localhost, serving the bundled
 viewer. It only exposes the data directory, the viewer and this package's own
-`node_modules`. It reloads when a page, `mockup.config.json` or `tokens.json`
-changes.
+`node_modules`. It reloads when a page, `mockup.config.json`, `tokens.json` or
+`tokens.dark.json` changes.
 
 Because it never exits, an agent should start it in the background or hand the
 command to the user, and use `check` for its own verification.

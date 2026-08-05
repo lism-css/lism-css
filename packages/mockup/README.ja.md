@@ -52,6 +52,7 @@ npx lism-mockup dev ./mockup
 mockup/
 ├── mockup.config.json      # 必須
 ├── tokens.json             # 任意
+├── tokens.dark.json        # 任意（ダーク時の値）
 └── pages/                  # 必須（最低1ページ）
     ├── landing.jsx
     └── admin/
@@ -145,6 +146,44 @@ mockup/
 
 `className="-bgc:canvas"`と書いても、対応するCSSが存在しないクラスになるだけです。
 
+### `tokens.dark.json`
+
+任意です。ダークモード時の値だけを書きます。形式は`tokens.json`と同じlism.config互換の`tokens`オブジェクトで、**このファイルの有無がダーク対応の有無**です。置かなければダーク用のCSSは一切出力されません。
+
+```json
+{
+  "color": {
+    "base": "oklch(24% 0.015 152)",
+    "text": "oklch(92% 0.01 152)",
+    "canvas": "oklch(20% 0.015 152)"
+  }
+}
+```
+
+ここに書いた値は`.set--dark`というクラスの中で宣言されます。`:root.set--dark`ではないため、ページ全体・ページの一部・任意の箱のどこにでも`className="set--dark"`を付けるだけで、その中だけダークの値が効きます。
+
+```jsx
+<Group className="set--dark" bgc="base" c="text">…</Group>
+```
+
+`@media (prefers-color-scheme: dark)`は出力しません。OSの設定に追従させたい場合は、モックアップ側のCSSで`.set--dark`を当てる条件を自分で書いてください。ビューアはカラーモードの切り替えUIを持たないため、切り替えて見せたい場合もページ側で用意します。
+
+ルール：
+
+| ルール | 詳細 |
+| --- | --- |
+| 上書きできるのはライトが持つトークンのみ | 対象は**ライト側が実際にCSS変数として持っているトークン**だけです。判定の基準はマージ後のライト側、つまりLism CSSのデフォルトトークンと`tokens.json`が追加したキーの両方です。`tokens.json`に書いていない`color.base`や`color.text`も、ダークだけで指定できます。 |
+| 新規キーは追加できない | `tokens.json`が`color`にだけ認めている新規キーの追加は、ダーク側には適用されません。ライトに存在しないキーはエラーです。 |
+| CSS変数を持たないキーは対象外 | ライト側が実値を持たないキー（`lh.*`・`bdrs.inner`・`flow.s`・`palette.keycolor`など）は上書きできず、エラーになります。ただし`tokens.json`でそのキーに実値を与えていれば上書きできます。 |
+| グループの制限はない | `color`・`palette`・`space`・`fz`・`bxsh`・`vars`など、ライト側と同じグループをすべて上書きできます。 |
+| 違反はエラー | `tokens.json`と同じく、`dev`と`check`のどちらも非0で終了します。 |
+
+**`vars`を上書きすると、それを参照しているトークンも一緒に再宣言されます。** 例えば`vars`の`--L`をダークで変えると、`--L`を参照して組み立てられているライト側のトークン（`palette.*`・`space.*`・`fz.*`・`hl.*`など）も、同じ`.set--dark`ブロックへ自動的に再宣言されます。CSSカスタムプロパティの`var()`は宣言した要素の計算値を作る時点で解決されるため、`.set--dark { --L: 70% }`と書くだけでは`:root`で確定済みの`--red: oklch(var(--L) …)`が変わらないからです。参照の連鎖も追いかけるので、多段の依存も漏れなく再宣言されます。
+
+ビューアのトークン一覧（`?view=tokens`）には、ダークで値が変わるグループの**直後**に`color (dark)`のようなセクションが増えます（目次にも並びます）。そこに並ぶのは`.set--dark`ブロックが定義しているトークン、つまり明示的に指定したものと、依存で再宣言されたものです。セクションの中身は`.set--dark`スコープの箱の中で描画されるため、影やベース色に近いスワッチもダーク文脈のまま確認できます。なお、ダークセクションの行に`override` / `new`のバッジは出ません（定義上すべてライトからの差分であるためです）。
+
+`lism-mockup init`のひな形にこのファイルは含まれません。ダーク対応が必要になった時点で自分で作成してください。
+
 ### import
 
 ページからimportできるのは、許可リストにあるものだけです。bare specifierは各パッケージの実際の`exports`マップと照合されるため、パッケージが公開していないパスは、バンドラーで失敗する前の段階で拒否されます。
@@ -181,9 +220,11 @@ mockup/
 
 `check`は`dev`と同じ発見・検証・importのルールを通るため、両者の結果が食い違うことはありません。検証するのは次の3つです。
 
-1. `mockup.config.json`と`tokens.json`のスキーマ（`schemaVersion`を含む）
+1. `mockup.config.json`・`tokens.json`・`tokens.dark.json`のスキーマ（`schemaVersion`を含む）
 2. 上で説明したimport境界
 3. 全ページがbundleできること（構文エラー・未解決のimport・変換エラーを、対象ファイルと理由つきで報告します）
+
+ダーク宣言がある場合は、出力に`dark tokens: N override(s)`の行が増えます。
 
 **renderは一切行いません。** 次は`check`の対象外です。
 
@@ -195,7 +236,7 @@ mockup/
 
 ## devサーバー
 
-`lism-mockup dev`は、localhostにバインドしたVite devサーバーを起動し、同梱のビューアを配信します。公開するのはデータディレクトリ・ビューア・このパッケージ自身の`node_modules`だけです。ページ・`mockup.config.json`・`tokens.json`が変更されるとリロードします。
+`lism-mockup dev`は、localhostにバインドしたVite devサーバーを起動し、同梱のビューアを配信します。公開するのはデータディレクトリ・ビューア・このパッケージ自身の`node_modules`だけです。ページ・`mockup.config.json`・`tokens.json`・`tokens.dark.json`が変更されるとリロードします。
 
 終了しないプロセスであるため、エージェントはバックグラウンドで起動するかユーザーにコマンドを渡し、自身の検証には`check`を使ってください。
 

@@ -32,7 +32,7 @@ export interface MockupRuntime {
   getPageSpecifiers(): ReadonlySet<string>;
   /** `mockup.config.json` と `pages/` を読み直す。 */
   refreshPages(): void;
-  /** `tokens.json` を読み直し、config モジュール・トークン CSS・トークン一覧を作り直す。 */
+  /** トークンファイルを読み直し、config モジュール・トークン CSS・トークン一覧を作り直す。 */
   refreshTokens(): Promise<void>;
   /** 一時ディレクトリを削除する。 */
   cleanup(): void;
@@ -43,8 +43,8 @@ export async function loadMockData(dir: string): Promise<MockupData> {
   const dataDir = resolveDataDir(dir);
   const config = readMockConfig(dataDir);
   const pages = discoverPages(dataDir, config);
-  const tokens = await loadTokens(dataDir);
-  return { dataDir, config, pages, tokens };
+  const { tokens, darkTokens } = await loadTokens(dataDir);
+  return { dataDir, config, pages, tokens, darkTokens };
 }
 
 /** データディレクトリを検証し、vite を動かすための一時生成物まで用意する。 */
@@ -58,7 +58,7 @@ export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
   fs.mkdirSync(cacheDir, { recursive: true });
 
   const configPath = writeConfigModule(tempDir, data.tokens);
-  const { css: tokensCss, groups: tokensData } = await buildTokensArtifacts(data.dataDir, configPath, data.tokens);
+  const { css: tokensCss, groups: tokensData } = await buildTokensArtifacts(data.dataDir, configPath, data.tokens, data.darkTokens);
 
   let specifierSource: MockupData['pages'] | null = null;
   let specifiers: ReadonlySet<string> = new Set();
@@ -86,10 +86,10 @@ export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
     },
 
     async refreshTokens() {
-      const tokens = await loadTokens(runtime.data.dataDir);
+      const { tokens, darkTokens } = await loadTokens(runtime.data.dataDir);
       writeConfigModule(tempDir, tokens);
-      runtime.data = { ...runtime.data, tokens };
-      const { css, groups } = await buildTokensArtifacts(runtime.data.dataDir, configPath, tokens);
+      runtime.data = { ...runtime.data, tokens, darkTokens };
+      const { css, groups } = await buildTokensArtifacts(runtime.data.dataDir, configPath, tokens, darkTokens);
       runtime.tokensCss = css;
       runtime.tokensData = groups;
     },

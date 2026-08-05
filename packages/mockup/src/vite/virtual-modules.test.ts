@@ -4,7 +4,7 @@ import type { MockupData, TokenGroupEntry } from '../core/types.js';
 import { generateCheckEntryModule, generatePagesModule, generateTokensDataModule } from './virtual-modules.js';
 
 function createData(pages: MockupData['pages'], title?: string): MockupData {
-  return { dataDir: '/data', config: { schemaVersion: 2, ...(title === undefined ? {} : { title }) }, pages, tokens: {} };
+  return { dataDir: '/data', config: { schemaVersion: 2, ...(title === undefined ? {} : { title }) }, pages, tokens: {}, darkTokens: {} };
 }
 
 describe('generatePagesModule', () => {
@@ -42,13 +42,22 @@ describe('generatePagesModule', () => {
 describe('generateTokensDataModule', () => {
   const GROUPS: TokenGroupEntry[] = [
     {
+      id: 'color',
       group: 'color',
+      label: 'color',
       tokens: [
         { key: 'text', varName: '--text', value: '#333333', source: 'default' },
         { key: 'canvas', varName: '--canvas', value: '#f7f7f7', source: 'custom' },
       ],
     },
-    { group: 'space', tokens: [{ key: '30', varName: '--s30', value: '1.5rem', source: 'overridden' }] },
+    {
+      id: 'color--dark',
+      group: 'color',
+      label: 'color (dark)',
+      isDark: true,
+      tokens: [{ key: 'text', varName: '--text', value: '#eeeeee', source: 'overridden' }],
+    },
+    { id: 'space', group: 'space', label: 'space', tokens: [{ key: '30', varName: '--s30', value: '1.5rem', source: 'overridden' }] },
   ];
 
   test('トークン一覧を tokenGroups として export する', () => {
@@ -58,6 +67,8 @@ describe('generateTokensDataModule', () => {
     expect(code).toContain('export const tokenGroups = [');
     expect(code).toContain('"varName": "--canvas"');
     expect(code).toContain('"source": "overridden"');
+    // ダークセクションを描画するクラス名はビューアに直書きさせず、CSS 生成側の値を配る。
+    expect(code).toContain('export const darkScopeClass = "set--dark";');
   });
 
   test('生成コードを評価すると渡した配列と同じ値になる', () => {
