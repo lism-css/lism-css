@@ -38,6 +38,11 @@ export interface ImportBoundaryContext {
   /** 仮想モジュールが生成した import 指定子の集合。 */
   getPageSpecifiers: () => ReadonlySet<string>;
   allowlist: ImportAllowlist;
+  /**
+   * vite の生成物を置く一時ディレクトリ（realpath）。
+   * dev の依存最適化はここへ書き出した bundle へ解決するため、解決結果の封じ込め判定で許可する。
+   */
+  generatedDir?: string;
 }
 
 export type ImportDecision =
@@ -158,6 +163,29 @@ function resolveUserRelativeImport(
 
 export type ImportBoundaryOptions = ImportBoundaryContext;
 
+/**
+ * bare import の解決結果が、許可パッケージのファイルに留まっているか検証する。
+ *
+ * 許可リストの照合は specifier の文字列に対して行うため、`exports` を持たないパッケージの
+ * 任意サブパスでは「拡張子を補ったら実体はパッケージ外のシンボリックリンクだった」という
+ * 抜け道が残る（`pkg/escape` → `pkg/escape.js` → 外部ファイル）。
+ * 最終的な解決結果の realpath で判定して、その経路を塞ぐ。
+ *
+ * 判定は許可パッケージのルート全体に対して行う（宣言済みパッケージ同士の行き来までは禁じない）。
+ * 防ぎたいのは「許可していないパッケージや node_modules 外のファイルへ届くこと」のため。
+ */
+function assertResolvedInsideAllowedRoots(resolvedId: string, source: string, importer: string, ctx: ImportBoundaryContext): void {
+  const { pathname } = splitQuery(resolvedId);
+  // 仮想モジュール・相対 URL 形式の id はファイルパスではないので対象外。
+  if (pathname.startsWith('\0') || !path.isAbsolute(pathname)) return;
+
+  const real = safeRealpath(pathname);
+  const roots = ctx.generatedDir === undefined ? ctx.allowlist.packageRoots : [...ctx.allowlist.packageRoots, ctx.generatedDir];
+  if (roots.some((root) => isInsideDir(root, real))) return;
+
+  throw violation(ctx.dataDir, splitQuery(importer).pathname, source, `it resolves outside the allowed packages (${real}).`);
+}
+
 /** 解決できなかった許可 bare import の案内文（由来によって直し方が違う）。 */
 function unresolvedMessage(specifier: string, resolution: PackageResolution): string {
   return resolution.origin === 'data'
@@ -183,6 +211,7 @@ export function importBoundaryPlugin(ctx: ImportBoundaryOptions): Plugin {
       if (!resolved) {
         throw new MockupContractError(unresolvedMessage(decision.specifier, decision.resolution), { file: importer });
       }
+      assertResolvedInsideAllowedRoots(resolved.id, source, importer ?? '', ctx);
       return resolved;
     },
   };

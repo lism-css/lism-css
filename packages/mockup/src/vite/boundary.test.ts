@@ -5,7 +5,7 @@ import { toImportSpecifier } from '../core/paths.js';
 import { MockupContractError } from '../core/types.js';
 import { cleanupTempDirs, createTempDir, installFakePackage, writeFiles } from '../test-helpers/fixtures.js';
 import { buildImportAllowlist } from './allowlist.js';
-import { classifyImport, type ImportBoundaryContext } from './boundary.js';
+import { classifyImport, importBoundaryPlugin, type ImportBoundaryContext } from './boundary.js';
 import { RESOLVED_VIRTUAL_PAGES_ID } from './virtual-modules.js';
 
 const PAGE = 'export default () => null;\n';
@@ -29,6 +29,11 @@ installFakePackage(projectDir, 'fake-ui', {
   'package.json': JSON.stringify({ name: 'fake-ui', version: '1.0.0', exports: { '.': './index.js', './button': './button.js' } }),
   'index.js': 'export const a = 1;\n',
   'button.js': 'export const Button = 1;\n',
+});
+// exports を持たないパッケージ（任意サブパスが許可リストの文字列判定を通る）。
+installFakePackage(projectDir, 'fake-plain', {
+  'package.json': JSON.stringify({ name: 'fake-plain', version: '1.0.0' }),
+  'index.js': 'export const a = 1;\n',
 });
 
 const dataDir = path.join(projectDir, 'data');
@@ -167,6 +172,57 @@ describe('classifyImport: 相対 import', () => {
 
   test('存在しないファイルは拒否', () => {
     expect(() => classifyImport('./missing.jsx', homePage, ctx)).toThrow(/file not found/);
+  });
+});
+
+describe('importBoundaryPlugin: 解決結果の封じ込め', () => {
+  const extraCtx: ImportBoundaryContext = { ...ctx, allowlist: buildImportAllowlist({ dataDir, extraPackages: ['fake-ui', 'fake-plain'] }) };
+  const fakeUiDir = path.join(projectDir, 'node_modules', 'fake-ui');
+
+  /** vite の解決結果を差し替えて、プラグインの封じ込め判定だけを検証する。 */
+  function resolveWith(resolvedId: string | null, source: string, boundaryCtx: ImportBoundaryContext = extraCtx): Promise<unknown> {
+    const plugin = importBoundaryPlugin(boundaryCtx);
+    const handler = plugin.resolveId as unknown as (
+      this: { resolve: () => Promise<{ id: string } | null> },
+      source: string,
+      importer: string
+    ) => Promise<unknown>;
+    return handler.call({ resolve: () => Promise.resolve(resolvedId === null ? null : { id: resolvedId }) }, source, homePage);
+  }
+
+  test('パッケージ内のファイルへ解決されたものは通す', async () => {
+    await expect(resolveWith(path.join(fakeUiDir, 'button.js'), 'fake-ui/button')).resolves.toMatchObject({
+      id: path.join(fakeUiDir, 'button.js'),
+    });
+  });
+
+  test('許可パッケージの外のファイルへ解決されたものは拒否する（拡張子補完でリンクを辿った場合）', async () => {
+    // exports の無いパッケージの `fake-plain/escape` は許可リストの文字列判定を通るが、
+    // vite が `.js` を補うとパッケージ外を指すシンボリックリンクへ解決しうる。
+    expect(extraCtx.allowlist.isAllowed('fake-plain/escape')).toBe(true);
+
+    await expect(resolveWith(path.join(projectDir, 'outside.jsx'), 'fake-plain/escape')).rejects.toThrow(/resolves outside the allowed packages/);
+    await expect(resolveWith('/etc/passwd', 'fake-plain/escape')).rejects.toThrow(/resolves outside the allowed packages/);
+  });
+
+  test('vite の生成物（依存最適化の出力）は許可する', async () => {
+    const generatedDir = createTempDir();
+    const optimized = path.join(generatedDir, 'vite-cache/deps/fake-ui.js');
+    writeFiles(generatedDir, { 'vite-cache/deps/fake-ui.js': 'export const a = 1;\n' });
+
+    await expect(resolveWith(`${optimized}?v=abc`, 'fake-ui', { ...extraCtx, generatedDir })).resolves.toMatchObject({
+      id: `${optimized}?v=abc`,
+    });
+    // generatedDir を渡していない構成では同じ id を拒否する（許可範囲を広げすぎない）。
+    await expect(resolveWith(`${optimized}?v=abc`, 'fake-ui')).rejects.toThrow(/resolves outside the allowed packages/);
+  });
+
+  test('仮想モジュール id はファイルパスではないので判定対象外', async () => {
+    await expect(resolveWith('\0some-plugin-virtual', 'fake-ui')).resolves.toMatchObject({ id: '\0some-plugin-virtual' });
+  });
+
+  test('解決できなかった場合は従来どおり契約エラー', async () => {
+    await expect(resolveWith(null, 'fake-ui/button')).rejects.toThrow(/does not exist in the installed version/);
   });
 });
 

@@ -67,6 +67,7 @@ export function createMockViteConfig({ runtime, viewerDir, mode }: MockupViteCon
       importBoundaryPlugin({
         dataDir,
         allowlist,
+        generatedDir: runtime.tempDir,
         getPageSpecifiers: () => runtime.getPageSpecifiers(),
       }),
       react(),

@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { afterAll, afterEach, describe, expect, test, vi } from 'vitest';
 
@@ -131,6 +132,23 @@ describe('checkCommand', () => {
     });
 
     await expect(check(path.join(project, 'data'))).rejects.toThrow(/not an allowed package entry/);
+  }, 60_000);
+
+  test('拡張子省略の import でパッケージ外を指すシンボリックリンクを辿れない', async () => {
+    const project = createTempDir();
+    writeFiles(project, {
+      'outside.js': `export const secret = 'secret';\n`,
+      'data/mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['fake-plain'] }),
+      // `escape.js` は node_modules 外を指すリンク。拡張子を省くと許可リストの文字列判定を通ってしまう。
+      'data/pages/home.jsx': `import { secret } from 'fake-plain/escape';\nexport default function Home() {\n  return <div>{secret}</div>;\n}\n`,
+    });
+    installFakePackage(project, 'fake-plain', {
+      'package.json': JSON.stringify({ name: 'fake-plain', version: '1.0.0', type: 'module' }),
+      'index.js': `export const ok = 1;\n`,
+    });
+    fs.symlinkSync(path.join(project, 'outside.js'), path.join(project, 'node_modules', 'fake-plain', 'escape.js'));
+
+    await expect(check(path.join(project, 'data'))).rejects.toThrow(/resolves outside the allowed packages/);
   }, 60_000);
 
   test('imports で宣言したパッケージが未インストールなら bundle 前に停止する', async () => {
