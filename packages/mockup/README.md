@@ -215,9 +215,10 @@ Relative imports must resolve **inside the data directory** and point at one of:
 `.jsx` `.tsx` `.css` `.png` `.jpg` `.jpeg` `.gif` `.svg` `.webp`
 
 Everything else is rejected with an explicit contract error: absolute paths,
-`/@fs/` paths, `../` escapes out of the data directory, and bare imports outside
-the allowlist. Query suffixes (`?raw`, `?url`) are checked against the path in
-front of the query.
+`/@fs/` paths, `../` escapes out of the data directory, relative paths that reach
+into a `node_modules` directory (import the package by name through `imports`
+instead), and bare imports outside the allowlist. Query suffixes (`?raw`, `?url`)
+are checked against the path in front of the query.
 
 ## What `check` guarantees
 

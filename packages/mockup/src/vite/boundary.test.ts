@@ -24,6 +24,8 @@ writeFiles(projectDir, {
   'data/lib/util.js': 'export const a = 1;\n',
   // データディレクトリがプロジェクト直下に置かれた場合を再現する（node_modules が配下に入る）。
   'data/node_modules/some-dep/index.js': 'export const a = 1;\n',
+  'data/node_modules/some-dep/style.css': '.a { color: red; }\n',
+  'data/node_modules/some-dep/Comp.jsx': PAGE,
 });
 installFakePackage(projectDir, 'fake-ui', {
   'package.json': JSON.stringify({ name: 'fake-ui', version: '1.0.0', exports: { '.': './index.js', './button': './button.js' } }),
@@ -172,6 +174,15 @@ describe('classifyImport: 相対 import', () => {
 
   test('存在しないファイルは拒否', () => {
     expect(() => classifyImport('./missing.jsx', homePage, ctx)).toThrow(/file not found/);
+  });
+
+  test('データディレクトリ配下でも node_modules の中へは入れない（許可拡張子でも）', () => {
+    // 宣言していないパッケージのファイルを相対パスで読めないようにする。
+    expect(() => classifyImport('../node_modules/some-dep/style.css', homePage, ctx)).toThrow(/relative imports into node_modules are not allowed/);
+    expect(() => classifyImport('../node_modules/some-dep/Comp.jsx', homePage, ctx)).toThrow(/relative imports into node_modules are not allowed/);
+    expect(() => classifyImport('../node_modules/some-dep/Comp', homePage, ctx)).toThrow(/relative imports into node_modules are not allowed/);
+    // 拡張子制限で先に落ちる経路も従来どおり拒否のまま。
+    expect(() => classifyImport('../node_modules/some-dep/index.js', homePage, ctx)).toThrow(/can be imported with a relative path/);
   });
 });
 

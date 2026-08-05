@@ -96,7 +96,7 @@ describe('buildImportAllowlist: 標準パッケージ', () => {
 
   test('fs.allow 用に許可パッケージの realpath ルートを持つ', () => {
     expect(allowlist.packageRoots).toHaveLength(STANDARD_PACKAGES.length);
-    expect(allowlist.packageRoots.some((root) => root.endsWith('/packages/lism-css'))).toBe(true);
+    expect(allowlist.packageRoots.some((root) => root.endsWith(path.join('packages', 'lism-css')))).toBe(true);
     expect(allowlist.dependencyRoots).toEqual([]);
   });
 });

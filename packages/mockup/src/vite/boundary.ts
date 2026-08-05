@@ -15,6 +15,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { Plugin } from 'vite';
 
+import { MOCKUP_CONFIG_FILENAME } from '../core/data-dir.js';
 import { hasNodeModulesSegment, isInsideDir, safeRealpath, splitQuery, toImportSpecifier } from '../core/paths.js';
 import { MockupContractError } from '../core/types.js';
 import { type ImportAllowlist, type PackageResolution } from './allowlist.js';
@@ -156,6 +157,17 @@ function resolveUserRelativeImport(
   const real = safeRealpath(target);
   if (!isInsideDir(ctx.dataDir, real)) {
     throw violation(ctx.dataDir, importerFile, source, `it resolves outside the data directory (${real}).`);
+  }
+  // データディレクトリをプロジェクト直下に置くと node_modules が配下に入る。相対パスで
+  // そこへ入れると、`imports` に宣言していないパッケージのファイルを読めてしまう。
+  // 許可済み bare import から到達したパッケージ内部の import は importer 側の判定で通す。
+  if (hasNodeModulesSegment(path.relative(ctx.dataDir, real))) {
+    throw violation(
+      ctx.dataDir,
+      importerFile,
+      source,
+      `relative imports into node_modules are not allowed. Add the package to "imports" in ${MOCKUP_CONFIG_FILENAME} and import it by name.`
+    );
   }
 
   return { kind: 'resolved', id: real + query };
