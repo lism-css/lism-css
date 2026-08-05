@@ -7,7 +7,27 @@
  */
 
 /** Supported `mockup.config.json` schema version. Bump when the contract changes. */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
+
+/**
+ * Packages every page may import without any configuration.
+ *
+ * These are the standard building blocks of a Lism mockup, so they are resolved
+ * from the copies `@lism-css/mockup` owns and can never be turned into an opt-in
+ * dependency of the data directory. Anything else goes through the `imports`
+ * field of `mockup.config.json`.
+ */
+export const STANDARD_PACKAGES = ['react', 'react-dom', 'lism-css', '@lism-css/ui'] as const;
+
+/**
+ * Whether a parsed JSON value is an object the validators can walk key by key.
+ *
+ * Shared by every validator so `mockup.config.json` and `tokens.json` can never
+ * disagree about what counts as an object.
+ */
+export function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
 
 /** Per-page metadata overrides in `mockup.config.json` (`pages` field). */
 export interface MockupConfigPageMeta {
@@ -28,6 +48,11 @@ export interface MockupConfigPageMeta {
 export interface MockupConfigFile {
   schemaVersion: number;
   title?: string;
+  /**
+   * Extra packages pages may import, on top of {@link STANDARD_PACKAGES}.
+   * Resolved from the project that contains the data directory.
+   */
+  imports?: string[];
   pages?: Record<string, MockupConfigPageMeta>;
 }
 
@@ -43,8 +68,42 @@ export interface PageEntry {
   order?: number;
 }
 
-/** `tokens.json` content: lism.config-compatible `tokens` object. */
+/** `tokens.json` / `tokens.dark.json` content: lism.config-compatible `tokens` object. */
 export type MockupTokens = Record<string, Record<string, string | number>>;
+
+/**
+ * One resolved design token for the viewer's tokens view.
+ * Mirrors `ViewerToken` in `viewer/src/virtual-modules.d.ts` — keep both in sync.
+ */
+export interface TokenEntry {
+  /** Token key inside its group (e.g. `brand`, `20`). */
+  key: string;
+  /** CSS custom property name (e.g. `--brand`). */
+  varName: string;
+  /** Value as it appears in the generated token CSS (numbers are stringified). */
+  value: string;
+  /** How the mockup's `tokens.json` affected this token. */
+  source: 'default' | 'overridden' | 'custom';
+}
+
+/**
+ * A token group section in merged-config order (`virtual:lism-mockup/tokens`).
+ *
+ * A dark section is a section of its own, listed right after the light one it
+ * mirrors, so `id` / `label` / `group` cannot be collapsed into a single field:
+ * two sections share a `group` but never an `id`.
+ */
+export interface TokenGroupEntry {
+  /** Unique key of the section: DOM id source and React key (e.g. `color`, `color--dark`). */
+  id: string;
+  /** Token group the section lists, which also picks the preview shape (e.g. `color`). */
+  group: string;
+  /** Heading text (e.g. `color`, `color (dark)`). */
+  label: string;
+  /** Whether the section lists the dark values, and must render inside the dark scope. */
+  isDark?: boolean;
+  tokens: TokenEntry[];
+}
 
 /** Fully validated data directory, shared by `dev` and `check`. */
 export interface MockupData {
@@ -54,6 +113,8 @@ export interface MockupData {
   /** Sorted for display: `order` ascending, then id lexicographic. */
   pages: PageEntry[];
   tokens: MockupTokens;
+  /** `tokens.dark.json` overrides. Empty when the mockup declares no dark theme. */
+  darkTokens: MockupTokens;
 }
 
 /**

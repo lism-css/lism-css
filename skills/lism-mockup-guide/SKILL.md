@@ -44,10 +44,12 @@ Lism Mockupを使って画面モックアップを作成するための実装ガ
 
 ```
 mockup/
-├── mockup.config.json      # 必須 — schemaVersion＋表示メタデータ
+├── mockup.config.json      # 必須 — schemaVersion＋追加import＋表示メタデータ
 ├── tokens.json             # 任意 — デザイントークンの上書き
+├── tokens.dark.json        # 任意 — ダーク時の値（initでは生成されない）
 └── pages/                  # 必須 — 1ファイル=1画面（最低1ページ）
     ├── landing.jsx
+    ├── components.jsx      # 予約ID — 共通部品の一覧（手で維持するページ）
     └── admin/
         ├── settings.jsx
         └── settings.css  # ページ付随CSS（settings.jsxが相対importする）
@@ -66,16 +68,18 @@ mockup/
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "title": "Acme Console Mockup",
+  "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 }
   }
 }
 ```
 
-- `schemaVersion`は必須で`1`
-- `title`は任意。`pages`は表示メタデータ（`label` / `category` / `order`）の上書きのみで、並び順の既定はページIDの辞書順
+- `schemaVersion`は必須で`2`
+- `title`は任意。`imports`は追加でimportを許可するパッケージ（後述）。`pages`は表示メタデータ（`label` / `category` / `order`）の上書きのみで、並び順の既定はページIDの辞書順
+- **`components`は予約ページID**（後述）。ビューアが「UI Parts」という名前でサイドバーの「Viewer」グループに固定表示するため、ここにエントリを書く必要はない（`label` / `category` / `order`はいずれも無視される）
 - **実在しないページIDの参照はエラー**（消し忘れ・タイポのシグナル）。未知のトップレベルキーもエラー
 
 ### tokens.json（任意）
@@ -104,17 +108,33 @@ lism.config互換の`tokens`オブジェクト（`lism.config.js`の`tokens`に�
 .c--saveStatus::before { background-color: var(--success); }  /* CSS内はvar()直書き */
 ```
 
+### tokens.dark.json（任意）
+
+ダーク時の値だけを書くファイル。形式は`tokens.json`と同じで、**ファイルの有無＝ダーク対応の有無**（`init`では生成されないので、必要になったら自分で作る）。
+
+- 書けるのは**ライト側がCSS変数として実際に持っているトークンの上書きだけ**。基準はマージ後のライト（Lismデフォルト＋`tokens.json`が追加したキー）なので、`tokens.json`に書いていない`color.base` / `color.text`もダークだけで指定できる
+- **新キーの追加は不可**（`color`の例外はダークには適用されない）。ライト側が実値を持たないキー（`lh.*` / `bdrs.inner` / `flow.s` / `palette.keycolor`など）もエラー。ただし`tokens.json`で実値を与えていれば上書きできる
+- グループの制限は無い（`color` / `palette` / `space` / `fz` / `bxsh` / `vars`など全て）。違反は`tokens.json`と同じくエラー
+- 値は`.set--dark`クラスの中に出力される（`:root.set--dark`ではない）。**ページ全体でも一部でも、`className="set--dark"`を付けた箱の中だけダークになる**
+- `@media (prefers-color-scheme: dark)`は出力されない。OS設定への追従やモード切替UIが要る場合はページ側で用意する
+- `vars`（`--L`等）を上書きすると、それを参照しているライト側トークン（`palette.*` / `space.*` / `fz.*`など）も同じ`.set--dark`ブロックへ自動で再宣言される（`var()`は宣言した要素で解決されるため）
+
 ### import規則
 
-bare importは許可リストのパッケージのみ。CLI側のnode_modulesで解決されるため、モックアップ用にユーザープロジェクトへ依存を追加する必要はない（かつ、リスト外のパッケージは追加しても使えない）。
+bare importは許可リストのパッケージのみ。次の標準パッケージは設定不要で常に使え、CLI側のnode_modulesで解決される（ユーザープロジェクトへ依存を追加する必要はない）。
 
 | パッケージ | 例 |
 | --- | --- |
 | `react` / `react-dom` | `import { useState } from 'react'` |
 | `lism-css` | `import { Stack, Group } from 'lism-css/react'` |
 | `@lism-css/ui` | `import { Button } from '@lism-css/ui/react/Button'` |
-| `lucide-react` | `import { Check } from 'lucide-react'` |
 
+それ以外のパッケージは`mockup.config.json`の`imports`に**パッケージ名だけ**を書いて許可する（`"lucide-react"`は可、`"lucide-react/icons"`は不可）。
+
+- 宣言したパッケージは、データディレクトリを含むプロジェクト側にインストールする。未インストールならbundle前に停止する
+- `lucide-react`はCLIが提供するためインストール不要。`imports`への記載は必要（`init`が生成する設定には最初から入っている）。使えるのはルートからの名前付きimportで、アイコン（`Bell` / `BellIcon` / `Sidebar`など）と`Icon` / `createLucideIcon`のみ。`icons`（全アイコンのレコード）と`lucide-react/icons/bell`のようなサブパスは提供していない（どちらも`check`がエラーにする）
+- 標準パッケージを`imports`に書くとエラーになる（常時許可されているため）
+- `dev`は起動時に一度だけ許可リストを作る。`imports`を編集したら`dev`を再起動する
 - **`@lism-css/ui`にルートexportは無い。** 必ず`@lism-css/ui/react/<Component>`から個別importする
 - 許可リスト内でも、パッケージが実際にexportしているパスのみ許可（存在しないサブパスは拒否される）
 - 相対importはデータディレクトリ内で完結させ、対象は`.jsx` / `.tsx` / `.css` / 画像（`.png` / `.jpg` / `.jpeg` / `.gif` / `.svg` / `.webp`）のみ
@@ -124,7 +144,7 @@ bare importは許可リストのパッケージのみ。CLI側のnode_modulesで
 
 `check`は`dev`と同じ発見・検証・import規則を通るため、両者の結果は食い違わない。保証するのは次の3点。
 
-1. `mockup.config.json` / `tokens.json`のスキーマ（`schemaVersion`含む）
+1. `mockup.config.json` / `tokens.json` / `tokens.dark.json`のスキーマ（`schemaVersion`含む）
 2. import境界（上記の規則）
 3. 全ページのbundle成功（構文エラー・未解決import・変換エラーを対象ファイルと原因つきで報告）
 
@@ -139,7 +159,9 @@ bare importは許可リストのパッケージのみ。CLI側のnode_modulesで
 ## モックアップ特有の注意
 
 - **Astroプロジェクト向けのモックアップでもReact（`.jsx` / `.tsx`）で書く。** モックアップの目的は「デザインと、それを実装するクラス・コンポーネントが把握できること」であり、import文を実プロジェクトと厳密に揃える必要はない
-- ビューアはダークモード切替を備える。色をトークンで書いていれば両モードの確認がそのままできる（直書き色を避けるのは`lism-css-guide`の通常ルール通り）
+- **ビューアにカラーモードの切替UIは無い。** ダーク確認は`tokens.dark.json`＋`className="set--dark"`で行い、切替UIが要る場合はモックのページ側に作る。色をトークンで書いていればそのまま両モードを確認できる（直書き色を避けるのは`lism-css-guide`の通常ルール通り）
+- **ビューアの既定表示はギャラリー。** 予約ID`components`を除く各ページがiframeカードでカテゴリごとに並び、カードをクリックするとそのページの単体表示になる。サイドバーは「Viewer」グループ（Design tokens → UI Parts → All pages）から始まり、その下にカテゴリ別のページが並ぶ。「All pages」でギャラリーへ戻れる。「Design tokens」は`tokens.json`とLismデフォルトをマージしたトークン一覧をビューアが自動生成する。`tokens.dark.json`がある場合は、ダークで値が変わるグループの直後に`color (dark)`のようなセクションが増え、`.set--dark`スコープの中で描画される。サイドバーのページ名は、ギャラリー表示中でも常に単体表示で開く
+- **モック内で定義した共通部品の一覧は自動生成できない。** そのため`init`のひな形には`pages/components.jsx`（ボタン・フォーム部品・バッジ・カードなど、そのモックで使う部品を並べたページ）が含まれる。共通部品を追加したらこのページの一覧にも載せる。`components`は予約IDで、ビューアはこれを「UI Parts」という固定の名前で「Viewer」グループに表示し、カテゴリ別の一覧とギャラリーからは除外する。一覧が不要ならファイルごと削除してよい（別の名前にすると普通の画面として扱われる）
 - ページはただのJSX（任意コード実行）でサンドボックスは無い。信頼できるモックアップだけを実行する
 
 ## このスキルファイル自身のアップデート方法

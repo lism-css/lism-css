@@ -285,7 +285,7 @@ In this example, the following styles would be automatically generated into `lis
 }
 ```
 
-When you give a value in `tokens`, the build generates both the **utility class that references the token** (such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`) and the referenced CSS variable itself (the actual token **value**, such as `:root { --lts--2xl: .5em }`). Note that a key whose value is `'-'` only registers the name and does not output a value: no `:root` declaration is emitted, and the real value is defined in hand-written SCSS (mainly used for `color` / `palette`).
+When you give a value in `tokens`, the build generates both the **utility class that references the token** (such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`) and the referenced CSS variable itself (the actual token **value**, such as `:root { --lts--2xl: .5em }`). Note that a key whose value is `'-'` only registers the name and does not output a value: no `:root` declaration is emitted. It is used for tokens that have no CSS variable (such as `lh`) or whose real value is defined in hand-written SCSS.
 
 On the other hand, `is--` class styles are not auto-generated, so you need to define and load them manually.
 

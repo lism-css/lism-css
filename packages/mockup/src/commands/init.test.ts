@@ -3,6 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { SCHEMA_VERSION } from '../core/types.js';
 import { initCommand } from './init.js';
 
 const EXPECTED_FILES = [
@@ -11,6 +12,7 @@ const EXPECTED_FILES = [
   'mockup.config.json',
   'tokens.json',
   'pages/landing.jsx',
+  'pages/components.jsx',
   'pages/admin/dashboard.jsx',
   'pages/admin/settings.jsx',
   'pages/admin/settings.css',
@@ -49,16 +51,19 @@ describe('initCommand', () => {
     }
   });
 
-  it('generates a mockup.config.json with schemaVersion 1 and a parsable tokens.json', async () => {
+  it('generates a mockup.config.json with the supported schema version and a parsable tokens.json', async () => {
     const target = path.join(tmpDir, 'mockup');
 
     await initCommand(target, { force: false });
 
     const config = JSON.parse(await readFile(path.join(target, 'mockup.config.json'), 'utf-8')) as {
       schemaVersion: number;
+      imports?: string[];
       pages?: Record<string, unknown>;
     };
-    expect(config.schemaVersion).toBe(1);
+    expect(config.schemaVersion).toBe(SCHEMA_VERSION);
+    // テンプレートのページが lucide-react を使うため、生成された設定に最初から入っている。
+    expect(config.imports).toContain('lucide-react');
     // Metadata may only reference page ids that exist on disk.
     for (const pageId of Object.keys(config.pages ?? {})) {
       expect(await exists(path.join(target, 'pages', `${pageId}.jsx`)), `page ${pageId} should exist`).toBe(true);

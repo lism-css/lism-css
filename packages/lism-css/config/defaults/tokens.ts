@@ -7,35 +7,58 @@
  * - 値 `'-'` は「カタログに登録するがcssの出力はしない」もの。実値はscssで手書き。
  */
 export default {
-  // セマンティックカラー: 実値は手書き SCSS（カタログ専用）。
+  // 構造変数: 他トークンの計算式から参照される、出力専用のグループ。
+  //  - props からは参照されない（ユーティリティ生成・prop 受理の対象外）。
+  //  - キーがそのまま CSS 変数名になる（[[token-var-prefix]] の空プレフィックス）。
+  //  - lism.config の tokens.vars で既存キーの値を上書きする用途（新規キーの追加は想定しない）。
+  vars: {
+    // パレットカラーの基準の明度・彩度（赤基準。各色は palette 側の計算式で微調整）
+    '--L': '60%',
+    '--C': '0.2',
+    // フォントサイズ倍音列の分母（7~ に対応）
+    '--fz-mol': '8',
+    // ハーフレディングの計算単位 ≒ 2px
+    '--hl-unit': 'calc(var(--fz--base) * 0.125)',
+    // 余白の計算単位 ≒ 8px（フィボナッチ数列ベース）
+    '--s-unit': 'calc(var(--fz--base) * 0.5)',
+  },
+  // セマンティックカラー
   color: {
-    base: '-',
-    'base-2': '-',
-    text: '-',
-    'text-2': '-',
-    divider: '-',
-    link: '-',
-    brand: '-',
-    accent: '-',
-    neutral: '-',
+    // base: 背景色
+    base: 'hsl(220 0% 99%)',
+    'base-2': 'hsl(220 4% 95%)',
+    // text: コンテンツの文字色
+    text: 'hsl(220 0% 8%)',
+    'text-2': 'hsl(220 4% 32%)',
+    // divider: 境界線の色
+    divider: 'hsl(220 4% 88%)',
+    link: 'oklch(50% 0.3 240)', // ≒ hsl(220, 90%, 48%)
+    brand: '#1e5f8c',
+    accent: '#d94a6a',
+    // ライトモード・ダークモードのどちらでもブレンドして使えるようなニュートラルカラー。
+    //  Memo: 黒からの変化の方がわかりづらいため、明るめにする。
+    neutral: 'hsl(220, 2%, 80%)',
+    // shadow: 影の色。--shc（手書き SCSS）はこの変数の別名で、.set--bxsh から上書きされる。
+    shadow: 'hsl(220 4% 8% / 12%)',
   },
 
-  // パレットカラー: 多くは --L/--C からの計算色のため手書き SCSS。white/black のみリテラル値。
+  // パレットカラー: 基準の明度 --L / 彩度 --C（vars グループの構造変数）を色相ごとに微調整して算出する。
+  //  keycolor は :root に実値を持たないカタログ専用キー（prop 側で style 属性へ出力する）。
   palette: {
-    red: '-',
-    blue: '-',
-    green: '-',
-    yellow: '-',
-    purple: '-',
-    orange: '-',
-    pink: '-',
-    gray: '-',
+    red: 'oklch(var(--L) var(--C) 20)',
+    blue: 'oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264)',
+    green: 'oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152)',
+    yellow: 'oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80)',
+    purple: 'oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288)',
+    orange: 'oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48)',
+    pink: 'oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352)',
+    gray: 'oklch(calc(var(--L) - 4%) calc(var(--C) / 10) 240)',
     white: '#fff',
     black: '#000',
     keycolor: '-',
   },
 
-  // font-size: 倍音列でのスケーリング（--fz-mol は手書き SCSS の構造変数）。基準は --fz--base。
+  // font-size: 倍音列でのスケーリング（--fz-mol は vars グループの構造変数）。基準は --fz--base。
   fz: {
     base: '1rem',
     '5xl': 'calc(1em * var(--fz-mol) / (var(--fz-mol) - 6))',
@@ -49,20 +72,6 @@ export default {
     xs: 'calc(1em * var(--fz-mol) / (var(--fz-mol) + 2))',
     '2xs': 'calc(1em * var(--fz-mol) / (var(--fz-mol) + 3))',
   },
-
-  // line-height: CSS 変数を持たないカタログ専用（prop 側で解釈）。
-  lh: { base: '-', xs: '-', s: '-', l: '-' },
-
-  // half-leading: --hl-unit は手書き SCSS の構造変数。
-  hl: {
-    base: 'calc(var(--hl-unit) * 3)',
-    xs: 'var(--hl-unit)',
-    s: 'calc(var(--hl-unit) * 2)',
-    l: 'calc(var(--hl-unit) * 4)',
-  },
-
-  // letter-spacing
-  lts: { base: 'normal', s: '-0.025em', l: '0.05em', xl: '0.1em' },
 
   // font-family
   ff: {
@@ -83,13 +92,28 @@ export default {
   // font-weight
   fw: { light: '300', normal: '400', bold: '600' },
 
+  // half-leading: --hl-unit は vars グループの構造変数。
+  hl: {
+    base: 'calc(var(--hl-unit) * 3)',
+    xs: 'var(--hl-unit)',
+    s: 'calc(var(--hl-unit) * 2)',
+    l: 'calc(var(--hl-unit) * 4)',
+  },
+
+  // line-height: CSS 変数を持たないカタログ専用（prop 側で解釈）。
+  lh: { base: '-', xs: '-', s: '-', l: '-' },
+
+  // letter-spacing
+  lts: { base: 'normal', s: '-0.025em', l: '0.05em', xl: '0.1em' },
+
   // opacity（音楽の強弱記号 piano 系列に由来）
   o: { mp: '0.9', p: '0.75', pp: '0.5', ppp: '0.25' },
 
   // border-radius: inner は .set 系の計算値（手書き SCSS）でカタログ専用。
   bdrs: { '10': '0.25rem', '20': '0.5rem', '30': '1rem', '40': '1.5rem', '99': '99rem', inner: '-' },
 
-  // box-shadow: 構造変数 --shsz--* / --shc（手書き SCSS）を合成。.set--bxsh で再宣言され影色 --shc を上書きできる。
+  // box-shadow: 構造変数 --shsz--*（手書き SCSS）と影色 --shc を合成。.set--bxsh で再宣言され影色 --shc を上書きできる。
+  //  Memo: --shc は color.shadow（--shadow）の別名（手書き SCSS で定義）。
   bxsh: {
     '10': 'var(--shsz--10) var(--shc)',
     '20': 'var(--shsz--20) var(--shc)',
@@ -98,7 +122,10 @@ export default {
     '50': 'var(--shsz--50) var(--shc)',
   },
 
-  // space: 構造変数 --s-unit（手書き SCSS）の倍数。フィボナッチ数列ベース。.set--s で --s-unit を em 化すると再ベースされる。
+  // aspect-ratio
+  ar: { og: '1.91/1' },
+
+  // space: 構造変数 --s-unit（vars グループ）の倍数。フィボナッチ数列ベース。.set--s で --s-unit を em 化すると再ベースされる。
   space: {
     '5': 'calc(var(--s-unit) * 0.5)', // ≒ 4px
     '10': 'var(--s-unit)', // ≒ 8px
@@ -119,7 +146,4 @@ export default {
 
   // content-size
   sz: { xs: '400px', s: '640px', m: '880px', l: '1200px', xl: '1600px' },
-
-  // aspect-ratio
-  ar: { og: '1.91/1' },
 } as const;

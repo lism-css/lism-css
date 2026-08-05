@@ -12,10 +12,11 @@ import { MOCKUP_CONFIG_FILENAME } from '../core/data-dir.js';
 import { PAGE_EXTENSIONS, PAGES_DIRNAME } from '../core/pages.js';
 import { getViewerDir, isInsideDir } from '../core/paths.js';
 import { prepareMockRuntime, type MockupRuntime } from '../core/runtime.js';
-import { TOKENS_FILENAME } from '../core/tokens.js';
+import { DARK_TOKENS_FILENAME, TOKENS_FILENAME } from '../core/tokens.js';
 import { MockupContractError } from '../core/types.js';
-import { createMockViteConfig } from '../vite/config.js';
-import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID } from '../vite/virtual-modules.js';
+import { createImportAllowlist, createMockViteConfig } from '../vite/config.js';
+import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIRTUAL_TOKENS_DATA_ID } from '../vite/virtual-modules.js';
+import { warnMissingStandardPackages } from './diagnostics.js';
 
 export interface DevCommandOptions {
   /** ビューアディレクトリの上書き（テスト用。既定は同梱ビューア）。 */
@@ -30,7 +31,9 @@ type WatchEvent = 'add' | 'change' | 'unlink';
 export function classifyDataEvent(dataDir: string, event: WatchEvent, file: string): ReloadKind | null {
   const target = path.resolve(file);
 
-  if (target === path.join(dataDir, TOKENS_FILENAME)) return 'tokens';
+  // ライトとダークは同じ経路で作り直す（ダークの検証はマージ後のライト側トークンが基準のため、
+  // 片方だけ作り直すと `tokens.json` の変更がダークの検証結果とずれる）。
+  if (target === path.join(dataDir, TOKENS_FILENAME) || target === path.join(dataDir, DARK_TOKENS_FILENAME)) return 'tokens';
   if (target === path.join(dataDir, MOCKUP_CONFIG_FILENAME)) return 'pages';
 
   // ページ本体の内容変更は vite の HMR に任せる。列挙が変わる追加・削除だけ拾う。
@@ -57,14 +60,29 @@ function reportWatchError(server: ViteDevServer, error: unknown): void {
   server.ws.send({ type: 'error', err: { message: `[lism-mockup] ${detail}`, stack: '' } });
 }
 
+/** 2つのパッケージ名リストが同じ内容か（順序は問わない）。 */
+export function sameImports(before: readonly string[] = [], after: readonly string[] = []): boolean {
+  if (before.length !== after.length) return false;
+  const sortedAfter = [...after].sort();
+  return [...before].sort().every((name, index) => name === sortedAfter[index]);
+}
+
 /** 変更種別に応じて runtime を作り直し、仮想モジュールを invalidate してフルリロードする。 */
 export async function applyDataChange(server: ViteDevServer, runtime: MockupRuntime, kind: ReloadKind): Promise<void> {
   try {
     if (kind === 'tokens') {
       await runtime.refreshTokens();
+      // CSS とトークン一覧は同じ tokens.json から作るため、必ず両方を作り直させる。
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_CSS_ID);
+      invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_DATA_ID);
     } else {
+      const before = runtime.data.config.imports;
       runtime.refreshPages();
+      // 許可リストは vite 設定の組み立て時に一度だけ作るため、`imports` の変更は再起動しないと効かない。
+      // 黙って無視すると「設定に足したのに Forbidden import のまま」で行き詰まるので必ず伝える。
+      if (!sameImports(before, runtime.data.config.imports)) {
+        server.config.logger.warn(pc.yellow('[lism-mockup] "imports" changed in mockup.config.json. Restart `lism-mockup dev` to apply it.'));
+      }
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_PAGES_ID);
     }
     server.ws.send({ type: 'full-reload' });
@@ -76,7 +94,12 @@ export async function applyDataChange(server: ViteDevServer, runtime: MockupRunt
 /** データディレクトリの監視を仕掛ける。 */
 export function watchDataDir(server: ViteDevServer, runtime: MockupRuntime): void {
   const { dataDir } = runtime.data;
-  server.watcher.add([path.join(dataDir, PAGES_DIRNAME), path.join(dataDir, MOCKUP_CONFIG_FILENAME), path.join(dataDir, TOKENS_FILENAME)]);
+  server.watcher.add([
+    path.join(dataDir, PAGES_DIRNAME),
+    path.join(dataDir, MOCKUP_CONFIG_FILENAME),
+    path.join(dataDir, TOKENS_FILENAME),
+    path.join(dataDir, DARK_TOKENS_FILENAME),
+  ]);
 
   // 連続イベント（エディタの保存やファイル移動）で作り直しが重ならないよう、種別ごとに1つへまとめる。
   const pending = new Set<ReloadKind>();
@@ -107,9 +130,14 @@ export function watchDataDir(server: ViteDevServer, runtime: MockupRuntime): voi
 
 /** dev サーバーを作る（listen は呼び出し側。統合テストからも使う）。 */
 export async function createMockDevServer(dir: string, options: DevCommandOptions = {}): Promise<{ server: ViteDevServer; runtime: MockupRuntime }> {
-  const runtime = await prepareMockRuntime(dir);
+  // dev は依存の事前バンドルを共有 cacheDir へ書き込むため、共有キャッシュを占有してから使う。
+  const runtime = await prepareMockRuntime(dir, { exclusiveViteCache: true });
   try {
-    const server = await createServer(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'dev' }));
+    // 許可リストは vite 設定でも使うため1回だけ作る（構築は node_modules の走査を伴う）。
+    const allowlist = createImportAllowlist(runtime);
+    warnMissingStandardPackages(allowlist.missingPackages);
+
+    const server = await createServer(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'dev', allowlist }));
     watchDataDir(server, runtime);
     return { server, runtime };
   } catch (error) {

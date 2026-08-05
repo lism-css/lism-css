@@ -19,13 +19,30 @@ export function getViewerDir(): string {
 }
 
 /**
- * 許可 bare import を「@lism-css/mockup 自身の位置」から解決するための importer パス。
- *
- * 実ファイルである必要はない（Vite / Rollup は importer の dirname だけを見る）。
+ * 標準パッケージの bare import を「@lism-css/mockup 自身の位置」から解決するための importer パス。
  * データディレクトリ側の node_modules を参照させないためのアンカー。
+ *
+ * アンカーには必ず実在ファイルを使う。vite は存在しない importer を渡されると解決の起点を
+ * `root` へフォールバックするため、実在しないパスだと「どこを起点にするか」を指定できない。
  */
 export function getResolveAnchor(): string {
-  return path.join(getMockPackageRoot(), '__lism-mockup-resolve-anchor.js');
+  return path.join(getMockPackageRoot(), 'package.json');
+}
+
+/**
+ * `from` 自身から filesystem のルートまで、親方向へ1階層ずつ辿る。
+ *
+ * Node のパッケージ解決と同じ「近い順」。node_modules 探索がこの順序に依存するため、
+ * 遡り方は複数箇所で書き写さずここ1箇所に置く。
+ */
+export function* walkAncestorDirs(from: string): Generator<string> {
+  let dir = path.resolve(from);
+  for (;;) {
+    yield dir;
+    const parent = path.dirname(dir);
+    if (parent === dir) return;
+    dir = parent;
+  }
 }
 
 /** realpath 解決。解決できないパス（仮想 id・未作成ファイル）はそのまま返す。 */
@@ -43,10 +60,29 @@ export function isInsideDir(dir: string, target: string): boolean {
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
 }
 
-/** `?raw` などのクエリを除いたパス部分。 */
-export function stripQuery(id: string): string {
-  const index = id.search(/[?#]/);
-  return index === -1 ? id : id.slice(0, index);
+/**
+ * パスに `node_modules` セグメントが含まれるか。
+ *
+ * データディレクトリからの相対パスを渡すこと。データディレクトリ自身のパスに
+ * `node_modules` が含まれる場合まで巻き込まないようにするため。
+ */
+export function hasNodeModulesSegment(relativePath: string): boolean {
+  return relativePath.split(/[\\/]/).includes('node_modules');
+}
+
+/**
+ * `from` から親方向へ辿って見つかる node_modules ディレクトリ（realpath、近い順）。
+ *
+ * 起動時のパッケージ検索と `server.fs.allow` の組み立てはどちらもこの一覧を必要とするため、
+ * 呼び出し側は起点ごとに1回だけ呼んで結果を共有すること（同じ祖先チェーンを何度も走らせない）。
+ */
+export function ancestorNodeModules(from: string): string[] {
+  const found: string[] = [];
+  for (const dir of walkAncestorDirs(from)) {
+    const candidate = path.join(dir, 'node_modules');
+    if (fs.existsSync(candidate)) found.push(safeRealpath(candidate));
+  }
+  return found;
 }
 
 /** id をパス部分とクエリ部分（`?...`）に分割する。 */

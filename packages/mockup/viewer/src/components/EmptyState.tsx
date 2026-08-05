@@ -2,7 +2,7 @@ import { Inline, List, Stack, Text } from 'lism-css/react';
 import { Alert } from '@lism-css/ui/react/Alert';
 import type { ViewerPage } from 'virtual:lism-mockup/pages';
 
-import { buildPageHref } from '../lib/usePageId';
+import { buildPageHref } from '../lib/useViewerRoute';
 
 interface EmptyStateProps {
   pages: ViewerPage[];

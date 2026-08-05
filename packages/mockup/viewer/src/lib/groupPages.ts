@@ -13,7 +13,7 @@ export interface PageGroup {
 const DEFAULT_GROUP_KEY = '__lism-mockup:default__';
 
 /** Heading shown for pages without a `category`. */
-export const DEFAULT_GROUP_LABEL = 'Pages';
+const DEFAULT_GROUP_LABEL = 'Pages';
 
 /**
  * Groups pages by `category`, keeping the incoming order.

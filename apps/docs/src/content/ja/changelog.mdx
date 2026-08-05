@@ -9,6 +9,36 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.25.0 (2026.08.06)
+
+### 構造変数を lism.config から上書き可能に (#530)
+
+- `--L` / `--C` / `--fz-mol` / `--hl-unit` / `--s-unit` をトークンの新グループ `vars` へ移動し、`lism.config` の `tokens` から上書きできるようにしました。
+- 影色 `--shadow` を `color.shadow` へ移動しました（CSS変数名は従来どおりです）。
+
+### spacing系の方向指定 props を main.css でもクラス化 (#531)
+
+- `ps` / `pe` / `pl` / `pt` / `ms` / `mt` / `cg` / `rg` など方向指定の props 全18種で、`-ps:20` のようなトークンクラスと `-pl_sm` のようなBPクラスが `main.css` でも使えるようになりました。
+- これに伴い `main.css` のサイズが約 +1.5KB（gzip後）増えています。`full.css` のサイズは変わりません。
+
+### カラー系 Property Class の拡充 (#533)
+
+- `-c:keycolor` / `-bgc:keycolor` / `-bdc:keycolor` を `main.css` で出力するようにしました。
+- `full.css` では `c` / `bgc` / `bdc` の全カラートークンがクラス化されます（`-bgc:red` など）。
+- `-bgc:current`（`currentColor`）を追加しました。
+
+### その他
+
+- `set--plain` が `input` のフォーム既定スタイルに詳細度で負ける問題を修正しました。(#537)
+- `.browserslistrc` を追加し、不要なベンダープレフィックスを除去しました。
+
+### `@lism-css/plugin` v.0.4.2 (2026.08.06)
+
+- カラー系 Property Class のクラス生成を `color` ∪ `palette` の和集合に揃え、`full.css` のビルド結果をランタイム側の解決規則と一致させました。(#533)
+- マージ前の default-config だけを読み込む `loadDefaultConfig()` を追加しました。(#539)
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.24.1 (2026.08.04)
 
 - `full.css` で border 用の Property Class（`.-bd` 系）が効かなくなっていた競合を修正しました。(#513)

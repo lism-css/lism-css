@@ -92,7 +92,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 | --- | --- | --- |
 | `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|s\|e\|bs\|be\|t\|b\|l\|r}`, `-bd:none` |
 | `bds` | `--bds` | `-bds:dashed`, `-bds:dotted`, `-bds:double` |
-| `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` |
+| `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:keycolor`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` |
 | `bdw` | `--bdw` | BP クラス: ✔（`-bdw_sm` / `-bdw_md`） |
 
 → 詳細（方向ごとのスタイル指定、BP での方向切り替え等）は [property-class/bd.md](./property-class/bd.md) 参照
@@ -125,6 +125,7 @@ Property Class の値名は基本的に CSS の実値と同じですが、以下
 | `-w:fit` | `width: fit-content` | `w`, `h` |
 | `-ac:between` | `align-content: space-between` | `ac`, `jc` |
 | `-bdc:current` | `border-color: currentColor` | `bdc` |
+| `-bgc:current` | `background-color: currentColor` | `bgc` |
 
 
 ## Property Class の特殊な出力タイプ

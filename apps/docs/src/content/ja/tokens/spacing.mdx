@@ -67,43 +67,39 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
 
 ## 対応する Property Class
 
-余白トークンは、`padding`, `margin`, `gap` 系の property class で利用できます。
-ただし、**すべてのプロパティで使えるわけではありません**。
+余白トークンは、`padding`, `margin`, `gap` 系のすべての property class で利用できます。
 
-### フルサポート（トークン値 5〜80）
+### 対応プロパティ（トークン値 5〜80）
 
-以下のプロパティには、余白トークン `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80` に対応した property class が用意されています。
+以下のプロパティには、余白トークン `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80` に対応した property class が用意されています。すべてブレイクポイント指定にも対応しています。
 
-| プロパティ | CSS | クラス例 | BP対応 |
-|---|---|---|---|
-| `p` | `padding` | `-p:5`, `-p:20`, ... | ○ |
-| `px` | `padding-inline` | `-px:10`, `-px:30`, ... | ○ |
-| `py` | `padding-block` | `-py:15`, `-py:40`, ... | ○ |
-| `m` | `margin` | `-m:10`, `-m:20`, ... | ○ |
-| `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... | ○ |
-| `my` | `margin-block` | `-my:10`, `-my:20`, ... | ○ |
-| `mbs` | `margin-block-start` | `-mbs:10`, `-mbs:20`, ... | ○ |
-| `g` | `gap` | `-g:10`, `-g:20`, ... | ○ |
+| プロパティ | CSS | クラス例 |
+|---|---|---|
+| `p` | `padding` | `-p:5`, `-p:20`, ... |
+| `px` | `padding-inline` | `-px:10`, `-px:30`, ... |
+| `py` | `padding-block` | `-py:15`, `-py:40`, ... |
+| `ps` | `padding-inline-start` | `-ps:10`, `-ps:20`, ... |
+| `pe` | `padding-inline-end` | `-pe:10`, `-pe:20`, ... |
+| `pbs` | `padding-block-start` | `-pbs:10`, `-pbs:20`, ... |
+| `pbe` | `padding-block-end` | `-pbe:10`, `-pbe:20`, ... |
+| `pl`, `pr`, `pt`, `pb` | 物理方向の padding | `-pl:10`, `-pt:20`, ... |
+| `m` | `margin` | `-m:10`, `-m:20`, ... |
+| `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... |
+| `my` | `margin-block` | `-my:10`, `-my:20`, ... |
+| `ms` | `margin-inline-start` | `-ms:10`, `-ms:20`, ... |
+| `me` | `margin-inline-end` | `-me:10`, `-me:20`, ... |
+| `mbs` | `margin-block-start` | `-mbs:10`, `-mbs:20`, ... |
+| `mbe` | `margin-block-end` | `-mbe:10`, `-mbe:20`, ... |
+| `ml`, `mr`, `mt`, `mb` | 物理方向の margin | `-ml:10`, `-mt:20`, ... |
+| `g` | `gap` | `-g:10`, `-g:20`, ... |
+| `cg` | `column-gap` | `-cg:10`, `-cg:20`, ... |
+| `rg` | `row-gap` | `-rg:10`, `-rg:20`, ... |
 
 `gap` は `inherit` にも対応しています。
 
-### プリセットクラスなし
-
-以下のプロパティには、余白トークンのプリセット property class は用意されていません。ただし、CSS変数（`--ps` 等）や JSX prop（`ps="20"` 等）での値指定は可能です。
-
-| プロパティ | CSS |
-|---|---|
-| `ps` | `padding-inline-start` |
-| `pe` | `padding-inline-end` |
-| `pbs` | `padding-block-start` |
-| `pbe` | `padding-block-end` |
-| `pl`, `pr`, `pt`, `pb` | 物理方向の padding |
-| `ms` | `margin-inline-start` |
-| `me` | `margin-inline-end` |
-| `mbe` | `margin-block-end` |
-| `ml`, `mr`, `mt`, `mb` | 物理方向の margin |
-| `cg` | `column-gap` |
-| `rg` | `row-gap` |
+:::info
+物理方向（`pl` / `mt` など）よりも、書字方向に追従する論理方向（`ps` / `mbs` など）の利用を推奨しています。
+:::
 
 ### margin 系の auto 対応
 

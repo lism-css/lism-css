@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { afterAll, describe, expect, test } from 'vitest';
 import { objDeepMerge } from 'lism-css/config/helper';
-import { computeBuildConfigs, findUserConfigPath, loadBuildConfigs } from './load-config';
+import { computeBuildConfigs, findUserConfigPath, loadBuildConfigs, loadDefaultConfig } from './load-config';
 import type { BuildConfig, PropConfig } from './serialize';
 
 const objMerge = objDeepMerge as (a: Record<string, unknown>, b: Record<string, unknown>) => Record<string, unknown>;
@@ -162,5 +162,37 @@ describe('loadBuildConfigs', () => {
     fs.writeFileSync(configPath, 'export default { breakpoints: { xs: "420px" } };\n');
     const second = await loadBuildConfigs(root);
     expect(second.mainConfig.breakpoints?.xs).toBe('420px');
+  });
+});
+
+describe('loadDefaultConfig', () => {
+  const dirs: string[] = [];
+  function tmpDir(): string {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-config-'));
+    dirs.push(dir);
+    return dir;
+  }
+  afterAll(() => dirs.forEach((d) => fs.rmSync(d, { recursive: true, force: true })));
+
+  test('lism-css の default-config 一式（tokens / props / traits / breakpoints）を返す', async () => {
+    const defaults = await loadDefaultConfig();
+
+    expect(Object.keys(defaults.tokens ?? {}).length).toBeGreaterThan(0);
+    expect(Object.keys(defaults.props ?? {}).length).toBeGreaterThan(0);
+    expect(Object.keys(defaults.traits ?? {}).length).toBeGreaterThan(0);
+    expect(Object.keys(defaults.breakpoints ?? {}).length).toBeGreaterThan(0);
+  });
+
+  test('loadBuildConfigs の defaultConfig と一致し、user 設定の影響を受けない', async () => {
+    const root = tmpDir();
+    // full preset と user 設定が乗るのは main/full config だけで、default-config は素のまま。
+    fs.writeFileSync(path.join(root, 'lism.config.ts'), 'export default { breakpoints: { xs: "420px" } };\n');
+
+    const { defaultConfig, mainConfig } = await loadBuildConfigs(root);
+    const defaults = await loadDefaultConfig();
+
+    expect(defaults).toEqual(defaultConfig);
+    expect(mainConfig.breakpoints?.xs).toBe('420px');
+    expect(defaults.breakpoints?.xs).not.toBe('420px');
   });
 });

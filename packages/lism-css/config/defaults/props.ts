@@ -114,7 +114,10 @@ export default {
   // },
   bgc: {
     prop: 'backgroundColor',
-    presets: ['base', 'base-2', 'text', 'brand', 'accent', 'inherit', 'transparent'],
+    // keycolor は palette カタログ経由で var(--keycolor) に解決される（#479）。
+    presets: ['base', 'base-2', 'text', 'brand', 'accent', 'keycolor', 'inherit', 'transparent'],
+    // bdc と同様に currentColor を短く書けるようにする（-bgc:current）。
+    utils: { current: 'currentColor' },
     token: 'color',
     exUtility: { inherit: { 'background-color': 'inherit' } },
     alwaysVar: 1,
@@ -123,7 +126,7 @@ export default {
   c: {
     // Note: bg系（bgclip）より後にくるように。
     prop: 'color',
-    presets: ['base', 'text', 'text-2', 'brand', 'accent', 'inherit'],
+    presets: ['base', 'text', 'text-2', 'brand', 'accent', 'keycolor', 'inherit'],
     token: 'color',
     exUtility: {
       inherit: { color: 'inherit' }, // --c ではなく color で出力したい
@@ -136,7 +139,7 @@ export default {
   bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
   bdc: {
     isVar: 1,
-    presets: ['brand', 'accent', 'divider', 'inherit', 'transparent'],
+    presets: ['brand', 'accent', 'divider', 'keycolor', 'inherit', 'transparent'],
     utils: { current: 'currentColor' },
     token: 'color',
   },
@@ -201,14 +204,14 @@ export default {
   },
   px: { prop: 'paddingInline', presets: ['0'], token: 'space', tokenClass: 1, bp: 1 },
   py: { prop: 'paddingBlock', presets: ['0'], token: 'space', tokenClass: 1, bp: 1 },
-  ps: { prop: 'paddingInlineStart', token: 'space', bp: 1 },
-  pe: { prop: 'paddingInlineEnd', token: 'space', bp: 1 },
-  pbs: { prop: 'paddingBlockStart', token: 'space', bp: 1 },
-  pbe: { prop: 'paddingBlockEnd', token: 'space', bp: 1 },
-  pl: { prop: 'paddingLeft', token: 'space' },
-  pr: { prop: 'paddingRight', token: 'space' },
-  pt: { prop: 'paddingTop', token: 'space' },
-  pb: { prop: 'paddingBottom', token: 'space' },
+  ps: { prop: 'paddingInlineStart', token: 'space', tokenClass: 1, bp: 1 },
+  pe: { prop: 'paddingInlineEnd', token: 'space', tokenClass: 1, bp: 1 },
+  pbs: { prop: 'paddingBlockStart', token: 'space', tokenClass: 1, bp: 1 },
+  pbe: { prop: 'paddingBlockEnd', token: 'space', tokenClass: 1, bp: 1 },
+  pl: { prop: 'paddingLeft', token: 'space', tokenClass: 1, bp: 1 },
+  pr: { prop: 'paddingRight', token: 'space', tokenClass: 1, bp: 1 },
+  pt: { prop: 'paddingTop', token: 'space', tokenClass: 1, bp: 1 },
+  pb: { prop: 'paddingBottom', token: 'space', tokenClass: 1, bp: 1 },
   m: {
     prop: 'margin',
     presets: ['auto', '0'],
@@ -219,14 +222,14 @@ export default {
   },
   mx: { prop: 'marginInline', presets: ['auto', '0'], token: 'space', tokenClass: 1, bp: 1 },
   my: { prop: 'marginBlock', presets: ['auto', '0'], token: 'space', tokenClass: 1, bp: 1 },
-  ms: { prop: 'marginInlineStart', presets: ['auto'], token: 'space', bp: 1 },
-  me: { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', bp: 1 },
-  mbs: { prop: 'marginBlockStart', token: 'space', bp: 1, presets: ['auto', '0'], tokenClass: 1 },
-  mbe: { prop: 'marginBlockEnd', presets: ['auto'], token: 'space', bp: 1 },
-  ml: { prop: 'marginLeft', token: 'space' },
-  mr: { prop: 'marginRight', token: 'space' },
-  mt: { prop: 'marginTop', token: 'space' },
-  mb: { prop: 'marginBottom', token: 'space' },
+  ms: { prop: 'marginInlineStart', presets: ['auto'], token: 'space', tokenClass: 1, bp: 1 },
+  me: { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', tokenClass: 1, bp: 1 },
+  mbs: { prop: 'marginBlockStart', presets: ['auto', '0'], token: 'space', tokenClass: 1, bp: 1 },
+  mbe: { prop: 'marginBlockEnd', presets: ['auto'], token: 'space', tokenClass: 1, bp: 1 },
+  ml: { prop: 'marginLeft', token: 'space', tokenClass: 1, bp: 1 },
+  mr: { prop: 'marginRight', token: 'space', tokenClass: 1, bp: 1 },
+  mt: { prop: 'marginTop', token: 'space', tokenClass: 1, bp: 1 },
+  mb: { prop: 'marginBottom', token: 'space', tokenClass: 1, bp: 1 },
 
   g: {
     prop: 'gap',
@@ -236,8 +239,8 @@ export default {
     tokenClass: 1,
     bp: 1,
   },
-  cg: { prop: 'columnGap', token: 'space' },
-  rg: { prop: 'rowGap', token: 'space' },
+  cg: { prop: 'columnGap', token: 'space', tokenClass: 1, bp: 1 },
+  rg: { prop: 'rowGap', token: 'space', tokenClass: 1, bp: 1 },
   cols: { isVar: 1, bp: 1 },
   rows: { isVar: 1, bp: 1 },
 

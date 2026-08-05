@@ -15,7 +15,9 @@ import { build } from 'vite';
 import { getViewerDir } from '../core/paths.js';
 import { prepareMockRuntime } from '../core/runtime.js';
 import { MockupContractError, type MockupData } from '../core/types.js';
-import { createMockViteConfig } from '../vite/config.js';
+import { createImportAllowlist, createMockViteConfig } from '../vite/config.js';
+import { describeMissingLucideExport } from '../vite/lucide-icons.js';
+import { warnMissingStandardPackages } from './diagnostics.js';
 
 export interface CheckCommandOptions {
   /** ビューアディレクトリの上書き（テスト用。既定は同梱ビューア）。 */
@@ -29,25 +31,36 @@ function toCheckError(error: unknown): MockupContractError {
   const err = error as { message?: string; id?: string; frame?: string; loc?: { file?: string; line?: number; column?: number } };
   const file = err.loc?.file ?? err.id;
   const position = err.loc?.line !== undefined ? `:${err.loc.line}${err.loc.column !== undefined ? `:${err.loc.column}` : ''}` : '';
-  const parts = [err.message ?? String(error)];
+  // 仮想 lucide-react モジュールの「その export は無い」だけは、対応範囲の説明へ差し替える。
+  const parts = [describeMissingLucideExport(error) ?? err.message ?? String(error)];
   if (err.frame) parts.push(err.frame);
 
   return new MockupContractError(parts.join('\n'), { file: file ? `${file}${position}` : undefined });
 }
 
+function countTokens(tokens: MockupData['tokens']): number {
+  return Object.values(tokens).reduce((total, group) => total + Object.keys(group).length, 0);
+}
+
 function printSummary(data: MockupData): void {
-  const tokenCount = Object.values(data.tokens).reduce((total, group) => total + Object.keys(group).length, 0);
+  const darkCount = countTokens(data.darkTokens);
 
   console.log(pc.green('[lism-mockup] check passed'));
   console.log(pc.dim(`  data directory: ${data.dataDir}`));
   console.log(pc.dim(`  pages: ${data.pages.length} (${data.pages.map((page) => page.id).join(', ')})`));
-  console.log(pc.dim(`  tokens: ${tokenCount} override(s)`));
+  console.log(pc.dim(`  tokens: ${countTokens(data.tokens)} override(s)`));
+  // ダークは任意機能なので、宣言があるときだけ1行増やす。
+  if (darkCount > 0) console.log(pc.dim(`  dark tokens: ${darkCount} override(s)`));
 }
 
 export async function checkCommand(dir: string, options: CheckCommandOptions = {}): Promise<void> {
   const runtime = await prepareMockRuntime(dir);
   try {
-    await build(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'build' }));
+    // 許可リストは vite 設定でも使うため1回だけ作る（構築は node_modules の走査を伴う）。
+    const allowlist = createImportAllowlist(runtime);
+    warnMissingStandardPackages(allowlist.missingPackages);
+
+    await build(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'build', allowlist }));
   } catch (error) {
     throw toCheckError(error);
   } finally {

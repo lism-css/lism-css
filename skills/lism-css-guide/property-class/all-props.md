@@ -83,17 +83,19 @@
 | `bgr` | `background-repeat` | `-bgr:no-repeat` | — |
 | `bgp` | `background-position` | `-bgp:center` | — |
 | `bgsz` | `background-size` | `-bgsz:cover`, `-bgsz:contain` | — |
-| `bgc` | `background-color` | `-bgc:base`, `-bgc:base-2`, `-bgc:text`, `-bgc:brand`, `-bgc:accent`, `-bgc:inherit`, `-bgc:transparent` | — |
+| `bgc` | `background-color` | `-bgc:base`, `-bgc:base-2`, `-bgc:text`, `-bgc:brand`, `-bgc:accent`, `-bgc:keycolor`, `-bgc:inherit`, `-bgc:transparent`, `-bgc:current` | — |
 
 ### カラー
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 | --- | --- | --- | --- |
-| `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:inherit` | — |
+| `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:keycolor`, `-c:inherit` | — |
 | `keycolor` | `--keycolor` 変数のみ | — | — |
 
 セマンティック/パレットの全カラートークンは [tokens.md のカラー](../tokens.md#カラー)を参照。<br />
 キーカラー変数: `keycolor`（ユーザー定義の `--keycolor` を参照する独立変数。詳細は `tokens.md` を参照）
+
+`c` / `bgc` / `bdc` に `keycolor` を指定すると、`--keycolor` を参照する `-c:keycolor` のようなクラスが出力される（`style` 属性ではない）。
 
 ### 角丸
 
@@ -142,14 +144,14 @@
 | `p` | `padding` | `-p:0`, `-p:5`, `-p:10`, `-p:20`, ... (SPACEトークン) | ✔ |
 | `px` | `padding-inline` | `-px:0`, `-px:5`, `-px:10`, `-px:20`, ... (SPACEトークン) | ✔ |
 | `py` | `padding-block` | `-py:0`, `-py:5`, `-py:10`, `-py:20`, ... (SPACEトークン) | ✔ |
-| `ps` | `padding-inline-start` | — | ✔ |
-| `pe` | `padding-inline-end` | — | ✔ |
-| `pbs` | `padding-block-start` | — | ✔ |
-| `pbe` | `padding-block-end` | — | ✔ |
-| `pl` | `padding-left` | — | — |
-| `pr` | `padding-right` | — | — |
-| `pt` | `padding-top` | — | — |
-| `pb` | `padding-bottom` | — | — |
+| `ps` | `padding-inline-start` | `-ps:5`, `-ps:10`, `-ps:20`, ... (SPACEトークン) | ✔ |
+| `pe` | `padding-inline-end` | `-pe:5`, `-pe:10`, `-pe:20`, ... (SPACEトークン) | ✔ |
+| `pbs` | `padding-block-start` | `-pbs:5`, `-pbs:10`, `-pbs:20`, ... (SPACEトークン) | ✔ |
+| `pbe` | `padding-block-end` | `-pbe:5`, `-pbe:10`, `-pbe:20`, ... (SPACEトークン) | ✔ |
+| `pl` | `padding-left` | `-pl:5`, `-pl:10`, `-pl:20`, ... (SPACEトークン) | ✔ |
+| `pr` | `padding-right` | `-pr:5`, `-pr:10`, `-pr:20`, ... (SPACEトークン) | ✔ |
+| `pt` | `padding-top` | `-pt:5`, `-pt:10`, `-pt:20`, ... (SPACEトークン) | ✔ |
+| `pb` | `padding-bottom` | `-pb:5`, `-pb:10`, `-pb:20`, ... (SPACEトークン) | ✔ |
 
 SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (space)](../tokens.md#余白-space) を参照。
 
@@ -160,22 +162,22 @@ SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (
 | `m` | `margin` | `-m:auto`, `-m:0`, `-m:5`, `-m:10`, `-m:20`, ... (SPACEトークン) | ✔ |
 | `mx` | `margin-inline` | `-mx:auto`, `-mx:0`, `-mx:5`, `-mx:10`, `-mx:20`, ... (SPACEトークン) | ✔ |
 | `my` | `margin-block` | `-my:auto`, `-my:0`, `-my:5`, `-my:10`, `-my:20`, ... (SPACEトークン) | ✔ |
-| `ms` | `margin-inline-start` | `-ms:auto` | ✔ |
-| `me` | `margin-inline-end` | `-me:auto` | ✔ |
+| `ms` | `margin-inline-start` | `-ms:auto`, `-ms:5`, `-ms:10`, `-ms:20`, ... (SPACEトークン) | ✔ |
+| `me` | `margin-inline-end` | `-me:auto`, `-me:5`, `-me:10`, `-me:20`, ... (SPACEトークン) | ✔ |
 | `mbs` | `margin-block-start` | `-mbs:auto`, `-mbs:0`, `-mbs:5`, `-mbs:10`, `-mbs:20`, ... (SPACEトークン) | ✔ |
-| `mbe` | `margin-block-end` | `-mbe:auto` | ✔ |
-| `ml` | `margin-left` | — | — |
-| `mr` | `margin-right` | — | — |
-| `mt` | `margin-top` | — | — |
-| `mb` | `margin-bottom` | — | — |
+| `mbe` | `margin-block-end` | `-mbe:auto`, `-mbe:5`, `-mbe:10`, `-mbe:20`, ... (SPACEトークン) | ✔ |
+| `ml` | `margin-left` | `-ml:5`, `-ml:10`, `-ml:20`, ... (SPACEトークン) | ✔ |
+| `mr` | `margin-right` | `-mr:5`, `-mr:10`, `-mr:20`, ... (SPACEトークン) | ✔ |
+| `mt` | `margin-top` | `-mt:5`, `-mt:10`, `-mt:20`, ... (SPACEトークン) | ✔ |
+| `mb` | `margin-bottom` | `-mb:5`, `-mb:10`, `-mb:20`, ... (SPACEトークン) | ✔ |
 
 ### Gap
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 | --- | --- | --- | --- |
 | `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | ✔ |
-| `cg` | `column-gap` | — | — |
-| `rg` | `row-gap` | — | — |
+| `cg` | `column-gap` | `-cg:5`, `-cg:10`, `-cg:20`, ... (SPACEトークン) | ✔ |
+| `rg` | `row-gap` | `-rg:5`, `-rg:10`, `-rg:20`, ... (SPACEトークン) | ✔ |
 
 ### Flex
 

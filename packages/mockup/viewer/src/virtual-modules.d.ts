@@ -29,5 +29,48 @@ declare module 'virtual:lism-mockup/pages' {
 /** Token CSS generated from the mockup's `tokens.json`. Imported for its side effect. */
 declare module 'virtual:lism-mockup/tokens.css';
 
-/** Plain CSS imports (`lism-css/full.css`, `@lism-css/ui/style.css`, local files). */
+declare module 'virtual:lism-mockup/tokens' {
+  /** One resolved design token, mirroring what the generated token CSS declares. */
+  export interface ViewerToken {
+    /** Token key inside its group (e.g. `brand`, `20`). */
+    key: string;
+    /** CSS custom property name (e.g. `--brand`). */
+    varName: string;
+    /** Value as it appears in the generated token CSS (numbers are stringified). */
+    value: string;
+    /** How the mockup's `tokens.json` affected this token. */
+    source: 'default' | 'overridden' | 'custom';
+  }
+
+  /**
+   * One section of the tokens view (e.g. `color`, `color (dark)`).
+   *
+   * A dark section is a section of its own, so a group can appear twice: `id` is
+   * what tells the two apart, while `group` stays the token group both list.
+   */
+  export interface ViewerTokenGroup {
+    /** Unique key of the section: DOM id source and React key (e.g. `color`, `color--dark`). */
+    id: string;
+    /** Token group the section lists, which also picks the preview shape (e.g. `color`). */
+    group: string;
+    /** Heading text (e.g. `color`, `color (dark)`). */
+    label: string;
+    /** Whether the section lists the dark values, and must render inside the dark scope. */
+    isDark?: boolean;
+    tokens: ViewerToken[];
+  }
+
+  /**
+   * Sections in merged-config order, holding every token the viewer's CSS actually
+   * defines. Keys whose value is the `'-'` sentinel (or empty) are omitted, the
+   * same rule the token CSS generation applies. A group whose values the mockup's
+   * `tokens.dark.json` changes is followed by its dark section.
+   */
+  export const tokenGroups: ViewerTokenGroup[];
+
+  /** Scope class the dark token CSS declares (`set--dark`). */
+  export const darkScopeClass: string;
+}
+
+/** Plain CSS imports (`lism-css/main.css`, `@lism-css/ui/style.css`, local files). */
 declare module '*.css';

@@ -8,4 +8,5 @@ export const TOKEN_VAR_PREFIX = {
   space: '--s', // --s30
   color: '--', // --brand
   palette: '--', // --red
+  vars: '', // キーがそのまま変数名（--L 等の構造変数）
 } as const;

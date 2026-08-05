@@ -6,8 +6,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { isInsideDir, safeRealpath } from './paths.js';
-import { MockupContractError, SCHEMA_VERSION, type MockupConfigFile, type MockupConfigPageMeta } from './types.js';
+import { safeRealpath } from './paths.js';
+import { isPlainObject, MockupContractError, SCHEMA_VERSION, STANDARD_PACKAGES, type MockupConfigFile, type MockupConfigPageMeta } from './types.js';
 
 export const MOCKUP_CONFIG_FILENAME = 'mockup.config.json';
 
@@ -16,15 +16,28 @@ export const MOCKUP_CONFIG_FILENAME = 'mockup.config.json';
  * 未知キーはエラーにして、項目追加が必ず `schemaVersion` の更新を伴うようにする
  * （将来の拡張＝ここへキーを足しつつ SCHEMA_VERSION を上げる、という一本道にする）。
  */
-const CONFIG_KEYS = ['schemaVersion', 'title', 'pages'] as const;
+const CONFIG_KEYS = ['schemaVersion', 'title', 'imports', 'pages'] as const;
 const PAGE_META_KEYS = ['label', 'category', 'order'] as const;
 
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
+/**
+ * npm のパッケージ名（`@scope/name` 含む）。
+ * `imports` はパッケージ単位の宣言なので、サブパス・相対パス・絶対パス・URL・`node:` は弾く。
+ */
+const PACKAGE_NAME_RE = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
 function unknownKeys(value: Record<string, unknown>, allowed: readonly string[]): string[] {
   return Object.keys(value).filter((key) => !allowed.includes(key));
+}
+
+/**
+ * `imports` の追加パッケージを、データディレクトリを含むプロジェクトから解決するための
+ * importer パス（`getResolveAnchor()` のデータディレクトリ版）。
+ *
+ * アンカーは実在ファイルである必要があるため、必ず存在する `mockup.config.json` を使う
+ * （vite は存在しない importer だと解決の起点を `root` へフォールバックしてしまう）。
+ */
+export function getDataResolveAnchor(dataDir: string): string {
+  return path.join(dataDir, MOCKUP_CONFIG_FILENAME);
 }
 
 /** `[dir]` 引数を絶対パス（realpath）へ解決する。 */
@@ -42,15 +55,24 @@ export function resolveDataDir(dir: string): string {
 /** `mockup.config.json` を読み、スキーマを検証して返す。 */
 export function readMockConfig(dataDir: string): MockupConfigFile {
   const file = path.join(dataDir, MOCKUP_CONFIG_FILENAME);
-  if (!fs.existsSync(file)) {
-    throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME} not found. Run \`lism-mockup init\` to scaffold a mockup data directory.`, {
-      file,
-    });
+
+  // 存在確認と読み込みを分けると同じパスへ2回 syscall が走るので、読み込みの失敗（ENOENT）で
+  // 「無い」を判定する。ENOENT 以外（権限エラー等）はここで握りつぶさず、そのまま投げ直す。
+  let content: string;
+  try {
+    content = fs.readFileSync(file, 'utf-8');
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME} not found. Run \`lism-mockup init\` to scaffold a mockup data directory.`, {
+        file,
+      });
+    }
+    throw error;
   }
 
   let raw: unknown;
   try {
-    raw = JSON.parse(fs.readFileSync(file, 'utf-8'));
+    raw = JSON.parse(content);
   } catch (error) {
     throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME} is not valid JSON: ${(error as Error).message}`, { file });
   }
@@ -74,7 +96,7 @@ export function readMockConfig(dataDir: string): MockupConfigFile {
   }
   if (raw.schemaVersion !== SCHEMA_VERSION) {
     throw new MockupContractError(
-      `${MOCKUP_CONFIG_FILENAME} has "schemaVersion": ${JSON.stringify(raw.schemaVersion)}, but this version of @lism-css/mockup only supports ${SCHEMA_VERSION}.`,
+      `${MOCKUP_CONFIG_FILENAME} has "schemaVersion": ${JSON.stringify(raw.schemaVersion)}, but this version of @lism-css/mockup only supports ${SCHEMA_VERSION}. Update it to ${SCHEMA_VERSION}.`,
       { file }
     );
   }
@@ -85,9 +107,47 @@ export function readMockConfig(dataDir: string): MockupConfigFile {
 
   const config: MockupConfigFile = { schemaVersion: SCHEMA_VERSION };
   if (typeof raw.title === 'string') config.title = raw.title;
+  if (raw.imports !== undefined) config.imports = readImports(raw.imports, file);
   if (raw.pages !== undefined) config.pages = readPagesMeta(raw.pages, file);
 
   return config;
+}
+
+/**
+ * `imports`（ページが追加で import してよいパッケージ）を検証して読み込む。
+ *
+ * 標準パッケージは設定不要で常時許可されるため、ここに書くのは重複宣言として弾く
+ * （「書かないと使えない」と誤解させないため）。
+ */
+function readImports(value: unknown, file: string): string[] {
+  if (!Array.isArray(value)) {
+    throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME}: "imports" must be an array of package names.`, { file });
+  }
+
+  const packages: string[] = [];
+  for (const entry of value) {
+    if (typeof entry !== 'string' || entry === '') {
+      throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME}: "imports" must only contain non-empty package names.`, { file });
+    }
+    if ((STANDARD_PACKAGES as readonly string[]).includes(entry)) {
+      throw new MockupContractError(
+        `${MOCKUP_CONFIG_FILENAME}: "imports" must not contain "${entry}". ${STANDARD_PACKAGES.join(', ')} are always available.`,
+        { file }
+      );
+    }
+    if (!PACKAGE_NAME_RE.test(entry)) {
+      throw new MockupContractError(
+        `${MOCKUP_CONFIG_FILENAME}: "imports" entry "${entry}" is not a package name. Declare the package itself (e.g. "lucide-react"), not a subpath or a file path.`,
+        { file }
+      );
+    }
+    if (packages.includes(entry)) {
+      throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME}: "imports" lists "${entry}" more than once.`, { file });
+    }
+    packages.push(entry);
+  }
+
+  return packages;
 }
 
 function readPagesMeta(value: unknown, file: string): Record<string, MockupConfigPageMeta> {
@@ -128,9 +188,4 @@ function readPagesMeta(value: unknown, file: string): Record<string, MockupConfi
     pages[pageId] = entry;
   }
   return pages;
-}
-
-/** データディレクトリ配下のパスかどうか（realpath 比較）。 */
-export function isInsideDataDir(dataDir: string, target: string): boolean {
-  return isInsideDir(dataDir, safeRealpath(target));
 }

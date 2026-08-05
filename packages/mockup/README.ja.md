@@ -52,6 +52,7 @@ npx lism-mockup dev ./mockup
 mockup/
 ├── mockup.config.json      # 必須
 ├── tokens.json             # 任意
+├── tokens.dark.json        # 任意（ダーク時の値）
 └── pages/                  # 必須（最低1ページ）
     ├── landing.jsx
     └── admin/
@@ -69,7 +70,7 @@ mockup/
 - 画面はファイルシステムから自動的に発見されます。ファイルを置くだけでよく、登録作業はありません（だからこそconfigの記述が実態とずれることがありません）。
 - 同じIDになるファイルが2つある場合（`foo.jsx`と`foo.tsx`）はID衝突となり、`dev`と`check`が停止します。
 - `.jsx` / `.tsx`以外のファイル（例えば同じ場所に置いた`.css`）は画面ではありません。ページ側からimportして使ってください。
-- `.tsx`も使えますが、**型は削除されるだけでチェックされません**。型安全性が必要な場合は自分で`tsc`を実行してください。
+- `.tsx`も使えますが、**型は削除されるだけでチェックされません**。型安全性が必要な場合は自分で`tsc`を実行してください（[型チェック](#型チェック)を参照）。
 
 ページを書く時の決まりは次の通りです。
 
@@ -79,12 +80,13 @@ mockup/
 
 ### `mockup.config.json`
 
-必須です。スキーマバージョンと表示用メタデータだけを持ちます。
+必須です。スキーマバージョン・追加importの宣言・表示用メタデータだけを持ちます。
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "title": "Acme Console Mockup",
+  "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 },
     "admin/dashboard": { "label": "Dashboard", "category": "Admin", "order": 20 }
@@ -94,11 +96,13 @@ mockup/
 
 | キー | 必須 | 説明 |
 | --- | --- | --- |
-| `schemaVersion` | はい | `1`である必要があります。他のどの処理よりも先に検証されます。 |
+| `schemaVersion` | はい | `2`である必要があります。他のどの処理よりも先に検証されます。 |
 | `title` | いいえ | ビューアに表示されます。 |
+| `imports` | いいえ | ページが追加でimportできるパッケージ。[import](#import)を参照。 |
 | `pages` | いいえ | ページIDごとの`label` / `category` / `order`。 |
 
 - 既定の並び順は`order`の昇順、次にページIDの辞書順です。既定のラベルはページIDです。
+- `components`は**予約ページID**です。ビューアが自身の画面と並べて「UI Parts」という名前で固定表示し、ギャラリーには出しません。ここにエントリを書く必要はなく、`label` / `category` / `order`のいずれを書いても無視されます。
 - 実在しないページIDを指す`pages`エントリは、警告ではなく契約違反です。自動発見が正本である以上、残っているエントリはタイポか消し忘れを意味します。
 - 未知のトップレベルキーは拒否されます。将来の項目追加は必ず`schemaVersion`の更新を伴います。
 
@@ -142,32 +146,131 @@ mockup/
 
 `className="-bgc:canvas"`と書いても、対応するCSSが存在しないクラスになるだけです。
 
+### `tokens.dark.json`
+
+任意です。ダークモード時の値だけを書きます。形式は`tokens.json`と同じlism.config互換の`tokens`オブジェクトで、**このファイルの有無がダーク対応の有無**です。置かなければダーク用のCSSは一切出力されません。
+
+```json
+{
+  "color": {
+    "base": "oklch(24% 0.015 152)",
+    "text": "oklch(92% 0.01 152)",
+    "canvas": "oklch(20% 0.015 152)"
+  }
+}
+```
+
+ここに書いた値は`.set--dark`というクラスの中で宣言されます。`:root.set--dark`ではないため、ページ全体・ページの一部・任意の箱のどこにでも`className="set--dark"`を付けるだけで、その中だけダークの値が効きます。
+
+```jsx
+<Group className="set--dark" bgc="base" c="text">…</Group>
+```
+
+`@media (prefers-color-scheme: dark)`は出力しません。OSの設定に追従させたい場合は、モックアップ側のCSSで`.set--dark`を当てる条件を自分で書いてください。ビューアはカラーモードの切り替えUIを持たないため、切り替えて見せたい場合もページ側で用意します。
+
+ルール：
+
+| ルール | 詳細 |
+| --- | --- |
+| 上書きできるのはライトが持つトークンのみ | 対象は**ライト側が実際にCSS変数として持っているトークン**だけです。判定の基準はマージ後のライト側、つまりLism CSSのデフォルトトークンと`tokens.json`が追加したキーの両方です。`tokens.json`に書いていない`color.base`や`color.text`も、ダークだけで指定できます。 |
+| 新規キーは追加できない | `tokens.json`が`color`にだけ認めている新規キーの追加は、ダーク側には適用されません。ライトに存在しないキーはエラーです。 |
+| CSS変数を持たないキーは対象外 | ライト側が実値を持たないキー（`lh.*`・`bdrs.inner`・`flow.s`・`palette.keycolor`など）は上書きできず、エラーになります。ただし`tokens.json`でそのキーに実値を与えていれば上書きできます。 |
+| グループの制限はない | `color`・`palette`・`space`・`fz`・`bxsh`・`vars`など、ライト側と同じグループをすべて上書きできます。 |
+| 違反はエラー | `tokens.json`と同じく、`dev`と`check`のどちらも非0で終了します。 |
+
+**`vars`を上書きすると、それを参照しているトークンも一緒に再宣言されます。** 例えば`vars`の`--L`をダークで変えると、`--L`を参照して組み立てられているライト側のトークン（`palette.*`・`space.*`・`fz.*`・`hl.*`など）も、同じ`.set--dark`ブロックへ自動的に再宣言されます。CSSカスタムプロパティの`var()`は宣言した要素の計算値を作る時点で解決されるため、`.set--dark { --L: 70% }`と書くだけでは`:root`で確定済みの`--red: oklch(var(--L) …)`が変わらないからです。参照の連鎖も追いかけるので、多段の依存も漏れなく再宣言されます。
+
+ビューアのトークン一覧（`?view=tokens`）には、ダークで値が変わるグループの**直後**に`color (dark)`のようなセクションが増えます（目次にも並びます）。そこに並ぶのは`.set--dark`ブロックが定義しているトークン、つまり明示的に指定したものと、依存で再宣言されたものです。セクションの中身は`.set--dark`スコープの箱の中で描画されるため、影やベース色に近いスワッチもダーク文脈のまま確認できます。なお、ダークセクションの行に`override` / `new`のバッジは出ません（定義上すべてライトからの差分であるためです）。
+
+`lism-mockup init`のひな形にこのファイルは含まれません。ダーク対応が必要になった時点で自分で作成してください。
+
 ### import
 
-ページからimportできるのは、固定の許可リストにあるものだけです。bare specifierは各パッケージの実際の`exports`マップと照合されるため、パッケージが公開していないパスは、バンドラーで失敗する前の段階で拒否されます。
+ページからimportできるのは、許可リストにあるものだけです。bare specifierは各パッケージの実際の`exports`マップと照合されるため、パッケージが公開していないパスは、バンドラーで失敗する前の段階で拒否されます。
+
+**標準パッケージ**は設定なしで使えます。
 
 | パッケージ | 備考 |
 | --- | --- |
 | `react`・`react-dom` | `react/jsx-runtime`を含みます。 |
 | `lism-css` | `lism-css/react`、`lism-css/lib/*`など。 |
 | `@lism-css/ui` | ルートexportはありません。`@lism-css/ui/react/<Component>`を使ってください。 |
-| `lucide-react` | アイコン。 |
 
 これらは`@lism-css/mockup`が持つコピーへ解決されます。そのためデータディレクトリが独自の`node_modules`を持つ必要はなく、親ディレクトリに置かれた`react`がこれらを覆い隠すこともありません。
+
+**追加パッケージ**は`mockup.config.json`の`imports`で明示的に許可します。
+
+```json
+{ "schemaVersion": 2, "imports": ["lucide-react", "some-ui-library"] }
+```
+
+- 書けるのはパッケージ名だけです（`"lucide-react"`は可、`"lucide-react/icons"`は不可）。どのサブパスをimportできるかは、これまで通りパッケージ自身の`exports`マップで決まります。
+- 対象パッケージは、データディレクトリを含むプロジェクトにインストールしてください。宣言だけしてインストールされていない場合、bundleを始める前に`dev`・`check`が停止します。
+- `lucide-react`だけは例外で、インストールは不要です（`@lism-css/mockup`が提供しているため、`init`直後の状態がそのまま動きます）。ただし`imports`への記載は必要です。提供する内容は[CLIが提供する`lucide-react`](#cliが提供するlucide-react)を参照してください。
+- 標準パッケージを`imports`に書くとエラーになります。常時許可されているためです。
+- `dev`は起動時に一度だけ許可リストを作ります。`imports`を編集したら再起動してください。
 
 相対importは**データディレクトリ内で解決される**必要があり、対象は次のいずれかです。
 
 `.jsx` `.tsx` `.css` `.png` `.jpg` `.jpeg` `.gif` `.svg` `.webp`
 
-それ以外は契約違反として明示的に拒否されます。絶対パス、`/@fs/`パス、`../`によるデータディレクトリ外への脱出、許可リスト外のbare importが該当します。クエリ（`?raw`・`?url`）が付く場合は、クエリより前のパスが検査されます。
+それ以外は契約違反として明示的に拒否されます。絶対パス、`/@fs/`パス、`../`によるデータディレクトリ外への脱出、`node_modules`の中へ入る相対パス（パッケージは`imports`に宣言してパッケージ名でimportしてください）、許可リスト外のbare importが該当します。クエリ（`?raw`・`?url`）が付く場合は、クエリより前のパスが検査されます。
+
+### CLIが提供する`lucide-react`
+
+本物の`lucide-react`はアイコンのモジュール群で45MBあり、npx実行のたびにダウンロードされてしまいます。そこで`@lism-css/mockup`は、アイコンの実データだけを持つ[`@iconify-json/lucide`](https://www.npmjs.com/package/@iconify-json/lucide)（約570KB）からモジュールを組み立て、`lucide-react`をそこへ解決します。importの書き方は変わらず、使っていないアイコンがbundleから落ちる点も同じです。
+
+そのモジュールがルートからexportするものは次の通りです。
+
+| export | 提供 | 備考 |
+| --- | --- | --- |
+| アイコンコンポーネント | あり | 全アイコンを`Bell`と`BellIcon`の両方の書き方で提供します。lucide自身のエイリアス（`Sidebar`など）も含みます。 |
+| `Icon` | あり | 渡された`iconNode`のデータを描画する汎用コンポーネントです。 |
+| `createLucideIcon` | あり | `iconNode`のデータからアイコンコンポーネントを作ります。 |
+| `icons` | **なし** | 全アイコンのレコードです。参照した時点で約1,800個すべてがbundleへ入り、このモジュールの目的そのものが無くなるため提供しません。必要なアイコンを名前でimportしてください。 |
+
+サブパス（`lucide-react/icons/bell`・`lucide-react/dynamic`）も使えません。`icons`とサブパスはどちらも`check`が「何が無いのか」を示す契約エラーとして報告するため、気づかないまま進むことはありません。
+
+描画結果はlucide-react 0.577.0と属性レベルで一致します（`lucide lucide-<name>`のclass名を含みます）。
+
+## 型チェック
+
+`check`はページの型検査を行いません。`.tsx`は型を削除して変換するだけで、検証はしません。自分で`tsc`を実行する場合は少し準備が必要です。データディレクトリは依存関係を持たず、ページがimportするパッケージはビルド時に`@lism-css/mockup`の中から供給されるため、そのままではコンパイラが見つけられないからです。
+
+データディレクトリを含むプロジェクトへ、ページがimportするパッケージとコンパイラをインストールしてください。
+
+```bash
+pnpm add -D typescript @types/react lism-css @lism-css/ui @lism-css/mockup
+```
+
+`lucide-react`だけはこの方法が使えません。CLIが生成しているため、そのようなパッケージはディスク上に存在しないからです。代わりに`@lism-css/mockup`が型定義を同梱しているので、tsconfigからそのファイルを参照してください。
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "strict": true
+  },
+  "files": ["node_modules/@lism-css/mockup/types/lucide-react.d.ts"],
+  "include": ["mockup/**/*"]
+}
+```
+
+`include`ではなく`files`を使うのは、TypeScriptが既定で`node_modules`を`include`の対象から外すためです。
+
+この型定義はモジュール本体と同じアイコンデータから生成しています。そのため宣言されている内容は、モックアップが実際にimportできるものと一致します（`icons`とサブパスは、`check`で落ちるのと同じ理由で型検査でも落ちます）。型のために本物の`lucide-react`をインストールすると、この一致が崩れます（モックアップでは使えないexportまで型上は通ってしまうため）。
 
 ## `check`が保証する範囲
 
 `check`は`dev`と同じ発見・検証・importのルールを通るため、両者の結果が食い違うことはありません。検証するのは次の3つです。
 
-1. `mockup.config.json`と`tokens.json`のスキーマ（`schemaVersion`を含む）
+1. `mockup.config.json`・`tokens.json`・`tokens.dark.json`のスキーマ（`schemaVersion`を含む）
 2. 上で説明したimport境界
 3. 全ページがbundleできること（構文エラー・未解決のimport・変換エラーを、対象ファイルと理由つきで報告します）
+
+ダーク宣言がある場合は、出力に`dark tokens: N override(s)`の行が増えます。
 
 **renderは一切行いません。** 次は`check`の対象外です。
 
@@ -179,7 +282,7 @@ mockup/
 
 ## devサーバー
 
-`lism-mockup dev`は、localhostにバインドしたVite devサーバーを起動し、同梱のビューアを配信します。公開するのはデータディレクトリ・ビューア・このパッケージ自身の`node_modules`だけです。ページ・`mockup.config.json`・`tokens.json`が変更されるとリロードします。
+`lism-mockup dev`は、localhostにバインドしたVite devサーバーを起動し、同梱のビューアを配信します。公開するのはデータディレクトリ・ビューア・このパッケージ自身の`node_modules`だけです。ページ・`mockup.config.json`・`tokens.json`・`tokens.dark.json`が変更されるとリロードします。
 
 終了しないプロセスであるため、エージェントはバックグラウンドで起動するかユーザーにコマンドを渡し、自身の検証には`check`を使ってください。
 
