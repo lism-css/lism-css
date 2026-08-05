@@ -12,7 +12,7 @@ import { MOCKUP_CONFIG_FILENAME } from '../core/data-dir.js';
 import { PAGE_EXTENSIONS, PAGES_DIRNAME } from '../core/pages.js';
 import { getViewerDir, isInsideDir } from '../core/paths.js';
 import { prepareMockRuntime, type MockupRuntime } from '../core/runtime.js';
-import { TOKENS_FILENAME } from '../core/tokens.js';
+import { DARK_TOKENS_FILENAME, TOKENS_FILENAME } from '../core/tokens.js';
 import { MockupContractError } from '../core/types.js';
 import { createMockViteConfig } from '../vite/config.js';
 import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIRTUAL_TOKENS_DATA_ID } from '../vite/virtual-modules.js';
@@ -30,7 +30,9 @@ type WatchEvent = 'add' | 'change' | 'unlink';
 export function classifyDataEvent(dataDir: string, event: WatchEvent, file: string): ReloadKind | null {
   const target = path.resolve(file);
 
-  if (target === path.join(dataDir, TOKENS_FILENAME)) return 'tokens';
+  // ライトとダークは同じ経路で作り直す（ダークの検証はマージ後のライト側トークンが基準のため、
+  // 片方だけ作り直すと `tokens.json` の変更がダークの検証結果とずれる）。
+  if (target === path.join(dataDir, TOKENS_FILENAME) || target === path.join(dataDir, DARK_TOKENS_FILENAME)) return 'tokens';
   if (target === path.join(dataDir, MOCKUP_CONFIG_FILENAME)) return 'pages';
 
   // ページ本体の内容変更は vite の HMR に任せる。列挙が変わる追加・削除だけ拾う。
@@ -91,7 +93,12 @@ export async function applyDataChange(server: ViteDevServer, runtime: MockupRunt
 /** データディレクトリの監視を仕掛ける。 */
 export function watchDataDir(server: ViteDevServer, runtime: MockupRuntime): void {
   const { dataDir } = runtime.data;
-  server.watcher.add([path.join(dataDir, PAGES_DIRNAME), path.join(dataDir, MOCKUP_CONFIG_FILENAME), path.join(dataDir, TOKENS_FILENAME)]);
+  server.watcher.add([
+    path.join(dataDir, PAGES_DIRNAME),
+    path.join(dataDir, MOCKUP_CONFIG_FILENAME),
+    path.join(dataDir, TOKENS_FILENAME),
+    path.join(dataDir, DARK_TOKENS_FILENAME),
+  ]);
 
   // 連続イベント（エディタの保存やファイル移動）で作り直しが重ならないよう、種別ごとに1つへまとめる。
   const pending = new Set<ReloadKind>();

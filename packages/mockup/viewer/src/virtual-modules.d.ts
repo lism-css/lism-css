@@ -42,18 +42,34 @@ declare module 'virtual:lism-mockup/tokens' {
     source: 'default' | 'overridden' | 'custom';
   }
 
-  /** A token group (e.g. `color`, `space`). */
+  /**
+   * One section of the tokens view (e.g. `color`, `color (dark)`).
+   *
+   * A dark section is a section of its own, so a group can appear twice: `id` is
+   * what tells the two apart, while `group` stays the token group both list.
+   */
   export interface ViewerTokenGroup {
+    /** Unique key of the section: DOM id source and React key (e.g. `color`, `color--dark`). */
+    id: string;
+    /** Token group the section lists, which also picks the preview shape (e.g. `color`). */
     group: string;
+    /** Heading text (e.g. `color`, `color (dark)`). */
+    label: string;
+    /** Whether the section lists the dark values, and must render inside the dark scope. */
+    isDark?: boolean;
     tokens: ViewerToken[];
   }
 
   /**
-   * Groups in merged-config order, holding every token the viewer's CSS actually
+   * Sections in merged-config order, holding every token the viewer's CSS actually
    * defines. Keys whose value is the `'-'` sentinel (or empty) are omitted, the
-   * same rule the token CSS generation applies.
+   * same rule the token CSS generation applies. A group whose values the mockup's
+   * `tokens.dark.json` changes is followed by its dark section.
    */
   export const tokenGroups: ViewerTokenGroup[];
+
+  /** Scope class the dark token CSS declares (`set--dark`). */
+  export const darkScopeClass: string;
 }
 
 /** Plain CSS imports (`lism-css/main.css`, `@lism-css/ui/style.css`, local files). */

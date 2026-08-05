@@ -35,13 +35,19 @@ function toCheckError(error: unknown): MockupContractError {
   return new MockupContractError(parts.join('\n'), { file: file ? `${file}${position}` : undefined });
 }
 
+function countTokens(tokens: MockupData['tokens']): number {
+  return Object.values(tokens).reduce((total, group) => total + Object.keys(group).length, 0);
+}
+
 function printSummary(data: MockupData): void {
-  const tokenCount = Object.values(data.tokens).reduce((total, group) => total + Object.keys(group).length, 0);
+  const darkCount = countTokens(data.darkTokens);
 
   console.log(pc.green('[lism-mockup] check passed'));
   console.log(pc.dim(`  data directory: ${data.dataDir}`));
   console.log(pc.dim(`  pages: ${data.pages.length} (${data.pages.map((page) => page.id).join(', ')})`));
-  console.log(pc.dim(`  tokens: ${tokenCount} override(s)`));
+  console.log(pc.dim(`  tokens: ${countTokens(data.tokens)} override(s)`));
+  // ダークは任意機能なので、宣言があるときだけ1行増やす。
+  if (darkCount > 0) console.log(pc.dim(`  dark tokens: ${darkCount} override(s)`));
 }
 
 export async function checkCommand(dir: string, options: CheckCommandOptions = {}): Promise<void> {

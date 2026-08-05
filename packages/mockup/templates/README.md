@@ -47,6 +47,7 @@ on it.
 .
 ├── mockup.config.json      # required — schema version + extra imports + page metadata
 ├── tokens.json             # optional — design token overrides
+├── tokens.dark.json        # optional — dark values (not scaffolded; add it yourself)
 ├── pages/                  # required — one file per screen
 │   ├── landing.jsx
 │   ├── components.jsx      # reserved id — hand maintained index of the UI parts in use
@@ -122,6 +123,34 @@ them as component props (`<Group bgc="canvas">`, `<Icon c="success">`) or as a
 CSS variable (`var(--success)`). See `pages/landing.jsx` and
 `pages/admin/settings.css` for both forms.
 
+### `tokens.dark.json` (optional)
+
+The dark values, in the same shape as `tokens.json`. This file is not scaffolded:
+create it only when the mockup needs a dark theme. **No file, no dark CSS.**
+
+```json
+{
+  "color": { "base": "oklch(24% 0.015 152)", "text": "oklch(92% 0.01 152)" }
+}
+```
+
+- Only tokens the light side really has as a CSS variable may be overridden —
+  the Lism CSS defaults plus whatever `tokens.json` added. **New keys are never
+  allowed here**, not even under `color`, and keys with no real light value
+  (`lh.*`, `bdrs.inner`, `flow.s`, `palette.keycolor`, …) are an error too.
+- Any group may be overridden (`color`, `palette`, `space`, `fz`, `bxsh`,
+  `vars`, …). Violations stop `dev` and `check`, same as `tokens.json`.
+- The values land in a `.set--dark` class, so `className="set--dark"` turns dark
+  on for a whole page, a section or a single box:
+  `<Group className="set--dark" bgc="base" c="text">…</Group>`.
+- `@media (prefers-color-scheme: dark)` is never emitted, and the viewer has no
+  color mode switch — write your own rule or toggle in the mockup if you want one.
+- Overriding `vars` (`--L` and friends) also re-declares every light token built
+  from it (`palette.*`, `space.*`, `fz.*`, …) inside the same `.set--dark` block,
+  because `var()` resolves where it is declared.
+- The viewer's **Design tokens** view gains a `color (dark)` section right after
+  each group whose values change, rendered inside the dark scope.
+
 ## Imports
 
 These packages are always available (only paths they really export):
@@ -154,11 +183,11 @@ Absolute paths, `/@fs/` paths and `../` escapes are rejected.
 
 ## What `check` does and does not guarantee
 
-`check` verifies the schema of `mockup.config.json` and `tokens.json`, the import
-rules above, and that every page bundles (syntax, unresolved imports, transform
-errors). It does **not** render the pages, so a component that throws while
-rendering is only caught by opening `dev` in a browser. "check passed" is not the
-same as "the screen looks right".
+`check` verifies the schema of `mockup.config.json`, `tokens.json` and
+`tokens.dark.json`, the import rules above, and that every page bundles (syntax,
+unresolved imports, transform errors). It does **not** render the pages, so a
+component that throws while rendering is only caught by opening `dev` in a
+browser. "check passed" is not the same as "the screen looks right".
 
 Pages are plain JSX, so they run as ordinary code. Only run mockups you trust.
 
