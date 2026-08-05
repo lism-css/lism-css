@@ -13,7 +13,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { loadBuildConfigs, serializeTokens } from '@lism-css/plugin/builder';
+import { loadBuildConfigs, loadDefaultConfig, serializeTokens } from '@lism-css/plugin/builder';
 import getTokenVarName from 'lism-css/lib/getTokenVarName';
 
 import { isPlainObject, MockupContractError, type MockupTokens, type TokenEntry, type TokenGroupEntry } from './types.js';
@@ -175,7 +175,7 @@ function validateTokenFile(raw: unknown, knownTokens: Record<string, unknown>, f
  * `tokens.json` の中身を検証する。
  *
  * @param raw          パース済みの `tokens.json`
- * @param defaultTokens `loadBuildConfigs()` の `defaultConfig.tokens`（既存キー判定の正）
+ * @param defaultTokens `loadDefaultConfig()` の `tokens`（既存キー判定の正）
  * @param file         エラー表示用の絶対パス
  */
 export function validateTokens(raw: unknown, defaultTokens: Record<string, unknown>, file: string): MockupTokens {
@@ -228,22 +228,37 @@ export function mergeLightTokens(defaultTokens: Record<string, unknown>, overrid
 /** トークンファイルを読み込む。ファイルが無い場合は null（空トークン扱い）。 */
 export function readTokensFile(dataDir: string, filename: string = TOKENS_FILENAME): { raw: unknown; file: string } | null {
   const file = path.join(dataDir, filename);
-  if (!fs.existsSync(file)) return null;
+
+  // 存在確認と読み込みを分けると同じパスへ2回 syscall が走るので、読み込みの失敗（ENOENT）で
+  // 「無い」を判定する。ENOENT 以外（権限エラー等）はここで握りつぶさず、そのまま投げ直す。
+  let content: string;
+  try {
+    content = fs.readFileSync(file, 'utf-8');
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null;
+    throw error;
+  }
 
   try {
-    return { raw: JSON.parse(fs.readFileSync(file, 'utf-8')), file };
+    return { raw: JSON.parse(content), file };
   } catch (error) {
     throw new MockupContractError(`${filename} is not valid JSON: ${(error as Error).message}`, { file });
   }
 }
 
-/** ライト / ダークの2ファイルを読み、default-config を正として検証した結果を返す。 */
+/**
+ * ライト / ダークの2ファイルを読み、default-config を正として検証した結果を返す。
+ *
+ * ここで要るのはマージ前の default-config だけなので `loadDefaultConfig()` を使う。
+ * `loadBuildConfigs()` だと user 設定の読み込みと full preset のマージまで走り、
+ * dev watch で `tokens.json` を保存するたびに無駄な計算を繰り返すことになる。
+ */
 export async function loadTokens(dataDir: string): Promise<{ tokens: MockupTokens; darkTokens: MockupTokens }> {
   const light = readTokensFile(dataDir, TOKENS_FILENAME);
   const dark = readTokensFile(dataDir, DARK_TOKENS_FILENAME);
   if (!light && !dark) return { tokens: {}, darkTokens: {} };
 
-  const { defaultConfig } = await loadBuildConfigs(dataDir);
+  const defaultConfig = await loadDefaultConfig();
   const tokens = light ? validateTokens(light.raw, defaultConfig.tokens, light.file) : {};
   if (!dark) return { tokens, darkTokens: {} };
 
@@ -425,7 +440,7 @@ export function collectTokenGroups(
  * ビューアは Lism 標準の `lism-css/main.css` を読むため、main 側の BuildConfig を直列化する。
  * React ランタイム（`lism.config.js` は `isFullMode` を持たない）も main 側の prop 設定で動くので、
  * CSS・コンポーネント・トークン一覧の3つがすべて同じモードで揃う。
- * CSS と一覧は必ず同じ config から作る（`loadBuildConfigs()` は1回だけ呼び、両者のずれを防ぐ）。
+ * CSS と一覧は必ず同じ config から作る（この関数の中で `loadBuildConfigs()` を1回だけ呼び、両者のずれを防ぐ）。
  */
 export async function buildTokensArtifacts(
   dataDir: string,

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { afterAll, beforeAll, describe, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { loadBuildConfigs } from '@lism-css/plugin/builder';
 
 import { cleanupTempDirs, createDataDir, createTempDir } from '../test-helpers/fixtures.js';
@@ -10,6 +10,7 @@ import {
   collectTokenGroups,
   loadTokens,
   mergeLightTokens,
+  readTokensFile,
   serializeDarkTokens,
   validateDarkTokens,
   validateTokens,
@@ -86,6 +87,25 @@ describe('validateTokens', () => {
   test('トップレベルがオブジェクトでなければエラー', () => {
     expect(() => validateTokens(['#fff'], defaultTokens, 'tokens.json')).toThrow(/must contain a JSON object/);
     expect(() => validateTokens({ color: '#fff' }, defaultTokens, 'tokens.json')).toThrow(/"color" must be an object/);
+  });
+});
+
+describe('readTokensFile', () => {
+  test('ファイルが無ければ null', () => {
+    expect(readTokensFile(createDataDir({}))).toBeNull();
+  });
+
+  test('ENOENT 以外の読み込みエラー（権限エラー等）は null 扱いにせず、そのまま投げる', () => {
+    const dir = createDataDir({ 'tokens.json': '{}' });
+    const eacces = Object.assign(new Error('EACCES: permission denied'), { code: 'EACCES' });
+    const spy = vi.spyOn(fs, 'readFileSync').mockImplementation(() => {
+      throw eacces;
+    });
+    try {
+      expect(() => readTokensFile(dir)).toThrow(eacces);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });
 

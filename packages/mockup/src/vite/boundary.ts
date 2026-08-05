@@ -44,6 +44,13 @@ export interface ImportBoundaryContext {
    * dev の依存最適化はここへ書き出した bundle へ解決するため、解決結果の封じ込め判定で許可する。
    */
   generatedDir?: string;
+  /**
+   * importer ファイルの realpath キャッシュ（`importerFile` → realpath）。
+   * `importBoundaryPlugin` がプラグインインスタンス単位で作り、watcher イベントで無効化する
+   * （下記 `classifyImport` のコメント参照）。テストから直接 `classifyImport` を呼ぶ場合など、
+   * 未指定ならキャッシュせず毎回 `safeRealpath` を実行する。
+   */
+  realpathCache?: Map<string, string>;
 }
 
 export type ImportDecision =
@@ -68,6 +75,23 @@ function isViteInternalId(pathname: string): boolean {
 function violation(dataDir: string, importerFile: string, source: string, reason: string): MockupContractError {
   const where = isInsideDir(dataDir, importerFile) ? path.relative(dataDir, importerFile) : importerFile;
   return new MockupContractError(`Forbidden import ${JSON.stringify(source)} in ${where}: ${reason}`, { file: importerFile });
+}
+
+/**
+ * `safeRealpath` の結果をキャッシュ付きで返す。
+ *
+ * 同じ importer から複数の import 文がある場合、`resolveId` は import 文の数だけ呼ばれるが、
+ * importer の realpath はどれも同じ値になるため計算を使い回す。
+ * キャッシュは `path.resolve` した絶対パスをキーにして、区切り文字の揺れによる取りこぼしを防ぐ。
+ */
+function cachedRealpath(target: string, cache: Map<string, string> | undefined): string {
+  if (!cache) return safeRealpath(target);
+  const key = path.resolve(target);
+  const hit = cache.get(key);
+  if (hit !== undefined) return hit;
+  const real = safeRealpath(target);
+  cache.set(key, real);
+  return real;
 }
 
 /** 拡張子省略にも対応して相対 import 先の実ファイルを探す。 */
@@ -97,7 +121,7 @@ export function classifyImport(source: string, importer: string | undefined, ctx
   }
 
   // 2. ユーザーファイル判定は realpath で行う（シンボリックリンク経由の抜けを作らない）。
-  const realImporter = safeRealpath(importerFile);
+  const realImporter = cachedRealpath(importerFile, ctx.realpathCache);
   if (!isInsideDir(ctx.dataDir, realImporter)) return { kind: 'passthrough' };
   // データディレクトリ配下でも node_modules の中は「解決済みパッケージ本体とその依存」であり、
   // ページの契約対象ではない。データディレクトリをプロジェクト直下に置くとこの構成になる。
@@ -207,12 +231,27 @@ function unresolvedMessage(specifier: string, resolution: PackageResolution): st
 
 /** import 境界を強制する vite プラグイン。 */
 export function importBoundaryPlugin(ctx: ImportBoundaryOptions): Plugin {
+  // importer の realpath キャッシュはプラグインインスタンス（= dev サーバー・build 実行の1回）単位に
+  // 閉じる。サーバーをまたいで使い回さないので、実行中に差し替わったファイルの古い realpath が
+  // 別セッションへ漏れることはない。さらに dev では watcher のイベントでキャッシュを個別に破棄し、
+  // ページファイルの削除・再作成（シンボリックリンク経由の抜け道が生まれる可能性がある）で
+  // realpath が変わった場合でも古い判定結果を使い続けないようにする。
+  const realpathCache = new Map<string, string>();
+  const cachedCtx: ImportBoundaryContext = { ...ctx, realpathCache };
+
   return {
     name: 'lism-mockup:import-boundary',
     enforce: 'pre',
 
+    configureServer(server) {
+      const invalidate = (file: string) => realpathCache.delete(path.resolve(file));
+      server.watcher.on('add', invalidate);
+      server.watcher.on('change', invalidate);
+      server.watcher.on('unlink', invalidate);
+    },
+
     async resolveId(source, importer) {
-      const decision = classifyImport(source, importer, ctx);
+      const decision = classifyImport(source, importer, cachedCtx);
       if (decision.kind === 'passthrough') return null;
       if (decision.kind === 'resolved') return decision.id;
 

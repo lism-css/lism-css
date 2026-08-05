@@ -23,6 +23,7 @@ export {
 export {
   computeBuildConfigs,
   loadBuildConfigs,
+  loadDefaultConfig,
   findUserConfigPath,
   type LoadedBuildConfigs,
   type ComputeBuildConfigsInput,

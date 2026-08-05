@@ -206,7 +206,7 @@ mockup/
 
 - 書けるのはパッケージ名だけです（`"lucide-react"`は可、`"lucide-react/icons"`は不可）。どのサブパスをimportできるかは、これまで通りパッケージ自身の`exports`マップで決まります。
 - 対象パッケージは、データディレクトリを含むプロジェクトにインストールしてください。宣言だけしてインストールされていない場合、bundleを始める前に`dev`・`check`が停止します。
-- `lucide-react`だけは例外で、インストールは不要です（`@lism-css/mockup`が同梱しているため、`init`直後の状態がそのまま動きます）。ただし`imports`への記載は必要です。
+- `lucide-react`だけは例外で、インストールは不要です（`@lism-css/mockup`が提供しているため、`init`直後の状態がそのまま動きます）。importできるのはパッケージルートからの名前付きimport（`import { Bell } from 'lucide-react'`）のみで、`lucide-react/icons/bell`のようなサブパスのimportはできません。ただし`imports`への記載は必要です。
 - 標準パッケージを`imports`に書くとエラーになります。常時許可されているためです。
 - `dev`は起動時に一度だけ許可リストを作ります。`imports`を編集したら再起動してください。
 

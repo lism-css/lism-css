@@ -6,7 +6,7 @@ import { getDataResolveAnchor } from '../core/data-dir.js';
 import { getMockPackageRoot, getResolveAnchor } from '../core/paths.js';
 import { MockupContractError, STANDARD_PACKAGES } from '../core/types.js';
 import { cleanupTempDirs, createTempDir, installFakePackage, writeFiles } from '../test-helpers/fixtures.js';
-import { buildImportAllowlist, collectPackageSpecifiers, findPackageDir } from './allowlist.js';
+import { buildImportAllowlist, collectPackageSpecifiers, findPackageDir, findPackageDirIn } from './allowlist.js';
 
 const dataDir = createTempDir();
 const allowlist = buildImportAllowlist({ dataDir });
@@ -35,9 +35,9 @@ describe('collectPackageSpecifiers', () => {
   });
 
   test('exports を持たないパッケージはパッケージ名と任意サブパスを候補にする', () => {
-    const { statics, wildcards } = collectPackageSpecifiers('lucide-react', {});
-    expect(statics).toEqual(['lucide-react']);
-    expect(wildcards).toEqual([{ prefix: 'lucide-react/', suffix: '' }]);
+    const { statics, wildcards } = collectPackageSpecifiers('plain-pkg', {});
+    expect(statics).toEqual(['plain-pkg']);
+    expect(wildcards).toEqual([{ prefix: 'plain-pkg/', suffix: '' }]);
   });
 });
 
@@ -88,6 +88,7 @@ describe('buildImportAllowlist: 標準パッケージ', () => {
 
   test('宣言しない限り lucide-react も拒否する（標準パッケージではない）', () => {
     expect(allowlist.isAllowed('lucide-react')).toBe(false);
+    expect(allowlist.allowedPackages).not.toContain('lucide-react');
   });
 
   test('@lism-css/mockup 起点で解決する', () => {
@@ -98,6 +99,13 @@ describe('buildImportAllowlist: 標準パッケージ', () => {
     expect(allowlist.packageRoots).toHaveLength(STANDARD_PACKAGES.length);
     expect(allowlist.packageRoots.some((root) => root.endsWith(path.join('packages', 'lism-css')))).toBe(true);
     expect(allowlist.dependencyRoots).toEqual([]);
+  });
+
+  test('標準パッケージの検索に使った node_modules 一覧を fs.allow 用に持ち回す', () => {
+    // 同じ祖先チェーンを config 側でもう一度走らせないための受け渡し。
+    expect(allowlist.mockupDependencyRoots).toContain(path.join(getMockPackageRoot(), 'node_modules'));
+    expect(findPackageDirIn(allowlist.mockupDependencyRoots, 'lism-css')).not.toBeNull();
+    expect(findPackageDirIn(allowlist.mockupDependencyRoots, 'no-such-package-anywhere')).toBeNull();
   });
 });
 
@@ -158,16 +166,37 @@ describe('buildImportAllowlist: imports で宣言した追加パッケージ', (
     }
   });
 
-  test('CLI 同梱の依存（lucide-react）は init 直後でも解決できる', () => {
+  test('仮想パッケージ（lucide-react）は init 直後でも解決できる', () => {
     const bundled = buildImportAllowlist({ dataDir, extraPackages: ['lucide-react'] });
     expect(bundled.isAllowed('lucide-react')).toBe(true);
     expect(bundled.resolutionFor('lucide-react')).toEqual({ name: 'lucide-react', origin: 'mockup', anchor: getResolveAnchor() });
     // 同梱側で解決できた場合はプロジェクト側の node_modules を開ける必要がない。
     expect(bundled.dependencyRoots).toEqual([]);
+    // ディスク上に実体を持たないので fs.allow へ足すルートも増えない。
+    expect(bundled.packageRoots).toHaveLength(STANDARD_PACKAGES.length);
   });
 
-  test('同梱許可リストに無い CLI 依存は、プロジェクト側に未インストールならフォールバックせず契約エラーになる', () => {
-    // vite / picocolors は @lism-css/mockup 自身の依存だが、同梱を契約しているのは lucide-react だけ。
+  test('仮想パッケージは仮想モジュールが供給するルートだけを許可する（サブパスは不可）', () => {
+    const bundled = buildImportAllowlist({ dataDir, extraPackages: ['lucide-react'] });
+    expect(bundled.isAllowed('lucide-react/icons/bell')).toBe(false);
+    expect(bundled.isAllowed('lucide-react/dist/esm/icons/bell.js')).toBe(false);
+  });
+
+  test('プロジェクト側に lucide-react があっても仮想パッケージとして扱う', () => {
+    // vite プラグインが必ず仮想モジュールへ解決するため、許可リストも同じ判断へ揃える。
+    installFakePackage(projectDir, 'lucide-react', {
+      'package.json': JSON.stringify({ name: 'lucide-react', version: '0.0.0-fake' }),
+      'index.js': 'export const Bell = 1;\n',
+    });
+    const installed = buildImportAllowlist({ dataDir: projectDataDir, extraPackages: ['lucide-react'] });
+
+    expect(installed.resolutionFor('lucide-react')).toEqual({ name: 'lucide-react', origin: 'mockup', anchor: getResolveAnchor() });
+    expect(installed.packageRoots).not.toContain(path.join(projectDir, 'node_modules', 'lucide-react'));
+    expect(installed.dependencyRoots).toEqual([]);
+  });
+
+  test('仮想パッケージ以外の CLI 依存は、プロジェクト側に未インストールならフォールバックせず契約エラーになる', () => {
+    // vite / picocolors は @lism-css/mockup 自身の依存だが、宣言だけで使えるのは仮想パッケージだけ。
     for (const name of ['vite', 'picocolors']) {
       expect(() => buildImportAllowlist({ dataDir: projectDataDir, extraPackages: [name] }), name).toThrow(/not installed: /);
     }
@@ -193,9 +222,8 @@ describe('buildImportAllowlist: imports で宣言した追加パッケージ', (
     expect(plain.isAllowed('fake-plain/escape.js')).toBe(false);
   });
 
-  test('CLI 同梱側で解決したパッケージでも `..` セグメントは拒否する', () => {
+  test('仮想パッケージでも `..` セグメントは拒否する', () => {
     const bundled = buildImportAllowlist({ dataDir, extraPackages: ['lucide-react'] });
-    // react は lucide-react と同階層に実在するが、traversal では届かせない。
     expect(bundled.isAllowed('lucide-react/../react')).toBe(false);
     expect(bundled.isAllowed('lucide-react/../../outside.js')).toBe(false);
   });

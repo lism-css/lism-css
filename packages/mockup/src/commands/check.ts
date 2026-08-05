@@ -15,7 +15,8 @@ import { build } from 'vite';
 import { getViewerDir } from '../core/paths.js';
 import { prepareMockRuntime } from '../core/runtime.js';
 import { MockupContractError, type MockupData } from '../core/types.js';
-import { createMockViteConfig } from '../vite/config.js';
+import { createImportAllowlist, createMockViteConfig } from '../vite/config.js';
+import { warnMissingStandardPackages } from './diagnostics.js';
 
 export interface CheckCommandOptions {
   /** ビューアディレクトリの上書き（テスト用。既定は同梱ビューア）。 */
@@ -53,7 +54,11 @@ function printSummary(data: MockupData): void {
 export async function checkCommand(dir: string, options: CheckCommandOptions = {}): Promise<void> {
   const runtime = await prepareMockRuntime(dir);
   try {
-    await build(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'build' }));
+    // 許可リストは vite 設定でも使うため1回だけ作る（構築は node_modules の走査を伴う）。
+    const allowlist = createImportAllowlist(runtime);
+    warnMissingStandardPackages(allowlist.missingPackages);
+
+    await build(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'build', allowlist }));
   } catch (error) {
     throw toCheckError(error);
   } finally {

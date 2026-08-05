@@ -70,7 +70,12 @@ export function hasNodeModulesSegment(relativePath: string): boolean {
   return relativePath.split(/[\\/]/).includes('node_modules');
 }
 
-/** `from` から親方向へ辿って見つかる node_modules ディレクトリ（realpath、近い順）。 */
+/**
+ * `from` から親方向へ辿って見つかる node_modules ディレクトリ（realpath、近い順）。
+ *
+ * 起動時のパッケージ検索と `server.fs.allow` の組み立てはどちらもこの一覧を必要とするため、
+ * 呼び出し側は起点ごとに1回だけ呼んで結果を共有すること（同じ祖先チェーンを何度も走らせない）。
+ */
 export function ancestorNodeModules(from: string): string[] {
   const found: string[] = [];
   for (const dir of walkAncestorDirs(from)) {
