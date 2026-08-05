@@ -64,7 +64,10 @@ beforeAll(async () => {
 }, 60_000);
 
 afterAll(async () => {
-  await server?.close();
+  // vitejs/vite#18224: 変換中に close するとウォッチャーが残り、close が返ってこないことがある。
+  // テストは全て完了しているので、返ってこない場合は待たずに次へ進む。
+  // タイマーは unref する。ref 付きのままだと close が即座に返ってもプロセスの終了が 5 秒延びる。
+  await Promise.race([server?.close(), new Promise((resolve) => setTimeout(resolve, 5_000).unref())]);
   runtime?.cleanup();
   // 共有の cacheDir / configDir は cleanup() では消えない（次回起動で使い回すため）。テストが作った分だけ片付ける。
   // cacheDir は cleanup() の返却で共有パスへ戻っているので、占有パスではなく共有パスを消す。
