@@ -13,6 +13,11 @@ export const FULL_BP_EXCLUDED_KEYS = ['bd', 'bd-x', 'bd-y', 'bd-s', 'bd-e', 'bd-
 // `.-bds_sm { --bds: var(--bds_sm) !important }` のように変数を上書きするだけなので競合しない。
 export const FULL_BP_ISVAR_KEYS = ['bds', 'bdc'] as const;
 
+// full 限定でカラートークンを全てクラス化する props（#480）。
+// デフォルトは「厳選した presets だけをクラス化する」思想を維持するため、tokenClass:1 は full だけで付ける。
+// これにより、セマンティックカラー（color）に加えパレットカラー（palette）も `-bgc:red` 等のクラスで書けるようになる。
+export const FULL_COLOR_TOKEN_CLASS_KEYS = ['bgc', 'c', 'bdc'] as const;
+
 export type FullBpExcludedKey = (typeof FULL_BP_EXCLUDED_KEYS)[number];
 export type FullBpIsVarKey = (typeof FULL_BP_ISVAR_KEYS)[number];
 
@@ -20,6 +25,9 @@ export type FullBpIsVarKey = (typeof FULL_BP_ISVAR_KEYS)[number];
 // デフォルトで bp を持つもの（bdw, cols, rows）はデフォルト値のまま維持される。
 type NonVarPropKey = { [K in PropKey]: (typeof PROPS)[K] extends { isVar: 1 } ? never : K }[PropKey];
 type FullPropKey = Exclude<NonVarPropKey, FullBpExcludedKey> | FullBpIsVarKey;
+
+/** full 用オーバーライドの値。BP サポートに加え、カラー系のみ tokenClass を持つ。 */
+type FullPropOverride = { bp: 1; tokenClass?: 1 };
 
 /**
  * full.css 用の props オーバーライド設定（defaults/props.ts への差分のみ）。
@@ -35,11 +43,17 @@ const propsFull = Object.fromEntries(
   Object.entries(PROPS)
     .filter(([key, config]) => !('isVar' in config && config.isVar === 1) && !(FULL_BP_EXCLUDED_KEYS as readonly string[]).includes(key))
     .map(([key]) => [key, { bp: 1 }])
-) as Record<FullPropKey, { bp: 1 }>;
+) as Record<FullPropKey, FullPropOverride>;
 
 // border サブプロパティ（isVar 系）は導出フィルタの対象外のため、個別に BP サポートを追加する。
 for (const key of FULL_BP_ISVAR_KEYS) {
   propsFull[key] = { bp: 1 };
+}
+
+// カラー系 props はカラートークン（color ∪ palette）を全てクラス化する。
+// bdc は isVar 系なので上の FULL_BP_ISVAR_KEYS で追加済みのエントリへ、それ以外は導出済みエントリへ足す。
+for (const key of FULL_COLOR_TOKEN_CLASS_KEYS) {
+  propsFull[key] = { ...propsFull[key], tokenClass: 1 };
 }
 
 // スペーシング系の方向指定 props（padding / margin / gap）の space トークンユーティリティクラスは

@@ -83,17 +83,19 @@
 | `bgr` | `background-repeat` | `-bgr:no-repeat` | — |
 | `bgp` | `background-position` | `-bgp:center` | — |
 | `bgsz` | `background-size` | `-bgsz:cover`, `-bgsz:contain` | — |
-| `bgc` | `background-color` | `-bgc:base`, `-bgc:base-2`, `-bgc:text`, `-bgc:brand`, `-bgc:accent`, `-bgc:inherit`, `-bgc:transparent` | — |
+| `bgc` | `background-color` | `-bgc:base`, `-bgc:base-2`, `-bgc:text`, `-bgc:brand`, `-bgc:accent`, `-bgc:keycolor`, `-bgc:inherit`, `-bgc:transparent`, `-bgc:current` | — |
 
 ### カラー
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 | --- | --- | --- | --- |
-| `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:inherit` | — |
+| `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:keycolor`, `-c:inherit` | — |
 | `keycolor` | `--keycolor` 変数のみ | — | — |
 
 セマンティック/パレットの全カラートークンは [tokens.md のカラー](../tokens.md#カラー)を参照。<br />
 キーカラー変数: `keycolor`（ユーザー定義の `--keycolor` を参照する独立変数。詳細は `tokens.md` を参照）
+
+`c` / `bgc` / `bdc` に `keycolor` を指定すると、`--keycolor` を参照する `-c:keycolor` のようなクラスが出力される（`style` 属性ではない）。
 
 ### 角丸
 

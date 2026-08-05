@@ -114,7 +114,10 @@ export default {
   // },
   bgc: {
     prop: 'backgroundColor',
-    presets: ['base', 'base-2', 'text', 'brand', 'accent', 'inherit', 'transparent'],
+    // keycolor は palette カタログ経由で var(--keycolor) に解決される（#479）。
+    presets: ['base', 'base-2', 'text', 'brand', 'accent', 'keycolor', 'inherit', 'transparent'],
+    // bdc と同様に currentColor を短く書けるようにする（-bgc:current）。
+    utils: { current: 'currentColor' },
     token: 'color',
     exUtility: { inherit: { 'background-color': 'inherit' } },
     alwaysVar: 1,
@@ -123,7 +126,7 @@ export default {
   c: {
     // Note: bg系（bgclip）より後にくるように。
     prop: 'color',
-    presets: ['base', 'text', 'text-2', 'brand', 'accent', 'inherit'],
+    presets: ['base', 'text', 'text-2', 'brand', 'accent', 'keycolor', 'inherit'],
     token: 'color',
     exUtility: {
       inherit: { color: 'inherit' }, // --c ではなく color で出力したい
@@ -136,7 +139,7 @@ export default {
   bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
   bdc: {
     isVar: 1,
-    presets: ['brand', 'accent', 'divider', 'inherit', 'transparent'],
+    presets: ['brand', 'accent', 'divider', 'keycolor', 'inherit', 'transparent'],
     utils: { current: 'currentColor' },
     token: 'color',
   },

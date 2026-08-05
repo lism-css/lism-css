@@ -136,10 +136,18 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 |Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`c`|`color`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`|-|
-|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
-|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
+|`c`|`color`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`keycolor`,<br />`inherit`|-|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
+|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
+
+:::info
+`current` は `currentColor`（その要素の文字色）の省略形です。
+
+`keycolor` は `--keycolor` 変数を参照するクラスです（例: `.-c\:keycolor { --c: var(--keycolor) }`）。
+
+また[`full.css`](/docs/customize/build/)では、上の表の値に加えて、セマンティックカラー・パレットカラーの全トークンが `-bgc:red` のようにクラス化されます。
+:::
 
 
 <Preview>
@@ -610,7 +618,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`bd`|`border`|`none`|-|
-|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
+|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 |`bds`|`--bds`|`dashed`,`dotted`,`double`|-|
 |`bdw`|`--bdw`|-|✔|
 |`bd-t`|`border-top`|-|-|
@@ -657,7 +665,7 @@ borderに関する仕様は少し特殊になっていますので、詳しく�
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`bg`|`background`|-|-|
-|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 |`bgi`|`background-image`|-|-|
 |`bgr`|`background-repeat`|`no-repeat`|-|
 |`bgp`|`background-position`|`center`|-|

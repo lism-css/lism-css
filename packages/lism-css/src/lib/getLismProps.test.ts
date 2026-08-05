@@ -144,6 +144,17 @@ describe('getLismProps', () => {
       const result = getLismProps({ d: 'none' });
       expect(result.className).toContain('-d:none');
     });
+
+    test('c / bgc / bdc: keycolor がユーティリティクラスになる（#479）', () => {
+      const result = getLismProps({ c: 'keycolor', bgc: 'keycolor', bdc: 'keycolor' });
+      expect(result.className).toContain('-c:keycolor');
+      expect(result.className).toContain('-bgc:keycolor');
+      expect(result.className).toContain('-bdc:keycolor');
+      // クラス化されるので style 属性側には出力されない
+      expect(result.style?.['--c']).toBeUndefined();
+      expect(result.style?.['--bgc']).toBeUndefined();
+      expect(result.style?.['--bdc']).toBeUndefined();
+    });
   });
 
   describe('Lism Props処理 - カスタム値', () => {
@@ -529,6 +540,11 @@ describe('getLismProps', () => {
     test('td: none がユーティリティクラスになる', () => {
       const result = getLismProps({ td: 'none' });
       expect(result.className).toContain('-td:none');
+    });
+
+    test('bgc: current / currentColor がユーティリティクラスになる', () => {
+      expect(getLismProps({ bgc: 'current' }).className).toContain('-bgc:current');
+      expect(getLismProps({ bgc: 'currentColor' }).className).toContain('-bgc:current');
     });
   });
 
