@@ -49,14 +49,14 @@ export default {
 };
 ```
 
-With `isFullMode: true`, the full preset is also applied to the component props configuration, so `t="20"` is output as the `-t` class and `--t` variable instead of an inline style. Breakpoint values (such as `ta={['start', 'center']}`) can also be used on every property without warnings. The configuration is merged in the order "defaults → full preset → `props` in `lism.config.js`", with later entries taking precedence.
+With `isFullMode: true`, the full preset is also applied to the component props configuration, so `t="20"` is output as the `-t` class and `--t` variable instead of an inline style. Breakpoint values (such as `ta={['start', 'center']}`) can also be used without warnings on the properties that get the breakpoint classes listed above. Variable-only (`isVar`) properties — except `bds` / `bdc` — and border shorthands remain excluded, and passing breakpoint values to those still triggers a warning. The configuration is merged in the order "defaults → full preset → `props` in `lism.config.js`", with later entries taking precedence.
 
 :::warning
 - `isFullMode` assumes the corresponding styles are loaded via `full.css` (or a CLI rebuild with `isFullMode` enabled). If you keep the default `main.css`, the output classes will have no matching styles.
 - `isFullMode` is a build-time setting. It cannot be toggled at runtime via `window._LISM_CSS_CONFIG_`.
 :::
 
-Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `@lism-css/plugin`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `pl` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
+Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `@lism-css/plugin`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `ta` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
 
 If you do not use the integrated plugin, extend the type in a type definition file at your project root (e.g. `src/lism-env.d.ts`) like this:
 
