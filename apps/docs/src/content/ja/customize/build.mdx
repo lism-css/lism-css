@@ -30,7 +30,7 @@ import 'lism-css/full.css'; // @layer なし版は 'lism-css/full_no_layer.css'
 
 - 変数出力専用（`isVar` 系＝クラスを出力せず CSS変数だけを出すプロパティ）と border ショートハンド系（`bd` と `bd-x` などの方向指定）を除く、全 Property Class のブレイクポイント対応クラス（`-ta_lg` など）
 - border サブプロパティ `bds` / `bdc` のブレイクポイント対応クラス（`bdw` は `main.css` から対応済み）。border のブレイクポイント対応は、ショートハンドではなくサブプロパティで行います
-- カラー系 Property Class（`bgc` / `c` / `bdc`）の全カラートークン分のクラス（`-bgc:red` など）。`main.css` では厳選したセマンティックカラーのみがクラス化されますが、`full.css` では[パレットカラー](/docs/tokens/colors/)を含む全トークンが対象になります
+- カラー系 Property Class（`bgc` / `c` / `bdc`）の全カラートークン分のクラス（`-bgc:red` など）。`main.css` では厳選したセマンティックカラーと `keycolor` だけがクラス化されますが、`full.css` では[パレットカラー](/docs/tokens/colors/)を含む全トークンが対象になります
 
 そのぶんCSSサイズは `main.css` より大きくなるため、**未使用のクラスをビルド時に削除する [CSS Purge](/docs/customize/purge/) との併用を前提とした配布物**です。
 

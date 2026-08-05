@@ -218,7 +218,7 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 ```html
 <!-- u--cbox や c--callout など、ボックス全体の色味を局所的に切り替える -->
 <div class="u--cbox" style="--keycolor: var(--red)">
-  <p class="-c" style="--c: var(--keycolor)">danger 用カラーリング</p>
+  <p class="-c:keycolor">danger 用カラーリング</p>
 </div>
 ```
 

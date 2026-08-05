@@ -51,7 +51,7 @@ Lism CSS のボーダーは、CSS 変数（`--bds` / `--bdw` / `--bdc`）で管�
 | --- | --- | --- | --- |
 | `bd` | — | `-bd:none` | — |
 | `bds` | `--bds` | `-bds:dashed`, `-bds:dotted`, `-bds:double` | — |
-| `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` | — |
+| `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:keycolor`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` | — |
 | `bdw` | `--bdw` | — | `-bdw_sm`, `-bdw_md` |
 
 `bdw` はブレイクポイント指定に対応。`--bdw` の値を BP で切り替えることで、ボーダーの方向自体を変化させることもできる。

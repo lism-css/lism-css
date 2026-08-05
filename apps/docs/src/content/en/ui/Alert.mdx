@@ -28,7 +28,7 @@ Use this component to emphasize short messages.
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="c--alert l--flex u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
-      <div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
+      <div class="l--center -c:keycolor -fz:xl -fxsh:0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 256 256"
@@ -233,7 +233,7 @@ This example builds the Alert with lism-css primitives only, without `@lism-css/
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--withSide u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
-      <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">
+      <div class="l--center is--side -c:keycolor -fz:xl">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="a--icon"

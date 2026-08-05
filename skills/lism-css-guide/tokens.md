@@ -263,10 +263,12 @@ OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩
 
 `--keycolor: var(--red)` のように指定しておくことで、そのボックス自身や子要素のカラー Props（`c`, `bgc`, `bdc` など）で 特定の色をハードコーディングせずに `--keycolor` 経由で参照できるようにすることができる。代表的な使用例は `u--cbox` ユーティリティクラス。
 
+`c` / `bgc` / `bdc` の値に `keycolor` を指定すると、`-c:keycolor` のような Property Class が出力される（`style` 属性ではない）。これらのクラスは `--c: var(--keycolor)` のように `--keycolor` を参照する。
+
 ```html
 <!-- ボックスにキーカラーを設定、テキストをキーカラーに連動させる例 -->
 <div class="u--cbox" style="--keycolor: var(--red)">
-  <p class="-c" style="-c:var(--keycolor)">...</p>
+  <p class="-c:keycolor">...</p>
 </div>
 ```
 ```jsx
@@ -277,7 +279,7 @@ OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩
 
 - `c`, `bgc` 等のカラー系 Props では、セマンティックカラー → パレットカラーの順で検索される
 - どちらも最終的に `var(--{name})` に変換される
-- `main.css` でクラス化されるのは厳選したセマンティックカラーのみ（`-c:brand` など）。それ以外のカラートークンは `style` 属性の CSS 変数として出力される
+- `main.css` でクラス化されるのは厳選したセマンティックカラーと `keycolor` のみ（`-c:brand` / `-c:keycolor` など）。それ以外のカラートークン（`red` などのパレットカラー）は `style` 属性の CSS 変数として出力される
 - `full.css` + `isFullMode` では、`c` / `bgc` / `bdc` の全カラートークンがクラス化される（`-bgc:red` など）
 
 

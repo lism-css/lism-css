@@ -134,13 +134,15 @@ Each table covers one group of properties.
 
 |Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`c`|`color`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`|-|
-|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
-|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
+|`c`|`color`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`keycolor`,<br />`inherit`|-|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
+|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
 
 :::info
 `current` is shorthand for `currentColor` (the element's text color).
+
+`keycolor` outputs a class that references the `--keycolor` variable (e.g. `.-c\:keycolor { --c: var(--keycolor) }`).
 
 In [`full.css`](/en/docs/customize/build/), every semantic and palette color token is also output as a class (such as `-bgc:red`), in addition to the values listed above.
 :::
@@ -614,7 +616,7 @@ The examples below demonstrate positioning with `position: absolute`.
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`bd`|`border`|`none`|-|
-|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`|-|
+|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 |`bds`|`--bds`|`dashed`,`dotted`,`double`|-|
 |`bdw`|`--bdw`|-|✔|
 |`bd-t`|`border-top`|-|-|
@@ -662,7 +664,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`bg`|`background`|-|-|
-|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 |`bgi`|`background-image`|-|-|
 |`bgr`|`background-repeat`|`no-repeat`|-|
 |`bgp`|`background-position`|`center`|-|
