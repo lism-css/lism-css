@@ -20,7 +20,11 @@ export function useActiveSection(ids: readonly string[]): string | null {
   const [activeId, setActiveId] = useState<string | null>(ids[0] ?? null);
 
   useEffect(() => {
-    if (ids.length === 0) return;
+    // No sections to track: nothing can be current, so drop whatever was.
+    if (ids.length === 0) {
+      setActiveId(null);
+      return;
+    }
 
     let frame = 0;
 

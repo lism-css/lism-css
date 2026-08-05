@@ -29,6 +29,15 @@ export const GENERATED_CONFIG_FILENAME = 'lism.config.js';
 const NEW_KEY_ALLOWED_TOKENS = new Set(['color']);
 
 /**
+ * トークンキーに使えない予約キー。
+ *
+ * `writeConfigModule()` が書き出すのは `export default { ... }` のオブジェクトリテラルで、
+ * その中の `"__proto__": ...` はプロトタイプ設定構文と解釈されるため own key として残らない。
+ * 検証だけ通って生成 CSS とトークン一覧から黙って消えるより、ここで契約違反にする。
+ */
+const RESERVED_TOKEN_KEY = '__proto__';
+
+/**
  * `serializeTokens()` が CSS 変数として出力しない値か。
  *
  * 一覧に出すのは「生成 CSS が実際に定義しているトークン」だけなので、除外規則は
@@ -61,7 +70,7 @@ export function validateTokens(raw: unknown, defaultTokens: Record<string, unkno
   }
 
   // ユーザー入力のキーを持たせる器は必ず null プロトタイプにする。
-  // 素の `{}` だと `__proto__` などの予約キーが own key として保持されず、検証結果と実データがずれる。
+  // 素の `{}` だと `constructor` / `toString` が継承分と紛れ、下流の存在判定がプロトタイプ由来のキーに引っかかる。
   const tokens = Object.create(null) as MockupTokens;
   for (const [group, values] of Object.entries(raw)) {
     // `in` は `constructor` / `toString` / `__proto__` まで既知グループ扱いにしてしまうため hasOwn で判定する。
@@ -80,6 +89,12 @@ export function validateTokens(raw: unknown, defaultTokens: Record<string, unkno
     const knownKeys = defaultTokenKeys(defaultTokens[group]);
     const entry = Object.create(null) as Record<string, string | number>;
     for (const [key, value] of Object.entries(values)) {
+      if (key === RESERVED_TOKEN_KEY) {
+        throw new MockupContractError(
+          `${TOKENS_FILENAME}: "${group}.${key}" cannot be used as a token key (the generated ${GENERATED_CONFIG_FILENAME} cannot carry it). Rename the token.`,
+          { file }
+        );
+      }
       if (!knownKeys.includes(key) && !NEW_KEY_ALLOWED_TOKENS.has(group)) {
         throw new MockupContractError(
           `${TOKENS_FILENAME}: "${group}.${key}" is not an existing token. Only "color" accepts new keys; other groups can override existing values only (${group}: ${knownKeys.join(', ')}).`,

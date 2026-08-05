@@ -46,13 +46,20 @@ describe('validateTokens', () => {
     }
   });
 
-  test('検証結果は null プロトタイプで、予約キーも own key として保持する', () => {
-    const tokens = validateTokens(JSON.parse('{ "color": { "__proto__": "#fff" } }'), defaultTokens, 'tokens.json');
+  test('__proto__ はトークンキーにできない（生成 config が持てないため）', () => {
+    // 通すと validateTokens は own key として保持できるのに、生成 config のオブジェクトリテラルで
+    // 消えて CSS にもトークン一覧にも出ない。黙って消えるより契約違反にする。
+    expect(() => validateTokens(JSON.parse('{ "color": { "__proto__": "#fff" } }'), defaultTokens, 'tokens.json')).toThrow(
+      /"color\.__proto__" cannot be used as a token key/
+    );
+  });
+
+  test('検証結果は null プロトタイプで、prototype 由来の名前も own key として保持する', () => {
+    const tokens = validateTokens(JSON.parse('{ "color": { "constructor": "#fff", "toString": "#000" } }'), defaultTokens, 'tokens.json');
 
     expect(Object.getPrototypeOf(tokens)).toBe(null);
     expect(Object.getPrototypeOf(tokens.color)).toBe(null);
-    expect(Object.hasOwn(tokens.color, '__proto__')).toBe(true);
-    expect(Object.keys(tokens.color)).toEqual(['__proto__']);
+    expect(Object.keys(tokens.color)).toEqual(['constructor', 'toString']);
   });
 
   test('値は string / number のみ', () => {

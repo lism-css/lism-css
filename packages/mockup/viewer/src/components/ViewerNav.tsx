@@ -1,4 +1,4 @@
-import type { ElementType, MouseEvent, ReactNode } from 'react';
+import { useId, type ElementType, type MouseEvent, type ReactNode } from 'react';
 import { Flex, Icon, Stack, Text } from 'lism-css/react';
 import { NavMenu } from '@lism-css/ui/react/NavMenu';
 import { ComponentIcon, GalleryVerticalEndIcon, PaletteIcon } from 'lucide-react';
@@ -31,6 +31,13 @@ export default function ViewerNav({ id, isOpen, groups, pinnedPage, route, onOpe
   /** True while `pageId` is the page on screen. */
   const isCurrentPage = (pageId: string) => route.view === 'page' && pageId === route.pageId;
 
+  // Each list is labelled by its own heading, so screen readers announce the group a
+  // link belongs to. Category names come from `mockup.config.json` and may contain
+  // spaces, which `aria-labelledby` reads as an id separator — hence generated ids
+  // rather than ones derived from the label.
+  const labelIdPrefix = useId();
+  const groupLabelId = (suffix: string) => `${labelIdPrefix}nav-${suffix}`;
+
   return (
     <Stack
       as="nav"
@@ -46,8 +53,8 @@ export default function ViewerNav({ id, isOpen, groups, pinnedPage, route, onOpe
       bd-e
     >
       <Stack g="5">
-        <NavGroupLabel>{VIEWER_GROUP_LABEL}</NavGroupLabel>
-        <NavMenu.Root itemP="15">
+        <NavGroupLabel id={groupLabelId('viewer')}>{VIEWER_GROUP_LABEL}</NavGroupLabel>
+        <NavMenu.Root itemP="15" aria-labelledby={groupLabelId('viewer')}>
           <NavLink href={buildTokensHref()} icon={PaletteIcon} isCurrent={route.view === 'tokens'} onSelect={onOpenTokens}>
             {TOKENS_VIEW_LABEL}
           </NavLink>
@@ -66,10 +73,10 @@ export default function ViewerNav({ id, isOpen, groups, pinnedPage, route, onOpe
           </NavLink>
         </NavMenu.Root>
       </Stack>
-      {groups.map((group) => (
+      {groups.map((group, index) => (
         <Stack key={group.key} g="5">
-          <NavGroupLabel>{group.label}</NavGroupLabel>
-          <NavMenu.Root itemP="15">
+          <NavGroupLabel id={groupLabelId(String(index))}>{group.label}</NavGroupLabel>
+          <NavMenu.Root itemP="15" aria-labelledby={groupLabelId(String(index))}>
             {group.pages.map((page) => (
               <NavLink key={page.id} href={buildPageHref(page.id)} isCurrent={isCurrentPage(page.id)} onSelect={() => onOpenPage(page.id)}>
                 {page.label}
@@ -82,9 +89,10 @@ export default function ViewerNav({ id, isOpen, groups, pinnedPage, route, onOpe
   );
 }
 
-function NavGroupLabel({ children }: { children: ReactNode }) {
+/** Heading of a nav group. Its `id` labels the group's list. */
+function NavGroupLabel({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <Text as="div" px="15" fz="2xs" fw="bold" c="text-2" tt="upper" lts="l">
+    <Text as="div" id={id} px="15" fz="2xs" fw="bold" c="text-2" tt="upper" lts="l">
       {children}
     </Text>
   );
