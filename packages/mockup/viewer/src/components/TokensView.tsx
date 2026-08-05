@@ -65,8 +65,6 @@ const SECTION_IDS = OUTLINE_ITEMS.map((item) => item.id);
  * the pages actually use.
  */
 export default function TokensView() {
-  const activeId = useActiveSection(SECTION_IDS);
-
   return (
     <>
       {/* `is--wrapper` keeps the rows at a readable measure (its default
@@ -91,9 +89,24 @@ export default function TokensView() {
           tokenGroups.map((section) => <TokenGroupSection key={section.id} section={section} />)
         )}
       </Stack>
-      <TokenOutline items={OUTLINE_ITEMS} activeId={activeId} />
+      <ScrollSpyOutline />
     </>
   );
+}
+
+/**
+ * The outline, with the section tracking it needs.
+ *
+ * `useActiveSection` changes state on every section the reader passes, so it is
+ * kept in this leaf: called from `TokensView`, every one of those changes would
+ * re-render the whole token list — hundreds of rows — for a highlight that only
+ * moves inside the outline. Both constants it needs are module scope, so nothing
+ * has to be handed down for this to be a component of its own.
+ */
+function ScrollSpyOutline() {
+  const activeId = useActiveSection(SECTION_IDS);
+
+  return <TokenOutline items={OUTLINE_ITEMS} activeId={activeId} />;
 }
 
 interface TokenGroupSectionProps {

@@ -1,5 +1,6 @@
+import fs from 'node:fs';
 import path from 'node:path';
-import { afterAll, describe, expect, test } from 'vitest';
+import { afterAll, describe, expect, test, vi } from 'vitest';
 
 import { cleanupTempDirs, createDataDir } from '../test-helpers/fixtures.js';
 import { readMockConfig, resolveDataDir } from './data-dir.js';
@@ -126,6 +127,19 @@ describe('readMockConfig', () => {
   test('トップレベルの __proto__ は未知キーとしてエラー', () => {
     const dir = createDataDir({ 'mockup.config.json': '{ "schemaVersion": 2, "__proto__": { "title": "x" } }' });
     expect(() => readMockConfig(dir)).toThrow(/unknown key\(s\): "__proto__"/);
+  });
+
+  test('ENOENT 以外の読み込みエラー（権限エラー等）は「無い」扱いにせず、そのまま投げる', () => {
+    const dir = createDataDir({ 'mockup.config.json': '{ "schemaVersion": 2 }' });
+    const eacces = Object.assign(new Error('EACCES: permission denied'), { code: 'EACCES' });
+    const spy = vi.spyOn(fs, 'readFileSync').mockImplementation(() => {
+      throw eacces;
+    });
+    try {
+      expect(() => readMockConfig(dir)).toThrow(eacces);
+    } finally {
+      spy.mockRestore();
+    }
   });
 
   test('契約違反は MockupContractError（対象ファイル付き）で投げる', () => {

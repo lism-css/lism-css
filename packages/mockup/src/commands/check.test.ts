@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { afterAll, afterEach, describe, expect, test, vi } from 'vitest';
 
+import { resolveGeneratedConfigDir, resolveViteCacheDir } from '../core/runtime.js';
 import { MockupContractError } from '../core/types.js';
 import {
   cleanupTempDirs,
@@ -17,8 +18,22 @@ import { checkCommand } from './check.js';
 
 const viewerDir = getFixtureViewerDir();
 
+/** check を実行したデータディレクトリ（後片付けで共有ディレクトリの場所を再現するために覚えておく）。 */
+const checkedDirs: string[] = [];
+
 function check(dir: string): Promise<void> {
+  checkedDirs.push(dir);
   return checkCommand(dir, { viewerDir });
+}
+
+/** データディレクトリの `imports`（共有ディレクトリのキーの一部）。読めなければ空扱い。 */
+function readImports(dir: string): string[] {
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(dir, 'mockup.config.json'), 'utf-8')) as { imports?: string[] };
+    return Array.isArray(raw.imports) ? raw.imports : [];
+  } catch {
+    return [];
+  }
 }
 
 afterEach(() => {
@@ -26,6 +41,16 @@ afterEach(() => {
 });
 
 afterAll(() => {
+  // cacheDir / configDir は起動間で使い回すため runtime.cleanup() では消えない。
+  // テストが os.tmpdir() に作った分だけ、キーを同じ入力から再現して片付ける。
+  for (const dir of checkedDirs) {
+    if (!fs.existsSync(dir)) continue;
+    const real = fs.realpathSync(dir);
+    const imports = readImports(real);
+    for (const shared of [resolveViteCacheDir(real, imports), resolveGeneratedConfigDir(real, imports)]) {
+      fs.rmSync(shared, { recursive: true, force: true });
+    }
+  }
   cleanupTempDirs();
 });
 
@@ -65,6 +90,25 @@ describe('checkCommand', () => {
     });
 
     await expect(check(dir)).rejects.toThrow(/"NoSuchComponent" is not exported/);
+  }, 60_000);
+
+  test('lucide-react のアイコンは仮想モジュールから bundle できる', async () => {
+    vi.spyOn(console, 'log').mockImplementation(() => undefined);
+    const dir = createDataDir({
+      'mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['lucide-react'] }),
+      'pages/home.jsx': `import { Bell, TrendingUp, Trash2, Sidebar } from 'lucide-react';\nexport default () => <><Bell /><TrendingUp /><Trash2 /><Sidebar /></>;\n`,
+    });
+
+    await expect(check(dir)).resolves.toBeUndefined();
+  }, 60_000);
+
+  test('存在しないアイコン名は bundle 時に検出する', async () => {
+    const dir = createDataDir({
+      'mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['lucide-react'] }),
+      'pages/home.jsx': `import { NoSuchIcon } from 'lucide-react';\nexport default () => <NoSuchIcon />;\n`,
+    });
+
+    await expect(check(dir)).rejects.toThrow(/"NoSuchIcon" is not exported/);
   }, 60_000);
 
   test('許可外の bare import は契約違反として非0終了する', async () => {

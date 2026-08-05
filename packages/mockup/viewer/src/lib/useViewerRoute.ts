@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /** Query parameter that holds the id of the page to display. */
 export const PAGE_QUERY_KEY = 'page';
@@ -113,17 +113,20 @@ export function useViewerRoute(): ViewerRouteState {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigate = useCallback((href: string) => {
+  // Plain functions, not `useCallback`: these are only ever passed to components
+  // that render with their parent anyway (none of them is memoized) and none of
+  // them is a dependency of an effect, so a stable identity would buy nothing.
+  const navigate = (href: string) => {
     // Re-selecting the current screen must not stack duplicate history entries.
     if (href === `${window.location.pathname}${window.location.search}${window.location.hash}`) return;
 
     window.history.pushState(null, '', href);
     setRoute(readRouteFromUrl());
-  }, []);
+  };
 
-  const openPage = useCallback((pageId: string) => navigate(buildPageHref(pageId)), [navigate]);
-  const openGallery = useCallback(() => navigate(buildGalleryHref()), [navigate]);
-  const openTokens = useCallback(() => navigate(buildTokensHref()), [navigate]);
+  const openPage = (pageId: string) => navigate(buildPageHref(pageId));
+  const openGallery = () => navigate(buildGalleryHref());
+  const openTokens = () => navigate(buildTokensHref());
 
   return { route, openPage, openGallery, openTokens };
 }

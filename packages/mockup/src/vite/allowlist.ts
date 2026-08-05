@@ -19,19 +19,25 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { getDataResolveAnchor, MOCKUP_CONFIG_FILENAME } from '../core/data-dir.js';
-import { ancestorNodeModules, getMockPackageRoot, getResolveAnchor, isInsideDir, safeRealpath, walkAncestorDirs } from '../core/paths.js';
+import { ancestorNodeModules, getMockPackageRoot, getResolveAnchor, isInsideDir, safeRealpath } from '../core/paths.js';
 import { MockupContractError, STANDARD_PACKAGES } from '../core/types.js';
+import { LUCIDE_PACKAGE_NAME } from './lucide-icons.js';
 
 /** JSX 変換が注入する runtime（exports にも含まれるが、変換方式が変わっても落ちないよう明示する）。 */
 const ALWAYS_ALLOWED = ['react/jsx-runtime', 'react/jsx-dev-runtime'];
 
 /**
- * `imports` に宣言するだけで（プロジェクト側に未インストールでも）使える CLI 同梱パッケージ。
+ * `imports` に宣言するだけで（プロジェクト側に未インストールでも）使える仮想パッケージ。
  * README の「`lucide-react` だけは例外でインストール不要」という契約に対応する。
- * ここに無いパッケージは CLI の依存ツリーにあってもフォールバックさせない
- * （CLI の依存変更でモックアップの成否が変わらないようにするため）。
+ *
+ * node_modules に実体は無く、`lucideIconsPlugin` が仮想モジュールとして供給する。
+ * そのためプロジェクト側に同名パッケージがインストールされていても解決先は変えない
+ * （vite プラグインが必ず仮想モジュールへ解決するので、許可リストも同じ判断に揃える）。
+ *
+ * 値は「実体のある package.json の代わりに使う manifest」。ルート `.` だけを export することで、
+ * 仮想モジュールが供給しないサブパス（`lucide-react/icons/...` 等）は許可されない。
  */
-const BUNDLED_EXTRA_PACKAGES: ReadonlySet<string> = new Set(['lucide-react']);
+const VIRTUAL_PACKAGES: ReadonlyMap<string, Record<string, unknown>> = new Map([[LUCIDE_PACKAGE_NAME, { exports: { '.': {} } }]]);
 
 interface WildcardPattern {
   prefix: string;
@@ -70,9 +76,17 @@ export interface ImportAllowlist {
   readonly specifiers: ReadonlySet<string>;
   /** `server.fs.allow` に渡す、許可パッケージの realpath ルート。 */
   readonly packageRoots: readonly string[];
-  /** `server.fs.allow` に渡す、追加パッケージの依存解決用 node_modules ルート。 */
+  /** `server.fs.allow` に渡す、追加パッケージ（データディレクトリ側）の依存解決用 node_modules ルート。 */
   readonly dependencyRoots: readonly string[];
-  /** 見つからなかった標準パッケージ名（デバッグ・テスト用）。 */
+  /**
+   * 標準パッケージの解決に使った `@lism-css/mockup` 側の node_modules ルート（近い順）。
+   * `server.fs.allow` でも同じ一覧が要るため、祖先方向の列挙を2度行わずここから受け渡す。
+   */
+  readonly mockupDependencyRoots: readonly string[];
+  /**
+   * 見つからなかった標準パッケージ名。
+   * `dev` / `check` はこれを起動時の警告に使う（CLI のインストール破損の診断用）。
+   */
   readonly missingPackages: readonly string[];
   /** 許可パッケージ名（標準＋追加）。エラーメッセージ用。 */
   readonly allowedPackages: readonly string[];
@@ -88,13 +102,24 @@ export interface ImportAllowlistOptions {
   extraPackages?: readonly string[];
 }
 
-/** `from` から親方向へ辿って `node_modules/<pkg>/package.json` を探す（Node の解決と同じ順序）。 */
-export function findPackageDir(pkgName: string, from: string): string | null {
-  for (const dir of walkAncestorDirs(from)) {
-    const manifest = path.join(dir, 'node_modules', ...pkgName.split('/'), 'package.json');
+/**
+ * 列挙済みの node_modules ルート（近い順）から `<root>/<pkg>/package.json` を探す。
+ *
+ * 祖先ディレクトリの走査は起動のたびに何度も走るため、列挙（`ancestorNodeModules()`）は
+ * 呼び出し側で1回だけ行い、複数パッケージの検索でその結果を使い回す。
+ * 引数の順序が Node の解決順（近い順）である限り、結果は親方向へ1階層ずつ探すのと同じになる。
+ */
+export function findPackageDirIn(nodeModulesRoots: readonly string[], pkgName: string): string | null {
+  for (const root of nodeModulesRoots) {
+    const manifest = path.join(root, ...pkgName.split('/'), 'package.json');
     if (fs.existsSync(manifest)) return path.dirname(manifest);
   }
   return null;
+}
+
+/** `from` から親方向へ辿って `node_modules/<pkg>/package.json` を探す（Node の解決と同じ順序）。 */
+export function findPackageDir(pkgName: string, from: string): string | null {
+  return findPackageDirIn(ancestorNodeModules(from), pkgName);
 }
 
 /** `exports` オブジェクトがサブパスマップか（条件マップの糖衣ではないか）。 */
@@ -109,7 +134,7 @@ export function collectPackageSpecifiers(pkgName: string, manifest: Record<strin
   const wildcards: WildcardPattern[] = [];
   const exportsField = manifest.exports;
 
-  // exports 未定義のパッケージ（lucide-react 等）は「実在するファイルへ解決できること」を条件に許可する。
+  // exports 未定義のパッケージは「実在するファイルへ解決できること」を条件に許可する。
   if (exportsField === undefined || exportsField === null) {
     statics.push(pkgName);
     wildcards.push({ prefix: `${pkgName}/`, suffix: '' });
@@ -190,6 +215,12 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
   const mockAnchor = getResolveAnchor();
   const dataAnchor = getDataResolveAnchor(dataDir);
 
+  // 祖先方向の node_modules 列挙は起点ごとに1回だけ行う（標準パッケージ4件の検索と fs.allow で共有する）。
+  const mockupDependencyRoots = ancestorNodeModules(mockRoot);
+  // データディレクトリ側は追加パッケージがある場合しか要らないので、必要になった時点で1回だけ列挙する。
+  let dataNodeModules: readonly string[] | null = null;
+  const dataDependencyRoots = (): readonly string[] => (dataNodeModules ??= ancestorNodeModules(dataDir));
+
   const staticSpecifiers = new Map<string, PackageResolution>();
   const wildcards: WildcardEntry[] = [];
   const packageRoots: string[] = [];
@@ -198,20 +229,25 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
   const allowedPackages: string[] = [];
   let hasDataResolvedPackage = false;
 
-  const register = (pkgDir: string, manifest: Record<string, unknown>, resolution: PackageResolution): void => {
-    const pkgRoot = safeRealpath(pkgDir);
-    packageRoots.push(pkgRoot);
+  /**
+   * 1パッケージ分の specifier を登録する。
+   * `pkgDir` が null の場合は仮想パッケージで、ディスク上のルートを持たない
+   * （`fs.allow` にも解決先の封じ込め判定にも実ディレクトリが要らない）。
+   */
+  const register = (pkgDir: string | null, manifest: Record<string, unknown>, resolution: PackageResolution): void => {
+    const pkgRoot = pkgDir === null ? null : safeRealpath(pkgDir);
+    if (pkgRoot !== null) packageRoots.push(pkgRoot);
     allowedPackages.push(resolution.name);
 
     const { statics, wildcards: patterns } = collectPackageSpecifiers(resolution.name, manifest);
     // exports の無いパッケージだけが「任意サブパス」のワイルドカードを持つ（collectPackageSpecifiers 参照）。
-    const confineDir = manifest.exports === undefined || manifest.exports === null ? pkgRoot : undefined;
+    const confineDir = pkgRoot !== null && (manifest.exports === undefined || manifest.exports === null) ? pkgRoot : undefined;
     for (const specifier of statics) staticSpecifiers.set(specifier, resolution);
     for (const pattern of patterns) wildcards.push({ pattern, resolution, verify: resolution.origin === 'mockup', confineDir });
   };
 
   for (const name of STANDARD_PACKAGES) {
-    const pkgDir = findPackageDir(name, mockRoot);
+    const pkgDir = findPackageDirIn(mockupDependencyRoots, name);
     const manifest = pkgDir === null ? null : readManifest(pkgDir);
     if (pkgDir === null || manifest === null) {
       missingPackages.push(name);
@@ -227,20 +263,25 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
   }
 
   for (const name of extraPackages) {
-    // データディレクトリ側を優先する。プロジェクト側に無い場合のフォールバックは、
-    // CLI 同梱を契約として保証する BUNDLED_EXTRA_PACKAGES（lucide-react）だけに限り、
-    // init 直後（プロジェクト側に未インストール）でもそのまま使えるようにする。
-    const dataDirPkg = findPackageDir(name, dataDir);
-    const pkgDir = dataDirPkg ?? (BUNDLED_EXTRA_PACKAGES.has(name) ? findPackageDir(name, mockRoot) : null);
+    // 仮想パッケージ（lucide-react）は node_modules を探さない。CLI 側が必ず供給するため、
+    // init 直後（プロジェクト側に未インストール）でもそのまま使える。
+    const virtualManifest = VIRTUAL_PACKAGES.get(name);
+    if (virtualManifest !== undefined) {
+      register(null, virtualManifest, { name, origin: 'mockup', anchor: mockAnchor });
+      continue;
+    }
+
+    // それ以外はデータディレクトリ側から解決する。CLI の依存ツリーにあってもフォールバックさせない
+    // （CLI の依存変更でモックアップの成否が変わらないようにするため）。
+    const pkgDir = findPackageDirIn(dataDependencyRoots(), name);
     const manifest = pkgDir === null ? null : readManifest(pkgDir);
     if (pkgDir === null || manifest === null) {
       missingExtraPackages.push(name);
       continue;
     }
 
-    const origin = dataDirPkg === null ? 'mockup' : 'data';
-    if (origin === 'data') hasDataResolvedPackage = true;
-    register(pkgDir, manifest, { name, origin, anchor: origin === 'data' ? dataAnchor : mockAnchor });
+    hasDataResolvedPackage = true;
+    register(pkgDir, manifest, { name, origin: 'data', anchor: dataAnchor });
   }
 
   if (missingExtraPackages.length > 0) {
@@ -253,7 +294,7 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
 
   // 追加パッケージ自身の依存も bundle 対象になるため、データディレクトリ側の
   // node_modules も fs.allow に載せる（許可パッケージのルートだけでは依存を辿れない）。
-  const dependencyRoots = hasDataResolvedPackage ? ancestorNodeModules(dataDir) : [];
+  const dependencyRoots = hasDataResolvedPackage ? dataDependencyRoots() : [];
 
   const wildcardCache = new Map<string, PackageResolution | null>();
 
@@ -284,6 +325,7 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
     specifiers: new Set(staticSpecifiers.keys()),
     packageRoots,
     dependencyRoots,
+    mockupDependencyRoots,
     missingPackages,
     allowedPackages,
     resolutionFor,

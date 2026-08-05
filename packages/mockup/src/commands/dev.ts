@@ -14,8 +14,9 @@ import { getViewerDir, isInsideDir } from '../core/paths.js';
 import { prepareMockRuntime, type MockupRuntime } from '../core/runtime.js';
 import { DARK_TOKENS_FILENAME, TOKENS_FILENAME } from '../core/tokens.js';
 import { MockupContractError } from '../core/types.js';
-import { createMockViteConfig } from '../vite/config.js';
+import { createImportAllowlist, createMockViteConfig } from '../vite/config.js';
 import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIRTUAL_TOKENS_DATA_ID } from '../vite/virtual-modules.js';
+import { warnMissingStandardPackages } from './diagnostics.js';
 
 export interface DevCommandOptions {
   /** ビューアディレクトリの上書き（テスト用。既定は同梱ビューア）。 */
@@ -129,9 +130,14 @@ export function watchDataDir(server: ViteDevServer, runtime: MockupRuntime): voi
 
 /** dev サーバーを作る（listen は呼び出し側。統合テストからも使う）。 */
 export async function createMockDevServer(dir: string, options: DevCommandOptions = {}): Promise<{ server: ViteDevServer; runtime: MockupRuntime }> {
-  const runtime = await prepareMockRuntime(dir);
+  // dev は依存の事前バンドルを共有 cacheDir へ書き込むため、共有キャッシュを占有してから使う。
+  const runtime = await prepareMockRuntime(dir, { exclusiveViteCache: true });
   try {
-    const server = await createServer(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'dev' }));
+    // 許可リストは vite 設定でも使うため1回だけ作る（構築は node_modules の走査を伴う）。
+    const allowlist = createImportAllowlist(runtime);
+    warnMissingStandardPackages(allowlist.missingPackages);
+
+    const server = await createServer(createMockViteConfig({ runtime, viewerDir: options.viewerDir ?? getViewerDir(), mode: 'dev', allowlist }));
     watchDataDir(server, runtime);
     return { server, runtime };
   } catch (error) {

@@ -262,8 +262,10 @@ shadow them.
   package that is not installed stops `dev` and `check` before anything is
   bundled.
 - `lucide-react` is the exception that needs no install: `@lism-css/mockup`
-  bundles it, so the scaffold that `init` writes works as-is. It still has to be
-  declared in `imports`.
+  provides it, so the scaffold that `init` writes works as-is. Only named
+  imports from the package root work (`import { Bell } from 'lucide-react'`) —
+  subpaths like `lucide-react/icons/bell` are not supported. It still has to
+  be declared in `imports`.
 - Adding a standard package to `imports` is an error — they are always available.
 - `dev` builds the allowlist once at startup, so restart it after editing
   `imports`.

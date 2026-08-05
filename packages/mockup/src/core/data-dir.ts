@@ -55,15 +55,24 @@ export function resolveDataDir(dir: string): string {
 /** `mockup.config.json` を読み、スキーマを検証して返す。 */
 export function readMockConfig(dataDir: string): MockupConfigFile {
   const file = path.join(dataDir, MOCKUP_CONFIG_FILENAME);
-  if (!fs.existsSync(file)) {
-    throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME} not found. Run \`lism-mockup init\` to scaffold a mockup data directory.`, {
-      file,
-    });
+
+  // 存在確認と読み込みを分けると同じパスへ2回 syscall が走るので、読み込みの失敗（ENOENT）で
+  // 「無い」を判定する。ENOENT 以外（権限エラー等）はここで握りつぶさず、そのまま投げ直す。
+  let content: string;
+  try {
+    content = fs.readFileSync(file, 'utf-8');
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME} not found. Run \`lism-mockup init\` to scaffold a mockup data directory.`, {
+        file,
+      });
+    }
+    throw error;
   }
 
   let raw: unknown;
   try {
-    raw = JSON.parse(fs.readFileSync(file, 'utf-8'));
+    raw = JSON.parse(content);
   } catch (error) {
     throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME} is not valid JSON: ${(error as Error).message}`, { file });
   }

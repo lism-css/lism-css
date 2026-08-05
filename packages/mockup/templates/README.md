@@ -173,8 +173,11 @@ installed in the project that contains this directory:
 
 - Package names only — `"lucide-react"`, not `"lucide-react/icons"`.
 - A package that is declared but not installed stops `dev` and `check`.
-- `lucide-react` (used by the sample pages) ships with the CLI, so it works
-  without installing anything. It still has to stay in `imports`.
+- `lucide-react` (used by the sample pages) is provided by the CLI, so it
+  works without installing anything. Only named imports from the package
+  root work (`import { Bell } from 'lucide-react'`) — subpaths like
+  `lucide-react/icons/bell` are not supported. It still has to stay in
+  `imports`.
 - `dev` reads `imports` once at startup — restart it after editing the list.
 
 Relative imports must stay inside this directory and point at `.jsx`, `.tsx`,
