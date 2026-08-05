@@ -67,6 +67,7 @@ on it.
 - Adding a file is enough — pages are discovered from disk, not from
   `mockup.config.json`. Two files with the same id (`foo.jsx` + `foo.tsx`) is an error.
 - `.tsx` is accepted but **not type-checked** (types are stripped, not verified).
+  To check types yourself, see "Type checking" in the `@lism-css/mockup` README.
 
 Allowed inside a page:
 
@@ -174,10 +175,11 @@ installed in the project that contains this directory:
 - Package names only — `"lucide-react"`, not `"lucide-react/icons"`.
 - A package that is declared but not installed stops `dev` and `check`.
 - `lucide-react` (used by the sample pages) is provided by the CLI, so it
-  works without installing anything. Only named imports from the package
-  root work (`import { Bell } from 'lucide-react'`) — subpaths like
-  `lucide-react/icons/bell` are not supported. It still has to stay in
-  `imports`.
+  works without installing anything. It still has to stay in `imports`.
+  The CLI builds that module out of icon data, so it exports the icon
+  components (`Bell`, `BellIcon`, `Sidebar`, …) plus `Icon` and
+  `createLucideIcon`. `icons` (the record of every icon) and subpaths like
+  `lucide-react/icons/bell` are not available — `check` reports both by name.
 - `dev` reads `imports` once at startup — restart it after editing the list.
 
 Relative imports must stay inside this directory and point at `.jsx`, `.tsx`,

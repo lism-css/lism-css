@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { MockupContractError } from '../core/types.js';
 import {
   buildLucideIconIndex,
+  describeMissingLucideExport,
   generateLucideModule,
   loadLucideIconSet,
   lucideClassName,
@@ -11,11 +12,27 @@ import {
   LUCIDE_PACKAGE_NAME,
   RESOLVED_VIRTUAL_LUCIDE_ID,
   stripInheritedAttributes,
+  SUPPORTED_LUCIDE_API,
   toPascalCase,
 } from './lucide-icons.js';
 
 const iconSet = loadLucideIconSet();
 const index = buildLucideIconIndex(iconSet);
+
+/** 生成コードの `export { … };` から export 名を集める。 */
+function exportedNames(code: string): Set<string> {
+  return new Set(
+    [...code.matchAll(/export \{([^}]*)\};/g)].flatMap((match) =>
+      match[1].split(',').map(
+        (specifier) =>
+          specifier
+            .trim()
+            .split(/\s+as\s+/)
+            .at(-1) as string
+      )
+    )
+  );
+}
 
 /** テスト用の最小アイコンセット。 */
 const FIXTURE_SET: LucideIconSet = {
@@ -166,22 +183,11 @@ describe('generateLucideModule', () => {
   });
 
   test('lucide-react と同じ名前で export する（`Icon` サフィックスと alias を含む）', () => {
-    const exported = new Set(
-      [...code.matchAll(/export \{([^}]*)\};/g)].flatMap((match) =>
-        match[1].split(',').map(
-          (specifier) =>
-            specifier
-              .trim()
-              .split(/\s+as\s+/)
-              .at(-1) as string
-        )
-      )
-    );
+    const exported = exportedNames(code);
 
     for (const name of ['Bell', 'BellIcon', 'TrendingUp', 'TrendingUpIcon', 'Trash2', 'Trash2Icon', 'PanelLeft', 'PanelLeftIcon', 'Sidebar']) {
       expect(exported.has(name), name).toBe(true);
     }
-    expect(exported.size).toBe(index.keyByExportName.size);
     // alias は本体の const を別名で export する。
     expect(code).toContain('PanelLeft as Sidebar');
   });
@@ -197,6 +203,59 @@ describe('generateLucideModule', () => {
     expect(fixture).toContain('const Bell = /*#__PURE__*/ icon("Bell", "lucide lucide-bell", "<path d=\\"M1 2\\"/>");');
     // 既定と違う viewBox のアイコンだけ第4引数が付く。
     expect(fixture).toContain('icon("SearchLarge", "lucide lucide-search-large", "<path d=\\"M5 6\\"/>", "0 0 32 32");');
+  });
+
+  test('アイコン名以外は `Icon` と `createLucideIcon` だけを export する', () => {
+    expect(SUPPORTED_LUCIDE_API).toEqual(['Icon', 'createLucideIcon']);
+    // 生成コード側の識別子は小文字始まりにして、PascalCase のアイコン名と衝突しないようにしている。
+    expect(code).toContain('export { lucideIcon as Icon, createLucideIcon };');
+    // アイコンを使うだけのページでバンドルへ残らないよう、副作用が無いことを明示する。
+    expect(code).toContain('const lucideIcon = /*#__PURE__*/ forwardRef(');
+
+    const exported = exportedNames(code);
+    expect(exported.has('Icon')).toBe(true);
+    expect(exported.has('createLucideIcon')).toBe(true);
+    // 全アイコンのレコードは提供しない（参照した時点で全アイコンがバンドルへ入るため）。
+    expect(exported.has('icons')).toBe(false);
+    expect(exported.size).toBe(index.keyByExportName.size + SUPPORTED_LUCIDE_API.length);
+  });
+});
+
+describe('describeMissingLucideExport', () => {
+  /** rollup が投げる MISSING_EXPORT エラーの形。 */
+  function missingExport(binding: string, exporter: string = RESOLVED_VIRTUAL_LUCIDE_ID): unknown {
+    return { code: 'MISSING_EXPORT', binding, exporter, message: `"${binding}" is not exported by "${exporter}"` };
+  }
+
+  test('`icons` は理由と代替を説明する', () => {
+    const message = describeMissingLucideExport(missingExport('icons'));
+    expect(message).toContain('Cannot import "icons" from lucide-react');
+    expect(message).toContain('pulls every lucide icon into the bundle');
+    expect(message).toContain("import { Bell } from 'lucide-react'");
+  });
+
+  test('アイコン名の間違いは索引と同じ候補付きの案内にする', () => {
+    expect(describeMissingLucideExport(missingExport('bell'))).toContain('"bell" is not an icon of lucide-react. Did you mean "Bell"?');
+    expect(describeMissingLucideExport(missingExport('Belll'))).toContain(
+      '"Belll" is not an icon of lucide-react. See https://lucide.dev/icons/ for the available icons.'
+    );
+  });
+
+  test('どの場合も対応範囲を添える', () => {
+    for (const binding of ['icons', 'Belll']) {
+      expect(describeMissingLucideExport(missingExport(binding)), binding).toContain('the icon components plus "Icon" and "createLucideIcon"');
+    }
+  });
+
+  test('仮想モジュール以外のエラーには関与しない', () => {
+    expect(describeMissingLucideExport(missingExport('foo', '/somewhere/other.js'))).toBeNull();
+    expect(describeMissingLucideExport({ code: 'PARSE_ERROR', message: 'boom' })).toBeNull();
+    expect(describeMissingLucideExport(new Error('boom'))).toBeNull();
+    expect(describeMissingLucideExport(undefined)).toBeNull();
+  });
+
+  test('実在するアイコン名なら差し替えない（元のエラーを残す）', () => {
+    expect(describeMissingLucideExport(missingExport('Bell'))).toBeNull();
   });
 });
 

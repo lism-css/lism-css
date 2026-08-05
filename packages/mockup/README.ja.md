@@ -70,7 +70,7 @@ mockup/
 - 画面はファイルシステムから自動的に発見されます。ファイルを置くだけでよく、登録作業はありません（だからこそconfigの記述が実態とずれることがありません）。
 - 同じIDになるファイルが2つある場合（`foo.jsx`と`foo.tsx`）はID衝突となり、`dev`と`check`が停止します。
 - `.jsx` / `.tsx`以外のファイル（例えば同じ場所に置いた`.css`）は画面ではありません。ページ側からimportして使ってください。
-- `.tsx`も使えますが、**型は削除されるだけでチェックされません**。型安全性が必要な場合は自分で`tsc`を実行してください。
+- `.tsx`も使えますが、**型は削除されるだけでチェックされません**。型安全性が必要な場合は自分で`tsc`を実行してください（[型チェック](#型チェック)を参照）。
 
 ページを書く時の決まりは次の通りです。
 
@@ -206,7 +206,7 @@ mockup/
 
 - 書けるのはパッケージ名だけです（`"lucide-react"`は可、`"lucide-react/icons"`は不可）。どのサブパスをimportできるかは、これまで通りパッケージ自身の`exports`マップで決まります。
 - 対象パッケージは、データディレクトリを含むプロジェクトにインストールしてください。宣言だけしてインストールされていない場合、bundleを始める前に`dev`・`check`が停止します。
-- `lucide-react`だけは例外で、インストールは不要です（`@lism-css/mockup`が提供しているため、`init`直後の状態がそのまま動きます）。importできるのはパッケージルートからの名前付きimport（`import { Bell } from 'lucide-react'`）のみで、`lucide-react/icons/bell`のようなサブパスのimportはできません。ただし`imports`への記載は必要です。
+- `lucide-react`だけは例外で、インストールは不要です（`@lism-css/mockup`が提供しているため、`init`直後の状態がそのまま動きます）。ただし`imports`への記載は必要です。提供する内容は[CLIが提供する`lucide-react`](#cliが提供するlucide-react)を参照してください。
 - 標準パッケージを`imports`に書くとエラーになります。常時許可されているためです。
 - `dev`は起動時に一度だけ許可リストを作ります。`imports`を編集したら再起動してください。
 
@@ -215,6 +215,52 @@ mockup/
 `.jsx` `.tsx` `.css` `.png` `.jpg` `.jpeg` `.gif` `.svg` `.webp`
 
 それ以外は契約違反として明示的に拒否されます。絶対パス、`/@fs/`パス、`../`によるデータディレクトリ外への脱出、`node_modules`の中へ入る相対パス（パッケージは`imports`に宣言してパッケージ名でimportしてください）、許可リスト外のbare importが該当します。クエリ（`?raw`・`?url`）が付く場合は、クエリより前のパスが検査されます。
+
+### CLIが提供する`lucide-react`
+
+本物の`lucide-react`はアイコンのモジュール群で45MBあり、npx実行のたびにダウンロードされてしまいます。そこで`@lism-css/mockup`は、アイコンの実データだけを持つ[`@iconify-json/lucide`](https://www.npmjs.com/package/@iconify-json/lucide)（約570KB）からモジュールを組み立て、`lucide-react`をそこへ解決します。importの書き方は変わらず、使っていないアイコンがbundleから落ちる点も同じです。
+
+そのモジュールがルートからexportするものは次の通りです。
+
+| export | 提供 | 備考 |
+| --- | --- | --- |
+| アイコンコンポーネント | あり | 全アイコンを`Bell`と`BellIcon`の両方の書き方で提供します。lucide自身のエイリアス（`Sidebar`など）も含みます。 |
+| `Icon` | あり | 渡された`iconNode`のデータを描画する汎用コンポーネントです。 |
+| `createLucideIcon` | あり | `iconNode`のデータからアイコンコンポーネントを作ります。 |
+| `icons` | **なし** | 全アイコンのレコードです。参照した時点で約1,800個すべてがbundleへ入り、このモジュールの目的そのものが無くなるため提供しません。必要なアイコンを名前でimportしてください。 |
+
+サブパス（`lucide-react/icons/bell`・`lucide-react/dynamic`）も使えません。`icons`とサブパスはどちらも`check`が「何が無いのか」を示す契約エラーとして報告するため、気づかないまま進むことはありません。
+
+描画結果はlucide-react 0.577.0と属性レベルで一致します（`lucide lucide-<name>`のclass名を含みます）。
+
+## 型チェック
+
+`check`はページの型検査を行いません。`.tsx`は型を削除して変換するだけで、検証はしません。自分で`tsc`を実行する場合は少し準備が必要です。データディレクトリは依存関係を持たず、ページがimportするパッケージはビルド時に`@lism-css/mockup`の中から供給されるため、そのままではコンパイラが見つけられないからです。
+
+データディレクトリを含むプロジェクトへ、ページがimportするパッケージとコンパイラをインストールしてください。
+
+```bash
+pnpm add -D typescript @types/react lism-css @lism-css/ui @lism-css/mockup
+```
+
+`lucide-react`だけはこの方法が使えません。CLIが生成しているため、そのようなパッケージはディスク上に存在しないからです。代わりに`@lism-css/mockup`が型定義を同梱しているので、tsconfigからそのファイルを参照してください。
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "strict": true
+  },
+  "files": ["node_modules/@lism-css/mockup/types/lucide-react.d.ts"],
+  "include": ["mockup/**/*"]
+}
+```
+
+`include`ではなく`files`を使うのは、TypeScriptが既定で`node_modules`を`include`の対象から外すためです。
+
+この型定義はモジュール本体と同じアイコンデータから生成しています。そのため宣言されている内容は、モックアップが実際にimportできるものと一致します（`icons`とサブパスは、`check`で落ちるのと同じ理由で型検査でも落ちます）。型のために本物の`lucide-react`をインストールすると、この一致が崩れます（モックアップでは使えないexportまで型上は通ってしまうため）。
 
 ## `check`が保証する範囲
 
