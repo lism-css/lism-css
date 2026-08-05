@@ -180,6 +180,8 @@ describe('dev サーバー', () => {
 
   test('watch 対象の分類', () => {
     expect(classifyDataEvent(dataDir, 'change', path.join(dataDir, 'tokens.json'))).toBe('tokens');
+    // ダークもライトと同じ tokens 経路で作り直す（ダークの検証はマージ後のライト側が基準のため）
+    expect(classifyDataEvent(dataDir, 'change', path.join(dataDir, 'tokens.dark.json'))).toBe('tokens');
     expect(classifyDataEvent(dataDir, 'change', path.join(dataDir, 'mockup.config.json'))).toBe('pages');
     expect(classifyDataEvent(dataDir, 'add', path.join(dataDir, 'pages/new.tsx'))).toBe('pages');
     expect(classifyDataEvent(dataDir, 'unlink', path.join(dataDir, 'pages/admin/old.jsx'))).toBe('pages');
