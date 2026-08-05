@@ -191,6 +191,27 @@ describe('dev サーバー', () => {
     }
   });
 
+  test('lockfile の変更は vite cacheDir だけを変える', () => {
+    const lockfile = path.join(projectDir, 'package-lock.json');
+    const imports = ['lucide-react'];
+    const configDir = resolveGeneratedConfigDir(dataDir, imports);
+    const cacheDir = resolveViteCacheDir(dataDir, imports);
+
+    try {
+      fs.writeFileSync(lockfile, '{"lockfileVersion": 3}\n');
+      const changedCacheDir = resolveViteCacheDir(dataDir, imports);
+
+      expect(changedCacheDir).not.toBe(cacheDir);
+      expect(resolveGeneratedConfigDir(dataDir, imports)).toBe(configDir);
+
+      fs.writeFileSync(lockfile, '{"lockfileVersion": 4}\n');
+      expect(resolveViteCacheDir(dataDir, imports)).not.toBe(changedCacheDir);
+      expect(resolveGeneratedConfigDir(dataDir, imports)).toBe(configDir);
+    } finally {
+      fs.rmSync(lockfile, { force: true });
+    }
+  });
+
   test('生成 config は安定パスに置く（vite の依存キャッシュキーに入るため）', () => {
     // 起動ごとにパスが変わると vite が毎回「config が変わった」と判断して事前バンドルをやり直す。
     expect(runtime.configDir).toBe(resolveGeneratedConfigDir(dataDir, ['lucide-react']));

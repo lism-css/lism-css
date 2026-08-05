@@ -13,7 +13,7 @@ import path from 'node:path';
 import { claimViteCacheDir, type ViteCacheClaim } from './cache-claim.js';
 import { readMockConfig, resolveDataDir } from './data-dir.js';
 import { discoverPages } from './pages.js';
-import { getMockPackageRoot, safeRealpath, toImportSpecifier } from './paths.js';
+import { getMockPackageRoot, safeRealpath, toImportSpecifier, walkAncestorDirs } from './paths.js';
 import { buildTokensArtifacts, loadTokens, writeConfigModule } from './tokens.js';
 import type { MockupData, TokenGroupEntry } from './types.js';
 
@@ -53,14 +53,12 @@ function readMockPackageVersion(packageRoot: string): string {
 }
 
 /**
- * 起動間で共有する生成物（vite の依存キャッシュ・生成 config）を置く場所のキー。
+ * 起動間で共有する生成 config を置く場所のキー。
  *
- * 「事前バンドルの結果が変わる入力」をハッシュする。CLI のバージョンと実体位置
- * （別インストールなら同梱依存も別物）、データディレクトリ、`imports` の追加パッケージ
- * （プロジェクト側から解決するので事前バンドル対象が変わる）。
- * 入力が変われば別のディレクトリになるため、古いキャッシュを引き当てることはない。
+ * CLI のバージョンと実体位置（別インストールなら同梱依存も別物）、
+ * データディレクトリ、`imports` の追加パッケージをハッシュする。
  */
-function sharedDirKey(dataDir: string, imports: readonly string[]): string {
+function generatedDirKey(dataDir: string, imports: readonly string[]): string {
   const packageRoot = safeRealpath(getMockPackageRoot());
   return (
     createHash('sha256')
@@ -69,6 +67,34 @@ function sharedDirKey(dataDir: string, imports: readonly string[]): string {
       .digest('hex')
       .slice(0, 16)
   );
+}
+
+const LOCKFILE_NAMES = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lock'] as const;
+
+/** データディレクトリから最も近い lockfile の実体パスと内容。 */
+function findNearestLockfile(dataDir: string): [string, string] | null {
+  for (const dir of walkAncestorDirs(dataDir)) {
+    for (const name of LOCKFILE_NAMES) {
+      const candidate = path.join(dir, name);
+      try {
+        return [safeRealpath(candidate), fs.readFileSync(candidate, 'utf-8')];
+      } catch {
+        // 見つからない、または読めない lockfile はキャッシュキーに使わない。
+      }
+    }
+  }
+  return null;
+}
+
+/** vite の依存キャッシュ用のキー。追加依存がある場合だけ lockfile も含める。 */
+function viteCacheDirKey(dataDir: string, imports: readonly string[]): string {
+  const key = generatedDirKey(dataDir, imports);
+  if (imports.length === 0) return key;
+
+  const lockfile = findNearestLockfile(dataDir);
+  if (!lockfile) return key;
+  const [lockfilePath, lockfileContent] = lockfile;
+  return createHash('sha256').update(key).update('\0').update(lockfilePath).update('\0').update(lockfileContent).digest('hex').slice(0, 16);
 }
 
 /** 共有ディレクトリの置き場所（macOS の os.tmpdir() はシンボリックリンクなので realpath 化して使う）。 */
@@ -90,13 +116,13 @@ function sharedDirRoot(): string {
  * 使う（`prepareViteCacheDir()` 参照）。このパスが存在するのは「誰も使っていない」ときだけ。
  */
 export function resolveViteCacheDir(dataDir: string, imports: readonly string[] = []): string {
-  return path.join(sharedDirRoot(), `lism-mockup-cache-${sharedDirKey(dataDir, imports)}`);
+  return path.join(sharedDirRoot(), `lism-mockup-cache-${viteCacheDirKey(dataDir, imports)}`);
 }
 
 /**
  * 生成した lism.config モジュールを置くディレクトリを決める。
  *
- * ここも `cacheDir` と同じキーの安定パスにする。`lismConfigAlias()` はこのファイルのパスを
+ * ここは lockfile に影響されない安定パスにする。`lismConfigAlias()` はこのファイルのパスを
  * `resolve.alias` に入れ、vite は `resolve` をまるごと依存キャッシュのキーに含めるため、
  * パスが起動ごとに変わると毎回「vite config has changed」で事前バンドルをやり直してしまい、
  * `cacheDir` を共有した意味が無くなる。
@@ -112,7 +138,7 @@ export function resolveViteCacheDir(dataDir: string, imports: readonly string[] 
  * 相手プロセスの vite が書き込み途中の状態を読むことはない。
  */
 export function resolveGeneratedConfigDir(dataDir: string, imports: readonly string[] = []): string {
-  return path.join(sharedDirRoot(), `lism-mockup-config-${sharedDirKey(dataDir, imports)}`);
+  return path.join(sharedDirRoot(), `lism-mockup-config-${generatedDirKey(dataDir, imports)}`);
 }
 
 interface PreparedViteCacheDir {
