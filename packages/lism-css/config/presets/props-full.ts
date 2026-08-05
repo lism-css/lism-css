@@ -35,38 +35,14 @@ const propsFull = Object.fromEntries(
   Object.entries(PROPS)
     .filter(([key, config]) => !('isVar' in config && config.isVar === 1) && !(FULL_BP_EXCLUDED_KEYS as readonly string[]).includes(key))
     .map(([key]) => [key, { bp: 1 }])
-) as Record<FullPropKey, { bp: 1; tokenClass?: 1 }>;
+) as Record<FullPropKey, { bp: 1 }>;
 
 // border サブプロパティ（isVar 系）は導出フィルタの対象外のため、個別に BP サポートを追加する。
 for (const key of FULL_BP_ISVAR_KEYS) {
   propsFull[key] = { bp: 1 };
 }
 
-// スペーシング系の方向指定 props（padding / margin / gap）にも space トークンの
-// ユーティリティクラスを出力する（inset 系は position 用途のため対象外）。
-const SPACING_DIRECTION_KEYS = [
-  'ps',
-  'pe',
-  'pbs',
-  'pbe',
-  'pl',
-  'pr',
-  'pt',
-  'pb',
-  'ms',
-  'me',
-  'mbs',
-  'mbe',
-  'ml',
-  'mr',
-  'mt',
-  'mb',
-  'cg',
-  'rg',
-] as const;
-
-for (const key of SPACING_DIRECTION_KEYS) {
-  propsFull[key] = { ...propsFull[key], tokenClass: 1 };
-}
+// スペーシング系の方向指定 props（padding / margin / gap）の space トークンユーティリティクラスは
+// defaults 側で tokenClass:1 になったため、ここでの上書きは不要。
 
 export default propsFull;

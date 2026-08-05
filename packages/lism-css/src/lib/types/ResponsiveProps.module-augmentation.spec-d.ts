@@ -97,13 +97,13 @@ describe('BreakpointRegistry module augmentation', () => {
     expectTypeOf(validSubProps).toExtend<PropValueTypes>();
   });
 
-  it('FullModeRegistry 拡張で bp:0 だった props も responsive 指定が解禁される（#425）', () => {
-    // defaults では pl/ml/cg は bp:0、bg は bp 未設定（いずれも非レスポンシブ）。
+  it('FullModeRegistry 拡張で defaults では非レスポンシブな props も responsive 指定が解禁される（#425）', () => {
+    // defaults では ta/ff/fs/bg はいずれも bp 未設定（非レスポンシブ）。
     // full モードを型に反映すると、配列・オブジェクト記法が型エラーにならなくなる。
     const value: PropValueTypes = {
-      pl: ['10', '20'], // paddingLeft（space トークン値はそのまま）
-      ml: { base: '10', md: '20' }, // marginLeft
-      cg: ['10', '20'], // columnGap
+      ta: ['start', 'center'], // textAlign
+      ff: { base: 'base', md: 'mono' }, // fontFamily（ff トークン値はそのまま）
+      fs: ['italic', 'normal'], // fontStyle
       bg: { base: 'red', lg: 'blue' }, // フォールバック型でも responsive 化
     };
 

@@ -318,24 +318,24 @@ describe('getLismProps', () => {
     // bp:0 プロパティへの BP 指定は #393 で型エラーになる。
     // ランタイム警告は JS 利用者など型チェックをすり抜けたケースの保険なので、
     // テストでは unknown 経由のキャストで意図的に不正な値を渡して挙動を確認する。
-    test('bp:0 のプロパティに BP 指定すると警告が出る（代替プロパティを案内）', () => {
+    test('bp:0 のプロパティに BP 指定すると警告が出る（同じ prop は 1 回だけ）', () => {
       const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-      getLismProps({ pl: ['10', '20'] } as unknown as LismProps);
+      getLismProps({ fw: ['bold', 'normal'] } as unknown as LismProps);
       // 同じ prop は 2 回目以降は警告しない
-      getLismProps({ pl: ['10', '20'] } as unknown as LismProps);
+      getLismProps({ fw: ['bold', 'normal'] } as unknown as LismProps);
       expect(spy).toHaveBeenCalledTimes(1);
       const msg = spy.mock.calls[0][0] as string;
-      expect(msg).toContain('pl');
-      expect(msg).toContain('ps');
+      expect(msg).toContain('fw');
       spy.mockRestore();
     });
 
-    test('代替プロパティのない bp:0 プロパティは SCSS 案内のみ', () => {
+    test('オブジェクト記法での BP 指定でも警告が出る（SCSS での有効化を案内）', () => {
       const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       getLismProps({ lts: { base: '0', md: '1px' } } as unknown as LismProps);
       expect(spy).toHaveBeenCalledTimes(1);
       const msg = spy.mock.calls[0][0] as string;
-      expect(msg).not.toContain('logical property');
+      expect(msg).toContain('lts');
+      expect(msg).toContain("'lts': ( bp: 1 )");
       spy.mockRestore();
     });
 
