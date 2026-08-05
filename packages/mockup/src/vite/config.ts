@@ -4,13 +4,12 @@
  * 両コマンドが同じ列挙・検証・境界ロジックを通るよう、プラグイン構成はここ1箇所で決める
  * （`check` 成功なのに `dev` で表示されない、という不一致を作らないため）。
  */
-import fs from 'node:fs';
 import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import { lismConfigAlias } from '@lism-css/plugin/vite';
 import type { InlineConfig } from 'vite';
 
-import { getMockPackageRoot, safeRealpath, walkAncestorDirs } from '../core/paths.js';
+import { ancestorNodeModules, getMockPackageRoot, safeRealpath } from '../core/paths.js';
 import type { MockupRuntime } from '../core/runtime.js';
 import { buildImportAllowlist, type ImportAllowlist } from './allowlist.js';
 import { importBoundaryPlugin } from './boundary.js';
@@ -25,22 +24,13 @@ export interface MockupViteConfigOptions {
   mode: MockupViteMode;
 }
 
-/** `from` から親方向へ辿って見つかる node_modules ディレクトリ（`@lism-css/mockup` の依存ツリー）。 */
-function ancestorNodeModules(from: string): string[] {
-  const found: string[] = [];
-  for (const dir of walkAncestorDirs(from)) {
-    const candidate = path.join(dir, 'node_modules');
-    if (fs.existsSync(candidate)) found.push(safeRealpath(candidate));
-  }
-  return found;
-}
-
 /**
  * `server.fs.allow` に渡すルート一覧（多層防御。境界の本体は `importBoundaryPlugin`）。
  *
  * ビューア・データディレクトリ・生成物の一時ディレクトリと、`@lism-css/mockup` が所有する
  * 依存ツリーだけを許可する。workspace リンクされたパッケージは node_modules 配下に無いため、
- * 許可パッケージの realpath も個別に足す。
+ * 許可パッケージの realpath も個別に足す。`imports` の追加パッケージをデータディレクトリ側から
+ * 解決した場合は、その依存も辿れるよう `dependencyRoots` も加わる。
  */
 export function collectFsAllowRoots(options: { viewerDir: string; dataDir: string; tempDir: string; allowlist: ImportAllowlist }): string[] {
   const mockRoot = getMockPackageRoot();
@@ -50,6 +40,7 @@ export function collectFsAllowRoots(options: { viewerDir: string; dataDir: strin
     options.dataDir,
     options.tempDir,
     ...options.allowlist.packageRoots,
+    ...options.allowlist.dependencyRoots,
     ...ancestorNodeModules(mockRoot),
   ]);
   return [...roots];
@@ -57,8 +48,8 @@ export function collectFsAllowRoots(options: { viewerDir: string; dataDir: strin
 
 /** `dev` / `check` 共通の vite 設定を作る。 */
 export function createMockViteConfig({ runtime, viewerDir, mode }: MockupViteConfigOptions): InlineConfig {
-  const allowlist = buildImportAllowlist();
   const dataDir = runtime.data.dataDir;
+  const allowlist = buildImportAllowlist({ dataDir, extraPackages: runtime.data.config.imports });
 
   const config: InlineConfig = {
     // ユーザー側の vite 設定・.env は読まない（ビューアは CLI 同梱の固定配布物）。
@@ -76,6 +67,7 @@ export function createMockViteConfig({ runtime, viewerDir, mode }: MockupViteCon
       importBoundaryPlugin({
         dataDir,
         allowlist,
+        generatedDir: runtime.tempDir,
         getPageSpecifiers: () => runtime.getPageSpecifiers(),
       }),
       react(),

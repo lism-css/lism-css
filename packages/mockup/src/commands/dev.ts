@@ -57,6 +57,13 @@ function reportWatchError(server: ViteDevServer, error: unknown): void {
   server.ws.send({ type: 'error', err: { message: `[lism-mockup] ${detail}`, stack: '' } });
 }
 
+/** 2つのパッケージ名リストが同じ内容か（順序は問わない）。 */
+export function sameImports(before: readonly string[] = [], after: readonly string[] = []): boolean {
+  if (before.length !== after.length) return false;
+  const sortedAfter = [...after].sort();
+  return [...before].sort().every((name, index) => name === sortedAfter[index]);
+}
+
 /** 変更種別に応じて runtime を作り直し、仮想モジュールを invalidate してフルリロードする。 */
 export async function applyDataChange(server: ViteDevServer, runtime: MockupRuntime, kind: ReloadKind): Promise<void> {
   try {
@@ -66,7 +73,13 @@ export async function applyDataChange(server: ViteDevServer, runtime: MockupRunt
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_CSS_ID);
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_DATA_ID);
     } else {
+      const before = runtime.data.config.imports;
       runtime.refreshPages();
+      // 許可リストは vite 設定の組み立て時に一度だけ作るため、`imports` の変更は再起動しないと効かない。
+      // 黙って無視すると「設定に足したのに Forbidden import のまま」で行き詰まるので必ず伝える。
+      if (!sameImports(before, runtime.data.config.imports)) {
+        server.config.logger.warn(pc.yellow('[lism-mockup] "imports" changed in mockup.config.json. Restart `lism-mockup dev` to apply it.'));
+      }
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_PAGES_ID);
     }
     server.ws.send({ type: 'full-reload' });

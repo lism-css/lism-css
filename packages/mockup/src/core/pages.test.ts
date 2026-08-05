@@ -6,7 +6,7 @@ import { cleanupTempDirs, createDataDir, createTempDir } from '../test-helpers/f
 import { discoverPages, sortPages } from './pages.js';
 import type { MockupConfigFile, PageEntry } from './types.js';
 
-const CONFIG: MockupConfigFile = { schemaVersion: 1 };
+const CONFIG: MockupConfigFile = { schemaVersion: 2 };
 const PAGE = 'export default () => null;\n';
 
 afterAll(() => {
@@ -43,7 +43,7 @@ describe('discoverPages', () => {
 
   test('mockup.config.json のメタデータをマージする', () => {
     const dir = createDataDir({ 'pages/home.jsx': PAGE });
-    const config: MockupConfigFile = { schemaVersion: 1, pages: { home: { label: 'Top', category: 'Main', order: 2 } } };
+    const config: MockupConfigFile = { schemaVersion: 2, pages: { home: { label: 'Top', category: 'Main', order: 2 } } };
 
     expect(discoverPages(dir, config)[0]).toMatchObject({ id: 'home', label: 'Top', category: 'Main', order: 2 });
   });
@@ -55,14 +55,14 @@ describe('discoverPages', () => {
 
   test('実在しない pageId を参照していればエラー', () => {
     const dir = createDataDir({ 'pages/home.jsx': PAGE });
-    const config: MockupConfigFile = { schemaVersion: 1, pages: { dashboard: { label: 'Dashboard' } } };
+    const config: MockupConfigFile = { schemaVersion: 2, pages: { dashboard: { label: 'Dashboard' } } };
 
     expect(() => discoverPages(dir, config)).toThrow(/references an unknown page id "dashboard"/);
   });
 
   test('実在しない pageId が __proto__ でもエラー（prototype 由来キーで検証を抜けない）', () => {
     const dir = createDataDir({ 'pages/home.jsx': PAGE });
-    const config = { schemaVersion: 1, pages: JSON.parse('{ "__proto__": { "label": "Ghost" } }') } as MockupConfigFile;
+    const config = { schemaVersion: 2, pages: JSON.parse('{ "__proto__": { "label": "Ghost" } }') } as MockupConfigFile;
 
     expect(() => discoverPages(dir, config)).toThrow(/references an unknown page id "__proto__"/);
   });
@@ -78,7 +78,7 @@ describe('discoverPages', () => {
 
   test('__proto__ という page id のメタデータを正しくマージする', () => {
     const dir = createDataDir({ 'pages/__proto__.jsx': PAGE });
-    const config = { schemaVersion: 1, pages: JSON.parse('{ "__proto__": { "label": "Proto", "order": 1 } }') } as MockupConfigFile;
+    const config = { schemaVersion: 2, pages: JSON.parse('{ "__proto__": { "label": "Proto", "order": 1 } }') } as MockupConfigFile;
 
     expect(discoverPages(dir, config)[0]).toMatchObject({ id: '__proto__', label: 'Proto', order: 1 });
   });

@@ -5,7 +5,7 @@ import type { ViteDevServer } from 'vite';
 import type { MockupRuntime } from '../core/runtime.js';
 import { cleanupTempDirs, createTempDir, getFixtureViewerDir, writeFiles } from '../test-helpers/fixtures.js';
 import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIRTUAL_TOKENS_DATA_ID } from '../vite/virtual-modules.js';
-import { classifyDataEvent, createMockDevServer } from './dev.js';
+import { classifyDataEvent, createMockDevServer, sameImports } from './dev.js';
 
 const HOME_PAGE = `import { Box } from 'lism-css/react';
 import { Check } from 'lucide-react';
@@ -44,8 +44,10 @@ beforeAll(async () => {
     'node_modules/react/package.json': JSON.stringify({ name: 'react', version: '0.0.0-fake', main: 'index.js' }),
     'node_modules/react/index.js': 'export default "fake react";\n',
     'data/mockup.config.json': JSON.stringify({
-      schemaVersion: 1,
+      schemaVersion: 2,
       title: 'Integration',
+      // プロジェクト側に無くても CLI 同梱の依存として解決できることを確かめる。
+      imports: ['lucide-react'],
       pages: { home: { label: 'Home', order: 1 } },
     }),
     'data/tokens.json': JSON.stringify({ color: { canvas: '#f7f7f7' }, space: { '30': '1.5rem' } }),
@@ -186,6 +188,14 @@ describe('dev サーバー', () => {
     // ページ以外のファイルは再列挙しない
     expect(classifyDataEvent(dataDir, 'add', path.join(dataDir, 'pages/home.css'))).toBeNull();
     expect(classifyDataEvent(dataDir, 'add', path.join(dataDir, 'README.md'))).toBeNull();
+  });
+
+  test('imports の変更検知は順序を問わず内容だけで判定する', () => {
+    expect(sameImports(undefined, undefined)).toBe(true);
+    expect(sameImports([], undefined)).toBe(true);
+    expect(sameImports(['a', 'b'], ['b', 'a'])).toBe(true);
+    expect(sameImports(['a'], ['a', 'b'])).toBe(false);
+    expect(sameImports(['a'], ['b'])).toBe(false);
   });
 
   test('ページを追加すると再列挙されて仮想モジュールへ反映される', async () => {

@@ -7,7 +7,17 @@
  */
 
 /** Supported `mockup.config.json` schema version. Bump when the contract changes. */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
+
+/**
+ * Packages every page may import without any configuration.
+ *
+ * These are the standard building blocks of a Lism mockup, so they are resolved
+ * from the copies `@lism-css/mockup` owns and can never be turned into an opt-in
+ * dependency of the data directory. Anything else goes through the `imports`
+ * field of `mockup.config.json`.
+ */
+export const STANDARD_PACKAGES = ['react', 'react-dom', 'lism-css', '@lism-css/ui'] as const;
 
 /**
  * Whether a parsed JSON value is an object the validators can walk key by key.
@@ -38,6 +48,11 @@ export interface MockupConfigPageMeta {
 export interface MockupConfigFile {
   schemaVersion: number;
   title?: string;
+  /**
+   * Extra packages pages may import, on top of {@link STANDARD_PACKAGES}.
+   * Resolved from the project that contains the data directory.
+   */
+  imports?: string[];
   pages?: Record<string, MockupConfigPageMeta>;
 }
 

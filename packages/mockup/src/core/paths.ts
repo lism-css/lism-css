@@ -19,13 +19,14 @@ export function getViewerDir(): string {
 }
 
 /**
- * 許可 bare import を「@lism-css/mockup 自身の位置」から解決するための importer パス。
- *
- * 実ファイルである必要はない（Vite / Rollup は importer の dirname だけを見る）。
+ * 標準パッケージの bare import を「@lism-css/mockup 自身の位置」から解決するための importer パス。
  * データディレクトリ側の node_modules を参照させないためのアンカー。
+ *
+ * アンカーには必ず実在ファイルを使う。vite は存在しない importer を渡されると解決の起点を
+ * `root` へフォールバックするため、実在しないパスだと「どこを起点にするか」を指定できない。
  */
 export function getResolveAnchor(): string {
-  return path.join(getMockPackageRoot(), '__lism-mockup-resolve-anchor.js');
+  return path.join(getMockPackageRoot(), 'package.json');
 }
 
 /**
@@ -57,6 +58,26 @@ export function safeRealpath(target: string): string {
 export function isInsideDir(dir: string, target: string): boolean {
   const rel = path.relative(dir, target);
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
+}
+
+/**
+ * パスに `node_modules` セグメントが含まれるか。
+ *
+ * データディレクトリからの相対パスを渡すこと。データディレクトリ自身のパスに
+ * `node_modules` が含まれる場合まで巻き込まないようにするため。
+ */
+export function hasNodeModulesSegment(relativePath: string): boolean {
+  return relativePath.split(/[\\/]/).includes('node_modules');
+}
+
+/** `from` から親方向へ辿って見つかる node_modules ディレクトリ（realpath、近い順）。 */
+export function ancestorNodeModules(from: string): string[] {
+  const found: string[] = [];
+  for (const dir of walkAncestorDirs(from)) {
+    const candidate = path.join(dir, 'node_modules');
+    if (fs.existsSync(candidate)) found.push(safeRealpath(candidate));
+  }
+  return found;
 }
 
 /** id をパス部分とクエリ部分（`?...`）に分割する。 */

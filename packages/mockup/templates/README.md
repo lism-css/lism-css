@@ -45,7 +45,7 @@ on it.
 
 ```
 .
-├── mockup.config.json      # required — schema version + page metadata
+├── mockup.config.json      # required — schema version + extra imports + page metadata
 ├── tokens.json             # optional — design token overrides
 ├── pages/                  # required — one file per screen
 │   ├── landing.jsx
@@ -79,16 +79,18 @@ picture of a screen, not an app.
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "title": "Acme Console Mockup",
+  "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 }
   }
 }
 ```
 
-- `schemaVersion` must be `1`.
+- `schemaVersion` must be `2`.
 - `title` (optional) is shown in the viewer.
+- `imports` (optional) lists extra packages the pages may import — see [Imports](#imports).
 - `pages` (optional) only overrides display metadata: `label`, `category`, `order`.
   Default order is the page id, alphabetically.
 - `components` is a reserved page id (see [Viewer](#viewer)). The viewer decides both
@@ -122,17 +124,29 @@ CSS variable (`var(--success)`). See `pages/landing.jsx` and
 
 ## Imports
 
-Bare imports are limited to these packages (only paths they really export):
+These packages are always available (only paths they really export):
 
 | Package               | Example                                              |
 | --------------------- | ---------------------------------------------------- |
 | `react` / `react-dom` | `import { useState } from 'react'`                   |
 | `lism-css`            | `import { Stack, Group } from 'lism-css/react'`      |
 | `@lism-css/ui`        | `import { Button } from '@lism-css/ui/react/Button'` |
-| `lucide-react`        | `import { Check } from 'lucide-react'`               |
 
 Note that `@lism-css/ui` has no root export: import each component from
 `@lism-css/ui/react/<Component>`.
+
+Any other package must be listed in `imports` in `mockup.config.json` **and**
+installed in the project that contains this directory:
+
+```json
+{ "schemaVersion": 2, "imports": ["lucide-react", "some-ui-library"] }
+```
+
+- Package names only — `"lucide-react"`, not `"lucide-react/icons"`.
+- A package that is declared but not installed stops `dev` and `check`.
+- `lucide-react` (used by the sample pages) ships with the CLI, so it works
+  without installing anything. It still has to stay in `imports`.
+- `dev` reads `imports` once at startup — restart it after editing the list.
 
 Relative imports must stay inside this directory and point at `.jsx`, `.tsx`,
 `.css` or an image (`.png` / `.jpg` / `.jpeg` / `.gif` / `.svg` / `.webp`).

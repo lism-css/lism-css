@@ -4,7 +4,7 @@ import type { MockupData, TokenGroupEntry } from '../core/types.js';
 import { generateCheckEntryModule, generatePagesModule, generateTokensDataModule } from './virtual-modules.js';
 
 function createData(pages: MockupData['pages'], title?: string): MockupData {
-  return { dataDir: '/data', config: { schemaVersion: 1, ...(title === undefined ? {} : { title }) }, pages, tokens: {} };
+  return { dataDir: '/data', config: { schemaVersion: 2, ...(title === undefined ? {} : { title }) }, pages, tokens: {} };
 }
 
 describe('generatePagesModule', () => {
