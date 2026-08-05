@@ -253,5 +253,5 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `<Grid cg={['40', null, '80']}>` | `<Grid g={['40', null, '80']}>` または `<Grid cg="40">` | `cg` / `rg` は BP 非対応。レスポンシブにするなら BP 対応の `g` を使うか、単一値にする |
+| `<Box ta={['start', null, 'center']}>` | `<Box ta="center">` | `ta` / `fw` / `ov` などは BP 非対応。レスポンシブが必要なら SCSS 側で `bp: 1` を有効にするか、単一値にする |
 

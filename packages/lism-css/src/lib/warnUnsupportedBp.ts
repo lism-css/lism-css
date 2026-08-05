@@ -8,7 +8,9 @@
  * 「SCSS でカスタマイズ済みなら無視して OK」の注記を添える方針とする。
  */
 
-// bp:0 化されたプロパティのうち、論理プロパティで代替できるものの対応表。
+// 論理プロパティで代替できるものの対応表。
+// これらは defaults では bp:1 のため通常は警告対象にならないが、
+// lism.config で bp:0 に opt-out した場合の案内として残している。
 const ALT_PROP_MAP: Record<string, string> = {
   pl: 'ps',
   pr: 'pe',

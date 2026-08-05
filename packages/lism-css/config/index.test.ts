@@ -21,8 +21,8 @@ describe('isFullMode', () => {
     const { PROPS } = await importConfig();
     const props = PROPS as unknown as LoosePropConfig;
     // bp 省略 = 非レスポンシブ（bp:0 のデフォルト）。full preset 未適用を確認する
-    expect(props.pl.bp).toBeUndefined();
-    expect(props.pl.tokenClass).toBeUndefined();
+    expect(props.ov.bp).toBeUndefined();
+    expect(props.td.bp).toBeUndefined();
   });
 
   test('lism.config.js の isFullMode で full preset が適用される', async () => {
@@ -30,13 +30,12 @@ describe('isFullMode', () => {
     const props = PROPS as unknown as LoosePropConfig;
 
     // bp:0 だった prop が bp:1 になる
-    expect(props.pl.bp).toBe(1);
-    // スペーシング系方向 props には tokenClass:1 が付与される
-    expect(props.pl.tokenClass).toBe(1);
-    expect(props.cg.tokenClass).toBe(1);
-    // isVar 系は preset の対象外
-    expect(props.cols.isVar).toBe(1);
-    expect(props.cols.tokenClass).toBeUndefined();
+    expect(props.ov.bp).toBe(1);
+    expect(props.td.bp).toBe(1);
+    // isVar 系は preset の対象外（bds / bdc のみ例外的に bp:1 になる）
+    expect(props.lh.isVar).toBe(1);
+    expect(props.lh.bp).toBeUndefined();
+    expect(props.contentSize.bp).toBeUndefined();
   });
 
   test('isFullMode でも border ショートハンド系は bp 対象外、bds / bdc は bp:1 になる（#513）', async () => {
@@ -56,27 +55,29 @@ describe('isFullMode', () => {
   });
 
   test('ユーザー設定の props 上書きが full preset より優先される（opt-out 可能）', async () => {
-    const { PROPS } = await importConfig({ isFullMode: true, props: { pl: { bp: 0 } } });
+    const { PROPS } = await importConfig({ isFullMode: true, props: { ov: { bp: 0 } } });
     const props = PROPS as unknown as LoosePropConfig;
-    expect(props.pl.bp).toBe(0);
-    expect(props.pl.tokenClass).toBe(1); // 上書きしていないキーは preset のまま
+    expect(props.ov.bp).toBe(0);
+    expect(props.td.bp).toBe(1); // 上書きしていないキーは preset のまま
   });
 
-  test('isFullMode でコンポーネントの出力がトークンクラスになる', async () => {
+  test('isFullMode では bp:0 プロパティへの BP 指定でも警告が出ない', async () => {
     vi.resetModules();
     vi.doMock('lism-css/config.js', () => ({ default: { isFullMode: true } }));
     const { default: getLismProps } = await import('../src/lib/getLismProps');
-    const result = getLismProps({ pl: '20' });
-    expect(result.className).toContain('-pl:20');
-    expect(result.style).toBeUndefined();
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    getLismProps({ td: ['none', 'underline'] } as never);
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
   });
 
-  test('isFullMode なしではコンポーネントの出力は inline style のまま', async () => {
+  test('isFullMode なしでは bp:0 プロパティへの BP 指定で警告が出る', async () => {
     vi.resetModules();
     const { default: getLismProps } = await import('../src/lib/getLismProps');
-    const result = getLismProps({ pl: '20' });
-    expect(result.className).toBeUndefined();
-    expect(result.style).toEqual({ paddingLeft: 'var(--s20)' });
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    getLismProps({ td: ['none', 'underline'] } as never);
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockRestore();
   });
 });
 

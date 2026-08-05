@@ -1,5 +1,6 @@
 import { describe, test, expect, vi } from 'vitest';
 import getLismProps, { type LismProps } from './getLismProps';
+import warnUnsupportedBp from './warnUnsupportedBp';
 
 describe('getLismProps', () => {
   describe('基本動作', () => {
@@ -318,12 +319,22 @@ describe('getLismProps', () => {
     // bp:0 プロパティへの BP 指定は #393 で型エラーになる。
     // ランタイム警告は JS 利用者など型チェックをすり抜けたケースの保険なので、
     // テストでは unknown 経由のキャストで意図的に不正な値を渡して挙動を確認する。
-    test('bp:0 のプロパティに BP 指定すると警告が出る（代替プロパティを案内）', () => {
+    test('bp:0 のプロパティに BP 指定すると警告が出る（同じ prop は 1 回だけ）', () => {
       const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-      getLismProps({ pl: ['10', '20'] } as unknown as LismProps);
+      getLismProps({ fw: ['bold', 'normal'] } as unknown as LismProps);
       // 同じ prop は 2 回目以降は警告しない
-      getLismProps({ pl: ['10', '20'] } as unknown as LismProps);
+      getLismProps({ fw: ['bold', 'normal'] } as unknown as LismProps);
       expect(spy).toHaveBeenCalledTimes(1);
+      const msg = spy.mock.calls[0][0] as string;
+      expect(msg).toContain('fw');
+      spy.mockRestore();
+    });
+
+    test('物理方向プロパティを bp:0 に戻した場合は論理プロパティを案内する', () => {
+      // pl / mt などは defaults で bp:1 のため通常この警告は出ないが、
+      // lism.config で bp:0 に opt-out した場合の案内は残しているので直接呼んで確認する。
+      const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      warnUnsupportedBp('pl');
       const msg = spy.mock.calls[0][0] as string;
       expect(msg).toContain('pl');
       expect(msg).toContain('ps');
