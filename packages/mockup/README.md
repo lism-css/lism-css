@@ -96,12 +96,14 @@ Page conventions:
 
 ### `mockup.config.json`
 
-Required. Holds the schema version and display metadata only.
+Required. Holds the schema version, the extra import allowlist and display
+metadata only.
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "title": "Acme Console Mockup",
+  "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 },
     "admin/dashboard": { "label": "Dashboard", "category": "Admin", "order": 20 }
@@ -111,8 +113,9 @@ Required. Holds the schema version and display metadata only.
 
 | Key | Required | Description |
 | --- | --- | --- |
-| `schemaVersion` | yes | Must be `1`. Validated before anything else runs. |
+| `schemaVersion` | yes | Must be `2`. Validated before anything else runs. |
 | `title` | no | Shown in the viewer. |
+| `imports` | no | Extra packages pages may import. See [Imports](#imports). |
 | `pages` | no | Per page id: `label`, `category`, `order`. |
 
 - Default sort order is `order` ascending, then page id alphabetically. The
@@ -172,20 +175,40 @@ Writing `className="-bgc:canvas"` produces a class that has no CSS behind it.
 
 ### Imports
 
-Pages may import from a fixed allowlist. Bare specifiers are checked against the
-real `exports` map of each package, so a path that the package does not export is
+Pages may import from an allowlist. Bare specifiers are checked against the real
+`exports` map of each package, so a path that the package does not export is
 rejected up front instead of failing later in the bundler.
+
+**Standard packages** need no configuration:
 
 | Package | Notes |
 | --- | --- |
 | `react`, `react-dom` | Including `react/jsx-runtime`. |
 | `lism-css` | `lism-css/react`, `lism-css/lib/*`, … |
 | `@lism-css/ui` | No root export — use `@lism-css/ui/react/<Component>`. |
-| `lucide-react` | Icons. |
 
 These resolve to the copies owned by `@lism-css/mockup`, so a data directory never
 needs its own `node_modules`, and a `react` sitting in a parent directory cannot
 shadow them.
+
+**Extra packages** are opt-in through `imports` in `mockup.config.json`:
+
+```json
+{ "schemaVersion": 2, "imports": ["lucide-react", "some-ui-library"] }
+```
+
+- List package names only — not subpaths (`"lucide-react"`, not
+  `"lucide-react/icons"`). Which subpaths are importable still comes from the
+  package's own `exports` map.
+- Install them in the project that contains the data directory. A declared
+  package that is not installed stops `dev` and `check` before anything is
+  bundled.
+- `lucide-react` is the exception that needs no install: `@lism-css/mockup`
+  bundles it, so the scaffold that `init` writes works as-is. It still has to be
+  declared in `imports`.
+- Adding a standard package to `imports` is an error — they are always available.
+- `dev` builds the allowlist once at startup, so restart it after editing
+  `imports`.
 
 Relative imports must resolve **inside the data directory** and point at one of:
 

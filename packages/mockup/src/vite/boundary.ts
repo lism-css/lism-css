@@ -6,17 +6,18 @@
  * このプラグインは `dev` と `check` の両方に適用する。
  *
  * 1. 信頼済みコード（`virtual:lism-mockup/pages`）からのページ import … 列挙結果に含まれることを検証して許可
- * 2. ユーザーファイル（realpath がデータディレクトリ配下）からの import … 許可リストの bare import と、
- *    データディレクトリ内で完結する相対 import のみ。絶対パス・`/@fs/`・許可外 bare は契約違反として拒否
- * 3. それ以外（ビューア自身のコード・vite 内部モジュール） … 通常解決
+ * 2. ユーザーファイル（realpath がデータディレクトリ配下、かつ `node_modules` 配下でない）からの import …
+ *    許可リストの bare import と、データディレクトリ内で完結する相対 import のみ。
+ *    絶対パス・`/@fs/`・許可外 bare は契約違反として拒否
+ * 3. それ以外（ビューア自身のコード・インストール済みパッケージ・vite 内部モジュール） … 通常解決
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import type { Plugin } from 'vite';
 
-import { getResolveAnchor, isInsideDir, safeRealpath, splitQuery, toImportSpecifier } from '../core/paths.js';
+import { hasNodeModulesSegment, isInsideDir, safeRealpath, splitQuery, toImportSpecifier } from '../core/paths.js';
 import { MockupContractError } from '../core/types.js';
-import { ALLOWED_PACKAGES, type ImportAllowlist } from './allowlist.js';
+import { type ImportAllowlist, type PackageResolution } from './allowlist.js';
 import { isPageImporterId } from './virtual-modules.js';
 
 /** 相対 import で許可する拡張子。 */
@@ -44,8 +45,8 @@ export type ImportDecision =
   | { kind: 'passthrough' }
   /** 検証済みの絶対パスへ解決する。 */
   | { kind: 'resolved'; id: string }
-  /** 許可された bare import（`@lism-css/mockup` 起点で解決する）。 */
-  | { kind: 'bare'; specifier: string };
+  /** 許可された bare import（許可リストが示すアンカーから解決する）。 */
+  | { kind: 'bare'; specifier: string; resolution: PackageResolution };
 
 /**
  * vite / プラグインが注入する内部モジュールか。
@@ -92,6 +93,9 @@ export function classifyImport(source: string, importer: string | undefined, ctx
   // 2. ユーザーファイル判定は realpath で行う（シンボリックリンク経由の抜けを作らない）。
   const realImporter = safeRealpath(importerFile);
   if (!isInsideDir(ctx.dataDir, realImporter)) return { kind: 'passthrough' };
+  // データディレクトリ配下でも node_modules の中は「解決済みパッケージ本体とその依存」であり、
+  // ページの契約対象ではない。データディレクトリをプロジェクト直下に置くとこの構成になる。
+  if (hasNodeModulesSegment(path.relative(ctx.dataDir, realImporter))) return { kind: 'passthrough' };
 
   const { pathname, query } = splitQuery(source);
 
@@ -112,15 +116,17 @@ export function classifyImport(source: string, importer: string | undefined, ctx
     throw violation(ctx.dataDir, realImporter, source, 'external URLs cannot be imported.');
   }
 
-  if (!ctx.allowlist.isAllowed(pathname)) {
+  const resolution = ctx.allowlist.resolutionFor(pathname);
+  if (!resolution) {
     throw violation(
       ctx.dataDir,
       realImporter,
       source,
-      `it is not an allowed package entry. Only published entries of ${ALLOWED_PACKAGES.join(', ')} can be imported.`
+      `it is not an allowed package entry. Only published entries of ${ctx.allowlist.allowedPackages.join(', ')} can be imported. ` +
+        `To use another package, add it to "imports" in mockup.config.json and install it in this project.`
     );
   }
-  return { kind: 'bare', specifier: source };
+  return { kind: 'bare', specifier: source, resolution };
 }
 
 function resolveUserRelativeImport(
@@ -150,16 +156,17 @@ function resolveUserRelativeImport(
   return { kind: 'resolved', id: real + query };
 }
 
-export interface ImportBoundaryOptions extends ImportBoundaryContext {
-  /** 許可 bare import を解決するときの importer（既定は `@lism-css/mockup` パッケージルート）。 */
-  resolveAnchor?: string;
+export type ImportBoundaryOptions = ImportBoundaryContext;
+
+/** 解決できなかった許可 bare import の案内文（由来によって直し方が違う）。 */
+function unresolvedMessage(specifier: string, resolution: PackageResolution): string {
+  return resolution.origin === 'data'
+    ? `Cannot resolve ${JSON.stringify(specifier)}. "${resolution.name}" is declared in "imports" but this entry does not exist in the installed version.`
+    : `Cannot resolve ${JSON.stringify(specifier)} from @lism-css/mockup. Reinstall @lism-css/mockup and try again.`;
 }
 
 /** import 境界を強制する vite プラグイン。 */
-export function importBoundaryPlugin(options: ImportBoundaryOptions): Plugin {
-  const { resolveAnchor, ...ctx } = options;
-  const anchor = resolveAnchor ?? getResolveAnchor();
-
+export function importBoundaryPlugin(ctx: ImportBoundaryOptions): Plugin {
   return {
     name: 'lism-mockup:import-boundary',
     enforce: 'pre',
@@ -169,14 +176,12 @@ export function importBoundaryPlugin(options: ImportBoundaryOptions): Plugin {
       if (decision.kind === 'passthrough') return null;
       if (decision.kind === 'resolved') return decision.id;
 
-      // 許可 bare import は `@lism-css/mockup` 自身の位置から解決する。
-      // データディレクトリ側（や、その親）に同名パッケージがあっても CLI 同梱側を使うため。
-      const resolved = await this.resolve(decision.specifier, anchor, { skipSelf: true });
+      // 標準パッケージは `@lism-css/mockup` 自身の位置から解決する（データディレクトリ側や
+      // その親に同名パッケージがあっても CLI 同梱側を使うため）。`imports` の追加パッケージは
+      // データディレクトリ側のアンカーから解決する。
+      const resolved = await this.resolve(decision.specifier, decision.resolution.anchor, { skipSelf: true });
       if (!resolved) {
-        throw new MockupContractError(
-          `Cannot resolve ${JSON.stringify(decision.specifier)} from @lism-css/mockup. Reinstall @lism-css/mockup and try again.`,
-          { file: importer }
-        );
+        throw new MockupContractError(unresolvedMessage(decision.specifier, decision.resolution), { file: importer });
       }
       return resolved;
     },

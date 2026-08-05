@@ -2,7 +2,7 @@ import path from 'node:path';
 import { afterAll, afterEach, describe, expect, test, vi } from 'vitest';
 
 import { MockupContractError } from '../core/types.js';
-import { cleanupTempDirs, createDataDir, getFixtureViewerDir, MOCKUP_CONFIG, PLAIN_PAGE } from '../test-helpers/fixtures.js';
+import { cleanupTempDirs, createDataDir, getFixtureViewerDir, installFakePackage, MOCKUP_CONFIG, PLAIN_PAGE } from '../test-helpers/fixtures.js';
 import { checkCommand } from './check.js';
 
 const viewerDir = getFixtureViewerDir();
@@ -87,15 +87,39 @@ describe('checkCommand', () => {
     await expect(check(badTokens)).rejects.toThrow(/is not an existing token/);
 
     const ghostPage = createDataDir({
-      'mockup.config.json': JSON.stringify({ schemaVersion: 1, pages: { missing: { label: 'x' } } }),
+      'mockup.config.json': JSON.stringify({ schemaVersion: 2, pages: { missing: { label: 'x' } } }),
       'pages/home.jsx': PLAIN_PAGE,
     });
     await expect(check(ghostPage)).rejects.toThrow(/references an unknown page id "missing"/);
   });
 
+  test('imports で宣言したパッケージはプロジェクト側から解決して bundle できる', async () => {
+    vi.spyOn(console, 'log').mockImplementation(() => undefined);
+    // データディレクトリをプロジェクト直下に置く（node_modules がデータディレクトリ配下に入る構成）。
+    const project = createDataDir({
+      'mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['fake-ui'] }),
+      'pages/home.jsx': `import { Badge } from 'fake-ui';\nexport default function Home() {\n  return <div>{Badge}</div>;\n}\n`,
+    });
+    installFakePackage(project, 'fake-ui', {
+      'package.json': JSON.stringify({ name: 'fake-ui', version: '1.0.0', type: 'module', exports: { '.': './index.js' } }),
+      'index.js': `export const Badge = 'badge';\n`,
+    });
+
+    await expect(check(project)).resolves.toBeUndefined();
+  }, 60_000);
+
+  test('imports で宣言したパッケージが未インストールなら bundle 前に停止する', async () => {
+    const dir = createDataDir({
+      'mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['not-installed-anywhere'] }),
+      'pages/home.jsx': PLAIN_PAGE,
+    });
+
+    await expect(check(dir)).rejects.toThrow(/not installed: "not-installed-anywhere"/);
+  });
+
   test('一時ディレクトリは check 終了後に残らない', async () => {
-    const dir = createDataDir({ 'mockup.config.json': '{ "schemaVersion": 2 }', 'pages/home.jsx': PLAIN_PAGE });
-    await expect(check(dir)).rejects.toThrow(/only supports 1/);
+    const dir = createDataDir({ 'mockup.config.json': '{ "schemaVersion": 1 }', 'pages/home.jsx': PLAIN_PAGE });
+    await expect(check(dir)).rejects.toThrow(/only supports 2/);
     expect(path.isAbsolute(dir)).toBe(true);
   });
 });

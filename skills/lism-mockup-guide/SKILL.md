@@ -44,7 +44,7 @@ Lism Mockupを使って画面モックアップを作成するための実装ガ
 
 ```
 mockup/
-├── mockup.config.json      # 必須 — schemaVersion＋表示メタデータ
+├── mockup.config.json      # 必須 — schemaVersion＋追加import＋表示メタデータ
 ├── tokens.json             # 任意 — デザイントークンの上書き
 └── pages/                  # 必須 — 1ファイル=1画面（最低1ページ）
     ├── landing.jsx
@@ -67,16 +67,17 @@ mockup/
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "title": "Acme Console Mockup",
+  "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 }
   }
 }
 ```
 
-- `schemaVersion`は必須で`1`
-- `title`は任意。`pages`は表示メタデータ（`label` / `category` / `order`）の上書きのみで、並び順の既定はページIDの辞書順
+- `schemaVersion`は必須で`2`
+- `title`は任意。`imports`は追加でimportを許可するパッケージ（後述）。`pages`は表示メタデータ（`label` / `category` / `order`）の上書きのみで、並び順の既定はページIDの辞書順
 - **`components`は予約ページID**（後述）。ビューアが「UI Parts」という名前でサイドバーの「Viewer」グループに固定表示するため、ここにエントリを書く必要はない（`label` / `category` / `order`はいずれも無視される）
 - **実在しないページIDの参照はエラー**（消し忘れ・タイポのシグナル）。未知のトップレベルキーもエラー
 
@@ -108,15 +109,20 @@ lism.config互換の`tokens`オブジェクト（`lism.config.js`の`tokens`に�
 
 ### import規則
 
-bare importは許可リストのパッケージのみ。CLI側のnode_modulesで解決されるため、モックアップ用にユーザープロジェクトへ依存を追加する必要はない（かつ、リスト外のパッケージは追加しても使えない）。
+bare importは許可リストのパッケージのみ。次の標準パッケージは設定不要で常に使え、CLI側のnode_modulesで解決される（ユーザープロジェクトへ依存を追加する必要はない）。
 
 | パッケージ | 例 |
 | --- | --- |
 | `react` / `react-dom` | `import { useState } from 'react'` |
 | `lism-css` | `import { Stack, Group } from 'lism-css/react'` |
 | `@lism-css/ui` | `import { Button } from '@lism-css/ui/react/Button'` |
-| `lucide-react` | `import { Check } from 'lucide-react'` |
 
+それ以外のパッケージは`mockup.config.json`の`imports`に**パッケージ名だけ**を書いて許可する（`"lucide-react"`は可、`"lucide-react/icons"`は不可）。
+
+- 宣言したパッケージは、データディレクトリを含むプロジェクト側にインストールする。未インストールならbundle前に停止する
+- `lucide-react`はCLI同梱のためインストール不要。ただし`imports`への記載は必要（`init`が生成する設定には最初から入っている）
+- 標準パッケージを`imports`に書くとエラーになる（常時許可されているため）
+- `dev`は起動時に一度だけ許可リストを作る。`imports`を編集したら`dev`を再起動する
 - **`@lism-css/ui`にルートexportは無い。** 必ず`@lism-css/ui/react/<Component>`から個別importする
 - 許可リスト内でも、パッケージが実際にexportしているパスのみ許可（存在しないサブパスは拒否される）
 - 相対importはデータディレクトリ内で完結させ、対象は`.jsx` / `.tsx` / `.css` / 画像（`.png` / `.jpg` / `.jpeg` / `.gif` / `.svg` / `.webp`）のみ

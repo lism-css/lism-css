@@ -1,21 +1,26 @@
 /**
  * ページから import してよい bare specifier の許可リスト。
  *
+ * 許可対象は2種類ある。
+ * 1. 標準パッケージ（`STANDARD_PACKAGES`）… 設定不要で常時許可し、`@lism-css/mockup` 同梱の
+ *    コピーへ解決する。データディレクトリ側に同名パッケージがあっても CLI 側を使う。
+ * 2. 追加パッケージ（`mockup.config.json` の `imports`）… データディレクトリを含む
+ *    プロジェクトから解決する。未インストールならコマンド開始時にエラーにする。
+ *
  * パッケージ名の前方一致では許可しない。`@lism-css/ui` はルート `.` を export しておらず
  * `./react/Accordion` 等の個別エントリしか無いため、前方一致だと「許可済みなのに bundle できない
  * specifier」を生むため。許可リストは各パッケージの `exports` マップから実在 specifier へ展開する。
  *
- * 解決は必ず `@lism-css/mockup` 自身を起点に行う（`import.meta.resolve()`）。
+ * 標準パッケージの解決は必ず `@lism-css/mockup` 自身を起点に行う（`import.meta.resolve()`）。
  * `createRequire()` は使えない — `lism-css` / `@lism-css/ui` の対象 exports は `import` 条件のみのため。
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { getMockPackageRoot, safeRealpath, walkAncestorDirs } from '../core/paths.js';
-
-/** ページからの bare import を許可するパッケージ。 */
-export const ALLOWED_PACKAGES = ['react', 'react-dom', 'lism-css', '@lism-css/ui', 'lucide-react'] as const;
+import { getDataResolveAnchor, MOCKUP_CONFIG_FILENAME } from '../core/data-dir.js';
+import { ancestorNodeModules, getMockPackageRoot, getResolveAnchor, safeRealpath, walkAncestorDirs } from '../core/paths.js';
+import { MockupContractError, STANDARD_PACKAGES } from '../core/types.js';
 
 /** JSX 変換が注入する runtime（exports にも含まれるが、変換方式が変わっても落ちないよう明示する）。 */
 const ALWAYS_ALLOWED = ['react/jsx-runtime', 'react/jsx-dev-runtime'];
@@ -25,14 +30,48 @@ interface WildcardPattern {
   suffix: string;
 }
 
+/** 許可 specifier をどこから解決するか。 */
+export interface PackageResolution {
+  /** パッケージ名。 */
+  name: string;
+  /** `mockup` = `@lism-css/mockup` 同梱、`data` = データディレクトリ側のプロジェクト。 */
+  origin: 'mockup' | 'data';
+  /** vite / rollup の `resolve()` に渡す importer。 */
+  anchor: string;
+}
+
+interface WildcardEntry {
+  pattern: WildcardPattern;
+  resolution: PackageResolution;
+  /**
+   * ワイルドカード一致時に実ファイルの存在まで確認するか。
+   * `import.meta.resolve()` は `@lism-css/mockup` 起点でしか解決できないため、
+   * データディレクトリ側のパッケージは bundler の解決に委ねる（失敗すれば契約エラーになる）。
+   */
+  verify: boolean;
+}
+
 export interface ImportAllowlist {
   /** 完全一致で許可する specifier（`exports` の静的エントリ）。 */
   readonly specifiers: ReadonlySet<string>;
   /** `server.fs.allow` に渡す、許可パッケージの realpath ルート。 */
   readonly packageRoots: readonly string[];
-  /** 見つからなかったパッケージ名（デバッグ・テスト用）。 */
+  /** `server.fs.allow` に渡す、追加パッケージの依存解決用 node_modules ルート。 */
+  readonly dependencyRoots: readonly string[];
+  /** 見つからなかった標準パッケージ名（デバッグ・テスト用）。 */
   readonly missingPackages: readonly string[];
+  /** 許可パッケージ名（標準＋追加）。エラーメッセージ用。 */
+  readonly allowedPackages: readonly string[];
   isAllowed(specifier: string): boolean;
+  /** 許可済み specifier の解決情報。許可外なら null。 */
+  resolutionFor(specifier: string): PackageResolution | null;
+}
+
+export interface ImportAllowlistOptions {
+  /** データディレクトリ（追加パッケージの解決起点）。 */
+  dataDir: string;
+  /** `mockup.config.json` の `imports` で宣言された追加パッケージ。 */
+  extraPackages?: readonly string[];
 }
 
 /** `from` から親方向へ辿って `node_modules/<pkg>/package.json` を探す（Node の解決と同じ順序）。 */
@@ -105,51 +144,111 @@ function resolvesToExistingFile(specifier: string): boolean {
   }
 }
 
-/** 許可リストを構築する。 */
-export function buildImportAllowlist(): ImportAllowlist {
-  const from = getMockPackageRoot();
-  const specifiers = new Set<string>(ALWAYS_ALLOWED);
-  const wildcards: WildcardPattern[] = [];
+/** 1パッケージ分の manifest を読む。読めなければ null。 */
+function readManifest(pkgDir: string): Record<string, unknown> | null {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+  } catch {
+    return null;
+  }
+}
+
+/** 許可リストを構築する。追加パッケージが解決できない場合は契約エラーを投げる。 */
+export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllowlistOptions): ImportAllowlist {
+  const mockRoot = getMockPackageRoot();
+  const mockAnchor = getResolveAnchor();
+  const dataAnchor = getDataResolveAnchor(dataDir);
+
+  const staticSpecifiers = new Map<string, PackageResolution>();
+  const wildcards: WildcardEntry[] = [];
   const packageRoots: string[] = [];
   const missingPackages: string[] = [];
+  const missingExtraPackages: string[] = [];
+  const allowedPackages: string[] = [];
+  let hasDataResolvedPackage = false;
 
-  for (const pkgName of ALLOWED_PACKAGES) {
-    const pkgDir = findPackageDir(pkgName, from);
-    if (!pkgDir) {
-      missingPackages.push(pkgName);
-      continue;
-    }
+  const register = (pkgDir: string, manifest: Record<string, unknown>, resolution: PackageResolution): void => {
     packageRoots.push(safeRealpath(pkgDir));
+    allowedPackages.push(resolution.name);
 
-    let manifest: Record<string, unknown>;
-    try {
-      manifest = JSON.parse(fs.readFileSync(path.join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
-    } catch {
-      missingPackages.push(pkgName);
+    const { statics, wildcards: patterns } = collectPackageSpecifiers(resolution.name, manifest);
+    for (const specifier of statics) staticSpecifiers.set(specifier, resolution);
+    for (const pattern of patterns) wildcards.push({ pattern, resolution, verify: resolution.origin === 'mockup' });
+  };
+
+  for (const name of STANDARD_PACKAGES) {
+    const pkgDir = findPackageDir(name, mockRoot);
+    const manifest = pkgDir === null ? null : readManifest(pkgDir);
+    if (pkgDir === null || manifest === null) {
+      missingPackages.push(name);
       continue;
     }
-
-    const { statics, wildcards: patterns } = collectPackageSpecifiers(pkgName, manifest);
-    for (const specifier of statics) specifiers.add(specifier);
-    wildcards.push(...patterns);
+    register(pkgDir, manifest, { name, origin: 'mockup', anchor: mockAnchor });
   }
 
-  const wildcardCache = new Map<string, boolean>();
+  // JSX runtime は react の exports にも含まれるが、react が見つからない環境でも
+  // 「変換が注入した import だけは通る」状態を保つため、パッケージ登録とは別に足す。
+  for (const specifier of ALWAYS_ALLOWED) {
+    if (!staticSpecifiers.has(specifier)) staticSpecifiers.set(specifier, { name: 'react', origin: 'mockup', anchor: mockAnchor });
+  }
+
+  for (const name of extraPackages) {
+    // データディレクトリ側を優先しつつ、`lucide-react` のように CLI が同梱するものは
+    // init 直後（プロジェクト側に未インストール）でもそのまま使えるようにする。
+    const dataDirPkg = findPackageDir(name, dataDir);
+    const pkgDir = dataDirPkg ?? findPackageDir(name, mockRoot);
+    const manifest = pkgDir === null ? null : readManifest(pkgDir);
+    if (pkgDir === null || manifest === null) {
+      missingExtraPackages.push(name);
+      continue;
+    }
+
+    const origin = dataDirPkg === null ? 'mockup' : 'data';
+    if (origin === 'data') hasDataResolvedPackage = true;
+    register(pkgDir, manifest, { name, origin, anchor: origin === 'data' ? dataAnchor : mockAnchor });
+  }
+
+  if (missingExtraPackages.length > 0) {
+    throw new MockupContractError(
+      `${MOCKUP_CONFIG_FILENAME} declares package(s) in "imports" that are not installed: ${missingExtraPackages.map((name) => `"${name}"`).join(', ')}. ` +
+        `Install them in the project that contains this data directory (for example \`npm install ${missingExtraPackages.join(' ')}\`), or remove them from "imports".`,
+      { file: path.join(dataDir, MOCKUP_CONFIG_FILENAME) }
+    );
+  }
+
+  // 追加パッケージ自身の依存も bundle 対象になるため、データディレクトリ側の
+  // node_modules も fs.allow に載せる（許可パッケージのルートだけでは依存を辿れない）。
+  const dependencyRoots = hasDataResolvedPackage ? ancestorNodeModules(dataDir) : [];
+
+  const wildcardCache = new Map<string, PackageResolution | null>();
+
+  const resolutionFor = (specifier: string): PackageResolution | null => {
+    const exact = staticSpecifiers.get(specifier);
+    if (exact) return exact;
+
+    const cached = wildcardCache.get(specifier);
+    if (cached !== undefined) return cached;
+
+    let match: PackageResolution | null = null;
+    for (const entry of wildcards) {
+      if (!matchesWildcard(entry.pattern, specifier)) continue;
+      if (entry.verify && !resolvesToExistingFile(specifier)) continue;
+      match = entry.resolution;
+      break;
+    }
+    wildcardCache.set(specifier, match);
+    return match;
+  };
 
   return {
-    specifiers,
+    specifiers: new Set(staticSpecifiers.keys()),
     packageRoots,
+    dependencyRoots,
     missingPackages,
+    allowedPackages,
+    resolutionFor,
     isAllowed(specifier: string): boolean {
-      if (specifiers.has(specifier)) return true;
-      if (!wildcards.some((pattern) => matchesWildcard(pattern, specifier))) return false;
-
-      const cached = wildcardCache.get(specifier);
-      if (cached !== undefined) return cached;
-
-      const allowed = resolvesToExistingFile(specifier);
-      wildcardCache.set(specifier, allowed);
-      return allowed;
+      return resolutionFor(specifier) !== null;
     },
   };
 }

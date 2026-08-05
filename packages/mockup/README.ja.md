@@ -79,12 +79,13 @@ mockup/
 
 ### `mockup.config.json`
 
-必須です。スキーマバージョンと表示用メタデータだけを持ちます。
+必須です。スキーマバージョン・追加importの宣言・表示用メタデータだけを持ちます。
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "title": "Acme Console Mockup",
+  "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 },
     "admin/dashboard": { "label": "Dashboard", "category": "Admin", "order": 20 }
@@ -94,8 +95,9 @@ mockup/
 
 | キー | 必須 | 説明 |
 | --- | --- | --- |
-| `schemaVersion` | はい | `1`である必要があります。他のどの処理よりも先に検証されます。 |
+| `schemaVersion` | はい | `2`である必要があります。他のどの処理よりも先に検証されます。 |
 | `title` | いいえ | ビューアに表示されます。 |
+| `imports` | いいえ | ページが追加でimportできるパッケージ。[import](#import)を参照。 |
 | `pages` | いいえ | ページIDごとの`label` / `category` / `order`。 |
 
 - 既定の並び順は`order`の昇順、次にページIDの辞書順です。既定のラベルはページIDです。
@@ -145,16 +147,29 @@ mockup/
 
 ### import
 
-ページからimportできるのは、固定の許可リストにあるものだけです。bare specifierは各パッケージの実際の`exports`マップと照合されるため、パッケージが公開していないパスは、バンドラーで失敗する前の段階で拒否されます。
+ページからimportできるのは、許可リストにあるものだけです。bare specifierは各パッケージの実際の`exports`マップと照合されるため、パッケージが公開していないパスは、バンドラーで失敗する前の段階で拒否されます。
+
+**標準パッケージ**は設定なしで使えます。
 
 | パッケージ | 備考 |
 | --- | --- |
 | `react`・`react-dom` | `react/jsx-runtime`を含みます。 |
 | `lism-css` | `lism-css/react`、`lism-css/lib/*`など。 |
 | `@lism-css/ui` | ルートexportはありません。`@lism-css/ui/react/<Component>`を使ってください。 |
-| `lucide-react` | アイコン。 |
 
 これらは`@lism-css/mockup`が持つコピーへ解決されます。そのためデータディレクトリが独自の`node_modules`を持つ必要はなく、親ディレクトリに置かれた`react`がこれらを覆い隠すこともありません。
+
+**追加パッケージ**は`mockup.config.json`の`imports`で明示的に許可します。
+
+```json
+{ "schemaVersion": 2, "imports": ["lucide-react", "some-ui-library"] }
+```
+
+- 書けるのはパッケージ名だけです（`"lucide-react"`は可、`"lucide-react/icons"`は不可）。どのサブパスをimportできるかは、これまで通りパッケージ自身の`exports`マップで決まります。
+- 対象パッケージは、データディレクトリを含むプロジェクトにインストールしてください。宣言だけしてインストールされていない場合、bundleを始める前に`dev`・`check`が停止します。
+- `lucide-react`だけは例外で、インストールは不要です（`@lism-css/mockup`が同梱しているため、`init`直後の状態がそのまま動きます）。ただし`imports`への記載は必要です。
+- 標準パッケージを`imports`に書くとエラーになります。常時許可されているためです。
+- `dev`は起動時に一度だけ許可リストを作ります。`imports`を編集したら再起動してください。
 
 相対importは**データディレクトリ内で解決される**必要があり、対象は次のいずれかです。
 
