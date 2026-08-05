@@ -16,6 +16,7 @@ import { getViewerDir } from '../core/paths.js';
 import { prepareMockRuntime } from '../core/runtime.js';
 import { MockupContractError, type MockupData } from '../core/types.js';
 import { createImportAllowlist, createMockViteConfig } from '../vite/config.js';
+import { describeMissingLucideExport } from '../vite/lucide-icons.js';
 import { warnMissingStandardPackages } from './diagnostics.js';
 
 export interface CheckCommandOptions {
@@ -30,7 +31,8 @@ function toCheckError(error: unknown): MockupContractError {
   const err = error as { message?: string; id?: string; frame?: string; loc?: { file?: string; line?: number; column?: number } };
   const file = err.loc?.file ?? err.id;
   const position = err.loc?.line !== undefined ? `:${err.loc.line}${err.loc.column !== undefined ? `:${err.loc.column}` : ''}` : '';
-  const parts = [err.message ?? String(error)];
+  // 仮想 lucide-react モジュールの「その export は無い」だけは、対応範囲の説明へ差し替える。
+  const parts = [describeMissingLucideExport(error) ?? err.message ?? String(error)];
   if (err.frame) parts.push(err.frame);
 
   return new MockupContractError(parts.join('\n'), { file: file ? `${file}${position}` : undefined });

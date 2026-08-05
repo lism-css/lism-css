@@ -86,7 +86,7 @@ Every `.jsx` / `.tsx` file under `pages/` is one screen.
 - Files that are not `.jsx` / `.tsx` (for example a co-located `.css`) are not
   screens; import them from a page.
 - `.tsx` is accepted, but **types are stripped, not checked**. Run your own
-  `tsc` if you need type safety.
+  `tsc` if you need type safety — see [Type checking](#type-checking).
 
 Page conventions:
 
@@ -262,10 +262,9 @@ shadow them.
   package that is not installed stops `dev` and `check` before anything is
   bundled.
 - `lucide-react` is the exception that needs no install: `@lism-css/mockup`
-  provides it, so the scaffold that `init` writes works as-is. Only named
-  imports from the package root work (`import { Bell } from 'lucide-react'`) —
-  subpaths like `lucide-react/icons/bell` are not supported. It still has to
-  be declared in `imports`.
+  provides it, so the scaffold that `init` writes works as-is. It still has to be
+  declared in `imports`. See [The `lucide-react` it provides](#the-lucide-react-it-provides)
+  for what that copy contains.
 - Adding a standard package to `imports` is an error — they are always available.
 - `dev` builds the allowlist once at startup, so restart it after editing
   `imports`.
@@ -279,6 +278,70 @@ Everything else is rejected with an explicit contract error: absolute paths,
 into a `node_modules` directory (import the package by name through `imports`
 instead), and bare imports outside the allowlist. Query suffixes (`?raw`, `?url`)
 are checked against the path in front of the query.
+
+### The `lucide-react` it provides
+
+The real `lucide-react` package is 45MB of icon modules, which npx would download
+on every run. `@lism-css/mockup` therefore builds the module itself out of
+[`@iconify-json/lucide`](https://www.npmjs.com/package/@iconify-json/lucide)
+(about 570KB of plain icon data) and resolves `lucide-react` to it. Nothing about how
+you write the import changes, and unused icons still drop out of the bundle.
+
+What that module exports from its root:
+
+| Export | Provided | Notes |
+| --- | --- | --- |
+| Icon components | yes | Every lucide icon, in both the `Bell` and `BellIcon` spelling, plus lucide's own aliases (`Sidebar`). |
+| `Icon` | yes | The generic component that draws the `iconNode` data you hand it. |
+| `createLucideIcon` | yes | Builds an icon component out of `iconNode` data. |
+| `icons` | **no** | The record of every icon. Reading it would pull all ~1,800 icons into the bundle, which is what the generated module exists to avoid — import the icons you need by name instead. |
+
+Subpaths (`lucide-react/icons/bell`, `lucide-react/dynamic`) are not available
+either. Both this and `icons` are reported by `check` as a contract error naming
+what is missing, so nothing fails silently.
+
+Rendering matches lucide-react 0.577.0 attribute for attribute, including the
+`lucide lucide-<name>` class names.
+
+## Type checking
+
+`check` does not type-check pages: `.tsx` is transformed with types stripped, not
+verified. Running `tsc` yourself is opt-in and needs a little setup, because a data
+directory owns no dependencies — at build time the packages a page imports come
+from inside `@lism-css/mockup`, which is not where the compiler looks for them.
+
+In the project that holds the data directory, install the packages your pages
+import, plus the compiler itself:
+
+```bash
+pnpm add -D typescript @types/react lism-css @lism-css/ui @lism-css/mockup
+```
+
+`lucide-react` is the one that cannot be installed for this — the CLI generates it,
+so no such package exists on disk. `@lism-css/mockup` ships the declarations for it
+instead; point your tsconfig at that file:
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "strict": true
+  },
+  "files": ["node_modules/@lism-css/mockup/types/lucide-react.d.ts"],
+  "include": ["mockup/**/*"]
+}
+```
+
+`files` is used rather than `include` because TypeScript excludes `node_modules`
+from `include` by default.
+
+Those declarations are generated from the same icon data as the module itself, so
+they describe exactly what a mockup can import: `icons` and package subpaths fail
+to type-check for the same reason they fail `check`. Installing the real
+`lucide-react` for its types instead would undo that — it declares exports the
+mockup cannot use.
 
 ## What `check` guarantees
 

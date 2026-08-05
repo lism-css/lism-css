@@ -132,7 +132,7 @@ bare importは許可リストのパッケージのみ。次の標準パッケー
 それ以外のパッケージは`mockup.config.json`の`imports`に**パッケージ名だけ**を書いて許可する（`"lucide-react"`は可、`"lucide-react/icons"`は不可）。
 
 - 宣言したパッケージは、データディレクトリを含むプロジェクト側にインストールする。未インストールならbundle前に停止する
-- `lucide-react`はCLIが提供するためインストール不要。importはルートからの名前付きimportのみ（`lucide-react/icons/bell`のようなサブパスは不可）。`imports`への記載は必要（`init`が生成する設定には最初から入っている）
+- `lucide-react`はCLIが提供するためインストール不要。`imports`への記載は必要（`init`が生成する設定には最初から入っている）。使えるのはルートからの名前付きimportで、アイコン（`Bell` / `BellIcon` / `Sidebar`など）と`Icon` / `createLucideIcon`のみ。`icons`（全アイコンのレコード）と`lucide-react/icons/bell`のようなサブパスは提供していない（どちらも`check`がエラーにする）
 - 標準パッケージを`imports`に書くとエラーになる（常時許可されているため）
 - `dev`は起動時に一度だけ許可リストを作る。`imports`を編集したら`dev`を再起動する
 - **`@lism-css/ui`にルートexportは無い。** 必ず`@lism-css/ui/react/<Component>`から個別importする

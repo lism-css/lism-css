@@ -24,6 +24,10 @@
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/skills/lism-css-guide/**"],
       "outputs": ["dist/**"]
     },
+    "@lism-css/mockup#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "types/**"]
+    },
     "build:css": {
       "inputs": [
         "$TURBO_DEFAULT$",

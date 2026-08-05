@@ -6,6 +6,9 @@ __*
 build/
 dist/
 
+# mockup がビルド時に生成する公開用の型定義（@iconify-json/lucide から生成）
+packages/mockup/types/
+
 # テンプレプレビュー集約サイトのビルド成果物（lism-templates の merged ツリー）
 .preview/
 
@@ -18,6 +21,8 @@ node_modules/
 /coverage
 # plugin の scss-source.test.ts が作る一時ディレクトリ（テスト中断時に残る）
 packages/plugin/.lism-test-*/
+# mockup の lucide-runtime.test.ts が作る一時ディレクトリ（同上）
+packages/mockup/.lism-test-*/
 
 # astro
 .astro/

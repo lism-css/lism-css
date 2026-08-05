@@ -102,13 +102,39 @@ describe('checkCommand', () => {
     await expect(check(dir)).resolves.toBeUndefined();
   }, 60_000);
 
-  test('存在しないアイコン名は bundle 時に検出する', async () => {
+  test('lucide-react の Icon / createLucideIcon も bundle できる', async () => {
+    vi.spyOn(console, 'log').mockImplementation(() => undefined);
     const dir = createDataDir({
       'mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['lucide-react'] }),
-      'pages/home.jsx': `import { NoSuchIcon } from 'lucide-react';\nexport default () => <NoSuchIcon />;\n`,
+      'pages/home.jsx':
+        `import { Icon, createLucideIcon } from 'lucide-react';\n` +
+        `const node = [['path', { d: 'M1 2', key: 'a' }]];\n` +
+        `const Custom = createLucideIcon('custom', node);\n` +
+        `export default () => <><Icon iconNode={node} /><Custom /></>;\n`,
     });
 
-    await expect(check(dir)).rejects.toThrow(/"NoSuchIcon" is not exported/);
+    await expect(check(dir)).resolves.toBeUndefined();
+  }, 60_000);
+
+  test('存在しないアイコン名は候補付きの契約エラーになる', async () => {
+    const dir = createDataDir({
+      'mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['lucide-react'] }),
+      'pages/home.jsx': `import { bell } from 'lucide-react';\nexport default () => <div>{String(bell)}</div>;\n`,
+    });
+
+    // rollup の「そんな export は無い」ではなく、何を import すべきかが分かる文言にする。
+    await expect(check(dir)).rejects.toThrow(/"bell" is not an icon of lucide-react\. Did you mean "Bell"\?/);
+  }, 60_000);
+
+  test('提供しない `icons` の import は対応範囲を説明する契約エラーになる', async () => {
+    const dir = createDataDir({
+      'mockup.config.json': JSON.stringify({ schemaVersion: 2, imports: ['lucide-react'] }),
+      'pages/home.jsx': `import { icons } from 'lucide-react';\nexport default () => <div>{Object.keys(icons).length}</div>;\n`,
+    });
+
+    await expect(check(dir)).rejects.toThrow(MockupContractError);
+    await expect(check(dir)).rejects.toThrow(/pulls every lucide icon into the bundle/);
+    await expect(check(dir)).rejects.toThrow(/the icon components plus "Icon" and "createLucideIcon"/);
   }, 60_000);
 
   test('許可外の bare import は契約違反として非0終了する', async () => {

@@ -17,7 +17,7 @@
     "preview"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node dist/scripts/generate-lucide-types.js",
     "test": "vitest run",
     "typecheck": "tsc --noEmit && tsc --noEmit -p viewer/tsconfig.json",
     "format": "prettier --write . --ignore-path ../../.prettierignore",
@@ -31,7 +31,8 @@
     "dist",
     "bin",
     "viewer",
-    "templates"
+    "templates",
+    "types"
   ],
   "type": "module",
   "homepage": "https://lism-css.com/",
