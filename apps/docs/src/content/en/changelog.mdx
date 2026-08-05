@@ -9,6 +9,36 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.25.0 (2026.08.06)
+
+### Structural variables can now be overridden from lism.config (#530)
+
+- Moved `--L` / `--C` / `--fz-mol` / `--hl-unit` / `--s-unit` into a new `vars` token group, so they can be overridden via `tokens` in `lism.config`.
+- Moved the shadow color `--shadow` into `color.shadow` (the CSS variable name is unchanged).
+
+### Directional spacing props are now class-based in main.css (#531)
+
+- All 18 directional spacing props (`ps` / `pe` / `pl` / `pt` / `ms` / `mt` / `cg` / `rg`, etc.) now emit token classes such as `-ps:20` and breakpoint classes such as `-pl_sm` in `main.css`.
+- As a result, `main.css` grew by about 1.5KB (gzipped). The size of `full.css` is unchanged.
+
+### Expanded color Property Classes (#533)
+
+- `-c:keycolor` / `-bgc:keycolor` / `-bdc:keycolor` are now emitted in `main.css`.
+- In `full.css`, all color tokens are now class-based for `c` / `bgc` / `bdc` (e.g. `-bgc:red`).
+- Added `-bgc:current` (`currentColor`).
+
+### Other
+
+- Fixed `set--plain` losing to the default form styles for `input` on specificity. (#537)
+- Added `.browserslistrc` and removed unnecessary vendor prefixes.
+
+### `@lism-css/plugin` v.0.4.2 (2026.08.06)
+
+- Aligned color Property Class generation with the union of `color` and `palette`, so the `full.css` build output matches the runtime resolution rules. (#533)
+- Added `loadDefaultConfig()` for callers that only need the pre-merge default config. (#539)
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.24.1 (2026.08.04)
 
 - Fixed a conflict that prevented border Property Classes (`.-bd` etc.) from working in `full.css`. (#513)
