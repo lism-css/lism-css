@@ -1,10 +1,11 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { afterAll, describe, expect, test } from 'vitest';
 
 import { getDataResolveAnchor } from '../core/data-dir.js';
 import { getMockPackageRoot, getResolveAnchor } from '../core/paths.js';
 import { MockupContractError, STANDARD_PACKAGES } from '../core/types.js';
-import { cleanupTempDirs, createTempDir, installFakePackage } from '../test-helpers/fixtures.js';
+import { cleanupTempDirs, createTempDir, installFakePackage, writeFiles } from '../test-helpers/fixtures.js';
 import { buildImportAllowlist, collectPackageSpecifiers, findPackageDir } from './allowlist.js';
 
 const dataDir = createTempDir();
@@ -103,10 +104,16 @@ describe('buildImportAllowlist: 標準パッケージ', () => {
 describe('buildImportAllowlist: imports で宣言した追加パッケージ', () => {
   const projectDir = createTempDir();
   const projectDataDir = path.join(projectDir, 'mockup');
+  writeFiles(projectDir, { 'outside.js': 'export const secret = 1;\n' });
   installFakePackage(projectDir, 'fake-ui', {
     'package.json': JSON.stringify({ name: 'fake-ui', version: '1.0.0', exports: { '.': './index.js', './button': './button.js' } }),
     'index.js': 'export const a = 1;\n',
     'button.js': 'export const Button = 1;\n',
+  });
+  // exports の無いパッケージ（任意サブパスがワイルドカード許可になる）。
+  installFakePackage(projectDir, 'fake-plain', {
+    'package.json': JSON.stringify({ name: 'fake-plain', version: '1.0.0' }),
+    'icons/star.js': 'export const Star = 1;\n',
   });
   const extra = buildImportAllowlist({ dataDir: projectDataDir, extraPackages: ['fake-ui'] });
 
@@ -157,5 +164,39 @@ describe('buildImportAllowlist: imports で宣言した追加パッケージ', (
     expect(bundled.resolutionFor('lucide-react')).toEqual({ name: 'lucide-react', origin: 'mockup', anchor: getResolveAnchor() });
     // 同梱側で解決できた場合はプロジェクト側の node_modules を開ける必要がない。
     expect(bundled.dependencyRoots).toEqual([]);
+  });
+
+  test('同梱許可リストに無い CLI 依存は、プロジェクト側に未インストールならフォールバックせず契約エラーになる', () => {
+    // vite / picocolors は @lism-css/mockup 自身の依存だが、同梱を契約しているのは lucide-react だけ。
+    for (const name of ['vite', 'picocolors']) {
+      expect(() => buildImportAllowlist({ dataDir: projectDataDir, extraPackages: [name] }), name).toThrow(/not installed: /);
+    }
+  });
+
+  test('exports の無いパッケージでも `.` / `..` セグメントで宣言外へ抜けられない', () => {
+    const plain = buildImportAllowlist({ dataDir: projectDataDir, extraPackages: ['fake-plain'] });
+    expect(plain.isAllowed('fake-plain')).toBe(true);
+    expect(plain.isAllowed('fake-plain/icons/star.js')).toBe(true);
+    // 宣言していない同階層パッケージへの traversal
+    expect(plain.isAllowed('fake-plain/../fake-ui')).toBe(false);
+    expect(plain.isAllowed('fake-plain/../fake-ui/index.js')).toBe(false);
+    // node_modules 外のファイルへの traversal
+    expect(plain.isAllowed('fake-plain/../../outside.js')).toBe(false);
+    expect(plain.isAllowed('fake-plain/..')).toBe(false);
+    expect(plain.isAllowed('fake-plain/./icons/star.js')).toBe(false);
+    expect(plain.isAllowed('fake-plain\\..\\..\\outside.js')).toBe(false);
+  });
+
+  test('パッケージ内のシンボリックリンクがパッケージ外を指す場合は拒否する', () => {
+    fs.symlinkSync(path.join(projectDir, 'outside.js'), path.join(projectDir, 'node_modules', 'fake-plain', 'escape.js'));
+    const plain = buildImportAllowlist({ dataDir: projectDataDir, extraPackages: ['fake-plain'] });
+    expect(plain.isAllowed('fake-plain/escape.js')).toBe(false);
+  });
+
+  test('CLI 同梱側で解決したパッケージでも `..` セグメントは拒否する', () => {
+    const bundled = buildImportAllowlist({ dataDir, extraPackages: ['lucide-react'] });
+    // react は lucide-react と同階層に実在するが、traversal では届かせない。
+    expect(bundled.isAllowed('lucide-react/../react')).toBe(false);
+    expect(bundled.isAllowed('lucide-react/../../outside.js')).toBe(false);
   });
 });

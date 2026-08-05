@@ -19,11 +19,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { getDataResolveAnchor, MOCKUP_CONFIG_FILENAME } from '../core/data-dir.js';
-import { ancestorNodeModules, getMockPackageRoot, getResolveAnchor, safeRealpath, walkAncestorDirs } from '../core/paths.js';
+import { ancestorNodeModules, getMockPackageRoot, getResolveAnchor, isInsideDir, safeRealpath, walkAncestorDirs } from '../core/paths.js';
 import { MockupContractError, STANDARD_PACKAGES } from '../core/types.js';
 
 /** JSX 変換が注入する runtime（exports にも含まれるが、変換方式が変わっても落ちないよう明示する）。 */
 const ALWAYS_ALLOWED = ['react/jsx-runtime', 'react/jsx-dev-runtime'];
+
+/**
+ * `imports` に宣言するだけで（プロジェクト側に未インストールでも）使える CLI 同梱パッケージ。
+ * README の「`lucide-react` だけは例外でインストール不要」という契約に対応する。
+ * ここに無いパッケージは CLI の依存ツリーにあってもフォールバックさせない
+ * （CLI の依存変更でモックアップの成否が変わらないようにするため）。
+ */
+const BUNDLED_EXTRA_PACKAGES: ReadonlySet<string> = new Set(['lucide-react']);
 
 interface WildcardPattern {
   prefix: string;
@@ -49,6 +57,12 @@ interface WildcardEntry {
    * データディレクトリ側のパッケージは bundler の解決に委ねる（失敗すれば契約エラーになる）。
    */
   verify: boolean;
+  /**
+   * サブパスの解決先をこのディレクトリ（パッケージルートの realpath）配下に制限する。
+   * `exports` の無いパッケージは任意サブパスをファイルパスとして解決するため、
+   * シンボリックリンク等でパッケージ外のファイルへ届かないことを realpath で確認する。
+   */
+  confineDir?: string;
 }
 
 export interface ImportAllowlist {
@@ -129,6 +143,23 @@ function matchesWildcard(pattern: WildcardPattern, specifier: string): boolean {
 }
 
 /**
+ * `.` / `..` のパスセグメントを含むか。
+ *
+ * bundler はサブパスをファイルパスとして解決するため、`pkg/../target` は宣言していない
+ * 同階層パッケージへ、`pkg/../../outside.js` は node_modules 外のファイルへ届いてしまう。
+ * Node の ESM 解決も同種の specifier を Invalid Module Specifier として拒否する。
+ */
+function hasDotPathSegment(specifier: string): boolean {
+  return specifier.split(/[\\/]/).some((segment) => segment === '.' || segment === '..');
+}
+
+/** 任意サブパス許可（`confineDir` 付き）で、サブパスの解決先がパッケージルート配下に留まるか。 */
+function staysInsideDir(confineDir: string, pattern: WildcardPattern, specifier: string): boolean {
+  const subpath = specifier.slice(pattern.prefix.length);
+  return isInsideDir(confineDir, safeRealpath(path.resolve(confineDir, subpath)));
+}
+
+/**
  * `@lism-css/mockup` 自身を起点に解決でき、かつ実ファイルが存在するか。
  *
  * `import.meta.resolve()` は exports のワイルドカード展開でファイルの存在を確認しないため、
@@ -168,12 +199,15 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
   let hasDataResolvedPackage = false;
 
   const register = (pkgDir: string, manifest: Record<string, unknown>, resolution: PackageResolution): void => {
-    packageRoots.push(safeRealpath(pkgDir));
+    const pkgRoot = safeRealpath(pkgDir);
+    packageRoots.push(pkgRoot);
     allowedPackages.push(resolution.name);
 
     const { statics, wildcards: patterns } = collectPackageSpecifiers(resolution.name, manifest);
+    // exports の無いパッケージだけが「任意サブパス」のワイルドカードを持つ（collectPackageSpecifiers 参照）。
+    const confineDir = manifest.exports === undefined || manifest.exports === null ? pkgRoot : undefined;
     for (const specifier of statics) staticSpecifiers.set(specifier, resolution);
-    for (const pattern of patterns) wildcards.push({ pattern, resolution, verify: resolution.origin === 'mockup' });
+    for (const pattern of patterns) wildcards.push({ pattern, resolution, verify: resolution.origin === 'mockup', confineDir });
   };
 
   for (const name of STANDARD_PACKAGES) {
@@ -193,10 +227,11 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
   }
 
   for (const name of extraPackages) {
-    // データディレクトリ側を優先しつつ、`lucide-react` のように CLI が同梱するものは
+    // データディレクトリ側を優先する。プロジェクト側に無い場合のフォールバックは、
+    // CLI 同梱を契約として保証する BUNDLED_EXTRA_PACKAGES（lucide-react）だけに限り、
     // init 直後（プロジェクト側に未インストール）でもそのまま使えるようにする。
     const dataDirPkg = findPackageDir(name, dataDir);
-    const pkgDir = dataDirPkg ?? findPackageDir(name, mockRoot);
+    const pkgDir = dataDirPkg ?? (BUNDLED_EXTRA_PACKAGES.has(name) ? findPackageDir(name, mockRoot) : null);
     const manifest = pkgDir === null ? null : readManifest(pkgDir);
     if (pkgDir === null || manifest === null) {
       missingExtraPackages.push(name);
@@ -223,6 +258,10 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
   const wildcardCache = new Map<string, PackageResolution | null>();
 
   const resolutionFor = (specifier: string): PackageResolution | null => {
+    // `pkg/../target` のような specifier は静的エントリに存在せず、ワイルドカードに
+    // 通すとパッケージ外へ解決されうるため、照合前に一律拒否する。
+    if (hasDotPathSegment(specifier)) return null;
+
     const exact = staticSpecifiers.get(specifier);
     if (exact) return exact;
 
@@ -232,6 +271,7 @@ export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllo
     let match: PackageResolution | null = null;
     for (const entry of wildcards) {
       if (!matchesWildcard(entry.pattern, specifier)) continue;
+      if (entry.confineDir !== undefined && !staysInsideDir(entry.confineDir, entry.pattern, specifier)) continue;
       if (entry.verify && !resolvesToExistingFile(specifier)) continue;
       match = entry.resolution;
       break;
