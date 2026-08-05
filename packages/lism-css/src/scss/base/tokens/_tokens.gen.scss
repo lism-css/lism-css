@@ -1,6 +1,23 @@
 // このファイルは自動生成されます。直接編集しないでください（次回ビルド時に上書きされます）。
 // 生成元: コア → config/defaults/tokens.ts / 利用側 → defaults + lism.config.js の tokens
 :root {
+  --base: hsl(220 0% 99%);
+  --base-2: hsl(220 4% 95%);
+  --text: hsl(220 0% 8%);
+  --text-2: hsl(220 4% 32%);
+  --divider: hsl(220 4% 88%);
+  --link: oklch(50% 0.3 240);
+  --brand: #1e5f8c;
+  --accent: #d94a6a;
+  --neutral: hsl(220, 2%, 80%);
+  --red: oklch(var(--L) var(--C) 20);
+  --blue: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264);
+  --green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152);
+  --yellow: oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80);
+  --purple: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288);
+  --orange: oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48);
+  --pink: oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352);
+  --gray: oklch(calc(var(--L) - 4%) calc(var(--C) / 10) 240);
   --white: #fff;
   --black: #000;
   --fz--base: 1rem;
@@ -14,6 +31,12 @@
   --fz--s: calc(1em * var(--fz-mol) / (var(--fz-mol) + 1));
   --fz--xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 2));
   --fz--2xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 3));
+  --ff--base: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif;
+  --ff--accent: Georgia, serif;
+  --ff--mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --fw--light: 300;
+  --fw--normal: 400;
+  --fw--bold: 600;
   --hl--base: calc(var(--hl-unit) * 3);
   --hl--xs: var(--hl-unit);
   --hl--s: calc(var(--hl-unit) * 2);
@@ -22,12 +45,6 @@
   --lts--s: -0.025em;
   --lts--l: 0.05em;
   --lts--xl: 0.1em;
-  --ff--base: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif;
-  --ff--accent: Georgia, serif;
-  --ff--mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-  --fw--light: 300;
-  --fw--normal: 400;
-  --fw--bold: 600;
   --o--mp: 0.9;
   --o--p: 0.75;
   --o--pp: 0.5;

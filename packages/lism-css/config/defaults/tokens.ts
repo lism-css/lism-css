@@ -7,29 +7,35 @@
  * - 値 `'-'` は「カタログに登録するがcssの出力はしない」もの。実値はscssで手書き。
  */
 export default {
-  // セマンティックカラー: 実値は手書き SCSS（カタログ専用）。
+  // セマンティックカラー
   color: {
-    base: '-',
-    'base-2': '-',
-    text: '-',
-    'text-2': '-',
-    divider: '-',
-    link: '-',
-    brand: '-',
-    accent: '-',
-    neutral: '-',
+    // base: 背景色
+    base: 'hsl(220 0% 99%)',
+    'base-2': 'hsl(220 4% 95%)',
+    // text: コンテンツの文字色
+    text: 'hsl(220 0% 8%)',
+    'text-2': 'hsl(220 4% 32%)',
+    // divider: 境界線の色
+    divider: 'hsl(220 4% 88%)',
+    link: 'oklch(50% 0.3 240)', // ≒ hsl(220, 90%, 48%)
+    brand: '#1e5f8c',
+    accent: '#d94a6a',
+    // ライトモード・ダークモードのどちらでもブレンドして使えるようなニュートラルカラー。
+    //  Memo: 黒からの変化の方がわかりづらいため、明るめにする。
+    neutral: 'hsl(220, 2%, 80%)',
   },
 
-  // パレットカラー: 多くは --L/--C からの計算色のため手書き SCSS。white/black のみリテラル値。
+  // パレットカラー: 基準の明度 --L / 彩度 --C（手書き SCSS の構造変数）を色相ごとに微調整して算出する。
+  //  keycolor は :root に実値を持たないカタログ専用キー（prop 側で style 属性へ出力する）。
   palette: {
-    red: '-',
-    blue: '-',
-    green: '-',
-    yellow: '-',
-    purple: '-',
-    orange: '-',
-    pink: '-',
-    gray: '-',
+    red: 'oklch(var(--L) var(--C) 20)',
+    blue: 'oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264)',
+    green: 'oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152)',
+    yellow: 'oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80)',
+    purple: 'oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288)',
+    orange: 'oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48)',
+    pink: 'oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352)',
+    gray: 'oklch(calc(var(--L) - 4%) calc(var(--C) / 10) 240)',
     white: '#fff',
     black: '#000',
     keycolor: '-',
