@@ -1,6 +1,5 @@
 import { describe, test, expect, vi } from 'vitest';
 import getLismProps, { type LismProps } from './getLismProps';
-import warnUnsupportedBp from './warnUnsupportedBp';
 
 describe('getLismProps', () => {
   describe('基本動作', () => {
@@ -330,23 +329,13 @@ describe('getLismProps', () => {
       spy.mockRestore();
     });
 
-    test('物理方向プロパティを bp:0 に戻した場合は論理プロパティを案内する', () => {
-      // pl / mt などは defaults で bp:1 のため通常この警告は出ないが、
-      // lism.config で bp:0 に opt-out した場合の案内は残しているので直接呼んで確認する。
-      const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-      warnUnsupportedBp('pl');
-      const msg = spy.mock.calls[0][0] as string;
-      expect(msg).toContain('pl');
-      expect(msg).toContain('ps');
-      spy.mockRestore();
-    });
-
-    test('代替プロパティのない bp:0 プロパティは SCSS 案内のみ', () => {
+    test('オブジェクト記法での BP 指定でも警告が出る（SCSS での有効化を案内）', () => {
       const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       getLismProps({ lts: { base: '0', md: '1px' } } as unknown as LismProps);
       expect(spy).toHaveBeenCalledTimes(1);
       const msg = spy.mock.calls[0][0] as string;
-      expect(msg).not.toContain('logical property');
+      expect(msg).toContain('lts');
+      expect(msg).toContain("'lts': ( bp: 1 )");
       spy.mockRestore();
     });
 

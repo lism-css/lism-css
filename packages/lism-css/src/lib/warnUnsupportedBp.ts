@@ -8,20 +8,6 @@
  * 「SCSS でカスタマイズ済みなら無視して OK」の注記を添える方針とする。
  */
 
-// 論理プロパティで代替できるものの対応表。
-// これらは defaults では bp:1 のため通常は警告対象にならないが、
-// lism.config で bp:0 に opt-out した場合の案内として残している。
-const ALT_PROP_MAP: Record<string, string> = {
-  pl: 'ps',
-  pr: 'pe',
-  pt: 'pbs',
-  pb: 'pbe',
-  ml: 'ms',
-  mr: 'me',
-  mt: 'mbs',
-  mb: 'mbe',
-};
-
 // 同じ prop で毎レンダー警告し続けないよう、prop 単位で 1 回だけ出力する。
 const warnedProps = new Set<string>();
 
@@ -29,14 +15,12 @@ export default function warnUnsupportedBp(propName: string): void {
   if (warnedProps.has(propName)) return;
   warnedProps.add(propName);
 
-  const alt = ALT_PROP_MAP[propName];
-  const lines = [`[lism-css] \`${propName}\` does not support breakpoint values by default.`];
-  if (alt) {
-    lines.push(`  - Use the logical property \`${alt}\` instead`);
-  }
-  lines.push(`  - ${alt ? 'Or e' : 'E'}nable it via SCSS $props: \`'${propName}': ( bp: 1 )\``);
-  lines.push('  Docs: https://lism-css.com/en/docs/customize/scss/');
-  lines.push("  * If you've already customized this via SCSS, you can ignore this warning.");
+  const lines = [
+    `[lism-css] \`${propName}\` does not support breakpoint values by default.`,
+    `  - Enable it via SCSS $props: \`'${propName}': ( bp: 1 )\``,
+    '  Docs: https://lism-css.com/en/docs/customize/scss/',
+    "  * If you've already customized this via SCSS, you can ignore this warning.",
+  ];
 
   console.warn(lines.join('\n'));
 }
