@@ -6,8 +6,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { isInsideDir, safeRealpath } from './paths.js';
-import { MockupContractError, SCHEMA_VERSION, type MockupConfigFile, type MockupConfigPageMeta } from './types.js';
+import { safeRealpath } from './paths.js';
+import { isPlainObject, MockupContractError, SCHEMA_VERSION, type MockupConfigFile, type MockupConfigPageMeta } from './types.js';
 
 export const MOCKUP_CONFIG_FILENAME = 'mockup.config.json';
 
@@ -18,10 +18,6 @@ export const MOCKUP_CONFIG_FILENAME = 'mockup.config.json';
  */
 const CONFIG_KEYS = ['schemaVersion', 'title', 'pages'] as const;
 const PAGE_META_KEYS = ['label', 'category', 'order'] as const;
-
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
 
 function unknownKeys(value: Record<string, unknown>, allowed: readonly string[]): string[] {
   return Object.keys(value).filter((key) => !allowed.includes(key));
@@ -128,9 +124,4 @@ function readPagesMeta(value: unknown, file: string): Record<string, MockupConfi
     pages[pageId] = entry;
   }
   return pages;
-}
-
-/** データディレクトリ配下のパスかどうか（realpath 比較）。 */
-export function isInsideDataDir(dataDir: string, target: string): boolean {
-  return isInsideDir(dataDir, safeRealpath(target));
 }

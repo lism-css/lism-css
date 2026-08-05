@@ -3,7 +3,7 @@
  *
  * 反映は2経路必要なので、検証済み tokens から生成した lism.config モジュール1本を両方の入口にする。
  * 1. React ランタイム（props → `var()` 変換）… `lismConfigAlias({ configPath })` で `lism-css/config.js` を差し替え
- * 2. CSS 変数定義 … `loadBuildConfigs(dataDir, { configPath }).fullConfig` を `serializeTokens()` へ
+ * 2. CSS 変数定義 … `loadBuildConfigs(dataDir, { configPath }).mainConfig` を `serializeTokens()` へ
  *
  * 契約違反は警告にせず必ずエラーにする（警告だと `check` 成功の意味が崩れるため）。
  */
@@ -11,8 +11,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { loadBuildConfigs, serializeTokens } from '@lism-css/plugin/builder';
+import getTokenVarName from 'lism-css/lib/getTokenVarName';
 
-import { MockupContractError, type MockupTokens } from './types.js';
+import { isPlainObject, MockupContractError, type MockupTokens, type TokenEntry, type TokenGroupEntry } from './types.js';
 
 export const TOKENS_FILENAME = 'tokens.json';
 /**
@@ -27,8 +28,24 @@ export const GENERATED_CONFIG_FILENAME = 'lism.config.js';
 /** 新しいキーの追加を許可するトークン種別。それ以外は既存キーの値上書きのみ。 */
 const NEW_KEY_ALLOWED_TOKENS = new Set(['color']);
 
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+/**
+ * トークンキーに使えない予約キー。
+ *
+ * `writeConfigModule()` が書き出すのは `export default { ... }` のオブジェクトリテラルで、
+ * その中の `"__proto__": ...` はプロトタイプ設定構文と解釈されるため own key として残らない。
+ * 検証だけ通って生成 CSS とトークン一覧から黙って消えるより、ここで契約違反にする。
+ */
+const RESERVED_TOKEN_KEY = '__proto__';
+
+/**
+ * `serializeTokens()` が CSS 変数として出力しない値か。
+ *
+ * 一覧に出すのは「生成 CSS が実際に定義しているトークン」だけなので、除外規則は
+ * `serializeTokens()` と揃える必要がある。片方だけ変わるズレを見つけやすいよう、
+ * 複製したルールはこの関数1つに閉じ込める。
+ */
+function isOmittedTokenValue(value: string | number | null | undefined): boolean {
+  return value === '-' || value === '' || value == null;
 }
 
 /** default-config の1トークン種別が持つ既存キー一覧（配列カタログにも対応）。 */
@@ -53,7 +70,7 @@ export function validateTokens(raw: unknown, defaultTokens: Record<string, unkno
   }
 
   // ユーザー入力のキーを持たせる器は必ず null プロトタイプにする。
-  // 素の `{}` だと `__proto__` などの予約キーが own key として保持されず、検証結果と実データがずれる。
+  // 素の `{}` だと `constructor` / `toString` が継承分と紛れ、下流の存在判定がプロトタイプ由来のキーに引っかかる。
   const tokens = Object.create(null) as MockupTokens;
   for (const [group, values] of Object.entries(raw)) {
     // `in` は `constructor` / `toString` / `__proto__` まで既知グループ扱いにしてしまうため hasOwn で判定する。
@@ -72,6 +89,12 @@ export function validateTokens(raw: unknown, defaultTokens: Record<string, unkno
     const knownKeys = defaultTokenKeys(defaultTokens[group]);
     const entry = Object.create(null) as Record<string, string | number>;
     for (const [key, value] of Object.entries(values)) {
+      if (key === RESERVED_TOKEN_KEY) {
+        throw new MockupContractError(
+          `${TOKENS_FILENAME}: "${group}.${key}" cannot be used as a token key (the generated ${GENERATED_CONFIG_FILENAME} cannot carry it). Rename the token.`,
+          { file }
+        );
+      }
       if (!knownKeys.includes(key) && !NEW_KEY_ALLOWED_TOKENS.has(group)) {
         throw new MockupContractError(
           `${TOKENS_FILENAME}: "${group}.${key}" is not an existing token. Only "color" accepts new keys; other groups can override existing values only (${group}: ${knownKeys.join(', ')}).`,
@@ -119,11 +142,63 @@ export function writeConfigModule(dir: string, tokens: MockupTokens): string {
 }
 
 /**
- * 生成 config を反映した CSS 変数定義を作る。
+ * マージ済みトークンを、ビューアのトークン一覧が読める形へ整理する。
  *
- * ビューアは `lism-css/full.css` を読むため、full 側の BuildConfig を直列化する。
+ * 出すのは生成 CSS が実際に定義しているトークンだけ（`isOmittedTokenValue()` を参照）。
+ *
+ * @param mergedTokens  `mainConfig.tokens`（`tokens.json` 反映後のマージ結果）
+ * @param defaultTokens `defaultConfig.tokens`（既存キー判定の正）
+ * @param overrides     検証済み `tokens.json`（`source` 判定に使う）
  */
-export async function buildTokensCss(dataDir: string, configPath: string): Promise<string> {
-  const { fullConfig } = await loadBuildConfigs(dataDir, { configPath });
-  return serializeTokens(fullConfig);
+export function collectTokenGroups(
+  mergedTokens: Record<string, unknown>,
+  defaultTokens: Record<string, unknown>,
+  overrides: MockupTokens
+): TokenGroupEntry[] {
+  const groups: TokenGroupEntry[] = [];
+
+  for (const [group, valueMap] of Object.entries(mergedTokens)) {
+    // 配列カタログ（キーだけの登録）などは CSS 変数を持たないため、serializeTokens と同じ規則で飛ばす。
+    if (!isPlainObject(valueMap)) continue;
+
+    // 上書き元は null プロトタイプのユーザー入力なので、`in` ではなく hasOwn で own key だけを見る。
+    const overrideGroup = Object.hasOwn(overrides, group) && isPlainObject(overrides[group]) ? overrides[group] : null;
+    // 既存キー一覧は上書きがある種別でだけ必要（default しか無いなら判定に使わない）。
+    const knownKeys = overrideGroup ? defaultTokenKeys(defaultTokens[group]) : [];
+
+    const tokens: TokenEntry[] = [];
+    // 値は string | number 前提（default-config の定義と `validateTokens` の契約）。serializeTokens と同じ見なし方。
+    for (const [key, value] of Object.entries(valueMap as Record<string, string | number>)) {
+      if (isOmittedTokenValue(value)) continue;
+
+      const isOverride = overrideGroup !== null && Object.hasOwn(overrideGroup, key);
+      const source: TokenEntry['source'] = isOverride ? (knownKeys.includes(key) ? 'overridden' : 'custom') : 'default';
+
+      tokens.push({ key, varName: getTokenVarName(group, key), value: String(value), source });
+    }
+
+    if (tokens.length > 0) groups.push({ group, tokens });
+  }
+
+  return groups;
+}
+
+/**
+ * 生成 config を反映した CSS 変数定義と、その内訳（ビューアのトークン一覧用）を作る。
+ *
+ * ビューアは Lism 標準の `lism-css/main.css` を読むため、main 側の BuildConfig を直列化する。
+ * React ランタイム（`lism.config.js` は `isFullMode` を持たない）も main 側の prop 設定で動くので、
+ * CSS・コンポーネント・トークン一覧の3つがすべて同じモードで揃う。
+ * CSS と一覧は必ず同じ config から作る（`loadBuildConfigs()` は1回だけ呼び、両者のずれを防ぐ）。
+ */
+export async function buildTokensArtifacts(
+  dataDir: string,
+  configPath: string,
+  overrides: MockupTokens
+): Promise<{ css: string; groups: TokenGroupEntry[] }> {
+  const { mainConfig, defaultConfig } = await loadBuildConfigs(dataDir, { configPath });
+  return {
+    css: serializeTokens(mainConfig),
+    groups: collectTokenGroups(mainConfig.tokens, defaultConfig.tokens, overrides),
+  };
 }

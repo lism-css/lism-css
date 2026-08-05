@@ -12,8 +12,8 @@ import path from 'node:path';
 import { readMockConfig, resolveDataDir } from './data-dir.js';
 import { discoverPages } from './pages.js';
 import { safeRealpath, toImportSpecifier } from './paths.js';
-import { buildTokensCss, loadTokens, writeConfigModule } from './tokens.js';
-import type { MockupData } from './types.js';
+import { buildTokensArtifacts, loadTokens, writeConfigModule } from './tokens.js';
+import type { MockupData, TokenGroupEntry } from './types.js';
 
 export interface MockupRuntime {
   /** 最新の検証済みデータ（watch で差し替わる）。 */
@@ -26,11 +26,13 @@ export interface MockupRuntime {
   readonly tempDir: string;
   /** `serializeTokens()` の結果（`virtual:lism-mockup/tokens.css` の中身）。 */
   tokensCss: string;
+  /** 上の CSS が定義するトークンの内訳（`virtual:lism-mockup/tokens` の中身）。 */
+  tokensData: TokenGroupEntry[];
   /** 仮想モジュールが生成する動的 import 指定子の集合（境界チェックの照合用）。 */
   getPageSpecifiers(): ReadonlySet<string>;
   /** `mockup.config.json` と `pages/` を読み直す。 */
   refreshPages(): void;
-  /** `tokens.json` を読み直し、config モジュールとトークン CSS を作り直す。 */
+  /** `tokens.json` を読み直し、config モジュール・トークン CSS・トークン一覧を作り直す。 */
   refreshTokens(): Promise<void>;
   /** 一時ディレクトリを削除する。 */
   cleanup(): void;
@@ -56,7 +58,7 @@ export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
   fs.mkdirSync(cacheDir, { recursive: true });
 
   const configPath = writeConfigModule(tempDir, data.tokens);
-  const tokensCss = await buildTokensCss(data.dataDir, configPath);
+  const { css: tokensCss, groups: tokensData } = await buildTokensArtifacts(data.dataDir, configPath, data.tokens);
 
   let specifierSource: MockupData['pages'] | null = null;
   let specifiers: ReadonlySet<string> = new Set();
@@ -67,6 +69,7 @@ export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
     cacheDir,
     tempDir,
     tokensCss,
+    tokensData,
 
     getPageSpecifiers() {
       if (specifierSource !== runtime.data.pages) {
@@ -86,7 +89,9 @@ export async function prepareMockRuntime(dir: string): Promise<MockupRuntime> {
       const tokens = await loadTokens(runtime.data.dataDir);
       writeConfigModule(tempDir, tokens);
       runtime.data = { ...runtime.data, tokens };
-      runtime.tokensCss = await buildTokensCss(runtime.data.dataDir, configPath);
+      const { css, groups } = await buildTokensArtifacts(runtime.data.dataDir, configPath, tokens);
+      runtime.tokensCss = css;
+      runtime.tokensData = groups;
     },
 
     cleanup() {

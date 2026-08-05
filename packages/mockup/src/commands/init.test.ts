@@ -11,6 +11,7 @@ const EXPECTED_FILES = [
   'mockup.config.json',
   'tokens.json',
   'pages/landing.jsx',
+  'pages/components.jsx',
   'pages/admin/dashboard.jsx',
   'pages/admin/settings.jsx',
   'pages/admin/settings.css',

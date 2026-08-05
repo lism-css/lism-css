@@ -51,7 +51,7 @@ describe('buildImportAllowlist', () => {
       'lism-css',
       'lism-css/react',
       'lism-css/lib/getTokenVarName',
-      'lism-css/full.css',
+      'lism-css/main.css',
       '@lism-css/ui/react',
       '@lism-css/ui/react/Accordion',
       '@lism-css/ui/style.css',

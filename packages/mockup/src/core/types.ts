@@ -9,6 +9,16 @@
 /** Supported `mockup.config.json` schema version. Bump when the contract changes. */
 export const SCHEMA_VERSION = 1;
 
+/**
+ * Whether a parsed JSON value is an object the validators can walk key by key.
+ *
+ * Shared by every validator so `mockup.config.json` and `tokens.json` can never
+ * disagree about what counts as an object.
+ */
+export function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
 /** Per-page metadata overrides in `mockup.config.json` (`pages` field). */
 export interface MockupConfigPageMeta {
   label?: string;
@@ -45,6 +55,27 @@ export interface PageEntry {
 
 /** `tokens.json` content: lism.config-compatible `tokens` object. */
 export type MockupTokens = Record<string, Record<string, string | number>>;
+
+/**
+ * One resolved design token for the viewer's tokens view.
+ * Mirrors `ViewerToken` in `viewer/src/virtual-modules.d.ts` — keep both in sync.
+ */
+export interface TokenEntry {
+  /** Token key inside its group (e.g. `brand`, `20`). */
+  key: string;
+  /** CSS custom property name (e.g. `--brand`). */
+  varName: string;
+  /** Value as it appears in the generated token CSS (numbers are stringified). */
+  value: string;
+  /** How the mockup's `tokens.json` affected this token. */
+  source: 'default' | 'overridden' | 'custom';
+}
+
+/** A token group in merged-config order (`virtual:lism-mockup/tokens`). */
+export interface TokenGroupEntry {
+  group: string;
+  tokens: TokenEntry[];
+}
 
 /** Fully validated data directory, shared by `dev` and `check`. */
 export interface MockupData {

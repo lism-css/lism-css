@@ -28,6 +28,22 @@ export function getResolveAnchor(): string {
   return path.join(getMockPackageRoot(), '__lism-mockup-resolve-anchor.js');
 }
 
+/**
+ * `from` 自身から filesystem のルートまで、親方向へ1階層ずつ辿る。
+ *
+ * Node のパッケージ解決と同じ「近い順」。node_modules 探索がこの順序に依存するため、
+ * 遡り方は複数箇所で書き写さずここ1箇所に置く。
+ */
+export function* walkAncestorDirs(from: string): Generator<string> {
+  let dir = path.resolve(from);
+  for (;;) {
+    yield dir;
+    const parent = path.dirname(dir);
+    if (parent === dir) return;
+    dir = parent;
+  }
+}
+
 /** realpath 解決。解決できないパス（仮想 id・未作成ファイル）はそのまま返す。 */
 export function safeRealpath(target: string): string {
   try {
@@ -41,12 +57,6 @@ export function safeRealpath(target: string): string {
 export function isInsideDir(dir: string, target: string): boolean {
   const rel = path.relative(dir, target);
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
-}
-
-/** `?raw` などのクエリを除いたパス部分。 */
-export function stripQuery(id: string): string {
-  const index = id.search(/[?#]/);
-  return index === -1 ? id : id.slice(0, index);
 }
 
 /** id をパス部分とクエリ部分（`?...`）に分割する。 */

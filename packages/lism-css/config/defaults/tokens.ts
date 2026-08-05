@@ -50,20 +50,6 @@ export default {
     '2xs': 'calc(1em * var(--fz-mol) / (var(--fz-mol) + 3))',
   },
 
-  // line-height: CSS 変数を持たないカタログ専用（prop 側で解釈）。
-  lh: { base: '-', xs: '-', s: '-', l: '-' },
-
-  // half-leading: --hl-unit は手書き SCSS の構造変数。
-  hl: {
-    base: 'calc(var(--hl-unit) * 3)',
-    xs: 'var(--hl-unit)',
-    s: 'calc(var(--hl-unit) * 2)',
-    l: 'calc(var(--hl-unit) * 4)',
-  },
-
-  // letter-spacing
-  lts: { base: 'normal', s: '-0.025em', l: '0.05em', xl: '0.1em' },
-
   // font-family
   ff: {
     /* Base:
@@ -83,6 +69,20 @@ export default {
   // font-weight
   fw: { light: '300', normal: '400', bold: '600' },
 
+  // half-leading: --hl-unit は手書き SCSS の構造変数。
+  hl: {
+    base: 'calc(var(--hl-unit) * 3)',
+    xs: 'var(--hl-unit)',
+    s: 'calc(var(--hl-unit) * 2)',
+    l: 'calc(var(--hl-unit) * 4)',
+  },
+
+  // line-height: CSS 変数を持たないカタログ専用（prop 側で解釈）。
+  lh: { base: '-', xs: '-', s: '-', l: '-' },
+
+  // letter-spacing
+  lts: { base: 'normal', s: '-0.025em', l: '0.05em', xl: '0.1em' },
+
   // opacity（音楽の強弱記号 piano 系列に由来）
   o: { mp: '0.9', p: '0.75', pp: '0.5', ppp: '0.25' },
 
@@ -97,6 +97,9 @@ export default {
     '40': 'var(--shsz--40) var(--shc)',
     '50': 'var(--shsz--50) var(--shc)',
   },
+
+  // aspect-ratio
+  ar: { og: '1.91/1' },
 
   // space: 構造変数 --s-unit（手書き SCSS）の倍数。フィボナッチ数列ベース。.set--s で --s-unit を em 化すると再ベースされる。
   space: {
@@ -119,7 +122,4 @@ export default {
 
   // content-size
   sz: { xs: '400px', s: '640px', m: '880px', l: '1200px', xl: '1600px' },
-
-  // aspect-ratio
-  ar: { og: '1.91/1' },
 } as const;
