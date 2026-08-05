@@ -38,6 +38,16 @@ export interface BuildConfig {
 }
 
 /**
+ * トークンカタログ（配列 or 値付きフラットマップ）から、クラス化するキー一覧を取り出す。
+ * '-' センチネル（実値は手書き SCSS）もカタログ上は有効なので、キーとして含める。
+ */
+function tokenCatalogKeys(catalog: unknown): string[] {
+  if (Array.isArray(catalog)) return catalog.map(String);
+  if (catalog && typeof catalog === 'object') return Object.keys(catalog);
+  return [];
+}
+
+/**
  * ユーティリティ値を生成する。
  */
 function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<string, string> {
@@ -50,13 +60,11 @@ function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<strin
 
   // token をクラス化するのであれば presets へ追加
   if (token && tokenClass === 1) {
-    const tokenCatalog = TOKENS[token];
-    if (Array.isArray(tokenCatalog)) {
-      presets.push(...(tokenCatalog as TokenValue[]));
-    } else if (tokenCatalog && typeof tokenCatalog === 'object') {
-      // '-' センチネル（実値は手書き SCSS）もカタログ上は有効なので、キー一覧を presets 化する。
-      presets.push(...Object.keys(tokenCatalog));
-    }
+    presets.push(...tokenCatalogKeys(TOKENS[token]));
+    // token:'color' は color（セマンティック）∪ palette（パレット）の合成カタログとして解決されるため、
+    // ビルド側のクラス生成もその和集合に揃える（config/index.ts の tokensWithColor /
+    // getMaybeTokenValue.ts の palette フォールバック / gen-types.ts と同じ規則）。
+    if (token === 'color') presets.push(...tokenCatalogKeys(TOKENS.palette));
   }
 
   if (presets.length > 0) {

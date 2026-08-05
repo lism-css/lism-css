@@ -83,7 +83,7 @@
 | `bgr` | `background-repeat` | `-bgr:no-repeat` | — |
 | `bgp` | `background-position` | `-bgp:center` | — |
 | `bgsz` | `background-size` | `-bgsz:cover`, `-bgsz:contain` | — |
-| `bgc` | `background-color` | `-bgc:base`, `-bgc:base-2`, `-bgc:text`, `-bgc:brand`, `-bgc:accent`, `-bgc:inherit`, `-bgc:transparent` | — |
+| `bgc` | `background-color` | `-bgc:base`, `-bgc:base-2`, `-bgc:text`, `-bgc:brand`, `-bgc:accent`, `-bgc:inherit`, `-bgc:transparent`, `-bgc:current` | — |
 
 ### カラー
 

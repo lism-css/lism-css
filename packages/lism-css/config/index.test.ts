@@ -1,5 +1,5 @@
 import { describe, test, expect, afterEach, vi } from 'vitest';
-import { FULL_BP_EXCLUDED_KEYS, FULL_BP_ISVAR_KEYS } from './presets/props-full';
+import { FULL_BP_EXCLUDED_KEYS, FULL_BP_ISVAR_KEYS, FULL_COLOR_TOKEN_CLASS_KEYS } from './presets/props-full';
 
 // config/index.ts はモジュール初期化時に lism-css/config.js（= lism.config.js）を読むため、
 // doMock で差し替えてから resetModules + 動的 import する
@@ -52,6 +52,37 @@ describe('isFullMode', () => {
       expect(props[key].bp, key).toBe(1);
     }
     expect(props.bdw.bp).toBe(1); // defaults で対応済み
+  });
+
+  test('isFullMode ではカラー系 props（bgc / c / bdc）が tokenClass:1 になる（#480）', async () => {
+    const { PROPS } = await importConfig({ isFullMode: true });
+    const props = PROPS as unknown as LoosePropConfig;
+
+    for (const key of FULL_COLOR_TOKEN_CLASS_KEYS) {
+      expect(props[key].tokenClass, key).toBe(1);
+    }
+    // bdc は isVar 系なので bp:1 の追加と両立していることも確認する
+    expect(props.bdc.isVar).toBe(1);
+    expect(props.bdc.bp).toBe(1);
+  });
+
+  test('デフォルトではカラー系 props に tokenClass は付かない（厳選 presets のまま）', async () => {
+    const { PROPS } = await importConfig();
+    const props = PROPS as unknown as LoosePropConfig;
+
+    for (const key of FULL_COLOR_TOKEN_CLASS_KEYS) {
+      expect(props[key].tokenClass, key).toBeUndefined();
+    }
+  });
+
+  test('isFullMode ではパレットカラーもクラス出力される（bgc="red" → -bgc:red）', async () => {
+    vi.resetModules();
+    vi.doMock('lism-css/config.js', () => ({ default: { isFullMode: true } }));
+    const { default: getLismProps } = await import('../src/lib/getLismProps');
+    const result = getLismProps({ bgc: 'red', c: 'blue', bdc: 'green' });
+    expect(result.className).toContain('-bgc:red');
+    expect(result.className).toContain('-c:blue');
+    expect(result.className).toContain('-bdc:green');
   });
 
   test('ユーザー設定の props 上書きが full preset より優先される（opt-out 可能）', async () => {

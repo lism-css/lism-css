@@ -530,6 +530,11 @@ describe('getLismProps', () => {
       const result = getLismProps({ td: 'none' });
       expect(result.className).toContain('-td:none');
     });
+
+    test('bgc: current / currentColor がユーティリティクラスになる', () => {
+      expect(getLismProps({ bgc: 'current' }).className).toContain('-bgc:current');
+      expect(getLismProps({ bgc: 'currentColor' }).className).toContain('-bgc:current');
+    });
   });
 
   describe('複雑な組み合わせ', () => {

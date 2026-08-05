@@ -137,9 +137,15 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`c`|`color`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`|-|
-|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 |`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
+
+:::info
+`current` は `currentColor`（その要素の文字色）の省略形です。
+
+また[`full.css`](/docs/customize/build/)では、上の表の値に加えて、セマンティックカラー・パレットカラーの全トークンが `-bgc:red` のようにクラス化されます。
+:::
 
 
 <Preview>

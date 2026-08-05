@@ -115,6 +115,8 @@ export default {
   bgc: {
     prop: 'backgroundColor',
     presets: ['base', 'base-2', 'text', 'brand', 'accent', 'inherit', 'transparent'],
+    // bdc と同様に currentColor を短く書けるようにする（-bgc:current）。
+    utils: { current: 'currentColor' },
     token: 'color',
     exUtility: { inherit: { 'background-color': 'inherit' } },
     alwaysVar: 1,

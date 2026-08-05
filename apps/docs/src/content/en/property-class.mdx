@@ -135,9 +135,15 @@ Each table covers one group of properties.
 |Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`c`|`color`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`|-|
-|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
-|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`|-|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
+|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
+
+:::info
+`current` is shorthand for `currentColor` (the element's text color).
+
+In [`full.css`](/en/docs/customize/build/), every semantic and palette color token is also output as a class (such as `-bgc:red`), in addition to the values listed above.
+:::
 
 
 <Preview>

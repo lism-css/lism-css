@@ -84,6 +84,26 @@ describe('tokens フラットマップのユーティリティ生成', () => {
     });
     expect(scss).toContain("'inner': 'var(--bdrs--inner)'");
   });
+
+  test("token:'color' は color ∪ palette のキーが utilities へ展開される（#480）", () => {
+    const scss = serializePropConfig({
+      tokens: { color: { brand: '#1e5f8c' }, palette: { red: 'red', keycolor: '-' } },
+      props: { bgc: { prop: 'backgroundColor', token: 'color', tokenClass: 1, alwaysVar: 1 } },
+    });
+    expect(scss).toContain("'brand': 'var(--brand)'");
+    expect(scss).toContain("'red': 'var(--red)'");
+    // '-' センチネルの keycolor もカタログ上は有効なのでクラス化される
+    expect(scss).toContain("'keycolor': 'var(--keycolor)'");
+  });
+
+  test("token:'color' でも tokenClass 無しなら palette は展開されない", () => {
+    const scss = serializePropConfig({
+      tokens: { color: { brand: '#1e5f8c' }, palette: { red: 'red' } },
+      props: { bgc: { prop: 'backgroundColor', presets: ['brand'], token: 'color', alwaysVar: 1 } },
+    });
+    expect(scss).toContain("'brand': 'var(--brand)'");
+    expect(scss).not.toContain("'red'");
+  });
 });
 
 describe('serializeTokens', () => {
