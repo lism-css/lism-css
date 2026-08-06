@@ -7,13 +7,18 @@ packages:
 overrides:
   '@vitest/expect': $vitest
   '@vitest/spy': $vitest
+  '@vitest/browser': $vitest # GHSA: Browser Mode の provider コマンドが file-access 権限ゲートをバイパス (#169)
   # セキュリティ: Dependabot alert 対応（推移的依存の patch 更新）
   'vite@<6.4.3': '^6.4.3' # GHSA: fs.deny bypass / launch-editor NTLMv2 hash disclosure (#119-#122)
   'vite@>=7 <7.3.5': '^7.3.5' # GHSA: fs.deny bypass / launch-editor NTLMv2 hash disclosure (#119-#122)
   'hono@<4.12.25': '^4.12.25' # GHSA: CORS wildcard credentials / bodyLimit bypass / Set-Cookie injection 等 (#93-#99, #109-#112, #124-#128)
   '@hono/node-server@<1.19.13': '^1.19.13' # GHSA: Middleware bypass via repeated slashes (#82)
-  'postcss@<8.5.10': '^8.5.10' # GHSA: XSS via Unescaped </style> in Stringify Output (#91)。next@16 が 8.4.31 を固定ピンしているため override が必要
+  'postcss@<8.5.23': '^8.5.23' # GHSA: XSS via Unescaped </style> (#91) / sourceMappingURL 経由の任意 .map 読み取り (#186, #193)。next@16 が 8.4.31 を固定ピンしているため override が必要
   'esbuild@>=0.27.3 <0.28.1': '^0.28.1' # GHSA: dev server での arbitrary file read on Windows (#113)。astro/tsup が ^0.27 系要求のため override が必要
+  'undici@>=7 <7.29.0': '^7.29.0' # GHSA: private cache directive 経由の情報漏洩 / CRLF injection 等 (#195-#199)。miniflare 由来
+  'ip-address@<10.3.1': '^10.3.1' # GHSA: 先頭ゼロ8進数の解釈差などによる SSRF / trust-boundary バイパス (#187, #188, #200)。express-rate-limit 由来
+  'brace-expansion@<1.1.16': '^1.1.16' # GHSA: 連続する {} の指数時間展開による DoS (#183)。minimatch@3 由来
+  'svgo@>=4 <4.0.2': '^4.0.2' # GHSA: removeScripts プラグインが一部の実行可能スクリプトを残す (#171)
 
 # ビルドスクリプトの実行を許可するパッケージ (pnpm 10 で必要になった)
 onlyBuiltDependencies:
@@ -29,8 +34,11 @@ trustPolicyIgnoreAfter: 525600 # 1年以上前に公開されたパッケージ�
 trustPolicyExclude:
   - 'vite@6.4.1' # publish方法変更による検出（trusted publisher → provenance）
 
-# サプライチェーン攻撃対策: 公開から3日未満のバージョンはインストールしない
-minimumReleaseAge: 4320
+# サプライチェーン攻撃対策: 公開から7日未満のバージョンはインストールしない
+# 2026-08-04 の Shai-Hulud npm ワーム（keyv / flat-cache / cacheable 系を起点に 400+ パッケージが汚染）を受けて
+# 3日(4320) から 7日(10080) へ引き上げた。汚染版自体は npm から削除済みだが、二次感染分の削除漏れに備えた保険。
+# 状況が落ち着いたら 4320 に戻してよい。
+minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - 'lism-css' # 自プロジェクトのパッケージは除外
   - '@lism-css/*'
