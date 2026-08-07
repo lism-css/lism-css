@@ -92,6 +92,8 @@ export interface TokenEntry {
  * A dark section is a section of its own, listed right after the light one it
  * mirrors, so `id` / `label` / `group` cannot be collapsed into a single field:
  * two sections share a `group` but never an `id`.
+ *
+ * Mirrors `ViewerTokenGroup` in `viewer/src/virtual-modules.d.ts` — keep both in sync.
  */
 export interface TokenGroupEntry {
   /** Unique key of the section: DOM id source and React key (e.g. `color`, `color--dark`). */
@@ -102,6 +104,17 @@ export interface TokenGroupEntry {
   label: string;
   /** Whether the section lists the dark values, and must render inside the dark scope. */
   isDark?: boolean;
+  /**
+   * CSS 変数名のプレフィックス（`--fz--`・space は `--s`・color / palette は `--`）。
+   * 行ごとに変数名を並べる代わりに、見出しの横に1回だけ出す。
+   * キー自体が変数名のグループ（`vars` の残余）は空文字で、見出しには何も出さない。
+   */
+  varPrefix: string;
+  /**
+   * このグループのトークン値が参照している構造変数（`vars` グループからの振り分け）。
+   * キー自体が CSS 変数名（`--L` 等）。ビューアは表には入れず、見出し下の1行にまとめて出す。
+   */
+  structuralVars?: TokenEntry[];
   tokens: TokenEntry[];
 }
 

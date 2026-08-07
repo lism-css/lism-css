@@ -13,14 +13,13 @@
  * isolated viewport it expects, and the embed mode above is what it loads.
  */
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Flex, Group, Stack } from 'lism-css/react';
+import { Flex, Group } from 'lism-css/react';
 import { pages, title } from 'virtual:lism-mockup/pages';
 
 import EmptyState from './components/EmptyState';
 import GalleryView from './components/GalleryView';
 import PageView from './components/PageView';
 import TokensView, { TOKENS_VIEW_LABEL } from './components/TokensView';
-import ViewerHeader from './components/ViewerHeader';
 import ViewerNav from './components/ViewerNav';
 import { groupPages } from './lib/groupPages';
 import { splitPinnedPage } from './lib/pinnedPage';
@@ -29,7 +28,7 @@ import { useViewerRoute } from './lib/useViewerRoute';
 /** Fallback used when `mockup.config.json` does not declare a `title`. */
 const DEFAULT_TITLE = 'Lism Mockup';
 
-/** Id used to wire the header toggle to the sidebar (`aria-controls`). */
+/** Id used to wire the sidebar's collapse / expand buttons to it (`aria-controls`). */
 const NAV_ID = 'mockupViewerNav';
 
 // The pinned page documents the mockup instead of being one of its screens, so it
@@ -85,40 +84,31 @@ export default function App() {
   };
 
   return (
-    // The shell owns the viewport: header + sidebar stay put while only the page
-    // area scrolls. `is--container` is deliberately NOT used anywhere above the
-    // page area, because `container-type` would become a containing block for a
+    // The shell owns the viewport: the sidebar stays put while only the page area
+    // scrolls. `is--container` is deliberately NOT used anywhere above the page
+    // area, because `container-type` would become a containing block for a
     // mockup's `position: fixed` elements.
     // `100dvh` matches the `min-height: 100dvh` the base styles put on <body>,
     // so the document itself never gains a second scrollbar.
-    <Stack className="z--mockupViewer" h="100dvh" ov="hidden">
-      <ViewerHeader
+    <Flex className="z--mockupViewer" h="100dvh" ov="hidden">
+      {/* Collapses into an icon rail instead of unmounting, so `aria-controls`
+          stays valid and the primary links stay reachable. */}
+      <ViewerNav
+        id={NAV_ID}
         title={viewerTitle}
-        currentLabel={route.view === 'tokens' ? TOKENS_VIEW_LABEL : currentPage?.label}
-        isNavOpen={isNavOpen}
-        onToggleNav={() => setIsNavOpen((open) => !open)}
-        navId={NAV_ID}
+        isOpen={isNavOpen}
+        onToggle={() => setIsNavOpen((open) => !open)}
+        groups={pageGroups}
+        pinnedPage={pinnedPage}
+        route={route}
+        onOpenGallery={openGallery}
+        onOpenTokens={openTokens}
+        onOpenPage={openPage}
       />
-      {/* `min-h:0` lets this row shrink inside the fixed-height shell so its
-          children can own the scrolling instead of pushing the shell taller. */}
-      <Flex className="z--mockupViewerBody" fxg="1" min-h="0">
-        {/* Kept mounted while hidden so `aria-controls` stays valid and the
-            sidebar keeps its scroll position. */}
-        <ViewerNav
-          id={NAV_ID}
-          isOpen={isNavOpen}
-          groups={pageGroups}
-          pinnedPage={pinnedPage}
-          route={route}
-          onOpenGallery={openGallery}
-          onOpenTokens={openTokens}
-          onOpenPage={openPage}
-        />
-        {/* No padding / background here: the mockup page must look exactly as authored. */}
-        <Group as="main" forwardedRef={mainRef} className="z--mockupViewerMain" fxg="1" ov-y="auto">
-          {renderMain()}
-        </Group>
-      </Flex>
-    </Stack>
+      {/* No padding / background here: the mockup page must look exactly as authored. */}
+      <Group as="main" forwardedRef={mainRef} className="z--mockupViewerMain" fxg="1" ov-y="auto">
+        {renderMain()}
+      </Group>
+    </Flex>
   );
 }

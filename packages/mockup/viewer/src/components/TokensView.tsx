@@ -11,8 +11,8 @@ export const TOKENS_VIEW_LABEL = 'Design tokens';
 
 /** Short badge text for the tokens the mockup's `tokens.json` touched. */
 const SOURCE_LABELS: Record<Exclude<ViewerToken['source'], 'default'>, string> = {
-  overridden: 'override',
-  custom: 'new',
+  overridden: 'Custom',
+  custom: 'New',
 };
 
 /**
@@ -26,18 +26,21 @@ const sectionId = (id: string) => `tokenGroup-${id}`;
 /**
  * Column tracks of a group's rows.
  *
- * `TABLE` is preview / name / var name (+ badge) / value on one line.
- * `STACKED` is two rows — preview + name, then var name + value — so a narrow
- * viewport stays two lines instead of three. Which breakpoint swaps one for the
- * other depends on the group: a wide preview only leaves room for the full table
- * from `md`, everything else manages from `sm`. Responsive positions are
- * `[base, sm, md]`, so the wide variant skips `sm` with a `null`.
+ * `TABLE` is preview (spanning two tracks) / name (+ badge) / value on one
+ * line. `STACKED` keeps two tracks and two rows: the preview spans the first
+ * row, then the name and value share the second. Which breakpoint swaps one
+ * for the other depends on the group: a wide preview only leaves room for the
+ * full table from `md`, everything else manages from `sm`. Responsive
+ * positions are `[base, sm, md]`, so the wide variant skips `sm` with a
+ * `null`.
  *
- * Both layouts place the four cells in document order; no per-cell `gc` is
- * needed because the track count alone decides the wrap.
+ * The var name is not a column: it is the group's `varPrefix` plus the key, and
+ * the prefix is shown once next to the heading instead of on every row.
  */
 const STACKED_COLUMNS = '1fr 1fr';
-const TABLE_COLUMNS = 'minmax(max-content, 25%) auto minmax(max-content, 1fr) auto';
+const TABLE_COLUMNS = 'minmax(max-content, 20%) 1fr minmax(max-content, 20%) minmax(12rem, 25%)';
+const STACKED_AREAS = `'preview preview' 'name value'`;
+const TABLE_AREAS = `'preview preview name value'`;
 
 /**
  * Column tracks of a group whose keys are already the custom property names.
@@ -114,32 +117,40 @@ interface TokenGroupSectionProps {
 }
 
 function TokenGroupSection({ section }: TokenGroupSectionProps) {
-  const { id, group, label, isDark = false, tokens } = section;
+  const { id, group, label, isDark = false, varPrefix, structuralVars = [], tokens } = section;
   // A group whose preview needs the whole row needs the whole view with it, so
   // it opts out of the wrapper's content size instead of being centred in it.
   // The shape is looked up by `group`, never by `label`: a dark section shows
   // the same tokens and has to get the same preview.
   const { note, isBlock: isBlockPreview, isWide } = tokenGroupLayout(group);
 
-  // A group whose prefix is empty (`vars`) has the custom property name as its
-  // key, so a normal row would print the very same string twice — once as the
-  // key and once as the var name. Those groups drop to name + value only.
-  // Checked on the tokens themselves rather than on the group name, so a group
-  // named differently but built the same way is laid out the same way.
-  // A group with a block preview keeps the normal row: its rows are not in a
-  // grid at all, so they have no columns to drop.
-  const isVarOnly = !isBlockPreview && tokens.every((token) => token.key === token.varName);
+  // A group whose prefix is empty (the leftover `vars` section) has the custom
+  // property name as its key, so its rows drop to name + value only. Checked on
+  // the tokens themselves rather than on the group name, so a group named
+  // differently but built the same way is laid out the same way. A group with a
+  // block preview keeps the normal row: its rows are not in a grid at all, so
+  // they have no columns to drop.
+  const isVarOnly = !isBlockPreview && tokens.length > 0 && tokens.every((token) => token.key === token.varName);
 
-  const rows = tokens.map((token, index) => (
-    <TokenRow
-      key={token.key}
-      group={group}
-      token={token}
-      isBlockPreview={isBlockPreview}
-      isVarOnly={isVarOnly}
-      hasDivider={index > 0}
-      hasBadge={!isDark}
-    />
+  // The structural variables the group's values are computed from are knobs,
+  // not tokens of the group, so they do not join the table: they sit on one
+  // compact line of their own between the heading and the list.
+  const structuralLine = structuralVars.length > 0 && (
+    <Flex ai="baseline" cg="30" rg="5" fxw="wrap">
+      {structuralVars.map((token) => (
+        // The item itself wraps too, so on a tight viewport the badge drops
+        // under the text instead of squeezing it into letter-per-line breaks.
+        <Flex key={token.key} ai="center" g="0" fxw="wrap" min-w="0">
+          <Inline as="code" fz="xs" ff="mono" ovw="anywhere">
+            <Inline fw="bold">{token.key}</Inline>: {token.value}
+          </Inline>
+          {!isDark && <SourceBadge source={token.source} />}
+        </Flex>
+      ))}
+    </Flex>
+  );
+  const rows = tokens.map((token) => (
+    <TokenRow key={token.key} group={group} token={token} isBlockPreview={isBlockPreview} isVarOnly={isVarOnly} isWide={isWide} hasBadge={!isDark} />
   ));
 
   // The list is rendered inside the dark scope, not just labelled as dark:
@@ -159,12 +170,24 @@ function TokenGroupSection({ section }: TokenGroupSectionProps) {
         <Heading level="3" fz="xs" fw="bold" c="text-2" tt="upper" lts="l">
           {label}
         </Heading>
+        {/* Outside the heading: `tt="upper"` would distort the case-sensitive
+            custom property prefix. */}
+        {varPrefix && (
+          <Text fz="2xs" c="text-2">
+            (prefix:{' '}
+            <Inline as="code" ff="mono">
+              {varPrefix}
+            </Inline>
+            )
+          </Text>
+        )}
         {note && (
           <Text fz="2xs" c="text-2">
             {note}
           </Text>
         )}
       </Flex>
+      {structuralLine}
       {isBlockPreview ? (
         <Stack as="ul" g="0" {...listScope}>
           {rows}
@@ -190,6 +213,20 @@ function TokenGroupSection({ section }: TokenGroupSectionProps) {
   );
 }
 
+/**
+ * Source badge for a token the mockup's `tokens.json` touched. The badge names
+ * the token, not its value, so callers put it right after the name instead of
+ * giving it a column of its own.
+ */
+function SourceBadge({ source }: { source: ViewerToken['source'] }) {
+  if (source === 'default') return null;
+  return (
+    <Badge util="cbox" keycolor={source === 'custom' ? 'orange' : 'blue'} fz="10px" hl="0" fxsh="0" px="10" bdrs="99" ms="10">
+      {SOURCE_LABELS[source]}
+    </Badge>
+  );
+}
+
 interface TokenRowProps {
   /** Decides which preview shape the row gets. */
   group: string;
@@ -198,8 +235,8 @@ interface TokenRowProps {
   isBlockPreview: boolean;
   /** Whether the row shows the custom property name and the value only. */
   isVarOnly: boolean;
-  /** Rows are separated by a rule, which the first row of a group must not get. */
-  hasDivider: boolean;
+  /** Whether the group's table layout waits for `md` (see `STACKED_COLUMNS`). */
+  isWide: boolean;
   /**
    * Whether the row may carry a source badge. A dark section is a list of
    * differences from the light theme by definition, so the same badge on every
@@ -208,51 +245,32 @@ interface TokenRowProps {
   hasBadge: boolean;
 }
 
-function TokenRow({ group, token, isBlockPreview, isVarOnly, hasDivider, hasBadge }: TokenRowProps) {
-  const preview = <TokenPreview group={group} tokenKey={token.key} varName={token.varName} />;
-
-  // The badge names the token, not its value, so it rides along with the name
-  // instead of taking a column of its own.
-  const badge = hasBadge && token.source !== 'default' && (
-    <Badge util="cbox" keycolor={token.source === 'custom' ? 'orange' : 'blue'} fz="2xs" hl="0" fxsh="0" px="10" bdrs="99" ms="10">
-      {SOURCE_LABELS[token.source]}
-    </Badge>
-  );
-  const valueCell = (
-    <Inline fz="xs" ff="mono" ovw="anywhere">
-      {token.value}
-    </Inline>
-  );
+function TokenRow({ group, token, isBlockPreview, isVarOnly, isWide, hasBadge }: TokenRowProps) {
+  const preview = <TokenPreview group={group} tokenKey={token.key} varName={token.varName} ga={isBlockPreview ? undefined : 'preview'} />;
+  const badge = hasBadge && <SourceBadge source={token.source} />;
 
   // A group whose key is already the custom property name has nothing to show
   // besides that name and its value: no preview shape is defined for it, and a
   // key column would repeat the name. Two columns, no responsive variant.
   if (isVarOnly) {
     return (
-      <Grid as="li" gtc="subgrid" gc="1/-1" ai="center" g="25" py="15" bd-bs={hasDivider || undefined}>
+      <Grid as="li" gtc="subgrid" gc="1/-1" ai="center" g="25" py="10">
         <Inline as="code" fz="s" fw="bold" ff="mono" ovw="anywhere" min-w="0">
           {token.varName}
           {badge}
         </Inline>
-        {valueCell}
+        <Inline fz="2xs" ff="mono" c="text-2" ovw="anywhere">
+          {token.value}
+        </Inline>
       </Grid>
     );
   }
 
-  // Both layouts below show the same cells, so each one is built once here and
-  // only placed differently.
   const keyCell = (
-    <Inline fz="s" fw="bold" ovw="anywhere" min-w="0">
+    <Inline fz="s" fw="bold" ovw="anywhere" min-w="0" ga={isBlockPreview ? undefined : 'name'}>
       {token.key}
       {badge}
     </Inline>
-  );
-  const varCell = (
-    <Flex ai="baseline" g="10" fxw="wrap" min-w="0">
-      <Inline as="code" fz="2xs" ff="mono" c="text-2" ovw="anywhere">
-        {token.varName}
-      </Inline>
-    </Flex>
   );
 
   // A block preview is too wide to sit next to the text, so it takes a band of
@@ -262,11 +280,10 @@ function TokenRow({ group, token, isBlockPreview, isVarOnly, hasDivider, hasBadg
   // from its track instead.
   if (isBlockPreview) {
     return (
-      <Stack as="li" g="10" py="10" bd-bs={hasDivider || undefined}>
+      <Stack as="li" g="10" py="10">
         <Flex ai="center" g="25" fxw="wrap">
           {keyCell}
-          {varCell}
-          <Inline fz="xs" ff="mono" fxg="1" min-w="0" ovw="anywhere">
+          <Inline fz="2xs" ff="mono" c="text-2" fxg="1" min-w="0" ovw="anywhere">
             {token.value}
           </Inline>
         </Flex>
@@ -277,15 +294,25 @@ function TokenRow({ group, token, isBlockPreview, isVarOnly, hasDivider, hasBadg
 
   return (
     // `subgrid` takes the columns from the `ul`, so the cells line up with every
-    // other row without knowing anything about their own width. The gap repeats
-    // the one the `ul` sets, and adds the row gap the narrow layout needs.
-    // Cells stay in source order: two tracks stack them into two rows, four
-    // tracks line them up as a table.
-    <Grid as="li" gtc="subgrid" gc="1/-1" ai="center" g="25" rg="10" py="15" bd-bs={hasDivider || undefined}>
+    // other row without knowing anything about their own width. Named areas
+    // keep placement explicit: the preview spans the first row at narrow
+    // widths, while the name and value share the second row. At the group's
+    // table breakpoint all three line up, with the preview spanning two tracks.
+    <Grid
+      as="li"
+      gtc="subgrid"
+      gta={isWide ? [STACKED_AREAS, null, TABLE_AREAS] : [STACKED_AREAS, TABLE_AREAS]}
+      gc="1/-1"
+      ai="center"
+      g="25"
+      rg="10"
+      py="10"
+    >
       {preview}
       {keyCell}
-      {varCell}
-      {valueCell}
+      <Inline fz="2xs" ff="mono" c="text-2" ovw="anywhere" min-w="0" ga="value">
+        {token.value}
+      </Inline>
     </Grid>
   );
 }

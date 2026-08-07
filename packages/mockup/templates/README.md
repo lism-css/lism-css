@@ -82,7 +82,7 @@ picture of a screen, not an app.
 ```json
 {
   "schemaVersion": 2,
-  "title": "Acme Console Mockup",
+  "title": "Lism Mockup",
   "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 }

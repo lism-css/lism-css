@@ -368,12 +368,43 @@ export function serializeDarkTokens(entries: DarkTokenEntry[]): string {
   return `.${DARK_SCOPE_CLASS} {\n${decls.join('\n')}\n}\n`;
 }
 
+/** 構造変数のグループ名。キー自体が CSS 変数名（`--L` 等）で、他グループの計算式から参照される。 */
+const STRUCTURAL_VARS_GROUP = 'vars';
+
+/**
+ * 構造変数キー → その変数を参照している最初のグループ名。
+ *
+ * 固定の対応表を持たず、トークン値の `var()` 参照から導く。lism-css 側で構造変数が
+ * 増減しても追従し、どのグループからも参照されない変数は振り分け先なし（`vars` セクション残り）
+ * として扱える。複数グループから参照される場合はマージ順で最初のグループに置く。
+ */
+function mapStructuralVarTargets(mergedTokens: Record<string, unknown>): Map<string, string> {
+  const targets = new Map<string, string>();
+  const varsMap = mergedTokens[STRUCTURAL_VARS_GROUP];
+  if (!isPlainObject(varsMap)) return targets;
+
+  for (const [group, valueMap] of Object.entries(mergedTokens)) {
+    if (group === STRUCTURAL_VARS_GROUP || !isPlainObject(valueMap)) continue;
+    for (const value of Object.values(valueMap)) {
+      if (typeof value !== 'string') continue;
+      for (const name of referencedVarNames(value)) {
+        if (Object.hasOwn(varsMap, name) && !targets.has(name)) targets.set(name, group);
+      }
+    }
+  }
+  return targets;
+}
+
 /**
  * マージ済みトークンを、ビューアのトークン一覧が読める形へ整理する。
  *
  * 出すのは生成 CSS が実際に定義しているトークンだけ（`isOmittedTokenValue()` を参照）。
  * ダークのトークンを持つ種別には、元のセクションの直後に `色 (dark)` のセクションを足す。
  * 並べて比較できるようにするためで、中身は `.set--dark` ブロックが定義しているものと一致する。
+ *
+ * 構造変数（`vars`）は独立したセクションにせず、それを参照しているグループの
+ * `structuralVars` へ振り分ける（`--L` はパレットの基準明度、のように使う場所で読めるため）。
+ * どこからも参照されない変数だけが `vars` セクションに残る。
  *
  * @param mergedTokens  `mainConfig.tokens`（`tokens.json` 反映後のマージ結果）
  * @param defaultTokens `defaultConfig.tokens`（既存キー判定の正）
@@ -387,18 +418,10 @@ export function collectTokenGroups(
   darkEntries: DarkTokenEntry[] = []
 ): TokenGroupEntry[] {
   const groups: TokenGroupEntry[] = [];
+  const varTargets = mapStructuralVarTargets(mergedTokens);
 
-  const darkByGroup = new Map<string, DarkTokenEntry[]>();
-  for (const entry of darkEntries) {
-    const list = darkByGroup.get(entry.group);
-    if (list) list.push(entry);
-    else darkByGroup.set(entry.group, [entry]);
-  }
-
-  for (const [group, valueMap] of Object.entries(mergedTokens)) {
-    // 配列カタログ（キーだけの登録）などは CSS 変数を持たないため、serializeTokens と同じ規則で飛ばす。
-    if (!isPlainObject(valueMap)) continue;
-
+  /** serializeTokens と同じ見なし方で、1グループ分の値マップを TokenEntry へ起こす。 */
+  const entriesOf = (group: string, valueMap: Record<string, string | number>): TokenEntry[] => {
     // 上書き元は null プロトタイプのユーザー入力なので、`in` ではなく hasOwn で own key だけを見る。
     const overrideGroup = Object.hasOwn(overrides, group) && isPlainObject(overrides[group]) ? overrides[group] : null;
     // 既存キー一覧は上書きがある種別でだけ必要（default しか無いなら判定に使わない）。
@@ -406,7 +429,7 @@ export function collectTokenGroups(
 
     const tokens: TokenEntry[] = [];
     // 値は string | number 前提（default-config の定義と `validateTokens` の契約）。serializeTokens と同じ見なし方。
-    for (const [key, value] of Object.entries(valueMap as Record<string, string | number>)) {
+    for (const [key, value] of Object.entries(valueMap)) {
       if (isOmittedTokenValue(value)) continue;
 
       const isOverride = overrideGroup !== null && Object.hasOwn(overrideGroup, key);
@@ -414,26 +437,77 @@ export function collectTokenGroups(
 
       tokens.push({ key, varName: getTokenVarName(group, key), value: String(value), source });
     }
+    return tokens;
+  };
 
-    if (tokens.length === 0) continue;
-    groups.push({ id: group, group, label: group, tokens });
+  // 構造変数を参照元グループへ振り分ける。メインのループはマージ順に進むため、
+  // vars がどの位置にあっても振り分け結果が揃っているよう先に処理しておく。
+  const structuralByGroup = new Map<string, TokenEntry[]>();
+  const residualVars: TokenEntry[] = [];
+  const varsMap = mergedTokens[STRUCTURAL_VARS_GROUP];
+  if (isPlainObject(varsMap)) {
+    for (const token of entriesOf(STRUCTURAL_VARS_GROUP, varsMap as Record<string, string | number>)) {
+      const target = varTargets.get(token.key);
+      if (target === undefined) {
+        residualVars.push(token);
+        continue;
+      }
+      const list = structuralByGroup.get(target);
+      if (list) list.push(token);
+      else structuralByGroup.set(target, [token]);
+    }
+  }
 
-    const dark = darkByGroup.get(group);
-    if (!dark) continue;
-    groups.push({
+  // ダークの構造変数も同じ振り分けで運ぶ（`vars (dark)` ではなく `palette (dark)` の構造変数になる）。
+  const darkTokensByGroup = new Map<string, DarkTokenEntry[]>();
+  const darkVarsByGroup = new Map<string, DarkTokenEntry[]>();
+  for (const entry of darkEntries) {
+    const target = entry.group === STRUCTURAL_VARS_GROUP ? varTargets.get(entry.key) : undefined;
+    const store = target === undefined ? darkTokensByGroup : darkVarsByGroup;
+    const group = target ?? entry.group;
+    const list = store.get(group);
+    if (list) list.push(entry);
+    else store.set(group, [entry]);
+  }
+
+  // ダークのセクションはすべてライトからの差分なので一覧では区別しないが、
+  // 「直接書いたもの」と「依存で再宣言されたもの」の別はここで保っておく。
+  const toDarkEntry = (entry: DarkTokenEntry): TokenEntry => ({
+    key: entry.key,
+    varName: entry.varName,
+    value: entry.value,
+    source: entry.isDeclared ? 'overridden' : 'default',
+  });
+
+  for (const [group, valueMap] of Object.entries(mergedTokens)) {
+    // 配列カタログ（キーだけの登録）などは CSS 変数を持たないため、serializeTokens と同じ規則で飛ばす。
+    if (!isPlainObject(valueMap)) continue;
+
+    // vars 自身のセクションに出すのは、どのグループからも参照されていない残りだけ。
+    const isVarsGroup = group === STRUCTURAL_VARS_GROUP;
+    const tokens = isVarsGroup ? residualVars : entriesOf(group, valueMap as Record<string, string | number>);
+    const structuralVars = structuralByGroup.get(group);
+
+    if (tokens.length === 0 && structuralVars === undefined) continue;
+    const varPrefix = getTokenVarName(group, '');
+
+    const entry: TokenGroupEntry = { id: group, group, label: group, varPrefix, tokens };
+    if (structuralVars !== undefined) entry.structuralVars = structuralVars;
+    groups.push(entry);
+
+    const dark = darkTokensByGroup.get(group);
+    const darkVars = darkVarsByGroup.get(group);
+    if (!dark && !darkVars) continue;
+    const darkEntry: TokenGroupEntry = {
       id: `${group}--dark`,
       group,
       label: `${group} (dark)`,
       isDark: true,
-      tokens: dark.map((entry) => ({
-        key: entry.key,
-        varName: entry.varName,
-        value: entry.value,
-        // ダークのセクションはすべてライトからの差分なので一覧では区別しないが、
-        // 「直接書いたもの」と「依存で再宣言されたもの」の別はここで保っておく。
-        source: entry.isDeclared ? 'overridden' : 'default',
-      })),
-    });
+      varPrefix,
+      tokens: (dark ?? []).map(toDarkEntry),
+    };
+    if (darkVars !== undefined) darkEntry.structuralVars = darkVars.map(toDarkEntry);
+    groups.push(darkEntry);
   }
 
   return groups;

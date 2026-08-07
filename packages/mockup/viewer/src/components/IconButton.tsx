@@ -13,7 +13,7 @@ interface IconButtonProps {
   controls?: string;
 }
 
-/** Square icon-only button used in the viewer header. */
+/** Square icon-only button used in the viewer sidebar. */
 export default function IconButton({ icon, label, onClick, isExpanded, controls }: IconButtonProps) {
   return (
     <Center
@@ -22,10 +22,8 @@ export default function IconButton({ icon, label, onClick, isExpanded, controls 
       set="plain"
       className="z--mockupViewerIconBtn"
       p="10"
-      bd
       bdrs="10"
-      bgc="base"
-      hov={{ bgc: 'base-2' }}
+      hov={{ bgc: 'base' }}
       hasTransition
       aria-label={label}
       aria-expanded={isExpanded}

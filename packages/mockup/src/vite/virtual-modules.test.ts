@@ -45,6 +45,7 @@ describe('generateTokensDataModule', () => {
       id: 'color',
       group: 'color',
       label: 'color',
+      varPrefix: '--',
       tokens: [
         { key: 'text', varName: '--text', value: '#333333', source: 'default' },
         { key: 'canvas', varName: '--canvas', value: '#f7f7f7', source: 'custom' },
@@ -55,9 +56,17 @@ describe('generateTokensDataModule', () => {
       group: 'color',
       label: 'color (dark)',
       isDark: true,
+      varPrefix: '--',
       tokens: [{ key: 'text', varName: '--text', value: '#eeeeee', source: 'overridden' }],
     },
-    { id: 'space', group: 'space', label: 'space', tokens: [{ key: '30', varName: '--s30', value: '1.5rem', source: 'overridden' }] },
+    {
+      id: 'space',
+      group: 'space',
+      label: 'space',
+      varPrefix: '--s',
+      structuralVars: [{ key: '--s-unit', varName: '--s-unit', value: '0.5rem', source: 'default' }],
+      tokens: [{ key: '30', varName: '--s30', value: '1.5rem', source: 'overridden' }],
+    },
   ];
 
   test('トークン一覧を tokenGroups として export する', () => {
