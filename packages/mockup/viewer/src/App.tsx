@@ -106,7 +106,7 @@ export default function App() {
         onOpenPage={openPage}
       />
       {/* No padding / background here: the mockup page must look exactly as authored. */}
-      <Group as="main" forwardedRef={mainRef} className="z--mockupViewerMain" fxg="1" ov-y="auto">
+      <Group as="main" forwardedRef={mainRef} className="z--mockupViewerMain" pos="relative" fxg="1" ov-y="auto">
         {renderMain()}
       </Group>
     </Flex>
