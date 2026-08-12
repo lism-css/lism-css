@@ -57,7 +57,7 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`lism-custom`</td>
-      <td>A customization layer for overriding existing Lism classes, or for placing custom classes (`c--{name}`, prefix-free classes, etc.).</td>
+      <td>A customization layer for overriding existing Lism classes, or for placing custom classes (`c--{name}`).</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Utility<br/>`lism-utility`</td>
@@ -203,7 +203,7 @@ The distinction from [Block Class](#block-class) is as follows:
 
 Use `b--` only for parts that satisfy all three [Block Class](#block-class) conditions (reused site-wide, base style managed in CSS, button/badge/card-level granularity); everything else is `c--`. The name `b--` guarantees that "the base style lives in CSS"; `c--` carries no such guarantee. The site skeleton and page-specific elements stay `c--` even when you write CSS for them. When in doubt, start with `c--` and rename it to `b--` once the part meets all three conditions and you want to switch to CSS-managed styling.
 
-Free-form naming without a prefix is still available (see [Rules for prefix-free classes](#rules-for-prefix-free-classes) below). If you want to keep things consistent with Lism's conventions, `c--` is recommended.
+Names use camelCase after the prefix (see the [naming guide](/en/docs/naming/)). For page-specific elements, including the page's slug or similar in the name — as in `c--landingHero` — makes it clear from the name alone where the element belongs.
 
 `c--` classes can follow the same BEM notation and combination rules as [Block Class](#block-class), giving them a BEM structure (Block / Modifier / Element):
 
@@ -212,13 +212,6 @@ Free-form naming without a prefix is still available (see [Rules for prefix-free
 |Block<br /><small>The base class</small>|`c--{name}`|`c--pricing`,<br />`c--siteHeader`|
 |Modifier<br /><small>Variation</small>|`c--{name}--{modifier}`|`c--pricing--featured`|
 |Element<br /><small>Child element</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
-
-### Rules for prefix-free classes
-
-- Avoid a single generic noun (`.hero`, `.card`, etc.); use camelCase that includes the page's slug or similar (`.frontHero`). This prevents collisions with external CSS and makes the class's origin clear from its name alone.
-- Place the CSS in `@layer lism-custom`. Writing it outside a layer breaks the assumption that Property Classes can override it.
-- Once you start reusing it across multiple pages, promote it to `c--` (or to `b--` if it meets the [Block Class](#block-class) conditions).
-
 
 ### Utility Class
 

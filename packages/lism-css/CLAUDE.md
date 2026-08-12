@@ -76,7 +76,7 @@ lism-base → lism-trait → lism-primitive → lism-block → lism-custom → l
 
 ※ 実際の `@layer` 宣言は上記に加えて後方互換用の `lism-component` を含む（`lism-block` と `lism-custom` の間）。
 
-`lism-trait` レイヤーには `is--`（役割宣言）と `has--`（機能付与）が含まれる。`lism-primitive` 内には `layout` / `atomic` のサブレイヤーがあり、それぞれ `l--` / `a--` を含む。`lism-trait` を `lism-primitive` より弱く配置することで、`is--boxLink` の `display: block` 等の初期化的な宣言が `l--stack` 等のレイアウトプリミティブに負けるようにしている。`lism-block` レイヤーは、ベーススタイルを CSS 側で管理する基礎部品（`b--`）用で、コアでは空。`lism-custom` レイヤーはユーザーの独自クラス（`c--` / プレフィックスなし）用。`lism-component` レイヤーは後方互換用（旧 `c--` の配置先・`@lism-css/ui` の旧版が使用）で、宣言から消すと既存ユーザー CSS の `@layer lism-component` が最後尾に再配置されてしまうため残している。
+`lism-trait` レイヤーには `is--`（役割宣言）と `has--`（機能付与）が含まれる。`lism-primitive` 内には `layout` / `atomic` のサブレイヤーがあり、それぞれ `l--` / `a--` を含む。`lism-trait` を `lism-primitive` より弱く配置することで、`is--boxLink` の `display: block` 等の初期化的な宣言が `l--stack` 等のレイアウトプリミティブに負けるようにしている。`lism-block` レイヤーは、ベーススタイルを CSS 側で管理する基礎部品（`b--`）用で、コアでは空。`lism-custom` レイヤーはユーザーの独自クラス（`c--`）用。`lism-component` レイヤーは後方互換用（旧 `c--` の配置先・`@lism-css/ui` の旧版が使用）で、宣言から消すと既存ユーザー CSS の `@layer lism-component` が最後尾に再配置されてしまうため残している。
 
 ※ Props クラスは `@layer` を付けない
 

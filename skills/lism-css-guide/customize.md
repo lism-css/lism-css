@@ -185,7 +185,7 @@ export default {
 
 統合プラグイン（型自動生成が有効）を使っている場合、有効化したブレイクポイントを反映した `lism-env.d.ts` がプロジェクト直下に**自動生成**されます。型補完も有効化したブレイクポイントのキーを自動で提示するため、`BreakpointRegistry` をプロジェクト側の `.d.ts` で手書き拡張する必要はありません。`lism-env.d.ts` は git にコミットしてください（`astro check` 等の型チェックがこのファイルを拠り所にします）。
 
-> SCSS を直接利用する構成では、`@use 'lism-css/scss/setting' with ($breakpoints: ...)` で有効化する方法も引き続き利用できます（[SCSS でのカスタマイズ](#scss-でのカスタマイズ) を参照）。
+> SCSS を直接利用する構成では、`@use 'lism-css/scss/setting' with ($breakpoints: ...)` で有効化する方法も利用できます（[SCSS でのカスタマイズ](#scss-でのカスタマイズ) を参照）。
 
 ### フォーマット
 

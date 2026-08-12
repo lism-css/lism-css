@@ -83,7 +83,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | hover/focus等の状態スタイルを書く | `property-class/hov.md`（必要に応じて`trait-class/has--transition.md`） |
 | トークン外の数値・色をコードに書く（丸める場合を含む。CSS/Props問わず） | `tokens.md`、`antipatterns.md`の「px / 固定値の直書き」節 |
 | レスポンシブの切替を決める | `responsive.md` |
-| 独自クラス（`b--*`/`c--*`/プレフィックスなし）を新しく作る/名前を付ける | `naming.md`、`css-rules.md`の`独自クラスの選び方（2分類）`節 |
+| 独自クラス（`b--*`/`c--*`）を新しく作る/名前を付ける | `naming.md`、`css-rules.md`の`独自クラスの選び方（2分類）`節 |
 | `b--*`/`c--*`のCSSを書く | `css-rules.md`の`Block Class（b--）`/`Custom Class（c--）`節 |
 | 状態・バリエーションを設計する | `trait-class.md` |
 
@@ -95,10 +95,10 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 - 構造は`<div>`+素のCSSよりPrimitiveを優先する。候補は「目的別実装ガイド」の表から選ぶ。
 - `c--*`/`b--*`命名はBlockをcamelCase、Elementを`_`ひとつ、Modifierを`--`ふたつにする。`c--feature-card`や`__`は使わない。
-- 独自クラスは2分類（ベーススタイルをCSS管理する共通基礎部品→`b--`／それ以外のカスタムクラス全般→`c--`。プレフィックスなしの自由命名も可）で命名する。
+- 独自クラスは2分類（ベーススタイルをCSS管理する共通基礎部品→`b--`／それ以外のカスタムクラス全般→`c--`）で命名する。
 - 独自CSSは必ず`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。
 - トークン外のpx/rem/em値を勝手に丸めたり直書きしたりしない。丸め・新規トークン・直書き例外は⏸にする（`antipatterns.md`の「直書きしてよい例外」に該当する場合のみ`✅例外`にできる）。
-- `c--*`・プレフィックスなしのクラスでは、単一要素にだけ効く宣言はCSSに書かず、まずLism Props/Property Classで表せないか確認する。CSSに残すのは擬似要素・子孫セレクタ・状態切替などProperty Classで書けない宣言だけにする。`b--*`のベーススタイルは対象外で、トークンを使って`@layer lism-block`にCSSとして書いてよい（例外的な調整・BP切替はProperty Class）。
+- `c--*`のクラスでは、単一要素にだけ効く宣言はCSSに書かず、まずLism Props/Property Classで表せないか確認する。CSSに残すのは擬似要素・子孫セレクタ・状態切替などProperty Classで書けない宣言だけにする。`b--*`のベーススタイルは対象外で、トークンを使って`@layer lism-block`にCSSとして書いてよい（例外的な調整・BP切替はProperty Class）。
 - レスポンシブ値はbaseを必ず置く。container query運用なら必要な`isContainer`祖先を確認する。
 - 状態は`data-*`/ARIA、見た目バリエーションはBlockと同じプレフィックスのModifier（`c--`なら`c--name--variant`、`b--`なら`b--name--variant`）で表す。`is--active`のようにTrait Classを状態名へ流用しない。
 

@@ -30,12 +30,12 @@ Settings（トークン定義）
       → @layer layout（l-- Layout Primitive）
       → @layer atomic（a-- Atomic Primitive）
   → @layer lism-block（b-- Block Class — CSS でベーススタイルを管理する基礎部品）
-  → @layer lism-custom（ユーザーの独自CSS — c-- / プレフィックスなし）
+  → @layer lism-custom（ユーザーの独自CSS — c--）
   → @layer lism-utility（u-- ユーティリティクラス）
   → Property Class（レイヤー外 — 最も詳細度が高い）
 ```
 
-ユーザーが独自クラスのCSSを置くレイヤーは2つです。`b--` のベーススタイルは `@layer lism-block`、それ以外（`c--` / プレフィックスなしのクラス）は `@layer lism-custom` に置きます。トークンやベーススタイルの上書きは `@layer lism-base` に置きます。
+ユーザーが独自クラスのCSSを置くレイヤーは2つです。`b--` のベーススタイルは `@layer lism-block`、それ以外（`c--`）は `@layer lism-custom` に置きます。トークンやベーススタイルの上書きは `@layer lism-base` に置きます。
 
 ## クラス分類とプレフィックス
 
@@ -76,12 +76,12 @@ Lism CSSで定義されるクラスは、その役割とレイヤーの所属が
 class 属性にクラスを直接記述する場合は、以下の順序で並べてください。
 
 ```
-[customClass] [b--] [c--] [a--] [l--] [set--] [is--] [has--] [u--] [-]
+[規約対象外クラス] [b--] [c--] [a--] [l--] [set--] [is--] [has--] [u--] [-]
 ```
 
 | # | 区分 | 例 |
 | --- | --- | --- |
-| 1 | 独自クラス（`customClass`） | `frontHero`, `postBody` |
+| 1 | Lismの規約対象外のクラス（外部ライブラリ・JSフック等） | `swiper-slide`, `js-modalOpen` |
 | 2 | Block（`b--`） | `b--btn`, `b--btn--outline` |
 | 3 | Custom（`c--`） | `c--box`, `c--box--primary` |
 | 4 | Atomic Primitive（`a--`） | `a--icon`, `a--divider` |
@@ -111,15 +111,15 @@ Lism CSS が提供するクラス（`set--` / `is--` / `has--` / `l--` / `a--` /
 | サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級） | `b--{name}` | `b--btn`, `b--badge` | ベーススタイルを `@layer lism-block` で管理。例外的な調整・BP切り替えは Property Class で上書き（→ [Block Class（`b--`）](#block-classb--)） |
 | それ以外のカスタムクラス全般（コンポーネント・ゾーニング・ページ固有要素など粒度不問） | `c--{name}` | `c--featureCard`, `c--siteHeader` | Property Class 中心。CSS を書かず、何のパーツかを示す名前付けとしてだけ使うのも可。CSS を書く場合は `@layer lism-custom`（→ [Custom Class（`c--`）](#custom-classc--)） |
 
-- `b--` にできるのは [Block Class（`b--`）](#block-classb--)の3条件（サイト共通の繰り返し利用・ベーススタイルのCSS管理・ボタン/バッジ/カード級の粒度）をすべて満たす部品だけで、それ以外は `c--`（またはプレフィックスなしの自由命名）にします。
+- `b--` にできるのは [Block Class（`b--`）](#block-classb--)の3条件（サイト共通の繰り返し利用・ベーススタイルのCSS管理・ボタン/バッジ/カード級の粒度）をすべて満たす部品だけで、それ以外は `c--` にします。
 - 「契約」を持つのは `b--` だけです。`b--` は「ベーススタイルが CSS 側にある」ことを名前が保証し、`c--` は契約のない自由地帯です。`c--siteHeader` や `c--sidebar` のように、サイト骨格・ゾーニングにも `c--` を使って構いません。
 - 迷ったら `c--` で始め、3条件を満たす部品として CSS 管理へ切り替えたくなった時点で `b--` へリネーム昇格します。リネームは JS フックや E2E セレクタに波及しうるため意図的なリファクタとして行い、公開API・CMS出力・外部JS・E2E・ドキュメントで案内済みのclass名の変更は、内部参照を全更新できる場合でも⏸としてユーザー確認します（CSSだけrenameしてJS/テスト/HTML生成側を漏らさない）。
-- プレフィックスなしの自由命名も使えます（Lismらしく揃えるなら `c--` を推奨）。一般名詞単体（`.hero`, `.card`）は避けてページslug等を含む camelCase（`.frontHero`）にし、CSS は `@layer lism-custom` に置きます（レイヤー外に書くと Property Class での上書き保証が壊れる）。
+- 名前は camelCase で付け、ページ固有の要素はページslug等を含めると名前だけで由来がわかります（例: `c--landingHero`。詳細は`naming.md`）。CSS は `@layer lism-custom` に置きます（レイヤー外に書くと Property Class での上書き保証が壊れる）。
 
 ```css
 @layer lism-custom {
   .c--siteHeader { /* ... */ }
-  .frontHero { /* ... */ }
+  .c--landingHero { /* ... */ }
 }
 ```
 
@@ -196,7 +196,7 @@ CSSが空になる場合は、CSSファイル側に`.c--myCard {}`を書かず�
 独自のスタイルを追加する場合は、対象に合った Lism の CSS Layer 内に記述してください。
 
 ```css
-/* ユーザーの独自CSS（c-- / プレフィックスなし） → lism-custom に追加 */
+/* ユーザーの独自CSS（c--） → lism-custom に追加 */
 @layer lism-custom {
   .c--myCard[data-is-active]::before { border-color: var(--brand); }
 }
@@ -210,7 +210,7 @@ CSSが空になる場合は、CSSファイル側に`.c--myCard {}`を書かず�
 }
 ```
 
-カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。また、`c--`・プレフィックスなしのクラスでは、`padding`/`border-radius`/`font-size`/`color`などProperty Class/Propsへ移せる宣言を、CSSに書く前にマークアップ側へ移します（NG→OK例は[antipatterns.md](./antipatterns.md#property-class-で書けるのに-css-で書く)を参照）。`b--`のベーススタイルは対象外で、トークンを使って`@layer lism-block`で管理します。
+カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。また、`c--` のクラスでは、`padding`/`border-radius`/`font-size`/`color`などProperty Class/Propsへ移せる宣言を、CSSに書く前にマークアップ側へ移します（NG→OK例は[antipatterns.md](./antipatterns.md#property-class-で書けるのに-css-で書く)を参照）。`b--`のベーススタイルは対象外で、トークンを使って`@layer lism-block`で管理します。
 
 明確にその数値に意図があり、トークン化・丸め・Property Class化ができない場合だけ、生のCSS値を例外として使用できます。その場合は実装プランに理由を残します。
 

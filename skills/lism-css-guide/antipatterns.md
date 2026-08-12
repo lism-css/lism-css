@@ -155,7 +155,7 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 
 ## 独自クラスの CSS を `@layer lism-custom` に入れない
 
-`.c--*`・プレフィックスなしのクラスのCSSは基本的に`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
+`.c--*`のCSSは基本的に`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
 
 | NG | OK |
 | --- | --- |
@@ -163,7 +163,7 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 | `<style>.c--pricing { ... }</style>` | `<style>@layer lism-custom { .c--pricing { ... } }</style>` |
 | `@layer lism-custom { .b--btn { ... } }` | `@layer lism-block { .b--btn { ... } }` |
 
-ただし、`c--*`・プレフィックスなしのクラスでは、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言を、Layerへ入れる前にマークアップ側へ移す（`b--`のベーススタイルは対象外で、`@layer lism-block`でCSS管理してよい）。  
+ただし、`c--*`のクラスでは、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言を、Layerへ入れる前にマークアップ側へ移す（`b--`のベーススタイルは対象外で、`@layer lism-block`でCSS管理してよい）。  
 また、詳細度の関係で`@layer`の外で書く必要がある場合は外に出してよい。
 
 ---

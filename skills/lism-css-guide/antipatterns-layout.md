@@ -52,7 +52,7 @@
 
 → 分類表と配置レイヤー: [css-rules.md の独自クラスの選び方（2分類）](./css-rules.md#独自クラスの選び方2分類)
 
-プレフィックスなしの自由命名も使えるが、一般名詞単体（`.hero` 等）は避け、ページslug等を含むcamelCase（`.frontHero`）にする。
+ページ固有の要素も`c--`で命名し、ページslug等を含むcamelCase（`c--frontHero` 等）にすると名前だけで由来がわかる。
 
 ## Astro/React Primitive を使わず素の HTML で組む
 

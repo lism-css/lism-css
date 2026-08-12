@@ -86,7 +86,7 @@
 
 - **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`などの記法違反、ベーススタイルをCSSで管理しているのに`c--`のままの共通部品。
 - **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`（`b--`も同記法）に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
-- **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。ベーススタイルをCSS管理する共通基礎部品は`b--*`、それ以外のカスタムクラス全般は`c--*`（プレフィックスなしの自由命名も可）へ寄せる。
+- **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。ベーススタイルをCSS管理する共通基礎部品は`b--*`、それ以外のカスタムクラス全般は`c--*`へ寄せる。
 - **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自クラスの選び方2分類`](../../lism-css-guide/css-rules.md#独自クラスの選び方2分類)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#css管理する部品を-c---のままにする`](../../lism-css-guide/antipatterns-layout.md#css管理する部品を-c---のままにする)。
 - **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.c--siteHeader{}`（kebab-caseをcamelCaseに）。
 - **注意**: CSSだけrenameしてJS/テスト/HTML生成側を漏らさない。`c--block.c--otherBlock`のようなBlock併用を見逃さない。

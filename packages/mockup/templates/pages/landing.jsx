@@ -67,7 +67,7 @@ export default function LandingPage() {
       {/* `bgc="canvas"` uses a color key added in tokens.json.
           New color keys have no Property Class, so they must be passed as props
           (or referenced as `var(--canvas)` in CSS) — never as `-bgc:canvas`. */}
-      <Group as="section" id="hero" className="landingHero" bgc="canvas" py={['50', null, '70']} hasGutter>
+      <Group as="section" id="hero" className="c--landingHero" bgc="canvas" py={['50', null, '70']} hasGutter>
         <Wrapper contentSize="m">
           <Stack g="30" ai="center" ta="center">
             <Badge keycolor="brand">Design mockup</Badge>
@@ -90,7 +90,7 @@ export default function LandingPage() {
         </Wrapper>
       </Group>
 
-      <Group as="section" id="features" className="landingFeatures" py={['50', null, '70']} hasGutter>
+      <Group as="section" id="features" className="c--landingFeatures" py={['50', null, '70']} hasGutter>
         <Wrapper contentSize="l">
           <Stack g="40">
             <Stack g="15" ta="center">
@@ -116,7 +116,7 @@ export default function LandingPage() {
         </Wrapper>
       </Group>
 
-      <Group as="section" id="pricing" className="landingPricing" bgc="base-2" py={['50', null, '70']} hasGutter>
+      <Group as="section" id="pricing" className="c--landingPricing" bgc="base-2" py={['50', null, '70']} hasGutter>
         <Wrapper contentSize="m">
           <Stack g="40">
             <Heading level="2" fz="2xl" ta="center">

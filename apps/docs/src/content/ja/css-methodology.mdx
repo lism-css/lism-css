@@ -55,7 +55,7 @@ export const WhsNw = ({children}) => {
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`lism-custom`</td>
-      <td>ユーザーが Lism の既存クラスを上書きしたい場合や、独自クラス（`c--{name}`, プレフィックスなしのクラス 等）を配置するためのカスタマイズ用レイヤー。</td>
+      <td>ユーザーが Lism の既存クラスを上書きしたい場合や、独自クラス（`c--{name}`）を配置するためのカスタマイズ用レイヤー。</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Utility<br/>`lism-utility`</td>
@@ -201,7 +201,7 @@ Blockの併用（`.b--xxx.b--yyy`）は基本 NG ですが、次の組み合わ�
 
 `b--` にできるのは、[Block Class](#block-class) の3条件（サイト共通の繰り返し利用・ベーススタイルのCSS管理・ボタン/バッジ/カード級の粒度）をすべて満たす部品だけで、それ以外はすべて `c--` です。「ベーススタイルはCSS側にある」ことを名前で保証するのが `b--` で、`c--` にはそうした約束はありません。サイト骨格やページ固有要素は、CSSを書く場合でも `c--` のままにします。迷ったときは `c--` から始めて、3条件を満たす部品としてCSS管理へ切り替えたくなった時点で `b--` へリネームして昇格させてください。
 
-なお、プレフィックスなしの自由命名も引き続き使えます（後述の[「プレフィックスなしのクラスで守ること」](#プレフィックスなしのクラスで守ること)を参照）。Lismらしく揃えるなら `c--` をおすすめします。
+名前はプレフィックスに続けて camelCase で付けます（[命名規則](/docs/naming/)を参照）。ページ固有の要素は `c--landingHero` のようにページのslug等を含めると、名前だけでどこの要素かわかります。
 
 `c--` クラスは、[Block Class](#block-class) と同じ BEM 記法・併用ルールで BEM 構造（Block / Modifier / Element）を持つことができます。
 
@@ -210,13 +210,6 @@ Blockの併用（`.b--xxx.b--yyy`）は基本 NG ですが、次の組み合わ�
 |Block<br /><small>本体クラス</small>|`c--{name}`|`c--pricing`,<br />`c--siteHeader`|
 |Modifier<br /><small>バリエーション</small>|`c--{name}--{modifier}`|`c--pricing--featured`|
 |Element<br /><small>子要素</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
-
-### プレフィックスなしのクラスで守ること
-
-- 一般名詞ひとつ（`.hero`, `.card` 等）の命名は避け、ページのslug等を含む camelCase（`.frontHero`）にしてください。外部CSSとの衝突を防ぎ、名前だけでどこのものかわかるようにするためです
-- CSSは `@layer lism-custom` に置いてください。レイヤーの外に書くと、Property Class で上書きできるという前提が崩れます
-- 複数ページで使い始めたら `c--` へ昇格させましょう（[Block Class](#block-class) の3条件を満たすなら `b--`）
-
 
 ### Utility Class
 
