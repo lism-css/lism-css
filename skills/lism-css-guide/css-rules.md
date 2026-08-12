@@ -123,6 +123,7 @@ BEM 構造（Block / Modifier / Element）は `c--` と同じ記法です（Bloc
 
 - `b--` でも Property Class は使えます。Property Class はレイヤー外で `b--` より必ず強いため、例外的な調整やブレイクポイント切り替え（`-p_sm` 等）にはむしろ Property Class を使ってください
 - `l--` や `is--` / `has--` は `b--` より弱いレイヤーです。`b--` の宣言と衝突するものは効かないため、レイアウトのバリエーションは Modifier を CSS 側に定義するか Property Class で上書きします
+- この優先関係が保証されるのは標準のlayer版（`main.css`/`full.css`）です。`main_no_layer.css`/`full_no_layer.css`ではレイヤー優先度が効かないため、読み込み順・詳細度に依存します
 
 ## Custom Class（`c--`）
 
@@ -188,7 +189,7 @@ CSSが空になる場合は、CSSファイル側に`.c--myCard {}`を書かず�
 }
 ```
 
-カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。ただし、`padding`/`border-radius`/`font-size`/`color`などProperty Class/Propsへ移せる宣言は、CSSに書く前にマークアップ側へ移します（NG→OK例は[antipatterns.md](./antipatterns.md#property-class-で書けるのに-css-で書く)を参照）。
+カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。また、`c--`・プレフィックスなしのクラスでは、`padding`/`border-radius`/`font-size`/`color`などProperty Class/Propsへ移せる宣言を、CSSに書く前にマークアップ側へ移します（NG→OK例は[antipatterns.md](./antipatterns.md#property-class-で書けるのに-css-で書く)を参照）。`b--`のベーススタイルは対象外で、トークンを使って`@layer lism-block`で管理します。
 
 明確にその数値に意図があり、トークン化・丸め・Property Class化ができない場合だけ、生のCSS値を例外として使用できます。その場合は実装プランに理由を残します。
 

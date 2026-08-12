@@ -98,7 +98,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 - 独自クラスは2分類（ベーススタイルをCSS管理する共通基礎部品→`b--`／それ以外のカスタムクラス全般→`c--`。プレフィックスなしの自由命名も可）で命名する。
 - 独自CSSは必ず`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。
 - トークン外のpx/rem/em値を勝手に丸めたり直書きしたりしない。丸め・新規トークン・直書き例外は⏸にする（`antipatterns.md`の「直書きしてよい例外」に該当する場合のみ`✅例外`にできる）。
-- 単一要素にだけ効く宣言はCSSに書かず、まずLism Props/Property Classで表せないか確認する。CSSに残すのは擬似要素・子孫セレクタ・状態切替などProperty Classで書けない宣言だけにする。
+- `c--*`・プレフィックスなしのクラスでは、単一要素にだけ効く宣言はCSSに書かず、まずLism Props/Property Classで表せないか確認する。CSSに残すのは擬似要素・子孫セレクタ・状態切替などProperty Classで書けない宣言だけにする。`b--*`のベーススタイルは対象外で、トークンを使って`@layer lism-block`にCSSとして書いてよい（例外的な調整・BP切替はProperty Class）。
 - レスポンシブ値はbaseを必ず置く。container query運用なら必要な`isContainer`祖先を確認する。
 - 状態は`data-*`/ARIA、見た目バリエーションはBlockと同じプレフィックスのModifier（`c--`なら`c--name--variant`、`b--`なら`b--name--variant`）で表す。`is--active`のようにTrait Classを状態名へ流用しない。
 

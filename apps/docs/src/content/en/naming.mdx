@@ -55,6 +55,7 @@ Rules for variable names used in Property Classes (`-{prop}:{value}`).
 
 Prefixes are chosen to match each class category and joined with two hyphens (`--`).
 
+- Block: `b--`
 - Custom: `c--`
 - Atomic Primitives: `a--`
 - Layout Primitives: `l--`
@@ -68,6 +69,7 @@ The name that follows the prefix is written in camelCase.
 - Not allowed: `c--my-component`
 - Allowed: `c--myComponent`
 
+Note that only `b--` and `c--` classes can have a BEM structure (Block / Modifier / Element). See [CSS Methodology](/en/docs/css-methodology/) for the notation details.
 
 Property Class naming follows these conventions:
 
@@ -85,6 +87,7 @@ The responsibility and layer assignment of each prefix is summarized below.
 | `set--` | Base styling of HTML elements / variable setup | `lism-base` | `set--plain`, `set--hov`, `set--bxsh`, `set--bdrsInner` |
 | `l--` | Layout Primitives (composition units) | `lism-primitive` | `l--box`, `l--flex`, `l--grid` |
 | `a--` | Atomic Primitives (smallest units) | `lism-primitive` | `a--icon`, `a--divider`, `a--spacer` |
+| `b--` | Common site-wide base parts whose base styles are managed in CSS (Block) | `lism-block` | `b--btn`, `b--badge` |
 | `c--` | Free-form custom classes beyond the core definitions | `lism-custom` | `c--pricing`, `c--siteHeader` |
 | `is--` | “is a …” (role / existence declaration) | `lism-trait` | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` |
 | `has--` | “has a …” (single-feature trait attachment) | `lism-trait` | `has--transition`, `has--gutter`, `has--snap` |

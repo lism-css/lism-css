@@ -173,6 +173,8 @@ Blockの併用（`.b--xxx.b--yyy`）は基本 NG ですが、次の組み合わ�
 :::point
 `b--` に Property Class を併用しても構いません。Property Class はレイヤーの外にあり `b--` より必ず強いため、例外的な調整やブレークポイントの切り替え（`-p_sm` 等）にはむしろ Property Class の使用をおすすめします。  
 逆に `lism-block` は `lism-primitive` より強いレイヤーなので、`b--` の要素に `l--` や Trait クラスを付けても、`b--` 側ですでに指定しているプロパティは上書きできません。レイアウトのバリエーションが必要な場合は、Modifier クラスをCSS側に定義するか、Property Class で上書きしてください。
+
+なお、この優先関係が保証されるのは標準のlayer版（`main.css` / `full.css`）です。`main_no_layer.css` / `full_no_layer.css` ではレイヤーの優先度が効かないため、読み込み順や詳細度に依存します。
 :::
 
 

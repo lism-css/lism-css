@@ -22,6 +22,7 @@
 ## `@layer` をオフにする
 
 `lism-css/main.css` の代わりに `lism-css/main_no_layer.css` を読み込むだけで、`@layer` を使わない CSS に切り替えられます。
+なお、no-layer版ではレイヤーによる優先度管理（`b--`よりProperty Classが必ず強い等の保証）が効かず、読み込み順・詳細度に依存します。
 
 ```js
 // 通常

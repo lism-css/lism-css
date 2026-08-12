@@ -163,7 +163,7 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 | `<style>.c--pricing { ... }</style>` | `<style>@layer lism-custom { .c--pricing { ... } }</style>` |
 | `@layer lism-custom { .b--btn { ... } }` | `@layer lism-block { .b--btn { ... } }` |
 
-ただし、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言は、Layerへ入れる前にマークアップ側へ移す。  
+ただし、`c--*`・プレフィックスなしのクラスでは、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言を、Layerへ入れる前にマークアップ側へ移す（`b--`のベーススタイルは対象外で、`@layer lism-block`でCSS管理してよい）。  
 また、詳細度の関係で`@layer`の外で書く必要がある場合は外に出してよい。
 
 ---

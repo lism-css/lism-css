@@ -55,6 +55,7 @@ Property Class（`-{prop}:{value}`）で使用される変数名に関するル�
 
 クラス分類に合わせたプレフィックスをつけます。この時、ハイフン2つ（`--`) で繋ぎます。
 
+- Block: `b--`
 - Custom: `c--`
 - Atomic Primitives: `a--`
 - Layout Primitives: `l--`
@@ -68,6 +69,7 @@ Property Class（`-{prop}:{value}`）で使用される変数名に関するル�
 - NG： `c--my-component` 
 - OK： `c--myComponent`
 
+なお、BEM構造（Block / Modifier / Element）を持てるのは `b--` と `c--` のみです。記法の詳細は [CSS設計](/docs/css-methodology/) を参照してください。
 
 Property Classの命名規則については、以下の通りです。
 
@@ -85,6 +87,7 @@ Property Classの命名規則については、以下の通りです。
 | `set--` | HTML 要素の基礎スタイリング / 変数のセット | `lism-base` | `set--plain`, `set--hov`, `set--bxsh`, `set--bdrsInner` |
 | `l--` | レイアウトの構成単位（Layout Primitive） | `lism-primitive` | `l--box`, `l--flex`, `l--grid` |
 | `a--` | レイアウトの最小単位（Atomic Primitive） | `lism-primitive` | `a--icon`, `a--divider`, `a--spacer` |
+| `b--` | ベーススタイルをCSS側で管理する基礎部品（Block） | `lism-block` | `b--btn`, `b--badge` |
 | `c--` | コア定義を超えた自由なカスタムクラス（Custom） | `lism-custom` | `c--pricing`, `c--siteHeader` |
 | `is--` | 〜である（役割・存在の宣言） | `lism-trait` | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` |
 | `has--` | 〜を持つ（単一機能 trait の付与） | `lism-trait` | `has--transition`, `has--gutter`, `has--snap` |

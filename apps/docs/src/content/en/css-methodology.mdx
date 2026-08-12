@@ -175,6 +175,8 @@ Combining Blocks (`.b--xxx.b--yyy`) is generally not allowed, but the following 
 :::point
 You can combine `b--` with Property Classes. Property Classes sit outside any layer and always take precedence over `b--`, so we recommend using them for exceptions and breakpoint switches (e.g. `-p_sm`).  
 Conversely, `lism-block` is a stronger layer than `lism-primitive`, so adding an `l--` or Trait class to a `b--` element cannot override properties the `b--` side already sets. If you need a layout variation, define a Modifier class in CSS, or override it with a Property Class.
+
+Note that this priority relationship is only guaranteed with the standard layered builds (`main.css` / `full.css`). With `main_no_layer.css` / `full_no_layer.css`, layer priority does not apply, so the result depends on load order and specificity.
 :::
 
 
