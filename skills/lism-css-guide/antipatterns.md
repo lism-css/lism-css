@@ -155,7 +155,7 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 
 ## 独自クラスの CSS を `@layer lism-custom` に入れない
 
-`.c--*`・`.z--*`・プレフィックスなしのクラスのCSSは基本的に`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
+`.c--*`・プレフィックスなしのクラスのCSSは基本的に`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
 
 | NG | OK |
 | --- | --- |

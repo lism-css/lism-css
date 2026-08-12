@@ -68,13 +68,13 @@
       "Set Class",
       "Primitive Class",
       "Trait Class",
-      "Component Class",
+      "Block Class",
       "Utility Class",
       "Property Class",
       "レスポンシブ対応の Property Class",
       "独自クラスの命名と定義場所",
-      "独自分類の追加",
-      "`b--` を使う基準",
+      "独自クラスの分類",
+      "Custom Class",
       "プレフィックスなしのクラスで守ること",
       "動的な状態管理はdata属性"
     ],
@@ -89,17 +89,17 @@
       "Property Class",
       "Primitive Class",
       "Trait Class",
-      "Component Class",
+      "Custom Class",
       "Set Class",
       "Utility Class",
       "省略",
       "Emmet",
       "b--",
       "Block Class",
-      "z--",
+      "c--",
       "独自分類"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility の順（Property Class はレイヤーの外）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。「独自分類の追加」では、サイト共通の基礎部品用 `b--{name}`（@layer lism-block でCSS管理）、サイト骨格ゾーニング用 `z--{zoneName}`、コンポーネント全般の `c--{name}`、ページ固有・ローカル要素はプレフィックスなしの4分類の使い分けを解説。`b--` は複数箇所で繰り返し使う／CSS管理したい／ボタン・バッジ・カード級という3条件を満たす場合にのみ使用し、`c--` と同じBEM構造（Block/Modifier/Element）を持てる。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility の順（Property Class はレイヤーの外）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。「独自クラスの分類」では、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理し、プレフィックスなしの自由命名も引き続き使える。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
   },
   {
     "sourcePath": "naming.mdx",
@@ -815,7 +815,7 @@
       "省略記法",
       "contentSize"
     ],
-    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で c-- クラス（Component Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
+    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で c-- クラス（Custom Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
   },
   {
     "sourcePath": "core-components/Text.mdx",

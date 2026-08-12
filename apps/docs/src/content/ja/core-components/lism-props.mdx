@@ -50,7 +50,7 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 
 ## `className`
 
-コンポーネントに任意のクラス名を付与するための標準の prop です。`c--`基底クラス（Component Class）や外部スタイルのクラスなどは、この prop から指定します。
+コンポーネントに任意のクラス名を付与するための標準の prop です。`c--`基底クラス（Custom Class）や外部スタイルのクラスなどは、この prop から指定します。
 
 :::info
 以前は `lismClass` / `variant` という専用スロットがありましたが、`className` に一本化しました。BEM 展開は `@lism-css/ui` の `buildModifierClass` ヘルパーを使って UI コンポーネント側で組み立てる形に変わっています。
@@ -358,7 +358,7 @@ BP対応プロパティは、配列またはオブジェクトでブレイクポ
 
 | # | Prop | 例 |
 |---|---|---|
-| 1 | 独自クラス（`className` / `class`） | `c--box`, `z--header`, `hoge` |
+| 1 | 独自クラス（`className` / `class`） | `c--box`, `c--siteHeader`, `hoge` |
 | 2 | `atomic` | `a--icon`, `a--divider` |
 | 3 | `layout` | `l--flex`, `l--columns` |
 | 4 | `set` | `set--hov` |
