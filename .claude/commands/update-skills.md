@@ -98,7 +98,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 | set-- クラス一覧 | `packages/lism-css/src/scss/base/set/` 配下の SCSS、`packages/lism-css/src/scss/base/tokens/_tokens.scss` / `_tokens.gen.scss`（set--bxsh のシャドウトークン） |
 | set prop の処理ロジック | `packages/lism-css/src/lib/helper/mergeSet.ts` |
 
-### プリミティブクラス / コンポーネントクラス関連
+### プリミティブクラス / トレイトクラス / カスタムクラス関連
 
 | 確認したい内容 | 参照先 |
 |---|---|

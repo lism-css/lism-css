@@ -160,7 +160,7 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 | NG | OK |
 | --- | --- |
 | `.c--hero { padding: var(--s40); }` | `@layer lism-custom { .c--hero::before { ... } }` |
-| `<style>.c--card { ... }</style>` | `<style>@layer lism-custom { .c--card { ... } }</style>` |
+| `<style>.c--pricing { ... }</style>` | `<style>@layer lism-custom { .c--pricing { ... } }</style>` |
 | `@layer lism-custom { .b--btn { ... } }` | `@layer lism-block { .b--btn { ... } }` |
 
 ただし、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言は、Layerへ入れる前にマークアップ側へ移す。  

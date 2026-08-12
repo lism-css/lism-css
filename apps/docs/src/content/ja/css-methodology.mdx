@@ -269,7 +269,7 @@ Lism CSS が提供するクラス群のどれにも当てはまらない、ユ�
 |分類|命名|スタイルの書き方|
 |---|---|---|
 |サイト共通で繰り返し使う基礎部品<br /><small>ボタン・バッジ・カード級</small>|`b--{name}`<br /><small>例: `b--btn`</small>|ベーススタイルを `@layer lism-block` に定義し、CSS側で管理します。（→ [Block Class](#block-class)）|
-|それ以外のカスタムクラス全般<br /><small>コンポーネント・ゾーニング・ページ固有要素など粒度不問</small>|`c--{name}`<br /><small>例: `c--card`,<br />`c--siteHeader`</small>|Property Class を中心に組み立てます。CSSを書かずに、何のパーツかを示す名前付けとしてだけ使っても構いません。CSSを書く場合は `@layer lism-custom` に定義します。（→ [Custom Class](#custom-class)）|
+|それ以外のカスタムクラス全般<br /><small>コンポーネント・ゾーニング・ページ固有要素など粒度不問</small>|`c--{name}`<br /><small>例: `c--pricing`,<br />`c--siteHeader`</small>|Property Class を中心に組み立てます。CSSを書かずに、何のパーツかを示す名前付けとしてだけ使っても構いません。CSSを書く場合は `@layer lism-custom` に定義します。（→ [Custom Class](#custom-class)）|
 
 `b--` にできるのは、[Block Class](#block-class) の3条件（サイト共通の繰り返し利用・ベーススタイルのCSS管理・ボタン/バッジ/カード級の粒度）をすべて満たす部品だけで、それ以外はすべて `c--` です。「ベーススタイルはCSS側にある」ことを名前で保証するのが `b--` で、`c--` にはそうした約束はありません。サイト骨格やページ固有要素は、CSSを書く場合でも `c--` のままにします。迷ったときは `c--` から始めて、3条件を満たす部品としてCSS管理へ切り替えたくなった時点で `b--` へリネームして昇格させてください。
 
@@ -282,7 +282,7 @@ Lism CSS が提供するクラス群のどれにも当てはまらない、ユ�
 
 @layer lism-custom {
   .c--siteHeader { /* ... */ }
-  .c--card { /* ... */ }
+  .c--pricing { /* ... */ }
   .frontHero { /* ... */ }
 }
 ```
@@ -296,7 +296,7 @@ Lism CSS が提供するクラス群のどれにも当てはまらない、ユ�
 
 ```css
 @layer lism-custom {
-  .c--card { /* ... */ }
+  .c--siteHeader { /* ... */ }
   .c--pricing { /* ... */ }
 }
 ```
@@ -305,9 +305,9 @@ Lism CSS が提供するクラス群のどれにも当てはまらない、ユ�
 
 |分類|形式|例|
 |---|---|---|
-|Block<br /><small>本体クラス</small>|`c--{name}`|`c--button`,<br />`c--card`|
+|Block<br /><small>本体クラス</small>|`c--{name}`|`c--button`,<br />`c--pricing`|
 |Modifier<br /><small>バリエーション</small>|`c--{name}--{modifier}`|`c--button--outline`|
-|Element<br /><small>子要素</small>|`c--{name}_{element}`|`c--card_header`,<br />`c--card_body`|
+|Element<br /><small>子要素</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
 
 ### プレフィックスなしのクラスで守ること
 

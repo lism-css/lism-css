@@ -253,7 +253,7 @@ Lism CSS では、プレフィックス（`c--` / `is--` / `has--` / `u--` / `se
 | --- | --- | --- |
 | `c--my-card` | `c--myCard` | プレフィックス後の名称は camelCase |
 | `c--my-card--primary` | `c--myCard--primary` | Modifier 区切り `--` と単語区切り `-` が混在して読みにくい |
-| `c--card_my-elem` | `c--card_myElem` | Element 名（`_` 後）も camelCase |
+| `c--pricing_my-elem` | `c--pricing_myElem` | Element 名（`_` 後）も camelCase |
 | `is--side-bar` / `has--gutter-x` | `is--sideBar` / `has--gutterX` | `is--` / `has--` / `u--` 等にも同じ規則が適用される |
 | `c--hero__inner` / `c--featureCard__title` | `c--hero_inner` / `c--featureCard_title` | Element 区切りは `_` ひとつ。BEM 風の `__` は使わない |
 

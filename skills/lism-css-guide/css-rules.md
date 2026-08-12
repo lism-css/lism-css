@@ -132,9 +132,9 @@ BEM 構造（Block / Modifier / Element）は `c--` と同じ記法です（Bloc
 
 | 分類 | 形式 | 例 |
 | --- | --- | --- |
-| Block | `c--{name}` | `c--button`, `c--card` |
+| Block | `c--{name}` | `c--button`, `c--pricing` |
 | Modifier | `c--{name}--{modifier}` | `c--button--outline` |
-| Element | `c--{name}_{element}` | `c--card_header`, `c--card_body` |
+| Element | `c--{name}_{element}` | `c--pricing_header`, `c--pricing_body` |
 
 - Modifier は Block と併記して使用: `.c--button.c--button--outline`
 - Element は `_`（アンダースコア）一つ区切り
