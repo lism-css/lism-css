@@ -221,14 +221,17 @@ Lism CSS の `is--` プレフィックスは「**〜である**」という**役
 - `data-*` は HTML 標準の状態表現で、JS からの切替（`element.dataset.isActive = ''` / `delete element.dataset.isActive`）も自然
 - ARIA 属性で意味が表せる場合（`aria-current` / `aria-disabled` / `aria-selected` 等）は ARIA を優先し、その属性自体を CSS セレクタにする
 
-### 2. スタイルバリエーション → BEM Modifier `c--{name}--{variant}`
+### 2. スタイルバリエーション → BEM Modifier（`c--{name}--{variant}` / `b--{name}--{variant}`）
 
-「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の Component Class](./css-rules.md#component-classc--)）。
+「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の Component Class](./css-rules.md#component-classc--)、[css-rules.md の Block Class](./css-rules.md#block-classb--)）。
+
+Modifier のプレフィックスは、その Block に付けたプレフィックスをそのまま維持する。`c--` の Block なら `c--{name}--{variant}`、`b--` の Block なら `b--{name}--{variant}` にし、`c--` と `b--` を混ぜない。
 
 | NG | OK |
 | --- | --- |
 | `<span class="c--tag is--solid">` + `.c--tag.is--solid { ... }` | `<span class="c--tag c--tag--solid">` + `.c--tag.c--tag--solid { ... }` |
 | `<button class="c--button is--outline">` | `<button class="c--button c--button--outline">` |
+| `<button class="b--btn is--outline">` / `<button class="b--btn c--btn--outline">`（Block と違うプレフィックス） | `<button class="b--btn b--btn--outline">` + `@layer lism-block` に `.b--btn.b--btn--outline { ... }` |
 
 なお、Modifier であってもまずは [Property Class で表現できないか](./antipatterns.md#property-class-で書けるのに-css-で書く) を検討すること。「色だけ違う」程度ならマークアップ側で `-bgc:* -c:*` を差し替えるだけで済むことも多い。
 

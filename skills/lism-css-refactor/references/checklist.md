@@ -73,10 +73,10 @@
 ## Pass6: 状態・バリエーションの確認
 
 - **見るもの**: `is--active`/`is--current`/`is--disabled`/`is--open`/`is--solid`/`is--outline`など、guide掲載外の`is--*`が状態や見た目違いに使われている箇所。
-- **判定**: 正規Trait（`is--container`/`is--wrapper`/`is--layer`/`is--boxLink`/`is--coverLink`/`is--skipFlow`/`is--side`、`has--transition`等）→✅。状態管理→🔧（`data-*`またはARIAへ）。見た目違い→🔧（`c--name--variant`へ）。独自Traitとして妥当だがguide外→⬜または⏸。
-- **直し方**: 状態は属性セレクタへ、見た目違いはModifierへ移す。CSSセレクタとJSの切り替え対象も同時に更新する。
-- **参照先**: [`antipatterns-layout.md#is---の誤用状態バリエーション`](../../lism-css-guide/antipatterns-layout.md#is---の誤用状態バリエーション)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`css-rules.md#component-classc--`](../../lism-css-guide/css-rules.md#component-classc--)。
-- **NG→OK**: NG=`<a className="c--catTab is--active">`＋`.c--catTab.is--active{}` → OK=`<a className="c--catTab" data-is-active>`＋`.c--catTab[data-is-active]{}`。NG=`<span className="c--tag is--solid">` → OK=`<span className="c--tag c--tag--solid">`。
+- **判定**: 正規Trait（`is--container`/`is--wrapper`/`is--layer`/`is--boxLink`/`is--coverLink`/`is--skipFlow`/`is--side`、`has--transition`等）→✅。状態管理→🔧（`data-*`またはARIAへ）。見た目違い→🔧（Blockと同じプレフィックスのModifierへ。`c--`なら`c--name--variant`、`b--`なら`b--name--variant`）。独自Traitとして妥当だがguide外→⬜または⏸。
+- **直し方**: 状態は属性セレクタへ、見た目違いはModifierへ移す。Modifierのプレフィックスは対象Blockに合わせ、`c--`と`b--`を混在させない。CSSセレクタとJSの切り替え対象も同時に更新する。
+- **参照先**: [`antipatterns-layout.md#is---の誤用状態バリエーション`](../../lism-css-guide/antipatterns-layout.md#is---の誤用状態バリエーション)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`css-rules.md#component-classc--`](../../lism-css-guide/css-rules.md#component-classc--)、[`css-rules.md#block-classb--`](../../lism-css-guide/css-rules.md#block-classb--)。
+- **NG→OK**: NG=`<a className="c--catTab is--active">`＋`.c--catTab.is--active{}` → OK=`<a className="c--catTab" data-is-active>`＋`.c--catTab[data-is-active]{}`。NG=`<span className="c--tag is--solid">` → OK=`<span className="c--tag c--tag--solid">`。NG=`<button className="b--btn is--outline">`／`<button className="b--btn c--btn--outline">` → OK=`<button className="b--btn b--btn--outline">`。
 - **注意**: JSの`classList.toggle('is--active')`・テスト・CSSセレクタを直し忘れると状態表示が壊れる。`aria-current`などが使える箇所は意味も確認する。
 - **guideで確認すること**: 正規Trait一覧と、状態/variant/独自Traitの境界例。
 
@@ -85,7 +85,7 @@
 ## Pass7: 命名の確認
 
 - **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`、サイト領域を表す`c--header`/`c--sidebar`など。
-- **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
+- **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`（`b--`も同記法）に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
 - **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。CSS管理する共通基礎部品は`b--*`、サイト骨格は`z--*`、コンポーネント的なものは`c--*`、それ以外のページ固有・ローカル要素はプレフィックスなしへ寄せる。
 - **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自プレフィックス`](../../lism-css-guide/css-rules.md#独自プレフィックス)、[`css-rules.md#b--z--c--プレフィックスなしの使い分け`](../../lism-css-guide/css-rules.md#b--z--c--プレフィックスなしの使い分け)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう`](../../lism-css-guide/antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう)。
 - **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.z--header{}`（再利用UIでない場合）。
