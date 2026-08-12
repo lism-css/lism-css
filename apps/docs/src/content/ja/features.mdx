@@ -18,10 +18,10 @@ Lism CSS は単なるユーティリティクラスのパッケージではあ�
 CSS Layers による詳細度管理も行われており、以下の階層構造で整理されています。
 
 ```
-lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility
+lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility
 ```
 
-`lism-base` の内部には `reset` サブレイヤーが含まれています。`lism-trait` は `is--`（役割宣言）/ `has--`（機能付与）の Trait クラス用のレイヤーで、`lism-primitive` の内部は `layout`・`atomic` のサブレイヤーに分かれています。`lism-component` は `c--` プレフィックスを持つ BEM 構造の UI コンポーネント用のレイヤーです。
+`lism-base` の内部には `reset` サブレイヤーが含まれています。`lism-trait` は `is--`（役割宣言）/ `has--`（機能付与）の Trait クラス用のレイヤーで、`lism-primitive` の内部は `layout`・`atomic` のサブレイヤーに分かれています。`lism-block` はサイト共通の基礎部品（`b--`）のベーススタイル用、`lism-custom` はユーザーが定義する独自クラスや上書き用のレイヤーです。
 
 
 :::check

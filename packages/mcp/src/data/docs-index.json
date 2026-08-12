@@ -74,6 +74,8 @@
       "レスポンシブ対応の Property Class",
       "独自クラスの命名と定義場所",
       "独自分類の追加",
+      "`b--` を使う基準",
+      "プレフィックスなしのクラスで守ること",
       "動的な状態管理はdata属性"
     ],
     "keywords": [
@@ -91,9 +93,13 @@
       "Set Class",
       "Utility Class",
       "省略",
-      "Emmet"
+      "Emmet",
+      "b--",
+      "Block Class",
+      "z--",
+      "独自分類"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility の順。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility の順（Property Class はレイヤーの外）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。「独自分類の追加」では、サイト共通の基礎部品用 `b--{name}`（@layer lism-block でCSS管理）、サイト骨格ゾーニング用 `z--{zoneName}`、コンポーネント全般の `c--{name}`、ページ固有・ローカル要素はプレフィックスなしの4分類の使い分けを解説。`b--` は複数箇所で繰り返し使う／CSS管理したい／ボタン・バッジ・カード級という3条件を満たす場合にのみ使用し、`c--` と同じBEM構造（Block/Modifier/Element）を持てる。"
   },
   {
     "sourcePath": "naming.mdx",
@@ -1434,7 +1440,7 @@
     "title": "Chat",
     "description": "@lism-css/ui で提供する Chat コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "Opt-in", "variant=\"think\"", "Astroでのslotの活用"],
+    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "Opt-in", "variant=\"think\""],
     "keywords": ["Chat", "チャット", "吹き出し", "会話", "balloon", "message bubble", "speech bubble"],
     "snippet": "チャット風の吹き出しコンポーネント。会話形式のUI表現に使用。@lism-css/uiパッケージで提供。"
   },

@@ -55,10 +55,10 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 
 ### C3: 命名設計
 
-- **列挙**: 新設する`c--`/`z--`/`p--`名とBlock/Element/Modifier構造、`c--*` CSSを置くLayer。
-- **照合・判定**: プレフィックス後の名前が規約に合う→✅。ハイフンや`__`がある→🔁。サイト領域→`✅新規`（`z--`）。ページ固有→`✅新規`（`p--`）。公開API・CMS・外部JS・E2E依存→⏸。`.c--*` CSSがLayer外になる→🔁。
-- **決め方**: `naming.md`に従う。Block名にハイフンは使わず、Element区切りは`_`ひとつ、Modifierは`--`ふたつ。再利用UIでない領域は`z--`、ページ固有は`p--`。`c--*` CSSを書く場合は必ず`@layer lism-component {}`内に置く。
-- **参照先**: `naming.md`、`css-rules.md#component-classc--`、`css-rules.md#独自プレフィックス`、`antipatterns-layout.md#クラス名の命名ミス`。
+- **列挙**: 新設する`b--`/`z--`/`c--`/プレフィックスなしのクラス名とBlock/Element/Modifier構造、独自CSSを置くLayer。
+- **照合・判定**: プレフィックス後の名前が規約に合う→✅。ハイフンや`__`がある→🔁。CSS管理する共通基礎部品→`✅新規`（`b--`）。サイト骨格→`✅新規`（`z--`）。コンポーネント的なもの→`✅新規`（`c--`）。ページ固有・ローカル→`✅新規`（プレフィックスなし）。公開API・CMS・外部JS・E2E依存→⏸。独自CSSがLayer外になる→🔁。
+- **決め方**: `naming.md`に従う。Block名にハイフンは使わず、Element区切りは`_`ひとつ、Modifierは`--`ふたつ（`b--`も`c--`と同記法）。分類は「CSS管理する共通基礎部品か→`b--`／サイト骨格か→`z--`／コンポーネント的なものか→`c--`／それ以外のページ固有・ローカルか→プレフィックスなし」の決定木で決める。独自CSSは必ず`@layer lism-custom {}`内に置く（`b--`のベーススタイルだけ`@layer lism-block {}`）。
+- **参照先**: `naming.md`、`css-rules.md#block-classb--`、`css-rules.md#component-classc--`、`css-rules.md#独自プレフィックス`、`antipatterns-layout.md#クラス名の命名ミス`。
 - **よい例・避けたい例**: OK=`c--featureCard`、`c--featureCard_body`、既存命名がアンダースコア寄せなら`c--feature_card`。罠=`c--feature-card`、`c--hero__inner`（正しくは`c--hero_inner`）、`c--feature-card__body`（正しくは`c--featureCard_body`）、サイトヘッダを`c--`にする。
 
 ### C4: 状態・バリエーション設計

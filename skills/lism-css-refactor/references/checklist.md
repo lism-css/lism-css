@@ -86,11 +86,11 @@
 
 - **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`、サイト領域を表す`c--header`/`c--sidebar`など。
 - **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
-- **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。ゾーニングは`z--*`、ページ固有は`p--*`へ寄せる。
-- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自プレフィックス`](../../lism-css-guide/css-rules.md#独自プレフィックス)、[`css-rules.md#z--p--c--の使い分け`](../../lism-css-guide/css-rules.md#z--p--c--の使い分け)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう`](../../lism-css-guide/antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう)。
+- **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。CSS管理する共通基礎部品は`b--*`、サイト骨格は`z--*`、コンポーネント的なものは`c--*`、それ以外のページ固有・ローカル要素はプレフィックスなしへ寄せる。
+- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自プレフィックス`](../../lism-css-guide/css-rules.md#独自プレフィックス)、[`css-rules.md#b--z--c--プレフィックスなしの使い分け`](../../lism-css-guide/css-rules.md#b--z--c--プレフィックスなしの使い分け)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう`](../../lism-css-guide/antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう)。
 - **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.z--header{}`（再利用UIでない場合）。
 - **注意**: CSSだけrenameしてJS/テスト/HTML生成側を漏らさない。`c--block.c--otherBlock`のようなBlock併用を見逃さない。
-- **guideで確認すること**: `z--`/`p--`の使い分け例と、公開classを⏸にする判断基準。
+- **guideで確認すること**: `b--`/`z--`/`c--`/プレフィックスなしの使い分け例と、公開classを⏸にする判断基準。
 
 ---
 

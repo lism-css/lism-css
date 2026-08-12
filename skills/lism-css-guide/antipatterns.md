@@ -11,7 +11,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 - [px / 固定値の直書き](#px--固定値の直書き)
 - [Property Class で書けるのに CSS で書く](#property-class-で書けるのに-css-で書く)
 - [Token typo（存在しない値）](#token-typo存在しない値)
-- [`c--*` CSS を `@layer lism-component` に入れない](#c---css-を-layer-lism-component-に入れない)
+- [独自クラスの CSS を `@layer lism-custom` に入れない](#独自クラスの-css-を-layer-lism-custom-に入れない)
 - [hover を component CSS に書いて負ける](#hover-を-component-css-に書いて負ける)
 - [Reset 済みプロパティの再指定](#reset-済みプロパティの再指定)
 - [`--keycolor` の誤用](#--keycolor-の誤用)
@@ -92,6 +92,8 @@ CSS に残すのは、基本的には　`::before` / `> li` などの「Primitiv
 
 なお、CSS が空になっても `c--*` クラス名は意味名としてマークアップに残して構わない（→ [css-rules.md の作成例](./css-rules.md#作成例)）。
 
+ベーススタイルを CSS 側で管理することを前提にする部品（サイト共通で繰り返し使うボタン・バッジ・カード級）は、`c--*` ではなく `b--*` を使い、CSS を `@layer lism-block` に書く（→ [css-rules.md の Block Class](./css-rules.md#block-classb--)）。`b--` の3条件を満たさない `c--*` でこの節の規律を外してはいけない。
+
 ---
 
 ## Token typo（存在しない値）
@@ -151,14 +153,15 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 
 ---
 
-## `c--*` CSS を `@layer lism-component` に入れない
+## 独自クラスの CSS を `@layer lism-custom` に入れない
 
-`.c--*`のCSSは基本的に`@layer lism-component`内に置く。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
+`.c--*`・`.z--*`・プレフィックスなしのクラスのCSSは基本的に`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
 
 | NG | OK |
 | --- | --- |
-| `.c--hero { padding: var(--s40); }` | `@layer lism-component { .c--hero::before { ... } }` |
-| `<style>.c--card { ... }</style>` | `<style>@layer lism-component { .c--card { ... } }</style>` |
+| `.c--hero { padding: var(--s40); }` | `@layer lism-custom { .c--hero::before { ... } }` |
+| `<style>.c--card { ... }</style>` | `<style>@layer lism-custom { .c--card { ... } }</style>` |
+| `@layer lism-custom { .b--btn { ... } }` | `@layer lism-block { .b--btn { ... } }` |
 
 ただし、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言は、Layerへ入れる前にマークアップ側へ移す。  
 また、詳細度の関係で`@layer`の外で書く必要がある場合は外に出してよい。

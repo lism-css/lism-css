@@ -106,7 +106,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 | has-- クラス | `packages/lism-css/src/scss/trait/has/` 配下の SCSS |
 | l-- クラス | `packages/lism-css/src/scss/primitives/layout/` 配下の SCSS |
 | a-- クラス | `packages/lism-css/src/scss/primitives/atomic/` 配下の SCSS |
-| c-- クラス | `packages/lism-ui/src/`（UIコンポーネントのCSS）。ユーザー独自は `@layer lism-component` または `@layer lism-custom` |
+| c-- クラス | `packages/lism-ui/src/`（UIコンポーネントのCSS）。ユーザー独自は `@layer lism-custom` |
 | プレフィックスと Layer の対応 | `packages/lism-css/src/scss/_with_layer.scss` |
 | 個別プリミティブの使い方・専用 Props | `apps/docs/src/content/ja/primitives/*.mdx`（サンプル・文言の情報源。ファイル名は Skill 側と同じ camelCase） |
 | プリミティブ詳細の React/Astro 側の Props 実装 | `packages/lism-css/src/components/layout/`, `state/`, `atomic/` |
@@ -164,7 +164,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| Layer 構造 | `packages/lism-css/src/scss/_with_layer.scss`, `packages/lism-css/src/scss/main.scss`（`lism-base` → `lism-primitive`{`trait`,`layout`,`atomic`} → `lism-component` → `lism-custom` → `lism-utility`） |
+| Layer 構造 | `packages/lism-css/src/scss/_with_layer.scss`（`@layer lism-base, lism-trait, lism-primitive, lism-block, lism-component, lism-custom, lism-utility;`。`lism-component` は後方互換用に宣言のみ残存） |
 | クラス命名規則・プレフィックス | `packages/lism-css/src/scss/primitives/`, `packages/lism-css/src/scss/base/` |
 
 

@@ -53,13 +53,13 @@
 
 ## クラスの命名規則
 
-クラス分類ごとのプレフィックス（`c--`/`a--`/`l--`/`is--`/`has--`/`set--`/`u--`）と各分類の責務・所属レイヤーは、[css-rules.md](./css-rules.md#クラス分類とプレフィックス)の分類表を正本とします。
+クラス分類ごとのプレフィックス（`b--`/`c--`/`a--`/`l--`/`is--`/`has--`/`set--`/`u--`）と各分類の責務・所属レイヤーは、[css-rules.md](./css-rules.md#クラス分類とプレフィックス)の分類表を正本とします。ユーザー定義クラスの4分類（`b--`/`z--`/`c--`/プレフィックスなし）の決定木は[css-rules.md](./css-rules.md#独自プレフィックス)を参照してください。
 
-プレフィックスに続く名称は camelCase（例: `c--myComponent`）。`is--`/`has--`/`set--`/`u--`にも同じ規則が適用されます。
+プレフィックスに続く名称は camelCase（例: `c--myComponent`）。`is--`/`has--`/`set--`/`u--`にも同じ規則が適用されます。プレフィックスなしの独自クラスも同様に camelCase（`.frontHero`）とし、一般名詞単体（`.hero`）は避けます。
 
-### `c--*`の命名
+### `c--*`/`b--*`の命名
 
-Block/Element/Modifierの形式（Block=`c--{name}`、Element=`_`ひとつ、Modifier=`--`ふたつ）は[css-rules.md](./css-rules.md#component-classc--)を参照。Block名はcamelCaseを第一候補にし、既存コードがアンダースコア区切りならそれに合わせます。単語区切りのハイフン（`c--feature-card`）とBEM風の`__`は使いません（NG→OK例は[antipatterns-layout.md](./antipatterns-layout.md#クラス名の命名ミス)を参照）。
+Block/Element/Modifierの形式（Block=`c--{name}`、Element=`_`ひとつ、Modifier=`--`ふたつ）は[css-rules.md](./css-rules.md#component-classc--)を参照。`b--*`も同じ記法です（[Block Class（`b--`）](./css-rules.md#block-classb--)）。Block名はcamelCaseを第一候補にし、既存コードがアンダースコア区切りならそれに合わせます。単語区切りのハイフン（`c--feature-card`）とBEM風の`__`は使いません（NG→OK例は[antipatterns-layout.md](./antipatterns-layout.md#クラス名の命名ミス)を参照）。
 
 Property Class の形式:
 

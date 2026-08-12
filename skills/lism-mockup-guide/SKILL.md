@@ -62,7 +62,7 @@ mockup/
 - 画面はファイルシステムから自動発見される。**ファイルを置くだけでよく、configへの登録は不要**
 - `.jsx` / `.tsx`の両方が使えるが、**型チェックは行われない**（型は剥がされるだけ）。同名の`.jsx`と`.tsx`の併存はID衝突エラー
 - `useState`等のローカルUI状態とイベントハンドラは書いてよい。**API通信・認証・永続化・業務ロジックは書かない**（モックアップは画面の絵であり、アプリではない）
-- ページ付随のCSS・画像は相対importで置ける。CSSに書くのは擬似要素・子孫セレクタ・属性状態などProperty Class / Propsで表せない宣言だけ（判断は`lism-css-guide`の`property-class.md`）。`c--*`のCSSは`@layer lism-component`内に置く
+- ページ付随のCSS・画像は相対importで置ける。CSSに書くのは擬似要素・子孫セレクタ・属性状態などProperty Class / Propsで表せない宣言だけ（判断は`lism-css-guide`の`property-class.md`）。`c--*`のCSSは`@layer lism-custom`内に置く
 
 ### mockup.config.json（必須）
 
