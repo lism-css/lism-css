@@ -152,7 +152,7 @@ Use `b--` only for parts that satisfy all three of the following:
 2. It's a part where a single class should define nearly the entire base style (you want style changes to stay contained to the CSS file).
 3. Its granularity is a self-contained, button/badge/card-level part (not a full page section or the site skeleton).
 
-Parts that don't meet these criteria should be `c--`. You can use it purely as a name that shows what part it is, without writing any CSS (see [Categories of custom classes](#categories-of-custom-classes) below).
+Parts that don't meet these criteria should be `c--`. You can use it purely as a name that shows what part it is, without writing any CSS (see [Custom Class](#custom-class) below).
 
 `b--` classes can have a BEM structure (Block / Modifier / Element), each defined in the following format:
 
@@ -177,6 +177,45 @@ You can combine `b--` with Property Classes. Property Classes sit outside any la
 Conversely, `lism-block` is a stronger layer than `lism-primitive`, so adding an `l--` or Trait class to a `b--` element cannot override properties the `b--` side already sets. If you need a layout variation, define a Modifier class in CSS, or override it with a Property Class.
 :::
 
+
+### Custom Class
+
+**Custom Classes** prefixed with `c--` are custom classes you're free to define beyond the core's built-in classes.  
+The name corresponds to the `lism-custom` layer, and you can use it for any granularity — components, zoning, page-specific elements, and more.
+
+The basic approach is to compose their style mainly through Property Classes; you can use a `c--` class purely as a name that shows what part it is, without writing any CSS. When a Property Class can't cover a more complex style, define the CSS in `@layer lism-custom`.
+
+```css
+@layer lism-custom {
+  .c--siteHeader { /* ... */ }
+  .c--pricing { /* ... */ }
+}
+```
+
+The distinction from [Block Class](#block-class) is as follows:
+
+| Category | Naming | Where to write styles |
+|---|---|---|
+|Common, reusable site-wide parts<br /><small>Button, badge, card-level components</small>|`b--{name}`<br /><small>e.g. `b--btn`</small>|Define base styles in `@layer lism-block` and manage them in CSS.|
+|All other custom classes<br /><small>Components, zoning, page-specific elements — any granularity</small>|`c--{name}`<br /><small>e.g. `c--pricing`,<br />`c--siteHeader`</small>|Compose mainly with Property Classes. If you write CSS, define it in `@layer lism-custom`.|
+
+Use `b--` only for parts that satisfy all three [Block Class](#block-class) conditions (reused site-wide, base style managed in CSS, button/badge/card-level granularity); everything else is `c--`. The name `b--` guarantees that "the base style lives in CSS"; `c--` carries no such guarantee. The site skeleton and page-specific elements stay `c--` even when you write CSS for them. When in doubt, start with `c--` and rename it to `b--` once the part meets all three conditions and you want to switch to CSS-managed styling.
+
+Free-form naming without a prefix is still available (see [Rules for prefix-free classes](#rules-for-prefix-free-classes) below). If you want to keep things consistent with Lism's conventions, `c--` is recommended.
+
+`c--` classes can follow the same BEM notation and combination rules as [Block Class](#block-class), giving them a BEM structure (Block / Modifier / Element):
+
+| Category | Format | Example |
+|---|---|---|
+|Block<br /><small>The base class</small>|`c--{name}`|`c--pricing`,<br />`c--siteHeader`|
+|Modifier<br /><small>Variation</small>|`c--{name}--{modifier}`|`c--pricing--featured`|
+|Element<br /><small>Child element</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
+
+### Rules for prefix-free classes
+
+- Avoid a single generic noun (`.hero`, `.card`, etc.); use camelCase that includes the page's slug or similar (`.frontHero`). This prevents collisions with external CSS and makes the class's origin clear from its name alone.
+- Place the CSS in `@layer lism-custom`. Writing it outside a layer breaks the assumption that Property Classes can override it.
+- Once you start reusing it across multiple pages, promote it to `c--` (or to `b--` if it meets the [Block Class](#block-class) conditions).
 
 
 ### Utility Class
@@ -245,7 +284,7 @@ See the [Responsive styling guide](/en/docs/responsive/) for details.
 
 
 
-## Naming and placing custom classes
+### Adding and overriding existing classes
 
 When you add your own classes that match one of Lism CSS's existing class categories (`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, `-{prop}:{value}`), use the same prefix and add them to the corresponding definition layer.
 
@@ -262,60 +301,6 @@ If you need to override an existing Lism class, do so within that same layer.
   .set--plain.set--plain { /* ... */ }
 }
 ```
-
-
-### Categories of custom classes
-
-Classes you define yourself that don't fit any of Lism CSS's built-in categories should be organized into the following two categories.
-
-| Category | Naming | Where to write styles |
-|---|---|---|
-|Common, reusable site-wide parts<br /><small>Button, badge, card-level components</small>|`b--{name}`<br /><small>e.g. `b--btn`</small>|Define base styles in `@layer lism-block` and manage them in CSS. (→ [Block Class](#block-class))|
-|All other custom classes<br /><small>Components, zoning, page-specific elements — any granularity</small>|`c--{name}`<br /><small>e.g. `c--pricing`,<br />`c--siteHeader`</small>|Compose mainly with Property Classes. You can use it purely as a name that shows what part it is, without writing any CSS. If you write CSS, define it in `@layer lism-custom`. (→ [Custom Class](#custom-class))|
-
-Use `b--` only for parts that satisfy all three [Block Class](#block-class) conditions (reused site-wide, base style managed in CSS, button/badge/card-level granularity); everything else is `c--`. The name `b--` guarantees that "the base style lives in CSS"; `c--` carries no such guarantee. The site skeleton and page-specific elements stay `c--` even when you write CSS for them. When in doubt, start with `c--` and rename it to `b--` once the part meets all three conditions and you want to switch to CSS-managed styling.
-
-Free-form naming without a prefix is still available (see [Rules for prefix-free classes](#rules-for-prefix-free-classes) below). If you want to keep things consistent with Lism's conventions, `c--` is recommended.
-
-```css
-@layer lism-block {
-  .b--btn { /* ... */ }
-}
-
-@layer lism-custom {
-  .c--siteHeader { /* ... */ }
-  .c--pricing { /* ... */ }
-  .frontHero { /* ... */ }
-}
-```
-
-### Custom Class
-
-**Custom Classes** prefixed with `c--` are custom classes you're free to define beyond the core's built-in classes.  
-The name corresponds to the `lism-custom` layer, and you can use it for any granularity — components, zoning, page-specific elements, and more.
-
-The basic approach is to compose their style mainly through Property Classes; you can use a `c--` class purely as a name that shows what part it is, without writing any CSS. When a Property Class can't cover a more complex style, define the CSS in `@layer lism-custom`.
-
-```css
-@layer lism-custom {
-  .c--siteHeader { /* ... */ }
-  .c--pricing { /* ... */ }
-}
-```
-
-`c--` classes can follow the same BEM notation and combination rules as [Block Class](#block-class), giving them a BEM structure (Block / Modifier / Element):
-
-| Category | Format | Example |
-|---|---|---|
-|Block<br /><small>The base class</small>|`c--{name}`|`c--button`,<br />`c--pricing`|
-|Modifier<br /><small>Variation</small>|`c--{name}--{modifier}`|`c--button--outline`|
-|Element<br /><small>Child element</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
-
-### Rules for prefix-free classes
-
-- Avoid a single generic noun (`.hero`, `.card`, etc.); use camelCase that includes the page's slug or similar (`.frontHero`). This prevents collisions with external CSS and makes the class's origin clear from its name alone.
-- Place the CSS in `@layer lism-custom`. Writing it outside a layer breaks the assumption that Property Classes can override it.
-- Once you start reusing it across multiple pages, promote it to `c--` (or to `b--` if it meets the [Block Class](#block-class) conditions).
 
 
 ## Using data attributes for dynamic state

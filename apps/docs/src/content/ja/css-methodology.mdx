@@ -150,7 +150,7 @@ Primitive クラスはバリエーションや子要素クラスを持たない�
 2. クラス1つでベーススタイルがほぼ定まる状態にしたい部品である（スタイルの修正をCSSファイル側だけで完結させたい）
 3. 粒度がボタン・バッジ・カード級の自己完結した部品である（ページセクション全体やサイト骨格は対象外）
 
-満たさない部品は `c--` にします。CSSを書かずに、何のパーツかを示す名前付けとしてだけ使っても構いません（後述の[「独自クラスの分類」](#独自クラスの分類)を参照）。
+満たさない部品は `c--` にします。CSSを書かずに、何のパーツかを示す名前付けとしてだけ使っても構いません（後述の [Custom Class](#custom-class) を参照）。
 
 `b--` クラスは BEM 構造（Block / Modifier / Element）を持つことができ、それぞれ次のような形式で定義します。
 
@@ -175,6 +175,45 @@ Blockの併用（`.b--xxx.b--yyy`）は基本 NG ですが、次の組み合わ�
 逆に `lism-block` は `lism-primitive` より強いレイヤーなので、`b--` の要素に `l--` や Trait クラスを付けても、`b--` 側ですでに指定しているプロパティは上書きできません。レイアウトのバリエーションが必要な場合は、Modifier クラスをCSS側に定義するか、Property Class で上書きしてください。
 :::
 
+
+### Custom Class
+
+`c--` プレフィックスで定義する **Custom Class** は、コアの定義を超えてユーザーが自由に定義できるカスタムクラスです。  
+名前は `lism-custom` レイヤーと対応しており、コンポーネント・ゾーニング・ページ固有の要素など、粒度を問わず使えます。
+
+スタイルは Property Class での指定を中心に組み立てるのが基本方針で、CSSを書かずに「何のパーツか」を示す名前付けとしてだけ使っても構いません。Property Class では対応しきれない複雑なスタイルをCSSに書く場合は、`@layer lism-custom` に定義します。
+
+```css
+@layer lism-custom {
+  .c--siteHeader { /* ... */ }
+  .c--pricing { /* ... */ }
+}
+```
+
+[Block Class](#block-class) との使い分けは次の通りです。
+
+|分類|命名|スタイルの書き方|
+|---|---|---|
+|サイト共通で繰り返し使う基礎部品<br /><small>ボタン・バッジ・カード級</small>|`b--{name}`<br /><small>例: `b--btn`</small>|ベーススタイルを `@layer lism-block` に定義し、CSS側で管理します。|
+|それ以外のカスタムクラス全般<br /><small>コンポーネント・ゾーニング・ページ固有要素など粒度不問</small>|`c--{name}`<br /><small>例: `c--pricing`,<br />`c--siteHeader`</small>|Property Class を中心に組み立てます。CSSを書く場合は `@layer lism-custom` に定義します。|
+
+`b--` にできるのは、[Block Class](#block-class) の3条件（サイト共通の繰り返し利用・ベーススタイルのCSS管理・ボタン/バッジ/カード級の粒度）をすべて満たす部品だけで、それ以外はすべて `c--` です。「ベーススタイルはCSS側にある」ことを名前で保証するのが `b--` で、`c--` にはそうした約束はありません。サイト骨格やページ固有要素は、CSSを書く場合でも `c--` のままにします。迷ったときは `c--` から始めて、3条件を満たす部品としてCSS管理へ切り替えたくなった時点で `b--` へリネームして昇格させてください。
+
+なお、プレフィックスなしの自由命名も引き続き使えます（後述の[「プレフィックスなしのクラスで守ること」](#プレフィックスなしのクラスで守ること)を参照）。Lismらしく揃えるなら `c--` をおすすめします。
+
+`c--` クラスは、[Block Class](#block-class) と同じ BEM 記法・併用ルールで BEM 構造（Block / Modifier / Element）を持つことができます。
+
+|分類|形式|例|
+|---|---|---|
+|Block<br /><small>本体クラス</small>|`c--{name}`|`c--pricing`,<br />`c--siteHeader`|
+|Modifier<br /><small>バリエーション</small>|`c--{name}--{modifier}`|`c--pricing--featured`|
+|Element<br /><small>子要素</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
+
+### プレフィックスなしのクラスで守ること
+
+- 一般名詞ひとつ（`.hero`, `.card` 等）の命名は避け、ページのslug等を含む camelCase（`.frontHero`）にしてください。外部CSSとの衝突を防ぎ、名前だけでどこのものかわかるようにするためです
+- CSSは `@layer lism-custom` に置いてください。レイヤーの外に書くと、Property Class で上書きできるという前提が崩れます
+- 複数ページで使い始めたら `c--` へ昇格させましょう（[Block Class](#block-class) の3条件を満たすなら `b--`）
 
 
 ### Utility Class
@@ -243,9 +282,9 @@ Prop クラス には以下の3種類の形式があります。
 詳しくは[レスポンシブ対応解説ページ](/docs/responsive/)を参照してください。
 <DocsLink path="/docs/responsive/" />
 
-## 独自クラスの命名と定義場所
+### 既存クラスの追加・上書き
 
-その他、Lism CSS の各クラス分類（`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, `-{prop}:{value}`）に合致する独自クラスを追加する場合は、同じプレフィックスを用いてそれぞれの定義レイヤーに追加するようにしてください。
+Lism CSS の各クラス分類（`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, `-{prop}:{value}`）に合致する独自クラスを追加する場合は、同じプレフィックスを用いてそれぞれの定義レイヤーに追加するようにしてください。
 
 なお、Lism の既存クラスを上書きしたい場合は、該当するレイヤー内で行ってください。
 
@@ -260,60 +299,6 @@ Prop クラス には以下の3種類の形式があります。
   .set--plain.set--plain { /* ... */ }
 }
 ```
-
-
-### 独自クラスの分類
-
-Lism CSS が提供するクラス群のどれにも当てはまらない、ユーザーが自分で定義するクラスは、次の2分類で整理してください。
-
-|分類|命名|スタイルの書き方|
-|---|---|---|
-|サイト共通で繰り返し使う基礎部品<br /><small>ボタン・バッジ・カード級</small>|`b--{name}`<br /><small>例: `b--btn`</small>|ベーススタイルを `@layer lism-block` に定義し、CSS側で管理します。（→ [Block Class](#block-class)）|
-|それ以外のカスタムクラス全般<br /><small>コンポーネント・ゾーニング・ページ固有要素など粒度不問</small>|`c--{name}`<br /><small>例: `c--pricing`,<br />`c--siteHeader`</small>|Property Class を中心に組み立てます。CSSを書かずに、何のパーツかを示す名前付けとしてだけ使っても構いません。CSSを書く場合は `@layer lism-custom` に定義します。（→ [Custom Class](#custom-class)）|
-
-`b--` にできるのは、[Block Class](#block-class) の3条件（サイト共通の繰り返し利用・ベーススタイルのCSS管理・ボタン/バッジ/カード級の粒度）をすべて満たす部品だけで、それ以外はすべて `c--` です。「ベーススタイルはCSS側にある」ことを名前で保証するのが `b--` で、`c--` にはそうした約束はありません。サイト骨格やページ固有要素は、CSSを書く場合でも `c--` のままにします。迷ったときは `c--` から始めて、3条件を満たす部品としてCSS管理へ切り替えたくなった時点で `b--` へリネームして昇格させてください。
-
-なお、プレフィックスなしの自由命名も引き続き使えます（後述の[「プレフィックスなしのクラスで守ること」](#プレフィックスなしのクラスで守ること)を参照）。Lismらしく揃えるなら `c--` をおすすめします。
-
-```css
-@layer lism-block {
-  .b--btn { /* ... */ }
-}
-
-@layer lism-custom {
-  .c--siteHeader { /* ... */ }
-  .c--pricing { /* ... */ }
-  .frontHero { /* ... */ }
-}
-```
-
-### Custom Class
-
-`c--` プレフィックスで定義する **Custom Class** は、コアの定義を超えてユーザーが自由に定義できるカスタムクラスです。  
-名前は `lism-custom` レイヤーと対応しており、コンポーネント・ゾーニング・ページ固有の要素など、粒度を問わず使えます。
-
-スタイルは Property Class での指定を中心に組み立てるのが基本方針で、CSSを書かずに「何のパーツか」を示す名前付けとしてだけ使っても構いません。Property Class では対応しきれない複雑なスタイルをCSSに書く場合は、`@layer lism-custom` に定義します。
-
-```css
-@layer lism-custom {
-  .c--siteHeader { /* ... */ }
-  .c--pricing { /* ... */ }
-}
-```
-
-`c--` クラスは、[Block Class](#block-class) と同じ BEM 記法・併用ルールで BEM 構造（Block / Modifier / Element）を持つことができます。
-
-|分類|形式|例|
-|---|---|---|
-|Block<br /><small>本体クラス</small>|`c--{name}`|`c--button`,<br />`c--pricing`|
-|Modifier<br /><small>バリエーション</small>|`c--{name}--{modifier}`|`c--button--outline`|
-|Element<br /><small>子要素</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
-
-### プレフィックスなしのクラスで守ること
-
-- 一般名詞ひとつ（`.hero`, `.card` 等）の命名は避け、ページのslug等を含む camelCase（`.frontHero`）にしてください。外部CSSとの衝突を防ぎ、名前だけでどこのものかわかるようにするためです
-- CSSは `@layer lism-custom` に置いてください。レイヤーの外に書くと、Property Class で上書きできるという前提が崩れます
-- 複数ページで使い始めたら `c--` へ昇格させましょう（[Block Class](#block-class) の3条件を満たすなら `b--`）
 
 
 ## 動的な状態管理はdata属性
