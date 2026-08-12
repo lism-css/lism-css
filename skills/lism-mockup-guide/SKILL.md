@@ -105,7 +105,9 @@ lism.config互換の`tokens`オブジェクト（`lism.config.js`の`tokens`に�
 ```
 
 ```css
-.c--saveStatus::before { background-color: var(--success); }  /* CSS内はvar()直書き */
+@layer lism-custom {
+  .c--saveStatus::before { background-color: var(--success); }  /* CSS内はvar()直書き */
+}
 ```
 
 ### tokens.dark.json（任意）
