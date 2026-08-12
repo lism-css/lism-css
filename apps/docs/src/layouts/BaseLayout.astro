@@ -64,20 +64,20 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
     <div class="is--container">
       <Header />
       <Grid
-        class={`z--wrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
+        class={`c--siteWrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
         gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
         gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
         min-h="100svh"
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="z--main">
+        <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="c--siteMain">
           <span class="u--srOnly" id="_top" aria-hidden="true"></span>
           <slot />
           <Footer />
         </Container>
         {
           toc && (
-            <Stack as="aside" class="z--toc" isContainer g="15" py="20" d={['none', null, null, 'flex']}>
+            <Stack as="aside" class="c--siteToc" isContainer g="15" py="20" d={['none', null, null, 'flex']}>
               <TableOfContents toc={toc} px="15" />
               <ShareBtns url={canonicalUrl} title={title} px="15" />
             </Stack>
