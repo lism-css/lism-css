@@ -229,7 +229,7 @@ Modifier のプレフィックスは、その Block に付けたプレフィッ�
 
 | NG | OK |
 | --- | --- |
-| `<span class="c--tag is--solid">` + `.c--tag.is--solid { ... }` | `<span class="c--tag c--tag--solid">` + `.c--tag.c--tag--solid { ... }` |
+| `<section class="c--hero is--dark">` + `.c--hero.is--dark { ... }` | `<section class="c--hero c--hero--dark">` + `.c--hero.c--hero--dark { ... }` |
 | `<div class="c--pricing is--featured">` | `<div class="c--pricing c--pricing--featured">` |
 | `<button class="b--btn is--outline">` / `<button class="b--btn c--btn--outline">`（Block と違うプレフィックス） | `<button class="b--btn b--btn--outline">` + `@layer lism-block` に `.b--btn.b--btn--outline { ... }` |
 

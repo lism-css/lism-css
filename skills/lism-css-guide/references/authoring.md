@@ -67,7 +67,7 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 - **照合・判定**: 状態→`✅新規`（`data-*`/ARIA）。見た目違い→`✅新規`（C3で決めたBlockと同じプレフィックスのModifier。`c--`なら`c--name--variant`、`b--`なら`b--name--variant`）。Blockと異なるプレフィックスのModifierになっている→🔁。正規Traitが当たる→✅。
 - **決め方**: 状態は属性セレクタ、バリエーションはBEM Modifier。ModifierのプレフィックスはC3で決めたBlockに合わせ、`c--`と`b--`を混在させない。`is--`を状態/バリエーションに流用しない。
 - **参照先**: `trait-class.md`、`trait-class/is--*.md`、`antipatterns-layout.md#is---の誤用状態バリエーション`、`css-rules.md#custom-classc--`、`css-rules.md#block-classb--`。
-- **よい例・避けたい例**: OK=`data-is-active`+`[data-is-active]`、`c--tag--solid`、`b--btn--outline`。罠=`is--active`、`is--solid`、`b--btn`に対する`c--btn--outline`（Blockと違うプレフィックス）。
+- **よい例・避けたい例**: OK=`data-is-active`+`[data-is-active]`、`c--pricing--featured`、`b--btn--outline`。罠=`is--active`、`is--solid`、`b--btn`に対する`c--btn--outline`（Blockと違うプレフィックス）。
 
 ### C5: 値・トークン照合
 
