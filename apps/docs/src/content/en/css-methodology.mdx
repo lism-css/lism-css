@@ -273,7 +273,7 @@ Classes you define yourself that don't fit any of Lism CSS's built-in categories
 |Common, reusable site-wide parts<br /><small>Button, badge, card-level components</small>|`b--{name}`<br /><small>e.g. `b--btn`</small>|Define base styles in `@layer lism-block` and manage them in CSS. (→ [Block Class](#block-class))|
 |All other custom classes<br /><small>Components, zoning, page-specific elements — any granularity</small>|`c--{name}`<br /><small>e.g. `c--card`,<br />`c--siteHeader`</small>|Compose mainly with Property Classes. You can use it purely as a name that shows what part it is, without writing any CSS. If you write CSS, define it in `@layer lism-custom`. (→ [Custom Class](#custom-class))|
 
-The only criterion is whether you want to manage the base style in CSS. The name `b--` guarantees that "the base style lives in CSS"; `c--` carries no such guarantee. When in doubt, start with `c--` and rename it to `b--` once you want to switch to CSS-managed styling.
+Use `b--` only for parts that satisfy all three [Block Class](#block-class) conditions (reused site-wide, base style managed in CSS, button/badge/card-level granularity); everything else is `c--`. The name `b--` guarantees that "the base style lives in CSS"; `c--` carries no such guarantee. The site skeleton and page-specific elements stay `c--` even when you write CSS for them. When in doubt, start with `c--` and rename it to `b--` once the part meets all three conditions and you want to switch to CSS-managed styling.
 
 Free-form naming without a prefix is still available (see [Rules for prefix-free classes](#rules-for-prefix-free-classes) below). If you want to keep things consistent with Lism's conventions, `c--` is recommended.
 
@@ -315,7 +315,7 @@ The basic approach is to compose their style mainly through Property Classes; yo
 
 - Avoid a single generic noun (`.hero`, `.card`, etc.); use camelCase that includes the page's slug or similar (`.frontHero`). This prevents collisions with external CSS and makes the class's origin clear from its name alone.
 - Place the CSS in `@layer lism-custom`. Writing it outside a layer breaks the assumption that Property Classes can override it.
-- Once you start reusing it across multiple pages, promote it to `c--` (or to `b--` if you intend to manage it in CSS).
+- Once you start reusing it across multiple pages, promote it to `c--` (or to `b--` if it meets the [Block Class](#block-class) conditions).
 
 
 ## Using data attributes for dynamic state

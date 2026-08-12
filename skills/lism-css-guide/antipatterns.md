@@ -32,7 +32,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 - [レスポンシブ抜け](./antipatterns-layout.md#レスポンシブ抜け)
 - [レスポンシブ配列の冗長指定](./antipatterns-layout.md#レスポンシブ配列の冗長指定)
 - [`is--` の誤用（状態・バリエーション）](./antipatterns-layout.md#is---の誤用状態バリエーション)
-- [カスタムクラスを全て `c--` にしてしまう](./antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう)
+- [CSS管理する部品を `c--` のままにする](./antipatterns-layout.md#css管理する部品を-c---のままにする)
 - [クラス名の命名ミス](./antipatterns-layout.md#クラス名の命名ミス)
 
 ---

@@ -16,7 +16,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 | `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・「クラス単位の詳細リファレンス」のリンク一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
 | `set-class.md` | `set--`クラス (`set--plain`,`set--revert`,`set--bxsh`,`set--hov`,`set--bdrsInner`) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/`（`_tokens.scss` / `_tokens.gen.scss`） |
-| `primitive-class.md` | Primitive クラス (`is--`, `l--`, `a--`) と Component クラス (`c--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/primitives/`, `packages/lism-ui/src/`（c-- 系） |
+| `primitive-class.md` | Primitive クラス (`l--`, `a--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/primitives/` |
 | `trait-class.md` | Trait クラス (`is--`, `has--`) の一覧と用途（※俯瞰マップに徹する。個別 Trait の詳細は `trait-class/*.md`） | `packages/lism-css/src/scss/trait/`, `apps/docs/src/content/ja/trait-class.mdx` |
 | `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
 | `property-class.md` | Property Class (`-{prop}:{value}`) の記法と出力の解説、Prop早見リスト、分冊へのリンク一覧（全Prop表・特殊Propの詳細は `property-class/` 配下に分冊済み） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.gen.scss`, `packages/lism-css/src/scss/props/` |
@@ -24,7 +24,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 | `components-core.md` | コアコンポーネント — セマンティック・Lism Props・getLismProps。Atomic/Trait/Layout の対応表には `primitives/*.md` への詳細リンクを保持する（※個別 Props・仕様の詳細は `primitives/*.md` 側に移管済み） | `packages/lism-css/src/components/`, 各パッケージの exports |
 | `components-ui.md` | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | `packages/lism-ui/src/`, `packages/lism-cli/src/commands/ui/`（CLI）, 各パッケージの exports |
 | `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |
-| `css-rules.md` | CSS Layer 構造・プレフィックス・Component クラス・カスタムCSS ルール | `packages/lism-css/src/scss/` |
+| `css-rules.md` | CSS Layer 構造・プレフィックス・Block Class (`b--`)・Custom Class (`c--`)・カスタムCSS ルール | `packages/lism-css/src/scss/` |
 | `naming.md` | 命名規則 — CSS変数名・クラス名・Property Class の `{prop}` / `{value}` 省略ルール | `packages/lism-css/config/defaults/props.ts`, `apps/docs/src/content/ja/naming.mdx` |
 | `customize.md` | カスタマイズ — @layerオフ・SCSS変数上書き・lism.config.js・CLIビルド | `packages/lism-css/src/scss/`, `packages/lism-cli/src/config.ts`（lism.config 読み込み）, `packages/plugin/src/`（`@lism-css/plugin`）, `apps/docs/src/content/ja/customize.mdx` |
 
