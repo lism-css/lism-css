@@ -20,6 +20,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 ### 構造・レイアウト・レスポンシブ系（antipatterns-layout.md）
 
 - [レイアウト選択ミス](./antipatterns-layout.md#レイアウト選択ミス)
+- [CSS管理する部品を `c--` のままにする](./antipatterns-layout.md#css管理する部品を-c---のままにする)
 - [Astro/React Primitive を使わず素の HTML で組む](./antipatterns-layout.md#astroreact-primitive-を使わず素の-html-で組む)
 - [ボタン装飾を reset から自作する](./antipatterns-layout.md#ボタン装飾を-reset-から自作する)
 - [`Frame` 未使用のメディア枠手組み](./antipatterns-layout.md#frame-未使用のメディア枠手組み)
@@ -32,7 +33,6 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 - [レスポンシブ抜け](./antipatterns-layout.md#レスポンシブ抜け)
 - [レスポンシブ配列の冗長指定](./antipatterns-layout.md#レスポンシブ配列の冗長指定)
 - [`is--` の誤用（状態・バリエーション）](./antipatterns-layout.md#is---の誤用状態バリエーション)
-- [CSS管理する部品を `c--` のままにする](./antipatterns-layout.md#css管理する部品を-c---のままにする)
 - [クラス名の命名ミス](./antipatterns-layout.md#クラス名の命名ミス)
 
 ---

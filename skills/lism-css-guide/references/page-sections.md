@@ -4,7 +4,7 @@
 
 共通の考え方:
 
-- セクションの外殻は`Group`（`as="header"`/`as="section"`/`as="footer"`）で意味付けし、`c--siteHeader`のような何のパーツかを示す独自クラス名を付ける（ページ固有の領域はプレフィックスなしのcamelCase（`.frontHero`等）も可。[`css-rules.md`](../css-rules.md#独自プレフィックス)）。
+- セクションの外殻は`Group`（`as="header"`/`as="section"`/`as="footer"`）で意味付けし、`c--siteHeader`のような何のパーツかを示す独自クラス名を付ける（ページ固有の領域はプレフィックスなしのcamelCase（`.frontHero`等）も可。[`css-rules.md`](../css-rules.md#独自クラスの選び方2分類)）。
 - 「全幅の背景＋中央寄せの本文幅」は、外殻`Group`（背景色・縦padding）＋`hasGutter`（サイト共通の左右余白）＋内側`Wrapper`（コンテンツ幅）の組み合わせで作る。`max-width`をpxで直書きしない。
 - 縦の並びは`Stack`、横並びは`Cluster`に任せ、余白はすべて`g`/`py`などのトークンPropsで表す。
 - セクションの高さをデザインpxで固定しない。高さは余白（`py`）とコンテンツが決める。

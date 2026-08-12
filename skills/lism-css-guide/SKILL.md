@@ -83,7 +83,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | hover/focus等の状態スタイルを書く | `property-class/hov.md`（必要に応じて`trait-class/has--transition.md`） |
 | トークン外の数値・色をコードに書く（丸める場合を含む。CSS/Props問わず） | `tokens.md`、`antipatterns.md`の「px / 固定値の直書き」節 |
 | レスポンシブの切替を決める | `responsive.md` |
-| 独自クラス（`b--*`/`c--*`/プレフィックスなし）を新しく作る/名前を付ける | `naming.md`、`css-rules.md`の`独自プレフィックス`節 |
+| 独自クラス（`b--*`/`c--*`/プレフィックスなし）を新しく作る/名前を付ける | `naming.md`、`css-rules.md`の`独自クラスの選び方（2分類）`節 |
 | `b--*`/`c--*`のCSSを書く | `css-rules.md`の`Block Class（b--）`/`Custom Class（c--）`節 |
 | 状態・バリエーションを設計する | `trait-class.md` |
 

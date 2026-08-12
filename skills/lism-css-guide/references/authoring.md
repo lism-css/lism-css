@@ -58,7 +58,7 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 - **列挙**: 新設する`b--`/`c--`/プレフィックスなしのクラス名とBlock/Element/Modifier構造、独自CSSを置くLayer。
 - **照合・判定**: プレフィックス後の名前が規約に合う→✅。ハイフンや`__`がある→🔁。ベーススタイルをCSS管理する共通基礎部品→`✅新規`（`b--`）。それ以外のカスタムクラス→`✅新規`（`c--`。プレフィックスなしも可）。公開API・CMS・外部JS・E2E依存→⏸。独自CSSがLayer外になる→🔁。
 - **決め方**: `naming.md`に従う。Block名にハイフンは使わず、Element区切りは`_`ひとつ、Modifierは`--`ふたつ（`b--`も`c--`と同記法）。分類は`b--`の3条件（サイト共通の繰り返し利用・ベーススタイルのCSS管理・ボタン/バッジ/カード級の粒度。`css-rules.md#block-classb--`参照）で決める（すべて満たす→`b--`／それ以外→`c--`。プレフィックスなしの自由命名も可）。独自CSSは必ず`@layer lism-custom {}`内に置く（`b--`のベーススタイルだけ`@layer lism-block {}`）。
-- **参照先**: `naming.md`、`css-rules.md#block-classb--`、`css-rules.md#custom-classc--`、`css-rules.md#独自プレフィックス`、`antipatterns-layout.md#クラス名の命名ミス`。
+- **参照先**: `naming.md`、`css-rules.md#block-classb--`、`css-rules.md#custom-classc--`、`css-rules.md#独自クラスの選び方2分類`、`antipatterns-layout.md#クラス名の命名ミス`。
 - **よい例・避けたい例**: OK=`c--featureCard`、`c--featureCard_body`、既存命名がアンダースコア寄せなら`c--feature_card`。罠=`c--feature-card`、`c--hero__inner`（正しくは`c--hero_inner`）、`c--feature-card__body`（正しくは`c--featureCard_body`）。
 
 ### C4: 状態・バリエーション設計
