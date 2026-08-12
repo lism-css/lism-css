@@ -122,6 +122,8 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 |------|---------|
 | Layout Primitive | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
 | Trait Class | `is--wrapper`, `is--container`, `is--layer`, `has--transition`, `has--gutter` |
+| Block Class | `b--btn`, `b--badge` |
+| Custom Class | `c--siteHeader`, `c--pricing` |
 | Property Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | Breakpoint | `-p_sm`, `-g_md`, `-fz_lg` |
 | Utility | `u--cbox` |

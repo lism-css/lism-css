@@ -149,6 +149,8 @@ Lism CSS uses a structured naming convention for CSS classes:
 | Layout Primitive | `l--{name}` | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
 | Trait Class (role) | `is--{name}` | `is--wrapper`, `is--container`, `is--layer`, `is--boxLink` |
 | Trait Class (feature) | `has--{name}` | `has--transition`, `has--gutter`, `has--snap` |
+| Block Class | `b--{name}` | `b--btn`, `b--badge` |
+| Custom Class | `c--{name}` | `c--siteHeader`, `c--pricing` |
 | Property Class | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | Breakpoint | `-{prop}_{bp}` | `-p_sm`, `-g_md`, `-fz_lg` |
 | Utility Class | `u--{name}` | `u--cbox` |

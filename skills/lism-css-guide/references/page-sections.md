@@ -82,7 +82,7 @@ import { Group, Wrapper, Stack, AutoColumns, Text, Divider } from 'lism-css/astr
 ```jsx
 import { Group, Wrapper, Stack, Heading, Columns } from 'lism-css/astro';
 
-<Group as="section" className="frontFeatures" py="70" hasGutter isContainer>
+<Group as="section" className="c--frontFeatures" py="70" hasGutter isContainer>
   <Wrapper contentSize="l">
     <Stack g="40">
       <Heading level="2" fz="2xl" ta="center">Features</Heading>

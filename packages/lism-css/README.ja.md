@@ -150,6 +150,8 @@ Lism CSSは構造化された命名規則をCSSクラスに使用しています
 | レイアウトプリミティブ | `l--{name}` | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
 | Trait Class（役割） | `is--{name}` | `is--wrapper`, `is--container`, `is--layer`, `is--boxLink` |
 | Trait Class（機能） | `has--{name}` | `has--transition`, `has--gutter`, `has--snap` |
+| Block Class | `b--{name}` | `b--btn`, `b--badge` |
+| Custom Class | `c--{name}` | `c--siteHeader`, `c--pricing` |
 | Property Class | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | ブレークポイント | `-{prop}_{bp}` | `-p_sm`, `-g_md`, `-fz_lg` |
 | ユーティリティクラス | `u--{name}` | `u--cbox` |
