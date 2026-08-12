@@ -67,7 +67,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 <Media as={Image} src="..." p="20" bd />
 // → Image コンポーネントに { className: '-p:20 -bd' } が渡される
 
-// className でコンポーネントクラスを付与（c--* も className に直接書く）
+// className で独自クラスを付与（c--* も className に直接書く）
 <Lism className="c--myComponent" p="10">...</Lism>
 // → <div class="c--myComponent -p:10">...</div>
 

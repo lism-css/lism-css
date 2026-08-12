@@ -50,7 +50,7 @@ const plans = [
 export default function LandingPage() {
   return (
     <Group isContainer>
-      <Group as="header" className="z--header" py="20" hasGutter bd-be>
+      <Group as="header" className="c--siteHeader" py="20" hasGutter bd-be>
         <Wrapper contentSize="xl">
           <Cluster jc="between" g="20">
             <Link href="#hero" fw="bold" fz="l" c="text" td="none">
@@ -156,7 +156,7 @@ export default function LandingPage() {
         </Wrapper>
       </Group>
 
-      <Group as="footer" className="z--footer" py="40" hasGutter bd-bs>
+      <Group as="footer" className="c--siteFooter" py="40" hasGutter bd-bs>
         <Wrapper contentSize="xl">
           <Cluster jc="between" g="20" fz="s" c="text-2">
             <Text>© 2026 Acme</Text>

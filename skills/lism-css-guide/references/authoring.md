@@ -50,23 +50,23 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 - **列挙**: 同じ部品が3箇所以上になりそうか、値差分・slot構造があるか。
 - **照合・判定**: 3+反復見込みかつ同じ意味のUI部品として安定→`✅新規`（コンポーネント化して着手）。1〜2回・局所・一時的重複→✅そのまま。Props設計が必要→⏸。
 - **決め方**: CSSの`c--`新設でなくReact/Astroコンポーネント抽出を優先。`className`/`style`/`data-*`/ARIA/イベントハンドラの受け渡しを最初から設計する。
-- **参照先**: `components-core.md`、`components-ui.md`、`css-rules.md#component-classc--`、`property-class.md`、本ファイルの「出力フォーマット」。
+- **参照先**: `components-core.md`、`components-ui.md`、`css-rules.md#custom-classc--`、`property-class.md`、本ファイルの「出力フォーマット」。
 - **よい例・避けたい例**: OK=反復するTagをTagコンポーネント化。罠=Property Classの組み合わせをコピペ展開。
 
 ### C3: 命名設計
 
-- **列挙**: 新設する`b--`/`z--`/`c--`/プレフィックスなしのクラス名とBlock/Element/Modifier構造、独自CSSを置くLayer。
-- **照合・判定**: プレフィックス後の名前が規約に合う→✅。ハイフンや`__`がある→🔁。CSS管理する共通基礎部品→`✅新規`（`b--`）。サイト骨格→`✅新規`（`z--`）。コンポーネント的なもの→`✅新規`（`c--`）。ページ固有・ローカル→`✅新規`（プレフィックスなし）。公開API・CMS・外部JS・E2E依存→⏸。独自CSSがLayer外になる→🔁。
-- **決め方**: `naming.md`に従う。Block名にハイフンは使わず、Element区切りは`_`ひとつ、Modifierは`--`ふたつ（`b--`も`c--`と同記法）。分類は「CSS管理する共通基礎部品か→`b--`／サイト骨格か→`z--`／コンポーネント的なものか→`c--`／それ以外のページ固有・ローカルか→プレフィックスなし」の決定木で決める。独自CSSは必ず`@layer lism-custom {}`内に置く（`b--`のベーススタイルだけ`@layer lism-block {}`）。
-- **参照先**: `naming.md`、`css-rules.md#block-classb--`、`css-rules.md#component-classc--`、`css-rules.md#独自プレフィックス`、`antipatterns-layout.md#クラス名の命名ミス`。
-- **よい例・避けたい例**: OK=`c--featureCard`、`c--featureCard_body`、既存命名がアンダースコア寄せなら`c--feature_card`。罠=`c--feature-card`、`c--hero__inner`（正しくは`c--hero_inner`）、`c--feature-card__body`（正しくは`c--featureCard_body`）、サイトヘッダを`c--`にする。
+- **列挙**: 新設する`b--`/`c--`/プレフィックスなしのクラス名とBlock/Element/Modifier構造、独自CSSを置くLayer。
+- **照合・判定**: プレフィックス後の名前が規約に合う→✅。ハイフンや`__`がある→🔁。ベーススタイルをCSS管理する共通基礎部品→`✅新規`（`b--`）。それ以外のカスタムクラス→`✅新規`（`c--`。プレフィックスなしも可）。公開API・CMS・外部JS・E2E依存→⏸。独自CSSがLayer外になる→🔁。
+- **決め方**: `naming.md`に従う。Block名にハイフンは使わず、Element区切りは`_`ひとつ、Modifierは`--`ふたつ（`b--`も`c--`と同記法）。分類は「ベーススタイルをCSS側で管理したいか」の1点で決める（管理したい→`b--`／それ以外→`c--`。プレフィックスなしの自由命名も可）。独自CSSは必ず`@layer lism-custom {}`内に置く（`b--`のベーススタイルだけ`@layer lism-block {}`）。
+- **参照先**: `naming.md`、`css-rules.md#block-classb--`、`css-rules.md#custom-classc--`、`css-rules.md#独自プレフィックス`、`antipatterns-layout.md#クラス名の命名ミス`。
+- **よい例・避けたい例**: OK=`c--featureCard`、`c--featureCard_body`、既存命名がアンダースコア寄せなら`c--feature_card`。罠=`c--feature-card`、`c--hero__inner`（正しくは`c--hero_inner`）、`c--feature-card__body`（正しくは`c--featureCard_body`）。
 
 ### C4: 状態・バリエーション設計
 
 - **列挙**: active/open/disabled/currentなどの状態、solid/outlineなどの見た目違い。
 - **照合・判定**: 状態→`✅新規`（`data-*`/ARIA）。見た目違い→`✅新規`（C3で決めたBlockと同じプレフィックスのModifier。`c--`なら`c--name--variant`、`b--`なら`b--name--variant`）。Blockと異なるプレフィックスのModifierになっている→🔁。正規Traitが当たる→✅。
 - **決め方**: 状態は属性セレクタ、バリエーションはBEM Modifier。ModifierのプレフィックスはC3で決めたBlockに合わせ、`c--`と`b--`を混在させない。`is--`を状態/バリエーションに流用しない。
-- **参照先**: `trait-class.md`、`trait-class/is--*.md`、`antipatterns-layout.md#is---の誤用状態バリエーション`、`css-rules.md#component-classc--`、`css-rules.md#block-classb--`。
+- **参照先**: `trait-class.md`、`trait-class/is--*.md`、`antipatterns-layout.md#is---の誤用状態バリエーション`、`css-rules.md#custom-classc--`、`css-rules.md#block-classb--`。
 - **よい例・避けたい例**: OK=`data-is-active`+`[data-is-active]`、`c--tag--solid`、`b--btn--outline`。罠=`is--active`、`is--solid`、`b--btn`に対する`c--btn--outline`（Blockと違うプレフィックス）。
 
 ### C5: 値・トークン照合
@@ -90,7 +90,7 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 - **列挙**: CSSへ書く予定の各宣言を「Property Class/Propsへ移す宣言」と「CSSにしか書けない宣言」に分ける。`c--*`のCSSに残る宣言を実装プランに明記する。
 - **照合・判定**: 1つの要素にだけ効く見た目の指定→✅マークアップへ。擬似クラス・擬似要素・状態切替・子孫セレクタ→✅CSSへ残す。下表の宣言が`.c--*` CSSに残る→🔁未通過。
 - **決め方**: `-{prop}:{value}`またはLism Propsへ移す。`.c--*`はCSSが空でも意味クラスとして残す。
-- **参照先**: `property-class.md`、`css-rules.md#component-classc--`、`antipatterns.md#property-class-で書けるのに-css-で書く`。
+- **参照先**: `property-class.md`、`css-rules.md#custom-classc--`、`antipatterns.md#property-class-で書けるのに-css-で書く`。
 - **移行表**:
 
 | CSSでの記述 | Lism Props/Property Class |

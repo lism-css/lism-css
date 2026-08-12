@@ -101,12 +101,12 @@ Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ね�
 
 ## サイト最外殻を `Wrapper` に使う
 
-`Wrapper`/`is--wrapper`は幅制限したい直下領域に使う。サイト全体の最外殻やbody直下のゾーニングには使わない。最外殻は`z--*`などの領域名で扱い、幅制限が必要な内側だけ`Wrapper`にする。
+`Wrapper`/`is--wrapper`は幅制限したい直下領域に使う。サイト全体の最外殻やbody直下のゾーニングには使わない。最外殻は`c--siteWrapper`などの領域名クラスで扱い、幅制限が必要な内側だけ`Wrapper`にする。
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `<Wrapper className="c--site">...全体...</Wrapper>` | `<div className="z--site"><Wrapper>...本文幅...</Wrapper></div>` | 最外殻と幅制限の責務を分ける |
-| `<main className="is--wrapper">`をページ全体に付与 | `<main className="z--main"><Wrapper>...</Wrapper></main>` | ゾーニングは`z--*`、幅制限は`Wrapper` |
+| `<Wrapper className="c--site">...全体...</Wrapper>` | `<div className="c--site"><Wrapper>...本文幅...</Wrapper></div>` | 最外殻と幅制限の責務を分ける |
+| `<main className="is--wrapper">`をページ全体に付与 | `<main className="c--siteMain"><Wrapper>...</Wrapper></main>` | ゾーニングは領域名クラス、幅制限は`Wrapper` |
 
 `Wrapper`直下の子要素には幅に関する既定が当たるため、最外殻に置くと予期しない幅制御を生むことがある。
 
@@ -223,7 +223,7 @@ Lism CSS の `is--` プレフィックスは「**〜である**」という**役
 
 ### 2. スタイルバリエーション → BEM Modifier（`c--{name}--{variant}` / `b--{name}--{variant}`）
 
-「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の Component Class](./css-rules.md#component-classc--)、[css-rules.md の Block Class](./css-rules.md#block-classb--)）。
+「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の Custom Class](./css-rules.md#custom-classc--)、[css-rules.md の Block Class](./css-rules.md#block-classb--)）。
 
 Modifier のプレフィックスは、その Block に付けたプレフィックスをそのまま維持する。`c--` の Block なら `c--{name}--{variant}`、`b--` の Block なら `b--{name}--{variant}` にし、`c--` と `b--` を混ぜない。
 
@@ -235,13 +235,13 @@ Modifier のプレフィックスは、その Block に付けたプレフィッ�
 
 なお、Modifier であってもまずは [Property Class で表現できないか](./antipatterns.md#property-class-で書けるのに-css-で書く) を検討すること。「色だけ違う」程度ならマークアップ側で `-bgc:* -c:*` を差し替えるだけで済むことも多い。
 
-## カスタムクラスを全て `c--` にしてしまう
+## CSS管理する部品を `c--` のままにする
 
-`c--` は「**コンポーネント**（再利用可能な UI 部品）」を表すプレフィックス。**カスタムクラスを必ず `c--` で命名する必要はない**。独自クラスは「CSS管理する共通基礎部品か→`b--`／サイト骨格（header / sidebar / main / footer 等）か→`z--`／コンポーネント的なものか→`c--`／それ以外のページ固有・ローカル要素か→プレフィックスなし（`.frontHero` 等）」の4分類で決める。
+`c--` は「コア定義を超えた自由なカスタムクラス（**Custom Class**）」を表すプレフィックスで、コンポーネント・ゾーニング・ページ固有要素など粒度を問わず使える（`c--siteHeader` のような骨格用途も可）。ただし、サイト共通で繰り返し使うボタン・バッジ・カード級の部品を、ベーススタイルごとCSS側で管理したい場合は `c--` のままにせず `b--`（`@layer lism-block`）へリネーム昇格する。
 
-→ 4分類表と配置レイヤー: [css-rules.md の独自プレフィックス](./css-rules.md#独自プレフィックス)
+→ 分類表と配置レイヤー: [css-rules.md の独自プレフィックス](./css-rules.md#独自プレフィックス)
 
-`c--header` のような命名も間違いとまでは言えないが、「カスタムクラス＝必ず `c--`」ではないことに注意する。サイト共通で繰り返し使うボタン・バッジ・カード級の部品を、ベーススタイルごとCSS側で管理したい場合は `b--`（`@layer lism-block`）を使う。
+プレフィックスなしの自由命名も使えるが、一般名詞単体（`.hero` 等）は避け、ページslug等を含むcamelCase（`.frontHero`）にする。
 
 ## クラス名の命名ミス
 

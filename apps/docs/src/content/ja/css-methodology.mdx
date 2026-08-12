@@ -55,7 +55,7 @@ export const WhsNw = ({children}) => {
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`lism-custom`</td>
-      <td>ユーザーが Lism の既存クラスを上書きしたい場合や、独自クラス（`c--{name}`, `z--{zone}`, プレフィックスなしのクラス 等）を配置するためのカスタマイズ用レイヤー。</td>
+      <td>ユーザーが Lism の既存クラスを上書きしたい場合や、独自クラス（`c--{name}`, プレフィックスなしのクラス 等）を配置するためのカスタマイズ用レイヤー。</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Utility<br/>`lism-utility`</td>
@@ -104,7 +104,7 @@ Lism CSS の中心的なクラス群について、その設計思想を説明�
 |Layout Primitives<br /><small>レイアウトの構成単位となる Primitive</small>|`l--{name}`|`l--grid`,<br />`l--columns`|
 |Atomic Primitives<br /><small>レイアウトの最小単位となる Primitive</small>|`a--{name}`|`a--divider`,<br />`a--icon`|
 
-Primitive クラスはバリエーションや子要素クラスを持たない、単体で機能するクラスです。BEM 構造を持つのは、後述の [Block Class](#block-class)（`b--`）と [Component Class](#component-class)（`c--`）のみです。
+Primitive クラスはバリエーションや子要素クラスを持たない、単体で機能するクラスです。BEM 構造を持つのは、後述の [Block Class](#block-class)（`b--`）と [Custom Class](#custom-class)（`c--`）のみです。
 
 また、Primitive 同士の併用は以下のルールに従ってください。
 
@@ -150,7 +150,7 @@ Primitive クラスはバリエーションや子要素クラスを持たない�
 2. クラス1つでベーススタイルがほぼ定まる状態にしたい部品である（スタイルの修正をCSSファイル側だけで完結させたい）
 3. 粒度がボタン・バッジ・カード級の自己完結した部品である（ページセクション全体やサイト骨格は対象外）
 
-満たさない部品は、繰り返し使うが Property Class 中心で組む場合やマーカーとして使う場合は `c--`、1ページ・1箇所でしか使わない場合はプレフィックスなしのクラスにします（後述の[「独自クラスの4分類」](#独自クラスの4分類)を参照）。
+満たさない部品は `c--` にします。CSSを書かずに、何のパーツかを示す名前付けとしてだけ使っても構いません（後述の[「独自クラスの分類」](#独自クラスの分類)を参照）。
 
 `b--` クラスは BEM 構造（Block / Modifier / Element）を持つことができ、それぞれ次のような形式で定義します。
 
@@ -262,20 +262,18 @@ Prop クラス には以下の3種類の形式があります。
 ```
 
 
-### 独自クラスの4分類
+### 独自クラスの分類
 
-Lism CSS が提供するクラス群のどれにも当てはまらない、ユーザーが自分で定義するクラスは、次の4分類で整理してください。
+Lism CSS が提供するクラス群のどれにも当てはまらない、ユーザーが自分で定義するクラスは、次の2分類で整理してください。
 
 |分類|命名|スタイルの書き方|
 |---|---|---|
 |サイト共通で繰り返し使う基礎部品<br /><small>ボタン・バッジ・カード級</small>|`b--{name}`<br /><small>例: `b--btn`</small>|ベーススタイルを `@layer lism-block` に定義し、CSS側で管理します。（→ [Block Class](#block-class)）|
-|サイト骨格のゾーニング|`z--{zoneName}`<br /><small>例: `z--header`,<br />`z--main`,<br />`z--footer`,<br />`z--sidebar`</small>|`@layer lism-custom` に定義します。|
-|コンポーネント的なもの全般|`c--{name}`<br /><small>例: `c--card`</small>|Property Class を中心に組み立てます。CSSを書く場合は `@layer lism-custom` に定義します。（→ [Component Class](#component-class)）|
-|上記以外のページ固有・ローカル要素|プレフィックスなしの自由命名<br /><small>例: `.frontHero`</small>|名前を付けるだけでも、CSSを書いても構いません。CSSを書く場合は `@layer lism-custom` に定義します。|
+|それ以外のカスタムクラス全般<br /><small>コンポーネント・ゾーニング・ページ固有要素など粒度不問</small>|`c--{name}`<br /><small>例: `c--card`,<br />`c--siteHeader`</small>|Property Class を中心に組み立てます。CSSを書かずに、何のパーツかを示す名前付けとしてだけ使っても構いません。CSSを書く場合は `@layer lism-custom` に定義します。（→ [Custom Class](#custom-class)）|
 
-「ベーススタイルはCSS側にある」ことを名前で保証するのが `b--`、「サイト骨格である」ことを名前で保証するのが `z--` です。`c--` とプレフィックスなしのクラスにはそうした約束がないため、どちらを選んでも運用は壊れません。両者の使い分けを厳密に決める必要はありません。
+判断軸は「ベーススタイルをCSS側で管理したいか」の1点だけです。「ベーススタイルはCSS側にある」ことを名前で保証するのが `b--` で、`c--` にはそうした約束はありません。迷ったときは `c--` から始めて、CSS管理へ切り替えたくなった時点で `b--` へリネームして昇格させてください。
 
-迷ったときは `c--` から始めて、CSS管理へ切り替えたくなった時点で `b--` へリネームして昇格させてください。
+なお、プレフィックスなしの自由命名も引き続き使えます（後述の[「プレフィックスなしのクラスで守ること」](#プレフィックスなしのクラスで守ること)を参照）。Lismらしく揃えるなら `c--` をおすすめします。
 
 ```css
 @layer lism-block {
@@ -283,18 +281,18 @@ Lism CSS が提供するクラス群のどれにも当てはまらない、ユ�
 }
 
 @layer lism-custom {
-  .z--header { /* ... */ }
+  .c--siteHeader { /* ... */ }
   .c--card { /* ... */ }
   .frontHero { /* ... */ }
 }
 ```
 
-### Component Class
+### Custom Class
 
-`c--` プレフィックスで定義する **Component Class** は、Primitive を組み合わせて作られる具体的なUIコンポーネントです。  
-コアの `lism-css` には含まれず、ユーザーが自由に定義できるクラスです。
+`c--` プレフィックスで定義する **Custom Class** は、コアの定義を超えてユーザーが自由に定義できるカスタムクラスです。  
+名前は `lism-custom` レイヤーと対応しており、コンポーネント・ゾーニング・ページ固有の要素など、粒度を問わず使えます。
 
-スタイルは Property Class での指定を中心に組み立てるのが基本方針で、CSSを書かずに「何のパーツか」を示すマーカー（意味名）として使うだけでも構いません。Property Class では対応しきれない複雑なスタイルをCSSに書く場合は、`@layer lism-custom` に定義します。
+スタイルは Property Class での指定を中心に組み立てるのが基本方針で、CSSを書かずに「何のパーツか」を示す名前付けとしてだけ使っても構いません。Property Class では対応しきれない複雑なスタイルをCSSに書く場合は、`@layer lism-custom` に定義します。
 
 ```css
 @layer lism-custom {

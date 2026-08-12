@@ -57,7 +57,7 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`lism-custom`</td>
-      <td>A customization layer for overriding existing Lism classes, or for placing custom classes (`c--{name}`, `z--{zone}`, prefix-free classes, etc.).</td>
+      <td>A customization layer for overriding existing Lism classes, or for placing custom classes (`c--{name}`, prefix-free classes, etc.).</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Utility<br/>`lism-utility`</td>
@@ -106,7 +106,7 @@ These are further categorized into several types:
 |Layout Primitives<br /><small>Primitives that serve as layout building blocks</small>|`l--{name}`|`l--grid`,<br />`l--columns`|
 |Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`a--{name}`|`a--divider`,<br />`a--icon`|
 
-Primitive classes are standalone — they have no variations or child element classes. Only [Block Class](#block-class) (`b--`) and [Component Class](#component-class) (`c--`), described later, follow a BEM structure.
+Primitive classes are standalone — they have no variations or child element classes. Only [Block Class](#block-class) (`b--`) and [Custom Class](#custom-class) (`c--`), described later, follow a BEM structure.
 
 Combining Primitives follows these rules:
 
@@ -152,7 +152,7 @@ Use `b--` only for parts that satisfy all three of the following:
 2. It's a part where a single class should define nearly the entire base style (you want style changes to stay contained to the CSS file).
 3. Its granularity is a self-contained, button/badge/card-level part (not a full page section or the site skeleton).
 
-Parts that don't meet these criteria should be classified as `c--` if they're reused but composed mainly with Property Classes or used only as a marker, or as a class with no prefix if used in only one page or one place (see [Four categories of custom classes](#four-categories-of-custom-classes) below).
+Parts that don't meet these criteria should be `c--`. You can use it purely as a name that shows what part it is, without writing any CSS (see [Categories of custom classes](#categories-of-custom-classes) below).
 
 `b--` classes can have a BEM structure (Block / Modifier / Element), each defined in the following format:
 
@@ -264,20 +264,18 @@ If you need to override an existing Lism class, do so within that same layer.
 ```
 
 
-### Four categories of custom classes
+### Categories of custom classes
 
-Classes you define yourself that don't fit any of Lism CSS's built-in categories should be organized into the following four categories.
+Classes you define yourself that don't fit any of Lism CSS's built-in categories should be organized into the following two categories.
 
 | Category | Naming | Where to write styles |
 |---|---|---|
 |Common, reusable site-wide parts<br /><small>Button, badge, card-level components</small>|`b--{name}`<br /><small>e.g. `b--btn`</small>|Define base styles in `@layer lism-block` and manage them in CSS. (→ [Block Class](#block-class))|
-|Site-skeleton zoning|`z--{zoneName}`<br /><small>e.g. `z--header`,<br />`z--main`,<br />`z--footer`,<br />`z--sidebar`</small>|Define in `@layer lism-custom`.|
-|Components in general|`c--{name}`<br /><small>e.g. `c--card`</small>|Compose mainly with Property Classes. If you write CSS, define it in `@layer lism-custom`. (→ [Component Class](#component-class))|
-|Page-specific or local elements not covered above|Free-form naming without a prefix<br /><small>e.g. `.frontHero`</small>|Just naming the element is fine, or you can add CSS. If you write CSS, define it in `@layer lism-custom`.|
+|All other custom classes<br /><small>Components, zoning, page-specific elements — any granularity</small>|`c--{name}`<br /><small>e.g. `c--card`,<br />`c--siteHeader`</small>|Compose mainly with Property Classes. You can use it purely as a name that shows what part it is, without writing any CSS. If you write CSS, define it in `@layer lism-custom`. (→ [Custom Class](#custom-class))|
 
-The name `b--` guarantees that "the base style lives in CSS," and `z--` guarantees that "this is part of the site skeleton." `c--` and prefix-free classes carry no such guarantee, so either works without breaking your workflow — there's no need to draw a strict line between them.
+The only criterion is whether you want to manage the base style in CSS. The name `b--` guarantees that "the base style lives in CSS"; `c--` carries no such guarantee. When in doubt, start with `c--` and rename it to `b--` once you want to switch to CSS-managed styling.
 
-When in doubt, start with `c--` and rename it to `b--` once you want to switch to CSS-managed styling.
+Free-form naming without a prefix is still available (see [Rules for prefix-free classes](#rules-for-prefix-free-classes) below). If you want to keep things consistent with Lism's conventions, `c--` is recommended.
 
 ```css
 @layer lism-block {
@@ -285,18 +283,18 @@ When in doubt, start with `c--` and rename it to `b--` once you want to switch t
 }
 
 @layer lism-custom {
-  .z--header { /* ... */ }
+  .c--siteHeader { /* ... */ }
   .c--card { /* ... */ }
   .frontHero { /* ... */ }
 }
 ```
 
-### Component Class
+### Custom Class
 
-**Component Classes** prefixed with `c--` are concrete UI components composed from Primitives.  
-They are not included in the core `lism-css` — you are free to define them yourself.
+**Custom Classes** prefixed with `c--` are custom classes you're free to define beyond the core's built-in classes.  
+The name corresponds to the `lism-custom` layer, and you can use it for any granularity — components, zoning, page-specific elements, and more.
 
-The basic approach is to compose their style mainly through Property Classes; you can even use a `c--` class purely as a marker (a semantic name) indicating "what part this is" without writing any CSS at all. When a Property Class can't cover a more complex style, define the CSS in `@layer lism-custom`.
+The basic approach is to compose their style mainly through Property Classes; you can use a `c--` class purely as a name that shows what part it is, without writing any CSS. When a Property Class can't cover a more complex style, define the CSS in `@layer lism-custom`.
 
 ```css
 @layer lism-custom {
