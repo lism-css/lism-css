@@ -69,13 +69,12 @@
       "Primitive Class",
       "Trait Class",
       "Block Class",
+      "Custom Class",
+      "プレフィックスなしのクラスで守ること",
       "Utility Class",
       "Property Class",
       "レスポンシブ対応の Property Class",
-      "独自クラスの命名と定義場所",
-      "独自クラスの分類",
-      "Custom Class",
-      "プレフィックスなしのクラスで守ること",
+      "既存クラスの追加・上書き",
       "動的な状態管理はdata属性"
     ],
     "keywords": [
@@ -99,7 +98,7 @@
       "c--",
       "独自分類"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility の順（Property Class はレイヤーの外）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。「独自クラスの分類」では、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理し、プレフィックスなしの自由命名も引き続き使える。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility の順（Property Class はレイヤーの外）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Custom Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。独自クラスは、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理し、プレフィックスなしの自由命名も引き続き使える。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
   },
   {
     "sourcePath": "naming.mdx",
