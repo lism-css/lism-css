@@ -41,8 +41,8 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <a class="c--button c--button--fill l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
-      <a class="c--button c--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Outline</a>
+      <a class="b--button b--button--fill l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
+      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Outline</a>
     </div>
     ```
   </PreviewCode>
@@ -62,7 +62,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
 
 ## How to use
 
-`@lism-css/ui` パッケージで`Button`(`c--button`)として提供しています。
+`@lism-css/ui` パッケージで`Button`(`b--button`)として提供しています。
 
 
 ### Import
@@ -74,7 +74,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
 
 | プロパティ | 説明 |
 |---|---|
-|`variant`| `c--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
+|`variant`| `b--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
 {/* |`layout`| Buttonを構成するレイアウト用コンポーネントを指定できます。デフォルトは`Lism`です。| */}
 {/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
 {/* |`hover`| デフォルトは`op`が指定されています。| */}
@@ -111,9 +111,9 @@ Button のベーススタイルは、以下のCSSで定義されています。
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a class="c--button l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
-      <a class="c--button l--flex -hl:s -py:10 -px:20 -hov:-o -bgc:brand -bdrs:10" href="###">Button</a>
-      <a class="c--button l--flex -hl:s -py:10 -px:20 -hov:-o -bgc -bdrs:99" style="--bgc: #d13d5e" href="###">
+      <a class="b--button l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
+      <a class="b--button l--flex -hl:s -py:10 -px:20 -hov:-o -bgc:brand -bdrs:10" href="###">Button</a>
+      <a class="b--button l--flex -hl:s -py:10 -px:20 -hov:-o -bgc -bdrs:99" style="--bgc: #d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -151,9 +151,9 @@ Button のベーススタイルは、以下のCSSで定義されています。
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a class="c--button c--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
-      <a class="c--button c--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o -c:brand -bdrs:10" href="###">Button</a>
-      <a class="c--button c--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o -c -bdrs:99" style="--c: #d13d5e" href="###">
+      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
+      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o -c:brand -bdrs:10" href="###">Button</a>
+      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o -c -bdrs:99" style="--c: #d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -272,11 +272,11 @@ Button のベーススタイルは、以下のCSSで定義されています。
 
   <PreviewCode slot="tab" label="CSS">
   ```css
-  .c--button:where(.l--grid) {
+  .b--button:where(.l--grid) {
     grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
     justify-items: center;
   }
-  .c--button:where(.l--grid) > :not(.a--icon) {
+  .b--button:where(.l--grid) > :not(.a--icon) {
     grid-column: 2;
   }
   ```
@@ -295,10 +295,10 @@ Button のベーススタイルは、以下のCSSで定義されています。
   --hov-c: var(--bgc);
   --hov-bgc: var(--c);
 }
-.-hov\\:reverse:where(.c--button--fill) {
+.-hov\\:reverse:where(.b--button--fill) {
   --hov-bgc: transparent;
 }
-.-hov\\:reverse:where(.c--button--outline) {
+.-hov\\:reverse:where(.b--button--outline) {
   --hov-c: var(--base);
 }
 @media (any-hover: hover) {
@@ -324,10 +324,10 @@ Button のベーススタイルは、以下のCSSで定義されています。
   .-hov\:reverse {
     --hov-c: var(--bgc);
     --hov-bgc: var(--c);
-    &:where(.c--button--fill) {
+    &:where(.b--button--fill) {
       --hov-bgc: transparent;
     }
-    &:where(.c--button--outline) {
+    &:where(.b--button--outline) {
       --hov-c: var(--base);
     }
     @media (any-hover: hover) {

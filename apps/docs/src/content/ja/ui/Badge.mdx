@@ -33,9 +33,9 @@ import { Badge } from '@lism-css/ui/astro/Badge';
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="c--badge c--badge--outline -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="c--badge u--cbox -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:99" style="--keycolor:var(--blue)">Badge</span>
+      <span class="b--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
+      <span class="b--badge b--badge--outline -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
+      <span class="b--badge u--cbox -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:99" style="--keycolor:var(--blue)">Badge</span>
     </div>
     ```
   </PreviewCode>
@@ -55,7 +55,7 @@ Badge のベーススタイルは、以下のCSSで定義されています。
 
 ## How to use
 
-`@lism-css/ui` パッケージで`Badge`(`c--badge`)として提供しています。
+`@lism-css/ui` パッケージで`Badge`(`b--badge`)として提供しています。
 
 
 ### Import
@@ -66,7 +66,7 @@ Badge のベーススタイルは、以下のCSSで定義されています。
 
 | プロパティ | 説明 |
 |---|---|
-|`variant`| `c--badge--{variant}` クラスを出力します。`outline`を用意しています。|
+|`variant`| `b--badge--{variant}` クラスを出力します。`outline`を用意しています。|
 
 
 ## Examples
@@ -112,9 +112,9 @@ Badge のベーススタイルは、以下のCSSで定義されています。
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--red)">Badge</span>
-      <span class="c--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--orange)">Badge</span>
+      <span class="b--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10">Badge</span>
+      <span class="b--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--red)">Badge</span>
+      <span class="b--badge -d:inline-flex -fz:xs -hl:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--orange)">Badge</span>
       ...
     </div>
     ```

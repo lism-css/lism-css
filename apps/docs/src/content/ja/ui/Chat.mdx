@@ -30,14 +30,14 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--chat c--chat--speak l--grid -ji:start" style="--keycolor:var(--gray)" data-chat-dir="start">
-      <div class="c--chat_avatar l--frame -bgc:base -ar:1/1 -bdrs:99" aria-hidden="true">
+    <div class="b--chat b--chat--speak l--grid -ji:start" style="--keycolor:var(--gray)" data-chat-dir="start">
+      <div class="b--chat_avatar l--frame -bgc:base -ar:1/1 -bdrs:99" aria-hidden="true">
         <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
       </div>
-      <div class="c--chat_name -c:text-2 -fs:italic -fz:2xs -hl:0 -py:5 -px:10 -aslf:end">Taro</div>
-      <div class="c--chat_body -pos:relative">
-        <div class="c--chat_deco a--decorator is--skipFlow u--cbox -pos:absolute" aria-hidden="true"></div>
-        <div class="c--chat_content l--flow -flow:s u--cbox -bdrs:30 -p:20 -hl:s -jslf:start">
+      <div class="b--chat_name -c:text-2 -fs:italic -fz:2xs -hl:0 -py:5 -px:10 -aslf:end">Taro</div>
+      <div class="b--chat_body -pos:relative">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox -pos:absolute" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow -flow:s u--cbox -bdrs:30 -p:20 -hl:s -jslf:start">
           <p>
             ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
           </p>
@@ -62,7 +62,7 @@ Chat のベーススタイルは、以下のCSSで定義されています。
 
 ## How to use
 
-`@lism-css/ui` パッケージで`Chat`(`c--chat`)として提供しています。
+`@lism-css/ui` パッケージで`Chat`(`b--chat`)として提供しています。
 
 
 ### Import
@@ -78,7 +78,7 @@ Chat のベーススタイルは、以下のCSSで定義されています。
 | `variant` | チャットタイプを指定できます。`speak` または `think` を例では用意しています。|
 | `direction` | チャットの表示位置を指定します。`start`または`end`を指定します。 |
 | `keycolor` | チャットボックスのキーカラーを指定します。|
-| `flow` |コンテンツを囲む要素(`c--chat_content`)に渡されます|
+| `flow` |コンテンツを囲む要素(`b--chat_content`)に渡されます|
 {/* | `footer` | チャット本文の下に表示するフッターテキストを指定できます。 | */}
 
 
@@ -116,7 +116,7 @@ Chat のベーススタイルは、以下のCSSで定義されています。
 
 <Preview css={`
 @layer lism-custom {
-  .c--chat--think {
+  .b--chat--think {
     --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
     --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
   }
@@ -144,7 +144,7 @@ Chat のベーススタイルは、以下のCSSで定義されています。
   <PreviewCode slot="tab" label="CSS">
     ```css
     @layer lism-custom {
-      .c--chat--think {
+      .b--chat--think {
         --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
         --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
       }

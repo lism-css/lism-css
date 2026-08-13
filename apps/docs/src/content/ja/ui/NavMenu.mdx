@@ -55,12 +55,12 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
-<ul class="c--navMenu l--stack">
-  <li class="c--navMenu_item">
-    <a class="c--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 1</a>
+<ul class="b--navMenu l--stack">
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 1</a>
   </li>
-  <li class="c--navMenu_item">
-    <a class="c--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 2</a>
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 2</a>
   </li>
   ...
 </ul>
@@ -86,7 +86,7 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
 
 ## How to use
 
-`@lism-css/ui` パッケージで`NavMenu`(`c--navMenu`)として提供しています。
+`@lism-css/ui` パッケージで`NavMenu`(`b--navMenu`)として提供しています。
 
 
 ### Import
@@ -98,8 +98,8 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
 
 | プロパティ | 説明 |
 |---|---|
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | `--hov-bgc`を出力します。（`c--navMenu_link`に`-hov:-bgc`を付けた時用）|
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | `--hov-c`を出力します。 （`c--navMenu_link`に`-hov:-c`を付けた時用）|
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | `--hov-bgc`を出力します。（`b--navMenu_link`に`-hov:-bgc`を付けた時用）|
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | `--hov-c`を出力します。 （`b--navMenu_link`に`-hov:-c`を付けた時用）|
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | `--_item-p`変数を出力します。各リンクのpaddingを一括で調整できます。|
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。デフォルトで`-bgc`が付与され、hover時に背景色が変化します。 |
 

@@ -55,13 +55,13 @@ Only interaction behavior is provided — visual styling is intentionally left f
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
-<div class="c--tabs">
-  <div class="c--tabs_list" role="tablist">
-    <button class="c--tabs_tab set--plain" role="tab" aria-controls="{id}-1" aria-selected="true">Tab 1</button>
-    <button class="c--tabs_tab set--plain" role="tab" aria-controls="{id}-2" aria-selected="false">Tab 2</button>
+<div class="b--tabs">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" role="tab" aria-controls="{id}-1" aria-selected="true">Tab 1</button>
+    <button class="b--tabs_tab set--plain" role="tab" aria-controls="{id}-2" aria-selected="false">Tab 2</button>
   </div>
-  <div class="c--tabs_panel" id="{id}-1" role="tabpanel" aria-hidden="false">...Contents...</div>
-  <div class="c--tabs_panel" id="{id}-2" role="tabpanel" aria-hidden="true">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-hidden="false">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-hidden="true">...Contents...</div>
 </div>
 ```
   </PreviewCode>
@@ -97,10 +97,10 @@ Provided as `Tabs` from the `@lism-css/ui` package.
 
 | Prop | Description |
 |---|---|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `c--tabs--{variant}` class. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `b--tabs--{variant}` class. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used as the value for `aria-controls` to identify each tab. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`c--tabs_list`) wrapping the tab buttons. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`b--tabs_list`) wrapping the tab buttons. |
 
 {/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | Specifies the tab label text. | */}
 
@@ -155,9 +155,9 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
 
 ### Side-by-side tab layout
 
-Setting `grid-template: 'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`c--tabs`) places the tab list and content side by side.
+Setting `grid-template: 'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`b--tabs`) places the tab list and content side by side.
 
-At the same time, changing the tab list (`c--tabs_list`) buttons to stack vertically (`flex-direction: column;`) achieves the following layout.
+At the same time, changing the tab list (`b--tabs_list`) buttons to stack vertically (`flex-direction: column;`) achieves the following layout.
 
 <Preview>
   <PreviewTitle>Example: side-by-side layout on `@sm` and above</PreviewTitle>
@@ -207,12 +207,12 @@ At the same time, changing the tab list (`c--tabs_list`) buttons to stack vertic
 
 ### Style variation examples
 
-`c--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are handy for styling.
+`b--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are handy for styling.
 (They can be used in the same way as `--_isHov` and `--_notHov` from [`set--hov`](/en/docs/property-class/hov#set--hov).)
 
 Here are a few styling examples.
 
-#### `c--tabs--line`
+#### `b--tabs--line`
 
 <PreviewTitle>Required additional CSS</PreviewTitle>
 <SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-line.css" />
@@ -256,7 +256,7 @@ Here are a few styling examples.
   </PreviewCode>
 </Preview>
 
-#### `c--tabs--emboss`
+#### `b--tabs--emboss`
 
 <PreviewTitle>Required additional CSS</PreviewTitle>
 <SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />

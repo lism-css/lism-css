@@ -49,13 +49,13 @@ A component for displaying modals using the `dialog` element.
     ```html '"modal-01"'
     <button class="-bd -px:15 -py:5 -bdrs:10 set--plain -hov:-o -d:inline-flex" data-modal-open="modal-01">Open Modal 01</button>
 
-    <dialog class="c--modal set--plain is--wrapper is--container -p:30" id="modal-01">
-      <div class="c--modal_inner l--stack -pos:relative -p:30 -bdrs:20 -bxsh:40">
+    <dialog class="b--modal set--plain is--wrapper is--container -p:30" id="modal-01">
+      <div class="b--modal_inner l--stack -pos:relative -p:30 -bdrs:20 -bxsh:40">
         <button class="set--plain -hov:-o -d:inline-flex -pos:absolute -t:0 -r:0 -z:1 -fz:xl -p:10 -m:15" data-modal-close="modal-01" autofocus>
           <svg class="a--icon" aria-hidden="true">...</svg>
           <span class="u--srOnly">Close</span>
         </button>
-        <div class="c--modal_body l--stack u--trimAll -g:30">
+        <div class="b--modal_body l--stack u--trimAll -g:30">
           <div class="-fz:xl -fw:bold">Modal Title</div>
           <p>...Contents...</p>
         </div>
@@ -100,7 +100,7 @@ Provided as `Modal` from the `@lism-css/ui` package.
 
 | Prop | Description |
 |---|---|
-|`id`| The `id` attribute is required on Modal (`c--modal`). |
+|`id`| The `id` attribute is required on Modal (`b--modal`). |
 |<PropBadge>`<Modal.Root>`</PropBadge><br/> `duration`| Sets the duration of the modal open/close animation. Output as the `--duration` variable. |
 |<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| Specifies the layout component for `__inner`. |
 |<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| Offset value to shift the position of `__inner` when hidden. |
@@ -110,11 +110,11 @@ Provided as `Modal` from the `@lism-css/ui` package.
 
 ## Examples
 
-{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`c--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
+{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`b--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
 
 {/* モーダルコンテンツを中央に寄せたい場合、l--stack + jc="center" か、 root:l--stack + inner:m='auto' で実現できます。 */}
 
-`c--modal_body` is a scrollable area with `overflow:auto`. Place any content that should always remain visible before or after it.
+`b--modal_body` is a scrollable area with `overflow:auto`. Place any content that should always remain visible before or after it.
 
 <Preview>
   <PreviewTitle>`Modal` example</PreviewTitle>
@@ -180,8 +180,8 @@ Provided as `Modal` from the `@lism-css/ui` package.
     ```html '"modal-02"'
     <button class="-bd -px:15 -py:5 -bdrs:10 set--plain -hov:-o -d:inline-flex" data-modal-open="modal-02">Open Modal 02</button>
 
-    <dialog class="c--modal set--plain is--wrapper is--container -px:30 -py:50 -contentSize:s" id="modal-02">
-      <div class="c--modal_inner l--stack -max-h:100% -bdrs:20 -bxsh:40">
+    <dialog class="b--modal set--plain is--wrapper is--container -px:30 -py:50 -contentSize:s" id="modal-02">
+      <div class="b--modal_inner l--stack -max-h:100% -bdrs:20 -bxsh:40">
         <div class="l--flex -ai:center -jc:between -py:15 -bd-b">
           <span class="-fz:l -fw:bold -hl:s -ms:30">Modal Header</span>
           <button class="set--plain -hov:-o -d:inline-flex -fz:xl -p:15 -mx:15" data-modal-close="modal-02" autofocus>
@@ -189,7 +189,7 @@ Provided as `Modal` from the `@lism-css/ui` package.
             <span class="u--srOnly">Close</span>
           </button>
         </div>
-        <div class="c--modal_body l--flow -px:30 -py:20 -ov-y:auto">
+        <div class="b--modal_body l--flow -px:30 -py:20 -ov-y:auto">
           ...Contents...
           <ul>
             <li>Lorem ipsum dolor sit amet.</li>
@@ -275,8 +275,8 @@ Provided as `Modal` from the `@lism-css/ui` package.
       <span>MENU</span>
     </button>
 
-    <dialog class="c--modal set--plain" id="modal-03">
-      <div class="c--modal_inner l--stack -max-w -h:100% -bxsh:40" style="--offset:-100px 0;--max-w:24rem">
+    <dialog class="b--modal set--plain" id="modal-03">
+      <div class="b--modal_inner l--stack -max-w -h:100% -bxsh:40" style="--offset:-100px 0;--max-w:24rem">
         <div class="l--flex -bd-b -ai:center -jc:between -p:20">
           <span class="-fz:l">MENU</span>
           <button class="set--plain -hov:-o -d:inline-flex -fz:xl -p:5" data-modal-close="modal-03" autofocus>
@@ -284,7 +284,7 @@ Provided as `Modal` from the `@lism-css/ui` package.
             <span class="u--srOnly">Close</span>
           </button>
         </div>
-        <div class="c--modal_body -ov-y:auto">
+        <div class="b--modal_body -ov-y:auto">
           <div class="l--stack u--divide -bd-b">
             <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link01">Menu item 1</a>
             <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link02">Menu item 2</a>

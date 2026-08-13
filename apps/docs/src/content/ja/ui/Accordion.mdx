@@ -61,21 +61,21 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
-<div class="c--accordion l--stack">
-  <div class="c--accordion_item">
-    <div class="c--accordion_heading set--plain" role="heading">
-      <button class="c--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between -p:20" aria-controls="{id}" aria-expanded="false">
+<div class="b--accordion l--stack">
+  <div class="b--accordion_item">
+    <div class="b--accordion_heading set--plain" role="heading">
+      <button class="b--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between -p:20" aria-controls="{id}" aria-expanded="false">
         Accordion Example 1
-        <span class="c--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
+        <span class="b--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
       </button>
     </div>
-    <div class="c--accordion_panel -pos:relative -ov:hidden" id="{id}" hidden="until-found">
-      <div class="c--accordion_content l--flow -p:20 -pt:5">
+    <div class="b--accordion_panel -pos:relative -ov:hidden" id="{id}" hidden="until-found">
+      <div class="b--accordion_content l--flow -p:20 -pt:5">
         ...Contents...
       </div>
     </div>
   </div>
-  <div class="c--accordion_item -bd-t">
+  <div class="b--accordion_item -bd-t">
     ...
   </div>
 </div>
@@ -183,12 +183,12 @@ Accordion のベーススタイルは、以下のCSSで定義されています�
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
   ```html "h3"
-  <div class="c--accordion l--stack">
-    <div class="c--accordion_item">
-      <h3 class="c--accordion_heading set--plain">
-        <button class="c--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between" aria-controls="{id}" aria-expanded="false">
+  <div class="b--accordion l--stack">
+    <div class="b--accordion_item">
+      <h3 class="b--accordion_heading set--plain">
+        <button class="b--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between" aria-controls="{id}" aria-expanded="false">
           Accordion Label
-          <span class="c--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
+          <span class="b--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
         </button>
       </h3>
       ...
@@ -243,9 +243,9 @@ Accordion のベーススタイルは、以下のCSSで定義されています�
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html "--duration"
-<div class="c--accordion l--stack" style="--duration: 0.15s">
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
+<div class="b--accordion l--stack" style="--duration: 0.15s">
+  <div class="b--accordion_item">...</div>
+  <div class="b--accordion_item">...</div>
 </div>
 ```
   </PreviewCode>
@@ -307,12 +307,12 @@ Accordion のベーススタイルは、以下のCSSで定義されています�
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html "data-opened"
-<div class="c--accordion l--stack">
-  <div class="c--accordion_item" data-opened>
+<div class="b--accordion l--stack">
+  <div class="b--accordion_item" data-opened>
     <!-- button: aria-expanded="true" / panel: hidden なし -->
     ...
   </div>
-  <div class="c--accordion_item">...</div>
+  <div class="b--accordion_item">...</div>
 </div>
 ```
   </PreviewCode>
@@ -381,10 +381,10 @@ Accordion のベーススタイルは、以下のCSSで定義されています�
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html "data-allow-multiple"
-<div class="c--accordion l--stack" data-allow-multiple>
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
+<div class="b--accordion l--stack" data-allow-multiple>
+  <div class="b--accordion_item">...</div>
+  <div class="b--accordion_item">...</div>
+  <div class="b--accordion_item">...</div>
 </div>
 ```
   </PreviewCode>
