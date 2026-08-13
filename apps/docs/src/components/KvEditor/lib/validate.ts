@@ -8,7 +8,8 @@
 /** エディターの最大入力文字数 */
 export const MAX_CODE_LENGTH = 2_000;
 
-const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'source', 'track', 'wbr']);
+/** 終了タグを持たない void 要素（convert.ts の自己閉じ出力と定義を共有する） */
+export const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'source', 'track', 'wbr']);
 
 // 中身をタグとして解釈しない raw text 要素（<textarea> 内の a < b 等を誤検知しないよう閉じタグまでスキップする）
 const RAW_TEXT_TAGS = new Set(['script', 'style', 'textarea', 'title']);

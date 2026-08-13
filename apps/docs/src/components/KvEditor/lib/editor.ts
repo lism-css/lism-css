@@ -7,7 +7,7 @@
 import { getRootLang, isValidLang } from '@/lib/i18n';
 import { INITIAL_HTML_BY_LANG, type DemoLang } from '../initial-code';
 import { SCENARIO_BY_LANG } from '../scenario';
-import { htmlToJsx, jsxToHtml } from './convert';
+import { escapeText, htmlToJsx, jsxToHtml } from './convert';
 import { sanitize } from './sanitize';
 import { MAX_CODE_LENGTH, findHtmlIssue } from './validate';
 import { createSnackbar } from './snackbar';
@@ -17,8 +17,6 @@ import { createPlayer } from './player';
 
 // 構文チェックはタイピングが止まってから評価する（タグの書きかけを即エラー扱いしないため）
 const SYNTAX_CHECK_DEBOUNCE_MS = 800;
-
-const escapeHtml = (text: string): string => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // 末尾が改行だと pre 側で最終行が潰れて textarea とズレるため、空白でパディングする
 const padTrailingNewline = (code: string): string => (code.endsWith('\n') ? `${code} ` : code);
@@ -183,18 +181,21 @@ export function initKvEditor(): void {
   const renderHighlight = (): void => {
     const code = padTrailingNewline(textarea.value);
     const out = highlightSyncFn?.(code, state.activeTab) ?? null;
-    preInner.innerHTML = out ?? `<span class="fallback">${escapeHtml(code)}</span>`;
+    preInner.innerHTML = out ?? `<span class="fallback">${escapeText(code)}</span>`;
     // innerHTML 差し替え後もスクロール位置を必ず一致させる
     syncScroll();
   };
 
   // 初期表示はSSR済みなので、shiki本体はアイドル時に読み込む
   const loadHighlighter = (): void => {
-    void import('./highlight').then(async (mod) => {
-      await mod.preloadHighlighter();
-      highlightSyncFn = mod.highlightSync;
-      renderHighlight();
-    });
+    void import('./highlight')
+      .then(async (mod) => {
+        await mod.preloadHighlighter();
+        highlightSyncFn = mod.highlightSync;
+        renderHighlight();
+      })
+      // 読み込み失敗（再デプロイ後の古いチャンク・オフライン等）はプレーンテキスト表示のまま続行する
+      .catch(() => {});
   };
   if ('requestIdleCallback' in window) {
     requestIdleCallback(loadHighlighter);

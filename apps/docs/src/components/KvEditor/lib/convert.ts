@@ -1,6 +1,6 @@
 // HTML（素のタグ + Lism Property Class）と JSX（Lism React コンポーネント表記）の双方向変換。
 // KVエディターデモ専用の軽量実装で、lism-css の実行時ロジックは import しない
-// （PROPS は純データのテーブルなのでクライアントバンドルに React を持ち込まない）。
+// （PROPS / TOKENS / BREAK_POINTS は純データなのでクライアントバンドルに React を持ち込まない）。
 //
 // 対応範囲（仕様）:
 // - `-prop:val` クラス ⇔ `prop="val"` （prop が PROPS テーブルに存在するもののみ）
@@ -18,7 +18,8 @@
 // - 上記以外のタグで Lism prop クラスを持つもの ⇔ <Lism as="tag">
 // - 変換できないクラスは className として保持
 // - 属性の正準形: HTML は class → style → その他、JSX は level/as → props → className → style → その他
-import { PROPS, TOKENS } from 'lism-css/config';
+import { BREAK_POINTS, PROPS, TOKENS } from 'lism-css/config';
+import { VOID_TAGS } from './validate';
 
 const LAYOUT_CLASS_TO_COMPONENT: Record<string, string> = {
   'l--stack': 'Stack',
@@ -30,8 +31,6 @@ const COMPONENT_TO_LAYOUT_CLASS: Record<string, string> = {
   Flex: 'l--flex',
   Box: 'l--box',
 };
-
-const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'source', 'track', 'wbr']);
 
 // 単一テキスト子を1行にまとめる際の行長上限（インデント込み）
 const INLINE_MAX_LENGTH = 80;
@@ -46,7 +45,8 @@ const parsePropToken = (token: string): [string, string] | null => {
   return [key, value];
 };
 
-const escapeText = (text: string): string => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+/** テキストノード用のエスケープ（editor.ts のハイライト前プレーンテキスト描画とも共有する） */
+export const escapeText = (text: string): string => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const escapeAttr = (value: string): string => escapeText(value).replace(/"/g, '&quot;');
 
 /** 属性の文字列表現 `name="value"` */
@@ -77,10 +77,10 @@ interface BpExpansion {
   styleDecls: StyleDecl[];
 }
 
-// 配列記法 [base, sm, md, lg, xl] の BP キー順（本物の config/defaults/breakpoints.ts の
-// BREAK_POINTS と同じ公開契約）。`lism-css/config` の BREAK_POINTS re-export はビルドの
-// tree-shaking で消えることがあるため、import せずここで直接定義する
-const BP_KEYS: readonly string[] = ['sm', 'md', 'lg', 'xl'];
+// 配列記法 [base, sm, md, lg, xl] の BP キー順。本物の定義（config/defaults/breakpoints.ts の
+// BREAK_POINTS）が位置の公開契約そのものなので、そのまま使う
+// （indexOf に任意の文字列を渡せるよう、タプル型から readonly string[] に広げる）
+const BP_KEYS: readonly string[] = BREAK_POINTS;
 
 // PROPS / TOKENS から参照するのは bp（レスポンシブ対応可否）と token（値変換の種別）のみ
 const propToken = (key: string): string | undefined => {
@@ -95,8 +95,8 @@ const tokenCatalogHas = (token: string, key: string): boolean => {
   return typeof map === 'object' && map !== null && Object.hasOwn(map, key);
 };
 
-/** `-fz_md` のような BP クラス */
-const BP_CLASS_RE = /^-([a-zA-Z][a-zA-Z-]*)_(sm|md|lg|xl)$/;
+/** `-fz_md` のような BP クラス（BP キーは BP_KEYS から導出する） */
+const BP_CLASS_RE = new RegExp(`^-([a-zA-Z][a-zA-Z-]*)_(${BP_KEYS.join('|')})$`);
 
 /** 文字列が数値表記そのもののときだけ number にする（'020' や '1e3' は文字列のまま） */
 const maybeNumber = (value: string): string | number => {

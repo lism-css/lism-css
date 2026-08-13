@@ -86,7 +86,8 @@ const applyEdits = (code: string, edits: [from: string, to: string][]): string =
     if (count !== 1) {
       throw new Error(`scenario edit target must match exactly once (found ${count}): "${from}"`);
     }
-    return acc.replace(from, to);
+    // 置換文字列内の `$&` 等が展開されないよう関数形式で渡す
+    return acc.replace(from, () => to);
   }, code);
 
 // 初期コードから各ステップの resultCode を順に導出する（resultCode は全文かつ累積）。
