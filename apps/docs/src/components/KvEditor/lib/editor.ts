@@ -383,7 +383,6 @@ export function initKvEditor(): void {
 
   // ---- 構文チェック・空チェック（デバウンス評価 → スナックバー） -------------
   let syntaxTimer: ReturnType<typeof setTimeout> | undefined;
-  let jsxInvalidNow = false; // onInput での即時判定結果（デバウンス時に再パースしないため）
   let syntaxReported = false; // 正常→不正の遷移時だけ表示する（不正のまま連発させない）
   let emptyPromptShown = false; // 空提案スナックバーの表示中フラグ（入力再開で即時に消すため）
   // 実体は後段で定義（setCode に依存するため）。呼び出しはデバウンス発火時なので初期化済み
@@ -416,7 +415,8 @@ export function initKvEditor(): void {
         setTextareaInvalid(issue !== null);
         setHtmlInvalid(issue !== null);
       } else {
-        issue = jsxInvalidNow ? STRINGS.invalidJsx : null;
+        // JSXタブの invalid 表示は processInput で即時に付けているので、ここはスナックバー用の再判定のみ
+        issue = jsxToHtml(textarea.value) === null ? STRINGS.invalidJsx : null;
       }
       if (issue && !syntaxReported) snackbar?.show(issue);
       syntaxReported = issue !== null;
@@ -426,7 +426,6 @@ export function initKvEditor(): void {
   const resetSyntaxCheck = (): void => {
     clearTimeout(syntaxTimer);
     syntaxReported = false;
-    jsxInvalidNow = false;
     emptyPromptShown = false;
     setTextareaInvalid(false);
     setHtmlInvalid(false);
@@ -448,7 +447,6 @@ export function initKvEditor(): void {
       state.stale.jsx = true;
     } else {
       const converted = jsxToHtml(text);
-      jsxInvalidNow = converted === null;
       if (converted === null) {
         // 不正なJSXの間は last-good モデルを維持する
         setJsxInvalid(true);
@@ -487,7 +485,6 @@ export function initKvEditor(): void {
     // 元のタブへ戻ったとき、保持していた生テキストが不正なままなら warning 表示を復元する
     // （モデルから再生成したテキストは常に有効＝プリンタ出力なので再評価不要。resetSyntaxCheck 後に行うこと）
     if (tab === 'jsx' && !regenerated && jsxToHtml(textarea.value) === null) {
-      jsxInvalidNow = true;
       setJsxInvalid(true);
       setTextareaInvalid(true);
     }
