@@ -3,9 +3,22 @@
     --c: var(--base);
     --bgc: var(--text);
     --bdc: transparent;
+    --bdw: 1px;
+    --hl: var(--hl--xs);
+
+    display: inline-flex;
     color: var(--c);
     background-color: var(--bgc);
-    border: solid 1px var(--bdc); /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
+    font-size: var(--fz--xs);
+    padding: 0.25em 0.5em;
+    gap: 0.375em;
+    border-radius: var(--bdrs--99);
+
+    /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
+    border: solid var(--bdw) var(--bdc);
+
+    /* u--cboxと併用した時に関連する変数 */
+    --cbox-cPct: 75%;
   }
   .b--badge--outline {
     --c: var(--text);
