@@ -29,6 +29,8 @@
     }
     p {
       color: #333;
+      // 和文の既定。欧文は下の html[lang='en'] で詰める（SP / PC 共通）
+      line-height: 1.75;
     }
 
     // 検索ボックスの色と影。どちらも Lism トークンクラスでは表現できない任意値なので、
@@ -85,14 +87,11 @@
     }
   }
 
-  // 英語トップ専用の調整（置き換え前の [lang]/index.astro 静的ヒーロー準拠）。
-  // エディター内容（INITIAL_HTML_BY_LANG）は言語間で構造を揃え、言語差のスタイルはここで吸収する
+  // 英語トップ専用の調整。エディター内容（INITIAL_HTML_BY_LANG）は言語間で構造を揃え、
+  // 言語差のスタイルはここで吸収する
   html[lang='en'] .c--kvEditorHero {
     p {
-      line-height: 1.75; // 旧ヒーローの --lh--l 相当（≥800px）
-      @media not (min-width: 800px) {
-        line-height: 1.5; // 旧ヒーローの --lh--base 相当
-      }
+      line-height: 1.5;
     }
   }
 
