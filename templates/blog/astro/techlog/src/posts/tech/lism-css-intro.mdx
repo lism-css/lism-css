@@ -15,7 +15,7 @@ Lism CSS は、ユーティリティクラスとコンポーネント、デザ�
 
 ## CSS Layers
 
-Lism CSS のスタイルは複数の `@layer` に分かれて配置されており、レイヤの宣言順がそのまま優先度になる。`lism-base` → `lism-component` → `lism-utility` の順で重ねられているため、詳細度を気にせず Property Class で上書きできる。
+Lism CSS のスタイルは複数の `@layer` に分かれて配置されており、レイヤの宣言順がそのまま優先度になる。`lism-base` → `lism-custom` → `lism-utility` の順で重ねられているため、詳細度を気にせず Property Class で上書きできる。
 
 カスタム CSS を追加する際も、用途に合わせていずれかのレイヤに乗せる。
 
@@ -28,7 +28,7 @@ Lism CSS のスタイルは複数の `@layer` に分かれて配置されてお�
   }
 }
 
-@layer lism-component {
+@layer lism-custom {
   .c--postList > li {
     border-block-end: 1px solid var(--divider);
   }
@@ -98,16 +98,16 @@ import { Stack, Flex, Heading, Text } from 'lism-css/astro';
 
 ステート切替（active 等）やバリエーションには使わない。状態は `data-*` 属性、バリエーションは `c--{name}--{variant}` の BEM Modifier で表現する。
 
-## コンポーネントクラス（c--）
+## カスタムクラス（c--）
 
-プロジェクト固有のコンポーネントは `c--{name}` プレフィックスのクラスで定義する。Property Class で書ける宣言はマークアップに移し、CSS には擬似クラス・状態切替・子孫セレクタなど CSS でしか書けない宣言だけを残す。
+プロジェクト固有の要素やコンポーネントには `c--{name}` プレフィックスのカスタムクラスを定義する。Property Class で書ける宣言はマークアップに移し、CSS には擬似クラス・状態切替・子孫セレクタなど CSS でしか書けない宣言だけを残す。
 
 ```html
 <span class="c--tag -fz:xs -px:10 -py:5 -bgc:base-2 -bdrs:10">React</span>
 ```
 
 ```css
-@layer lism-component {
+@layer lism-custom {
   .c--tag:hover {
     background-color: var(--divider);
   }
