@@ -97,7 +97,6 @@ const mvLayeredKeyframesStyle = `@layer lism-custom {
 
 /**
  * 左右の高さ: Grid の `ai` stretch + 右列 `Flex` 内 `fx:1` の img（`min-h:0`）。
- * 旧実装: `syncAboutRightMaxHeight` + `--c--ryokan-about-right-max-h`（復元は git 履歴参照）
  */
 
 const aboutImgLeft = {
@@ -138,7 +137,7 @@ const feature2Bg = {
   height: 1080,
 } as const;
 
-/** 各要素の `src` に任意の画像URLを直指定（下記は従来どおりのプレースホルダー）。 */
+/** 各要素の `src` に任意の画像URLを直指定（下記はプレースホルダー）。 */
 const feature2GalleryPhotos = [
   { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-a', alt: '富士と朝焼けの風景' },
   { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-b', alt: '日本の山並みと雲海' },
@@ -555,7 +554,7 @@ const reservationSites: readonly SiteCard[] = [
           </Lism>
         </Stack>
       </Container>
-      <!-- MV の動的 @keyframes はマージで抽出されないため、元コンポーネントと同じ set:html を明示注入 -->
+      <!-- MV の動的 @keyframes はマージで抽出されないため、set:html で明示注入 -->
       <style set:html={mvLayeredKeyframesStyle}></style>
 
       <Lism as="section" id="about" class="c--ryokan-about" isContainer pbs="60" pbe="60" bgc="black" c="white">
