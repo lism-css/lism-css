@@ -90,13 +90,13 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Avatar/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar)
 
-アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`c--avatar` クラスが付与される。
+アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`b--avatar` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
 | `src` | `string` | — | 画像URL |
 | `alt` | `string` | — | 代替テキスト |
-| `size` | `string` | `'1.5em'` | アバターのサイズ |
+| `size` | `string` | `'2em'` | アバターのサイズ |
 
 ```jsx
 <Avatar src='/avatar.jpg' alt='User' size='48px' />
