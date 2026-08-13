@@ -383,6 +383,9 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
       status = 'done';
       setPlayButtonsStopLabel(false);
       announce(STRINGS.done);
+      // デモが書き換えたコードを戻せるよう、リセット提案を出す
+      // （最後の snapTo が通知を消しているので、ここで出し直す）
+      editor.syncRestorePrompt();
     } catch (e) {
       // 中断: エディターは書きかけの状態をそのまま残す（仕様）。
       // 入力欄はプレースホルダーへ戻し、チャットへ Resume の導線を出す。

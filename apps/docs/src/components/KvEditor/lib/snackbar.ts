@@ -19,8 +19,10 @@ const TRANSITION_FALLBACK_MS = 350;
 export interface Snackbar {
   /** 自動クローズの通知を表示する */
   show(message: string): void;
-  /** アクションボタン付きの提案を表示する（hide されるまで消えない） */
-  showAction(message: string, buttonLabel: string, onAction: () => void): void;
+  /** ボタンだけの提案を表示する（hide されるまで消えない） */
+  showAction(buttonLabel: string, onAction: () => void): void;
+  /** アクション付きの提案だけを閉じる（警告の行は残す） */
+  hideAction(): void;
   hide(): void;
 }
 
@@ -108,14 +110,20 @@ export function createSnackbar(container: HTMLElement): Snackbar {
     });
   };
 
-  const createEl = (message: string, button?: HTMLButtonElement): Item => {
+  const createEl = (message: string, button?: HTMLButtonElement, isAction = false): Item => {
     const row = document.createElement('div');
     row.className = 'c--kvEditor_snackbarRow';
     const card = document.createElement('div');
     card.className = 'c--kvEditor_snackbar';
-    const text = document.createElement('span');
-    text.textContent = message;
-    card.appendChild(text);
+    // variant は余白や枠を変えるため、入場アニメの目標高さを測る前に付けておくこと
+    // （後から付けると、測った高さと実際の高さがずれて一度伸びてから縮む）
+    if (isAction) card.classList.add('is--action');
+    // 提案（showAction）は文言を持たずボタンだけを置く
+    if (message) {
+      const text = document.createElement('span');
+      text.textContent = message;
+      card.appendChild(text);
+    }
     if (button) card.appendChild(button);
     row.appendChild(card);
     container.appendChild(row);
@@ -155,16 +163,17 @@ export function createSnackbar(container: HTMLElement): Snackbar {
     items.set(message, item);
   };
 
-  const showAction = (message: string, buttonLabel: string, onAction: () => void): void => {
+  const showAction = (buttonLabel: string, onAction: () => void): void => {
     const existing = items.get(ACTION_KEY);
-    // 畳んでいる最中の同じ提案なら、積み直さず元へ戻す
-    // （タブ切替のように「消してすぐ出し直す」経路で二重に見えるのを防ぐ）
-    if (existing?.exiting && existing.message === message && existing.buttonLabel === buttonLabel) {
+    // 同じボタンなら作り直さず、そのまま出し続ける。
+    // 編集のたびに評価が走る呼び出し元があるため、積み直すと表示が点滅してしまう。
+    // 畳んでいる最中（タブ切替のように「消してすぐ出し直す」経路）なら元へ戻す
+    if (existing && existing.buttonLabel === buttonLabel) {
       existing.onAction = onAction;
-      revive(existing);
+      if (existing.exiting) revive(existing);
       return;
     }
-    // 内容の異なる既存のアクション提案は即時に差し替える（シングルトン）
+    // ボタンの異なる既存の提案は即時に差し替える（シングルトン）
     if (existing) {
       clearTimeout(existing.timer);
       // 入場 rAF が未発火なら取り消してから取り除く（発火すると height を再設定して一瞬ゾンビ化するため）
@@ -177,18 +186,19 @@ export function createSnackbar(container: HTMLElement): Snackbar {
     button.type = 'button';
     button.className = 'c--kvEditor_snackbar_btn';
     button.textContent = buttonLabel;
-    const item = createEl(message, button);
+    const item = createEl('', button, true);
     item.buttonLabel = buttonLabel;
     item.onAction = onAction;
     // 復帰時に差し替えられるよう item 経由で呼ぶ（リスナーは張り直さない）
     button.addEventListener('click', () => item.onAction?.());
-    item.card.classList.add('is--action');
     items.set(ACTION_KEY, item);
   };
+
+  const hideAction = (): void => remove(ACTION_KEY);
 
   const hide = (): void => {
     for (const key of [...items.keys()]) remove(key);
   };
 
-  return { show, showAction, hide };
+  return { show, showAction, hideAction, hide };
 }

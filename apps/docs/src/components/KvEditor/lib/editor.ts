@@ -35,6 +35,8 @@ export interface EditorApi {
   revealPosition(line: number, linePrefix: string): boolean;
   /** 保留中の構文チェック（デバウンス評価）と表示中の通知を破棄する */
   resetSyntaxCheck(): void;
+  /** 初期コードから変わっているかを評価し、リセット提案を出し入れする */
+  syncRestorePrompt(): void;
   textarea: HTMLTextAreaElement;
   tabButtons: HTMLButtonElement[];
 }
@@ -402,26 +404,40 @@ export function initKvEditor(): void {
   // ---- 構文チェック・空チェック（デバウンス評価 → スナックバー） -------------
   let syntaxTimer: ReturnType<typeof setTimeout> | undefined;
   let syntaxReported = false; // 正常→不正の遷移時だけ表示する（不正のまま連発させない）
-  let emptyPromptShown = false; // 空提案スナックバーの表示中フラグ（入力再開で即時に消すため）
   // 実体は後段で定義（setCode に依存するため）。呼び出しはデバウンス発火時なので初期化済み
   let restoreInitialCode: () => void = () => {};
 
-  // 空提案（ボタン付き・入力再開かリセットまで表示）。タブ切替でも維持するため関数化
-  const showEmptyPrompt = (): void => {
-    snackbar?.showAction(STRINGS.emptyEditor, STRINGS.restoreInitialCode, () => restoreInitialCode());
-    emptyPromptShown = true;
-    syntaxReported = false;
+  // 初期コードのタブ別の表示テキスト。JSX 版は初回参照時にだけ変換する
+  let initialJsxText: string | null = null;
+  const initialViewText = (): string => {
+    if (state.activeTab === 'html') return initialHtml;
+    initialJsxText ??= htmlToJsx(initialHtml);
+    return initialJsxText;
+  };
+  /** 表示中のコードが初期コードから変わっているか（空も「変更あり」に含まれる） */
+  const isModified = (): boolean => textarea.value !== initialViewText();
+
+  // リセット提案（ボタンのみ・初期コードへ戻すまで表示）。タブ切替でも維持するため関数化
+  const showRestorePrompt = (): void => {
+    snackbar?.showAction(STRINGS.restoreInitialCode, () => restoreInitialCode());
+  };
+
+  /** 変更の有無に応じてリセット提案を出し入れする（構文警告の行とは独立して積まれる） */
+  const syncRestorePrompt = (): void => {
+    if (isModified()) showRestorePrompt();
+    else snackbar?.hideAction();
   };
 
   const scheduleSyntaxCheck = (): void => {
     clearTimeout(syntaxTimer);
     syntaxTimer = setTimeout(() => {
-      // 空になったらリセット提案（ボタン付き・入力再開かリセットまで表示）
+      // 空になったらリセット提案（ボタン付き・初期コードへ戻すまで表示）
       if (textarea.value.trim() === '') {
-        // 空は構文エラーではない
+        // 空は構文エラーではないので、警告表示は消し、次に不正になったら改めて知らせる
         setTextareaInvalid(false);
         setHtmlInvalid(false);
-        showEmptyPrompt();
+        syntaxReported = false;
+        showRestorePrompt();
         return;
       }
       // 表示は端的に（findHtmlIssue の詳細理由はテスト・デバッグ用で、表示には使わない）
@@ -438,6 +454,8 @@ export function initKvEditor(): void {
       }
       if (issue && !syntaxReported) snackbar?.show(issue);
       syntaxReported = issue !== null;
+      // 初期コードから変わっていればリセット提案を出す（構文警告とは別の行として共存する）
+      syncRestorePrompt();
     }, SYNTAX_CHECK_DEBOUNCE_MS);
   };
   // タブ切替・プログラム的な書き換え時は評価を破棄する（古いメッセージの誤表示防止）。
@@ -445,7 +463,6 @@ export function initKvEditor(): void {
   const resetSyntaxCheck = (): void => {
     clearTimeout(syntaxTimer);
     syntaxReported = false;
-    emptyPromptShown = false;
     setTextareaInvalid(false);
     setHtmlInvalid(false);
     setJsxInvalid(false);
@@ -455,11 +472,7 @@ export function initKvEditor(): void {
   const processInput = (): void => {
     const text = textarea.value;
     state.tabText[state.activeTab] = text;
-    // 空提案の表示中に入力が再開されたら即座に閉じる（デバウンスを待たない）
-    if (emptyPromptShown && text.trim() !== '') {
-      emptyPromptShown = false;
-      snackbar?.hide();
-    }
+    // 提案の出し入れはデバウンス評価に任せる（打鍵のたびに出し直すとちらつくため）
     scheduleSyntaxCheck();
 
     if (state.activeTab === 'html') {
@@ -511,8 +524,8 @@ export function initKvEditor(): void {
       setHtmlInvalid(true);
       setTextareaInvalid(true);
     }
-    // 空のままタブを切り替えた場合は、空提案を消さずに引き継ぐ（入力があるまで常時表示）
-    if (textarea.value.trim() === '') showEmptyPrompt();
+    // 変更されたままタブを切り替えた場合は、リセット提案を消さずに引き継ぐ
+    syncRestorePrompt();
     saveSnapshot();
 
     for (const button of tabButtons) {
@@ -606,7 +619,7 @@ export function initKvEditor(): void {
     queueHighlight();
   };
 
-  // 空提案スナックバーの「Restore initial code」ボタン
+  // リセット提案スナックバーの「Restore initial code」ボタン
   // NOTE: scheduleSyntaxCheck から参照されるが、呼び出しは常に初期化完了後（デバウンス発火時）
   restoreInitialCode = (): void => {
     setCode(initialHtml);
@@ -623,6 +636,7 @@ export function initKvEditor(): void {
     setViewText,
     revealPosition,
     resetSyntaxCheck,
+    syncRestorePrompt,
     textarea,
     tabButtons,
   };
