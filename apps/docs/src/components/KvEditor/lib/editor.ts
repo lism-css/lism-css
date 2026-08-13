@@ -610,11 +610,14 @@ export function initKvEditor(): void {
 
   const messages = demo.querySelector<HTMLElement>('[data-kv-messages]');
   const placeholder = demo.querySelector<HTMLElement>('[data-kv-placeholder]');
-  const askText = demo.querySelector<HTMLElement>('[data-kv-ask-text]');
   const playButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-kv-play]')];
+  // 文言要素は再生ボタンの中にあるので、ボタンごとに引く（ボタンが増えても対応が漏れない）
+  const askTexts = playButtons
+    .map((button) => button.querySelector<HTMLElement>('[data-kv-ask-text]'))
+    .filter((el): el is HTMLElement => el !== null);
   // SR向けの隠しライブリージョン（確定文言のみを告知する）。無くても再生自体は動く
   const liveRegion = demo.querySelector<HTMLElement>('[data-kv-live]');
-  if (messages && placeholder && askText && playButtons.length > 0) {
-    createPlayer({ editor: editorApi, messages, placeholder, askText, playButtons, liveRegion, initialHtml, scenario: SCENARIO_BY_LANG[lang] });
+  if (messages && placeholder && askTexts.length > 0) {
+    createPlayer({ editor: editorApi, messages, placeholder, playButtons, askTexts, liveRegion, initialHtml, scenario: SCENARIO_BY_LANG[lang] });
   }
 }

@@ -41,8 +41,9 @@ interface PlayerOptions {
   editor: EditorApi;
   messages: HTMLElement;
   placeholder: HTMLElement;
-  askText: HTMLElement;
   playButtons: HTMLButtonElement[];
+  // 再生ボタン内の文言要素（ボタンと 1 対 1）。タイピング演出はすべてのボタンへ反映する
+  askTexts: HTMLElement[];
   // SR向けの隠しライブリージョン。null でも再生は動く（告知だけがスキップされる）
   liveRegion: HTMLElement | null;
   // 言語別のデータは editor.ts が解決して注入する（このモジュールは言語を知らない）
@@ -73,7 +74,7 @@ const sleep = (ms: number, signal: AbortSignal): Promise<void> =>
 const joinBlocks = (before: string[], middle: string, after: string[]): string =>
   [...before, ...(middle === '' ? [] : [middle]), ...after].join('\n');
 
-export function createPlayer({ editor, messages, placeholder, askText, playButtons, liveRegion, initialHtml, scenario }: PlayerOptions): void {
+export function createPlayer({ editor, messages, placeholder, playButtons, askTexts, liveRegion, initialHtml, scenario }: PlayerOptions): void {
   let status: PlayerStatus = 'idle';
   let currentStep = 0;
   let controller: AbortController | null = null;
@@ -84,7 +85,7 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
   // "Interrupted" ステータス行。再開時にこの行だけを取り除く
   let interruptedRow: HTMLElement | null = null;
   // 入力欄トリガーのプレースホルダー文言（送信・中断時にここへ戻す）
-  const askPlaceholder = askText.textContent ?? '';
+  const askPlaceholders = new Map(askTexts.map((el) => [el, el.textContent ?? '']));
 
   // MediaQueryList は 1 回だけ生成して使い回す（.matches は live なので再生中の設定変更にも追従する）
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -156,18 +157,22 @@ export function createPlayer({ editor, messages, placeholder, askText, playButto
 
   /** 入力欄トリガーに1文字ずつタイピングする（送信前の演出） */
   const typeIntoAsk = async (text: string, signal: AbortSignal): Promise<void> => {
-    askText.classList.add('is--typing');
-    askText.textContent = '';
+    for (const el of askTexts) {
+      el.classList.add('is--typing');
+      el.textContent = '';
+    }
     for (const char of text) {
-      askText.textContent += char;
+      for (const el of askTexts) el.textContent += char;
       await sleep(USER_TYPE_INTERVAL, signal);
     }
   };
 
   /** 入力欄トリガーをプレースホルダー表示に戻す */
   const resetAsk = (): void => {
-    askText.classList.remove('is--typing');
-    askText.textContent = askPlaceholder;
+    for (const el of askTexts) {
+      el.classList.remove('is--typing');
+      el.textContent = askPlaceholders.get(el) ?? '';
+    }
   };
 
   const typeMessage = async (bubble: HTMLElement, text: string, interval: number, signal: AbortSignal): Promise<void> => {
