@@ -105,7 +105,7 @@
   }
   /**
    * モーダル内ナビ: Footer と同様に `li:not(:last-child)` + `border-block-end: dashed`（`u--divide` は未使用）
-   * フッターは黒地へ `color-mix(…, var(--white) 38%, …)`。モーダルは `.c--modal_inner` の `var(--base)` 地のため `var(--text)` を使用
+   * フッターは黒地へ `color-mix(…, var(--white) 38%, …)`。モーダルは `.b--modal_inner` の `var(--base)` 地のため `var(--text)` を使用
    * @see Footer.astro / tokens.md --text / `color-mix`
    */
   .c--ryokan-header_menuNav {
@@ -470,7 +470,7 @@
   }
 
   /* UI Button のデフォルト（--text 地）を上書きし、デザインどおり白ピル＋黒字に */
-  .c--ryokan-plans_reserve.c--button {
+  .c--ryokan-plans_reserve.b--button {
     --bgc: var(--white);
     --c: var(--black);
     --bdc: var(--white);
@@ -503,10 +503,10 @@
     }
   }
 
-  .c--ryokan-faq_acc .c--accordion_item {
+  .c--ryokan-faq_acc .b--accordion_item {
     border-block-end: 1px solid var(--divider);
   }
-  .c--ryokan-faq_acc .c--accordion_item:last-of-type {
+  .c--ryokan-faq_acc .b--accordion_item:last-of-type {
     border-block-end: none;
   }
 
@@ -557,7 +557,7 @@
   }
 
   /* ピル型 FAB: UI Button のセマンティック色を上書き */
-  .c--ryokan-reservationFab.c--button {
+  .c--ryokan-reservationFab.b--button {
     --bgc: var(--black);
     --c: var(--white);
     min-width: 12rem;
