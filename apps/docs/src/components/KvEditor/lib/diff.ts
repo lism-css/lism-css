@@ -11,15 +11,29 @@ export interface CodeDiff {
   tail: string;
 }
 
+const isHighSurrogate = (code: number): boolean => code >= 0xd800 && code <= 0xdbff;
+const isLowSurrogate = (code: number): boolean => code >= 0xdc00 && code <= 0xdfff;
+
+/**
+ * サロゲートペアを割らない位置まで index を戻す。
+ * JS の文字列は UTF-16 単位なので、絵文字などの途中で切ると片割れ（U+FFFD 表示）になる
+ */
+export const charBoundary = (text: string, index: number): number =>
+  index > 0 && index < text.length && isHighSurrogate(text.charCodeAt(index - 1)) && isLowSurrogate(text.charCodeAt(index)) ? index - 1 : index;
+
 /** 共通のprefix/suffixを保持したまま差分部分だけを書き換えるためのdiff計算 */
 export const diffCode = (from: string, to: string): CodeDiff => {
   let prefix = 0;
   const maxPrefix = Math.min(from.length, to.length);
   while (prefix < maxPrefix && from[prefix] === to[prefix]) prefix++;
+  // 共通部分の末尾がサロゲートの片割れにならないよう手前へ戻す
+  prefix = charBoundary(from, prefix);
 
   let suffix = 0;
   const maxSuffix = Math.min(from.length, to.length) - prefix;
   while (suffix < maxSuffix && from[from.length - 1 - suffix] === to[to.length - 1 - suffix]) suffix++;
+  // 末尾側の切れ目が下位サロゲートから始まる場合は 1 つ縮めてペアを保つ
+  if (suffix > 0 && isLowSurrogate(from.charCodeAt(from.length - suffix))) suffix--;
 
   return {
     head: from.slice(0, prefix),

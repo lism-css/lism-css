@@ -33,6 +33,8 @@ export interface EditorApi {
   setViewText(text: string): void;
   /** 編集位置（行番号と行内の先行テキスト）を可視範囲へスクロールする。スクロールが発生したら true */
   revealPosition(line: number, linePrefix: string): boolean;
+  /** 保留中の構文チェック（デバウンス評価）と表示中の通知を破棄する */
+  resetSyntaxCheck(): void;
   textarea: HTMLTextAreaElement;
   tabButtons: HTMLButtonElement[];
 }
@@ -422,13 +424,15 @@ export function initKvEditor(): void {
       syntaxReported = issue !== null;
     }, SYNTAX_CHECK_DEBOUNCE_MS);
   };
-  // タブ切替・プログラム的な書き換え時は評価を破棄する（古いメッセージの誤表示防止）
+  // タブ切替・プログラム的な書き換え時は評価を破棄する（古いメッセージの誤表示防止）。
+  // 構文エラーの表示は両タブぶんまとめて消す（呼び出し側で片方を補わせない）
   const resetSyntaxCheck = (): void => {
     clearTimeout(syntaxTimer);
     syntaxReported = false;
     emptyPromptShown = false;
     setTextareaInvalid(false);
     setHtmlInvalid(false);
+    setJsxInvalid(false);
     snackbar?.hide();
   };
 
@@ -480,7 +484,6 @@ export function initKvEditor(): void {
       state.stale[tab] = false;
     }
     textarea.value = state.tabText[tab];
-    setJsxInvalid(false);
     resetSyntaxCheck();
     // 元のタブへ戻ったとき、保持していた生テキストが不正なままなら warning 表示を復元する
     // （モデルから再生成したテキストは常に有効＝プリンタ出力なので再評価不要。resetSyntaxCheck 後に行うこと）
@@ -566,7 +569,6 @@ export function initKvEditor(): void {
       state.stale.jsx = true;
       textarea.value = code;
     }
-    setJsxInvalid(false);
     resetSyntaxCheck();
     saveSnapshot();
     renderHero();
@@ -604,6 +606,7 @@ export function initKvEditor(): void {
     getViewText: () => textarea.value,
     setViewText,
     revealPosition,
+    resetSyntaxCheck,
     textarea,
     tabButtons,
   };

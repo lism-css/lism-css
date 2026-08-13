@@ -40,20 +40,41 @@ const IMPLIED_BY_START = new Map<string, ReadonlySet<string>>([
 // prettier-ignore
 const OMITTABLE_AT_END = new Set(['p', 'li', 'dt', 'dd', 'option', 'optgroup', 'tr', 'td', 'th', 'thead', 'tbody', 'tfoot', 'caption', 'colgroup', 'rt', 'rp']);
 
-/** 引用符内の `>` を無視してタグの終わりを探す */
-const findTagEnd = (code: string, from: number): number => {
-  let quote = '';
+/**
+ * タグの終わり `>` の位置と、自己終了スラッシュの有無を返す（見つからなければ end: -1）。
+ * 属性値の内側と外側を区別することで、値に含まれる文字を区切りと誤認しない:
+ * - `<a href=https://example.com/>` … 末尾の `/` は引用符なし値の一部（自己終了ではない）
+ * - `<div title=it's>` … 引用符なし値の中の `'` は引用符の開始ではない
+ */
+const scanTag = (code: string, from: number): { end: number; selfClosing: boolean } => {
+  let quote = ''; // 引用符付き値の中なら、その引用符
+  let inUnquoted = false; // 引用符なし値の中か
+  let afterEquals = false; // `=` を読んだ直後（値の開始待ち）
+  let selfClosing = false;
   for (let i = from; i < code.length; i++) {
     const ch = code[i];
     if (quote) {
       if (ch === quote) quote = '';
-    } else if (ch === '"' || ch === "'") {
-      quote = ch;
-    } else if (ch === '>') {
-      return i;
+      continue;
     }
+    if (inUnquoted) {
+      // 引用符なし値は空白で終わる（`>` は値の途中でもタグを閉じる）
+      if (ch === '>') return { end: i, selfClosing: false };
+      if (/\s/.test(ch)) inUnquoted = false;
+      continue;
+    }
+    if (ch === '>') return { end: i, selfClosing };
+    if (afterEquals && !/\s/.test(ch)) {
+      afterEquals = false;
+      if (ch === '"' || ch === "'") quote = ch;
+      else inUnquoted = true;
+      continue;
+    }
+    if (ch === '=') afterEquals = true;
+    // 直前の文字が `/` のまま `>` に到達したときだけ自己終了とみなす
+    selfClosing = ch === '/';
   }
-  return -1;
+  return { end: -1, selfClosing: false };
 };
 
 /**
@@ -84,7 +105,7 @@ export function findHtmlIssue(code: string): string | null {
       continue;
     }
 
-    const gt = findTagEnd(code, lt + 1);
+    const { end: gt, selfClosing } = scanTag(code, lt + 1);
     if (gt === -1) return 'incomplete tag';
 
     const raw = code.slice(lt + 1, gt);
@@ -114,7 +135,10 @@ export function findHtmlIssue(code: string): string | null {
     while (stack.length > 0 && IMPLIED_BY_START.get(stack[stack.length - 1])?.has(tag)) {
       stack.pop();
     }
-    if (raw.endsWith('/') || VOID_TAGS.has(tag)) continue;
+    if (VOID_TAGS.has(tag)) continue;
+    // 自己終了スラッシュが効くのは SVG / MathML（外来コンテンツ）だけ。
+    // HTML 要素の `<div/>` はブラウザと同じく開始タグとして扱う（`<div/>x</div>` を不正としない）
+    if (selfClosing && (tag === 'svg' || tag === 'math' || stack.includes('svg') || stack.includes('math'))) continue;
     if (RAW_TEXT_TAGS.has(tag)) {
       // raw text 要素の中身はタグとして解釈せず、対応する閉じタグまでスキップする
       const close = new RegExp(`</${tag}\\b`, 'i').exec(code.slice(i));

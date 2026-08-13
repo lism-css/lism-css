@@ -11,7 +11,7 @@
 // - prefers-reduced-motion: タイピングを省略し、結果を即時適用する
 import type { ScenarioStep } from '../scenario';
 import { htmlToJsx } from './convert';
-import { diffCode, diffLineHunks, type LineHunk } from './diff';
+import { charBoundary, diffCode, diffLineHunks, type LineHunk } from './diff';
 import type { EditorApi } from './editor';
 import { initScrollHint } from './scroll-hint';
 import { STRINGS } from './strings';
@@ -183,8 +183,10 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
     }
     // 既存テキストが目標の先頭一致なら続き（中断からの再開）、不一致（タブ切替等）なら打ち直す
     if (!text.startsWith(bubble.textContent ?? '')) bubble.textContent = '';
-    for (let i = (bubble.textContent ?? '').length; i < text.length; i++) {
-      bubble.textContent += text[i];
+    // 絵文字などのサロゲートペアを割らないよう、UTF-16 単位ではなくコードポイント単位で進める
+    const chars = [...text];
+    for (let i = [...(bubble.textContent ?? '')].length; i < chars.length; i++) {
+      bubble.textContent += chars[i];
       scrollMessages();
       await sleep(interval, signal);
     }
@@ -202,9 +204,9 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
     const scrolled = editor.revealPosition(before.length + headLines.length - 1, headLines[headLines.length - 1]);
     if (scrolled) await sleep(PAUSE_AFTER_REVEAL, signal);
 
-    // 削除フェーズ（後ろから消す）
+    // 削除フェーズ（後ろから消す）。切る位置はサロゲートペアを割らない境界へ丸める
     for (let len = removed.length - CODE_DELETE_CHUNK; len > 0; len -= CODE_DELETE_CHUNK) {
-      frame(head + removed.slice(0, len) + tail);
+      frame(head + removed.slice(0, charBoundary(removed, len)) + tail);
       await sleep(CODE_DELETE_INTERVAL, signal);
     }
     if (removed.length > 0) {
@@ -213,7 +215,7 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
     }
     // 挿入フェーズ（1文字ずつタイピング）
     for (let len = 1; len <= inserted.length; len++) {
-      frame(head + inserted.slice(0, len) + tail);
+      frame(head + inserted.slice(0, charBoundary(inserted, len)) + tail);
       await sleep(CODE_INSERT_INTERVAL, signal);
     }
   };
@@ -405,6 +407,10 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
   // 再生中のエディター操作・タブ切替で即中断する（Ask ボタンのクリックは onPlayClick 側で停止として扱う）
   editor.textarea.addEventListener('pointerdown', interrupt);
   editor.textarea.addEventListener('focus', interrupt);
+  // 再生開始時に textarea へフォーカスが残っていると focus / pointerdown は発火しない
+  // （Safari / Firefox はボタンのクリックでフォーカスを移さない）。キー入力そのものも中断トリガーにする。
+  // 再生中の書き換えは value への代入なので beforeinput は発火せず、自分の描画で中断することはない
+  editor.textarea.addEventListener('beforeinput', interrupt);
   for (const button of editor.tabButtons) {
     button.addEventListener('click', interrupt);
   }
@@ -416,6 +422,10 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
       interrupt();
       return;
     }
+
+    // 入力直後に再生を始めると、張られたままの構文チェック（デバウンス評価）がデモ中に発火して
+    // 古い判定のスナックバーを出すため、再生に入る前に破棄する
+    editor.resetSyntaxCheck();
 
     if (status === 'interrupted') {
       // "Interrupted" 行だけを取り除き、吹き出し・書きかけコードは残したまま
