@@ -11,63 +11,10 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 `dialog`要素でモーダルを表示するコンポーネントです。
 
 
-
-## How to use
-
-`@lism-css/ui` パッケージで`Modal`として提供しています。
-
-
-### Import
-
-<ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
-
-`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.CloseBtn>`が利用できます。
-
-
-### Props
-
-| プロパティ | 説明 |
-|---|---|
-|`id`| Modal(`c--modal`)にはid属性が必要です。|
-|<PropBadge>`<Modal.Root>`</PropBadge><br/> `duration`| モーダルの開閉アニメーションの時間を指定します。`--duration`変数として出力されます。|
-|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
-|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| `__inner`の非表示時の位置をずらすためのオフセット値|
-|<PropBadge>`<Modal.OpenBtn>`</PropBadge><br/> `modalId`| `data-modal-open`として出力されます。モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
-|<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
-
-
-### 基本構造
-
-```jsx
-<Modal.OpenBtn modalId="modalID">Open</Modal.OpenBtn>
-<Modal.Root id="modalID">
-  <Modal.Inner>
-    <Modal.Body>...Contents...</Modal.Body>
-    <Modal.CloseBtn modalId="modalID" />
-  </Modal.Inner>
-</Modal.Root>
-```
-
-`<Modal.Root>`に`id`をつけ、`<Modal.OpenBtn>` / `<Modal.CloseBtn>`に同じ`modalId`を指定することで、そのモーダルの開閉ボタンになります。
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal) で公開しています。
-
-
-
-## Examples
-
-- Modalは`dialog`を使用しています。display値を変更しないように注意してください。
-- `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。
-
-{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`c--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
-
-{/* モーダルコンテンツを中央に寄せたい場合、l--stack + jc="center" か、 root:l--stack + inner:m='auto' で実現できます。 */}
+## Overview
 
 <Preview>
-  <PreviewTitle>`Modal`使用例</PreviewTitle>
+  <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">
       <Fragment>Open Modal 01</Fragment>
@@ -99,15 +46,78 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-01"'
+    <button class="-bd -px:15 -py:5 -bdrs:10 set--plain -hov:-o -d:inline-flex" data-modal-open="modal-01">Open Modal 01</button>
+
+    <dialog class="c--modal set--plain is--wrapper is--container -p:30" id="modal-01">
+      <div class="c--modal_inner l--stack -pos:relative -p:30 -bdrs:20 -bxsh:40">
+        <button class="set--plain -hov:-o -d:inline-flex -pos:absolute -t:0 -r:0 -z:1 -fz:xl -p:10 -m:15" data-modal-close="modal-01" autofocus>
+          <svg class="a--icon" aria-hidden="true">...</svg>
+          <span class="u--srOnly">Close</span>
+        </button>
+        <div class="c--modal_body l--stack u--trimAll -g:30">
+          <div class="-fz:xl -fw:bold">Modal Title</div>
+          <p>...Contents...</p>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>
 
+:::note
+`<Modal.Root>`に`id`をつけ、`<Modal.OpenBtn>` / `<Modal.CloseBtn>`に同じ`modalId`を指定することで、そのモーダルの開閉ボタンになります。
+
+- Modalは`dialog`を使用しています。display値を変更しないように注意してください。
+- `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。
+:::
+
+
+## Styles
+
+Modal のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Modal/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal) で公開しています。
+:::
+
+
+## How to use
+
+`@lism-css/ui` パッケージで`Modal`として提供しています。
+
+
+### Import
+
+<ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
+
+`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.CloseBtn>`が利用できます。
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`id`| Modal(`c--modal`)にはid属性が必要です。|
+|<PropBadge>`<Modal.Root>`</PropBadge><br/> `duration`| モーダルの開閉アニメーションの時間を指定します。`--duration`変数として出力されます。|
+|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
+|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| `__inner`の非表示時の位置をずらすためのオフセット値|
+|<PropBadge>`<Modal.OpenBtn>`</PropBadge><br/> `modalId`| `data-modal-open`として出力されます。モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
+|<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
+
+
+## Examples
+
+{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`c--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
+
+{/* モーダルコンテンツを中央に寄せたい場合、l--stack + jc="center" か、 root:l--stack + inner:m='auto' で実現できます。 */}
+
 `c--modal_body` が`overflow:auto`でスクロール可能なエリアになっていますので、常に見せておきたいコンテンツがあればその前後に配置します。
 
 <Preview>
-  <PreviewTitle>`Modal`使用例 2</PreviewTitle>
+  <PreviewTitle>`Modal`使用例</PreviewTitle>
   <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-02" className="-bd -px:15 -py:5 -bdrs:10">
       <Fragment>Open Modal 02</Fragment>
@@ -167,7 +177,32 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-02"'
+    <button class="-bd -px:15 -py:5 -bdrs:10 set--plain -hov:-o -d:inline-flex" data-modal-open="modal-02">Open Modal 02</button>
+
+    <dialog class="c--modal set--plain is--wrapper is--container -px:30 -py:50 -contentSize:s" id="modal-02">
+      <div class="c--modal_inner l--stack -max-h:100% -bdrs:20 -bxsh:40">
+        <div class="l--flex -ai:center -jc:between -py:15 -bd-b">
+          <span class="-fz:l -fw:bold -hl:s -ms:30">Modal Header</span>
+          <button class="set--plain -hov:-o -d:inline-flex -fz:xl -p:15 -mx:15" data-modal-close="modal-02" autofocus>
+            <svg class="a--icon" aria-hidden="true">...</svg>
+            <span class="u--srOnly">Close</span>
+          </button>
+        </div>
+        <div class="c--modal_body l--flow -px:30 -py:20 -ov-y:auto">
+          ...Contents...
+          <ul>
+            <li>ロレム・イプサムの座り雨。</li>
+            <li>目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</li>
+            <li>Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</li>
+          </ul>
+          ...Contents...
+        </div>
+        <div class="l--flex -jc:end -px:30 -py:20 -bd-t">
+          <button class="set--plain -hov:-o -d:inline-flex -bgc:text -c:base -hl:s -px:15 -py:10 -bd:none -bdrs:10" data-modal-close="modal-02">Close</button>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>
@@ -234,7 +269,31 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-03"'
+    <button class="set--plain -hov:-o -d:inline-flex -ai:center -g:5" data-modal-open="modal-03">
+      <svg class="a--icon -fz:l" aria-hidden="true">...</svg>
+      <span>MENU</span>
+    </button>
+
+    <dialog class="c--modal set--plain" id="modal-03">
+      <div class="c--modal_inner l--stack -max-w -h:100% -bxsh:40" style="--offset:-100px 0;--max-w:24rem">
+        <div class="l--flex -bd-b -ai:center -jc:between -p:20">
+          <span class="-fz:l">MENU</span>
+          <button class="set--plain -hov:-o -d:inline-flex -fz:xl -p:5" data-modal-close="modal-03" autofocus>
+            <svg class="a--icon" aria-hidden="true">...</svg>
+            <span class="u--srOnly">Close</span>
+          </button>
+        </div>
+        <div class="c--modal_body -ov-y:auto">
+          <div class="l--stack u--divide -bd-b">
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link01">Menu item 1</a>
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link02">Menu item 2</a>
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link03">Menu item 3</a>
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link04">Menu item 4</a>
+          </div>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>

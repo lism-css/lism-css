@@ -9,6 +9,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 チャットの会話のような見た目でコンテンツを表示するコンポーネントです。
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p="30" _dir="rtl">
@@ -16,7 +19,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
     </Chat>
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
       <p>
@@ -27,14 +30,14 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--chat c--chat--speak l--grid -ji:start" style="--keycolor: var(--gray)" data-chat-dir="start">
+    <div class="c--chat c--chat--speak l--grid -ji:start" style="--keycolor:var(--gray)" data-chat-dir="start">
       <div class="c--chat_avatar l--frame -bgc:base -ar:1/1 -bdrs:99" aria-hidden="true">
         <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
       </div>
       <div class="c--chat_name -c:text-2 -fs:italic -fz:2xs -hl:0 -py:5 -px:10 -aslf:end">Taro</div>
       <div class="c--chat_body -pos:relative">
         <div class="c--chat_deco a--decorator is--skipFlow u--cbox -pos:absolute" aria-hidden="true"></div>
-        <div class="c--chat_content l--flow u--cbox -flow:s -bdrs:30 -p:20 -hl:s -jslf:start">
+        <div class="c--chat_content l--flow -flow:s u--cbox -bdrs:30 -p:20 -hl:s -jslf:start">
           <p>
             ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
           </p>
@@ -44,6 +47,17 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```
   </PreviewCode>
 </Preview>
+
+
+## Styles
+
+Chat のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Chat/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat) で公開しています。
+:::
 
 
 ## How to use
@@ -66,11 +80,6 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 | `keycolor` | チャットボックスのキーカラーを指定します。|
 | `flow` |コンテンツを囲む要素(`c--chat_content`)に渡されます|
 {/* | `footer` | チャット本文の下に表示するフッターテキストを指定できます。 | */}
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat) で公開しています。
 
 
 ## Examples

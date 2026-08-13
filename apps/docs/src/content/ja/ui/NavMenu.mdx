@@ -2,11 +2,86 @@
 title: 'NavMenu'
 description: '@lism-css/ui で提供する NavMenu コンポーネントについて解説します。'
 ---
-import { Lism, Icon, Spacer, Box } from 'lism-css/astro'
+import { Lism, Icon, Box } from 'lism-css/astro'
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 
 ナビゲーションメニュー用のリストを作成できるコンポーネントです。
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <NavMenu.Root>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          <Fragment>Menu item 1</Fragment>
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          <Fragment>Menu item 2</Fragment>
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          <Fragment>Menu item 3</Fragment>
+        </NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <NavMenu.Root>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          Menu item 1
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          Menu item 2
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          Menu item 3
+        </NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<ul class="c--navMenu l--stack">
+  <li class="c--navMenu_item">
+    <a class="c--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 1</a>
+  </li>
+  <li class="c--navMenu_item">
+    <a class="c--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 2</a>
+  </li>
+  ...
+</ul>
+```
+  </PreviewCode>
+</Preview>
+
+:::note
+ネスト構造には `<NavMenu.Nest>` を使用します。
+:::
+
+
+## Styles
+
+NavMenu のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/NavMenu/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu) で公開しています。
+:::
 
 
 ## How to use
@@ -29,82 +104,7 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。デフォルトで`-bgc`が付与され、hover時に背景色が変化します。 |
 
 
-### 基本構造
-
-```jsx
-<NavMenu.Root>
-  <NavMenu.Item>
-    <NavMenu.Link href="">Menu item</NavMenu.Link>
-  </NavMenu.Item>
-  <NavMenu.Item>
-    <NavMenu.Link href="">Menu item</NavMenu.Link>
-    <NavMenu.Nest>
-      <NavMenu.Item>
-        <NavMenu.Link href="">Nested item</NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Nest>
-  </NavMenu.Item>
-</NavMenu.Root>
-```
-
-ネスト構造には `<NavMenu.Nest>` を使用します。
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu) で公開しています。
-
-
 ## Examples
-
-### シンプルな例
-<Preview>
-  <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p="20">
-    <NavMenu.Root>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          <Fragment>Menu item 1</Fragment>
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          <Fragment>Menu item 2</Fragment>
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          <Fragment>Menu item 3</Fragment>
-        </NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Root>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <NavMenu.Root>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          Menu item 1
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          Menu item 2
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          Menu item 3
-        </NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Root>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-<Spacer h="10" />
-
 
 ### アイコンやバッジを表示する例
 

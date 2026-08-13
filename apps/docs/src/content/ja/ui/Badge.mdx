@@ -8,6 +8,8 @@ import { Badge } from '@lism-css/ui/astro/Badge';
 バッジを表示できるコンポーネントです。
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
@@ -19,7 +21,7 @@ import { Badge } from '@lism-css/ui/astro/Badge';
       </Badge>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
       <Badge>Badge</Badge>
@@ -40,6 +42,16 @@ import { Badge } from '@lism-css/ui/astro/Badge';
 </Preview>
 
 
+## Styles
+
+Badge のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Badge/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge) で公開しています。
+:::
+
 
 ## How to use
 
@@ -55,11 +67,6 @@ import { Badge } from '@lism-css/ui/astro/Badge';
 | プロパティ | 説明 |
 |---|---|
 |`variant`| `c--badge--{variant}` クラスを出力します。`outline`を用意しています。|
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge) で公開しています。
 
 
 ## Examples

@@ -10,6 +10,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 svgで境界線を描画するコンポーネントです。
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize layout="">
@@ -21,7 +24,44 @@ svgで境界線を描画するコンポーネントです。
       </ShapeDivider>
     </Stack>
   </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Stack>
+      <ShapeDivider isEmpty level={2} />
+      <DummyText p="30" />
+      <ShapeDivider viewBox="0 0 100 10">
+        <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z" />
+      </ShapeDivider>
+    </Stack>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="l--stack">
+  <div class="c--shapeDivider -max-sz:full" style="--level:2" aria-hidden="true"></div>
+  <p class="-p:30">...Contents...</p>
+  <div class="c--shapeDivider -max-sz:full" style="--level:5" aria-hidden="true">
+    <div class="c--shapeDivider_inner">
+      <svg class="c--shapeDivider_svg" viewBox="0 0 100 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+        <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+```
+  </PreviewCode>
 </Preview>
+
+
+## Styles
+
+ShapeDivider のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/ShapeDivider/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider) で公開しています。
+:::
 
 
 ## How to use
@@ -44,10 +84,6 @@ svgで境界線を描画するコンポーネントです。
 | `flip` | `"X"`, `"Y"`, `"XY"` でシェイプの反転方向を指定できます。|
 | `isEmpty` | シェイプを表示せず、Spacerのように使用することができます。|
 | `isAnimation` | アニメーションをONにします。`data-has-animation="true"`が出力されます。|
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider) で公開しています。
 
 
 ## Examples

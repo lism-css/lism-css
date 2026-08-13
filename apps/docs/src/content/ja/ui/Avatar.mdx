@@ -7,12 +7,15 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
 
 アバター画像用のコンポーネントです。
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
     ```
@@ -25,6 +28,15 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
     ```
   </PreviewCode>
 </Preview>
+
+
+## Styles
+
+Avatar には現時点で固有のベーススタイルはなく、lism-css のスタイルのみで構成されています。
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar) で公開しています。
+:::
 
 
 ## How to use
@@ -44,11 +56,6 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
 |`src`| アバター画像のパス |
 |`alt`| altテキスト |
 {/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar) で公開しています。
 
 
 ## Examples

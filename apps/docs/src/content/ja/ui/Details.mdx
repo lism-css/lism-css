@@ -11,6 +11,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 [`Accordion`](/docs/ui/Accordion/)とは違い、jsを使わずCSSだけでの実装となっています。
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
@@ -54,6 +57,22 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
 </Preview>
 
+:::note
+`<Details.Root>` の直下には、`<Details.Summary>`（開閉のトリガー）と `<Details.Content>`（開閉されるコンテンツ）を配置します。
+`<Details.Summary>` の中身は、`<Details.Title>` と `<Details.Icon>` で構成します。
+:::
+
+
+## Styles
+
+Details のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Details/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Details) で公開しています。
+:::
+
 
 ## How to use
 
@@ -81,25 +100,6 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 |---|---|
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | 展開アニメーションの秒数 |
 | <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | summary要素内のタイトルを出力するHTMLタグの種類|
-
-
-### 基本構造
-
-```jsx
-<Details.Root>
-  <Details.Summary>
-    <Details.Title>Details Title</Details.Title>
-    <Details.Icon />
-  </Details.Summary>
-  <Details.Content>...Contents...</Details.Content>
-</Details.Root>
-```
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Details) で公開しています。
-
 
 
 ## Examples

@@ -13,6 +13,8 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 パネルには `hidden="until-found"` を活用しているため、アコーディオンが閉じた状態でもブラウザのページ内検索でコンテンツを検出でき、ヒット時に自動的にパネルが展開されます。
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
@@ -40,7 +42,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Accordion.Root>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example</Accordion.Button>
+          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
         <Accordion.Panel p="20" pt="5">
           <DummyText length="l" />
@@ -59,9 +61,43 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
+<div class="c--accordion l--stack">
+  <div class="c--accordion_item">
+    <div class="c--accordion_heading set--plain" role="heading">
+      <button class="c--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between -p:20" aria-controls="{id}" aria-expanded="false">
+        Accordion Example 1
+        <span class="c--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="c--accordion_panel -pos:relative -ov:hidden" id="{id}" hidden="until-found">
+      <div class="c--accordion_content l--flow -p:20 -pt:5">
+        ...Contents...
+      </div>
+    </div>
+  </div>
+  <div class="c--accordion_item -bd-t">
+    ...
+  </div>
+</div>
 ```
   </PreviewCode>
 </Preview>
+
+:::note
+`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。
+アイコンはCSSの疑似要素（`::before` / `::after`）で描画されるため、SVGの指定は不要です。
+:::
+
+
+## Styles
+
+Accordion のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Accordion/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion) で公開しています。
+:::
 
 
 ## How to use
@@ -93,33 +129,6 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 | <PropBadge>`<Accordion.Button>`</PropBadge><br/>`isOpen` | 初期展開状態に合わせて `aria-expanded` を設定します。 |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | パネル内のコンテンツ領域（`_content`）に渡すフローレイアウトの設定。 |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`isOpen` | パネルを初期表示します（`hidden` を解除）。 |
-
-
-### 基本構造
-
-```jsx
-<Accordion.Root>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button>Accordion Label</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...Contents...
-    </Accordion.Panel>
-  </Accordion.Item>
-</Accordion.Root>
-```
-
-:::note
-`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。
-アイコンはCSSの疑似要素（`::before` / `::after`）で描画されるため、SVGの指定は不要です。
-:::
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion) で公開しています。
-
 
 
 ## Examples
