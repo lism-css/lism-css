@@ -112,7 +112,7 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
     <div class="l--flex -g:15">
       <a class="b--button -hov:-o" href="###">Button</a>
       <a class="b--button -hov:-o -bgc:brand -bdrs:10" href="###">Button</a>
-      <a class="b--button -hov:-o -bgc -bdrs:99" style="--bgc: #d13d5e" href="###">
+      <a class="b--button -hov:-o -bgc -bdrs:99" style="--bgc:#d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -151,9 +151,9 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a class="b--button b--button--outline -hov:-o" href="###">Button</a>
+      <a class="b--button -hov:-o" href="###">Button</a>
       <a class="b--button b--button--outline -hov:-o -c:brand -bdrs:10" href="###">Button</a>
-      <a class="b--button b--button--outline -hov:-o -c -bdrs:99" style="--c: #d13d5e" href="###">
+      <a class="b--button b--button--outline -hov:-o -c -bdrs:99" style="--c:#d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -196,23 +196,43 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
     </Cluster>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--cluster -g:15">
+      <a class="b--button -hov:-o -g:5 -bdrs:10" href="###">
+        <svg class="a--icon" style="translate:-25% 0" aria-hidden="true">...</svg>
+        <span>Button</span>
+      </a>
+      <a class="b--button b--button--outline -hov:-o -g:5 -bdrs:10" href="###">
+        <span>Button</span>
+        <svg class="a--icon" style="translate:25% 0" aria-hidden="true">...</svg>
+      </a>
+      <a class="b--button -hov:-o -w:fit -px:10 -py:10 -hl:0 -bdrs:10" href="###">
+        <svg class="a--icon -fz:l" aria-hidden="true">...</svg>
+      </a>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 
-### Adjusting size
+### Adjusting styles
 
 <Preview>
-  <PreviewTitle>Adjusting size</PreviewTitle>
+  <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20" bg=":stripe" flow="s">
-    <Button href="###" max-w="12em" py="15" fz="l" bdrs="10">
+    <Button href="###" fz="l" bdrs="99" px="25">
       <Fragment>Button</Fragment>
     </Button>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'max-w="12em"' 'py="15"'
-    <Button href="###" max-w="12em" py="15" fz="l" bdrs="10">
-      Button
-    </Button>
+    ```jsx 'fz="l" bdrs="99" px="25"'
+    <Button href="###" fz="l" bdrs="99" px="25">Button</Button>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <a class="b--button -hov:-o -fz:l -bdrs:99 -px:25" href="###">Button</a>
     ```
   </PreviewCode>
 </Preview>
@@ -227,15 +247,15 @@ Specifying `layout='grid'` applies the `l--grid` class, enabling a grid layout w
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="20">
     <Stack max-w="20em" g="15">
-      <Button href="###" layout="grid" py="15" bdrs="10" hov="-bgc">
+      <Button href="###" layout="grid" bdrs="10" hov="-bgc">
         <Icon icon="cart" />
         <span>Button</span>
       </Button>
-      <Button href="###" layout="grid" py="15" bdrs="10" hov="-bgc">
+      <Button href="###" layout="grid" bdrs="10" hov="-bgc">
         <span>Button</span>
         <Icon icon={ArrowRightIcon} />
       </Button>
-      <Button href="###" layout="grid" py="15" bdrs="10" hov="-bgc">
+      <Button href="###" layout="grid" bdrs="10" hov="-bgc">
         <Icon icon="cart" />
         <span>Button</span>
         <Icon icon={ArrowRightIcon} />
@@ -244,19 +264,36 @@ Specifying `layout='grid'` applies the `l--grid` class, enabling a grid layout w
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'layout="grid"'
-    <Button href="###" layout="grid" max-w="20em" py="15" bdrs="10" hov="-bgc">
+    <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
       <Icon icon="cart" />
       <span>Button</span>
     </Button>
-    <Button href="###" layout="grid" max-w="20em" py="15" bdrs="10" hov="-bgc">
+    <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
       <span>Button</span>
       <Icon icon={ArrowRightIcon} />
     </Button>
-    <Button href="###" layout="grid" max-w="20em" py="15" bdrs="10" hov="-bgc">
+    <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
       <Icon icon="cart" />
       <span>Button</span>
       <Icon icon={ArrowRightIcon} />
     </Button>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <a class="b--button l--grid -hov:-bgc -bdrs:10" href="###">
+      <svg class="a--icon" aria-hidden="true">...</svg>
+      <span>Button</span>
+    </a>
+    <a class="b--button l--grid -hov:-bgc -bdrs:10" href="###">
+      <span>Button</span>
+      <svg class="a--icon" aria-hidden="true">...</svg>
+    </a>
+    <a class="b--button l--grid -hov:-bgc -bdrs:10" href="###">
+      <svg class="a--icon" aria-hidden="true">...</svg>
+      <span>Button</span>
+      <svg class="a--icon" aria-hidden="true">...</svg>
+    </a>
     ```
   </PreviewCode>
 
@@ -407,5 +444,13 @@ An example of adding a [`-hov` class](/en/docs/property-class/hov) that swaps th
     </Button>
   </Flex>
   ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--flex -g:15">
+      <a class="b--button b--button--fill -hov:reverse" href="###">Button</a>
+      <a class="b--button b--button--outline -hov:reverse" href="###">Button</a>
+    </div>
+    ```
   </PreviewCode>
 </Preview>
