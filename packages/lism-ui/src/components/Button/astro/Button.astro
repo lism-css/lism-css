@@ -1,7 +1,7 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
-import { Flex } from 'lism-css/astro';
+import { Link } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
 import '../_style.css';
@@ -14,4 +14,4 @@ type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> &
 const { class: className, variant, ...props } = Astro.props;
 ---
 
-<Flex as="a" hl="s" py="10" px="20" hov="-o" class={atts(className, buildModifierClass('b--button', { variant }))} {...props}><slot /></Flex>
+<Link hov="-o" class={atts(className, buildModifierClass('b--button', { variant }))} {...props}><slot /></Link>

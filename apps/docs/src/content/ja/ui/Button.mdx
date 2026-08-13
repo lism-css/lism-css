@@ -41,8 +41,8 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <a class="b--button b--button--fill l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
-      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Outline</a>
+      <a class="b--button b--button--fill -hov:-o" href="###">Button</a>
+      <a class="b--button b--button--outline -hov:-o" href="###">Outline</a>
     </div>
     ```
   </PreviewCode>
@@ -111,9 +111,9 @@ Button のベーススタイルは、以下のCSSで定義されています。
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a class="b--button l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
-      <a class="b--button l--flex -hl:s -py:10 -px:20 -hov:-o -bgc:brand -bdrs:10" href="###">Button</a>
-      <a class="b--button l--flex -hl:s -py:10 -px:20 -hov:-o -bgc -bdrs:99" style="--bgc: #d13d5e" href="###">
+      <a class="b--button -hov:-o" href="###">Button</a>
+      <a class="b--button -hov:-o -bgc:brand -bdrs:10" href="###">Button</a>
+      <a class="b--button -hov:-o -bgc -bdrs:99" style="--bgc: #d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -151,9 +151,9 @@ Button のベーススタイルは、以下のCSSで定義されています。
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
-      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o -c:brand -bdrs:10" href="###">Button</a>
-      <a class="b--button b--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o -c -bdrs:99" style="--c: #d13d5e" href="###">
+      <a class="b--button b--button--outline -hov:-o" href="###">Button</a>
+      <a class="b--button b--button--outline -hov:-o -c:brand -bdrs:10" href="###">Button</a>
+      <a class="b--button b--button--outline -hov:-o -c -bdrs:99" style="--c: #d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -207,18 +207,12 @@ Button のベーススタイルは、以下のCSSで定義されています。
 <Preview>
   <PreviewTitle>サイズの調整</PreviewTitle>
   <PreviewArea p="20" bg=":stripe" flow="s">
-    <Button href="###" w="fit" bdrs="10">
-      <Fragment>Button</Fragment>
-    </Button>
     <Button href="###" max-w="12em" py="15" fz="l" bdrs="10">
       <Fragment>Button</Fragment>
     </Button>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'w="fit"' 'max-w="12em"' 'py="15"'
-    <Button href="###" w="fit" bdrs="10">
-      Button
-    </Button>
+    ```jsx 'max-w="12em"' 'py="15"'
     <Button href="###" max-w="12em" py="15" fz="l" bdrs="10">
       Button
     </Button>
@@ -284,7 +278,74 @@ Button のベーススタイルは、以下のCSSで定義されています。
 </Preview>
 
 
-## Opt-in
+## Only lism-css
+
+@lism-css/uiを使用せずに、lism-css のみで Button を構築するコード例を紹介します。
+
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" bg=":stripe" flow="s">
+    <Flex g="15">
+      <Link href="###" d="inline-flex" td="none" c="base" bgc="text" hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
+      <Link href="###" d="inline-flex" td="none" c="inherit" bd hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
+    </Flex>
+    <Grid
+      as="a"
+      href="###"
+      gtc="1em 1fr 1em"
+      ji="center"
+      ai="center"
+      px="15"
+      py="10"
+      g="30"
+      w="16rem"
+      td="none"
+      bgc="text"
+      c="base"
+      bdrs="20"
+      hov="-bgc"
+    >
+      <Lism as="span" gc="2">Button</Lism>
+      <Icon icon={ArrowRightIcon} />
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Flex g="15">
+      <Link href="###" d="inline-flex" td="none" c="base" bgc="text" hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
+      <Link href="###" d="inline-flex" td="none" c="inherit" bd hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
+    </Flex>
+    <Grid as="a" href="###" gtc="1em 1fr 1em" ji="center" ai="center" px="15" py="10" g="30" w="16rem" td="none" bgc="text" c="base" bdrs="20" hov="-bgc">
+      <Lism as="span" gc="2">Button</Lism>
+      <Icon icon={ArrowRightIcon}/>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--flex -g:15">
+      <a href="###" class="-d:inline-flex -td:none -c:base -bgc:text -hl:s -py:10 -px:20 -bdrs:20 -hov:-o">Button</a>
+      <a href="###" class="-d:inline-flex -td:none -c:inherit -bd -hl:s -py:10 -px:20 -bdrs:20 -hov:-o">Button</a>
+    </div>
+    <a
+      class="l--grid -ji:center -ai:center -px:15 -py:10 -g:30 -w -gtc -td:none -bgc:text -c:base -bdrs:20 -hov:-bgc"
+      style="--w: 16rem; --gtc: 1em 1fr 1em"
+      href="###"
+    >
+      <span class="-gc" style="--gc: 2">Button</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="a--icon" aria-hidden="true">
+        <path
+          d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+        ></path>
+      </svg>
+    </a>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Opt-in Styles
 
 ### `hov="reverse"`
 
@@ -384,71 +445,3 @@ Button のベーススタイルは、以下のCSSで定義されています。
     ```
   </PreviewCode>
 </Preview> */}
-
-## Only lism-css
-
-@lism-css/uiを使用せずに、lism-css のみで Button を構築するコード例を紹介します。
-
-
-<Preview>
-  <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20" bg=":stripe" flow="s">
-    <Flex g="15">
-      <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
-      <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
-    </Flex>
-    <Grid
-      as="a"
-      href="###"
-      gtc="1em 1fr 1em"
-      ji="center"
-      ai="center"
-      px="15"
-      py="10"
-      g="30"
-      w="16rem"
-      td="none"
-      bgc="text"
-      c="base"
-      bdrs="20"
-      hov="-bgc"
-    >
-      <Lism as="span" gc="2">Button</Lism>
-      <Icon icon={ArrowRightIcon} />
-    </Grid>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Flex g="15">
-      <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
-      <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd hl="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
-    </Flex>
-    <Grid as="a" href="###" gtc="1em 1fr 1em" ji="center" ai="center" px="15" py="10" g="30" w="16rem" td="none" bgc="text" c="base" bdrs="20" hov="-bgc">
-      <Lism as="span" gc="2">Button</Lism>
-      <Icon icon={ArrowRightIcon}/>
-    </Grid>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html
-    <div class="l--flex -g:15">
-      <a href="###" class="-d:inline-flex -w:fit -td:none -c:base -bgc:text -hl:s -py:10 -px:20 -bdrs:20 -hov:-o">Button</a>
-      <a href="###" class="-d:inline-flex -w:fit -td:none -c:inherit -bd -hl:s -py:10 -px:20 -bdrs:20 -hov:-o">Button</a>
-    </div>
-    <a
-      class="l--grid -ji:center -ai:center -px:15 -py:10 -g:30 -w -gtc -td:none -bgc:text -c:base -bdrs:20 -hov:-bgc"
-      style="--w: 16rem; --gtc: 1em 1fr 1em"
-      href="###"
-    >
-      <span class="-gc" style="--gc: 2">Button</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="a--icon" aria-hidden="true">
-        <path
-          d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
-        ></path>
-      </svg>
-    </a>
-    ```
-  </PreviewCode>
-</Preview>
-
-
