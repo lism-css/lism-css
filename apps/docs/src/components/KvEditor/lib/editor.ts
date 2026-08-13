@@ -180,23 +180,31 @@ export function initKvEditor(): void {
   // ---- シンタックスハイライト（遅延ロード、初期化後は同期実行） --------------
   let highlightSyncFn: typeof HighlightSyncFn | null = null;
 
-  // 再生アニメは 12〜18ms ごとにフレームを流すので、そのたびに全文を再トークナイズして
-  // オーバーレイを作り直すと 1 フレームに複数回走る。ヒーロー描画と同じく rAF でまとめる
-  let highlightRenderQueued = false;
+  // ユーザー入力に対しては同期で描画する。textarea は color: transparent で、
+  // 見えている文字はこのオーバーレイそのものなので、1 フレームでも遅らせると
+  // caret だけが先に進んだ状態が見えてしまう
   const renderHighlight = (): void => {
+    const code = padTrailingNewline(textarea.value);
+    const out = highlightSyncFn?.(code, state.activeTab) ?? null;
+    preInner.innerHTML = out ?? `<span class="fallback">${escapeText(code)}</span>`;
+    // innerHTML 差し替え後もスクロール位置を必ず一致させる
+    syncScroll();
+  };
+
+  // 再生アニメのフレームは 12〜18ms ごとに来るため、1 フレームに複数回走らないようまとめる。
+  // こちらは caret が動かない（プログラム的な書き換え）ので、遅らせても見え方は変わらない
+  let highlightRenderQueued = false;
+  const queueHighlight = (): void => {
     if (highlightRenderQueued) return;
     highlightRenderQueued = true;
     requestAnimationFrame(() => {
       highlightRenderQueued = false;
-      const code = padTrailingNewline(textarea.value);
-      const out = highlightSyncFn?.(code, state.activeTab) ?? null;
-      preInner.innerHTML = out ?? `<span class="fallback">${escapeText(code)}</span>`;
-      // innerHTML 差し替え後もスクロール位置を必ず一致させる
-      syncScroll();
+      renderHighlight();
     });
   };
 
-  // 初期表示はSSR済みなので、shiki本体はアイドル時に読み込む
+  // 初期表示はSSR済みなので、shiki本体はアイドル時に読み込む。
+  // 初回操作まで遅らせる案は、読み込み前に打鍵されると全文が一度プレーンテキストへ落ちるため見送った
   const loadHighlighter = (): void => {
     void import('./highlight')
       .then(async (mod) => {
@@ -595,7 +603,7 @@ export function initKvEditor(): void {
       renderHero();
     }
     saveSnapshot();
-    renderHighlight();
+    queueHighlight();
   };
 
   // 空提案スナックバーの「Restore initial code」ボタン
