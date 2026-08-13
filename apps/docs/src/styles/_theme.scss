@@ -44,6 +44,7 @@
     /* // content */
     --text: hsl(48, 12%, 95%); /* Cloud Dancer */
     --text-2: hsl(48, 8%, 84%);
+    --gray-hi-c: var(--text);
 
     // --code-bgc: hsl(205, 10%, 10%);
 
@@ -75,14 +76,6 @@
     background-color: white;
     box-shadow: var(--bxsh--base);
     backdrop-filter: blur(32px);
-  }
-
-  .c--line-height {
-    line-height: var(--lh--base);
-
-    @container (min-width: 800px) {
-      line-height: var(--lh--l);
-    }
   }
 
   :root[data-theme='dark'] {

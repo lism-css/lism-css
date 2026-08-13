@@ -6,6 +6,7 @@
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import { Stack, Flex, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
+import KvEditor from '@/components/KvEditor/KvEditor.astro';
 import { siteConfig } from '@/config/site';
 // import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
 
@@ -172,62 +173,13 @@ const presets = [
     </Box>
   </Box>
   <Lism as="section" isWrapper="l" px="20">
-    <Stack as="div" ai="center" pbs={{ base: '9rem', md: '14rem' }} pbe={{ md: '60' }}>
-      <Heading ta="center" level="1" fw="700" fz={{ base: '2.25rem', md: '5xl' }} lh="1.25" c="var(--gray-hi-c)" lts="var(--lts--tight)">
-        The CSS Design <Lism as="br" d={{ base: 'inherit', md: 'none' }} />Framework<br />for AI and Humans
-      </Heading>
-      <Text class="c--line-height" ta="center" fz={{ base: 's', md: 'l' }} c="#333" mt="30" style={{ '--lh--base': '1.5', '--lh--l': '1.75' }}>
-        軽量でビルド不要。どんなサイトにも導入できます。<br />
-        あなたはもう、CSS設計に悩む必要はありません。
-      </Text>
-      <Flex g={{ base: '15', md: '20' }} ai="center" jc="center" mt="40" w="100%">
-        <Button
-          href="/docs/installation/"
-          fz={{ base: 's', md: 'base' }}
-          bdrs="var(--bdrs--15)"
-          bd="none"
-          bgc="var(--gray-hi-c)"
-          hov={{ bgc: 'var(--link)' }}
-          fw="500"
-          lh="1.5"
-          px="10"
-          g="0"
-        >
-          <Lism as="span" px={{ base: '0.375rem', md: '10' }}>Get Started</Lism>
-          <Icon icon="caret-right" style={{ scale: '1' }} />
-        </Button>
-        <Box pos="relative" max-w={{ base: '11.8125rem', md: '16.6875rem' }} w="100%" bd="none" aslf="stretch">
-          <input id="kv-search" class="c--kv-search c--shadow-box" type="text" placeholder="Search documentation..." autocomplete="off" />
-          <Lism
-            as="button"
-            type="button"
-            class="c--searchTrigger"
-            px="10"
-            py="0.125rem"
-            h="fit-content"
-            bd="none"
-            bgc="transparent"
-            g="5"
-            bdrs="10"
-            pos="absolute"
-            r="10"
-            i-y="0"
-            d={{ base: 'none', md: 'flex' }}
-            hov="-c"
-            data-modal-open="search-modal"
-          >
-            <Lism as="kbd" class="c--searchTrigger_shortcut" p="0" bxsh="none" bd="none" fz="base" ff="base" lh="1.25" lts="var(--lts--tighter)"
-              >⌘K</Lism
-            >
-          </Lism>
-        </Box>
-      </Flex>
-      {/* TODO: AIコード生成のイメージ図。フロント確認のため画像で配置。実装方法変更予定 */}
-      <Group bxsh="var(--bxsh--code)" bdrs="0.625rem" mbs={{ base: '40', md: '3.5rem' }}>
-        <Media src="/svg/code-pc.svg" alt="" width="903" height="400" d={{ base: 'none', md: 'block' }} />
-        <Media src="/svg/code-sp.svg" alt="" width="368" height="552" d={{ base: 'block', md: 'none' }} />
-      </Group>
-    </Stack>
+    {
+      /* ヒーローはライブコードエディター（KvEditor）の描画結果。位置決め（上下padding）は
+        エディター外なのでレスポンシブ可。色・行間は _kv-editor.scss の .c--kvEditorHero に集約 */
+    }
+    <Box pbs={{ base: '9rem', md: '14rem' }} pbe={{ md: '60' }}>
+      <KvEditor />
+    </Box>
   </Lism>
 
   <Lism as="section" isWrapper="l" hasGutter>
@@ -402,23 +354,6 @@ const presets = [
   </Lism>
 </SimpleLayout>
 
-<script>
-  const kvSearch = document.getElementById('kv-search');
-  kvSearch?.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter') return;
-    const query = (e.target as HTMLInputElement).value.trim();
-    if (!query) return;
-    document.querySelector<HTMLElement>('[data-modal-open="search-modal"]')?.click();
-    setTimeout(() => {
-      const pfInput = document.querySelector<HTMLInputElement>('#search input[type="text"]');
-      if (pfInput) {
-        pfInput.value = query;
-        pfInput.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-    }, 50);
-  });
-</script>
-
 <style>
   video {
     position: absolute;
@@ -426,25 +361,5 @@ const presets = [
     width: 100%;
     height: 150vh;
     object-fit: cover;
-  }
-
-  .c--kv-search {
-    padding: var(--s10) 0.875rem;
-    font-size: var(--fz--s);
-    width: 100%;
-    height: 100%;
-    border: none;
-    line-height: 1.5;
-    @container (min-width: 800px) {
-      padding-left: var(--s20);
-      font-size: var(--fz--base);
-    }
-  }
-
-  /* 検索トリガーボタン */
-  .c--searchTrigger {
-    box-shadow: var(--bxsh--search-border);
-    background: var(--search-button-c);
-    align-self: center;
   }
 </style>
