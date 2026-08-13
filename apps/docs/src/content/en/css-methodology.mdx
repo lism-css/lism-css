@@ -108,7 +108,7 @@ These are further categorized into several types:
 
 Primitive classes are standalone — they have no variations or child element classes. Only [Block Class](#block-class) (`b--`) and [Custom Class](#custom-class) (`c--`), described later, follow a BEM structure.
 
-Combining Primitives follows these rules:
+Combining Primitive classes follows these rules:
 
 | Combination | Allowed | Notes |
 |---|---|---|
@@ -137,8 +137,7 @@ See the [naming guide](/en/docs/naming/) for the detailed decision criteria and 
 
 ### Block Class
 
-**Block Classes** prefixed with `b--` are for common, reusable, site-wide base parts (button, badge, card-level components).  
-The name guarantees that "the base style lives in CSS" — base styles are defined in `@layer lism-block` and managed in a CSS file. The core `lism-css` only provides the dedicated layer; you define the classes themselves.
+**Block Classes** prefixed with `b--` are for common, reusable, site-wide base parts (button, badge, card-level components), defined on the premise that "base styles are managed in CSS".  
 
 ```css
 @layer lism-block {
@@ -146,13 +145,15 @@ The name guarantees that "the base style lives in CSS" — base styles are defin
 }
 ```
 
+The core `lism-css` only provides the dedicated layer (`@layer lism-block`) and does not ship any `b--` classes.
+
 Use `b--` only for parts that satisfy all three of the following:
 
 1. It's a common part reused across multiple pages or multiple places on the site.
-2. It's a part where a single class should define nearly the entire base style (you want style changes to stay contained to the CSS file).
-3. Its granularity is a self-contained, button/badge/card-level part (not a full page section or the site skeleton).
+2. It's a part where a single class should define nearly the entire base style.
+3. Its granularity is a self-contained, button/badge/card-level part.
 
-Parts that don't meet these criteria should be `c--`. You can use it purely as a name that shows what part it is, without writing any CSS (see [Custom Class](#custom-class) below).
+If a part doesn't meet all of these, use `c--` instead.
 
 `b--` classes can have a BEM structure (Block / Modifier / Element), each defined in the following format:
 
@@ -162,19 +163,17 @@ Parts that don't meet these criteria should be `c--`. You can use it purely as a
 |Modifier<br /><small>Variation</small>|`b--{name}--{modifier}`|`b--btn--outline`|
 |Element<br /><small>Child element</small>|`b--{name}_{element}`|`b--card_header`,<br />`b--card_body`|
 
-:::point
+:::info
 Modifiers are used alongside the Block class, e.g. `.b--btn.b--btn--outline`.  
 Elements use a single underscore (`_`) as the separator.
 :::
 
-Combining Blocks (`.b--xxx.b--yyy`) is generally not allowed, but the following combinations are allowed:
-
-- Block with its own Modifier: `.b--xxx.b--xxx--variant`
-- Block with another Block's Element: `.b--xxx.b--yyy_elem`
+Combining different Blocks (`.b--xxx.b--yyy`) is generally not allowed.
 
 :::point
-You can combine `b--` with Property Classes. Property Classes sit outside any layer and always take precedence over `b--`, so we recommend using them for exceptions and breakpoint switches (e.g. `-p_sm`).  
-Conversely, `lism-block` is a stronger layer than `lism-primitive`, so adding an `l--` or Trait class to a `b--` element cannot override properties the `b--` side already sets. If you need a layout variation, define a Modifier class in CSS, or override it with a Property Class.
+- Combining `b--` with other classes is not prohibited. Property Classes come in handy for exceptional adjustments and breakpoint switches (e.g. `-p_sm`).
+- A `b--` part is expected to own its base styles — including layout — in CSS. Also, since `lism-block` is a stronger layer than `lism-primitive` and `lism-trait`, adding those classes cannot override properties the `b--` side already sets.
+- If you need a layout variation, define a Modifier class in CSS, or override it with a Property Class.
 
 Note that this priority relationship is only guaranteed with the standard layered builds (`main.css` / `full.css`). With `main_no_layer.css` / `full_no_layer.css`, layer priority does not apply, so the result depends on load order and specificity.
 :::
@@ -185,33 +184,20 @@ Note that this priority relationship is only guaranteed with the standard layere
 **Custom Classes** prefixed with `c--` are custom classes you're free to define beyond the core's built-in classes.  
 The name corresponds to the `lism-custom` layer, and you can use it for any granularity — components, zoning, page-specific elements, and more.
 
-The basic approach is to compose their style mainly through Property Classes; you can use a `c--` class purely as a name that shows what part it is, without writing any CSS. When a Property Class can't cover a more complex style, define the CSS in `@layer lism-custom`.
+- The basic approach is to compose their styles mainly from the other classes Lism provides.
+- Complex styles that Property Classes and the like can't cover are defined in `@layer lism-custom`.
+- You can also use a `c--` class **purely as a name** that shows what part it is, without writing any CSS.
 
 ```css
 @layer lism-custom {
-  .c--siteHeader { /* ... */ }
+  .c--header { /* ... */ }
   .c--pricing { /* ... */ }
 }
 ```
 
-The distinction from [Block Class](#block-class) is as follows:
-
-| Category | Naming | Where to write styles |
-|---|---|---|
-|Common, reusable site-wide parts<br /><small>Button, badge, card-level components</small>|`b--{name}`<br /><small>e.g. `b--btn`</small>|Define base styles in `@layer lism-block` and manage them in CSS.|
-|All other custom classes<br /><small>Components, zoning, page-specific elements — any granularity</small>|`c--{name}`<br /><small>e.g. `c--pricing`,<br />`c--siteHeader`</small>|Compose mainly with Property Classes. If you write CSS, define it in `@layer lism-custom`.|
-
-Use `b--` only for parts that satisfy all three [Block Class](#block-class) conditions (reused site-wide, base style managed in CSS, button/badge/card-level granularity); everything else is `c--`. The name `b--` guarantees that "the base style lives in CSS"; `c--` carries no such guarantee. The site skeleton and page-specific elements stay `c--` even when you write CSS for them. When in doubt, start with `c--` and rename it to `b--` once the part meets all three conditions and you want to switch to CSS-managed styling.
-
 Names use camelCase after the prefix (see the [naming guide](/en/docs/naming/)). For page-specific elements, including the page's slug or similar in the name — as in `c--landingHero` — makes it clear from the name alone where the element belongs.
 
-`c--` classes can follow the same BEM notation and combination rules as [Block Class](#block-class), giving them a BEM structure (Block / Modifier / Element):
-
-| Category | Format | Example |
-|---|---|---|
-|Block<br /><small>The base class</small>|`c--{name}`|`c--pricing`,<br />`c--siteHeader`|
-|Modifier<br /><small>Variation</small>|`c--{name}--{modifier}`|`c--pricing--featured`|
-|Element<br /><small>Child element</small>|`c--{name}_{element}`|`c--pricing_header`,<br />`c--pricing_body`|
+Also, `c--` classes can follow the same BEM notation and combination rules as [Block Class](#block-class), giving them a BEM structure (Block / Modifier / Element).
 
 ### Utility Class
 

@@ -95,7 +95,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 - 構造は`<div>`+素のCSSよりPrimitiveを優先する。候補は「目的別実装ガイド」の表から選ぶ。
 - `c--*`/`b--*`命名はBlockをcamelCase、Elementを`_`ひとつ、Modifierを`--`ふたつにする。`c--feature-card`や`__`は使わない。
-- 独自クラスは2分類（ベーススタイルをCSS管理する共通基礎部品→`b--`／それ以外のカスタムクラス全般→`c--`）で命名する。
+- 独自クラスは2分類（ベーススタイルを CSS 側で管理する共通基礎部品→`b--`／それ以外のカスタムクラス全般→`c--`）で命名する。
 - 独自CSSは必ず`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。
 - トークン外のpx/rem/em値を勝手に丸めたり直書きしたりしない。丸め・新規トークン・直書き例外は⏸にする（`antipatterns.md`の「直書きしてよい例外」に該当する場合のみ`✅例外`にできる）。
 - `c--*`のクラスでは、単一要素にだけ効く宣言はCSSに書かず、まずLism Props/Property Classで表せないか確認する。CSSに残すのは擬似要素・子孫セレクタ・状態切替などProperty Classで書けない宣言だけにする。`b--*`のベーススタイルは対象外で、トークンを使って`@layer lism-block`にCSSとして書いてよい（例外的な調整・BP切替はProperty Class）。
@@ -116,7 +116,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | `components-ui.md`、`set-class.md` |
 | hover効果 | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | `property-class/hov.md`、`trait-class/has--transition.md` |
 | ボックス・カードの全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | `trait-class/is--boxLink.md` |
-| 小さいUI部品 | `c--*`＋Property Class（`c--*`は意味名に留め、単一要素の見た目はProperty Class/Lism Propsへ）。ベーススタイルをCSS管理する共通部品なら`b--*` | `property-class.md`、`css-rules.md#custom-classc--`、`css-rules.md#block-classb--` |
+| 小さいUI部品 | `c--*`＋Property Class（`c--*`は何のパーツかを示す名前に留め、単一要素の見た目はProperty Class/Lism Propsへ）。ベーススタイルを CSS 側で管理する共通部品なら`b--*` | `property-class.md`、`css-rules.md#custom-classc--`、`css-rules.md#block-classb--` |
 | ページの定番セクション（ヒーロー・サイトヘッダー・フッター等） | `Group`＋`Wrapper`/`Stack`/`Cluster`の定番構成 | `references/page-sections.md` |
 
 ## 提出前セルフチェック

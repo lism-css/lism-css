@@ -5,7 +5,7 @@
 ## TOC
 
 - [レイアウト選択ミス](#レイアウト選択ミス)
-- [CSS管理する部品を `c--` のままにする](#css管理する部品を-c---のままにする)
+- [ベーススタイルを CSS 側で持つ部品を `c--` のままにする](#ベーススタイルを-css-側で持つ部品を-c---のままにする)
 - [Astro/React Primitive を使わず素の HTML で組む](#astroreact-primitive-を使わず素の-html-で組む)
 - [ボタン装飾を reset から自作する](#ボタン装飾を-reset-から自作する)
 - [`Frame` 未使用のメディア枠手組み](#frame-未使用のメディア枠手組み)
@@ -46,9 +46,9 @@
 | `<Grid gtc="1fr 240px">` で固定 | `<WithSide sideW="240px">` | コンテンツ幅で自動切替したいなら WithSide |
 | `<Flex>` で 2 カラム強制横並び | `<WithSide>` | 縦並びへの切替が必要なら WithSide |
 
-## CSS管理する部品を `c--` のままにする
+## ベーススタイルを CSS 側で持つ部品を `c--` のままにする
 
-`c--` は「コア定義を超えた自由なカスタムクラス（**Custom Class**）」を表すプレフィックスで、コンポーネント・ゾーニング・ページ固有要素など粒度を問わず使える（`c--siteHeader` のような骨格用途も可）。ただし、サイト共通で繰り返し使うボタン・バッジ・カード級の部品を、ベーススタイルごとCSS側で管理したい場合は `c--` のままにせず `b--`（`@layer lism-block`）へリネーム昇格する。
+`c--` は「Lism 本体に含まれない、ユーザーが自由に定義するカスタムクラス（**Custom Class**）」を表すプレフィックスで、コンポーネント・サイトの領域（ヘッダーやサイドバーなど）・ページ固有要素など粒度を問わず使える（`c--siteHeader` のような骨格用途も可）。ただし、サイト共通で繰り返し使うボタン・バッジ・カード級の部品を、ベーススタイルごと CSS 側で管理したい場合は `c--` のままにせず `b--`（`@layer lism-block`）へリネームして昇格する。
 
 → 分類表と配置レイヤー: [css-rules.md の独自クラスの選び方（2分類）](./css-rules.md#独自クラスの選び方2分類)
 
@@ -109,12 +109,12 @@ Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ね�
 
 ## サイト最外殻を `Wrapper` に使う
 
-`Wrapper`/`is--wrapper`は幅制限したい直下領域に使う。サイト全体の最外殻やbody直下のゾーニングには使わない。最外殻は`c--siteWrapper`などの領域名クラスで扱い、幅制限が必要な内側だけ`Wrapper`にする。
+`Wrapper`/`is--wrapper`は幅制限したい直下領域に使う。サイト全体の最外殻やbody直下の領域分けには使わない。最外殻は`c--siteWrapper`などの領域名クラスで扱い、幅制限が必要な内側だけ`Wrapper`にする。
 
 | NG | OK | 理由 |
 | --- | --- | --- |
 | `<Wrapper className="c--site">...全体...</Wrapper>` | `<div className="c--site"><Wrapper>...本文幅...</Wrapper></div>` | 最外殻と幅制限の責務を分ける |
-| `<main className="is--wrapper">`をページ全体に付与 | `<main className="c--siteMain"><Wrapper>...</Wrapper></main>` | ゾーニングは領域名クラス、幅制限は`Wrapper` |
+| `<main className="is--wrapper">`をページ全体に付与 | `<main className="c--siteMain"><Wrapper>...</Wrapper></main>` | サイトの領域は領域名クラス、幅制限は`Wrapper` |
 
 `Wrapper`直下の子要素には幅に関する既定が当たるため、最外殻に置くと予期しない幅制御を生むことがある。
 
@@ -231,7 +231,7 @@ Lism CSS の `is--` プレフィックスは「**〜である**」という**役
 
 ### 2. スタイルバリエーション → BEM Modifier（`c--{name}--{variant}` / `b--{name}--{variant}`）
 
-「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の Custom Class](./css-rules.md#custom-classc--)、[css-rules.md の Block Class](./css-rules.md#block-classb--)）。
+「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の独自クラスの選び方](./css-rules.md#独自クラスの選び方2分類)）。
 
 Modifier のプレフィックスは、その Block に付けたプレフィックスをそのまま維持する。`c--` の Block なら `c--{name}--{variant}`、`b--` の Block なら `b--{name}--{variant}` にし、`c--` と `b--` を混ぜない。
 

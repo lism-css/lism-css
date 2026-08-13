@@ -1,6 +1,6 @@
 # 例: 重複3箇所以上 → コンポーネント抽出
 
-[`checklist.md`](../references/checklist.md) Pass3の実例です。同じProperty Class束・`c--*`構造が3箇所以上で安定して現れる時、CSSへ逃がさず**React/Astroコンポーネントとして抽出**します。`className="c--*"`は意味名として残します。
+[`checklist.md`](../references/checklist.md) Pass3の実例です。同じProperty Class束・`c--*`構造が3箇所以上で安定して現れる時、CSSへ逃がさず**React/Astroコンポーネントとして抽出**します。`className="c--*"`は何のパーツかを示す名前として残します。
 
 ### 抽出するかの判断
 
@@ -113,6 +113,6 @@ export function Features({ items }) {
 ### 壊さないための注意
 
 - **レスポンシブPropsを単一値に潰さない**。元のカードが`p={['20','30']}`のような配列Propsを持っていたら、抽出後のコンポーネントもその配列を受けて出力する（[`common-mistakes.md`](../references/common-mistakes.md)）。
-- 値差分はProps（`item`）へ。`c--features_card`等の意味クラスは残す。
+- 値差分はProps（`item`）へ。`c--features_card`等の、何のパーツかを示す名前は残す。
 - 抽出でHTML要素が変わらないようにする（`<Stack>`=`<div>`基盤。元が`<article>`なら`as="article"`を付ける）。
 - リファクタの結果、重複が3箇所未満になり抽出が過剰になるなら、✅で据え置く判断もある（不要な差分を出さない）。
