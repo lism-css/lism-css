@@ -50,7 +50,7 @@ const plans = [
 export default function LandingPage() {
   return (
     <Group isContainer>
-      <Group as="header" className="z--header" py="20" hasGutter bd-be>
+      <Group as="header" className="c--siteHeader" py="20" hasGutter bd-be>
         <Wrapper contentSize="xl">
           <Cluster jc="between" g="20">
             <Link href="#hero" fw="bold" fz="l" c="text" td="none">
@@ -67,7 +67,7 @@ export default function LandingPage() {
       {/* `bgc="canvas"` uses a color key added in tokens.json.
           New color keys have no Property Class, so they must be passed as props
           (or referenced as `var(--canvas)` in CSS) — never as `-bgc:canvas`. */}
-      <Group as="section" id="hero" className="p--hero" bgc="canvas" py={['50', null, '70']} hasGutter>
+      <Group as="section" id="hero" className="c--landingHero" bgc="canvas" py={['50', null, '70']} hasGutter>
         <Wrapper contentSize="m">
           <Stack g="30" ai="center" ta="center">
             <Badge keycolor="brand">Design mockup</Badge>
@@ -90,7 +90,7 @@ export default function LandingPage() {
         </Wrapper>
       </Group>
 
-      <Group as="section" id="features" className="p--features" py={['50', null, '70']} hasGutter>
+      <Group as="section" id="features" className="c--landingFeatures" py={['50', null, '70']} hasGutter>
         <Wrapper contentSize="l">
           <Stack g="40">
             <Stack g="15" ta="center">
@@ -116,7 +116,7 @@ export default function LandingPage() {
         </Wrapper>
       </Group>
 
-      <Group as="section" id="pricing" className="p--pricing" bgc="base-2" py={['50', null, '70']} hasGutter>
+      <Group as="section" id="pricing" className="c--landingPricing" bgc="base-2" py={['50', null, '70']} hasGutter>
         <Wrapper contentSize="m">
           <Stack g="40">
             <Heading level="2" fz="2xl" ta="center">
@@ -156,7 +156,7 @@ export default function LandingPage() {
         </Wrapper>
       </Group>
 
-      <Group as="footer" className="z--footer" py="40" hasGutter bd-bs>
+      <Group as="footer" className="c--siteFooter" py="40" hasGutter bd-bs>
         <Wrapper contentSize="xl">
           <Cluster jc="between" g="20" fz="s" c="text-2">
             <Text>© 2026 Acme</Text>

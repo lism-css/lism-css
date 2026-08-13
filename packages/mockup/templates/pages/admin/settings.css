@@ -5,9 +5,9 @@
  * pseudo-elements, descendant selectors and attribute-based state selectors.
  * Padding, gap, font size, color and radius belong on the markup as props.
  *
- * Component (`c--*`) rules must live inside `@layer lism-component`.
+ * Custom Class (`c--*`) rules must live inside `@layer lism-custom`.
  */
-@layer lism-component {
+@layer lism-custom {
   /* Required-field marker: a pseudo-element, so it has to be CSS. */
   .c--fieldLabel[data-required]::after {
     content: '*';

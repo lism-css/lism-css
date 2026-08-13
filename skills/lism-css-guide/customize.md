@@ -22,6 +22,7 @@
 ## `@layer` をオフにする
 
 `lism-css/main.css` の代わりに `lism-css/main_no_layer.css` を読み込むだけで、`@layer` を使わない CSS に切り替えられます。
+なお、no-layer版ではレイヤーによる優先度管理（`b--`よりProperty Classが必ず強い等の保証）が効かず、読み込み順・詳細度に依存します。
 
 ```js
 // 通常
@@ -184,7 +185,7 @@ export default {
 
 統合プラグイン（型自動生成が有効）を使っている場合、有効化したブレイクポイントを反映した `lism-env.d.ts` がプロジェクト直下に**自動生成**されます。型補完も有効化したブレイクポイントのキーを自動で提示するため、`BreakpointRegistry` をプロジェクト側の `.d.ts` で手書き拡張する必要はありません。`lism-env.d.ts` は git にコミットしてください（`astro check` 等の型チェックがこのファイルを拠り所にします）。
 
-> SCSS を直接利用する構成では、`@use 'lism-css/scss/setting' with ($breakpoints: ...)` で有効化する方法も引き続き利用できます（[SCSS でのカスタマイズ](#scss-でのカスタマイズ) を参照）。
+> SCSS を直接利用する構成では、`@use 'lism-css/scss/setting' with ($breakpoints: ...)` で有効化する方法も利用できます（[SCSS でのカスタマイズ](#scss-でのカスタマイズ) を参照）。
 
 ### フォーマット
 

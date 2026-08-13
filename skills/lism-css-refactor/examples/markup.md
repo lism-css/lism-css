@@ -1,6 +1,6 @@
 # 例: div手組み → Primitive化
 
-[`checklist.md`](../references/checklist.md) Pass2の実例です。`<div>`＋素のCSSで組まれた構造を、同じ挙動のままLism Primitiveへ置換します。`c--*`の意味クラスは残します。
+[`checklist.md`](../references/checklist.md) Pass2の実例です。`<div>`＋素のCSSで組まれた構造を、同じ挙動のままLism Primitiveへ置換します。`c--*`は何のパーツかを示す名前として残します。
 
 import例（Reactの場合）:
 
