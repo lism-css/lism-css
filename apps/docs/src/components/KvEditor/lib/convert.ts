@@ -9,11 +9,17 @@
 //   その他の `{}` 式は非対応で、XML パースエラー → null（last-good 維持）になる。
 //   集約は往復ガード付き: 配列へ束ねて再展開したとき元のクラス・宣言を文字単位で再現できる
 //   組だけを集約し、それ以外（変数だけ・クラスだけ・非正準な値）は素通しする）
+// - スペース区切り値: `-p` クラス + `--p` の style 変数 ⇔ `p="10 20"`（padding の一括指定など。
+//   本物はトークンでない値をプロパティクラスにせず変数で出力するため、その形に合わせる。
+//   対象は bp 対応 prop と alwaysVar の prop のみで、それ以外（`bd="1px solid red"` 等、本物は
+//   生のスタイル宣言を書く）は変換不能 → null（last-good 維持）。BP 配列の base スロットも非対応）
 // - `-bd` などの bare クラス ⇔ `bd`（値なしの boolean prop。key が PROPS に存在するもののみ。
-//   本物の `val === true` → `-{prop}` と同じ規則。XML は値なし属性を書けないため前処理でマーカー化する）
+//   本物の `val === true` → `-{prop}` と同じ規則。XML は値なし属性を書けないため前処理でマーカー化する。
+//   `--{prop}` 宣言を伴う場合は上のスペース区切り値として扱う）
 // - `-hov:val` クラス ⇔ `hov="val"` （hov は PROPS 外の特別扱い prop。文字列形式のみ・複数はカンマ結合。
 //   boolean（値なし -hov）/ オブジェクト形式（inline CSS 変数が絡む）は非対応で className 保持）
-// - `l--stack` / `l--flex` / `l--box` ⇔ Stack / Flex / Box（タグが div 以外なら as="tag"）
+// - `l--{layout}` ⇔ レイアウトコンポーネント（Box / Center / Cluster / Columns / Flex / Frame /
+//   Grid / Stack / TileGrid。タグが div 以外なら as="tag"）
 // - h1〜h6 ⇔ <Heading level="n">、p ⇔ <Text>
 // - 上記以外のタグで Lism prop クラスを持つもの ⇔ <Lism as="tag">
 // - 変換できないクラスは className として保持
@@ -21,16 +27,13 @@
 import { BREAK_POINTS, PROPS, TOKENS } from 'lism-css/config';
 import { VOID_TAGS } from './validate';
 
-const LAYOUT_CLASS_TO_COMPONENT: Record<string, string> = {
-  'l--stack': 'Stack',
-  'l--flex': 'Flex',
-  'l--box': 'Box',
-};
-const COMPONENT_TO_LAYOUT_CLASS: Record<string, string> = {
-  Stack: 'l--stack',
-  Flex: 'l--flex',
-  Box: 'l--box',
-};
+// 対応するレイアウトコンポーネント。クラス名は本物と同じ `l--{layout}` 規則（src/lib/getLayoutProps.ts）。
+// 固有の prop 処理を併せ持つ Flow / WithSide / AutoColumns / SwitchColumns は、クラスだけでは
+// 往復が成立しないため対象外（それらのタグは変換不能 = last-good 維持になる）
+const LAYOUT_COMPONENTS = ['Box', 'Center', 'Cluster', 'Columns', 'Flex', 'Frame', 'Grid', 'Stack', 'TileGrid'];
+const layoutClassOf = (component: string): string => `l--${component[0].toLowerCase()}${component.slice(1)}`;
+const COMPONENT_TO_LAYOUT_CLASS: Record<string, string> = Object.fromEntries(LAYOUT_COMPONENTS.map((c) => [c, layoutClassOf(c)]));
+const LAYOUT_CLASS_TO_COMPONENT: Record<string, string> = Object.fromEntries(LAYOUT_COMPONENTS.map((c) => [layoutClassOf(c), c]));
 
 // 単一テキスト子を1行にまとめる際の行長上限（インデント込み）
 const INLINE_MAX_LENGTH = 80;
@@ -176,6 +179,34 @@ const expandBpProp = (key: string, values: BpSlotValue[]): BpExpansion => {
     styleDecls.push({ name: `--${key}_${bp}`, value: bpValueToCss(str, token) });
   });
   return { classTokens, styleDecls };
+};
+
+/**
+ * `-{prop}` クラス + `--{prop}` 変数の組を出力できる prop か。
+ * 本物の setAttrs はこの形を bp 対応 prop と alwaysVar 指定の prop にだけ使い、
+ * それ以外は生のスタイル宣言（`padding: ...`）を書くため、ここでは前者だけを対象にする
+ */
+const supportsVarForm = (key: string): boolean => {
+  if (!Object.hasOwn(PROPS, key)) return false;
+  const config = (PROPS as Record<string, { bp?: number | number[]; alwaysVar?: number }>)[key];
+  return Boolean(config.bp) || Boolean(config.alwaysVar);
+};
+
+/**
+ * トークンにならない値（`p="10 20"` のようなスペース区切り）をクラス + style 変数へ展開する。
+ * 本物はトークン以外の値をプロパティクラスにせず `-{prop}` + `--{prop}` で出力する
+ * （src/lib/getLismProps.ts の setAttrs 末尾）。expandBpProp と同じく両方向で共有し正準形を一意にする。
+ */
+const expandVarProp = (key: string, value: string): BpExpansion => {
+  if (!supportsVarForm(key)) throw new JsxConvertError(`prop cannot hold a spaced value: ${key}`);
+  // クラス・style 属性の文字列表現を壊す値は変換不能として扱う
+  if (value.includes(BP_ARRAY_MARKER) || value.includes(BOOL_MARKER) || /[;\n\r]/.test(value)) {
+    throw new JsxConvertError(`invalid value for ${key}: ${value}`);
+  }
+  return {
+    classTokens: [`-${key}`],
+    styleDecls: [{ name: `--${key}`, value: bpValueToCss(value, propToken(key)) }],
+  };
 };
 
 /** style 属性を宣言リストへ分解。壊れた宣言・括弧の不整合があれば null（= その要素は集約しない） */
@@ -337,6 +368,38 @@ const tryAggregateBpProp = (
   return { values, declNames };
 };
 
+interface VarAggregation {
+  value: string;
+  declNames: string[];
+}
+
+/**
+ * bare クラス `-{prop}` + `--{prop}` 宣言から値付き prop への集約を試みる（HTML → JSX）。
+ * `--{prop}` を伴わない bare クラスは本物でも `val === true` の出力なので、boolean prop のまま残る。
+ * 往復ガード: 復元した値を expandVarProp で再展開して元のクラス・宣言を再現できる組だけ集約する。
+ */
+const tryAggregateVarProp = (key: string, decls: StyleDecl[]): VarAggregation | null => {
+  const name = `--${key}`;
+  const matches = decls.filter((d) => d.name === name);
+  if (matches.length !== 1) return null; // 宣言なし・重複はクラスと 1:1 にならない
+  const value = String(cssToBpValue(matches[0].value, propToken(key)));
+  // JSX → HTML でこの形に戻るのはスペースを含む値だけ（それ以外はプロパティクラスになる）
+  if (!/\s/.test(value)) return null;
+
+  let expansion: BpExpansion;
+  try {
+    expansion = expandVarProp(key, value);
+  } catch (e) {
+    if (e instanceof JsxConvertError) return null;
+    throw e;
+  }
+  if (expansion.classTokens.length !== 1 || expansion.classTokens[0] !== `-${key}`) return null;
+  if (expansion.styleDecls.length !== 1) return null;
+  if (expansion.styleDecls[0].name !== name || expansion.styleDecls[0].value !== matches[0].value) return null;
+
+  return { value, declNames: [name] };
+};
+
 // ---------------------------------------------------------------------------
 // 共通プリンタ
 // ノード列を「要素・テキストごとに1行、2スペースインデント」で整形する。
@@ -460,6 +523,7 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
 
   // 3. パス2: BP クラスを持つ prop ごとに配列 prop への集約を試みる（往復ガード付き）
   const aggregated = new Map<string, BpAggregation>();
+  const varAggregated = new Map<string, VarAggregation>();
   if (styleDecls !== null) {
     interface KeyEntry {
       base: { value: string; token: string } | null;
@@ -491,8 +555,14 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
       const result = tryAggregateBpProp(key, entry.base, entry.bps, styleDecls);
       if (result) aggregated.set(key, result);
     }
+    // bare クラス単独（`-p` + `--p`）はスペース区切り値の prop へ戻す
+    for (const [key, entry] of byKey) {
+      if (entry.boolCount !== 1 || entry.bps.length > 0 || entry.baseCount > 0) continue;
+      const result = tryAggregateVarProp(key, styleDecls);
+      if (result) varAggregated.set(key, result);
+    }
   }
-  const consumedDeclNames = new Set([...aggregated.values()].flatMap((a) => a.declNames));
+  const consumedDeclNames = new Set([...aggregated.values(), ...varAggregated.values()].flatMap((a) => a.declNames));
 
   // 4. unit 列を元の並び順で属性へ実体化する。
   //    集約された prop はその prop の最初の出現位置に配列 prop として出す。
@@ -521,8 +591,9 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
       continue;
     }
     if (unit.type === 'bool') {
-      // boolean prop は値なしの属性名だけを出力する（`bd` 等）
-      propAttrs.push(unit.key);
+      // `--{prop}` を伴う bare クラスは値付き prop（`p="10 20"`）へ、それ以外は boolean prop（`bd` 等）
+      const varAgg = varAggregated.get(unit.key);
+      propAttrs.push(varAgg ? attrToString(unit.key, varAgg.value) : unit.key);
       continue;
     }
     // 集約されなかった BP クラス（変数なし等）とその他のクラスは className へ
@@ -664,12 +735,22 @@ const jsxElementToHtml = (el: Element): PrintableElement => {
     } else if (attr.name === 'className' || attr.name === 'class') {
       classNameTokens = classNameTokens.concat(attr.value.split(/\s+/).filter(Boolean));
     } else if (Object.hasOwn(PROPS, attr.name)) {
-      classTokens.push(`-${attr.name}:${attr.value}`);
+      // スペースを含む値はクラス名にできないため、本物と同じく `-{prop}` + `--{prop}` の組で出力する
+      if (/\s/.test(attr.value)) {
+        const expansion = expandVarProp(attr.name, attr.value);
+        classTokens.push(...expansion.classTokens);
+        bpStyleDecls.push(...expansion.styleDecls);
+      } else {
+        classTokens.push(`-${attr.name}:${attr.value}`);
+      }
     } else if (attr.name === 'hov') {
       // 文字列形式の hov（カンマ区切りで複数可）を -hov:{val} クラスへ展開（本物の setHovProps と同じ規則）
       for (const value of attr.value.split(',')) {
         const trimmed = value.trim();
-        if (trimmed) classTokens.push(`-hov:${trimmed}`);
+        if (!trimmed) continue;
+        // hov は値を変換せずクラスへ素通しする仕様なので、スペース入りの値はクラスを壊す
+        if (/\s/.test(trimmed)) throw new JsxConvertError(`invalid hov value: ${trimmed}`);
+        classTokens.push(`-hov:${trimmed}`);
       }
     } else if (attr.name === 'style') {
       jsxStyleValue = attr.value;

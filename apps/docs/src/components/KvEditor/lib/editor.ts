@@ -180,12 +180,20 @@ export function initKvEditor(): void {
   // ---- シンタックスハイライト（遅延ロード、初期化後は同期実行） --------------
   let highlightSyncFn: typeof HighlightSyncFn | null = null;
 
+  // 再生アニメは 12〜18ms ごとにフレームを流すので、そのたびに全文を再トークナイズして
+  // オーバーレイを作り直すと 1 フレームに複数回走る。ヒーロー描画と同じく rAF でまとめる
+  let highlightRenderQueued = false;
   const renderHighlight = (): void => {
-    const code = padTrailingNewline(textarea.value);
-    const out = highlightSyncFn?.(code, state.activeTab) ?? null;
-    preInner.innerHTML = out ?? `<span class="fallback">${escapeText(code)}</span>`;
-    // innerHTML 差し替え後もスクロール位置を必ず一致させる
-    syncScroll();
+    if (highlightRenderQueued) return;
+    highlightRenderQueued = true;
+    requestAnimationFrame(() => {
+      highlightRenderQueued = false;
+      const code = padTrailingNewline(textarea.value);
+      const out = highlightSyncFn?.(code, state.activeTab) ?? null;
+      preInner.innerHTML = out ?? `<span class="fallback">${escapeText(code)}</span>`;
+      // innerHTML 差し替え後もスクロール位置を必ず一致させる
+      syncScroll();
+    });
   };
 
   // 初期表示はSSR済みなので、shiki本体はアイドル時に読み込む
