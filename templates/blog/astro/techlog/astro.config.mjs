@@ -49,7 +49,8 @@ export default defineConfig({
   markdown: {
     // remark/rehype パイプライン（unified）をプロセッサとして明示指定
     processor: unified({
-      // :::note などの directive 記法を <Callout> に変換
+      // remark-directive: :::記法をASTへ解析
+      // remarkDirectiveHandler: ラベルあり → Callout、ラベルなし → Alert
       // URL単独段落/[[slug]]単独段落 → <LinkCard />、文中の[[slug]] → <WikiLink />
       remarkPlugins: [remarkDirective, remarkDirectiveHandler, remarkLinkCard, remarkWikiLink],
       // h2/h3 見出しに #アンカーリンクを追加

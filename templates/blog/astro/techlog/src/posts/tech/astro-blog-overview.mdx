@@ -18,7 +18,7 @@ AstroとLism CSS/`@lism-css/ui`に加え、以下を入れている。
 - `remark-directive` — `:::` 記法
 - `pagefind` / `@pagefind/default-ui` — 全文検索
 
-`astro.config.mjs`で`expressiveCode`を`mdx`より前に並べ、`markdown.processor`（`@astrojs/markdown-remark`の`unified()`）に自前の変換プラグイン3つ（`remark-directive`の`:::`変換、URL/`[[slug]]`段落のリンクカード化、文中`[[slug]]`のWikiLink化）を登録している。さらにsitemap integrationで、記事ごとの`lastmod`も補完する。
+`astro.config.mjs`で`expressiveCode`を`mdx`より前に並べ、`markdown.processor`（`@astrojs/markdown-remark`の`unified()`）に`remark-directive`（`:::`記法の解析）と自前の変換プラグイン3つ（ラベルありをCallout・なしをAlertへ変換、URL/`[[slug]]`段落のリンクカード化、文中`[[slug]]`のWikiLink化）を登録している。さらにsitemap integrationで、記事ごとの`lastmod`も補完する。
 
 ## ディレクトリ構成
 
