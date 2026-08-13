@@ -52,7 +52,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 | `allowMultiple` | Root | `boolean` | — | 複数アイテムの同時展開を許可 |
 | `isOpen` | Item / Button / Panel | `boolean` | `false` | アイテムを初期展開。Item・Button・Panel の3つ揃えて指定（Item=`data-opened` 付与、Button=`aria-expanded`、Panel=`hidden` 解除） |
 | `as` | Heading | `string` | `div` | 見出しのHTMLタグ。`div` 時は `role='heading'` が自動付与。`h2`〜`h6` 指定時は role なし |
-| `flow` | Panel | `string` | — | パネル内コンテンツ領域（`c--accordion_content`）のフロー余白 |
+| `flow` | Panel | `string` | — | パネル内コンテンツ領域（`b--accordion_content`）のフロー余白 |
 
 ```jsx
 <Accordion.Root>
@@ -107,11 +107,11 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Badge/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge)
 
-バッジ（ラベル）コンポーネント。`span` 要素としてインライン表示。`c--badge` クラスが付与される。
+バッジ（ラベル）コンポーネント。`span` 要素としてインライン表示。`b--badge` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
-| `variant` | `string` | — | バリエーション（`'outline'` 等）。`c--badge--{variant}` クラスが出力 |
+| `variant` | `string` | — | バリエーション（`'outline'` 等）。`b--badge--{variant}` クラスが出力 |
 | `keycolor` | `string` | — | キーカラー |
 
 ```jsx
@@ -123,11 +123,11 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Button/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Button)
 
-ボタン型リンクコンポーネント。デフォルトで `a` 要素として出力。`c--button` クラスが付与される。
+ボタン型リンクコンポーネント。デフォルトで `a` 要素として出力。`b--button` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
-| `variant` | `string` | — | バリエーション（`'fill'`, `'outline'` 等）。`c--button--{variant}` クラスが出力 |
+| `variant` | `string` | — | バリエーション（`'fill'`, `'outline'` 等）。`b--button--{variant}` クラスが出力 |
 | `keycolor` | `string` | — | キーカラー |
 | `href` | `string` | — | リンク先URL |
 
@@ -159,7 +159,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Chat/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat)
 
-チャット風の吹き出しコンポーネント。Grid ベースの会話形式 UI。`c--chat` クラスが付与される。
+チャット風の吹き出しコンポーネント。Grid ベースの会話形式 UI。`b--chat` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
@@ -231,7 +231,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ソース: [NavMenu/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu)
 
-ナビゲーションメニューコンポーネント。`c--navMenu` クラスが付与される。
+ナビゲーションメニューコンポーネント。`b--navMenu` クラスが付与される。
 
 **構造:** `NavMenu.Root > NavMenu.Item > NavMenu.Link`（`NavMenu.Nest` でネスト可能）
 
@@ -268,7 +268,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `tabId` | Root | `string` | — | タブを特定するための ID 文字列 |
 | `defaultIndex` | Root | `number` | `1` | 初期アクティブタブ（1始まり） |
 | `listProps` | Root | `object` | — | タブボタンリスト要素へ渡す props |
-| `variant` | Root | `string` | — | バリエーション。`c--tabs--{variant}` クラスが出力 |
+| `variant` | Root | `string` | — | バリエーション。`b--tabs--{variant}` クラスが出力 |
 
 ```jsx
 <Tabs.Root>
