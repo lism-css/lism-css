@@ -71,7 +71,7 @@ export default function Tabs<T extends ElementType = 'div'>({
   });
 
   return (
-    <Lism className={atts(className, buildModifierClass('c--tabs', { variant }))} {...(props as LismComponentProps<ElementType>)}>
+    <Lism className={atts(className, buildModifierClass('b--tabs', { variant }))} {...(props as LismComponentProps<ElementType>)}>
       {btns.length === 0 ? (
         // TabItemを使わず直接TabListなどを子要素に配置する場合
         children

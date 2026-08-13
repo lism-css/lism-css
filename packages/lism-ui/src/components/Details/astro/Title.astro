@@ -9,4 +9,4 @@ type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismB
 const { class: className, ...props } = Astro.props;
 ---
 
-<Lism as="span" fx="1" set="plain" class={atts(className, 'c--details_title')} {...props}><slot /></Lism>
+<Lism as="span" fx="1" set="plain" class={atts(className, 'b--details_title')} {...props}><slot /></Lism>

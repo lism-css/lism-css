@@ -37,7 +37,7 @@ export function ShapeDivider<T extends ElementType = 'div'>({
 
   return (
     <Lism
-      className={atts(className, 'c--shapeDivider')}
+      className={atts(className, 'b--shapeDivider')}
       max-sz="full"
       aria-hidden="true"
       data-flip={flip || undefined}
@@ -46,10 +46,10 @@ export function ShapeDivider<T extends ElementType = 'div'>({
       {...(props as object)}
     >
       {isEmpty ? null : (
-        <div className="c--shapeDivider_inner">
+        <div className="b--shapeDivider_inner">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="c--shapeDivider_svg"
+            className="b--shapeDivider_svg"
             viewBox={viewBox}
             width="100%"
             height="100%"

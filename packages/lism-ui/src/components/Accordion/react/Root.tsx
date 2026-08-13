@@ -14,7 +14,7 @@ type AccordionRootProps<T extends ElementType = 'div'> = LayoutComponentProps<T,
  */
 export default function Root<T extends ElementType = 'div'>({ children, className, allowMultiple, ...props }: AccordionRootProps<T>) {
   return (
-    <Stack className={atts(className, 'c--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...(props as object)}>
+    <Stack className={atts(className, 'b--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...(props as object)}>
       {children}
     </Stack>
   );

@@ -15,6 +15,6 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLayout
 const { class: className, ...props } = Astro.props;
 ---
 
-<Lism class="c--details_body">
-  <Flow flow="s" class={atts(className, 'c--details_content')} {...props}><slot /></Flow>
+<Lism class="b--details_body">
+  <Flow flow="s" class={atts(className, 'b--details_content')} {...props}><slot /></Flow>
 </Lism>

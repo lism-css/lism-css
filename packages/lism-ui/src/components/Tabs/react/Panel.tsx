@@ -22,7 +22,7 @@ export default function TabPanel<T extends ElementType = 'div'>({
       id={controlId}
       role="tabpanel"
       aria-hidden={isActive ? 'false' : 'true'}
-      className={atts(className, 'c--tabs_panel')}
+      className={atts(className, 'b--tabs_panel')}
       {...(props as object)}
     />
   );

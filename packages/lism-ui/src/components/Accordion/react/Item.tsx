@@ -29,7 +29,7 @@ export default function Item<T extends ElementType = 'div'>({
   // Lism コンポーネントは ref を forwardRef していないため、React 18 互換のため動的 Tag + getLismProps で実装
   const Tag = as ?? 'div';
   const lismProps = getLismProps({
-    className: atts(className, 'c--accordion_item'),
+    className: atts(className, 'b--accordion_item'),
     ...(props as object),
   });
 

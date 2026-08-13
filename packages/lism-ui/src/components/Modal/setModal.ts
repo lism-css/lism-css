@@ -143,7 +143,7 @@ export function setEvent(modal: HTMLElement): void {
 }
 
 const setModal = () => {
-  const modals = document.querySelectorAll('.c--modal');
+  const modals = document.querySelectorAll('.b--modal');
   modals?.forEach((target) => {
     setEvent(target as HTMLElement);
   });

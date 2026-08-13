@@ -1,5 +1,5 @@
-@layer lism-component {
-  .c--button {
+@layer lism-block {
+  .b--button {
     --c: var(--base);
     --bgc: var(--text);
     --bdc: var(--bgc);
@@ -13,22 +13,22 @@
     place-content: center;
     place-items: center;
   }
-  .c--button--outline {
+  .b--button--outline {
     --c: var(--text);
     --bgc: transparent;
     --bdc: var(--c);
   }
 
-  :where(.c--button) > .a--icon {
+  :where(.b--button) > .a--icon {
     scale: 1.05;
   }
 
   /* l--gridを使用する場合の追加スタイル */
-  .c--button:where(.l--grid) {
+  .b--button:where(.l--grid) {
     grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
     justify-items: center;
   }
-  .c--button:where(.l--grid) > :not(.a--icon) {
+  .b--button:where(.l--grid) > :not(.a--icon) {
     grid-column: 2;
   }
 }

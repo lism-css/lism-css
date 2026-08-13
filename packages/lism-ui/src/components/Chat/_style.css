@@ -1,5 +1,5 @@
-@layer lism-component {
-  .c--chat {
+@layer lism-block {
+  .b--chat {
     --cbox-bgPct: 8%;
     grid-template-areas: 'avatar name' 'avatar body';
     grid-template-columns: auto 1fr;
@@ -14,21 +14,21 @@
     gap: 0 calc(var(--_deco-size) + 1px);
   }
 
-  .c--chat_avatar {
+  .b--chat_avatar {
     grid-area: avatar;
     width: var(--_avator-size);
   }
-  .c--chat_name {
+  .b--chat_name {
     grid-area: name;
   }
-  .c--chat_body {
+  .b--chat_body {
     grid-area: body;
   }
-  .c--chat_content {
+  .b--chat_content {
     max-width: var(--sz--s);
   }
 
-  .c--chat_deco {
+  .b--chat_deco {
     top: var(--_deco-t);
     inset-inline: var(--_deco-inset-x);
     width: var(--_deco-size);
@@ -36,7 +36,7 @@
     scale: var(--_deco-scale);
     mask: var(--_deco-mask) center / contain no-repeat;
   }
-  .c--chat--speak {
+  .b--chat--speak {
     --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
   }
 
@@ -54,11 +54,11 @@
 /* NOTE: 以下は @layer 外に配置（セレクタの詳細度を確保するため） */
 
 /* speak バリアントの角丸調整: 左側 */
-.c--chat--speak[data-chat-dir='start'] > div > .c--chat_content {
+.b--chat--speak[data-chat-dir='start'] > div > .b--chat_content {
   border-start-start-radius: 0;
 }
 
 /* speak バリアントの角丸調整: 右側 */
-.c--chat--speak[data-chat-dir='end'] > div > .c--chat_content {
+.b--chat--speak[data-chat-dir='end'] > div > .b--chat_content {
   border-start-end-radius: 0;
 }

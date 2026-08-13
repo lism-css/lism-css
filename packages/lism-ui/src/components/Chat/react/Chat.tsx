@@ -26,25 +26,25 @@ export function Chat<T extends ElementType = 'div'>({
 }: Props<T>) {
   return (
     <Grid
-      className={atts(className, buildModifierClass('c--chat', { variant }))}
+      className={atts(className, buildModifierClass('b--chat', { variant }))}
       keycolor="gray"
       data-chat-dir={direction}
       ji={direction}
       {...(props as object)}
     >
       {avatar && (
-        <Frame className="c--chat_avatar" bgc="base" ar="1/1" bdrs="99" aria-hidden="true">
+        <Frame className="b--chat_avatar" bgc="base" ar="1/1" bdrs="99" aria-hidden="true">
           <img src={avatar} alt="" width="60" height="60" decoding="async" />
         </Frame>
       )}
       {name && (
-        <Lism className="c--chat_name" c="text-2" fs="italic" fz="2xs" hl="0" py="5" px="10" aslf="end">
+        <Lism className="b--chat_name" c="text-2" fs="italic" fz="2xs" hl="0" py="5" px="10" aslf="end">
           {name}
         </Lism>
       )}
-      <Lism className="c--chat_body" pos="relative">
-        <Decorator className="c--chat_deco" util="cbox" isSkipFlow pos="absolute" />
-        <Flow className="c--chat_content" util="cbox" bdrs="30" p="20" hl="s" flow={flow} jslf={direction}>
+      <Lism className="b--chat_body" pos="relative">
+        <Decorator className="b--chat_deco" util="cbox" isSkipFlow pos="absolute" />
+        <Flow className="b--chat_content" util="cbox" bdrs="30" p="20" hl="s" flow={flow} jslf={direction}>
           {children}
         </Flow>
       </Lism>

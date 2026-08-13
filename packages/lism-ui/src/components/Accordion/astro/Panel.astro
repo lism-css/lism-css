@@ -14,6 +14,6 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
 const { class: className, as = 'div', accID = '__LISM_ACC_ID__', isOpen = false, ...props } = Astro.props;
 ---
 
-<Lism as={as} class={atts(className, 'c--accordion_panel')} id={accID} hidden={isOpen ? undefined : 'until-found'} pos="relative" ov="hidden">
-  <Flow class="c--accordion_content" {...props}><slot /></Flow>
+<Lism as={as} class={atts(className, 'b--accordion_panel')} id={accID} hidden={isOpen ? undefined : 'until-found'} pos="relative" ov="hidden">
+  <Flow class="b--accordion_content" {...props}><slot /></Flow>
 </Lism>

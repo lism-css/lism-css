@@ -15,7 +15,7 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
 const { class: className, as = 'div', allowMultiple, ...props } = Astro.props;
 ---
 
-<Stack as={as} class={atts(className, 'c--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...props}><slot /></Stack>
+<Stack as={as} class={atts(className, 'b--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...props}><slot /></Stack>
 
 <script>
   import setAccordion from '../setAccordion';

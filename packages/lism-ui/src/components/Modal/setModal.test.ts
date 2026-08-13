@@ -9,7 +9,7 @@ import { waitAnimation } from '../../helper/animation';
 
 beforeEach(() => {
   document.body.innerHTML = `
-    <dialog id="m1" class="c--modal">
+    <dialog id="m1" class="b--modal">
       <button data-modal-close="m1"></button>
     </dialog>
     <button data-modal-open="m1"></button>
@@ -125,7 +125,7 @@ describe('setEvent (dialog 要素)', () => {
 describe('setEvent (非 dialog 要素)', () => {
   it('open/close が open 属性ベースで動作する', async () => {
     document.body.innerHTML = `
-      <div id="m2" class="c--modal">
+      <div id="m2" class="b--modal">
         <button data-modal-close="m2"></button>
       </div>
       <button data-modal-open="m2"></button>
@@ -151,7 +151,7 @@ describe('setEvent (非 dialog 要素)', () => {
 
 describe('setEvent (早期 return ケース)', () => {
   it('id が無い modal は何もしない', () => {
-    document.body.innerHTML = `<dialog class="c--modal"></dialog>`;
+    document.body.innerHTML = `<dialog class="b--modal"></dialog>`;
     const modal = document.querySelector<HTMLDialogElement>('dialog')!;
 
     setEvent(modal);
@@ -160,12 +160,12 @@ describe('setEvent (早期 return ケース)', () => {
 });
 
 describe('setModal (default export)', () => {
-  it('document 内の .c--modal 全件に登録される', async () => {
+  it('document 内の .b--modal 全件に登録される', async () => {
     document.body.innerHTML = `
-      <dialog id="m1" class="c--modal">
+      <dialog id="m1" class="b--modal">
         <button data-modal-close="m1"></button>
       </dialog>
-      <dialog id="m2" class="c--modal">
+      <dialog id="m2" class="b--modal">
         <button data-modal-close="m2"></button>
       </dialog>
       <button data-modal-open="m1"></button>

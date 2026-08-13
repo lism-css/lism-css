@@ -18,7 +18,7 @@ export default function Root<T extends ElementType = 'ul'>({ children, className
   if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
 
   return (
-    <Stack as="ul" className={atts(className, 'c--navMenu')} style={computedStyle} {...(props as object)}>
+    <Stack as="ul" className={atts(className, 'b--navMenu')} style={computedStyle} {...(props as object)}>
       {children}
     </Stack>
   );

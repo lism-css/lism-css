@@ -15,7 +15,7 @@ export default function Tab<T extends ElementType = 'button'>({ tabId = 'tab', i
     <Lism
       as="button"
       set="plain"
-      className={atts(className, 'c--tabs_tab')}
+      className={atts(className, 'b--tabs_tab')}
       role="tab"
       aria-controls={controlId}
       aria-selected={isActive ? 'true' : 'false'}

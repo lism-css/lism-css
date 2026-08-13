@@ -31,7 +31,7 @@ const { btns, panels } = transformTabitems(await Astro.slots.render('default'), 
 const hasItems = btns.length > 0;
 ---
 
-<Lism class={atts(className, buildModifierClass('c--tabs', { variant }))} {...props}>
+<Lism class={atts(className, buildModifierClass('b--tabs', { variant }))} {...props}>
   {
     btns && (
       <TabList {...listProps}>
@@ -51,7 +51,7 @@ const hasItems = btns.length > 0;
 
 <script>
   import setTabs from '../setTabs';
-  const tabsAll = document.querySelectorAll('.c--tabs');
+  const tabsAll = document.querySelectorAll('.b--tabs');
   tabsAll.forEach((tabs) => {
     setTabs(tabs as HTMLElement);
   });

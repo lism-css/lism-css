@@ -3,17 +3,13 @@ import setTabs from './setTabs';
 
 beforeEach(() => {
   document.body.innerHTML = `
-    <div class="c--tabs">
-      <div class="c--tabs_list">
-        <div class="c--tabs_item">
-          <button role="tab" aria-selected="true" aria-controls="panel1"></button>
-        </div>
-        <div class="c--tabs_item">
-          <button role="tab" aria-selected="false" aria-controls="panel2"></button>
-        </div>
+    <div class="b--tabs">
+      <div class="b--tabs_list" role="tablist">
+        <button class="b--tabs_tab" role="tab" aria-selected="true" aria-controls="panel1"></button>
+        <button class="b--tabs_tab" role="tab" aria-selected="false" aria-controls="panel2"></button>
       </div>
-      <div id="panel1" aria-hidden="false"></div>
-      <div id="panel2" aria-hidden="true"></div>
+      <div id="panel1" class="b--tabs_panel" role="tabpanel" aria-hidden="false"></div>
+      <div id="panel2" class="b--tabs_panel" role="tabpanel" aria-hidden="true"></div>
     </div>
   `;
   history.replaceState({}, '', '/');
@@ -26,7 +22,7 @@ afterEach(() => {
 
 describe('setTabs', () => {
   it('非選択 tab を click すると aria-selected と aria-hidden が切り替わる', () => {
-    const tabs = document.querySelector<HTMLElement>('.c--tabs')!;
+    const tabs = document.querySelector<HTMLElement>('.b--tabs')!;
     const [tab1, tab2] = tabs.querySelectorAll<HTMLElement>('[role="tab"]');
     const panel1 = document.querySelector<HTMLElement>('#panel1')!;
     const panel2 = document.querySelector<HTMLElement>('#panel2')!;
@@ -41,7 +37,7 @@ describe('setTabs', () => {
   });
 
   it('既選択 tab を click しても状態変化なし', () => {
-    const tabs = document.querySelector<HTMLElement>('.c--tabs')!;
+    const tabs = document.querySelector<HTMLElement>('.b--tabs')!;
     const [tab1] = tabs.querySelectorAll<HTMLElement>('[role="tab"]');
     const panel1 = document.querySelector<HTMLElement>('#panel1')!;
     setTabs(tabs);
@@ -53,14 +49,13 @@ describe('setTabs', () => {
   });
 
   it('aria-controls が無い tab を click しても例外で落ちない', () => {
-    const tabs = document.querySelector<HTMLElement>('.c--tabs')!;
+    const tabs = document.querySelector<HTMLElement>('.b--tabs')!;
 
-    const extraItem = document.createElement('div');
     const extraBtn = document.createElement('button');
+    extraBtn.className = 'b--tabs_tab';
     extraBtn.setAttribute('role', 'tab');
     extraBtn.setAttribute('aria-selected', 'false');
-    extraItem.appendChild(extraBtn);
-    tabs.querySelector('.c--tabs_list')!.appendChild(extraItem);
+    tabs.querySelector('.b--tabs_list')!.appendChild(extraBtn);
 
     setTabs(tabs);
 
@@ -70,7 +65,7 @@ describe('setTabs', () => {
   it('ディープリンク: ?lism-tab=panel2 で panel2 が選択状態になる', () => {
     vi.useFakeTimers();
 
-    const tabs = document.querySelector<HTMLElement>('.c--tabs')!;
+    const tabs = document.querySelector<HTMLElement>('.b--tabs')!;
     const [tab1, tab2] = tabs.querySelectorAll<HTMLElement>('[role="tab"]');
     const panel1 = document.querySelector<HTMLElement>('#panel1')!;
     const panel2 = document.querySelector<HTMLElement>('#panel2')!;
@@ -89,14 +84,14 @@ describe('setTabs', () => {
   });
 
   it('?lism-tab= が無い URL では dataset.hasTabLink が触られない', () => {
-    const tabs = document.querySelector<HTMLElement>('.c--tabs')!;
+    const tabs = document.querySelector<HTMLElement>('.b--tabs')!;
     setTabs(tabs);
 
     expect(tabs.dataset.hasTabLink).toBeUndefined();
   });
 
   it('存在しない id を ?lism-tab= に指定しても何も起きない', () => {
-    const tabs = document.querySelector<HTMLElement>('.c--tabs')!;
+    const tabs = document.querySelector<HTMLElement>('.b--tabs')!;
     const [tab1] = tabs.querySelectorAll<HTMLElement>('[role="tab"]');
     const panel1 = document.querySelector<HTMLElement>('#panel1')!;
 

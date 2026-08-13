@@ -28,7 +28,7 @@ if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
   Number(level) !== 0 && (
     <Lism
       as={as}
-      class={atts(className, 'c--shapeDivider')}
+      class={atts(className, 'b--shapeDivider')}
       max-sz="full"
       aria-hidden="true"
       data-flip={flip || undefined}
@@ -37,10 +37,10 @@ if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
       {...props}
     >
       {isEmpty ? null : (
-        <div class="c--shapeDivider_inner">
+        <div class="b--shapeDivider_inner">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="c--shapeDivider_svg"
+            class="b--shapeDivider_svg"
             viewBox={viewBox}
             width="100%"
             height="100%"

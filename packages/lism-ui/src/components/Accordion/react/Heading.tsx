@@ -17,7 +17,7 @@ export default function Heading<T extends ElementType = 'div'>({
   return (
     <Lism
       as={(as ?? 'div') as 'div'}
-      className={atts(className, 'c--accordion_heading')}
+      className={atts(className, 'b--accordion_heading')}
       set="plain"
       role={isDiv ? (role ?? 'heading') : role}
       {...(props as object)}

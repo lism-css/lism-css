@@ -29,7 +29,7 @@ export default function Button<T extends ElementType = 'button'>({
   return (
     <Flex
       as="button"
-      className={atts(className, 'c--accordion_button')}
+      className={atts(className, 'b--accordion_button')}
       set="plain"
       g="10"
       w="100%"

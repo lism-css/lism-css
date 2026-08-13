@@ -28,9 +28,9 @@ const slotHtml = rendered.includes('__LISM_ACC_ID__') ? rendered.replaceAll('__L
 {/* isOpen=true のとき data-opened を付与し、初期状態で展開しておく（CSS/JS は data-opened を基準に動作） */}
 {
   slotHtml !== null ? (
-    <Lism as={as} class={atts(className, 'c--accordion_item')} data-opened={isOpen ? '' : undefined} set:html={slotHtml} {...restProps} />
+    <Lism as={as} class={atts(className, 'b--accordion_item')} data-opened={isOpen ? '' : undefined} set:html={slotHtml} {...restProps} />
   ) : (
-    <Lism as={as} class={atts(className, 'c--accordion_item')} data-opened={isOpen ? '' : undefined} {...restProps}>
+    <Lism as={as} class={atts(className, 'b--accordion_item')} data-opened={isOpen ? '' : undefined} {...restProps}>
       <slot />
     </Lism>
   )
