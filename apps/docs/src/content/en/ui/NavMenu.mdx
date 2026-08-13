@@ -2,11 +2,86 @@
 title: 'NavMenu'
 description: 'Documentation for the NavMenu component provided by @lism-css/ui.'
 ---
-import { Lism, Icon, Spacer, Box } from 'lism-css/astro'
+import { Lism, Icon, Box } from 'lism-css/astro'
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 
 A component for creating navigation menu lists.
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <NavMenu.Root>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          <Fragment>Menu item 1</Fragment>
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          <Fragment>Menu item 2</Fragment>
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          <Fragment>Menu item 3</Fragment>
+        </NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <NavMenu.Root>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          Menu item 1
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          Menu item 2
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu">
+          Menu item 3
+        </NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<ul class="c--navMenu l--stack">
+  <li class="c--navMenu_item">
+    <a class="c--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 1</a>
+  </li>
+  <li class="c--navMenu_item">
+    <a class="c--navMenu_link l--flex -c:inherit -hov:-bgc" href="#menu">Menu item 2</a>
+  </li>
+  ...
+</ul>
+```
+  </PreviewCode>
+</Preview>
+
+:::note
+Use `<NavMenu.Nest>` for nested structures.
+:::
+
+
+## Styles
+
+The NavMenu base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/NavMenu/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu).
+:::
 
 
 ## Usage
@@ -29,81 +104,7 @@ Provided as `NavMenu` (`c--navMenu`) from the `@lism-css/ui` package.
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | Specifies the hover style. Defaults to `-bgc`, changing the background color on hover. |
 
 
-### Structure
-
-```jsx
-<NavMenu.Root>
-  <NavMenu.Item>
-    <NavMenu.Link href="">Menu item</NavMenu.Link>
-  </NavMenu.Item>
-  <NavMenu.Item>
-    <NavMenu.Link href="">Menu item</NavMenu.Link>
-    <NavMenu.Nest>
-      <NavMenu.Item>
-        <NavMenu.Link href="">Nested item</NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Nest>
-  </NavMenu.Item>
-</NavMenu.Root>
-```
-
-Use `<NavMenu.Nest>` to create nested menus.
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu).
-
-
 ## Examples
-
-### Simple example
-<Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p="20">
-    <NavMenu.Root>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          <Fragment>Menu item 1</Fragment>
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          <Fragment>Menu item 2</Fragment>
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          <Fragment>Menu item 3</Fragment>
-        </NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Root>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <NavMenu.Root>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          Menu item 1
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          Menu item 2
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu">
-          Menu item 3
-        </NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Root>
-    ```
-  </PreviewCode>
-</Preview>
-
-<Spacer h="10" />
-
 
 ### Adding icons and badges
 <Preview>

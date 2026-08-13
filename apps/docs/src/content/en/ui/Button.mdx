@@ -11,6 +11,9 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 A component for displaying button-style links.
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe" layout="">
@@ -23,7 +26,7 @@ A component for displaying button-style links.
       </Button>
     </Flex>
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Flex layout="cluster" g="15">
       <Button href="###" variant="fill">
@@ -38,19 +41,23 @@ A component for displaying button-style links.
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
-      <a class="c--button c--button--fill l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">
-        {' '}
-        Button{' '}
-      </a>
-      <a class="c--button c--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">
-        Outline
-      </a>
+      <a class="c--button c--button--fill l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Button</a>
+      <a class="c--button c--button--outline l--flex -hl:s -py:10 -px:20 -hov:-o" href="###">Outline</a>
     </div>
     ```
   </PreviewCode>
-
 </Preview>
 
+
+## Styles
+
+The Button base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Button/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Button).
+:::
 
 
 ## Usage
@@ -69,10 +76,6 @@ Provided as `Button` (`c--button`) from the `@lism-css/ui` package.
 |---|---|
 |`variant`<small>(optional)</small>| Outputs the `c--button--{variant}` class. Two styles are available: `fill` and `outline`. |
 
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Button).
 
 
 ## Examples

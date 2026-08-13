@@ -11,59 +11,10 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 A component for displaying modals using the `dialog` element.
 
 
-
-## Usage
-
-Provided as `Modal` from the `@lism-css/ui` package.
-
-
-### Import
-
-<ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
-
-`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, and `<Modal.CloseBtn>` are available.
-
-
-### Props
-
-| Prop | Description |
-|---|---|
-|`id`| The `id` attribute is required on Modal (`c--modal`). |
-|<PropBadge>`<Modal.Root>`</PropBadge><br/> `duration`| Sets the duration of the modal open/close animation. Output as the `--duration` variable. |
-|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| Specifies the layout component for `__inner`. |
-|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| Offset value to shift the position of `__inner` when hidden. |
-|<PropBadge>`<Modal.OpenBtn>`</PropBadge><br/> `modalId`| Output as `data-modal-open`. Specifies the modal `id` on the trigger element that opens the modal. |
-|<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| Output as `data-modal-close`. Specifies the modal `id` on the trigger element that closes the modal. |
-
-
-### Structure
-
-```jsx
-<Modal.OpenBtn modalId="modalID">Open</Modal.OpenBtn>
-<Modal.Root id="modalID">
-  <Modal.Inner>
-    <Modal.Body>...Contents...</Modal.Body>
-    <Modal.CloseBtn modalId="modalID" />
-  </Modal.Inner>
-</Modal.Root>
-```
-
-Add an `id` to `<Modal.Root>`, and pass the same `modalId` to `<Modal.OpenBtn>` / `<Modal.CloseBtn>` to wire up the open/close triggers.
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal).
-
-
-
-## Examples
-
-- Do not change the `display` value of the `dialog` element.
-- Due to animation issues with `::backdrop`, this component assumes the dialog covers the full viewport width with a background color.
+## Overview
 
 <Preview>
-  <PreviewTitle>Modal usage example</PreviewTitle>
+  <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">
       <Fragment>Open Modal 01</Fragment>
@@ -95,15 +46,78 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-01"'
+    <button class="-bd -px:15 -py:5 -bdrs:10 set--plain -hov:-o -d:inline-flex" data-modal-open="modal-01">Open Modal 01</button>
+
+    <dialog class="c--modal set--plain is--wrapper is--container -p:30" id="modal-01">
+      <div class="c--modal_inner l--stack -pos:relative -p:30 -bdrs:20 -bxsh:40">
+        <button class="set--plain -hov:-o -d:inline-flex -pos:absolute -t:0 -r:0 -z:1 -fz:xl -p:10 -m:15" data-modal-close="modal-01" autofocus>
+          <svg class="a--icon" aria-hidden="true">...</svg>
+          <span class="u--srOnly">Close</span>
+        </button>
+        <div class="c--modal_body l--stack u--trimAll -g:30">
+          <div class="-fz:xl -fw:bold">Modal Title</div>
+          <p>...Contents...</p>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>
 
+:::note
+Add an `id` to `<Modal.Root>`, and pass the same `modalId` to `<Modal.OpenBtn>` / `<Modal.CloseBtn>` to wire up the open/close triggers.
+
+- Do not change the `display` value of the `dialog` element.
+- Due to animation issues with `::backdrop`, this component assumes the dialog covers the full viewport width with a background color.
+:::
+
+
+## Styles
+
+The Modal base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Modal/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal).
+:::
+
+
+## Usage
+
+Provided as `Modal` from the `@lism-css/ui` package.
+
+
+### Import
+
+<ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
+
+`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, and `<Modal.CloseBtn>` are available.
+
+
+### Props
+
+| Prop | Description |
+|---|---|
+|`id`| The `id` attribute is required on Modal (`c--modal`). |
+|<PropBadge>`<Modal.Root>`</PropBadge><br/> `duration`| Sets the duration of the modal open/close animation. Output as the `--duration` variable. |
+|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| Specifies the layout component for `__inner`. |
+|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| Offset value to shift the position of `__inner` when hidden. |
+|<PropBadge>`<Modal.OpenBtn>`</PropBadge><br/> `modalId`| Output as `data-modal-open`. Specifies the modal `id` on the trigger element that opens the modal. |
+|<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| Output as `data-modal-close`. Specifies the modal `id` on the trigger element that closes the modal. |
+
+
+## Examples
+
+{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`c--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
+
+{/* モーダルコンテンツを中央に寄せたい場合、l--stack + jc="center" か、 root:l--stack + inner:m='auto' で実現できます。 */}
+
 `c--modal_body` is a scrollable area with `overflow:auto`. Place any content that should always remain visible before or after it.
 
 <Preview>
-  <PreviewTitle>Modal usage example 2</PreviewTitle>
+  <PreviewTitle>`Modal` example</PreviewTitle>
   <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-02" className="-bd -px:15 -py:5 -bdrs:10">
       <Fragment>Open Modal 02</Fragment>
@@ -163,7 +177,32 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-02"'
+    <button class="-bd -px:15 -py:5 -bdrs:10 set--plain -hov:-o -d:inline-flex" data-modal-open="modal-02">Open Modal 02</button>
+
+    <dialog class="c--modal set--plain is--wrapper is--container -px:30 -py:50 -contentSize:s" id="modal-02">
+      <div class="c--modal_inner l--stack -max-h:100% -bdrs:20 -bxsh:40">
+        <div class="l--flex -ai:center -jc:between -py:15 -bd-b">
+          <span class="-fz:l -fw:bold -hl:s -ms:30">Modal Header</span>
+          <button class="set--plain -hov:-o -d:inline-flex -fz:xl -p:15 -mx:15" data-modal-close="modal-02" autofocus>
+            <svg class="a--icon" aria-hidden="true">...</svg>
+            <span class="u--srOnly">Close</span>
+          </button>
+        </div>
+        <div class="c--modal_body l--flow -px:30 -py:20 -ov-y:auto">
+          ...Contents...
+          <ul>
+            <li>Lorem ipsum dolor sit amet.</li>
+            <li>Consectetur adipiscing elit.</li>
+            <li>Labore et dolore magna aliqua.</li>
+          </ul>
+          ...Contents...
+        </div>
+        <div class="l--flex -jc:end -px:30 -py:20 -bd-t">
+          <button class="set--plain -hov:-o -d:inline-flex -bgc:text -c:base -hl:s -px:15 -py:10 -bd:none -bdrs:10" data-modal-close="modal-02">Close</button>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>
@@ -230,7 +269,31 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-03"'
+    <button class="set--plain -hov:-o -d:inline-flex -ai:center -g:5" data-modal-open="modal-03">
+      <svg class="a--icon -fz:l" aria-hidden="true">...</svg>
+      <span>MENU</span>
+    </button>
+
+    <dialog class="c--modal set--plain" id="modal-03">
+      <div class="c--modal_inner l--stack -max-w -h:100% -bxsh:40" style="--offset:-100px 0;--max-w:24rem">
+        <div class="l--flex -bd-b -ai:center -jc:between -p:20">
+          <span class="-fz:l">MENU</span>
+          <button class="set--plain -hov:-o -d:inline-flex -fz:xl -p:5" data-modal-close="modal-03" autofocus>
+            <svg class="a--icon" aria-hidden="true">...</svg>
+            <span class="u--srOnly">Close</span>
+          </button>
+        </div>
+        <div class="c--modal_body -ov-y:auto">
+          <div class="l--stack u--divide -bd-b">
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link01">Menu item 1</a>
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link02">Menu item 2</a>
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link03">Menu item 3</a>
+            <a class="set--plain -hov:-bgc -px:20 -py:15" href="#menu-link04">Menu item 4</a>
+          </div>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>

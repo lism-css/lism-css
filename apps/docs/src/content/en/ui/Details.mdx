@@ -11,6 +11,9 @@ A UI component for creating collapsible accordion-style content using the `detai
 
 Unlike [`Accordion`](/en/docs/ui/Accordion/), this component is implemented with CSS only — no JavaScript required.
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
@@ -54,6 +57,21 @@ Unlike [`Accordion`](/en/docs/ui/Accordion/), this component is implemented with
   </PreviewCode>
 </Preview>
 
+:::note
+Place `<Details.Summary>` (the open/close trigger) and `<Details.Content>` (the collapsible content) directly inside `<Details.Root>`. `<Details.Summary>` is composed of `<Details.Title>` and `<Details.Icon>`.
+:::
+
+
+## Styles
+
+The Details base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Details/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Details).
+:::
+
 
 ## Usage
 
@@ -81,24 +99,6 @@ The following components are available:
 |---|---|
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | Duration of the expand/collapse animation. |
 | <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | The HTML tag used to render the title inside the summary element. |
-
-
-### Structure
-
-```jsx
-<Details.Root>
-  <Details.Summary>
-    <Details.Title>Details Title</Details.Title>
-    <Details.Icon />
-  </Details.Summary>
-  <Details.Content>...Contents...</Details.Content>
-</Details.Root>
-```
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Details).
 
 
 

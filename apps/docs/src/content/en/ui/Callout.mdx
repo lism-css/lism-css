@@ -10,6 +10,8 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 A component for highlighting important points within an article.
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30" resize>
@@ -20,7 +22,7 @@ A component for highlighting important points within an article.
       </p>
     </Callout>
   </PreviewArea>
-    <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Callout title="Callout Title">
       <p>Lorem ipsum dolor sit amet...</p>
@@ -29,32 +31,31 @@ A component for highlighting important points within an article.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--callout l--stack u--cbox -p:20 -g:10 -bdc:keycolor -bd-s" style="--keycolor:var(--blue);--bdw: 3px">
+    <div class="c--callout l--stack u--cbox -p:20 -g:10 -bdc:keycolor -bd-s" style="--keycolor:var(--gray);--bdw:3px">
       <div class="l--flex -c:keycolor -fw:bold -ai:center -g:10">
         <div class="l--center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 256 256"
-            width="1.25em"
-            height="1.25em"
-            fill="currentColor"
-            focusable="false"
-            class="a--icon"
-            aria-hidden="true"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1.25em" height="1.25em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true">
             <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z"></path>
           </svg>
         </div>
         <span>Callout Title</span>
       </div>
       <div class="l--flow -flow:s">
-        <p>Lorem ipsum dolor sit amet...</p>
+        <p>...Contents...</p>
       </div>
     </div>
     ```
   </PreviewCode>
 </Preview>
 
+
+## Styles
+
+Callout currently has no component-specific base styles; it is composed entirely of lism-css styles.
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout).
+:::
 
 
 ## Usage
@@ -75,11 +76,6 @@ Provided as `Callout` from the `@lism-css/ui` package.
 |`type`| Specifies a preset value combining `keycolor` and `icon`. Default: `"note"` |
 |`title`| Specifies the title text. |
 |`flow`| Passed to `_body`. |
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout).
-
 
 
 ## Examples

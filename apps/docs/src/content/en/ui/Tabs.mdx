@@ -15,53 +15,10 @@ A component for creating tab elements.
 Only interaction behavior is provided — visual styling is intentionally left for you to customize.
 
 
-## Usage
+## Overview
 
-Provided as `Tabs` from the `@lism-css/ui` package.
-
-
-### Import
-
-<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" />
-
-
-### Props
-
-| Prop | Description |
-|---|---|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `c--tabs--{variant}` class. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used as the value for `aria-controls` to identify each tab. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`c--tabs_list`) wrapping the tab buttons. |
-
-
-### Structure
-
-```jsx
-<Tabs.Root>
-  <Tabs.Item>
-    <Tabs.Tab>Tab label</Tabs.Tab>
-    <Tabs.Panel>...Contents...</Tabs.Panel>
-  </Tabs.Item>
-</Tabs.Root>
-```
-
-:::warning
-Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`. Both must always be used together.
-:::
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs).
-
-
-
-## Examples
-
-### Basic example
 <Preview>
-  <PreviewTitle>Example</PreviewTitle>
+  <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30">
     <Tabs.Root>
       <Tabs.Item>
@@ -84,7 +41,7 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
@@ -97,11 +54,60 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    ```
+```html
+<div class="c--tabs">
+  <div class="c--tabs_list" role="tablist">
+    <button class="c--tabs_tab set--plain" role="tab" aria-controls="{id}-1" aria-selected="true">Tab 1</button>
+    <button class="c--tabs_tab set--plain" role="tab" aria-controls="{id}-2" aria-selected="false">Tab 2</button>
+  </div>
+  <div class="c--tabs_panel" id="{id}-1" role="tabpanel" aria-hidden="false">...Contents...</div>
+  <div class="c--tabs_panel" id="{id}-2" role="tabpanel" aria-hidden="true">...Contents...</div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
+:::warning
+Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`. Both must always be used together.
+:::
+
+
+## Styles
+
+The Tabs base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Tabs/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs).
+:::
+
+
+## Usage
+
+Provided as `Tabs` from the `@lism-css/ui` package.
+
+
+### Import
+
+<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" />
+
+
+### Props
+
+| Prop | Description |
+|---|---|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `c--tabs--{variant}` class. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used as the value for `aria-controls` to identify each tab. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`c--tabs_list`) wrapping the tab buttons. |
+
+{/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | Specifies the tab label text. | */}
+
+{/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`| Outputs `[data-tabs-height="keep"]`, fixing the overall height of the tabs to the tallest content panel. | */}
+
+
+## Examples
 
 ### Default open tab
 
@@ -132,7 +138,7 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
@@ -181,7 +187,7 @@ At the same time, changing the tab list (`c--tabs_list`) buttons to stack vertic
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>

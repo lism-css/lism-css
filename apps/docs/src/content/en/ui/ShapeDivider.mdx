@@ -10,6 +10,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 A component that renders a decorative border using SVG.
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize layout="">
@@ -21,7 +24,44 @@ A component that renders a decorative border using SVG.
       </ShapeDivider>
     </Stack>
   </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Stack>
+      <ShapeDivider isEmpty level={2} />
+      <DummyText p="30" />
+      <ShapeDivider viewBox="0 0 100 10">
+        <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z" />
+      </ShapeDivider>
+    </Stack>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="l--stack">
+  <div class="c--shapeDivider -max-sz:full" style="--level:2" aria-hidden="true"></div>
+  <p class="-p:30">...Contents...</p>
+  <div class="c--shapeDivider -max-sz:full" style="--level:5" aria-hidden="true">
+    <div class="c--shapeDivider_inner">
+      <svg class="c--shapeDivider_svg" viewBox="0 0 100 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+        <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+```
+  </PreviewCode>
 </Preview>
+
+
+## Styles
+
+The ShapeDivider base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/ShapeDivider/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider).
+:::
 
 
 ## Usage
@@ -41,12 +81,9 @@ Provided as `ShapeDivider` (`c--shapeDivider`) from the `@lism-css/ui` package.
 | `level` | Specifies the height level of the shape as a positive number. Default is `5`. |
 | `offset` | Outputs a variable to shift the shape horizontally. |
 | `stretch` | Outputs a variable to stretch the shape horizontally. |
+| `flip` | Specifies the flip direction of the shape: `"X"`, `"Y"`, or `"XY"`. |
 | `isEmpty` | Renders no shape, allowing the component to be used as a spacer. |
 | `isAnimation` | Enables animation. Outputs `data-has-animation="true"`. |
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider).
 
 
 ## Examples

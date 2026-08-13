@@ -7,12 +7,15 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
 
 A component for displaying avatar images.
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
     ```
@@ -25,6 +28,15 @@ A component for displaying avatar images.
     ```
   </PreviewCode>
 </Preview>
+
+
+## Styles
+
+Avatar currently has no component-specific base styles; it is composed entirely of lism-css styles.
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar).
+:::
 
 
 ## Usage
@@ -43,11 +55,6 @@ Provided as `Avatar` (`c--avatar`) from the `@lism-css/ui` package.
 |`size`| Specifies the size of the avatar. Default: `"1.5em"` |
 |`src`| Path to the avatar image. |
 |`alt`| Alt text for the image. |
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar).
 
 
 ## Examples

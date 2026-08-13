@@ -8,6 +8,8 @@ import { Badge } from '@lism-css/ui/astro/Badge';
 A component for displaying badges.
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
@@ -19,7 +21,7 @@ A component for displaying badges.
       </Badge>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
       <Badge>Badge</Badge>
@@ -44,6 +46,16 @@ A component for displaying badges.
 </Preview>
 
 
+## Styles
+
+The Badge base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Badge/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge).
+:::
+
 
 ## Usage
 
@@ -59,11 +71,6 @@ Provided as `Badge` (`c--badge`) from the `@lism-css/ui` package.
 | Prop | Description |
 |---|---|
 |`variant`<small>(optional)</small>| Outputs the `c--badge--{variant}` class. An `outline` style is provided by default. |
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge).
 
 
 ## Examples

@@ -13,6 +13,8 @@ It is built with `<div>` / `<button>` elements rather than `<details>` / `<summa
 The panel uses `hidden="until-found"`, so its content can be discovered by the browser's in-page search even when the accordion is closed, and the panel will automatically expand when a match is found.
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
@@ -40,7 +42,7 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
     <Accordion.Root>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example</Accordion.Button>
+          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
         <Accordion.Panel p="20" pt="5">
           <DummyText length="l" />
@@ -59,9 +61,44 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
+<div class="c--accordion l--stack">
+  <div class="c--accordion_item">
+    <div class="c--accordion_heading set--plain" role="heading">
+      <button class="c--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between -p:20" aria-controls="{id}" aria-expanded="false">
+        Accordion Example 1
+        <span class="c--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="c--accordion_panel -pos:relative -ov:hidden" id="{id}" hidden="until-found">
+      <div class="c--accordion_content l--flow -p:20 -pt:5">
+        ...Contents...
+      </div>
+    </div>
+  </div>
+  <div class="c--accordion_item -bd-t">
+    ...
+  </div>
+</div>
 ```
   </PreviewCode>
 </Preview>
+
+
+:::note
+`<Accordion.Button>` automatically includes `<Accordion.Icon>` at the end.
+The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no SVG specification is needed.
+:::
+
+
+## Styles
+
+The Accordion base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Accordion/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion).
+:::
 
 
 ## Usage
@@ -93,33 +130,6 @@ The following components are available:
 | <PropBadge>`<Accordion.Button>`</PropBadge><br/>`isOpen` | Sets `aria-expanded` to match the initial expanded state. |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | Flow layout setting passed to the content area (`_content`) inside the panel. |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`isOpen` | Shows the panel by default (removes `hidden`). |
-
-
-### Structure
-
-```jsx
-<Accordion.Root>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button>Accordion Label</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...Contents...
-    </Accordion.Panel>
-  </Accordion.Item>
-</Accordion.Root>
-```
-
-:::note
-`<Accordion.Button>` automatically includes `<Accordion.Icon>` at the end.
-The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no SVG specification is needed.
-:::
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion).
-
 
 
 ## Examples
