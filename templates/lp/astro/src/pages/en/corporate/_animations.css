@@ -86,13 +86,13 @@
   }
 
   /* MV: スクロールで先頭セクション全体をぼかし＋拡大 */
-  .z--mv {
+  .c--mv {
     view-timeline: --mv y;
-    animation: z--mv linear both;
+    animation: c--mv linear both;
     animation-timeline: --mv;
     animation-range: exit;
   }
-  @keyframes z--mv {
+  @keyframes c--mv {
     from {
       filter: blur(0px);
       opacity: 1;
@@ -103,12 +103,12 @@
       transform: scale(1.05);
     }
   }
-  .z--mv_media {
-    animation: z--mv_media linear both;
+  .c--mv_media {
+    animation: c--mv_media linear both;
     animation-timeline: --mv;
     animation-range: exit;
   }
-  @keyframes z--mv_media {
+  @keyframes c--mv_media {
     from {
       transform: translateY(0);
     }
@@ -116,12 +116,12 @@
       transform: translateY(15%) scale(1.1);
     }
   }
-  .z--mv_content {
-    animation: z--mv_content linear both;
+  .c--mv_content {
+    animation: c--mv_content linear both;
     animation-timeline: --mv;
     animation-range: exit;
   }
-  @keyframes z--mv_content {
+  @keyframes c--mv_content {
     from {
       transform: scale(1);
     }
