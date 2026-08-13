@@ -29,10 +29,10 @@ const buildInitialHtml = (
   ${lead2}
 </p>
 <div class="l--flex -jc:center -ai:center -g:15 -mbs:40">
-  <a class="l--flex -ai:center -px:10 -py:10 -c:base -bdrs:20 -fw:500 -td:none -lh:s" href="${urlPrefix}/docs/installation/">
+  <a class="l--flex -ai:center -p:10 -c:base -bdrs:20 -fw:500 -td:none -lh:s" href="${urlPrefix}/docs/installation/">
     <span class="-px:10">Get Started</span>
   </a>
-  <a class="l--flex -ai:center -px:10 -py:10 -bgc:base -bdrs:20 -td:none -lh:s" href="${urlPrefix}/docs/" data-modal-open="search-modal">
+  <a class="l--flex -ai:center -p:10 -bgc:base -bdrs:20 -td:none -lh:s" href="${urlPrefix}/docs/" data-modal-open="search-modal">
     <span class="-px:10">Search documentation...</span>
     <span class="-px:10 -py:5 -c:text -bgc:base-2 -bdrs:10 -fz:s -lh:1 -lts:s -d:none -d_md -bd" style="--d_md: inline-block">
       ⌘ K
