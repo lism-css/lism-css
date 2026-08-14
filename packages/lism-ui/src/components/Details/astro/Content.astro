@@ -16,5 +16,5 @@ const { class: className, ...props } = Astro.props;
 ---
 
 <Lism class="b--details_body">
-  <Flow flow="s" class={atts(className, 'b--details_content')} {...props}><slot /></Flow>
+  <Flow class={atts(className, 'b--details_content')} {...props}><slot /></Flow>
 </Lism>

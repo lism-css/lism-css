@@ -16,44 +16,44 @@ Unlike [`Accordion`](/en/docs/ui/Accordion/), this component is implemented with
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20">
-    <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
+  <PreviewArea>
+    <Details.Root>
+      <Details.Summary>
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
-      <Details.Content p="20">
-        <p>Content goes here.</p>
+      <Details.Content>
+        <DummyText length="l" />
       </Details.Content>
     </Details.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
+    <Details.Root>
+      <Details.Summary>
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
-      <Details.Content p="20">
-        <p>Content goes here.</p>
+      <Details.Content>
+        <DummyText length="l" />
       </Details.Content>
     </Details.Root>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    <details class="b--details -bd">
-      <summary class="b--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:-bgc">
-        <span class="b--details_title set--plain -fx:1">Details Title</span>
-        <span class="b--details_icon a--icon" aria-hidden="true"></span>
-      </summary>
-      <div class="b--details_body">
-        <div class="b--details_content l--flow -flow:s -p:20">
-          <p>Content goes here.</p>
-        </div>
-      </div>
-    </details>
-    ```
+```html
+<details class="b--details">
+  <summary class="b--details_summary">
+    <span class="b--details_title">Details Title</span>
+    <span class="b--details_icon a--icon" aria-hidden="true"></span>
+  </summary>
+  <div class="b--details_body">
+    <div class="b--details_content l--flow">
+      ...Contents...
+    </div>
+  </div>
+</details>
+```
   </PreviewCode>
 </Preview>
 
@@ -85,11 +85,11 @@ Provided as `Details` (`b--details`) from the `@lism-css/ui` package.
 
 The following components are available:
 
-- `<Details.Root>`
-- `<Details.Summary>`
-- `<Details.Title>`
-- `<Details.Icon>`
-- `<Details.Content>`
+- `<Details.Root>`: The root element (`details` element)
+- `<Details.Summary>`: The open/close trigger (`summary` element)
+- `<Details.Title>`: The title inside the summary (defaults to `span`)
+- `<Details.Icon>`: An icon indicating the open/close state (rendered with CSS)
+- `<Details.Content>`: The collapsible content
 
 
 ### Props
@@ -97,66 +97,98 @@ The following components are available:
 
 | Prop | Description |
 |---|---|
+| <PropBadge>`<Details.Root>`</PropBadge><br/>`open` | Expands the details initially (the `open` attribute of the `details` element). |
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | Duration of the expand/collapse animation. |
-| <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | The HTML tag used to render the title inside the summary element. |
-
+| <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | The HTML tag used to render the title inside the summary element. When a heading tag is specified, `set--plain` is applied. |
 
 
 ## Examples
 
-### Custom title tag and exclusive expansion
+### Styling example
 
-`<Details.Title>` renders as a `span` by default, but you can specify an HTML tag via `as`.
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Details.Root bd>
+      <Details.Summary p="20" hov={{bgc:"base-2"}}>
+        <Details.Title>Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content p="20" pt="15">
+        <DummyText length="l" />
+      </Details.Content>
+    </Details.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Details.Root bd>
+      <Details.Summary p="20" hov={{bgc:"base-2"}}>
+        <Details.Title>Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content p="20" pt="15">
+        <DummyText length="l" />
+      </Details.Content>
+    </Details.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<details class="b--details -bd">
+  <summary class="b--details_summary -p:20 -hov:-bgc" style="--hov-bgc: var(--base-2)">
+    <span class="b--details_title">Details Title</span>
+    <span class="b--details_icon a--icon" aria-hidden="true"></span>
+  </summary>
+  <div class="b--details_body">
+    <div class="b--details_content l--flow -p:20 -pt:15">
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.</p>
+    </div>
+  </div>
+</details>
+```
+  </PreviewCode>
+</Preview>
 
-Additionally, as a native feature of `details`/`summary`, adding a `name` attribute restricts the group to one open item at a time.
+
+### Changing the title tag
+
+`<Details.Title>` renders as a `span` by default, but you can specify a heading tag such as `h3` via `as` to render it as an actual heading element.
+When a heading tag is specified, `set--plain` is applied to reset the default heading styles.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20">
-    <Stack g="10">
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>Content goes here.</p>
-        </Details.Content>
-      </Details.Root>
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>Content goes here.</p>
-        </Details.Content>
-      </Details.Root>
-    </Stack>
+    <Details.Root bd>
+      <Details.Summary>
+        <Details.Title as="h3">Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content>
+        <DummyText length="l" />
+      </Details.Content>
+    </Details.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'as="h3"' 'name="details-group-01"'
-    <Stack g="10">
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>Content goes here.</p>
-        </Details.Content>
-      </Details.Root>
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>Content goes here.</p>
-        </Details.Content>
-      </Details.Root>
-    </Stack>
+    ```jsx 'as="h3"'
+    <Details.Root bd>
+      <Details.Summary>
+        <Details.Title as="h3">Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      ...
+    </Details.Root>
     ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "h3"
+  <details class="b--details -bd">
+    <summary class="b--details_summary">
+      <h3 class="b--details_title set--plain">Details Title</h3>
+      <span class="b--details_icon a--icon" aria-hidden="true"></span>
+    </summary>
+    ...
+  </details>
+  ```
   </PreviewCode>
 </Preview>
 
@@ -166,38 +198,91 @@ There was a known issue where screen readers could not detect the role of headin
 :::
 
 
-### Animation duration
+### Restricting to one open item
+
+As a native feature of `details`/`summary`, adding a `name` attribute restricts the group with the same `name` to one open item at a time.
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Stack g="10">
+      <Details.Root bd name="details-group-01">
+        <Details.Summary>
+          <Details.Title>Details Title 1</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content>
+          <DummyText length="l" />
+        </Details.Content>
+      </Details.Root>
+      <Details.Root bd name="details-group-01">
+        <Details.Summary>
+          <Details.Title>Details Title 2</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content>
+          <DummyText length="l" />
+        </Details.Content>
+      </Details.Root>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+```jsx 'name="details-group-01"'
+<Stack g="10">
+  <Details.Root bd name="details-group-01">
+    <Details.Summary>
+      <Details.Title>Details Title 1</Details.Title>
+      <Details.Icon />
+    </Details.Summary>
+    <Details.Content>
+      <DummyText length="l" />
+    </Details.Content>
+  </Details.Root>
+  <Details.Root bd name="details-group-01">...</Details.Root>
+</Stack>
+```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html 'name="details-group-01"'
+<div class="l--stack -g:10">
+  <details class="b--details -bd" name="details-group-01">...</details>
+  <details class="b--details -bd" name="details-group-01">...</details>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+
+### Changing the animation duration
 
 The duration of the `<Details>` open/close animation is controlled by the `--duration` variable, which defaults to the same value as `<Accordion>` — `--acc-duration`.
 
 For local adjustments, override the `--duration` variable. For global adjustments, override `--acc-duration` on `:root`.
 
-
-
 <Preview>
-  <PreviewTitle>Example</PreviewTitle>
+  <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
     <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
-        <Details.Title as="h3">Details Title</Details.Title>
+      <Details.Summary>
+        <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
-      <Details.Content p="20">
-        <p>Content goes here.</p>
+      <Details.Content>
+        <DummyText length="l" />
       </Details.Content>
     </Details.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "--duration"
-    <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
-        <Details.Title as="h3">Details Title</Details.Title>
-        <Details.Icon />
-      </Details.Summary>
-      <Details.Content p="20">
-        <p>Content goes here.</p>
-      </Details.Content>
-    </Details.Root>
-    ```
+```jsx "--duration"
+<Details.Root bd style={{ '--duration': '.4s' }}>
+  <Details.Summary>...</Details.Summary>
+  <Details.Content>...</Details.Content>
+</Details.Root>
+```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html "--duration"
+<details class="b--details -bd" style="--duration: 0.4s">...</details>
+```
   </PreviewCode>
 </Preview>

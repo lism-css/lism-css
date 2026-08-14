@@ -4,10 +4,12 @@ import atts from 'lism-css/lib/helper/atts';
 
 /**
  * Title - タイトルコンポーネント
+ * as に見出しタグなどを指定した場合は set--plain でデフォルトスタイルをリセットする
  */
-export default function Title<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
+export default function Title<T extends ElementType = 'span'>({ children, className, as, ...props }: LismComponentProps<T>) {
+  const isSpan = !as || as === 'span';
   return (
-    <Lism as="span" fx="1" set="plain" className={atts(className, 'b--details_title')} {...(props as object)}>
+    <Lism as={(as ?? 'span') as 'span'} set={isSpan ? undefined : 'plain'} className={atts(className, 'b--details_title')} {...(props as object)}>
       {children}
     </Lism>
   );

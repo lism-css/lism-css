@@ -12,12 +12,21 @@
     --_content-gtr: 1fr;
   }
 
+  /* display: flex により summary のデフォルトマーカー（display: list-item）も解除される */
+  .b--details_summary {
+    display: flex;
+    gap: var(--s10);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--s15);
+  }
+
   /* Safariで表示されるデフォルトの三角形アイコンを削除 */
   .b--details_summary::-webkit-details-marker {
     display: none;
   }
 
-  /* 見出しタグでもフォントを揃える */
+  /* タイトル（見出しタグ指定時は set--plain でフォントを揃える） */
   /* .b--details_title {} */
 
   /* アイコン */
@@ -44,5 +53,10 @@
   /* コンテンツ内部のラッパー（grid-template-rows: 0frのアニメーションに必須） */
   .b--details_body {
     overflow: hidden;
+  }
+
+  .b--details_content {
+    /* _body に padding を付けると閉じた時に余白が残るので _content に付ける */
+    padding: var(--s15);
   }
 }

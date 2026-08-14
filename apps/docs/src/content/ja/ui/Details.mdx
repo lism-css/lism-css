@@ -16,44 +16,44 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20">
-    <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
+  <PreviewArea>
+    <Details.Root>
+      <Details.Summary>
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
-      <Details.Content p="20">
-        <p>ここにコンテンツが入ります。</p>
+      <Details.Content>
+        <DummyText length="l" />
       </Details.Content>
     </Details.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
+    <Details.Root>
+      <Details.Summary>
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
-      <Details.Content p="20">
-        <p>ここにコンテンツが入ります。</p>
+      <Details.Content>
+        <DummyText length="l" />
       </Details.Content>
     </Details.Root>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    <details class="b--details -bd">
-      <summary class="b--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:-bgc">
-        <span class="b--details_title set--plain -fx:1">Details Title</span>
-        <span class="b--details_icon a--icon" aria-hidden="true"></span>
-      </summary>
-      <div class="b--details_body">
-        <div class="b--details_content l--flow -flow:s -p:20">
-          <p>ここにコンテンツが入ります。</p>
-        </div>
-      </div>
-    </details>
-    ```
+```html
+<details class="b--details">
+  <summary class="b--details_summary">
+    <span class="b--details_title">Details Title</span>
+    <span class="b--details_icon a--icon" aria-hidden="true"></span>
+  </summary>
+  <div class="b--details_body">
+    <div class="b--details_content l--flow">
+      ...Contents...
+    </div>
+  </div>
+</details>
+```
   </PreviewCode>
 </Preview>
 
@@ -86,11 +86,11 @@ Details のベーススタイルは、以下のCSSで定義されています。
 
 以下のコンポーネントが利用できます。
 
-- `<Details.Root>`
-- `<Details.Summary>`
-- `<Details.Title>`
-- `<Details.Icon>`
-- `<Details.Content>`
+- `<Details.Root>`: ルート要素（`details`要素）
+- `<Details.Summary>`: 開閉のトリガー（`summary`要素）
+- `<Details.Title>`: summary内のタイトル（デフォルトは `span`）
+- `<Details.Icon>`: 開閉状態を示すアイコン（CSSで描画）
+- `<Details.Content>`: 開閉されるコンテンツ
 
 
 ### Props
@@ -98,68 +98,99 @@ Details のベーススタイルは、以下のCSSで定義されています。
 
 | プロパティ | 説明 | 
 |---|---|
+| <PropBadge>`<Details.Root>`</PropBadge><br/>`open` | 初期状態で展開します（`details`要素の`open`属性） |
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | 展開アニメーションの秒数 |
-| <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | summary要素内のタイトルを出力するHTMLタグの種類|
+| <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | summary要素内のタイトルを出力するHTMLタグの種類。見出しタグなどを指定すると `set--plain` が付与されます |
 
 
 ## Examples
 
-### タイトルのHTMLタグを変更し、複数同時展開を制限する例
+### スタイリング例
 
-`<Details.Title>`はデフォルトではspanタグで出力されますが、`as`でHTMLタグを指定できます。
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Details.Root bd>
+      <Details.Summary p="20" hov={{bgc:"base-2"}}>
+        <Details.Title>Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content p="20" pt="15">
+        <DummyText length="l" />
+      </Details.Content>
+    </Details.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Details.Root bd>
+      <Details.Summary p="20" hov={{bgc:"base-2"}}>
+        <Details.Title>Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content p="20" pt="15">
+        <DummyText length="l" />
+      </Details.Content>
+    </Details.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<details class="b--details -bd">
+  <summary class="b--details_summary -p:20 -hov:-bgc" style="--hov-bgc: var(--base-2)">
+    <span class="b--details_title">Details Title</span>
+    <span class="b--details_icon a--icon" aria-hidden="true"></span>
+  </summary>
+  <div class="b--details_body">
+    <div class="b--details_content l--flow -p:20 -pt:15">
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.</p>
+    </div>
+  </div>
+</details>
+```
+  </PreviewCode>
+</Preview>
 
-また、details/summaryの基本的な機能として、`name`属性を指定すると同じグループ内で同時に展開可能な要素が一つのみとなります。
+
+### タイトルのHTMLタグを変更する
+
+`<Details.Title>`はデフォルトではspanタグで出力されますが、`as`に`h3`などの見出しタグを指定することで、実際の見出し要素として出力できます。
+見出しタグを指定した場合は、`set--plain`が付与されてデフォルトの見出しスタイルがリセットされます。
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p="20">
-    <Stack g="10">
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>ここにコンテンツが入ります。</p>
-        </Details.Content>
-      </Details.Root>
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>ここにコンテンツが入ります。</p>
-        </Details.Content>
-      </Details.Root>
-    </Stack>
+    <Details.Root bd>
+      <Details.Summary>
+        <Details.Title as="h3">Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content>
+        <DummyText length="l" />
+      </Details.Content>
+    </Details.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'as="h3"' 'name="details-group-01"'
-    <Stack g="10">
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>ここにコンテンツが入ります。</p>
-        </Details.Content>
-      </Details.Root>
-      <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="-bgc">
-          <Details.Title as="h3">Details Title</Details.Title>
-          <Details.Icon />
-        </Details.Summary>
-        <Details.Content p="20">
-          <p>ここにコンテンツが入ります。</p>
-        </Details.Content>
-      </Details.Root>
-    </Stack>
+    ```jsx 'as="h3"'
+    <Details.Root bd>
+      <Details.Summary>
+        <Details.Title as="h3">Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      ...
+    </Details.Root>
     ```
   </PreviewCode>
-  {/* <PreviewCode slot="tab" label="HTML">
-  </PreviewCode> */}
+  <PreviewCode slot="tab" label="HTML">
+  ```html "h3"
+  <details class="b--details -bd">
+    <summary class="b--details_summary">
+      <h3 class="b--details_title set--plain">Details Title</h3>
+      <span class="b--details_icon a--icon" aria-hidden="true"></span>
+    </summary>
+    ...
+  </details>
+  ```
+  </PreviewCode>
 </Preview>
 
 :::warning
@@ -168,40 +199,91 @@ Details のベーススタイルは、以下のCSSで定義されています。
 :::
 
 
-### アニメーション時間を変更する例
+### 複数同時展開を制限する
+
+details/summaryの基本的な機能として、`name`属性を指定すると、同じ`name`のグループ内で同時に展開できる要素が一つのみになります。
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Stack g="10">
+      <Details.Root bd name="details-group-01">
+        <Details.Summary>
+          <Details.Title>Details Title 1</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content>
+          <DummyText length="l" />
+        </Details.Content>
+      </Details.Root>
+      <Details.Root bd name="details-group-01">
+        <Details.Summary>
+          <Details.Title>Details Title 2</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content>
+          <DummyText length="l" />
+        </Details.Content>
+      </Details.Root>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+```jsx 'name="details-group-01"'
+<Stack g="10">
+  <Details.Root bd name="details-group-01">
+    <Details.Summary>
+      <Details.Title>Details Title 1</Details.Title>
+      <Details.Icon />
+    </Details.Summary>
+    <Details.Content>
+      <DummyText length="l" />
+    </Details.Content>
+  </Details.Root>
+  <Details.Root bd name="details-group-01">...</Details.Root>
+</Stack>
+```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html 'name="details-group-01"'
+<div class="l--stack -g:10">
+  <details class="b--details -bd" name="details-group-01">...</details>
+  <details class="b--details -bd" name="details-group-01">...</details>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+
+### アニメーション時間を変更する
 
 `<Details>`の開閉アニメーションの時間は`--duration`変数で管理しており、初期値は、`<Accordion>`と同じ`--acc-duration`になっています。
 
 局所的な調整には `--duration`変数を調整し、全体的な調整には`:root`で`--acc-duration`を上書きしてください。
 
-
-
 <Preview>
-  <PreviewTitle>例</PreviewTitle>
+  <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
     <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
-        <Details.Title as="h3">Details Title</Details.Title>
+      <Details.Summary>
+        <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
-      <Details.Content p="20">
-        <p>ここにコンテンツが入ります。</p>
+      <Details.Content>
+        <DummyText length="l" />
       </Details.Content>
     </Details.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "--duration"
-    <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="-bgc">
-        <Details.Title as="h3">Details Title</Details.Title>
-        <Details.Icon />
-      </Details.Summary>
-      <Details.Content p="20">
-        <p>ここにコンテンツが入ります。</p>
-      </Details.Content>
-    </Details.Root>
-    ```
+```jsx "--duration"
+<Details.Root bd style={{ '--duration': '.4s' }}>
+  <Details.Summary>...</Details.Summary>
+  <Details.Content>...</Details.Content>
+</Details.Root>
+```
   </PreviewCode>
-  {/* <PreviewCode slot="tab" label="HTML">
-  </PreviewCode> */}
+  <PreviewCode slot="tab" label="HTML">
+```html "--duration"
+<details class="b--details -bd" style="--duration: 0.4s">...</details>
+```
+  </PreviewCode>
 </Preview>
