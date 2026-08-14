@@ -2,15 +2,20 @@
   .b--navMenu {
     --link-td: none;
     --hl: var(--hl--s);
-    --_item-p: var(--s20);
+    --_item-p: 0.5em;
     --focus-offset: -1px; /* アコーディオン化した時にoutlineが一部見えなくなるのを防ぐ */
   }
 
   .b--navMenu_nest {
     --_item-p: inherit;
+    padding-inline-start: 1em;
   }
 
   .b--navMenu_link {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: inherit;
     padding: var(--_item-p);
   }
 

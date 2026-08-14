@@ -1,14 +1,13 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroLayoutProps } from 'lism-css/astro';
-import type { StackProps } from 'lism-css/lib/types/LayoutProps';
-import { Stack } from 'lism-css/astro';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
 import '../_style.css';
 
 type Props<Tag extends HTMLTag = 'ul'> = Polymorphic<{ as: Tag }> &
-  AstroLayoutProps<StackProps> & {
+  AstroLismBaseProps & {
     hovC?: string;
     hovBgc?: string;
     itemP?: string;
@@ -21,4 +20,5 @@ if (hovC) computedStyle['--hov-c'] = getMaybeCssVar(hovC, 'color');
 if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
 ---
 
-<Stack as={as} class={atts(className, 'b--navMenu')} style={computedStyle} {...props}><slot /></Stack>
+{/* レイアウトが必要な場合は layout="flex" などで指定する */}
+<Lism as={as} class={atts(className, 'b--navMenu')} style={computedStyle} {...props}><slot /></Lism>
