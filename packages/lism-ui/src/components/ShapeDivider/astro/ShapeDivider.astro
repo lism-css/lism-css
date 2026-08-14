@@ -16,10 +16,10 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
     isAnimation?: boolean;
   };
 
-const { class: className, as = 'div', viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
+const { class: className, as = 'div', viewBox, isAnimation, isEmpty, level, stretch, offset, flip, style = {}, ...props } = Astro.props;
 
 const computedStyle: Record<string, unknown> = { ...(style as Record<string, string | undefined>) };
-computedStyle['--level'] = String(level);
+if (level != null) computedStyle['--level'] = String(level);
 if (offset != null) computedStyle['--_inner-offset'] = offset;
 if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
 ---

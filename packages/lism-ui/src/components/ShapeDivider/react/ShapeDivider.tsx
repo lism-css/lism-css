@@ -19,7 +19,7 @@ export function ShapeDivider<T extends ElementType = 'div'>({
   viewBox,
   isAnimation,
   isEmpty,
-  level = 5,
+  level,
   stretch,
   offset,
   flip,
@@ -30,7 +30,7 @@ export function ShapeDivider<T extends ElementType = 'div'>({
 
   const computedStyle = {
     ...style,
-    '--level': String(level),
+    ...(level != null && { '--level': String(level) }),
     ...(offset != null && { '--_inner-offset': offset }),
     ...(stretch != null && { '--_inner-stretch': stretch }),
   };
