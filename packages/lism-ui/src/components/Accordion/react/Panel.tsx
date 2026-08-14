@@ -17,6 +17,7 @@ type PanelProps<T extends ElementType = 'div'> = LayoutComponentProps<T, FlowLay
 export default function Panel<T extends ElementType = 'div'>({
   children,
   className,
+  as,
   accID: propAccID = '__LISM_ACC_ID__',
   isOpen = false,
   ...props
@@ -26,11 +27,10 @@ export default function Panel<T extends ElementType = 'div'>({
 
   return (
     <Lism
+      as={(as ?? 'div') as 'div'}
       className={atts(className, 'b--accordion_panel')}
       id={id}
       hidden={isOpen ? undefined : ('until-found' as unknown as boolean)}
-      pos="relative"
-      ov="hidden"
     >
       <Flow className="b--accordion_content" {...(props as object)}>
         {children}

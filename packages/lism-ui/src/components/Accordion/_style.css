@@ -13,14 +13,24 @@
     --_panel-h: auto; /* Note: アニメーション時、jsでセットされる */
   }
 
-  /* .b--accordion_button {} */
+  .b--accordion_button {
+    display: flex;
+    gap: var(--s10);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--s15);
+    width: 100%;
+  }
   .b--accordion_panel {
+    position: relative;
+    overflow: hidden;
     height: var(--_panel-h);
     transition: height var(--duration);
   }
-
-  /* コンテンツの paddingは __panel ではなくこっちにつける */
-  /* .b--accordion_content {} */
+  .b--accordion_content {
+    /* _panel に padding を付けると閉じた時に余白が残るので _content に付ける */
+    padding: var(--s15);
+  }
 
   /* パネルが完全に閉じている時にabsoluteで飛ばしておくと、Chromeでも検索時に正常にハイライトされるようになる（なぜかは不明） */
   [hidden] > .b--accordion_content {
@@ -30,6 +40,8 @@
   /* アイコンの描画 */
   .b--accordion_icon {
     display: grid;
+    place-items: center;
+    flex-shrink: 0;
     width: 1em;
     height: 1em;
 

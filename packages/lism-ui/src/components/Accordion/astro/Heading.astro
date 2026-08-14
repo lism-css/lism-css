@@ -12,6 +12,12 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
 const { class: className, as = 'div', role, ...props } = Astro.props;
 ---
 
-<Lism as={as} class={atts(className, 'b--accordion_heading')} set="plain" role={as === 'div' ? (role ?? 'heading') : role} {...props}>
+<Lism
+  as={as}
+  class={atts(className, 'b--accordion_heading')}
+  set={as === 'div' ? undefined : 'plain'}
+  role={as === 'div' ? (role ?? 'heading') : role}
+  {...props}
+>
   <slot />
 </Lism>
