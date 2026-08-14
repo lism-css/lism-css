@@ -1,1 +1,22 @@
-/* Callout component styles */
+@layer lism-block {
+  /* Note: l--stack と u--cbox との併用を前提としています. */
+  .b--callout {
+    --bds: solid;
+    --bdw: 3px;
+    --bdc: var(--keycolor); /* u--cbox 非併用時のフォールバック */
+
+    gap: var(--s10);
+    padding: var(--s20);
+    border-inline-start: var(--bdw) var(--bds) var(--bdc);
+
+    /* u--cbox のボーダー色ミックス率を 100% にして、純粋な keycolor をボーダーに使う */
+    --cbox-bdPct: 100%;
+  }
+
+  .b--callout_title {
+    align-items: center;
+    gap: var(--s10);
+    color: var(--keycolor);
+    font-weight: var(--fw--bold);
+  }
+}

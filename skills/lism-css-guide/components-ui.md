@@ -70,7 +70,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Alert/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert)
 
-短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。
+短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。`b--alert` クラスが付与される。
 プリセット: `alert`=alert/red, `point`=lightbulb/orange（`tip`も同じ）, `warning`=warning/yellow, `check`=check-circle/green, `help`=question/purple, `info`=info/blue, `note`=note/gray。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -140,7 +140,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Callout/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout)
 
-記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される（プリセット内容は [Alert](#alert) と同一）。
+記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される（プリセット内容は [Alert](#alert) と同一）。`b--callout` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
