@@ -1,6 +1,6 @@
 # Issue #550 作業引き継ぎ: @lism-css/ui の b--/lism-block 移行
 
-> 作成日: 2026-08-13 / 最終更新: 2026-08-14（Alert・Calloutの目視確認完了・コミット済み）/ 基準: `feature/550-ui-b-prefix` ブランチ / `@lism-css/ui` v0.25.0
+> 作成日: 2026-08-13 / 最終更新: 2026-08-14（Accordion・Detailsの目視確認完了・コミット済み）/ 基準: `feature/550-ui-b-prefix` ブランチ / `@lism-css/ui` v0.25.0
 
 ## 要点
 
@@ -42,8 +42,8 @@
 | Button | **完了・コミット済み（`3df1c81d`）** | `hl="s" py="10" px="20"`をCSSへ移行（`--hl: var(--hl--s)` / `padding-block: var(--s10)` / `padding-inline: var(--s20)`）し、`display: inline-flex`もCSSで管理。デフォルトの`l--flex`出力を廃止し`Flex`→`Link`ベースへ変更（`layout="grid"`指定時のみ`l--grid`が付く）。`hov="-o"`はpropsのまま。docs ja/en MDXのHTMLスニペット追随済み（`-hl:s -py:10 -px:20`と`l--flex`を削除） |
 | Badge | **完了・コミット済み（`34c3492b`）** | `d/fz/hl/py/px/bdrs`をCSSへ移行。paddingはem基準（`0.25em 0.625em`）、デフォルトborder-radiusは**`--bdrs--99`（ピル型）へ変更**（`border-radius: var(--bdrs--99)`直書き。`bdrs` propはProperty Classがレイヤー外のため従来通り効く）。u--cbox併用調整用の`--cbox-*`変数あり。変数フックは`--bdw`/`--hl`。docs ja/enはExamples再構成（カラーパレットの活用/スタイルの調整例の見出し・HTMLタブ拡充・Overviewからu--cbox例削除・見出し「Without @lism-css/ui」へ統一）。MCP docs-indexのheadings同期済み |
 | Chat | 未着手 | |
-| Accordion | 未着手 | |
-| Details | 未着手 | |
+| Accordion | **完了・コミット済み（`2973a310`）** | `g/w/ai/jc/p`をCSSへ移行（`.b--accordion_button`に`display: flex`＋`padding: var(--s15)`等、`.b--accordion_content`に`padding: var(--s15)`）。Root/ButtonをLismベース化（デフォルトの`l--stack`/`l--flex`出力を廃止。レイアウトが必要なら`layout="stack"`等を指定）、Panelの`pos/ov`もCSSへ。Headingの`set--plain`はdiv以外（見出しタグ指定時）のみ出力。docs ja/enはExamples再構成（Overviewをデフォルト表示化・「スタイリング例」新設・HTMLタブ拡充）、MCP headings同期 |
+| Details | **完了・コミット済み（`0f5cacfb`）** | Summary/TitleをLismベース化し、summaryのflex構成＋`padding: var(--s15)`と`.b--details_content`の`padding: var(--s15)`をCSSでデフォルト化（Accordionと同じ構成。paddingは閉時の余白残り回避のため`_body`ではなく`_content`）。Titleの`flex: 1`は`justify-content: space-between`に置換、`set--plain`はspan以外のみ出力。Contentの`flow="s"`を削除（素の`l--flow`に）。docs ja/enはAccordionと同構成へ再編（「スタイリング例」新設・「タイトルのHTMLタグを変更する」「複数同時展開を制限する」に分割・HTMLタブ追加・Propsに`open`追記）。MCP headings同期 |
 | Tabs | 未着手 | |
 | Modal | 未着手 | |
 | NavMenu | 未着手 | |
@@ -51,7 +51,7 @@
 | Avatar | **完了・コミット済み（`d2a9e782`）** | **`c--avatar`→`b--avatar`へリネーム**し、`ar="1/1"`/`bdrs="99"`/デフォルトサイズをCSSへ移行（`--w: 2em`＋`width: var(--w)`。当初1.5emから目視確認で変更）。`size`prop指定時のみ`w`を出力（`getLismProps`はnull/undefinedのpropを出力しない）。Frameベース（`l--frame`）は維持し、react/astroに`_style.css`のimportを追加。docs ja/enはStylesのSrcCode化・`ImportPackage`に`css="style.css"`追加・size初期値2em。skills `components-ui.md`も追随 |
 | Alert / Callout | **完了・コミット済み（`5a3e3ab7`）** | 両方**`b--*`へリネーム**。Alert: `ai/p/g/bd/bdrs`をCSSへ移行（`-bd`の`--bds`/`--bdw`/`--bdc`変数フックは忠実移植）。`l--flex`は出力継続（displayはCSSに持たない）、`layout="withSide"`時は`l--withSide`＋`Icon`へ`isSide`直付与。アイコンの`Center`ラッパーを廃止して`Icon`直下化し、内側スタイルは`> .a--icon` / `> .l--flow`の子セレクタで管理（要素クラスなし）。Callout: `p/g/bdc/bd-s/bdw`をCSSへ移行、`l--stack`（Stackベース）維持。ボーダー色は**`--cbox-bdPct: 100%`**で純keycolorを保持（`--bdc`経由のため`bdc` propも従来通り有効）。要素クラスは`b--callout_title`（CSSあり）・`b--callout_body`（マーカーのみ）で、タイトル行の`Center`ラッパーも廃止。u--cboxは両方propsのまま。docs ja/enはStylesのSrcCode化・`ImportPackage`へ`css="style.css"`・HTMLタブ追随（Calloutは「`title`を指定しない場合」等の加筆あり）。skills追随。MCP headings同期は`6ccfa558` |
 
-残り（Chat / Accordion / Details / Tabs / Modal / NavMenu / ShapeDivider）の着手順は未確定。着手時にユーザーへ確認する。
+残り（Chat / Tabs / Modal / NavMenu / ShapeDivider）の着手順は未確定。着手時にユーザーへ確認する。
 
 ## 決定事項（ユーザー確認済み）
 
@@ -84,6 +84,8 @@
 | `d2a9e782` | ui/docs/skills: Avatarを`b--avatar`へリネームしベーススタイルをCSSで管理 |
 | `5a3e3ab7` | ui/docs/skills: Alert/Calloutを`b--*`へリネームしベーススタイルをCSSへ移行 |
 | `6ccfa558` | mcp: Alert/Calloutのdocs再構成へ`docs-index.json`のheadingsを同期 |
+| `2973a310` | ui/docs/mcp: AccordionのベーススタイルをPropsからCSSへ移行、Root/ButtonのLismベース化、docs再構成 |
+| `0f5cacfb` | ui/docs/mcp: DetailsのベーススタイルをPropsからCSSへ移行、summary/contentのデフォルトpadding追加、docs再構成 |
 
 補足: React/Astroの出力クラスは移行前から完全一致しており、差異修正は不要だった。ChatのCSS末尾にある`@layer`外の2ルール（詳細度確保のため意図的）はレイヤー外のまま維持。
 
@@ -99,6 +101,7 @@
 - Button移行（`3df1c81d`）: `nr build:ui` / `nr typecheck` / `nr test`成功、`dist/style.css`への反映とユーザーの目視確認済み。docsのサイズ調整例・Only lism-css例の`w="fit"`削除等の調整もコミットに含む。
 - Badge移行（`34c3492b`）・Avatar移行（`d2a9e782`）: `nr build:ui` / `nr typecheck` / `nr test`成功、`dist/style.css`への反映とユーザーの目視確認済み。
 - Alert・Callout移行（`5a3e3ab7`）: `nr build:ui` / `nr typecheck` / `nr test`（`--force`全実行）/ `nr lint`成功、`dist/style.css`への反映とユーザーの目視確認済み。MCP同期（`6ccfa558`）後も`@lism-css/mcp`のテスト66件成功。
+- Accordion移行（`2973a310`）・Details移行（`0f5cacfb`）: `nr build:ui` / `nr typecheck` / `nr test` / `nr lint`成功、`dist/style.css`への反映とユーザーの目視確認済み。
 
 ## 残タスク（Props→CSS移行以外）
 
