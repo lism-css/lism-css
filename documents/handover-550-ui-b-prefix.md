@@ -115,6 +115,7 @@
 ### 別issueで対応するもの
 
 - レイヤー順変更（`22de723a`）のdocs・skills追随（cascade layers系ページ・skillsのレイヤー順記載）。uiの調整がすべて終わった後に行う。
+- Chatの`@lism-css/ui`からの削除検討＋docsのui/examples・Patterns再編。整理案は`documents/memo-chat-removal-examples-reorg.md`を参照（削除は破壊的変更のため、実施するならv0.26.0への同乗が望ましい点に注意）。
 
 ### スコープ外として未対応の既知残件
 
