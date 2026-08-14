@@ -168,7 +168,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 | `variant` | `'speak' \| 'think'` | `'speak'` | チャットタイプ |
 | `direction` | `'start' \| 'end'` | `'start'` | 表示位置 |
 | `keycolor` | `string` | `'gray'` | キーカラー |
-| `flow` | `string` | `'s'` | コンテンツ要素のフロー余白 |
+| `flow` | `string` | — | コンテンツ要素のフロー余白（デフォルトの間隔はCSS側で管理） |
 
 ```jsx
 <Chat name='Alice' avatar='/alice.jpg'>Hello!</Chat>

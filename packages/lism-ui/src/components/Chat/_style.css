@@ -1,34 +1,54 @@
 @layer lism-block {
   .b--chat {
     --cbox-bgPct: 8%;
+    --keycolor: var(--gray);
+    gap: 0 calc(var(--_deco-size) + 1px);
     grid-template-areas: 'avatar name' 'avatar body';
     grid-template-columns: auto 1fr;
     grid-template-rows: minmax(1.5rem, auto) auto;
+    justify-items: start;
     --_avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
     --_deco-size: calc(min(var(--_avator-size), 80px) / 4 + 0.25rem);
     --_deco-mask: none;
     --_deco-t: 0;
     --_deco-scale: 1;
     --_deco-inset-x: 0;
-
-    gap: 0 calc(var(--_deco-size) + 1px);
   }
 
   .b--chat_avatar {
     grid-area: avatar;
     width: var(--_avator-size);
+    aspect-ratio: 1/1;
+    border-radius: var(--bdrs--99);
+    background-color: var(--base);
   }
   .b--chat_name {
     grid-area: name;
+    align-self: end;
+    padding-block: var(--s5);
+    padding-inline: var(--s10);
+    color: var(--text-2);
+    font-size: var(--fz--2xs);
+    font-style: italic;
+    --hl: 0px;
   }
   .b--chat_body {
     grid-area: body;
+    position: relative;
   }
   .b--chat_content {
+    justify-self: start;
     max-width: var(--sz--s);
+    padding: var(--s20);
+    border-radius: var(--bdrs--30);
+    --hl: var(--hl--s);
+
+    /* 吹き出し内の flow 間隔は控えめに（l--flow が参照する --flow--base を上書き） */
+    --flow--base: var(--flow--s);
   }
 
   .b--chat_deco {
+    position: absolute;
     top: var(--_deco-t);
     inset-inline: var(--_deco-inset-x);
     width: var(--_deco-size);
@@ -39,6 +59,10 @@
   .b--chat--speak {
     --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
   }
+  .b--chat--think {
+    --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
+    --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
+  }
 
   [data-chat-dir='start'] {
     --_deco-inset-x: auto calc(100% - 1px);
@@ -48,6 +72,10 @@
     --_deco-inset-x: calc(100% - 1px) auto;
     grid-template-areas: 'name avatar' 'body avatar';
     grid-template-columns: 1fr auto;
+    justify-items: end;
+  }
+  [data-chat-dir='end'] .b--chat_content {
+    justify-self: end;
   }
 }
 
