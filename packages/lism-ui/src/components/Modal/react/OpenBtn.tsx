@@ -1,13 +1,23 @@
 import type { ElementType } from 'react';
 import { Lism, type LismComponentProps } from 'lism-css/react';
+import atts from 'lism-css/lib/helper/atts';
 
 type OpenBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
   modalId?: string;
 };
 
-export default function OpenBtn<T extends ElementType = 'button'>({ children, modalId = '', ...props }: OpenBtnProps<T>) {
+export default function OpenBtn<T extends ElementType = 'button'>({ children, className, modalId = '', ...props }: OpenBtnProps<T>) {
   return (
-    <Lism as="button" set="plain" hov="-o" d="inline-flex" data-modal-open={modalId} {...(props as object)}>
+    <Lism
+      as="button"
+      type="button"
+      aria-haspopup="dialog"
+      className={atts(className, 'b--modal_openBtn')}
+      set="plain"
+      hov="-o"
+      data-modal-open={modalId}
+      {...(props as object)}
+    >
       {children}
     </Lism>
   );

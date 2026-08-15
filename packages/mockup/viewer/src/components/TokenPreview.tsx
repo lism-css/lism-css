@@ -194,6 +194,8 @@ interface TokenPreviewProps {
   tokenKey: string;
   /** Custom property used when the preview has no compatible token class. */
   varName: string;
+  /** Named grid area used when the preview participates in a token row grid. */
+  ga?: string;
 }
 
 /**
@@ -202,7 +204,7 @@ interface TokenPreviewProps {
  * Groups with no preview shape render nothing, so a token group added to
  * lism-css later still lists correctly — just without a picture.
  */
-export default function TokenPreview({ group, tokenKey, varName }: TokenPreviewProps) {
+export default function TokenPreview({ group, tokenKey, varName, ga }: TokenPreviewProps) {
   const spec = PREVIEWS.get(group);
   if (!spec) return null;
 
@@ -213,6 +215,7 @@ export default function TokenPreview({ group, tokenKey, varName }: TokenPreviewP
     // say everything the preview shows.
     <Flex
       aria-hidden="true"
+      ga={ga}
       fxsh={isBlock ? '0' : undefined}
       ai="center"
       w={isBlock ? '100%' : undefined}

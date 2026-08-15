@@ -18,7 +18,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 - **Lightweight** — The entire CSS bundle is approximately 30 KB (~8 KB gzipped).
 - **Zero-Build Framework** — Works with plain HTML by simply loading a CSS file. No build tool, preprocessor, or configuration needed. Available via CDN or npm.
 - **Layout-First Primitive Architecture** — Pre-built layout primitives (`l--flex`, `l--stack`, `l--grid`, `l--columns`, `l--center`, `l--withSide`, etc.) let you compose common layout patterns without writing custom CSS.
-- **CSS Layer Structure** — Uses `@layer` (lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility) for clear specificity management. `lism-trait` is the layer for `is--` / `has--` trait classes. `lism-primitive` contains `layout` / `atomic` sub-layers. `lism-component` is the layer for BEM-structured `c--` components. `lism-custom` is the layer for user-defined classes with custom prefixes. Minimizes specificity conflicts.
+- **CSS Layer Structure** — Uses `@layer` (lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility) for clear specificity management. `lism-block` is the layer for shared base components (`b--`) whose base styles are managed in CSS — placed low in the order so explicitly added classes (`is--` / `has--` / `l--`, etc.) take precedence. `lism-trait` is the layer for `is--` / `has--` trait classes. `lism-primitive` contains `layout` / `atomic` sub-layers. `lism-custom` is the layer for user-defined classes and overrides. Minimizes specificity conflicts.
 - **Design Tokens** — Colors, spacing, font sizes, shadows, and border radii are managed as CSS custom properties. Easy to customize by overriding variables.
 - **Flexible Property Classes** — A `-{prop}:{value}` naming convention (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`) maps CSS properties to utility classes for quick, readable styling.
 - **Responsive System** — Breakpoint-specific classes and CSS variables (e.g., `-p_sm`, `-p_md`) use container queries by default for parent-based responsive design. Switchable to media queries.
@@ -29,7 +29,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 ### CDN (no build required)
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.25.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.26.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -149,6 +149,8 @@ Lism CSS uses a structured naming convention for CSS classes:
 | Layout Primitive | `l--{name}` | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
 | Trait Class (role) | `is--{name}` | `is--wrapper`, `is--container`, `is--layer`, `is--boxLink` |
 | Trait Class (feature) | `has--{name}` | `has--transition`, `has--gutter`, `has--snap` |
+| Block Class | `b--{name}` | `b--btn`, `b--badge` |
+| Custom Class | `c--{name}` | `c--siteHeader`, `c--pricing` |
 | Property Class | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | Breakpoint | `-{prop}_{bp}` | `-p_sm`, `-g_md`, `-fz_lg` |
 | Utility Class | `u--{name}` | `u--cbox` |

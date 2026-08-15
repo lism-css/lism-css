@@ -4,8 +4,8 @@
  *
  * セクション分類:
  * - Getting Started: トップレベルの overview/installation/changelog/features/mcp/skills
- * - UI Components:   ui/Xxx.mdx（examples 配下を除く）
- * - Optional:        ui/examples/*, property-class/*
+ * - UI Components:   ui/Xxx.mdx（パッケージ提供の Blocks。block-examples / components 配下を除く）
+ * - Optional:        ui/block-examples/*, ui/components/*, property-class/*
  * - Documentation:   それ以外すべて
  *
  * `_demo/` と `test.mdx`、`draft: true` のファイルは除外する。
@@ -62,7 +62,9 @@ export function parseFrontmatter(content: string): FrontMatter {
 export function classify(rel: string): Section | null {
   if (rel.startsWith('_demo/') || rel === 'test.mdx') return null;
   const slug = rel.replace(/\.mdx$/, '');
-  if (rel.startsWith('ui/examples/')) return 'Optional';
+  // ui/ 直下（パッケージ提供の Blocks）以外の作例・実装例は Optional 扱い（#557）
+  if (rel.startsWith('ui/block-examples/')) return 'Optional';
+  if (rel.startsWith('ui/components/')) return 'Optional';
   if (rel.startsWith('property-class/')) return 'Optional';
   if (rel.startsWith('ui/')) return 'UI Components';
   if (GS_SLUGS.has(slug)) return 'Getting Started';

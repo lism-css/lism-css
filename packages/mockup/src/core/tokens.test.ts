@@ -294,6 +294,7 @@ describe('collectTokenGroups', () => {
       // プレビュー形状は group で引くため、表示ラベルとは別に持つ。
       label: 'color (dark)',
       isDark: true,
+      varPrefix: '--',
       tokens: [{ key: 'base', varName: '--base', value: '#111111', source: 'overridden' }],
     });
   });
@@ -303,6 +304,68 @@ describe('collectTokenGroups', () => {
 
     expect(groups.map((entry) => entry.id)).toEqual(['color', 'space', 'fz']);
     expect(groups.every((entry) => entry.isDark === undefined)).toBe(true);
+  });
+
+  test('varPrefix はグループの変数命名規則に従う（フラット命名は getTokenVarName と同じ）', () => {
+    const groups = collectTokenGroups(DEFAULT_TOKENS, DEFAULT_TOKENS, {});
+
+    expect(Object.fromEntries(groups.map((entry) => [entry.group, entry.varPrefix]))).toEqual({
+      color: '--',
+      space: '--s',
+      fz: '--fz--',
+    });
+  });
+
+  test('vars は参照元グループの structuralVars へ振り分け、残りだけが vars セクションに出る', () => {
+    const light = {
+      vars: { '--L': '60%', '--unref': '1px' },
+      palette: { red: 'oklch(var(--L) 0.2 20)' },
+    };
+    const groups = collectTokenGroups(light, light, {});
+
+    expect(groups.map((entry) => entry.id)).toEqual(['vars', 'palette']);
+    expect(groups[1].structuralVars).toEqual([{ key: '--L', varName: '--L', value: '60%', source: 'default' }]);
+    // どこからも参照されない変数だけが vars セクションに残る（キー自体が変数名なのでプレフィックスは空）。
+    expect(groups[0].tokens.map((token) => token.key)).toEqual(['--unref']);
+    expect(groups[0].varPrefix).toBe('');
+    expect(groups[0].structuralVars).toBeUndefined();
+  });
+
+  test('全 vars が振り分けられたら vars セクション自体を出さない', () => {
+    const light = { vars: { '--L': '60%' }, palette: { red: 'oklch(var(--L) 0.2 20)' } };
+    const groups = collectTokenGroups(light, light, {});
+
+    expect(groups.map((entry) => entry.id)).toEqual(['palette']);
+  });
+
+  test('複数グループから参照される構造変数は、マージ順で最初のグループに置く', () => {
+    const light = {
+      vars: { '--L': '60%' },
+      color: { link: 'oklch(var(--L) 0.3 240)' },
+      palette: { red: 'oklch(var(--L) 0.2 20)' },
+    };
+    const groups = collectTokenGroups(light, light, {});
+
+    expect(groups.find((entry) => entry.id === 'color')?.structuralVars?.map((token) => token.key)).toEqual(['--L']);
+    expect(groups.find((entry) => entry.id === 'palette')?.structuralVars).toBeUndefined();
+  });
+
+  test('vars の上書きは振り分け先でも overridden として扱う', () => {
+    const light = { vars: { '--L': '72%' }, palette: { red: 'oklch(var(--L) 0.2 20)' } };
+    const groups = collectTokenGroups(light, { vars: { '--L': '60%' }, palette: light.palette }, { vars: { '--L': '72%' } });
+
+    expect(groups[0].structuralVars).toEqual([{ key: '--L', varName: '--L', value: '72%', source: 'overridden' }]);
+  });
+
+  test('ダークの vars 上書きは、参照元グループのダークセクションの structuralVars に載る', () => {
+    const light = { vars: { '--L': '60%' }, palette: { red: 'oklch(var(--L) 0.2 20)' } };
+    const darkEntries = collectDarkTokens(light, { vars: { '--L': '72%' } });
+    const groups = collectTokenGroups(light, light, {}, darkEntries);
+
+    expect(groups.map((entry) => entry.id)).toEqual(['palette', 'palette--dark']);
+    expect(groups[1].structuralVars).toEqual([{ key: '--L', varName: '--L', value: '72%', source: 'overridden' }]);
+    // 依存で再宣言された側は通常のトークン行のまま。
+    expect(groups[1].tokens).toEqual([{ key: 'red', varName: '--red', value: 'oklch(var(--L) 0.2 20)', source: 'default' }]);
   });
 });
 
@@ -424,10 +487,24 @@ describe('writeConfigModule / buildTokensArtifacts', () => {
 
     expect(color?.tokens).toContainEqual({ key: 'canvas', varName: '--canvas', value: '#f7f7f7', source: 'custom' });
     expect(color?.tokens).toContainEqual({ key: 'text', varName: '--text', value: '#000000', source: 'overridden' });
-    // 一覧に出るトークンは、生成 CSS が実際に定義しているものと一致する。
+    // 一覧に出るトークンは、振り分けた構造変数も含めて生成 CSS が実際に定義しているものと一致する。
     for (const entry of groups) {
-      for (const token of entry.tokens) expect(css).toContain(`${token.varName}: ${token.value};`);
+      for (const token of [...(entry.structuralVars ?? []), ...entry.tokens]) expect(css).toContain(`${token.varName}: ${token.value};`);
     }
+  });
+
+  test('既定の構造変数は参照元グループに振り分けられ、vars セクションは出ない', async () => {
+    const dataDir = createDataDir({});
+    const configPath = writeConfigModule(createTempDir(), {});
+
+    const { groups } = await buildTokensArtifacts(dataDir, configPath, {});
+
+    // 既定の構造変数はすべてどこかのグループから参照されているため、vars セクションが残らない。
+    expect(groups.map((entry) => entry.id)).not.toContain('vars');
+    expect(groups.find((entry) => entry.id === 'palette')?.structuralVars?.map((token) => token.key)).toEqual(['--L', '--C']);
+    expect(groups.find((entry) => entry.id === 'fz')?.structuralVars?.map((token) => token.key)).toEqual(['--fz-mol']);
+    expect(groups.find((entry) => entry.id === 'hl')?.structuralVars?.map((token) => token.key)).toEqual(['--hl-unit']);
+    expect(groups.find((entry) => entry.id === 'space')?.structuralVars?.map((token) => token.key)).toEqual(['--s-unit']);
   });
 
   test('ダークは :root の後ろに .set--dark ブロックとして足され、一覧にもセクションが増える', async () => {
@@ -457,6 +534,11 @@ describe('writeConfigModule / buildTokensArtifacts', () => {
     // --red は :root で値が確定しているため、再宣言しない限りダークの --L では組み直されない。
     expect(darkBlock).toContain('--red: oklch(var(--L) var(--C) 20);');
     expect(groups.map((entry) => entry.id)).toContain('palette--dark');
+    // ダークの --L も `vars (dark)` ではなく、パレットのダークセクションの構造変数として出す。
+    expect(groups.map((entry) => entry.id)).not.toContain('vars--dark');
+    expect(groups.find((entry) => entry.id === 'palette--dark')?.structuralVars).toEqual([
+      { key: '--L', varName: '--L', value: '72%', source: 'overridden' },
+    ]);
   });
 
   test('ダーク宣言が無ければ .set--dark も一覧のダークセクションも作らない', async () => {

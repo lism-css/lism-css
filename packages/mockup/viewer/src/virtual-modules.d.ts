@@ -57,6 +57,19 @@ declare module 'virtual:lism-mockup/tokens' {
     label: string;
     /** Whether the section lists the dark values, and must render inside the dark scope. */
     isDark?: boolean;
+    /**
+     * Custom property prefix shared by the group's tokens (`--fz--`; `--s` for
+     * `space`, `--` for the color groups). Shown once next to the heading, so
+     * the rows list keys only. Empty when the keys are full var names already.
+     */
+    varPrefix: string;
+    /**
+     * Structural variables (from the `vars` group) that the group's values are
+     * computed from — `--L` for the palette, `--fz-mol` for `fz`. Their keys are
+     * the full var names. Shown on a compact line above the token list, not as
+     * rows of it.
+     */
+    structuralVars?: ViewerToken[];
     tokens: ViewerToken[];
   }
 
@@ -72,5 +85,5 @@ declare module 'virtual:lism-mockup/tokens' {
   export const darkScopeClass: string;
 }
 
-/** Plain CSS imports (`lism-css/main.css`, `@lism-css/ui/style.css`, local files). */
+/** Plain CSS imports (`lism-css/main.css`, local files). */
 declare module '*.css';

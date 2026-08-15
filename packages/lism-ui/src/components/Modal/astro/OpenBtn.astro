@@ -2,15 +2,25 @@
 import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 
 type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
   AstroLismBaseProps & {
     modalId?: string;
   };
 
-const { modalId = '', ...props } = Astro.props;
+const { class: className, modalId = '', ...props } = Astro.props;
 ---
 
-<Lism as="button" set="plain" hov="-o" d="inline-flex" data-modal-open={modalId} {...props}>
+<Lism
+  as="button"
+  type="button"
+  aria-haspopup="dialog"
+  class={atts(className, 'b--modal_openBtn')}
+  set="plain"
+  hov="-o"
+  data-modal-open={modalId}
+  {...props}
+>
   <slot />
 </Lism>

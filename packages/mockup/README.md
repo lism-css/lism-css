@@ -103,7 +103,7 @@ metadata only.
 ```json
 {
   "schemaVersion": 2,
-  "title": "Acme Console Mockup",
+  "title": "Lism Mockup",
   "imports": ["lucide-react"],
   "pages": {
     "landing": { "label": "Landing", "category": "Marketing", "order": 10 },
@@ -225,7 +225,7 @@ gains a section such as `color (dark)` **right after** the light one (the outlin
 lists it too). It contains what the `.set--dark` block defines: the tokens you
 declared plus the ones re-declared as dependencies. That section is drawn inside
 a `.set--dark` scoped box, so shadows and swatches close to the base color can be
-checked in a dark context. Rows in a dark section carry no `override` / `new`
+checked in a dark context. Rows in a dark section carry no `Custom` / `New`
 badge, since by definition all of them are diffs from light.
 
 `lism-mockup init` does not scaffold this file — create it when the mockup needs

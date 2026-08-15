@@ -28,7 +28,7 @@ const mdMdxWithUnderscoreExcludes = ['**/*.{md,mdx}', '!**/_*/**'] as const;
  */
 // `primitives/` 配下のみ、ファイル名の大文字・小文字をそのまま ID（= URL スラッグ）に使う。
 // CSS クラス名（例: `l--tileGrid`）とドキュメント URL を一致させるための例外扱い。
-// それ以外のコレクション（core-components / ui / ui/examples 等）は従来通り小文字化して URL casing の破壊的変更を避ける。
+// それ以外のコレクション（core-components / ui / ui/block-examples / ui/components 等）は従来通り小文字化して URL casing の破壊的変更を避ける。
 const generateId = ({ entry }: { entry: string }) => {
   const withoutExt = entry.replace(/\.(md|mdx)$/, '');
   return toContentSlug(withoutExt);

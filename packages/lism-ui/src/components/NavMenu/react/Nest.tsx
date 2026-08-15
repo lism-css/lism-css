@@ -1,12 +1,11 @@
 import type { ElementType } from 'react';
-import { Stack, type LayoutComponentProps } from 'lism-css/react';
-import type { StackProps } from 'lism-css/lib/types/LayoutProps';
+import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
 
-export default function Nest<T extends ElementType = 'ul'>({ children, className, ...props }: LayoutComponentProps<T, StackProps>) {
+export default function Nest<T extends ElementType = 'ul'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Stack as="ul" className={atts(className, 'c--navMenu_nest')} ps="20" {...(props as object)}>
+    <Lism as="ul" className={atts(className, 'b--navMenu_nest')} {...(props as object)}>
       {children}
-    </Stack>
+    </Lism>
   );
 }

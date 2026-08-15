@@ -12,7 +12,7 @@ type DetailsRootProps<T extends ElementType = 'details'> = LismComponentProps<T>
  */
 export default function Details<T extends ElementType = 'details'>({ children, open, className, ...props }: DetailsRootProps<T>) {
   return (
-    <Lism as="details" open={open} className={atts(className, 'c--details')} {...(props as object)}>
+    <Lism as="details" open={open} className={atts(className, 'b--details')} {...(props as object)}>
       {children}
     </Lism>
   );

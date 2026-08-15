@@ -9,7 +9,9 @@
 		scrollbar-gutter: stable;
 	} */
 
-  .z--article :not(.c--preview_area *) {
+  /* 記事本文のタイポグラフィ既定値。記事内のLismクラスやProperty Classで上書きできるよう、
+     c-- の通常CSS（lism-custom）ではなく意図的に最弱の lism-base へ置いている */
+  .c--siteArticle :not(.c--preview_area *) {
     :not(pre) > code:is(&) {
       display: inline-flex;
       color: var(--code-c);

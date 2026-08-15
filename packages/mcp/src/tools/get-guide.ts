@@ -24,14 +24,14 @@ const GUIDE_TOPICS = {
   'set-class': { files: ['set-class.md'], label: 'Set classes (set--plain, set--bxsh, set--hov, etc.)' },
   'primitive-class': {
     files: ['primitive-class.md'],
-    label: 'Primitive class prefixes (is--, l--, a--) and Component class (c--), with column-layout primitive selection guide',
+    label: 'Primitive class prefixes (l--, a--), with column-layout primitive selection guide',
   },
   'trait-class': {
     files: ['trait-class.md'],
     label: 'Trait classes (is--, has--): declarative role/feature classes in the lism-trait layer',
   },
   'utility-class': { files: ['utility-class.md'], label: 'Utility classes (u--trim, u--cbox, etc.)' },
-  'css-rules': { files: ['css-rules.md'], label: 'CSS methodology, layer structure, naming conventions' },
+  'css-rules': { files: ['css-rules.md'], label: 'CSS methodology, layer structure, Block Class (b--) / Custom Class (c--), naming conventions' },
   naming: {
     files: ['naming.md'],
     label: 'Naming conventions: CSS variable / class naming rules, {prop} and {value} abbreviation rules',

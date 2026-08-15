@@ -1,10 +1,10 @@
 {
-  "version": "0.25.0",
+  "version": "0.26.0",
   "excludeComponentFiles": ["__contexts.js", "astro.ts", "react.ts"],
   "components": [
     {
       "name": "Accordion",
-      "helpers": ["animation", "uuid"]
+      "helpers": ["animation", "escapeHtmlAttr", "uuid"]
     },
     {
       "name": "Alert",
@@ -25,10 +25,6 @@
     {
       "name": "Callout",
       "helpers": []
-    },
-    {
-      "name": "Chat",
-      "helpers": ["buildModifierClass"]
     },
     {
       "name": "Details",
@@ -52,8 +48,8 @@
     },
     {
       "name": "Tabs",
-      "helpers": ["buildModifierClass", "uuid"]
+      "helpers": ["buildModifierClass", "escapeHtmlAttr", "uuid"]
     }
   ],
-  "helpers": ["animation", "buildModifierClass", "uuid"]
+  "helpers": ["animation", "buildModifierClass", "escapeHtmlAttr", "uuid"]
 }

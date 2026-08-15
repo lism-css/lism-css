@@ -1,2 +1,9 @@
-/* Avatar component styles */
-/* このコンポーネントは現時点でカスタムスタイルを必要としません */
+@layer lism-block {
+  /* Note: l--frame との併用を前提としています. */
+  .b--avatar {
+    --w: 2em; /* size prop未指定時のデフォルトサイズ */
+    width: var(--w);
+    aspect-ratio: 1/1;
+    border-radius: var(--bdrs--99);
+  }
+}

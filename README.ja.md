@@ -26,7 +26,7 @@ Lism CSSは、Webサイトのレイアウトを素早く、かつ美しく構築
 - **軽量** — CSSバンドル全体で約30 KB（gzip圧縮時約8 KB）。
 - **ゼロビルドフレームワーク** — CDNまたはnpmでプレーンHTMLでも動作。ビルドツールや設定は不要。
 - **レイアウト優先プリミティブ** — プリビルトのレイアウトパターン: `l--flex`、`l--stack`、`l--grid`、`l--columns`、`l--center`、`l--withSide` など。
-- **CSSレイヤー構造** — `@layer`（lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-component` はBEM構造の `c--` コンポーネント用レイヤー、`lism-custom` はユーザー独自プレフィックスのクラス用レイヤーです。詳細度の衝突を最小限に抑えます。
+- **CSSレイヤー構造** — `@layer`（lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-block` はベーススタイルをCSS側で管理する基礎部品（`b--`）用レイヤーで、明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝つように弱い位置へ配置されています。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-custom` はユーザーの独自クラスや上書き用のレイヤーです。詳細度の衝突を最小限に抑えます。
 - **デザイントークン** — カラー、余白、フォントサイズ、シャドウをCSSカスタムプロパティで管理。
 - **柔軟なProperty Class** — `-{prop}:{value}` 構文（例: `-p:20`、`-bgc:base-2`、`-fz:l`）。
 - **レスポンシブシステム** — ブレークポイントクラスとCSS変数（例: `-p_sm`、`-p_md`）にデフォルトでコンテナクエリを採用し、親要素ベースのレスポンシブデザインを実現。メディアクエリへの切り替えも可能。
@@ -49,7 +49,7 @@ Lism CSSは、Webサイトのレイアウトを素早く、かつ美しく構築
 ### CDN（ビルド不要）
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.25.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.26.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -122,6 +122,8 @@ import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/astro';
 |--------|-----|
 | レイアウトプリミティブ | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
 | Trait Class | `is--wrapper`, `is--container`, `is--layer`, `has--transition`, `has--gutter` |
+| Block Class | `b--btn`, `b--badge` |
+| Custom Class | `c--siteHeader`, `c--pricing` |
 | Property Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | ブレークポイント | `-p_sm`, `-g_md`, `-fz_lg` |
 | ユーティリティ | `u--cbox` |

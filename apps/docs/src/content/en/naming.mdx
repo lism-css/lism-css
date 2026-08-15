@@ -48,14 +48,15 @@ Rules for variable names used in Property Classes (`-{prop}:{value}`).
 |------|------|-----|
 | `--{target}-{prop}` | Property applied to an element or class (can be overridden on `:root`) | `--link-td`, `--headings-ff` |
 | `--{propName}` | Variables controlling a class's own main feature. Initialized on the element itself and cannot be given an initial value on `:root` | `--sideW`, `--mainW` |
-| `--_{item}-{propName}` | Properties for child elements of a component class (`c--`) | `--_icon-size` |
+| `--_{item}-{propName}` | Properties for child elements of a custom class (`c--`) | `--_icon-size` |
 | `--_{varName}` | Internal variables for state management | `--_isHov`, `--_notHov` |
 
 ## Class Naming Conventions
 
 Prefixes are chosen to match each class category and joined with two hyphens (`--`).
 
-- Component: `c--`
+- Block: `b--`
+- Custom: `c--`
 - Atomic Primitives: `a--`
 - Layout Primitives: `l--`
 - Trait (role declaration): `is--`
@@ -68,6 +69,7 @@ The name that follows the prefix is written in camelCase.
 - Not allowed: `c--my-component`
 - Allowed: `c--myComponent`
 
+Note that only `b--` and `c--` classes can have a BEM structure (Block / Modifier / Element). See [CSS Methodology](/en/docs/css-methodology/) for the notation details.
 
 Property Class naming follows these conventions:
 
@@ -85,7 +87,8 @@ The responsibility and layer assignment of each prefix is summarized below.
 | `set--` | Base styling of HTML elements / variable setup | `lism-base` | `set--plain`, `set--hov`, `set--bxsh`, `set--bdrsInner` |
 | `l--` | Layout Primitives (composition units) | `lism-primitive` | `l--box`, `l--flex`, `l--grid` |
 | `a--` | Atomic Primitives (smallest units) | `lism-primitive` | `a--icon`, `a--divider`, `a--spacer` |
-| `c--` | UI components with BEM-like structure | `lism-component` | `c--card`, `c--button` |
+| `b--` | Common site-wide base parts whose base styles are managed in CSS (Block) | `lism-block` | `b--btn`, `b--badge` |
+| `c--` | Free-form custom classes beyond the core definitions | `lism-custom` | `c--pricing`, `c--siteHeader` |
 | `is--` | “is a …” (role / existence declaration) | `lism-trait` | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` |
 | `has--` | “has a …” (single-feature trait attachment) | `lism-trait` | `has--transition`, `has--gutter`, `has--snap` |
 | `u--` | Decorative effects (including child-element decoration) | `lism-utility` | `u--trim`, `u--cbox`, `u--divide`, `u--enclose`, `u--clipText` |

@@ -11,7 +11,7 @@ Here we walk through the main layers that make up Lism CSS, one at a time.
 
 ## CSS Layers
 
-Lism CSS styles are split across several `@layer`s, and the order in which the layers are declared determines their priority. They are stacked in the order `lism-base` → `lism-component` → `lism-utility`, so you can override styles with property classes without worrying about specificity.
+Lism CSS styles are split across several `@layer`s, and the order in which the layers are declared determines their priority. They are stacked in the order `lism-base` → `lism-custom` → `lism-utility`, so you can override styles with property classes without worrying about specificity.
 
 When you add custom CSS, place it in whichever layer fits its purpose.
 
@@ -24,7 +24,7 @@ When you add custom CSS, place it in whichever layer fits its purpose.
   }
 }
 
-@layer lism-component {
+@layer lism-custom {
   .c--postList > li {
     border-block-end: 1px solid var(--divider);
   }
@@ -94,16 +94,16 @@ Lism provides classes with the `is--{name}` prefix that declare a "role".
 
 Don't use them for state changes (such as active) or variations. Express state with `data-*` attributes, and variations with BEM modifiers in the form `c--{name}--{variant}`.
 
-## Component classes (c--)
+## Custom classes (c--)
 
-Define project-specific components with classes using the `c--{name}` prefix. Move any declaration you can express with a property class into the markup, and leave only CSS-only declarations — pseudo-classes, state changes, descendant selectors, and the like — in the CSS.
+Define project-specific elements and components with custom classes using the `c--{name}` prefix. Move any declaration you can express with a property class into the markup, and leave only CSS-only declarations — pseudo-classes, state changes, descendant selectors, and the like — in the CSS.
 
 ```html
 <span class="c--tag -fz:xs -px:10 -py:5 -bgc:base-2 -bdrs:10">React</span>
 ```
 
 ```css
-@layer lism-component {
+@layer lism-custom {
   .c--tag:hover {
     background-color: var(--divider);
   }

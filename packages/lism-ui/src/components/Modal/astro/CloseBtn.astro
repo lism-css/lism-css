@@ -3,6 +3,7 @@ import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
 import type { IconOwnProps } from 'lism-css/react/atomic/Icon/getProps';
 import { Lism, Icon } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 
 type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
   AstroLismBaseProps & {
@@ -11,16 +12,16 @@ type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
     srText?: string;
   };
 
-const { modalId = '', icon, srText = 'Close', ...props } = Astro.props;
+const { class: className, modalId = '', icon, srText = 'Close', ...props } = Astro.props;
 ---
 
 {
   Astro.slots.has('default') ? (
-    <Lism as="button" set="plain" hov="-o" d="inline-flex" data-modal-close={modalId} {...props}>
+    <Lism as="button" type="button" class={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...props}>
       <slot />
     </Lism>
   ) : (
-    <Lism as="button" set="plain" hov="-o" d="inline-flex" data-modal-close={modalId} {...props}>
+    <Lism as="button" type="button" class={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...props}>
       <Icon icon={icon || 'x'} />
       <span class="u--srOnly">{srText || 'Close'}</span>
     </Lism>

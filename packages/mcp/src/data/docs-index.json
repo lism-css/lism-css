@@ -68,12 +68,12 @@
       "Set Class",
       "Primitive Class",
       "Trait Class",
-      "Component Class",
+      "Block Class",
+      "Custom Class",
       "Utility Class",
       "Property Class",
       "レスポンシブ対応の Property Class",
-      "独自クラスの命名と定義場所",
-      "独自分類の追加",
+      "既存クラスの追加・上書き",
       "動的な状態管理はdata属性"
     ],
     "keywords": [
@@ -87,13 +87,17 @@
       "Property Class",
       "Primitive Class",
       "Trait Class",
-      "Component Class",
+      "Custom Class",
       "Set Class",
       "Utility Class",
       "省略",
-      "Emmet"
+      "Emmet",
+      "b--",
+      "Block Class",
+      "c--",
+      "2分類"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility の順。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility の順（Property Class はレイヤーの外）。lism-block は trait / primitive より弱いレイヤーのため、`b--` のベーススタイルには明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝つ（この優先関係が保証されるのはレイヤーありの標準ビルド（`main.css` / `full.css`）のみで、`main_no_layer.css` / `full_no_layer.css` では読み込み順と詳細度に依存する）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Custom Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。独自クラスは、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理する。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
   },
   {
     "sourcePath": "naming.mdx",
@@ -137,6 +141,8 @@
       "カスタムプロパティ",
       "Property Class",
       "prefix",
+      "b--",
+      "Block Class",
       "camelCase",
       "token",
       "breakpoint",
@@ -144,7 +150,7 @@
       "max-",
       "min-"
     ],
-    "snippet": "Lism CSS の命名規則をまとめたページ。CSS変数はトークン変数 `--{prop}--{token}`、Property Class 用変数 `--{prop}` / `--{prop}_{bp}`、状態管理用の内部変数 `--_{varName}` などの形式で統一。クラスはプレフィックス（`c--`, `a--`, `l--`, `is--`, `set--`, `u--`）で分類を示し、続く名称は camelCase。Prop 名は Emmet を参考に 1 文字プロパティ（p, m, g, c, f, w, h, d, o, v, i, t, b, l, r, z）やグループ略称 + サブプロパティ形式（fz, bgc, gtc 等）で省略。方向サフィックスは `-t` / `-b` / `-l` / `-r` / `-x` / `-y` / `-s` / `-e` を使用し、p/m のみ最初のハイフンを省略（pt, px, my 等）。値は基本的に CSS の実値をそのまま使用し、トークン値を使う場合は `--{prop}--{value}` の `{value}` 部分を採用。"
+    "snippet": "Lism CSS の命名規則をまとめたページ。CSS変数はトークン変数 `--{prop}--{token}`、Property Class 用変数 `--{prop}` / `--{prop}_{bp}`、状態管理用の内部変数 `--_{varName}` などの形式で統一。クラスはプレフィックス（`b--`, `c--`, `a--`, `l--`, `is--`, `set--`, `u--`）で分類を示し、続く名称は camelCase。Prop 名は Emmet を参考に 1 文字プロパティ（p, m, g, c, f, w, h, d, o, v, i, t, b, l, r, z）やグループ略称 + サブプロパティ形式（fz, bgc, gtc 等）で省略。方向サフィックスは `-t` / `-b` / `-l` / `-r` / `-x` / `-y` / `-s` / `-e` を使用し、p/m のみ最初のハイフンを省略（pt, px, my 等）。値は基本的に CSS の実値をそのまま使用し、トークン値を使う場合は `--{prop}--{value}` の `{value}` 部分を採用。"
   },
   {
     "sourcePath": "tokens.mdx",
@@ -756,7 +762,7 @@
     "category": "core-components",
     "headings": ["Import", "Lism Props"],
     "keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "className", "layout", "atomic", "as", "exProps"],
-    "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。className で c-- クラスや任意クラスを指定、layout で l-- クラス、atomic で a-- クラス（divider / spacer / decorator）を指定可能。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
+    "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。className で b-- / c-- クラス（Block Class / Custom Class）や任意クラスを指定、layout で l-- クラス、atomic で a-- クラス（divider / spacer / decorator）を指定可能。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
   },
   {
     "sourcePath": "core-components/lism-props.mdx",
@@ -809,7 +815,7 @@
       "省略記法",
       "contentSize"
     ],
-    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で c-- クラス（Component Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
+    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で b-- / c-- クラス（Block Class / Custom Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
   },
   {
     "sourcePath": "core-components/Text.mdx",
@@ -1260,12 +1266,13 @@
     "description": "@lism-css/ui で提供する Accordion コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
       "Examples",
+      "スタイリング例",
       "見出しタグを変更する",
       "アニメーション時間を変更する",
       "最初の一つを開いた状態にする",
@@ -1290,7 +1297,7 @@
     "title": "Modal",
     "description": "@lism-css/ui で提供する Modal コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "基本構造", "ソースコード", "Examples", "ドロワーメニューの作成例"],
+    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "コンテンツが長い場合の例", "ドロワーメニューの作成例"],
     "keywords": ["Modal", "モーダル", "dialog", "ダイアログ", "ポップアップ", "popup"],
     "snippet": "モーダルダイアログUI。dialog要素を使用。@lism-css/uiパッケージで提供。"
   },
@@ -1300,20 +1307,21 @@
     "description": "@lism-css/ui で提供する Tabs コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
+      "キーボード操作",
       "Examples",
-      "基本例",
+      "variant=\"line\"",
       "最初に開いておくタブ番号を指定する",
-      "タブコンテンツを横並び配置にする",
+      "URLパラメータで初期タブを指定する",
+      "縦並びタブ",
       "Opt-in",
-      "スタイルバリエーションの作成例",
-      "c--tabs--line",
-      "c--tabs--emboss",
-      "高さを固定する方法"
+      "variant=\"emboss\"",
+      "variant=\"folder\"",
+      "高さを固定する"
     ],
     "keywords": [
       "Tabs",
@@ -1329,7 +1337,7 @@
       "Tabs.Panel",
       "--_isSelected"
     ],
-    "snippet": "タブ切り替えUI。Tabs.Root / Tabs.Item / Tabs.Tab / Tabs.Panel で構成。defaultIndex で初期タブ指定、listProps でタブリストへの props 渡しが可能。横並び配置やスタイルバリエーション（line/emboss 等）、高さ固定のOpt-in解説あり。@lism-css/uiパッケージで提供。"
+    "snippet": "タブ切り替えUI。Tabs.Root / Tabs.Item / Tabs.Tab / Tabs.Panel で構成。defaultIndex で初期タブ指定、listProps でタブリストへの props 渡しが可能。variant の初期値は default で、独自 variant 指定時は既定装飾（b--tabs--default）が外れる。左右キー・Home/End でのキーボード操作（listProps で aria-orientation=\"vertical\" を指定すると上下キー）と、URLパラメータ（?lism-tab=）での初期タブ指定に対応。line variant は標準提供。emboss / folder などの独自バリアント作成例や横並び配置、高さ固定の Opt-in 解説あり。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Details.mdx",
@@ -1337,14 +1345,16 @@
     "description": "@lism-css/ui で提供する Details コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
       "Examples",
-      "タイトルのHTMLタグを変更し、複数同時展開を制限する例",
-      "アニメーション時間を変更する例"
+      "スタイリング例",
+      "タイトルのHTMLタグを変更する",
+      "複数同時展開を制限する",
+      "アニメーション時間を変更する"
     ],
     "keywords": ["Details", "details", "summary", "開閉", "disclosure"],
     "snippet": "HTMLのdetails/summary要素をラップ。ネイティブのHTML要素を使用したアコーディオン。@lism-css/uiパッケージで提供。"
@@ -1355,17 +1365,17 @@
     "description": "@lism-css/ui で提供する Alert コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
       "カラーとアイコンを指定する例",
       "`l--withSide` を使ってレスポンシブ対応",
       "ボタン付き + ブレイクポイントによるレスポンシブ対応",
-      "`l--withSide` を使ったレスポンシブ対応",
       "type一覧",
-      "Only lism-css"
+      "Without @lism-css/ui"
     ],
     "keywords": ["Alert", "アラート", "注意", "notice", "warning", "info", "お知らせ", "通知", "type", "keycolor", "icon", "withSide", "layout"],
     "snippet": "短めの文言を目立たせて強調表示したい時に使えるコンポーネント。type prop（alert/point/warning/check/info/help/note/tip）でアイコンとキーカラーをまとめて設定。layout=\"withSide\" でコンテナ幅が狭い時に縦並び対応。@lism-css/uiパッケージで提供。"
@@ -1375,7 +1385,18 @@
     "title": "Callout",
     "description": "@lism-css/ui で提供する Callout コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "type一覧", "`icon`、`keycolor`を指定", "Only lism-css"],
+    "headings": [
+      "Overview",
+      "Styles",
+      "How to use",
+      "Import",
+      "Props",
+      "Examples",
+      "type一覧",
+      "`icon`、`keycolor`を指定",
+      "`title` を指定しない場合",
+      "Without @lism-css/ui"
+    ],
     "keywords": ["Callout", "コールアウト", "補足", "note", "注意書き", "強調ボックス", "highlight", "type", "keycolor", "icon", "title"],
     "snippet": "記事の中で重要なポイントを示すためのコンポーネント。type prop（info/alert/warning/point/check/help/note/tip）でアイコンとキーカラーをまとめて設定。title でタイトルテキストを表示。@lism-css/uiパッケージで提供。"
   },
@@ -1385,18 +1406,19 @@
     "description": "@lism-css/ui で提供する Button コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
       "variant: outline",
       "アイコンを使う例",
-      "サイズの調整",
+      "スタイルの調整",
       "Gridでアイコンを端に寄せる",
-      "Opt-in",
-      "hov=\"reverse\"",
-      "Only lism-css"
+      "Without @lism-css/ui",
+      "Opt-in Styles",
+      "hov=\"reverse\""
     ],
     "keywords": ["Button", "ボタン", "クリック", "outline", "action", "CTA", "submit"],
     "snippet": "ボタンコンポーネント。variant (outline 等) と keycolor でバリエーションを表現。@lism-css/uiパッケージで提供。"
@@ -1407,15 +1429,18 @@
     "description": "@lism-css/ui で提供する Badge コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
+      "カラーパレットの活用",
       "variant: outline",
       "u--cbox との併用",
+      "スタイルの調整例",
       "アイコンを使用する例",
-      "Only lism-css"
+      "Without @lism-css/ui"
     ],
     "keywords": ["Badge", "バッジ", "ラベル", "タグ", "status", "ステータス表示", "tag label", "カテゴリ表示"],
     "snippet": "バッジ (ラベル) コンポーネント。カテゴリやステータスの表示に使用。@lism-css/uiパッケージで提供。"
@@ -1425,18 +1450,18 @@
     "title": "Avatar",
     "description": "@lism-css/ui で提供する Avatar コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "Only lism-css"],
+    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "Without @lism-css/ui"],
     "keywords": ["Avatar", "アバター", "プロフィール", "画像", "丸", "user icon", "ユーザーアイコン"],
     "snippet": "アバター画像用のコンポーネント。円形の画像表示に使用。@lism-css/uiパッケージで提供。"
   },
   {
-    "sourcePath": "ui/Chat.mdx",
+    "sourcePath": "ui/block-examples/Chat.mdx",
     "title": "Chat",
-    "description": "@lism-css/ui で提供する Chat コンポーネントについて解説します。",
+    "description": "Lism CSS で実装するチャット風UI（b--chat）の実装例です。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "Opt-in", "variant=\"think\"", "Astroでのslotの活用"],
+    "headings": ["Overview", "Styles", "Markup", "Examples", "思考スタイル（b--chat--think）"],
     "keywords": ["Chat", "チャット", "吹き出し", "会話", "balloon", "message bubble", "speech bubble"],
-    "snippet": "チャット風の吹き出しコンポーネント。会話形式のUI表現に使用。@lism-css/uiパッケージで提供。"
+    "snippet": "チャット風の吹き出しUIの実装例。primitivesと少量のCSS（b--chat）で構成し、CSSをlism-blockレイヤーへコピーして利用。"
   },
   {
     "sourcePath": "ui/NavMenu.mdx",
@@ -1444,18 +1469,17 @@
     "description": "@lism-css/ui で提供する NavMenu コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
       "Examples",
-      "シンプルな例",
-      "アイコンやバッジを表示する例",
       "各リストの共通スタイルを一括で指定する方法",
+      "アイコンやバッジを表示する例",
       "メニューのネスト",
       "ネストしたメニューをアコーディオンで展開する",
-      "横並びメニューでホバー時に子メニューを表示する例"
+      "ホバー時にサブメニューを表示する例"
     ],
     "keywords": [
       "NavMenu",
@@ -1472,7 +1496,7 @@
       "NavMenu.Link",
       "NavMenu.Nest"
     ],
-    "snippet": "ナビゲーションメニューコンポーネント（c--navMenu）。NavMenu.Root / NavMenu.Item / NavMenu.Link / NavMenu.Nest で構成。hovBgc/hovC/itemP などの専用Props で一括スタイル指定が可能。ネスト構造・アコーディオン展開・横並びhoverドロップダウンなど様々なパターンを実装可能。@lism-css/uiパッケージで提供。"
+    "snippet": "ナビゲーションメニューコンポーネント（b--navMenu）。NavMenu.Root / NavMenu.Item / NavMenu.Link / NavMenu.Nest で構成。hovBgc/hovC/itemP などの専用Props で一括スタイル指定が可能。ネスト構造・アコーディオン展開・横並びhoverドロップダウンなど様々なパターンを実装可能。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/ShapeDivider.mdx",
@@ -1480,10 +1504,11 @@
     "description": "@lism-css/ui で提供する ShapeDivider コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
       "シェイプをセクションの上下に配置する",
       "空のShapeDividerをスペーサーとして利用する",
@@ -1494,7 +1519,7 @@
     "snippet": "セクション間の波型などの装飾的な区切り要素。SVGベースの形状で区切りを表現。@lism-css/uiパッケージで提供。"
   },
   {
-    "sourcePath": "ui/examples/Card.mdx",
+    "sourcePath": "ui/components/Card.mdx",
     "title": "Card",
     "description": "Lism CSS で実装するカード型コンテンツレイアウトの実装例です。",
     "category": "ui",
@@ -1512,7 +1537,7 @@
     "snippet": "Lism CSS を使ったカードレイアウトの実装例。WithSide+is--boxLink で縦横自動切り替えカード、is--coverLink でカード内別リンク配置、set--bdrsInner での内側角丸活用、ホバーでテキストを出現させる例など多様なパターンを紹介。"
   },
   {
-    "sourcePath": "ui/examples/Banner.mdx",
+    "sourcePath": "ui/components/Banner.mdx",
     "title": "Banner",
     "description": "Lism CSS で実装するバナーリンクの実装例です。",
     "category": "ui",
@@ -1521,7 +1546,7 @@
     "snippet": "バナーの実装例。"
   },
   {
-    "sourcePath": "ui/examples/Hero.mdx",
+    "sourcePath": "ui/components/Hero.mdx",
     "title": "Hero",
     "description": "Lism CSS で実装するヒーローセクションの実装例です。",
     "category": "ui",
@@ -1530,7 +1555,7 @@
     "snippet": "ヒーローセクション（メインビジュアル）の実装例。"
   },
   {
-    "sourcePath": "ui/examples/FAQ.mdx",
+    "sourcePath": "ui/components/FAQ.mdx",
     "title": "FAQ",
     "description": "Lism CSS で実装するQ&A（よくある質問）レイアウトの実装例です。",
     "category": "ui",
@@ -1539,7 +1564,7 @@
     "snippet": "FAQ（よくある質問）セクションの実装例。"
   },
   {
-    "sourcePath": "ui/examples/Steps.mdx",
+    "sourcePath": "ui/components/Steps.mdx",
     "title": "Steps",
     "description": "Lism CSS で実装する、手順を示すステップレイアウトの実装例です。",
     "category": "ui",
@@ -1548,16 +1573,24 @@
     "snippet": "ステップ（手順）表示の実装例。"
   },
   {
-    "sourcePath": "ui/examples/Timeline.mdx",
+    "sourcePath": "ui/block-examples/Timeline.mdx",
     "title": "Timeline",
-    "description": "Lism CSS で実装するタイムラインレイアウトの実装例です。",
+    "description": "Lism CSS で実装するタイムラインUI（b--timeline）の実装例です。",
     "category": "ui",
-    "headings": ["Create Component", "Source Code", "Import", "Usage", "End, Startの指定, シェイプの協調", "アイコンの使用例", "横並び"],
-    "keywords": ["Timeline", "タイムライン", "年表", "example"],
-    "snippet": "タイムライン表示の実装例。"
+    "headings": [
+      "Overview",
+      "Styles",
+      "Markup",
+      "Examples",
+      "先頭・末尾の指定とシェイプの強調",
+      "アイコンの表示",
+      "横並び（b--timeline--horizontal）"
+    ],
+    "keywords": ["Timeline", "b--timeline", "タイムライン", "年表", "時系列", "沿革", "history"],
+    "snippet": "出来事を時系列に並べるタイムラインUIの実装例。primitivesと少量のCSS（b--timeline）で構成し、CSSをlism-blockレイヤーへコピーして利用。data-timelineで先頭・末尾を指定でき、b--timeline--horizontalで横並びにできる。"
   },
   {
-    "sourcePath": "ui/examples/Breadcrumb.mdx",
+    "sourcePath": "ui/components/Breadcrumb.mdx",
     "title": "Breadcrumb",
     "description": "Lism CSS で実装するパンくずリストナビゲーションの実装例です。",
     "category": "ui",
@@ -1566,7 +1599,7 @@
     "snippet": "パンくずリストの実装例。"
   },
   {
-    "sourcePath": "ui/examples/DividerLabel.mdx",
+    "sourcePath": "ui/components/DividerLabel.mdx",
     "title": "DividerLabel",
     "description": "Lism CSS で実装する、ラベル付き区切り線コンポーネントの実装例です。",
     "category": "ui",
@@ -1575,7 +1608,7 @@
     "snippet": "ラベル付き区切り線の実装例。"
   },
   {
-    "sourcePath": "ui/examples/Reel.mdx",
+    "sourcePath": "ui/components/Reel.mdx",
     "title": "Reel",
     "description": "Lism CSS で実装する、コンテンツを横スクロールで表示するリールコンポーネントの実装例です。",
     "category": "ui",
@@ -1584,7 +1617,7 @@
     "snippet": "横スクロール（リール）レイアウトの実装例。Flex/Grid両方の実装パターンを紹介。"
   },
   {
-    "sourcePath": "ui/examples/BalloonBox.mdx",
+    "sourcePath": "ui/components/BalloonBox.mdx",
     "title": "BalloonBox",
     "description": "Lism CSS で実装するふきだし風装飾ボックスの実装例です。",
     "category": "ui",
@@ -1593,7 +1626,7 @@
     "snippet": "ふきだし風装飾ボックスの作成例。variant でふきだしの方向、keycolor で色を指定。"
   },
   {
-    "sourcePath": "ui/examples/Decorations.mdx",
+    "sourcePath": "ui/components/Decorations.mdx",
     "title": "Decorations",
     "description": "Lism CSS で実装する装飾ボックスパターンの実装例です。",
     "category": "ui",
@@ -1602,16 +1635,23 @@
     "snippet": "装飾ボックスの実装例。Call, Kakko, Sticky など様々な装飾パターンを紹介。"
   },
   {
-    "sourcePath": "ui/examples/List.mdx",
+    "sourcePath": "ui/block-examples/List.mdx",
     "title": "List",
-    "description": "Lism CSS で実装する、アイコン付き装飾リストの実装例です。",
+    "description": "Lism CSS で実装する、アイコン付き装飾リストUI（b--list）の実装例です。",
     "category": "ui",
-    "headings": ["Create Component", "Source Code", "Import", "Usage"],
-    "keywords": ["List", "リスト", "アイコン", "装飾リスト", "example"],
-    "snippet": "アイコンを使った装飾リストの作成例。List(.c--list)コンポーネントの実装と使い方を紹介。"
+    "headings": [
+      "Overview",
+      "Styles",
+      "Markup",
+      "Examples",
+      "チェックマークのリスト（b--list--check）",
+      "アイコンを差し替える（--_icon-c / --_icon-img）"
+    ],
+    "keywords": ["List", "b--list", "リスト", "箇条書き", "アイコン", "チェックマーク", "checklist"],
+    "snippet": "行頭にアイコンを表示する装飾リストUIの実装例。primitivesと少量のCSS（b--list）で構成し、CSSをlism-blockレイヤーへコピーして利用。b--list--checkでチェックマークに切り替え、--_icon-c / --_icon-imgでアイコンの色・画像を変更できる。"
   },
   {
-    "sourcePath": "ui/examples/Others.mdx",
+    "sourcePath": "ui/components/Others.mdx",
     "title": "Others",
     "description": "Lism CSS で実装する、ステップナビゲーションやメニュー表などその他のUIパターンの実装例です。",
     "category": "ui",
@@ -1620,13 +1660,13 @@
     "snippet": "ステップナビゲーションやメニュー表など、その他のUIパターンの実装例。"
   },
   {
-    "sourcePath": "ui/examples/Table.mdx",
+    "sourcePath": "ui/block-examples/Table.mdx",
     "title": "Table",
-    "description": "Lism CSS で実装する、行・列の固定表示に対応した汎用テーブルレイアウトの実装例です。",
+    "description": "Lism CSS で実装する、行・列の固定表示に対応したテーブルUI（b--table）の実装例です。",
     "category": "ui",
-    "headings": ["Create Component", "Source Code", "Import", "Usage", "スクロール時の固定表示"],
-    "keywords": ["Table", "テーブル", "表", "固定", "スクロール", "example"],
-    "snippet": "行・列の固定表示に対応した汎用Tableレイアウトの実装例。CSS変数でボーダースタイルを調整可能。"
+    "headings": ["Overview", "Styles", "Markup", "Examples", "ボーダーと th の色を調整する", "スクロール時の固定表示"],
+    "keywords": ["Table", "b--table", "テーブル", "表", "固定表示", "スクロール", "sticky"],
+    "snippet": "行・列の固定表示に対応したテーブルUIの実装例。primitivesと少量のCSS（b--table）で構成し、CSSをlism-blockレイヤーへコピーして利用。data-table-stickyでtheadや1列目を固定でき、ボーダーやthの色はCSS変数で調整する。"
   },
   {
     "sourcePath": "utility-class.mdx",

@@ -5,6 +5,7 @@
 ## TOC
 
 - [レイアウト選択ミス](#レイアウト選択ミス)
+- [ベーススタイルを CSS 側で持つ部品を `c--` のままにする](#ベーススタイルを-css-側で持つ部品を-c---のままにする)
 - [Astro/React Primitive を使わず素の HTML で組む](#astroreact-primitive-を使わず素の-html-で組む)
 - [ボタン装飾を reset から自作する](#ボタン装飾を-reset-から自作する)
 - [`Frame` 未使用のメディア枠手組み](#frame-未使用のメディア枠手組み)
@@ -17,7 +18,6 @@
 - [レスポンシブ抜け](#レスポンシブ抜け)
 - [レスポンシブ配列の冗長指定](#レスポンシブ配列の冗長指定)
 - [`is--` の誤用（状態・バリエーション）](#is---の誤用状態バリエーション)
-- [カスタムクラスを全て `c--` にしてしまう](#カスタムクラスを全て-c---にしてしまう)
 - [クラス名の命名ミス](#クラス名の命名ミス)
 
 ---
@@ -45,6 +45,14 @@
 | --- | --- | --- |
 | `<Grid gtc="1fr 240px">` で固定 | `<WithSide sideW="240px">` | コンテンツ幅で自動切替したいなら WithSide |
 | `<Flex>` で 2 カラム強制横並び | `<WithSide>` | 縦並びへの切替が必要なら WithSide |
+
+## ベーススタイルを CSS 側で持つ部品を `c--` のままにする
+
+`c--` は「Lism 本体に含まれない、ユーザーが自由に定義するカスタムクラス（**Custom Class**）」を表すプレフィックスで、コンポーネント・サイトの領域（ヘッダーやサイドバーなど）・ページ固有要素など粒度を問わず使える（`c--siteHeader` のような骨格用途も可）。ただし、サイト共通で繰り返し使うボタン・バッジ・カード級の部品を、ベーススタイルごと CSS 側で管理したい場合は `c--` のままにせず `b--`（`@layer lism-block`）へリネームして昇格する。
+
+→ 分類表と配置レイヤー: [css-rules.md の独自クラスの選び方（2分類）](./css-rules.md#独自クラスの選び方2分類)
+
+ページ固有の要素も`c--`で命名し、ページslug等を含むcamelCase（`c--frontHero` 等）にすると名前だけで由来がわかる。
 
 ## Astro/React Primitive を使わず素の HTML で組む
 
@@ -101,12 +109,12 @@ Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ね�
 
 ## サイト最外殻を `Wrapper` に使う
 
-`Wrapper`/`is--wrapper`は幅制限したい直下領域に使う。サイト全体の最外殻やbody直下のゾーニングには使わない。最外殻は`z--*`などの領域名で扱い、幅制限が必要な内側だけ`Wrapper`にする。
+`Wrapper`/`is--wrapper`は幅制限したい直下領域に使う。サイト全体の最外殻やbody直下の領域分けには使わない。最外殻は`c--siteWrapper`などの領域名クラスで扱い、幅制限が必要な内側だけ`Wrapper`にする。
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `<Wrapper className="c--site">...全体...</Wrapper>` | `<div className="z--site"><Wrapper>...本文幅...</Wrapper></div>` | 最外殻と幅制限の責務を分ける |
-| `<main className="is--wrapper">`をページ全体に付与 | `<main className="z--main"><Wrapper>...</Wrapper></main>` | ゾーニングは`z--*`、幅制限は`Wrapper` |
+| `<Wrapper className="c--site">...全体...</Wrapper>` | `<div className="c--site"><Wrapper>...本文幅...</Wrapper></div>` | 最外殻と幅制限の責務を分ける |
+| `<main className="is--wrapper">`をページ全体に付与 | `<main className="c--siteMain"><Wrapper>...</Wrapper></main>` | サイトの領域は領域名クラス、幅制限は`Wrapper` |
 
 `Wrapper`直下の子要素には幅に関する既定が当たるため、最外殻に置くと予期しない幅制御を生むことがある。
 
@@ -221,24 +229,19 @@ Lism CSS の `is--` プレフィックスは「**〜である**」という**役
 - `data-*` は HTML 標準の状態表現で、JS からの切替（`element.dataset.isActive = ''` / `delete element.dataset.isActive`）も自然
 - ARIA 属性で意味が表せる場合（`aria-current` / `aria-disabled` / `aria-selected` 等）は ARIA を優先し、その属性自体を CSS セレクタにする
 
-### 2. スタイルバリエーション → BEM Modifier `c--{name}--{variant}`
+### 2. スタイルバリエーション → BEM Modifier（`c--{name}--{variant}` / `b--{name}--{variant}`）
 
-「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の Component Class](./css-rules.md#component-classc--)）。
+「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の独自クラスの選び方](./css-rules.md#独自クラスの選び方2分類)）。
+
+Modifier のプレフィックスは、その Block に付けたプレフィックスをそのまま維持する。`c--` の Block なら `c--{name}--{variant}`、`b--` の Block なら `b--{name}--{variant}` にし、`c--` と `b--` を混ぜない。
 
 | NG | OK |
 | --- | --- |
-| `<span class="c--tag is--solid">` + `.c--tag.is--solid { ... }` | `<span class="c--tag c--tag--solid">` + `.c--tag.c--tag--solid { ... }` |
-| `<button class="c--button is--outline">` | `<button class="c--button c--button--outline">` |
+| `<section class="c--hero is--dark">` + `.c--hero.is--dark { ... }` | `<section class="c--hero c--hero--dark">` + `.c--hero.c--hero--dark { ... }` |
+| `<div class="c--pricing is--featured">` | `<div class="c--pricing c--pricing--featured">` |
+| `<button class="b--btn is--outline">` / `<button class="b--btn c--btn--outline">`（Block と違うプレフィックス） | `<button class="b--btn b--btn--outline">` + `@layer lism-block` に `.b--btn.b--btn--outline { ... }` |
 
 なお、Modifier であってもまずは [Property Class で表現できないか](./antipatterns.md#property-class-で書けるのに-css-で書く) を検討すること。「色だけ違う」程度ならマークアップ側で `-bgc:* -c:*` を差し替えるだけで済むことも多い。
-
-## カスタムクラスを全て `c--` にしてしまう
-
-`c--` は「**コンポーネント**（再利用可能な UI 部品）」を表すプレフィックス。**カスタムクラスを必ず `c--` で命名する必要はない**。サイトの大まかな領域（header / sidebar / main / footer 等）やページ固有のスタイルなど、再利用が前提でないクラスは、独自プレフィックス（`z--` / `p--` 等）やプレフィックスなしの命名も選択肢として検討すること。
-
-→ 使い分け表と配置レイヤー: [css-rules.md の独自プレフィックス](./css-rules.md#独自プレフィックス)
-
-`c--header` のような命名も間違いとまでは言えないが、「カスタムクラス＝必ず `c--`」ではないことに注意する。
 
 ## クラス名の命名ミス
 
@@ -250,7 +253,7 @@ Lism CSS では、プレフィックス（`c--` / `is--` / `has--` / `u--` / `se
 | --- | --- | --- |
 | `c--my-card` | `c--myCard` | プレフィックス後の名称は camelCase |
 | `c--my-card--primary` | `c--myCard--primary` | Modifier 区切り `--` と単語区切り `-` が混在して読みにくい |
-| `c--card_my-elem` | `c--card_myElem` | Element 名（`_` 後）も camelCase |
+| `c--pricing_my-elem` | `c--pricing_myElem` | Element 名（`_` 後）も camelCase |
 | `is--side-bar` / `has--gutter-x` | `is--sideBar` / `has--gutterX` | `is--` / `has--` / `u--` 等にも同じ規則が適用される |
 | `c--hero__inner` / `c--featureCard__title` | `c--hero_inner` / `c--featureCard_title` | Element 区切りは `_` ひとつ。BEM 風の `__` は使わない |
 

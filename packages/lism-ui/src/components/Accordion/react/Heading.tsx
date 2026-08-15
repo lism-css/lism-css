@@ -4,7 +4,7 @@ import { Lism, type LismComponentProps } from 'lism-css/react';
 
 /**
  * 見出しエリアのラッパー（デフォルトは <div role="heading">）
- * as に h2〜h6 を指定すると role は付与されない
+ * as に h2〜h6 を指定すると role は付与されず、代わりに set--plain で見出しのデフォルトスタイルをリセットする
  */
 export default function Heading<T extends ElementType = 'div'>({
   children,
@@ -17,8 +17,8 @@ export default function Heading<T extends ElementType = 'div'>({
   return (
     <Lism
       as={(as ?? 'div') as 'div'}
-      className={atts(className, 'c--accordion_heading')}
-      set="plain"
+      className={atts(className, 'b--accordion_heading')}
+      set={isDiv ? undefined : 'plain'}
       role={isDiv ? (role ?? 'heading') : role}
       {...(props as object)}
     >

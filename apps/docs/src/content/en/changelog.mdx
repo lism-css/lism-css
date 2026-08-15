@@ -9,6 +9,58 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.26.0 (2026.08.16)
+
+### Added the `lism-block` layer (#546, #559)
+
+- Added a `lism-block` layer for base parts whose base styles are managed in CSS (`b--`). It is empty in the core; `@lism-css/ui` and user-defined classes are placed there.
+- The layer order is now `lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility`. Placing `lism-block` right after `lism-base` (a weaker position) means classes you add explicitly (`is--`, `has--`, `l--`, etc.) always win over a `b--` base style.
+- The `lism-component` layer is kept in the declaration for backward compatibility (removing it would move any `@layer lism-component` in existing user CSS to the end and change its behavior).
+
+### Unified custom class naming into two categories (#546)
+
+- Custom classes are now organized into just two categories: `b--` (Block Class) and `c--` (Custom Class).
+- Renamed `c--` from Component Class to Custom Class (a free-form custom class matching the `lism-custom` layer, with no granularity restriction).
+- Removed the `p--` / `z--` conventions.
+
+### Other
+
+- Updated dependencies for security fixes.
+
+### `@lism-css/ui` v.0.26.0 (2026.08.16)
+
+This release contains **breaking changes**. It requires `lism-css` v0.26.0 or later.
+
+**Migrated to `b--` classes and the `lism-block` layer (#559)**
+
+- Renamed every component class from `c--{name}` to `b--{name}`, and moved their CSS from `@layer lism-component` to `@layer lism-block`. The element (`_element`) and modifier (`--modifier`) conventions are unchanged.
+- To migrate: replace `.c--{name}` with `.b--{name}` in your CSS and markup. Move any CSS that overrides these components into `@layer lism-block`, or into `@layer lism-custom` if you need it to win over `b--`.
+
+**Moved base styles into CSS (#559)**
+
+- Base styles that used to be emitted as Lism Props (Property Classes) are now CSS, so you can override them from your own CSS. The following defaults changed as a result.
+- Badge: the default border radius is now a pill shape (`--bdrs--99`).
+- Tabs: `variant="line"` is now a standard style, and the default `variant` is `'default'`. The previous default decoration is isolated in `.b--tabs--default`.
+- Avatar: the default size is now managed in CSS as `--w: 2em`.
+- Button / Accordion.Root / Details / NavMenu: no longer emit `l--flex` / `l--stack` by default. Pass the `layout` prop (e.g. `layout="flex"`) if you need that layout.
+- Details: removed `flow="s"` from Content, so the default spacing between child elements is now `--flow--base`. To keep the previous spacing, set `.b--details_content { --flow--base: var(--flow--s) }`.
+
+**Accessibility improvements for Tabs and Modal (#559, #563)**
+
+- Tabs: added roving tabindex and arrow / Home / End key navigation. Panels now use the `hidden` attribute instead of `aria-hidden`, and tabs get `type="button"` and an `id` that panels reference via `aria-labelledby`. The `?lism-tab=` deep link now works in the React version too.
+- Tabs: fixed tabs becoming unusable when `defaultIndex` was out of range.
+- Modal: `Modal.OpenBtn` / `Modal.CloseBtn` now get `type="button"` by default, and `Modal.OpenBtn` gets `aria-haspopup="dialog"` (both overridable via props).
+- Modal: open/close animations are now disabled under `prefers-reduced-motion: reduce`.
+- Modal: fixed the modal closing unintentionally when a drag started inside it and ended on the backdrop.
+- Modal: `data-is-open` is now removed and `scrollbar-gutter` restored even for closes that bypass `closeDialog()`, such as submitting a `<form method="dialog">`.
+- Modal: dropped support for non-`dialog` elements in `setEvent`, since focus trapping and backdrop inerting rely on the native `dialog` element.
+
+**Removed the Chat component (#564)**
+
+- Chat has been removed from the package. No markup changes are needed — copy the CSS shown on the example page in the docs (including its `@layer lism-block` wrapper) into your project to reproduce the same appearance.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.25.0 (2026.08.06)
 
 ### Structural variables can now be overridden from lism.config (#530)

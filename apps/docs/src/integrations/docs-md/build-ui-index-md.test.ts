@@ -15,7 +15,7 @@ async function writeFile(filePath: string, content: string) {
 }
 
 describe('buildUiIndexMd', () => {
-  it('UI index markdown を生成し、draft と _ 始まりを除外する', async () => {
+  it('UI index markdown を3分類で生成し、draft と _ 始まりを除外する', async () => {
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'lism-ui-index-md-'));
     const htmlPath = path.join(tmpDir, 'dist/ui/index.html');
     const outputPath = path.join(tmpDir, 'dist/ui.md');
@@ -51,7 +51,15 @@ description: Button docs
 body`
       );
       await writeFile(
-        path.join(uiContentDir, 'examples/Banner.mdx'),
+        path.join(uiContentDir, 'block-examples/Chat.mdx'),
+        `---
+title: Chat
+description: Chat block example
+---
+body`
+      );
+      await writeFile(
+        path.join(uiContentDir, 'components/Banner.mdx'),
         `---
 title: Banner
 description: Banner example
@@ -59,7 +67,7 @@ description: Banner example
 body`
       );
       await writeFile(
-        path.join(uiContentDir, 'examples/Draft.mdx'),
+        path.join(uiContentDir, 'components/Draft.mdx'),
         `---
 title: Draft
 description: Draft example
@@ -89,14 +97,19 @@ body`
       expect(md).toContain('title: "Lism UI"');
       expect(md).toContain('description: "UI components based on Lism CSS"');
       expect(md).toContain('url: https://lism-css.com/ui/');
-      expect(md).toContain('## Components');
+      expect(md).toContain('## Blocks');
       expect(md).toContain('- [Button](https://lism-css.com/ui/button.md): Button docs');
       expect(md).toContain('- [ShapeDivider](https://lism-css.com/ui/shapedivider.md): Shape divider docs');
-      expect(md).toContain('## Examples');
-      expect(md).toContain('- [Banner](https://lism-css.com/ui/examples/banner.md): Banner example');
+      expect(md).toContain('## Block Examples');
+      expect(md).toContain('- [Chat](https://lism-css.com/ui/block-examples/chat.md): Chat block example');
+      expect(md).toContain('## Components');
+      expect(md).toContain('- [Banner](https://lism-css.com/ui/components/banner.md): Banner example');
       expect(md).not.toContain('Draft');
       expect(md).not.toContain('Hidden');
       expect(md.indexOf('[Button]')).toBeLessThan(md.indexOf('[ShapeDivider]'));
+      // 見出しの並びは Blocks → Block Examples → Components
+      expect(md.indexOf('## Blocks')).toBeLessThan(md.indexOf('## Block Examples'));
+      expect(md.indexOf('## Block Examples')).toBeLessThan(md.indexOf('## Components'));
     } finally {
       await fs.rm(tmpDir, { recursive: true, force: true });
     }

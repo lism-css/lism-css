@@ -29,8 +29,9 @@ declare module 'lucide-react' {
   export type LucideIcon = ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
 
   /** Icons the bundled viewer imports. */
+  export const ChevronsLeftIcon: LucideIcon;
+  export const ChevronsRightIcon: LucideIcon;
   export const ComponentIcon: LucideIcon;
   export const GalleryVerticalEndIcon: LucideIcon;
   export const PaletteIcon: LucideIcon;
-  export const PanelLeftIcon: LucideIcon;
 }

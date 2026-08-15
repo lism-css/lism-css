@@ -71,7 +71,7 @@ Pass10で、修正案をユーザーに提示する前に確認した結果で�
 | 公開class/CMS/外部JS/E2Eに依存する変更を⏸にしたか | OK | 横断 |
 | CSSだけ直してJS/test/HTML生成側を漏らしていないか | OK | 横断 |
 | レスポンシブ配列を単一値に潰していないか | OK | Pass4 / Pass8 |
-| CSS空化のついでに`c--`意味classを消していないか | OK | Pass4 / Pass10 |
+| CSS空化のついでに`c--`の名前を消していないか | OK | Pass4 / Pass10 |
 | pxを勝手にtokenへ丸めていないか | OK | Pass5 |
 | 既定値削除で見た目・project overrideを変えていないか | OK | Pass2 / Pass9 |
 | 洗い出し表の✅・⬜を判定基準に再照合したか（根拠が空・推測のみの行がないか） | OK | Pass10 |

@@ -61,7 +61,7 @@ const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/tem
 const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates/${category}/`, lang);
 ---
 
-<Stack g="50" class="p--templates" data-pagefind-body>
+<Stack g="50" data-pagefind-body>
   {/* ===== ヘッダー ===== */}
   <Stack g="20">
     <Heading level="1">{copy.title}</Heading>
@@ -77,12 +77,12 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
         <Text util="trim" c="text-2" fz="s" hl="s">{copy.commandLead}</Text>
         <Preview>
           <PreviewCode slot="tab" label="npm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>npm create lism@latest</code>
             </Lism>
           </PreviewCode>
           <PreviewCode slot="tab" label="pnpm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>pnpm create lism</code>
             </Lism>
           </PreviewCode>
@@ -93,12 +93,12 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
         <Text util="trim" c="text-2" fz="s" hl="s">{copy.fullFormLead}</Text>
         <Preview>
           <PreviewCode slot="tab" label="npm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>npm create lism@latest {'{targetDir}'} -- --template {'{slug}'}</code>
             </Lism>
           </PreviewCode>
           <PreviewCode slot="tab" label="pnpm">
-            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
               <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
             </Lism>
           </PreviewCode>
@@ -169,12 +169,12 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
             return (
               <AutoColumns cols="20em" g="30">
                 {cards.map((card) => (
-                  <Stack as="article" id={card.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
+                  <Stack as="article" id={card.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="c--templatesCard">
                     <BoxLink
                       layout="frame"
                       href={card.detailUrl}
                       aria-label={card.title}
-                      class="p--templates_thumbLink"
+                      class="c--templatesCard_thumbLink"
                       ar="16/9"
                       ov="hidden"
                       bd-b
@@ -211,7 +211,7 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
                         {card.description}
                       </Text>
                       {card.features && card.features.length > 0 && (
-                        <Cluster as="ul" g="5" cg="15" fz="xs" hl="s" class="p--templates_features">
+                        <Cluster as="ul" g="5" cg="15" fz="xs" hl="s" class="c--templatesCard_features">
                           {card.features.map((feat) => (
                             <li class="-d:flex -g:5 -c:text-2">{feat}</li>
                           ))}
@@ -273,33 +273,35 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
   </Stack>
 
   <style>
-    /* Quick start カード内のコードブロック：折り返し許可 */
-    .p--templates_code {
-      max-width: 100%;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
+    @layer lism-custom {
+      /* Quick start カード内のコードブロック：折り返し許可 */
+      .c--templatesCode {
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
 
-    /* previewUrl 未設定の Preview ボタン等：クリック自体を抑止 */
-    [aria-disabled='true'] {
-      opacity: 0.5;
-      pointer-events: none;
-    }
+      /* サムネイル：リンクとして拡大ホバー */
+      .c--templatesCard_thumbLink img {
+        transition: transform 0.3s ease;
+      }
+      .c--templatesCard_thumbLink:hover img {
+        transform: scale(1.03);
+      }
 
-    /* サムネイル：リンクとして拡大ホバー */
-    .p--templates_thumbLink img {
-      transition: transform 0.3s ease;
-    }
-    .p--templates_thumbLink:hover img {
-      transform: scale(1.03);
-    }
+      /* 機能リスト：✅ プレフィックス付きで縦並び */
+      .c--templatesCard_features li::before {
+        content: '✅';
+        flex-shrink: 0;
+        font-size: 0.9em;
+      }
 
-    /* 機能リスト：✅ プレフィックス付きで縦並び */
-    .p--templates_features li::before {
-      content: '✅';
-      flex-shrink: 0;
-      font-size: 0.9em;
+      /* previewUrl 未設定の Preview ボタン等：クリック自体を抑止 */
+      [aria-disabled='true'] {
+        opacity: 0.5;
+        pointer-events: none;
+      }
     }
   </style>
 </Stack>

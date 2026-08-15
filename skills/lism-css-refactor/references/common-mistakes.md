@@ -17,7 +17,7 @@
 | 確認項目 | 判定 | 由来Pass |
 | --- | --- | --- |
 | レスポンシブ配列を単一値に潰していないか（`p={[20,30]}`→`-p:20`など） | OK/NG | Pass4 / Pass8 |
-| CSSを空にしたついでに`c--`意味classまで消していないか | OK/NG | Pass4 / Pass10 |
+| CSSを空にしたついでに`c--`の名前まで消していないか | OK/NG | Pass4 / Pass10 |
 | `is--active`→`data-*`に変えた時、CSS/JS/testセレクタも直したか | OK/NG | Pass6 |
 | pxを勝手にtokenへ丸めていないか（要確認を飛ばしていないか） | OK/NG | Pass5 |
 | 抽出コンポーネントで、propsのレスポンシブ対応が抜けていないか | OK/NG | Pass3 |

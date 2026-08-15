@@ -8,8 +8,8 @@ import atts from 'lism-css/lib/helper/atts';
  */
 export default function Content<T extends ElementType = 'div'>({ children, className, ...props }: LayoutComponentProps<T, FlowLayoutProps>) {
   return (
-    <Lism className="c--details_body">
-      <Flow flow="s" className={atts(className, 'c--details_content')} {...(props as object)}>
+    <Lism className="b--details_body">
+      <Flow className={atts(className, 'b--details_content')} {...(props as object)}>
         {children}
       </Flow>
     </Lism>

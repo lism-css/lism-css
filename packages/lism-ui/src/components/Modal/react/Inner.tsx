@@ -7,7 +7,7 @@ type ModalInnerProps<T extends ElementType = 'div'> = LismComponentProps<T> & { 
 export default function ModalInner<T extends ElementType = 'div'>({ children, className, offset, style, ...props }: ModalInnerProps<T>) {
   const mergedStyle = offset ? { ...style, '--offset': offset } : style;
   return (
-    <Lism className={atts(className, 'c--modal_inner')} style={mergedStyle} {...(props as object)}>
+    <Lism className={atts(className, 'b--modal_inner')} style={mergedStyle} {...(props as object)}>
       {children}
     </Lism>
   );

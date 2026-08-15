@@ -4,7 +4,6 @@ export { Avatar } from './Avatar/react';
 export { Badge } from './Badge/react';
 export { Button } from './Button/react';
 export { Callout } from './Callout/react';
-export { Chat } from './Chat/react';
 export { Details } from './Details/react';
 export { Modal } from './Modal/react';
 export { NavMenu } from './NavMenu/react';

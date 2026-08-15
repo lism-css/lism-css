@@ -48,7 +48,7 @@ unifiedパイプラインを以下の順で適用する。
 | 2 | `rehype-extract-meta` | `<head>` から `<title>` / `<meta name="description">` / `<link rel="canonical">` を抽出し `file.data` に保管 |
 | 3 | `rehypeKeepArticle`（ローカル） | `article[data-pagefind-body]` だけを残す。無ければ throw |
 | 4 | `rehype-strip-noise` | `nav.c--postNav` / `<script>` / `<style>` / `data-astro-cid-*` / `c--copyBtn` / `c--urlCopyBtn` 等のノイズを除去 |
-| 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `c--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
+| 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `b--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
 | 6 | `rehype-code-language` | `<pre data-language="X">` の言語名を `<code class="language-X">` に転記 |
 | 7 | `rehype-docs-link` | `<a class="c--docsLink">` の中身をタイトル文字列のみに畳み込む（タイトル + 説明文の二重出力を抑止） |
 | 8 | `rehype-callouts` | `c--docsNote` を GFM Alert（`> [!NOTE]` 等）に変換 |
@@ -97,8 +97,8 @@ unifiedパイプラインを以下の順で適用する。
 |----------|------|
 | **Getting Started** | トップレベルの `overview` / `installation` / `changelog` / `features` / `mcp` / `skills`（順固定） |
 | **Documentation** | `docs/` 配下の他すべて（上記以外） |
-| **UI Components** | `ui/Xxx.mdx`（`ui/examples/` を除く。`ui/DummyText` も含む） |
-| **Optional** | `ui/examples/*` / `property-class/*` |
+| **UI Components** | `ui/`直下（`ui/block-examples/`・`ui/components/`を除く。`ui/DummyText` も含む） |
+| **Optional** | `ui/block-examples/*` / `ui/components/*` / `property-class/*` |
 
 ### ソート順
 
@@ -140,7 +140,7 @@ llms.txtの慣習に従い、HTMLページではなく`.md`バージョンを指
 
 - **frontmatter（title / description / url）**: ビルド済みの`dist/{lang}/ui/index.html`から`rehype-extract-meta`と同等の抽出処理で取得し、一覧ページ本体の内容と同期させる
 - **本文**: `content/{ja,en}/ui/`配下を`walkMdx`で走査して組み立てる。`_`で始まるファイル・ディレクトリと`draft: true`のファイルは除外する
-- **見出し分け**: `examples/`配下は`## Examples`、それ以外は`## Components`の見出しにまとめ、それぞれタイトルの昇順でソートする
+- **見出し分け**: `ui/`直下は`## Blocks`、`block-examples/`配下は`## Block Examples`、`components/`配下は`## Components`の見出しにまとめ、それぞれタイトルの昇順でソートする
 - **リンク先**: 各エントリは個別ページの`.md`（`convert-html-to-md.ts`が生成済みのもの）を指す
 
 呼び出し元は`index.ts`の`astro:build:done`フック内（`index.ts:81-94`）で、ja版・en版それぞれに対して1回ずつ実行される。

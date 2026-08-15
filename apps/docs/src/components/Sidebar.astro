@@ -5,8 +5,8 @@ import ThemeSwitch from './ThemeSwitch.astro';
 import LanguageSelect from './LanguageSelect.astro';
 ---
 
-<Stack as="aside" class="z--sidebar" isContainer py="20" g="20" {...Astro.props}>
-  <Stack class="z--sidebar__nav" ov-y="auto" fx="1" px="15">
+<Stack as="aside" class="c--siteSidebar" isContainer py="20" g="20" {...Astro.props}>
+  <Stack class="c--siteSidebar_nav" ov-y="auto" fx="1" px="15">
     <SiteNav />
   </Stack>
   <Flex jc="between" g="5" bd-t px="15" pbs="20">
@@ -17,5 +17,5 @@ import LanguageSelect from './LanguageSelect.astro';
 
 <script>
   // アクティブなナビリンクまでサイドバーをスクロール
-  document.querySelector('.z--sidebar__nav .c--navLink._active')?.scrollIntoView({ block: 'center' });
+  document.querySelector('.c--siteSidebar_nav .c--navLink._active')?.scrollIntoView({ block: 'center' });
 </script>
