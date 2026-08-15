@@ -282,6 +282,14 @@ publish とデプロイの完了をユーザーが確認した後:
 
 1. `git tag {タグ名}` でタグを作成（main の HEAD に付与される）
 2. `git push origin {タグ名}` でタグをプッシュ
-3. `gh release create {タグ名} --title "{タグ名}" --notes "{リリースノート}"` で GitHub リリースを作成
+3. リリースノートを `mktemp` で作成した一時ファイルに書き出し、`gh release create {タグ名} --title "{タグ名}" --notes-file "{一時ファイル}"` で GitHub リリースを作成する
+
+リリースノートはコードブロックやバッククォートを含むため、`--notes "..."` やHEREDOCで直接渡さない。ファイル指定のオプションは `--notes-file`（`-F`）であり、`gh issue create` / `gh pr create` の `--body-file` とは名前が違う点に注意する。
+
+```bash
+body=$(mktemp); printf '%s' "$NOTES" > "$body"
+gh release create "{タグ名}" --title "{タグ名}" --notes-file "$body"
+rm -f "$body"
+```
 
 完了後、元のブランチ（dev）に戻る。
