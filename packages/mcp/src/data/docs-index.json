@@ -651,6 +651,18 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "lism-css v.0.26.0 (2026.08.16)",
+      "`lism-block` レイヤーの追加 (#546, #559)",
+      "独自クラスの命名規約を2分類へ統一 (#546)",
+      "その他",
+      "`@lism-css/ui` v.0.26.0 (2026.08.16)",
+      "lism-css v.0.25.0 (2026.08.06)",
+      "構造変数を lism.config から上書き可能に (#530)",
+      "spacing系の方向指定 props を main.css でもクラス化 (#531)",
+      "カラー系 Property Class の拡充 (#533)",
+      "その他",
+      "`@lism-css/plugin` v.0.4.2 (2026.08.06)",
+      "`@lism-css/ui` v.0.25.0 (2026.08.06)",
       "lism-css v.0.24.0 (2026.07.06)",
       "AI スキル群の刷新 (#459)",
       "`@lism-css/plugin` v.0.4.0 (2026.07.06)",
@@ -697,9 +709,13 @@
       "migration",
       "移行",
       "LismConfig",
-      "AIスキル"
+      "AIスキル",
+      "lism-block",
+      "Block Class",
+      "Custom Class",
+      "破壊的変更"
     ],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.24.0 (2026.07.06) では config の値（utils/presets/token）から型を導出しコンポーネント補完に反映（#505）、lism.config 執筆用の LismConfig 型追加（#472）、body に display: flow-root 追加、pre のデフォルトスタイル変更（#477）。AIスキル群を刷新し lism-css-refactor を新設（#459）。@lism-css/plugin v.0.4.0 では lism.config.ts 読み込み対応（#461）、purge の Astro SSR/hybrid 対応強化（#495, #503）。v.0.23.0 (2026.06.19) では破壊的変更としてビルド/プラグイン層を新パッケージ @lism-css/plugin へ分離（lism-css/vite 等のエクスポートを廃止）、tokens を「キー: 値」のフラットマップに刷新（tokenValues チャンネル廃止・c を color に改名）、xs ブレイクポイントのオプトイン対応・full.css / isFullMode の追加（#428, #423, #425）、標準 BP デフォルトを md → lg に拡大など。@lism-css/ui v.0.23.0 では Badge/Button/Chat の lh を hl へ移行。v.0.22.2 (2026.06.03) では --green 彩度微調整・alert アイコン変更、@lism-css/ui で Alert/Callout に tip プリセット追加・プリセット整理。v.0.22.1 (2026.05.30) では ':' 単体を true 相当のフラグとして対応・0.22.0 パッケージング修正、@lism-css/ui で NavMenu.Link にデフォルト hov 付与・Accordion.Item に isOpen prop 追加・Modal スクロールバーがたつき防止。v.0.22.0 (2026.05.28) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更、ユーティリティ・トークン名の整理（u--cells → u--enclose, --cells-p に整理, --gutter/--gutter--base 構造へ整理）、フォームコントロールのスタイル調整（border-radius 削除・padding を em 単位に変更）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（ps/pe/pbs/pbe、bd-s/bd-e/bd-bs/bd-be 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v0.18.0 以前は主要な変更点のみ抜粋掲載（--sz--* トークンの px 統一、-max-sz:bleed 新設、ユーティリティ・Layout Primitive のリネーム、CSSレイヤー構造の再編など）。"
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.26.0 (2026.08.16) ではベーススタイルをCSSで管理する `b--` 用の `lism-block` レイヤーを追加（`lism-base` の直後に配置し、`is--`/`has--`/`l--` など明示的に付与したクラスが常に勝つ設計、#546, #559）、独自クラスの命名規約を `b--`（Block Class）/ `c--`（Custom Class）の2分類へ統一し `p--`/`z--` を廃止（#546）。`@lism-css/ui` v.0.26.0（破壊的変更）では全コンポーネントのクラスを `c--` から `b--` へ移行しCSSレイヤーも `lism-component` から `lism-block` へ移行、Badge/Tabs/Avatar/Button/Accordion/Details/NavMenu 等のデフォルトスタイルをCSS管理へ移行、Tabs/Modalのアクセシビリティ改善（roving tabindex、reduced-motion対応等）、Chatコンポーネントを削除（#559, #563, #564）。v.0.25.0 (2026.08.06) では `--L`/`--C`/`--fz-mol` 等の構造変数をトークンの `vars` グループへ移動し `lism.config` の `tokens` から上書き可能に（#530）、spacing系の方向指定props（ps/pe/pl/pt等 全18種）をmain.cssでもトークンクラス・BPクラス化（#531）、カラー系Property Class拡充（`-c:keycolor`等をmain.cssへ追加、full.cssで全カラートークンクラス化、`-bgc:current`追加）（#533）。v.0.24.0 (2026.07.06) では config の値（utils/presets/token）から型を導出しコンポーネント補完に反映（#505）、lism.config 執筆用の LismConfig 型追加（#472）、body に display: flow-root 追加、pre のデフォルトスタイル変更（#477）。AIスキル群を刷新し lism-css-refactor を新設（#459）。@lism-css/plugin v.0.4.0 では lism.config.ts 読み込み対応（#461）、purge の Astro SSR/hybrid 対応強化（#495, #503）。v.0.23.0 (2026.06.19) では破壊的変更としてビルド/プラグイン層を新パッケージ @lism-css/plugin へ分離（lism-css/vite 等のエクスポートを廃止）、tokens を「キー: 値」のフラットマップに刷新（tokenValues チャンネル廃止・c を color に改名）、xs ブレイクポイントのオプトイン対応・full.css / isFullMode の追加（#428, #423, #425）、標準 BP デフォルトを md → lg に拡大など。@lism-css/ui v.0.23.0 では Badge/Button/Chat の lh を hl へ移行。v.0.22.2 (2026.06.03) では --green 彩度微調整・alert アイコン変更、@lism-css/ui で Alert/Callout に tip プリセット追加・プリセット整理。v.0.22.1 (2026.05.30) では ':' 単体を true 相当のフラグとして対応・0.22.0 パッケージング修正、@lism-css/ui で NavMenu.Link にデフォルト hov 付与・Accordion.Item に isOpen prop 追加・Modal スクロールバーがたつき防止。v.0.22.0 (2026.05.28) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更、ユーティリティ・トークン名の整理（u--cells → u--enclose, --cells-p に整理, --gutter/--gutter--base 構造へ整理）、フォームコントロールのスタイル調整（border-radius 削除・padding を em 単位に変更）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（ps/pe/pbs/pbe、bd-s/bd-e/bd-bs/bd-be 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v0.18.0 以前は主要な変更点のみ抜粋掲載（--sz--* トークンの px 統一、-max-sz:bleed 新設、ユーティリティ・Layout Primitive のリネーム、CSSレイヤー構造の再編など）。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
