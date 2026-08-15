@@ -171,11 +171,9 @@ Elements use a single underscore (`_`) as the separator.
 Combining different Blocks (`.b--xxx.b--yyy`) is generally not allowed.
 
 :::point
-- Combining `b--` with other classes is not prohibited. Since `lism-block` is a weaker layer than `lism-trait` and `lism-primitive`, adding `l--` / `a--` / `is--` / `has--` classes always takes precedence over the `b--` base styles (e.g. adding `.l--grid` to `.b--btn` makes `display: grid` win).
+- `b--` can be combined with other classes. Not everything has to be written on the CSS side.
 - A `b--` part can own its layout styles in CSS, or be built on the premise of combining it with `l--` classes — both approaches work.
-- Property Classes — always stronger than `b--` — come in handy for exceptional adjustments and breakpoint switches (e.g. `-p_sm`).
-
-Note that this priority relationship is only guaranteed with the standard layered builds (`main.css` / `full.css`). With `main_no_layer.css` / `full_no_layer.css`, layer priority does not apply, so the result depends on load order and specificity.
+- For breakpoint switches (e.g. `-p_sm`), hover styles, and other exceptional adjustments, Property Classes are a good fit.
 :::
 
 
