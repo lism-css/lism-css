@@ -7,7 +7,8 @@
 import { Stack, Inline, Heading, Link, List, ListItem } from 'lism-css/astro';
 import { Icon } from 'lism-css/react';
 import NavLink from '@parts/NavLink.astro';
-import sidebarConfig, { type SidebarSection, getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
+import sidebarConfig, { getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
+import { groupPostsBySidebarDirs, hasDirProperty, getPostUrl } from '@/lib/sidebarPosts';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang } from '@/lib/i18n';
 
@@ -38,83 +39,14 @@ const topLevelLinks = sidebarConfig.topLevelLinks;
 // 現在のセクションに対応するサイドバー設定を取得
 const sectionItems = sidebarConfig.sections[currentSection];
 
-// sidebarConfigで定義されているdir値を取得（ネストしたディレクトリも含む）
-const configuredDirs = sectionItems
-  .filter((item): item is SidebarSection & { dir: string } => 'dir' in item)
-  .map((item) => item.dir)
-  .sort((a, b) => b.length - a.length); // 長い（深い）ディレクトリを先にマッチさせる
-
-// アイテムからリンクURLを取得するヘルパー
-function getItemLink(item: string | { link: string }): string {
-  return typeof item === 'string' ? item : item.link;
-}
-
 // slugからMDX記事を取得するマップを作成
 const postsBySlug = new Map<string, PostEntry>();
 allPosts.forEach((post) => {
   postsBySlug.set(post.id, post);
 });
 
-// items で参照されている記事の slug を取得（これらはルートカテゴリから除外）
-const itemsReferencedSlugs = new Set<string>();
-sectionItems.forEach((section) => {
-  if ('items' in section) {
-    section.items.forEach((item) => {
-      if (!isSeparator(item)) {
-        // linkからslugを取得
-        const link = getItemLink(item);
-        const slug = extractSlugFromUrl(link);
-        itemsReferencedSlugs.add(slug);
-      }
-    });
-  }
-});
-
-// カテゴリーでグループ化（ネストしたディレクトリにも対応）
-const postsByCategory = allPosts.reduce(
-  (acc, post) => {
-    // items で参照されている記事はルートカテゴリに含めない
-    if (itemsReferencedSlugs.has(post.id)) {
-      return acc;
-    }
-
-    // sidebarConfigで定義されたdirと記事のslugをマッチング
-    // 例: "primitives/trait/Container" は "primitives/trait" にマッチ
-    let category = '/';
-    for (const dir of configuredDirs) {
-      if (dir === '/') {
-        // ルートの場合：スラッシュを含まないslugのみマッチ
-        if (!post.id.includes('/')) {
-          category = '/';
-          break;
-        }
-      } else if (post.id === dir || post.id.startsWith(dir + '/')) {
-        category = dir;
-        break;
-      }
-    }
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(post);
-    return acc;
-  },
-  {} as Record<string, PostEntry[]>
-);
-
-// 各カテゴリー内をorder順にソート（未指定は999として扱う）
-Object.values(postsByCategory).forEach((posts) => {
-  posts.sort((a, b) => {
-    const orderA = a.data.order ?? 999;
-    const orderB = b.data.order ?? 999;
-    return orderA - orderB;
-  });
-});
-
-// サイドバーセクションがdir指定かどうかをチェックするヘルパー
-function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: string } {
-  return 'dir' in item;
-}
+// カテゴリーでグループ化（最長dir一致・items参照記事の除外・order順ソートは PostNavigation と共通ロジック）
+const postsByCategory = groupPostsBySidebarDirs(allPosts, sectionItems);
 
 /**
  * URLパスのネスト深度を計算する
@@ -139,18 +71,6 @@ function getDirNestedDepth(postId: string, dir: string): number {
   const relativePath = postId.startsWith(dir + '/') ? postId.slice(dir.length + 1) : postId;
   const segments = relativePath.split('/').filter(Boolean);
   return segments.length - 1;
-}
-
-/**
- * slugからURLパスを生成するヘルパー
- * - ui/xxx → /ui/xxx/
- * - xxx → /docs/xxx/
- */
-function getPostUrl(slug: string): string {
-  if (slug.startsWith('ui/')) {
-    return `/${slug}/`;
-  }
-  return `/docs/${slug}/`;
 }
 ---
 
