@@ -67,7 +67,11 @@ export function setEvent(target: HTMLElement): void {
     modal.showModal();
 
     // 次フレームで data-is-open を付与（CSS側でフェードインアニメーション開始）
+    //   Point: rAF が実行されるまでの間に閉じられている場合があるため、開いていることを確認してから付与する。
+    //          close イベントは task としてキューされるので、開いた直後の close() では
+    //          後始末（close ハンドラでの data-is-open 削除）が先に走り、この rAF が属性を戻してしまう
     requestAnimationFrame(() => {
+      if (!modal.open) return;
       modal.dataset.isOpen = '1';
     });
   };

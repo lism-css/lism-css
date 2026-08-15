@@ -110,6 +110,25 @@ describe('setEvent (dialog 要素)', () => {
     });
   });
 
+  it('開いた直後（data-is-open 付与前）に閉じられた場合、次フレーム以降も data-is-open は付かない', async () => {
+    const modal = document.querySelector<HTMLDialogElement>('#m1')!;
+    const trigger = document.querySelector<HTMLElement>('[data-modal-open="m1"]')!;
+    setEvent(modal);
+
+    // open の rAF が実行される前に、closeDialog() を経由しない close() が走るケース
+    trigger.click();
+    modal.close();
+
+    // rAF を2フレーム分待って、保留中の rAF が属性を戻していないことを確認する
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+    });
+
+    expect(modal).not.toHaveAttribute('data-is-open');
+    expect(modal).not.toHaveAttribute('open');
+    expect(trigger.dataset.targetOpened).toBeUndefined();
+  });
+
   it('cancel イベントで preventDefault され、closeDialog が走る', async () => {
     const modal = document.querySelector<HTMLDialogElement>('#m1')!;
     const trigger = document.querySelector<HTMLElement>('[data-modal-open="m1"]')!;
