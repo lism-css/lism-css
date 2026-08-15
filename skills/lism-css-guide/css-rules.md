@@ -25,15 +25,19 @@ Lism CSS は CSS Layers による詳細度管理を採用しています。
 Settings（トークン定義）
   → @layer lism-base（Reset CSS・トークン・set-- クラス）
       → @layer reset（リセットCSS）
+  → @layer lism-block（b-- Block Class — CSS でベーススタイルを管理する基礎部品）
   → @layer lism-trait（is-- / has-- Trait Class）
   → @layer lism-primitive
       → @layer layout（l-- Layout Primitive）
       → @layer atomic（a-- Atomic Primitive）
-  → @layer lism-block（b-- Block Class — CSS でベーススタイルを管理する基礎部品）
   → @layer lism-custom（ユーザーの独自CSS — c--）
   → @layer lism-utility（u-- ユーティリティクラス）
   → Property Class（レイヤー外 — 最も詳細度が高い）
 ```
+
+`lism-block` は `lism-trait` / `lism-primitive` より弱い位置にあるため、`b--` のベーススタイルには、明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝ちます。
+
+なお、この優先関係が保証されるのはレイヤーありの標準ビルド（`main.css` / `full.css`）だけです。`main_no_layer.css` / `full_no_layer.css` にはレイヤーがないため、読み込み順と詳細度に依存します。
 
 ユーザーが定義する独自クラス・上書きスタイルは、役割に合わせて適切なレイヤーに配置します。
 例えば、トークンやベーススタイルの上書きは `@layer lism-base`、`b--` のベーススタイルは `@layer lism-block`、それ以外の独自クラス（`c--`）は `@layer lism-custom` に置きます。
@@ -61,6 +65,7 @@ Lism CSSで定義されるクラスは、その役割とレイヤーの所属が
 - Primitive の併用は禁止（`l--`同士、`a--`同士、`l--`+`a--` はNG）
 - Trait の併用は可 (`is--`同士 / `has--`同士、 `is--` + `has--` はOK)
 - Trait + Primitive の併用は可 (`is--`/`has--` + `l--`/`a--` はOK)
+- `b--` + Primitive / Trait の併用は可（`b--` + `l--`/`a--`/`is--`/`has--` はOK）
 - `b--` + `b--` は禁止
 - `c--` + `c--` は禁止
 - `b--` + `c--` は禁止
@@ -109,7 +114,7 @@ Lism CSS が提供するクラス（`set--` / `is--` / `has--` / `l--` / `a--` /
 
 | 分類 | 命名 | 例 | スタイルの書き方 |
 | --- | --- | --- | --- |
-| サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級） | `b--{name}` | `b--btn`, `b--badge` | ベーススタイルを `@layer lism-block` で管理。例外的な調整・BP切り替えは Property Class等を活用 |
+| サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級） | `b--{name}` | `b--btn`, `b--badge` | ベーススタイルを `@layer lism-block` で管理。BP切り替え・hover・例外的な調整は Property Class等を活用 |
 | それ以外のカスタムクラス全般（コンポーネント・サイトの領域・ページ固有要素など粒度不問） | `c--{name}` | `c--featureList`, `c--header` | Lismクラス（Trait, Primitive, Property Class など）を中心に組む。何のパーツかを示す名前付けとしてだけ使うのも可。CSS を書く場合は `@layer lism-custom` で管理。 |
 
 - `b--` にできるのは [Block Class（`b--`）](#block-classb--)の3条件をすべて満たす部品だけで、それ以外は `c--` にします。
@@ -156,8 +161,9 @@ BEM 構造（本体クラス / Modifier / Element）を持つのは `b--` と `c
 }
 ```
 
-- `b--` と他クラスの併用は禁止ではありません。例外的な調整やブレイクポイント切り替え（`-p_sm` 等）には、`b--` より必ず強い Property Class が便利です。
-- `b--` はレイアウトスタイルもCSS側で持てますが、`l--`系クラスとの併用を前提にして組むことも可能です。ただし、レイヤー順序の優劣があるため、レイアウトのバリエーションは Modifierで定義するか Property Class で上書きするのが安全です。
+- `b--` は他クラスと併用もできます。すべて CSS 側に書かなくてはいけないというわけではありません。
+- `b--` はレイアウトスタイルも CSS 側で持てますし、`l--` 系クラスとの併用を前提にして組むこともできます。
+- ブレイクポイント切り替え（`-p_sm` 等）、hover 系スタイル、その他例外的な調整には Property Class での調整が便利です。
 
 ### Custom Class（`c--`）
 

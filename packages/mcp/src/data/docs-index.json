@@ -97,7 +97,7 @@
       "c--",
       "2分類"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility の順（Property Class はレイヤーの外）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Custom Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。独自クラスは、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理する。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility の順（Property Class はレイヤーの外）。lism-block は trait / primitive より弱いレイヤーのため、`b--` のベーススタイルには明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝つ（この優先関係が保証されるのはレイヤーありの標準ビルド（`main.css` / `full.css`）のみで、`main_no_layer.css` / `full_no_layer.css` では読み込み順と詳細度に依存する）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Custom Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。独自クラスは、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理する。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
   },
   {
     "sourcePath": "naming.mdx",

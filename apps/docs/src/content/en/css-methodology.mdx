@@ -41,6 +41,10 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`set--{state}` classes are also defined here.</td>
     </tr>
     <tr>
+      <td class='-whs:nowrap'>Block<br/>`lism-block`</td>
+      <td>The layer where you define base styles for common, reusable site-wide parts (`b--{name}`) inside `@layer lism-block`. The core only declares the layer order and ships no styles of its own here.<br/>Since it sits below the layers that follow, explicitly added classes (`is--` / `has--` / `l--`, etc.) always win over the `b--` base styles.</td>
+    </tr>
+    <tr>
       <td class='-whs:nowrap'>Trait<br/>`lism-trait`</td>
       <td>The layer for classes that declaratively attach a role or feature to an element (`is--{name}`, `has--{name}`).</td>
     </tr>
@@ -50,10 +54,6 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
         The layer for Primitives — the building blocks for composing layouts.<br />
         `l--{layout}` and `a--{atomic}` are defined here.
       </td>
-    </tr>
-    <tr>
-      <td class='-whs:nowrap'>Block<br/>`lism-block`</td>
-      <td>The layer where you define base styles for common, reusable site-wide parts (`b--{name}`) inside `@layer lism-block`. The core only declares the layer order and ships no styles of its own here.</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`lism-custom`</td>
@@ -171,11 +171,9 @@ Elements use a single underscore (`_`) as the separator.
 Combining different Blocks (`.b--xxx.b--yyy`) is generally not allowed.
 
 :::point
-- Combining `b--` with other classes is not prohibited. Property Classes come in handy for exceptional adjustments and breakpoint switches (e.g. `-p_sm`).
-- A `b--` part is expected to own its base styles — including layout — in CSS. Also, since `lism-block` is a stronger layer than `lism-primitive` and `lism-trait`, adding those classes cannot override properties the `b--` side already sets.
-- If you need a layout variation, define a Modifier class in CSS, or override it with a Property Class.
-
-Note that this priority relationship is only guaranteed with the standard layered builds (`main.css` / `full.css`). With `main_no_layer.css` / `full_no_layer.css`, layer priority does not apply, so the result depends on load order and specificity.
+- `b--` can be combined with other classes. Not everything has to be written on the CSS side.
+- A `b--` part can own its layout styles in CSS, or be built on the premise of combining it with `l--` classes — both approaches work.
+- For breakpoint switches (e.g. `-p_sm`), hover styles, and other exceptional adjustments, Property Classes are a good fit.
 :::
 
 
