@@ -1,18 +1,19 @@
 @layer lism-block {
+  /* l--grid との併用が前提 */
   .b--tabs {
-    display: grid;
     grid: 'list' 'panel' / 100%;
     gap: var(--s20);
   }
   .b--tabs_list {
     grid-area: list;
     display: flex;
+    gap: 0.25em;
     overflow-x: auto;
   }
   .b--tabs_tab {
-    color: var(--_notSelected, var(--text-2));
-    background-color: var(--_isSelected, var(--base-2));
-    padding: 0.25em 0.75em;
+    --hl: var(--hl--s);
+    font-size: var(--fz--s);
+    padding: 0.375em 0.5em;
   }
   .b--tabs_tab[aria-selected='true'] {
     --_notSelected: ;
@@ -24,7 +25,21 @@
     grid-area: panel;
     width: 100%;
   }
-  /* .b--tabs_panel:where([hidden]) {
-    display: none;
-  } */
+
+  /* 既定バリアントの装飾。variant指定時は適用されないため、打ち消し不要で独自スタイルを組める */
+  .b--tabs--default .b--tabs_tab {
+    border-radius: var(--bdrs--10);
+    color: var(--_notSelected, var(--text-2));
+    background-color: var(--_notSelected, var(--base-2));
+    box-shadow: var(--_isSelected, inset 0 0 0 1px currentColor);
+  }
+
+  /* line バリアント: 選択中のタブを下線で表示 */
+  .b--tabs--line > .b--tabs_list {
+    /* Memo: ov-x='auto' の時に margin がネガティブだと崩れるので、box-shadowで表現する。 */
+    box-shadow: inset 0 -2px 0 var(--divider);
+  }
+  .b--tabs--line .b--tabs_tab {
+    box-shadow: var(--_isSelected, inset 0 -2px 0 0 currentColor);
+  }
 }

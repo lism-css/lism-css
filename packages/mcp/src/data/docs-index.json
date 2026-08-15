@@ -1297,7 +1297,7 @@
     "title": "Modal",
     "description": "@lism-css/ui で提供する Modal コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "ドロワーメニューの作成例"],
+    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "コンテンツが長い場合の例", "ドロワーメニューの作成例"],
     "keywords": ["Modal", "モーダル", "dialog", "ダイアログ", "ポップアップ", "popup"],
     "snippet": "モーダルダイアログUI。dialog要素を使用。@lism-css/uiパッケージで提供。"
   },
@@ -1314,14 +1314,14 @@
       "Props",
       "キーボード操作",
       "Examples",
+      "variant=\"line\"",
       "最初に開いておくタブ番号を指定する",
       "URLパラメータで初期タブを指定する",
-      "タブコンテンツを横並び配置にする",
+      "縦並びタブ",
       "Opt-in",
-      "スタイルバリエーションの作成例",
-      "b--tabs--line",
-      "b--tabs--emboss",
-      "高さを固定する方法"
+      "variant=\"emboss\"",
+      "variant=\"folder\"",
+      "高さを固定する"
     ],
     "keywords": [
       "Tabs",
@@ -1337,7 +1337,7 @@
       "Tabs.Panel",
       "--_isSelected"
     ],
-    "snippet": "タブ切り替えUI。Tabs.Root / Tabs.Item / Tabs.Tab / Tabs.Panel で構成。defaultIndex で初期タブ指定、listProps でタブリストへの props 渡しが可能。左右キー・Home/End でのキーボード操作（listProps で aria-orientation=\"vertical\" を指定すると上下キー）と、URLパラメータ（?lism-tab=）での初期タブ指定に対応。横並び配置やスタイルバリエーション（line/emboss 等）、高さ固定のOpt-in解説あり。@lism-css/uiパッケージで提供。"
+    "snippet": "タブ切り替えUI。Tabs.Root / Tabs.Item / Tabs.Tab / Tabs.Panel で構成。defaultIndex で初期タブ指定、listProps でタブリストへの props 渡しが可能。variant の初期値は default で、独自 variant 指定時は既定装飾（b--tabs--default）が外れる。左右キー・Home/End でのキーボード操作（listProps で aria-orientation=\"vertical\" を指定すると上下キー）と、URLパラメータ（?lism-tab=）での初期タブ指定に対応。line variant は標準提供。emboss / folder などの独自バリアント作成例や横並び配置、高さ固定の Opt-in 解説あり。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Details.mdx",

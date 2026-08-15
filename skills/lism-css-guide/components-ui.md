@@ -268,7 +268,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `tabId` | Root | `string` | — | タブを特定するための ID 文字列 |
 | `defaultIndex` | Root | `number` | `1` | 初期アクティブタブ（1始まり） |
 | `listProps` | Root | `object` | — | タブボタンリスト要素へ渡す props |
-| `variant` | Root | `string` | — | バリエーション。`b--tabs--{variant}` クラスが出力 |
+| `variant` | Root | `string` | `'default'` | バリエーション。`b--tabs--{variant}` クラスが出力。`'default'` のほか `'line'` を標準提供。独自 variant 指定時は既定バリアント（`b--tabs--default`）の装飾が適用されない |
 
 ```jsx
 <Tabs.Root>

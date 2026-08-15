@@ -6,8 +6,8 @@ description: 'Documentation for the Tabs component provided by @lism-css/ui.'
 import { Icon } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro/Tabs';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import '../../ja/ui/_opt-in/_tabs-line.css'
 import '../../ja/ui/_opt-in/_tabs-emboss.css'
+import '../../ja/ui/_opt-in/_tabs-folder.css'
 import '../../ja/ui/_opt-in/_tabs-keep-height.css'
 
 
@@ -55,7 +55,7 @@ Only interaction behavior is provided — visual styling is intentionally left f
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
-<div class="b--tabs">
+<div class="b--tabs b--tabs--default l--grid">
   <div class="b--tabs_list" role="tablist">
     <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
     <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
@@ -97,7 +97,7 @@ Provided as `Tabs` from the `@lism-css/ui` package.
 
 | Prop | Description |
 |---|---|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `b--tabs--{variant}` class. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `b--tabs--{variant}` class. Defaults to `default`, and `line` is also provided out of the box. When you specify your own variant, the default variant's decoration (`b--tabs--default`) no longer applies, so you can build your own styles without resetting the initial ones. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used to generate each tab button's id (`{tabId}-{index}-tab`), each panel's id (`{tabId}-{index}`), and the value of `aria-controls`. If omitted, an ID is generated automatically. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. Values out of range (e.g. a number greater than the number of tabs) fall back to `1`. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`b--tabs_list`) wrapping the tab buttons. |
@@ -131,6 +131,61 @@ Note that `aria-orientation` is an HTML attribute, so its value cannot change wi
 
 
 ## Examples
+
+### variant="line"
+
+Specify `variant="line"` for a line-style tab list that underlines the selected tab.
+
+<Preview>
+  <PreviewTitle>`variant='line'`</PreviewTitle>
+  <PreviewArea p="30">
+    <Tabs.Root variant="line">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'variant="line"'
+    <Tabs.Root variant="line">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--line l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
 
 ### Default open tab
 
@@ -199,7 +254,7 @@ To use this feature, explicitly set `tabId` on `<Tabs.Root>`.
 Visiting a page with the tabs above using `?lism-tab=sample-tabs-2` displays the second tab as selected.
 
 
-### Side-by-side tab layout
+### Vertical tabs
 
 Setting `grid-template: 'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`b--tabs`) places the tab list and content side by side.
 
@@ -250,59 +305,12 @@ At the same time, changing the tab list (`b--tabs_list`) buttons to stack vertic
 
 ## Opt-in
 
-
-### Style variation examples
+This is an example of creating your own style variation.
 
 `b--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are handy for styling.
 (They can be used in the same way as `--_isHov` and `--_notHov` from [`set--hov`](/en/docs/property-class/hov#set--hov).)
 
-Here are a few styling examples.
-
-#### `b--tabs--line`
-
-<PreviewTitle>Required additional CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-line.css" />
-
-
-<Preview>
-  <PreviewTitle>`variant='line'`</PreviewTitle>
-  <PreviewArea p="30">
-    <Tabs.Root variant="line">
-      <Tabs.Item>
-        <Tabs.Tab>Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'variant="line"'
-    <Tabs.Root variant="line">
-      <Tabs.Item>
-        <Tabs.Tab>Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-    ```
-  </PreviewCode>
-</Preview>
-
-#### `b--tabs--emboss`
+### variant="emboss"
 
 <PreviewTitle>Required additional CSS</PreviewTitle>
 <SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />
@@ -328,6 +336,52 @@ Here are a few styling examples.
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'variant="emboss"'
     <Tabs.Root variant="emboss">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### variant="folder"
+
+This is an example of a folder-style variation where the tab buttons appear connected to the panel.
+
+<PreviewTitle>Required additional CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-folder.css" />
+
+<Preview>
+  <PreviewTitle>`variant='folder'`</PreviewTitle>
+  <PreviewArea p="30">
+    <Tabs.Root variant="folder">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'variant="folder"'
+    <Tabs.Root variant="folder">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>

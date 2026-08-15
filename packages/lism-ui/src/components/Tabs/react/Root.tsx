@@ -1,7 +1,8 @@
 'use client';
 import { useState, useId, useEffect, Children, isValidElement } from 'react';
 import type { ElementType, KeyboardEvent, ReactElement, ReactNode } from 'react';
-import { Lism, type LismComponentProps } from 'lism-css/react';
+import { Grid, type LayoutComponentProps, type LismComponentProps } from 'lism-css/react';
+import type { GridLayoutProps } from 'lism-css/lib/types/LayoutProps';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
 import { resolveTabNavKey, toTabOrientation } from '../tabsKeyNav';
@@ -12,7 +13,7 @@ import TabPanel from './Panel';
 
 import '../_style.css';
 
-type TabsProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
+type TabsProps<T extends ElementType = 'div'> = LayoutComponentProps<T, GridLayoutProps> & {
   tabId?: string;
   defaultIndex?: number;
   listProps?: LismComponentProps;
@@ -23,7 +24,7 @@ export default function Tabs<T extends ElementType = 'div'>({
   tabId = '',
   defaultIndex = 1,
   listProps = {},
-  variant,
+  variant = 'default',
   className,
   children,
   ...props
@@ -104,7 +105,7 @@ export default function Tabs<T extends ElementType = 'div'>({
   });
 
   return (
-    <Lism className={atts(className, buildModifierClass('b--tabs', { variant }))} {...(props as LismComponentProps<ElementType>)}>
+    <Grid className={atts(className, buildModifierClass('b--tabs', { variant }))} {...(props as object)}>
       {btns.length === 0 ? (
         // TabItemを使わず直接TabListなどを子要素に配置する場合
         children
@@ -114,6 +115,6 @@ export default function Tabs<T extends ElementType = 'div'>({
           {panels}
         </>
       )}
-    </Lism>
+    </Grid>
   );
 }
