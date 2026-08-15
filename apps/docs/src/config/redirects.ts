@@ -97,6 +97,9 @@ export const astroRedirects: AstroRedirects = {
   // purge -> customize/purge 移動（Customize セクション化に伴う統合）
   '/docs/purge/': '/docs/customize/purge/',
   '/en/docs/purge/': '/en/docs/customize/purge/',
+  // Chat をパッケージから削除し、Block Examples の作例ページへ転換（#557）
+  '/ui/chat/': '/ui/block-examples/chat/',
+  '/en/ui/chat/': '/en/ui/block-examples/chat/',
 };
 
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。

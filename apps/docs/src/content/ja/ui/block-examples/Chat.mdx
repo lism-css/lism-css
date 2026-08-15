@@ -1,0 +1,276 @@
+---
+title: 'Chat'
+description: 'Lism CSS で実装するチャット風UI（b--chat）の実装例です。'
+---
+
+import { Lism, Grid, Frame, Flow, Decorator } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro/DummyText';
+import '@/components/ex/Chat/style.css';
+
+
+チャットの会話のような見た目でコンテンツを表示する UI の実装例です。Lism の primitives と少量の CSS（`b--chat`）で構成します。
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="30" _dir="rtl">
+    <Grid class="b--chat b--chat--speak" data-chat-dir="start">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Taro</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
+        </Flow>
+      </Lism>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Grid class="b--chat b--chat--speak" data-chat-dir="start">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Taro</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <p>
+            ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+          </p>
+        </Flow>
+      </Lism>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--chat b--chat--speak l--grid" data-chat-dir="start">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Taro</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>
+            ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+          </p>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Styles
+
+Chat のベーススタイルは、以下の CSS で定義されています。この CSS をプロジェクトにコピーして利用してください。
+
+`@layer lism-block` のままコピーすると、コア CSS のレイヤー順にそのまま組み込まれ、`lism-custom` レイヤーから上書きできます。
+
+<SrcCode dir="docs" path="src/components/ex/Chat/style.css" title="chat.css" />
+
+
+## Markup
+
+マークアップは以下のクラス・属性で構成します。
+
+| クラス / 属性 | 説明 |
+|---|---|
+| `b--chat` | ルート要素。`l--grid` と併用し、`b--chat--speak`（発言）または `b--chat--think`（思考）のモディファイアを付与します。 |
+| `data-chat-dir` | 表示位置。`start`（アバターが左）または `end`（アバターが右）を指定します。 |
+| `b--chat_avatar` | アバター画像を表示する要素（`l--frame` と併用。省略可）。 |
+| `b--chat_name` | 名前を表示する要素（省略可）。 |
+| `b--chat_body` | 吹き出し部分のラッパー要素。 |
+| `b--chat_deco` | 吹き出しのしっぽ装飾（`a--decorator` + `u--cbox` と併用）。 |
+| `b--chat_content` | コンテンツを配置する要素（`l--flow` + `u--cbox` と併用）。 |
+| `--keycolor` | 吹き出しのキーカラー。`style` 属性などで上書きできます（デフォルトは `var(--gray)`）。 |
+
+
+## Examples
+
+<Preview>
+  <PreviewTitle>会話形式の使用例</PreviewTitle>
+  <PreviewArea resize p="20" _dir="rtl">
+    <Grid class="b--chat b--chat--speak" data-chat-dir="start">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Taro</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <DummyText lang="ja" />
+        </Flow>
+      </Lism>
+    </Grid>
+    <Grid class="b--chat b--chat--speak" keycolor="green" data-chat-dir="end">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Hanako</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <DummyText lang="ja" length="codes" />
+          <DummyText lang="ja" />
+        </Flow>
+      </Lism>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'keycolor="green"' 'data-chat-dir="end"'
+    <Grid class="b--chat b--chat--speak" data-chat-dir="start">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Taro</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <p>ロレム・イプサムの座り雨。...</p>
+        </Flow>
+      </Lism>
+    </Grid>
+    <Grid class="b--chat b--chat--speak" keycolor="green" data-chat-dir="end">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Hanako</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <p>ロレム・イプサムの<i>座り雨</i>、それは...</p>
+          <p>ロレム・イプサムの座り雨。...</p>
+        </Flow>
+      </Lism>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html 'style="--keycolor:var(--green)"' 'data-chat-dir="end"'
+    <div class="b--chat b--chat--speak l--grid" data-chat-dir="start">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Taro</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>ロレム・イプサムの座り雨。...</p>
+        </div>
+      </div>
+    </div>
+    <div class="b--chat b--chat--speak l--grid" style="--keycolor:var(--green)" data-chat-dir="end">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Hanako</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>ロレム・イプサムの<i>座り雨</i>、それは...</p>
+          <p>ロレム・イプサムの座り雨。...</p>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### 思考スタイル（`b--chat--think`）
+
+`b--chat--speak` の代わりに `b--chat--think` を指定すると、発言ではなく心の中で思っていることを表現するスタイルになります。
+
+<Preview>
+  <PreviewTitle>`b--chat--think`</PreviewTitle>
+  <PreviewArea resize p="20" _dir="rtl">
+    <Grid class="b--chat b--chat--think" keycolor="blue" data-chat-dir="start">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Name B</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <DummyText length="xs" />
+        </Flow>
+      </Lism>
+    </Grid>
+    <Grid class="b--chat b--chat--think" keycolor="purple" data-chat-dir="end">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Name B</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <DummyText length="codes" />
+        </Flow>
+      </Lism>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'b--chat--think'
+    <Grid class="b--chat b--chat--think" keycolor="blue" data-chat-dir="start">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Name B</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <p>Lorem ipsum dolor sit amet.</p>
+        </Flow>
+      </Lism>
+    </Grid>
+    <Grid class="b--chat b--chat--think" keycolor="purple" data-chat-dir="end">
+      <Frame class="b--chat_avatar" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </Frame>
+      <Lism class="b--chat_name">Name B</Lism>
+      <Lism class="b--chat_body">
+        <Decorator class="b--chat_deco" util="cbox" isSkipFlow />
+        <Flow class="b--chat_content" util="cbox">
+          <p>Lorem ipsum dolor <i>sit amet</i>. ...</p>
+        </Flow>
+      </Lism>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html 'b--chat--think'
+    <div class="b--chat b--chat--think l--grid" style="--keycolor:var(--blue)" data-chat-dir="start">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Name B</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>Lorem ipsum dolor sit amet.</p>
+        </div>
+      </div>
+    </div>
+    <div class="b--chat b--chat--think l--grid" style="--keycolor:var(--purple)" data-chat-dir="end">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Name B</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>Lorem ipsum dolor <i>sit amet</i>. ...</p>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

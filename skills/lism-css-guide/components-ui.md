@@ -26,7 +26,6 @@ import { Button } from '@lism-css/ui/astro/Button';
 - [Badge](#badge)
 - [Button](#button)
 - [Callout](#callout)
-- [Chat](#chat)
 - [Details](#details)
 - [Modal](#modal)
 - [NavMenu](#navmenu)
@@ -152,26 +151,6 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ```jsx
 <Callout type='note' title='Note'>Supplemental note</Callout>
-```
-
-
-## Chat
-
-ソース: [Chat/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat)
-
-チャット風の吹き出しコンポーネント。Grid ベースの会話形式 UI。`b--chat` クラスが付与される。
-
-| Prop | 型 | デフォルト | 説明 |
-| --- | --- | --- | --- |
-| `name` | `string` | — | 発言者の名前 |
-| `avatar` | `string` | — | アバター画像の src |
-| `variant` | `'speak' \| 'think'` | `'speak'` | チャットタイプ |
-| `direction` | `'start' \| 'end'` | `'start'` | 表示位置 |
-| `keycolor` | `string` | `'gray'` | キーカラー |
-| `flow` | `string` | — | コンテンツ要素のフロー余白（デフォルトの間隔はCSS側で管理） |
-
-```jsx
-<Chat name='Alice' avatar='/alice.jpg'>Hello!</Chat>
 ```
 
 
