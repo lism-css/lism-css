@@ -4,6 +4,7 @@ import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import uuid from '../../../helper/uuid.js';
+import escapeHtmlAttr from '../../../helper/escapeHtmlAttr.js';
 
 import '../_style.css';
 
@@ -22,7 +23,8 @@ const accID = _accID || uuid();
 // - プレースホルダーあり → 置換して set:html で出力
 // - プレースホルダーなし → 通常の slot 出力（Button/Panel に直接 accID を指定しているケース）
 const rendered = await Astro.slots.render('default');
-const slotHtml = rendered.includes('__LISM_ACC_ID__') ? rendered.replaceAll('__LISM_ACC_ID__', accID) : null;
+// set:html で出力するため、ユーザー指定の accID は属性値としてエスケープしてから埋め込む（関数渡しで `$` パターンの解釈も防ぐ）
+const slotHtml = rendered.includes('__LISM_ACC_ID__') ? rendered.replaceAll('__LISM_ACC_ID__', () => escapeHtmlAttr(accID)) : null;
 ---
 
 {/* isOpen=true のとき data-opened を付与し、初期状態で展開しておく（CSS/JS は data-opened を基準に動作） */}

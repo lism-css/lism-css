@@ -74,7 +74,25 @@ describe('transformTabitems', () => {
     }
   });
 
-  it('button を含まない tabitem は無視される', () => {
+  // 結果は set:html で出力されるため、tabID 由来の属性注入が起きないこと
+  it('tabID の特殊文字は属性値としてエスケープされる', () => {
+    const { btns, panels } = transformTabitems(html(tabitem('タブ1')), 'x" onmouseover="alert(1)', 1);
+
+    expect(btns[0]).not.toContain('onmouseover="alert(1)"');
+    expect(btns[0]).toContain('id="x&quot; onmouseover=&quot;alert(1)-1-tab"');
+    expect(btns[0]).toContain('aria-controls="x&quot; onmouseover=&quot;alert(1)-1"');
+    expect(panels[0]).toContain('id="x&quot; onmouseover=&quot;alert(1)-1"');
+    expect(panels[0]).toContain('aria-labelledby="x&quot; onmouseover=&quot;alert(1)-1-tab"');
+  });
+
+  it('tabID に $& が含まれても置換パターンとして解釈されない', () => {
+    const { btns, panels } = transformTabitems(html(tabitem('タブ1')), 'a$&b', 1);
+
+    expect(btns[0]).toContain('id="a$&amp;b-1-tab"');
+    expect(panels[0]).toContain('id="a$&amp;b-1"');
+  });
+
+  it('button を含まない tabitem は無視され、index の割り当てにも含まれない', () => {
     const { btns, panels } = transformTabitems(
       html('<lism-placeholder-tabitem><div>ボタン無し</div></lism-placeholder-tabitem>', tabitem('タブ2')),
       'tabs',
@@ -83,6 +101,11 @@ describe('transformTabitems', () => {
 
     expect(btns).toHaveLength(1);
     expect(panels).toHaveLength(1);
+
+    // 残ったタブが index 1 を引き継ぎ、defaultIndex=1 で選択状態になる
+    expect(btns[0]).toContain('id="tabs-1-tab"');
+    expect(btns[0]).toContain('aria-selected="true"');
+    expect(panels[0]).not.toContain(' hidden>');
   });
 
   it('tabitem が無ければ空配列を返す', () => {

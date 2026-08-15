@@ -33,12 +33,17 @@ export default function Tabs<T extends ElementType = 'div'>({
   const generatedId = useId();
   const theTabId = tabId || generatedId;
 
-  // Tabs.Item だけを集める（総数が決まらないとindexをクランプできない）
-  const tabItems: ReactElement<{ children?: ReactNode }>[] = [];
+  // 各 Tabs.Item から Tab / Panel を先に抽出する。Tab を持たない Item を総数や index の割り当てに
+  // 含めると、残ったタブの index がずれて activeIndex と噛み合わなくなるため
+  const tabItems: { tab: ReactElement; panel?: ReactElement }[] = [];
   Children.forEach(children, (child) => {
-    if (isValidElement(child) && child.type === TabItem) {
-      tabItems.push(child as ReactElement<{ children?: ReactNode }>);
-    }
+    if (!isValidElement(child) || child.type !== TabItem) return;
+
+    const nestedChildren = Children.toArray((child as ReactElement<{ children?: ReactNode }>).props.children).filter(isValidElement);
+    const tab = nestedChildren.find((nested) => nested.type === Tab);
+    if (!tab) return;
+
+    tabItems.push({ tab, panel: nestedChildren.find((nested) => nested.type === TabPanel) });
   });
 
   const itemCount = tabItems.length;
@@ -75,30 +80,24 @@ export default function Tabs<T extends ElementType = 'div'>({
     nextBtn?.focus();
   };
 
-  // 各 Tabs.Item から Tab / Panel を取り出して状態付きで描画
+  // 抽出した Tab / Panel を状態付きで描画
   const btns: ReactElement[] = [];
   const panels: ReactElement[] = [];
-  tabItems.forEach((item, i) => {
+  tabItems.forEach(({ tab, panel }, i) => {
     const tabIndex = i + 1; // 1 はじまり
     const isActive = tabIndex === activeIndex;
 
-    const nestedChildren = Children.toArray(item.props.children).filter(isValidElement);
-    const tab = nestedChildren.find((nested) => nested.type === Tab);
-    const panel = nestedChildren.find((nested) => nested.type === TabPanel);
-
-    if (tab) {
-      btns.push(
-        <Tab
-          {...(tab.props as TabProps)}
-          tabId={theTabId}
-          index={tabIndex}
-          key={tabIndex}
-          isActive={isActive}
-          onClick={() => setSelectedIndex(tabIndex)}
-          onKeyDown={(e: KeyboardEvent<HTMLElement>) => handleTabKeyDown(e, tabIndex)}
-        />
-      );
-    }
+    btns.push(
+      <Tab
+        {...(tab.props as TabProps)}
+        tabId={theTabId}
+        index={tabIndex}
+        key={tabIndex}
+        isActive={isActive}
+        onClick={() => setSelectedIndex(tabIndex)}
+        onKeyDown={(e: KeyboardEvent<HTMLElement>) => handleTabKeyDown(e, tabIndex)}
+      />
+    );
     if (panel) {
       panels.push(<TabPanel {...(panel.props as LismComponentProps)} tabId={theTabId} index={tabIndex} key={tabIndex} isActive={isActive} />);
     }

@@ -79,3 +79,28 @@ describe('Tabs (React) ディープリンク', () => {
     expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
   });
 });
+
+describe('Tabs (React) Tab を持たない Item の扱い', () => {
+  it('Tab を持たない Tabs.Item は index の割り当てから除外される', () => {
+    act(() => {
+      reactRoot.render(
+        <Tabs tabId="sample-tabs">
+          <TabItem>
+            <div>Tabなし</div>
+          </TabItem>
+          <TabItem>
+            <Tab>Tab 1</Tab>
+            <TabPanel>Content 1</TabPanel>
+          </TabItem>
+          <TabItem>
+            <Tab>Tab 2</Tab>
+            <TabPanel>Content 2</TabPanel>
+          </TabItem>
+        </Tabs>
+      );
+    });
+
+    // 残った2タブが index 1〜2 となり、1番目が初期選択される
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+  });
+});
