@@ -14,25 +14,17 @@ import path from 'node:path';
 const currentLang = getRootLang();
 const allUiPosts = await getUiPostsByLang(currentLang);
 
-// examples 配下を除いた UI 記事
-const uiPosts = allUiPosts
-  .filter((post) => !post.id.startsWith('ui/examples/'))
-  .sort((a, b) => {
-    // order順にソート（未指定は999）
-    const orderA = a.data.order ?? 999;
-    const orderB = b.data.order ?? 999;
-    return orderA - orderB;
-  });
+// order順にソート（未指定は999）
+const byOrder = (a: (typeof allUiPosts)[number], b: (typeof allUiPosts)[number]) => (a.data.order ?? 999) - (b.data.order ?? 999);
 
-// ui/examples/ 配下の記事
-const examplePosts = allUiPosts
-  .filter((post) => post.id.startsWith('ui/examples/'))
-  .sort((a, b) => {
-    // order順にソート（未指定は999）
-    const orderA = a.data.order ?? 999;
-    const orderB = b.data.order ?? 999;
-    return orderA - orderB;
-  });
+// ui/block-examples/ 配下の記事（CSSをコピーして導入するb--部品の作例）
+const blockExamplePosts = allUiPosts.filter((post) => post.id.startsWith('ui/block-examples/')).sort(byOrder);
+
+// ui/components/ 配下の記事（Lism CSSだけで組み立てる実装例）
+const componentPosts = allUiPosts.filter((post) => post.id.startsWith('ui/components/')).sort(byOrder);
+
+// ui/ 直下の記事（パッケージ提供のUI）
+const blockPosts = allUiPosts.filter((post) => !post.id.startsWith('ui/block-examples/') && !post.id.startsWith('ui/components/')).sort(byOrder);
 
 // サムネイル画像が存在するかチェックするヘルパー
 function getThumbPath(title: string): string {
@@ -59,12 +51,12 @@ function getThumbPath(title: string): string {
     </Stack>
     <Lism as="section" mbs="50">
       <Stack as="header" g="20">
-        <h2>Components</h2>
+        <h2>Blocks</h2>
         <p class="-c:text-2"><code>@lism-css/ui</code>からインポートできるコンポーネント一覧です。</p>
       </Stack>
       <AutoColumns cols="240px" g="30" mbs="40">
         {
-          uiPosts.map((post) => {
+          blockPosts.map((post) => {
             const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
             const thumbPath = getThumbPath(post.data.title);
             return (
@@ -80,14 +72,40 @@ function getThumbPath(title: string): string {
       </AutoColumns>
     </Lism>
     {
-      examplePosts.length > 0 && (
-        <Lism mbs="50">
+      blockExamplePosts.length > 0 && (
+        <Lism as="section" mbs="50">
           <Stack as="header" g="20">
-            <h2>Examples</h2>
+            <h2>Block Examples</h2>
+            <p class="-c:text-2">
+              CSSをコピーして導入する<code>b--</code>部品の作例です。
+            </p>
+          </Stack>
+          <AutoColumns cols="240px" g="30" mbs="40">
+            {blockExamplePosts.map((post) => {
+              const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
+              const thumbPath = getThumbPath(post.data.title);
+              return (
+                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
+                  <Frame ar="3/2" bd bdrs="20" bgc="base">
+                    <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
+                  </Frame>
+                  <Lism class="u--trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
+                </BoxLink>
+              );
+            })}
+          </AutoColumns>
+        </Lism>
+      )
+    }
+    {
+      componentPosts.length > 0 && (
+        <Lism as="section" mbs="50">
+          <Stack as="header" g="20">
+            <h2>Components</h2>
             <p class="-c:text-2">Lism CSS, Lism UIをベースにした、その他の実装例・サンプル集です。</p>
           </Stack>
           <AutoColumns cols="240px" g="30" mbs="40">
-            {examplePosts.map((post) => {
+            {componentPosts.map((post) => {
               const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
               const thumbPath = getThumbPath(post.data.title);
               return (

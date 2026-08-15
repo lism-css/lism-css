@@ -1,5 +1,5 @@
-@layer lism-custom {
-  .c--list {
+@layer lism-block {
+  .b--list {
     list-style: none;
     --_icon-c: var(--brand);
     --_icon-size: 1em;
@@ -9,13 +9,13 @@
   }
 
   /* ボーダースタイルをつけれるように、li 側の ps で余白調整をする */
-  .c--list > li {
+  .b--list > li {
     position: relative;
     padding-inline-start: var(--_li-ps);
   }
 
   /* テキスト（半角スペース）を入れて、疑似要素の高さをリストのテキストに合わせる。（line-heightも含めて高さを一致させる）*/
-  .c--list > li::before {
+  .b--list > li::before {
     position: absolute;
     top: 0;
     inset-inline-start: calc(var(--_li-ps) / 2 - var(--_icon-size) / 2);
@@ -27,7 +27,7 @@
   }
 
   /* variationの例 */
-  .c--list--check {
+  .b--list--check {
     --_icon-c: var(--green);
     --_icon-img: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>');
   }

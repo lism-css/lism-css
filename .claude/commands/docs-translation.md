@@ -78,8 +78,9 @@
 | B | `primitives/` |
 | C | `trait-class/` |
 | D | `property-class/` + `tokens/` |
-| E | `ui/`（`examples/` 除く） |
-| F | `ui/examples/` |
+| E | `ui/`直下 |
+| F | `ui/block-examples/` |
+| F' | `ui/components/` |
 | G | `customize/` とルート直下の mdx |
 
 ※ ファイル数が少ないグループ（3件以下）は隣接グループと統合し、多いグループ（G 等）は分割してよい

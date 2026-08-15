@@ -38,8 +38,9 @@ argument-hint: "[対象ファイル/ディレクトリ...]"
 | C | `trait-class/`（`is--*`） | トレイトクラス | `lism-css` の SCSS・コンポーネント |
 | D | `property-class/` | プロパティクラス | `lism-css` の config・SCSS |
 | E | `tokens/` | デザイントークン | `lism-css` の config・SCSS |
-| F | `ui/`（`examples/` 除く） | `@lism-css/ui` コンポーネント | `lism-ui` のソース |
-| G | `ui/examples/` | コンポーネント組み合わせ例 | `lism-css` のコンポーネント |
+| F | `ui/`直下 | `@lism-css/ui` コンポーネント（Blocks） | `lism-ui` のソース |
+| G | `ui/block-examples/` | パッケージ外のb--部品作例（Block Examples） | `lism-css` のコンポーネント |
+| G' | `ui/components/` | 独自CSSなしの実装例（Components） | `lism-css` のコンポーネント |
 | H | `customize/` とルート直下の mdx | 概要・導入・カスタマイズガイド | `package.json`、ビルド設定、ソース全般 |
 
 ※ ファイル数が少ないグループ（3件以下）は隣接グループと統合し、多いグループ（H 等）は分割して構わない

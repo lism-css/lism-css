@@ -1,0 +1,199 @@
+---
+title: 'List'
+description: 'Lism CSS で実装する、アイコン付き装飾リストUI（b--list）の実装例です。'
+draft: true
+---
+
+import { Lism } from 'lism-css/astro';
+import '@/components/ex/List/style.css';
+
+
+行頭にアイコンを表示する装飾リストの実装例です。Lism の primitives と少量の CSS（`b--list`）で構成します。
+
+アイコンは疑似要素の `mask` で描画しているため、色や画像を CSS 変数だけで差し替えられます。
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism as="ul" class="b--list">
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Lism as="ul" class="b--list">
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <ul class="b--list">
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Styles
+
+List のベーススタイルは、以下の CSS で定義されています。この CSS をプロジェクトにコピーして利用してください。
+
+`@layer lism-block` のままコピーすると、コア CSS のレイヤー順にそのまま組み込まれ、`lism-custom` レイヤーから上書きできます。
+
+<SrcCode dir="docs" path="src/components/ex/List/style.css" title="list.css" />
+
+
+## Markup
+
+マークアップは以下のクラス・変数で構成します。
+
+| クラス / 変数 | 説明 |
+|---|---|
+| `b--list` | ルート要素。`<ul>` / `<ol>` に付与します。 |
+| `b--list--check` | チェックマークのアイコンに切り替えるモディファイア。 |
+| `--_icon-c` | アイコンの色（デフォルトは `var(--brand)`）。 |
+| `--_icon-img` | アイコンとして表示する画像（`mask` に渡す `url()`）。 |
+| `--_icon-size` | アイコンのサイズ（デフォルトは `1em`）。 |
+| `--_li-ps` | `li` の行頭に確保する余白（デフォルトは `1.875em`）。 |
+
+余白は `li` 側の `padding-inline-start` で確保しているため、`li` にボーダー系の Property Class（`-bd-be` など）をそのまま付与できます。
+
+
+## Examples
+
+### チェックマークのリスト（`b--list--check`）
+
+`b--list--check` を追加すると、アイコンがチェックマークに切り替わります。`li` にボーダーを付ける例です。
+
+<Preview>
+  <PreviewTitle>`b--list--check`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism as="ul" class="b--list b--list--check">
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 1</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 2</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 4</li>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'b--list--check'
+    <Lism as="ul" class="b--list b--list--check">
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 1</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 2</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 4</li>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html 'b--list--check'
+    <ul class="b--list b--list--check">
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 1</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 2</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 4</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### アイコンを差し替える（`--_icon-c` / `--_icon-img`）
+
+`--_icon-c` で色、`--_icon-img` で画像を上書きすると、任意のアイコンのリストになります。
+
+<Preview>
+  <PreviewTitle>`--_icon-c` と `--_icon-img`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism
+      as="ul"
+      class="b--list"
+      style={{
+        '--_icon-c': 'var(--purple)',
+        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+      }}
+    >
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "'--_icon-c'" "'--_icon-img'"
+    <Lism
+      as="ul"
+      class="b--list"
+      style={{
+        '--_icon-c': 'var(--purple)',
+        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+      }}
+    >
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--_icon-c" "--_icon-img"
+    <ul
+      class="b--list"
+      style="
+        --_icon-c: var(--purple);
+        --_icon-img: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>');
+      "
+    >
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
