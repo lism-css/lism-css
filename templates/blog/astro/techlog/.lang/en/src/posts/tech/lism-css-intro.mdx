@@ -15,7 +15,7 @@ Post files work with both `.md` and `.mdx`. Directive syntax like `:::note` is c
 
 ## CSS Layers
 
-Lism CSS styles are organized across several `@layer`s, and the order in which the layers are declared determines their priority. They stack in the order `lism-base` → `lism-component` → `lism-utility`, so you can override styles with Property Classes without worrying about specificity.
+Lism CSS styles are organized across several `@layer`s, and the order in which the layers are declared determines their priority. They stack in the order `lism-base` → `lism-custom` → `lism-utility`, so you can override styles with Property Classes without worrying about specificity.
 
 When you add custom CSS, place it on whichever layer fits its purpose.
 
@@ -28,7 +28,7 @@ When you add custom CSS, place it on whichever layer fits its purpose.
   }
 }
 
-@layer lism-component {
+@layer lism-custom {
   .c--postList > li {
     border-block-end: 1px solid var(--divider);
   }
@@ -98,16 +98,16 @@ Lism provides classes with the `is--{name}` prefix to declare a "role."
 
 Don't use them for state switching (such as active) or variations. Express state with `data-*` attributes, and variations with the `c--{name}--{variant}` BEM modifier.
 
-## Component Classes (c--)
+## Custom Classes (c--)
 
-Define project-specific components with classes that use the `c--{name}` prefix. Move any declarations that can be written as Property Classes into the markup, and leave in the CSS only what CSS alone can express — pseudo-classes, state switching, descendant selectors, and the like.
+Define project-specific elements and components with custom classes that use the `c--{name}` prefix. Move any declarations that can be written as Property Classes into the markup, and leave in the CSS only what CSS alone can express — pseudo-classes, state switching, descendant selectors, and the like.
 
 ```html
 <span class="c--tag -fz:xs -px:10 -py:5 -bgc:base-2 -bdrs:10">React</span>
 ```
 
 ```css
-@layer lism-component {
+@layer lism-custom {
   .c--tag:hover {
     background-color: var(--divider);
   }
