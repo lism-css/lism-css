@@ -17,7 +17,15 @@ export default function CloseBtn<T extends ElementType = 'button'>({
   ...props
 }: CloseBtnProps<T>) {
   return (
-    <Lism as="button" className={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...(props as object)}>
+    <Lism
+      as="button"
+      type="button"
+      className={atts(className, 'b--modal_closeBtn')}
+      set="plain"
+      hov="-o"
+      data-modal-close={modalId}
+      {...(props as object)}
+    >
       {children ? (
         children
       ) : (

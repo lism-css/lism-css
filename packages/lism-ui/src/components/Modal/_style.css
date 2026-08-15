@@ -48,4 +48,11 @@
   .b--modal:not([data-is-open]) > .b--modal_inner {
     translate: var(--offset);
   }
+
+  /* 減速設定時はアニメーションを無効化（duration プロップ由来の inline style よりも優先させるため !important） */
+  @media (prefers-reduced-motion: reduce) {
+    .b--modal {
+      --duration: 0s !important;
+    }
+  }
 }

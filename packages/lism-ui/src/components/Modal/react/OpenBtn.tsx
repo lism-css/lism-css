@@ -8,7 +8,16 @@ type OpenBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
 
 export default function OpenBtn<T extends ElementType = 'button'>({ children, className, modalId = '', ...props }: OpenBtnProps<T>) {
   return (
-    <Lism as="button" className={atts(className, 'b--modal_openBtn')} set="plain" hov="-o" data-modal-open={modalId} {...(props as object)}>
+    <Lism
+      as="button"
+      type="button"
+      aria-haspopup="dialog"
+      className={atts(className, 'b--modal_openBtn')}
+      set="plain"
+      hov="-o"
+      data-modal-open={modalId}
+      {...(props as object)}
+    >
       {children}
     </Lism>
   );

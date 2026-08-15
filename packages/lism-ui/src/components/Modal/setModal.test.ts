@@ -52,7 +52,7 @@ describe('setEvent (dialog 要素)', () => {
     });
   });
 
-  it('余白クリック（e.target === modal）で閉じる', async () => {
+  it('余白クリック（pointerdown / click ともにターゲットが modal）で閉じる', async () => {
     const modal = document.querySelector<HTMLDialogElement>('#m1')!;
     const trigger = document.querySelector<HTMLElement>('[data-modal-open="m1"]')!;
     setEvent(modal);
@@ -62,11 +62,71 @@ describe('setEvent (dialog 要素)', () => {
       expect(modal.dataset.isOpen).toBe('1');
     });
 
+    modal.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }));
     modal.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     await vi.waitFor(() => {
       expect(modal).not.toHaveAttribute('data-is-open');
       expect(modal).not.toHaveAttribute('open');
     });
+  });
+
+  it('モーダル内で pointerdown した後の余白 click では閉じない（ドラッグ誤爆防止）', async () => {
+    const modal = document.querySelector<HTMLDialogElement>('#m1')!;
+    const trigger = document.querySelector<HTMLElement>('[data-modal-open="m1"]')!;
+    const innerBtn = document.querySelector<HTMLElement>('[data-modal-close="m1"]')!;
+    setEvent(modal);
+
+    trigger.click();
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
+
+    // モーダル内でドラッグ（テキスト選択等）を開始し、余白で離して click のターゲットが modal になったケース
+    innerBtn.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }));
+    modal.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await Promise.resolve();
+
+    expect(modal.dataset.isOpen).toBe('1');
+    expect(modal).toHaveAttribute('open');
+  });
+
+  it('closeDialog を経由せず閉じられた場合（form method="dialog" 等）も後始末される', async () => {
+    const modal = document.querySelector<HTMLDialogElement>('#m1')!;
+    const trigger = document.querySelector<HTMLElement>('[data-modal-open="m1"]')!;
+    setEvent(modal);
+
+    trigger.click();
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
+
+    // closeDialog() を経由しないネイティブの close()（form method="dialog" の送信相当）
+    modal.close();
+
+    await vi.waitFor(() => {
+      expect(modal).not.toHaveAttribute('data-is-open');
+      expect(modal).not.toHaveAttribute('open');
+      expect(trigger.dataset.targetOpened).toBeUndefined();
+    });
+  });
+
+  it('開いた直後（data-is-open 付与前）に閉じられた場合、次フレーム以降も data-is-open は付かない', async () => {
+    const modal = document.querySelector<HTMLDialogElement>('#m1')!;
+    const trigger = document.querySelector<HTMLElement>('[data-modal-open="m1"]')!;
+    setEvent(modal);
+
+    // open の rAF が実行される前に、closeDialog() を経由しない close() が走るケース
+    trigger.click();
+    modal.close();
+
+    // rAF を2フレーム分待って、保留中の rAF が属性を戻していないことを確認する
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+    });
+
+    expect(modal).not.toHaveAttribute('data-is-open');
+    expect(modal).not.toHaveAttribute('open');
+    expect(trigger.dataset.targetOpened).toBeUndefined();
   });
 
   it('cancel イベントで preventDefault され、closeDialog が走る', async () => {
@@ -122,8 +182,16 @@ describe('setEvent (dialog 要素)', () => {
   });
 });
 
-describe('setEvent (非 dialog 要素)', () => {
-  it('open/close が open 属性ベースで動作する', async () => {
+describe('setEvent (早期 return ケース)', () => {
+  it('id が無い modal は何もしない', () => {
+    document.body.innerHTML = `<dialog class="b--modal"></dialog>`;
+    const modal = document.querySelector<HTMLDialogElement>('dialog')!;
+
+    setEvent(modal);
+    expect(modal).not.toHaveAttribute('open');
+  });
+
+  it('dialog 以外の要素はサポートせず、イベントを登録しない', async () => {
     document.body.innerHTML = `
       <div id="m2" class="b--modal">
         <button data-modal-close="m2"></button>
@@ -135,27 +203,10 @@ describe('setEvent (非 dialog 要素)', () => {
     setEvent(modal);
 
     trigger.click();
-    // open 属性は同期で付くが、closeDialog は data-is-open を見て早期 return するため、
-    // rAF での data-is-open 付与まで待ってから閉じる
-    await vi.waitFor(() => {
-      expect(modal).toHaveAttribute('open');
-      expect(modal.dataset.isOpen).toBe('1');
-    });
+    await Promise.resolve();
 
-    document.querySelector<HTMLElement>('[data-modal-close="m2"]')!.click();
-    await vi.waitFor(() => {
-      expect(modal).not.toHaveAttribute('open');
-    });
-  });
-});
-
-describe('setEvent (早期 return ケース)', () => {
-  it('id が無い modal は何もしない', () => {
-    document.body.innerHTML = `<dialog class="b--modal"></dialog>`;
-    const modal = document.querySelector<HTMLDialogElement>('dialog')!;
-
-    setEvent(modal);
     expect(modal).not.toHaveAttribute('open');
+    expect(modal.dataset.isOpen).toBeUndefined();
   });
 });
 
