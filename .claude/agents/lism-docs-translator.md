@@ -99,7 +99,7 @@ ja版で日本語プレースホルダーテキストが使われている箇所
 | 日本語 | 英語 |
 |--------|------|
 | 使い方 | **Usage**（× How to use） |
-| lism-css のみ／lism-css だけ | **Without @lism-css/ui**（× Only lism-css） |
+| UI の「lism-css のみ」セクション見出し | **Without @lism-css/ui**（ja/en ともこの英語見出し。× Only lism-css） |
 | 〜の例／〜の作成例 | **Examples** / **Examples of X built with Lism**（× Examples of creating X / Examples of using X to display Y） |
 | 〜について | （セクションタイトルでは省略：× About X → ✅ X） |
 | レスポンシブ対応 | Responsive styling（× Responsive support） |
@@ -188,7 +188,7 @@ ja版で日本語プレースホルダーテキストが使われている箇所
 
 1. **見出し統一**
    - [ ] `## How to use` を使っていない（→ `## Usage`）
-   - [ ] `## Only lism-css` を使っていない（→ `## Without @lism-css/ui`）
+   - [ ] `## Only lism-css` を使っていない（ja/en とも `## Without @lism-css/ui`）
    - [ ] `### Examples of creating/using X` を使っていない（→ `### Examples of X built with Lism`）
    - [ ] all-caps の見出しがない（`## COLOR` など）。Title Case か Sentence case に統一
      - 例外: Lismのトークンカテゴリ名として`SPACE: Spacing Scale`のように使う`SPACE`

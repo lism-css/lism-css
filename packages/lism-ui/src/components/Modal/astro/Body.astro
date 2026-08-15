@@ -9,4 +9,4 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBa
 const { class: className, as = 'div', ...props } = Astro.props;
 ---
 
-<Lism as={as} class={atts(className, 'c--modal_body')} {...props}><slot /></Lism>
+<Lism as={as} class={atts(className, 'b--modal_body')} {...props}><slot /></Lism>

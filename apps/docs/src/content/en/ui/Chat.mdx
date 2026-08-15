@@ -9,6 +9,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 A component for displaying content in a chat conversation style.
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p="30" _dir="rtl">
@@ -19,7 +22,7 @@ A component for displaying content in a chat conversation style.
       </p>
     </Chat>
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
       <p>
@@ -31,14 +34,14 @@ A component for displaying content in a chat conversation style.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--chat c--chat--speak l--grid -ji:start" style="--keycolor: var(--gray)" data-chat-dir="start">
-      <div class="c--chat_avatar l--frame -bgc:base -ar:1/1 -bdrs:99" aria-hidden="true">
+    <div class="b--chat b--chat--speak l--grid" data-chat-dir="start">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
         <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
       </div>
-      <div class="c--chat_name -c:text-2 -fs:italic -fz:2xs -hl:0 -py:5 -px:10 -aslf:end">Taro</div>
-      <div class="c--chat_body -pos:relative">
-        <div class="c--chat_deco a--decorator is--skipFlow u--cbox -pos:absolute" aria-hidden="true"></div>
-        <div class="c--chat_content l--flow u--cbox -flow:s -bdrs:30 -p:20 -hl:s -jslf:start">
+      <div class="b--chat_name">Taro</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
             veniam, quis nostrud exercitation.
@@ -51,9 +54,20 @@ A component for displaying content in a chat conversation style.
 </Preview>
 
 
+## Styles
+
+The Chat base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Chat/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat).
+:::
+
+
 ## Usage
 
-Provided as `Chat` (`c--chat`) from the `@lism-css/ui` package.
+Provided as `Chat` (`b--chat`) from the `@lism-css/ui` package.
 
 
 ### Import
@@ -66,15 +80,11 @@ Provided as `Chat` (`c--chat`) from the `@lism-css/ui` package.
 |---|---|
 | `avatar` | Specifies the `src` of the chat avatar image. |
 | `name` | Specifies the name displayed in the chat. |
-| `variant` | Specifies the chat type. Available options: `speak` or `think`. |
+| `variant` | Specifies the chat type. Available options: `speak` (default) or `think`. |
 | `direction` | Specifies the display position of the chat. Use `start` or `end`. |
 | `keycolor` | Specifies the key color of the chat bubble. |
-| `flow` | Passed to the element wrapping the content (`c--chat_content`). |
+| `flow` | Passed to the element wrapping the content (`b--chat_content`). |
 
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat).
 
 
 ## Examples
@@ -90,33 +100,54 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
       <DummyText lang="en" />
     </Chat>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
       <DummyText lang="en" />
     </Chat>
     <Chat direction="end" name="Hanako" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="green">
       <DummyText lang="en" length="codes" />
+      <DummyText lang="en" />
     </Chat>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--chat b--chat--speak l--grid" data-chat-dir="start">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Taro</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>Lorem ipsum dolor sit amet, ...</p>
+        </div>
+      </div>
+    </div>
+    <div class="b--chat b--chat--speak l--grid" style="--keycolor:var(--green)" data-chat-dir="end">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Hanako</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>Lorem ipsum dolor <i>sit amet</i>. ...</p>
+          <p>Lorem ipsum dolor sit amet, ...</p>
+        </div>
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
 
 
-## Opt-in styles
-
 ### variant="think"
 
-A style for representing thoughts — speech the character thinks but doesn't say aloud.
+Specify `variant="think"` to represent thoughts — speech the character thinks but doesn't say aloud.
 
-<Preview css={`
-@layer lism-custom {
-  .c--chat--think {
-    --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
-    --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
-  }
-}
-`}>
+<Preview>
   <PreviewTitle>`variant='think'`</PreviewTitle>
   <PreviewArea resize p="20" _dir="rtl">
     <Chat variant="think" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="blue">
@@ -127,7 +158,7 @@ A style for representing thoughts — speech the character thinks but doesn't sa
     </Chat>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx
+    ```jsx 'variant="think"'
     <Chat variant="think" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="blue">
       <DummyText length="xs" />
     </Chat>
@@ -136,14 +167,32 @@ A style for representing thoughts — speech the character thinks but doesn't sa
     </Chat>
     ```
   </PreviewCode>
-  <PreviewCode slot="tab" label="CSS">
-    ```css
-    @layer lism-custom {
-      .c--chat--think {
-        --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
-        --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
-      }
-    }
+  <PreviewCode slot="tab" label="HTML">
+    ```html 'b--chat--think'
+    <div class="b--chat b--chat--think l--grid" style="--keycolor:var(--blue)" data-chat-dir="start">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Name B</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>Lorem ipsum dolor sit amet.</p>
+        </div>
+      </div>
+    </div>
+    <div class="b--chat b--chat--think l--grid" style="--keycolor:var(--purple)" data-chat-dir="end">
+      <div class="b--chat_avatar l--frame" aria-hidden="true">
+        <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="" width="60" height="60" decoding="async" />
+      </div>
+      <div class="b--chat_name">Name B</div>
+      <div class="b--chat_body">
+        <div class="b--chat_deco a--decorator is--skipFlow u--cbox" aria-hidden="true"></div>
+        <div class="b--chat_content l--flow u--cbox">
+          <p>Lorem ipsum dolor <i>sit amet</i>. ...</p>
+        </div>
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>

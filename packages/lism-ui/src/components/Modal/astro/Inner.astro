@@ -13,4 +13,4 @@ const { class: className, as = 'div', offset, style = {}, ...props } = Astro.pro
 const mergedStyle = offset ? { ...(style as Record<string, string | undefined>), '--offset': offset } : style;
 ---
 
-<Lism as={as} class={atts(className, 'c--modal_inner')} style={mergedStyle} {...props}><slot /></Lism>
+<Lism as={as} class={atts(className, 'b--modal_inner')} style={mergedStyle} {...props}><slot /></Lism>

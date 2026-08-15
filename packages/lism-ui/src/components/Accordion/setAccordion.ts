@@ -12,13 +12,13 @@ type AccordionElements = {
 
 // アコーディオン要素から必要な要素を取得
 const getAccordionElements = (accordionItem: HTMLElement): AccordionElements => {
-  const heading = accordionItem.querySelector<HTMLElement>('.c--accordion_heading')!;
-  const panel = accordionItem.querySelector<HTMLElement>('.c--accordion_panel')!;
+  const heading = accordionItem.querySelector<HTMLElement>('.b--accordion_heading')!;
+  const panel = accordionItem.querySelector<HTMLElement>('.b--accordion_panel')!;
   return {
     heading,
-    button: heading.querySelector<HTMLElement>('.c--accordion_button')!,
+    button: heading.querySelector<HTMLElement>('.b--accordion_button')!,
     panel,
-    content: panel.querySelector<HTMLElement>('.c--accordion_content')!,
+    content: panel.querySelector<HTMLElement>('.b--accordion_content')!,
   };
 };
 
@@ -112,7 +112,7 @@ export const setEvent = (accordionItem: HTMLElement): (() => void) => {
  * ページ内の全アコーディオンにイベントをセット（Astro用）
  */
 const setAccordion = (): void => {
-  const accordionAll = document.querySelectorAll<HTMLElement>('.c--accordion_item');
+  const accordionAll = document.querySelectorAll<HTMLElement>('.b--accordion_item');
   accordionAll.forEach((accordionItem) => {
     setEvent(accordionItem);
   });

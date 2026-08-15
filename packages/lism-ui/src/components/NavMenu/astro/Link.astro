@@ -1,7 +1,7 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
-import { Flex } from 'lism-css/astro';
+import { Link as LinkBase } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
 type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> &
@@ -9,7 +9,7 @@ type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> &
     href?: string;
   };
 
-const { class: className, as = 'a', ...props } = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<Flex as={as} class={atts(className, 'c--navMenu_link')} c="inherit" hov="-bgc" {...props}><slot /></Flex>
+<LinkBase class={atts(className, 'b--navMenu_link')} hov="-bgc" {...props}><slot /></LinkBase>

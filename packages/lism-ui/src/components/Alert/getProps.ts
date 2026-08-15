@@ -23,11 +23,6 @@ export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex
     util: 'cbox',
     // set: 'bxsh',
     keycolor: _color,
-    ai: 'center',
-    p: '15',
-    g: '15',
-    bd: true,
-    bdrs: '10',
     ...props,
   };
 }

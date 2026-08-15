@@ -1,7 +1,7 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
-import { Lism } from 'lism-css/astro';
+import { Grid } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
 import TabList from './List.astro';
@@ -20,7 +20,7 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
   };
 
 // propsの取得
-const { defaultIndex = 1, tabId = '', listProps = {}, variant, class: className, ...props } = Astro.props;
+const { defaultIndex = 1, tabId = '', listProps = {}, variant = 'default', class: className, ...props } = Astro.props;
 
 // tabID生成
 const theTabID = tabId ? tabId : uuid();
@@ -31,9 +31,9 @@ const { btns, panels } = transformTabitems(await Astro.slots.render('default'), 
 const hasItems = btns.length > 0;
 ---
 
-<Lism class={atts(className, buildModifierClass('c--tabs', { variant }))} {...props}>
+<Grid class={atts(className, buildModifierClass('b--tabs', { variant }))} {...props}>
   {
-    btns && (
+    hasItems && (
       <TabList {...listProps}>
         {btns.map((btn, index) => {
           return <Fragment key={index} set:html={btn} />;
@@ -47,11 +47,11 @@ const hasItems = btns.length > 0;
     })
   }
   {!hasItems && <slot />}
-</Lism>
+</Grid>
 
 <script>
   import setTabs from '../setTabs';
-  const tabsAll = document.querySelectorAll('.c--tabs');
+  const tabsAll = document.querySelectorAll('.b--tabs');
   tabsAll.forEach((tabs) => {
     setTabs(tabs as HTMLElement);
   });

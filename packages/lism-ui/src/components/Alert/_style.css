@@ -1,1 +1,29 @@
-/* Alert component styles */
+@layer lism-block {
+  /* Note: u--cbox との併用を前提としています。layout="withSide" 指定時は l--withSide がレイアウトを上書きします. */
+  .b--alert {
+    --bds: solid;
+    --bdw: 1px;
+    --bdc: var(--divider); /* u--cbox 併用時は u--cbox 側の --bdc が優先される */
+
+    align-items: center;
+    gap: var(--s15);
+    padding: var(--s15);
+    border: var(--bdw) var(--bds) var(--bdc);
+    border-radius: var(--bdrs--10);
+  }
+
+  /* l--flex と同様に、flexアイテムが min-content 幅より縮めなくなるのを防ぐ */
+  /* .b--alert > * {
+    min-width: 0;
+  } */
+
+  .b--alert > .a--icon {
+    color: var(--keycolor);
+    font-size: var(--fz--xl);
+  }
+
+  /* memo: layout="withSide" を考慮し、flex: 1 ではなく width: 100% で本文幅を確保している */
+  .b--alert > .l--flow {
+    width: 100%;
+  }
+}

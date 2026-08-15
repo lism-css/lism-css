@@ -2,6 +2,7 @@ import type { ElementType } from 'react';
 import { Frame, type LayoutComponentProps } from 'lism-css/react';
 import type { FrameProps } from 'lism-css/lib/types/LayoutProps';
 import atts from 'lism-css/lib/helper/atts';
+import '../_style.css';
 
 type AvatarProps<T extends ElementType = 'div'> = LayoutComponentProps<T, FrameProps> & {
   size?: string;
@@ -9,9 +10,9 @@ type AvatarProps<T extends ElementType = 'div'> = LayoutComponentProps<T, FrameP
   alt?: string;
 };
 
-export function Avatar<T extends ElementType = 'div'>({ size = '1.5em', src = '', alt = '', className, ...props }: AvatarProps<T>) {
+export function Avatar<T extends ElementType = 'div'>({ size, src = '', alt = '', className, ...props }: AvatarProps<T>) {
   return (
-    <Frame className={atts(className, 'c--avatar')} ar="1/1" w={size} bdrs="99" {...(props as LayoutComponentProps<T, FrameProps>)}>
+    <Frame className={atts(className, 'b--avatar')} w={size} {...(props as LayoutComponentProps<T, FrameProps>)}>
       <img src={src} alt={alt} width="100%" height="100%" decoding="async" />
     </Frame>
   );

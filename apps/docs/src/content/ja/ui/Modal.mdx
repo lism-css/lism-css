@@ -3,13 +3,86 @@ title: 'Modal'
 description: '@lism-css/ui で提供する Modal コンポーネントについて解説します。'
 ---
 
-import { Grid, Flex, Stack, Center, Icon, Inline, Link } from 'lism-css/astro';
+import { Grid, Flex, Center, Icon, Inline, Box } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
+import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 
 `dialog`要素でモーダルを表示するコンポーネントです。
 
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="30">
+    <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">
+      <Fragment>Open Modal 01</Fragment>
+    </Modal.OpenBtn>
+
+    <Modal.Root id="modal-01" p="30">
+      <Modal.Inner layout="stack" pos="relative" max-sz="m" mx="auto" p="35" bdrs="30" bxsh="30">
+        <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="10" />
+        <Modal.Body layout="stack" g="30" util="trimAll">
+          <div className="-fz:l -fw:bold">Modal Title</div>
+          <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
+        </Modal.Body>
+      </Modal.Inner>
+    </Modal.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx '"modal-01"'
+    <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">Open Modal 01</Modal.OpenBtn>
+
+    <Modal.Root id="modal-01" p="30">
+      <Modal.Inner layout="stack" pos="relative" max-sz="m" mx="auto" p="35" bdrs="30" bxsh="30">
+        <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="10" />
+        <Modal.Body layout="stack" g="30" util="trimAll">
+          <div className="-fz:l -fw:bold">Modal Title</div>
+          <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
+        </Modal.Body>
+      </Modal.Inner>
+    </Modal.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html '"modal-01"'
+    <button class="-bd -px:15 -py:5 -bdrs:10 b--modal_openBtn set--plain -hov:-o" data-modal-open="modal-01">Open Modal 01</button>
+
+    <dialog class="b--modal set--plain -p:30" id="modal-01">
+      <div class="b--modal_inner l--stack -pos:relative -max-sz:m -mx:auto -p:35 -bdrs:30 -bxsh:30">
+        <button class="b--modal_closeBtn set--plain -hov:-o -pos:absolute -t:0 -r:0 -z:1 -fz:xl -p:10 -m:10" data-modal-close="modal-01" autofocus>
+          <svg class="a--icon" aria-hidden="true">...</svg>
+          <span class="u--srOnly">Close</span>
+        </button>
+        <div class="b--modal_body l--stack u--trimAll -g:30">
+          <div class="-fz:l -fw:bold">Modal Title</div>
+          <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
+        </div>
+      </div>
+    </dialog>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::note
+`<Modal.Root>`に`id`をつけ、`<Modal.OpenBtn>` / `<Modal.CloseBtn>`に同じ`modalId`を指定することで、そのモーダルの開閉ボタンになります。
+
+- Modalは`dialog`を使用しています。display値を変更しないように注意してください。
+- `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。
+:::
+
+
+## Styles
+
+Modal のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Modal/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal) で公開しています。
+:::
 
 
 ## How to use
@@ -19,16 +92,16 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ### Import
 
-<ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
+<ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" css="style.css" />
 
-`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.CloseBtn>`が利用できます。
+`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.OpenBtn>`, `<Modal.CloseBtn>`が利用できます。
 
 
 ### Props
 
 | プロパティ | 説明 |
 |---|---|
-|`id`| Modal(`c--modal`)にはid属性が必要です。|
+|`id`| Modal(`b--modal`)にはid属性が必要です。|
 |<PropBadge>`<Modal.Root>`</PropBadge><br/> `duration`| モーダルの開閉アニメーションの時間を指定します。`--duration`変数として出力されます。|
 |<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
 |<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| `__inner`の非表示時の位置をずらすためのオフセット値|
@@ -36,106 +109,42 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 |<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
 
 
-### 基本構造
-
-```jsx
-<Modal.OpenBtn modalId="modalID">Open</Modal.OpenBtn>
-<Modal.Root id="modalID">
-  <Modal.Inner>
-    <Modal.Body>...Contents...</Modal.Body>
-    <Modal.CloseBtn modalId="modalID" />
-  </Modal.Inner>
-</Modal.Root>
-```
-
-`<Modal.Root>`に`id`をつけ、`<Modal.OpenBtn>` / `<Modal.CloseBtn>`に同じ`modalId`を指定することで、そのモーダルの開閉ボタンになります。
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal) で公開しています。
-
-
-
 ## Examples
 
-- Modalは`dialog`を使用しています。display値を変更しないように注意してください。
-- `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。
-
-{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`c--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
+{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`b--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
 
 {/* モーダルコンテンツを中央に寄せたい場合、l--stack + jc="center" か、 root:l--stack + inner:m='auto' で実現できます。 */}
 
+`<Modal.Body>`をスクロール可能にする場合は、`ov-y="auto"`を指定します。常に見せておきたいコンテンツがあれば、その前後に配置します。
+
+### コンテンツが長い場合の例
 <Preview>
   <PreviewTitle>`Modal`使用例</PreviewTitle>
-  <PreviewArea p="30">
-    <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">
-      <Fragment>Open Modal 01</Fragment>
-    </Modal.OpenBtn>
-
-    <Modal.Root id="modal-01" isWrapper isContainer p="30">
-      <Modal.Inner layout="stack" pos="relative" p="30" bdrs="20" bxsh="40">
-        <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
-        <Modal.Body layout="stack" g="30" util="trimAll">
-          <div className="-fz:xl -fw:bold">Modal Title</div>
-          <DummyText />
-        </Modal.Body>
-      </Modal.Inner>
-    </Modal.Root>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx '"modal-01"'
-    <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">Open Modal 01</Modal.OpenBtn>
-
-    <Modal.Root id="modal-01" isWrapper isContainer p="30">
-      <Modal.Inner layout="stack" pos="relative" p="30" bdrs="20" bxsh="40">
-        <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
-        <Modal.Body layout="stack" g="30" util="trimAll">
-          <div className="-fz:xl -fw:bold">Modal Title</div>
-          <DummyText />
-        </Modal.Body>
-      </Modal.Inner>
-    </Modal.Root>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html
-    ```
-  </PreviewCode>
-</Preview>
-
-`c--modal_body` が`overflow:auto`でスクロール可能なエリアになっていますので、常に見せておきたいコンテンツがあればその前後に配置します。
-
-<Preview>
-  <PreviewTitle>`Modal`使用例 2</PreviewTitle>
   <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-02" className="-bd -px:15 -py:5 -bdrs:10">
       <Fragment>Open Modal 02</Fragment>
     </Modal.OpenBtn>
 
-    <Modal.Root id="modal-02" isWrapper="s" isContainer px="30" py="50">
-      <Modal.Inner layout="stack" max-h="100%" bdrs="20" bxsh="40">
+    <Modal.Root id="modal-02" isContainer px="30" py="50">
+      <Modal.Inner layout="stack" max-sz="s" mx="auto" bdrs="20" bxsh="40">
         <Flex ai="center" jc="between" py="15" bd-b>
           <Inline fz="l" fw="bold" hl="s" ms="30">
             <Fragment>Modal Header</Fragment>
           </Inline>
-          <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="15" mx="15" />
+          <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="10" mx="15" />
         </Flex>
         <Modal.Body layout="flow" px="30" py="20" ov-y="auto">
           <DummyText />
-          <DummyText length="xl" offset={1} />
+          <Box ar="16/9" bgc="base-2" bd />
           <DummyText length="l" />
-          <DummyText length="xl" offset={3} />
-          <ul>
-            <li>ロレム・イプサムの座り雨。</li>
-            <li>目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</li>
-            <li>Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</li>
-          </ul>
-          <DummyText length="xl" offset={2} />
+          <DummyText length="s" />
+          <DummyText length="m" />
+          <Box ar="16/9" bgc="base-2" bd />
+          <DummyText length="xl" />
         </Modal.Body>
-        <Flex jc="end" px="30" py="20" bd-t>
+        <Flex jc="end" px="30" py="15" bd-t>
           <Modal.CloseBtn modalId="modal-02" bgc="text" c="base" hl="s" px="15" py="10" bd="none" bdrs="10">
-            <Fragment>Close</Fragment>
+            <Fragment>Cancel</Fragment>
           </Modal.CloseBtn>
         </Flex>
       </Modal.Inner>
@@ -145,29 +154,59 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```jsx '"modal-02"'
     <Modal.OpenBtn modalId="modal-02" className="-bd -px:15 -py:5 -bdrs:10">Open Modal 02</Modal.OpenBtn>
 
-    <Modal.Root id="modal-02" isWrapper="s" isContainer px="30" py="50">
-      <Modal.Inner layout="stack" max-h="100%" bdrs="20" bxsh="40">
+    <Modal.Root id="modal-02" isContainer px="30" py="50">
+      <Modal.Inner layout="stack" max-sz="s" mx="auto" bdrs="20" bxsh="40">
         <Flex ai="center" jc="between" py="15" bd-b>
-          <Inline fz="l" fw="bold" hl="s" ms="30">Modal Header</Inline>
-          <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="15" mx="15"/>
+          <Inline fz="l" fw="bold" hl="s" ms="30">
+            <Fragment>Modal Header</Fragment>
+          </Inline>
+          <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="10" mx="15" />
         </Flex>
         <Modal.Body layout="flow" px="30" py="20" ov-y="auto">
           <DummyText />
-          <DummyText length="xl" offset={1} />
+          <Box ar="16/9" bgc="base-2" bd />
           <DummyText length="l" />
-          <DummyText length="xl" offset={3} />
-          <ul><li>ロレム・イプサムの座り雨。</li><li>目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</li><li>Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</li></ul>
-          <DummyText length="xl" offset={2}/>
+          <DummyText length="s" />
+          <DummyText length="m" />
+          <Box ar="16/9" bgc="base-2" bd />
+          <DummyText length="xl" />
         </Modal.Body>
-        <Flex jc="end" px="30" py="20" bd-t>
-          <Modal.CloseBtn modalId="modal-02" bgc="text" c="base" hl="s" px="15" py="10" bd="none" bdrs="10">Close</Modal.CloseBtn>
+        <Flex jc="end" px="30" py="15" bd-t>
+          <Modal.CloseBtn modalId="modal-02" bgc="text" c="base" hl="s" px="15" py="10" bd="none" bdrs="10">
+            <Fragment>Cancel</Fragment>
+          </Modal.CloseBtn>
         </Flex>
       </Modal.Inner>
     </Modal.Root>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-02"'
+    <button class="-bd -px:15 -py:5 -bdrs:10 b--modal_openBtn set--plain -hov:-o" data-modal-open="modal-02">Open Modal 02</button>
+
+    <dialog class="b--modal set--plain is--container -px:30 -py:50" id="modal-02">
+      <div class="b--modal_inner l--stack -max-sz:s -mx:auto -bdrs:20 -bxsh:40">
+        <div class="l--flex -ai:center -jc:between -py:15 -bd-b">
+          <span class="-fz:l -fw:bold -hl:s -ms:30">Modal Header</span>
+          <button class="b--modal_closeBtn set--plain -hov:-o -fz:xl -p:10 -mx:15" data-modal-close="modal-02" autofocus>
+            <svg class="a--icon" aria-hidden="true">...</svg>
+            <span class="u--srOnly">Close</span>
+          </button>
+        </div>
+        <div class="b--modal_body l--flow -px:30 -py:20 -ov-y:auto">
+          <p>...Contents...</p>
+          <div class="l--box -ar:16/9 -bgc:base-2 -bd"></div>
+          <p>...Contents...</p>
+          <p>...Contents...</p>
+          <p>...Contents...</p>
+          <div class="l--box -ar:16/9 -bgc:base-2 -bd"></div>
+          <p>...Contents...</p>
+        </div>
+        <div class="l--flex -jc:end -px:30 -py:15 -bd-t">
+          <button class="b--modal_closeBtn set--plain -hov:-o -bgc:text -c:base -hl:s -px:15 -py:10 -bd:none -bdrs:10" data-modal-close="modal-02">Cancel</button>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>
@@ -175,11 +214,10 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ### ドロワーメニューの作成例
 
-
 <Preview>
   <PreviewTitle>ドロワーメニューの作成例</PreviewTitle>
   <PreviewArea p="30">
-    <Modal.OpenBtn modalId="modal-03" ai="center" g="5">
+    <Modal.OpenBtn modalId="modal-03" g="5" fz="s">
       <Icon icon="menu" fz="l" />
       <span>MENU</span>
     </Modal.OpenBtn>
@@ -187,54 +225,100 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Modal.Root id="modal-03">
       <Modal.Inner layout="stack" max-w="24rem" h="100%" bxsh="40" offset="-100px 0">
         <Flex bd-b ai="center" jc="between" p="20">
-          <Inline fz="l">MENU</Inline>
+          <Inline fw="bold">MENU</Inline>
           <Modal.CloseBtn modalId="modal-03" autofocus fz="xl" p="5" />
         </Flex>
         <Modal.Body ov-y="auto">
-          <Stack util="divide" bd-b>
-            <Link href="#menu-link01" set="plain" hov="-bgc" px="20" py="15">
-              <Fragment>Menu item 1</Fragment>
-            </Link>
-            <Link href="#menu-link02" set="plain" hov="-bgc" px="20" py="15">
-              <Fragment>Menu item 2</Fragment>
-            </Link>
-            <Link href="#menu-link03" set="plain" hov="-bgc" px="20" py="15">
-              <Fragment>Menu item 3</Fragment>
-            </Link>
-            <Link href="#menu-link04" set="plain" hov="-bgc" px="20" py="15">
-              <Fragment>Menu item 4</Fragment>
-            </Link>
-          </Stack>
+          <nav aria-label="メインメニュー">
+            <NavMenu.Root bd-b itemP="1em">
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link01">Menu item 1</NavMenu.Link>
+              </NavMenu.Item>
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link02">Menu item 2</NavMenu.Link>
+              </NavMenu.Item>
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link03">Menu item 3</NavMenu.Link>
+              </NavMenu.Item>
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link04">Menu item 4</NavMenu.Link>
+              </NavMenu.Item>
+            </NavMenu.Root>
+          </nav>
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx '"modal-03"'
-    <Modal.OpenBtn modalId="modal-03" ai="center" g="5">
+    <Modal.OpenBtn modalId="modal-03" g="5" fz="s">
       <Icon icon="menu" fz="l" /><span>MENU</span>
     </Modal.OpenBtn>
 
     <Modal.Root id="modal-03">
       <Modal.Inner layout="stack" max-w="24rem" h="100%" bxsh="40" offset="-100px 0">
         <Flex bd-b ai="center" jc="between" p="20">
-          <Inline fz="l">MENU</Inline>
-          <Modal.CloseBtn modalId="modal-03" autofocus fz="xl" p="5"/>
+          <Inline fw="bold">MENU</Inline>
+          <Modal.CloseBtn modalId="modal-03" autofocus fz="xl" p="5" />
         </Flex>
         <Modal.Body ov-y="auto">
-          <Stack util="divide" bd-b>
-            <Link href="#menu-link01" set="plain" hov="-bgc" px="20" py="15">Menu item 1</Link>
-            <Link href="#menu-link02" set="plain" hov="-bgc" px="20" py="15">Menu item 2</Link>
-            <Link href="#menu-link03" set="plain" hov="-bgc" px="20" py="15">Menu item 3</Link>
-            <Link href="#menu-link04" set="plain" hov="-bgc" px="20" py="15">Menu item 4</Link>
-          </Stack>
+          <nav aria-label="メインメニュー">
+            <NavMenu.Root bd-b itemP="1em">
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link01">Menu item 1</NavMenu.Link>
+              </NavMenu.Item>
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link02">Menu item 2</NavMenu.Link>
+              </NavMenu.Item>
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link03">Menu item 3</NavMenu.Link>
+              </NavMenu.Item>
+              <NavMenu.Item>
+                <NavMenu.Link href="#menu-link04">Menu item 4</NavMenu.Link>
+              </NavMenu.Item>
+            </NavMenu.Root>
+          </nav>
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+    ```html '"modal-03"'
+    <button class="b--modal_openBtn set--plain -hov:-o -g:5 -fz:s" data-modal-open="modal-03">
+      <svg class="a--icon -fz:l" aria-hidden="true">...</svg>
+      <span>MENU</span>
+    </button>
+
+    <dialog class="b--modal set--plain" id="modal-03">
+      <div class="b--modal_inner l--stack -max-w -h:100% -bxsh:40" style="--offset:-100px 0;--max-w:24rem">
+        <div class="l--flex -bd-b -ai:center -jc:between -p:20">
+          <span class="-fw:bold">MENU</span>
+          <button class="b--modal_closeBtn set--plain -hov:-o -fz:xl -p:5" data-modal-close="modal-03" autofocus>
+            <svg class="a--icon" aria-hidden="true">...</svg>
+            <span class="u--srOnly">Close</span>
+          </button>
+        </div>
+        <div class="b--modal_body -ov-y:auto">
+          <nav aria-label="メインメニュー">
+            <ul class="b--navMenu -bd-b" style="--_item-p:1em">
+              <li class="b--navMenu_item">
+                <a class="b--navMenu_link -hov:-bgc" href="#menu-link01">Menu item 1</a>
+              </li>
+              <li class="b--navMenu_item">
+                <a class="b--navMenu_link -hov:-bgc" href="#menu-link02">Menu item 2</a>
+              </li>
+              <li class="b--navMenu_item">
+                <a class="b--navMenu_link -hov:-bgc" href="#menu-link03">Menu item 3</a>
+              </li>
+              <li class="b--navMenu_item">
+                <a class="b--navMenu_link -hov:-bgc" href="#menu-link04">Menu item 4</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </dialog>
     ```
   </PreviewCode>
 </Preview>

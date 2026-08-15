@@ -11,6 +11,8 @@ import { Button } from '@lism-css/ui/astro/Button';
 短めの文言を目立たせて強調表示したい時に使えるコンポーネントです。
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p="30">
@@ -18,7 +20,7 @@ import { Button } from '@lism-css/ui/astro/Button';
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
     </Alert>
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Alert>
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
@@ -26,29 +28,29 @@ import { Button } from '@lism-css/ui/astro/Button';
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    <div class="c--alert l--flex u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
-      <div class="l--center -c:keycolor -fz:xl -fxsh:0">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 256 256"
-          width="1em"
-          height="1em"
-          fill="currentColor"
-          focusable="false"
-          class="a--icon"
-          aria-hidden="true"
-        ><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path></svg>
-      </div>
-      <div class="l--flow -flow:s">
-        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-      </div>
-    </div>
-    ```
+```html
+<div class="b--alert l--flex u--cbox" style="--keycolor:var(--red)">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true"><path d="M120,136V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0ZM232,91.55v72.9a15.86,15.86,0,0,1-4.69,11.31l-51.55,51.55A15.86,15.86,0,0,1,164.45,232H91.55a15.86,15.86,0,0,1-11.31-4.69L28.69,175.76A15.86,15.86,0,0,1,24,164.45V91.55a15.86,15.86,0,0,1,4.69-11.31L80.24,28.69A15.86,15.86,0,0,1,91.55,24h72.9a15.86,15.86,0,0,1,11.31,4.69l51.55,51.55A15.86,15.86,0,0,1,232,91.55Zm-16,0L164.45,40H91.55L40,91.55v72.9L91.55,216h72.9L216,164.45ZM128,160a12,12,0,1,0,12,12A12,12,0,0,0,128,160Z"></path></svg>
+  <div class="l--flow -flow:s">
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+  </div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
 {/* 内部で`<WithSide>`を使用しており、コンテンツ側の横幅が一定値を下回ると自動で縦並びになります。 */}
+
+
+## Styles
+
+Alert のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Alert/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert) で公開しています。
+:::
 
 
 ## How to use
@@ -57,7 +59,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 
 ### Import
-<ImportPackage component="Alert" packageName="@lism-css/ui" />
+<ImportPackage component="Alert" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
@@ -71,13 +73,6 @@ import { Button } from '@lism-css/ui/astro/Button';
 |`layout`|レイアウトプリミティブを切り替えます。初期値:`"flex"`|
 {/* | `iconProps` | アイコン（`<Icon>`）に渡すpropsを指定できます。| */}
 {/* - `variant`: `'fill'` | `'outline'` ? */}
-
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert) で公開しています。
-
 
 
 ## Examples
@@ -98,6 +93,16 @@ import { Button } from '@lism-css/ui/astro/Button';
     </Alert>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--alert l--flex u--cbox" style="--keycolor:var(--green)">
+      <svg class="a--icon"...>...</svg>
+      <div class="l--flow -flow:s">
+        <p>icon="good" keycolor="green"</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 ### `l--withSide` を使ってレスポンシブ対応
@@ -114,6 +119,16 @@ import { Button } from '@lism-css/ui/astro/Button';
     <Alert type="check" layout="withSide">
       <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
     </Alert>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--alert l--withSide u--cbox" style="--keycolor:var(--green)">
+      <svg class="a--icon is--side"...>...</svg>
+      <div class="l--flow -flow:s">
+        <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -141,23 +156,17 @@ import { Button } from '@lism-css/ui/astro/Button';
     </Alert>
     ```
   </PreviewCode>
-</Preview>
-
-
-### `l--withSide` を使ったレスポンシブ対応
-
-<Preview>
-  <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p="30">
-    <Alert layout="withSide">
-      <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
-    </Alert>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Alert layout="withSide">
-      <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
-    </Alert>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--alert l--flex u--cbox -fxd:column -fxd_sm" style="--keycolor:var(--blue);--fxd_sm:row">
+      <svg class="a--icon"...>...</svg>
+      <div class="l--flow -flow:s">
+        <div class="l--flex -ai:center -jc:between -fxd:column -fxd_sm -g:15" style="--fxd_sm:row">
+          <p>画面が狭くなるとアイコン・テキスト・ボタンが縦並びになります。</p>
+          <a class="b--button -hov:-o -bdrs:10 -fxsh:0 -fz:s -bgc" style="--bgc:var(--link)" href="#">Button</a>
+        </div>
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -201,10 +210,24 @@ import { Button } from '@lism-css/ui/astro/Button';
   <Alert type="note">...</Alert>
   ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="b--alert l--flex u--cbox" style="--keycolor:var(--red)">
+    <svg class="a--icon"...>...</svg>
+    <div class="l--flow -flow:s">type="alert": Example text.</div>
+  </div>
+  <!-- type="point" → --keycolor:var(--orange) -->
+  <!-- type="warning" → --keycolor:var(--yellow) -->
+  <!-- type="check" → --keycolor:var(--green) -->
+  <!-- type="info" → --keycolor:var(--blue) -->
+  <!-- type="help" → --keycolor:var(--purple) -->
+  <!-- type="note" → --keycolor:var(--gray) -->
+  ```
+  </PreviewCode>
 </Preview>
 
 
-## Only lism-css
+## Without @lism-css/ui
 
 @lism-css/uiを使用せずに、lism-css のみで Alert を構築するコード例を紹介します。
 

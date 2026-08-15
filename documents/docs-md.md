@@ -48,7 +48,7 @@ unifiedパイプラインを以下の順で適用する。
 | 2 | `rehype-extract-meta` | `<head>` から `<title>` / `<meta name="description">` / `<link rel="canonical">` を抽出し `file.data` に保管 |
 | 3 | `rehypeKeepArticle`（ローカル） | `article[data-pagefind-body]` だけを残す。無ければ throw |
 | 4 | `rehype-strip-noise` | `nav.c--postNav` / `<script>` / `<style>` / `data-astro-cid-*` / `c--copyBtn` / `c--urlCopyBtn` 等のノイズを除去 |
-| 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `c--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
+| 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `b--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
 | 6 | `rehype-code-language` | `<pre data-language="X">` の言語名を `<code class="language-X">` に転記 |
 | 7 | `rehype-docs-link` | `<a class="c--docsLink">` の中身をタイトル文字列のみに畳み込む（タイトル + 説明文の二重出力を抑止） |
 | 8 | `rehype-callouts` | `c--docsNote` を GFM Alert（`> [!NOTE]` 等）に変換 |
