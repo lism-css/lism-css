@@ -57,11 +57,11 @@ import './_opt-in/_tabs-keep-height.css'
 ```html
 <div class="b--tabs">
   <div class="b--tabs_list" role="tablist">
-    <button class="b--tabs_tab set--plain" role="tab" aria-controls="{id}-1" aria-selected="true">Tab 1</button>
-    <button class="b--tabs_tab set--plain" role="tab" aria-controls="{id}-2" aria-selected="false">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
   </div>
-  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-hidden="false">...Contents...</div>
-  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-hidden="true">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
 </div>
 ```
   </PreviewCode>
@@ -98,12 +98,35 @@ Tabs のベーススタイルは、以下のCSSで定義されています。
 | プロパティ | 説明 |
 |---|---|
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`|`b--tabs--{variant}`クラスが出力されます。|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`|`aria-controls`の値として使用されるタブを特定するためのIDを文字列で指定できます。|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`|最初に開いておくタブ番号を指定できます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`|タブを特定するためのIDを文字列で指定できます。タブボタンのid(`{tabId}-{index}-tab`)、パネルのid(`{tabId}-{index}`)、`aria-controls`の値の生成に使用されます。未指定の場合は自動生成されたIDが使われます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`|最初に開いておくタブ番号を指定できます。タブの数を超える番号など、範囲外の値を指定した場合は`1`にフォールバックします。|
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`|タブボタンを囲むリスト要素(`b--tabs_list`)へ渡すpropsを指定できます。|
 {/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | タブテキストを指定します。 | */}
 
 {/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`|`[data-tabs-height="keep"]`が出力され、タブの高さを一番コンテンツ量の多いパネルに合わせて固定することができます。| */}
+
+
+### キーボード操作
+
+タブボタンにフォーカスがある状態で、以下のキー操作が可能です。
+
+| キー | 動作 |
+|---|---|
+|<kbd>←</kbd> <kbd>→</kbd>|前後のタブへフォーカスを移動し、同時にそのタブを選択します。端まで移動すると反対側の端へループします。|
+|<kbd>Home</kbd>|先頭のタブへ移動して選択します。|
+|<kbd>End</kbd>|末尾のタブへ移動して選択します。|
+
+タブリストを縦並びにする場合は、`listProps`から`aria-orientation="vertical"`を指定してください。矢印キーが<kbd>↑</kbd> <kbd>↓</kbd>に切り替わります。
+
+```jsx
+<Tabs.Root listProps={{ 'aria-orientation': 'vertical' }}>
+```
+
+:::note
+横並び（既定）で<kbd>↑</kbd> <kbd>↓</kbd>を使わないのは、ブラウザ本来のスクロール操作を妨げないためです。
+
+なお、`aria-orientation`はHTML属性のため、画面幅に応じて横並びと縦並びが切り替わるレイアウトでは値を出し分けられません。その場合は既定（横並び・<kbd>←</kbd> <kbd>→</kbd>）のまま使ってください。
+:::
 
 
 ## Examples
@@ -150,6 +173,29 @@ Tabs のベーススタイルは、以下のCSSで定義されています。
     ```
   </PreviewCode>
 </Preview>
+
+
+### URLパラメータで初期タブを指定する
+
+URLに`?lism-tab={tabId}-{index}`を付けてページを開くと、指定したタブが最初に選択された状態で表示されます。
+
+この機能を使う場合は、`<Tabs.Root>`の`tabId`を明示的に指定してください。  
+（未指定の場合はIDが自動生成されるため、URLから指定できません。）
+
+```jsx 'tabId="sample-tabs"'
+<Tabs.Root tabId="sample-tabs">
+  <Tabs.Item>
+    <Tabs.Tab>Tab 1</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+  <Tabs.Item>
+    <Tabs.Tab>Tab 2</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+</Tabs.Root>
+```
+
+上記のタブを設置したページに`?lism-tab=sample-tabs-2`を付けてアクセスすると、2番目のタブが選択された状態で表示されます。
 
 
 ### タブコンテンツを横並び配置にする

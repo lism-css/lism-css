@@ -57,11 +57,11 @@ Only interaction behavior is provided — visual styling is intentionally left f
 ```html
 <div class="b--tabs">
   <div class="b--tabs_list" role="tablist">
-    <button class="b--tabs_tab set--plain" role="tab" aria-controls="{id}-1" aria-selected="true">Tab 1</button>
-    <button class="b--tabs_tab set--plain" role="tab" aria-controls="{id}-2" aria-selected="false">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
   </div>
-  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-hidden="false">...Contents...</div>
-  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-hidden="true">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
 </div>
 ```
   </PreviewCode>
@@ -98,13 +98,36 @@ Provided as `Tabs` from the `@lism-css/ui` package.
 | Prop | Description |
 |---|---|
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `b--tabs--{variant}` class. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used as the value for `aria-controls` to identify each tab. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used to generate each tab button's id (`{tabId}-{index}-tab`), each panel's id (`{tabId}-{index}`), and the value of `aria-controls`. If omitted, an ID is generated automatically. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. Values out of range (e.g. a number greater than the number of tabs) fall back to `1`. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`b--tabs_list`) wrapping the tab buttons. |
 
 {/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | Specifies the tab label text. | */}
 
 {/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`| Outputs `[data-tabs-height="keep"]`, fixing the overall height of the tabs to the tallest content panel. | */}
+
+
+### Keyboard interactions
+
+When a tab button has focus, the following keyboard interactions are available.
+
+| Key | Action |
+|---|---|
+|<kbd>←</kbd> <kbd>→</kbd>| Moves focus to the previous or next tab and selects it, looping to the opposite end when it reaches the first or last tab. |
+|<kbd>Home</kbd>| Moves to and selects the first tab. |
+|<kbd>End</kbd>| Moves to and selects the last tab. |
+
+For a vertical tab list, pass `aria-orientation="vertical"` through `listProps`. The arrow keys then switch to <kbd>↑</kbd> and <kbd>↓</kbd>.
+
+```jsx
+<Tabs.Root listProps={{ 'aria-orientation': 'vertical' }}>
+```
+
+:::note
+A horizontal tab list (the default) deliberately ignores <kbd>↑</kbd> and <kbd>↓</kbd> so that those keys keep their normal browser scrolling behavior.
+
+Note that `aria-orientation` is an HTML attribute, so its value cannot change with the viewport width. For layouts that switch between horizontal and vertical responsively, keep the default (horizontal, <kbd>←</kbd> <kbd>→</kbd>).
+:::
 
 
 ## Examples
@@ -151,6 +174,29 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
     ```
   </PreviewCode>
 </Preview>
+
+
+### Specify the initial tab via URL parameter
+
+Opening a page with `?lism-tab={tabId}-{index}` in the URL displays the specified tab as selected from the start.
+
+To use this feature, explicitly set `tabId` on `<Tabs.Root>`.
+(If `tabId` is omitted, an ID is generated automatically, so it can't be targeted from the URL.)
+
+```jsx 'tabId="sample-tabs"'
+<Tabs.Root tabId="sample-tabs">
+  <Tabs.Item>
+    <Tabs.Tab>Tab 1</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+  <Tabs.Item>
+    <Tabs.Tab>Tab 2</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+</Tabs.Root>
+```
+
+Visiting a page with the tabs above using `?lism-tab=sample-tabs-2` displays the second tab as selected.
 
 
 ### Side-by-side tab layout

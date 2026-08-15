@@ -259,7 +259,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ソース: [Tabs/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs)
 
-タブ切り替え UI。タブクリックでコンテンツパネルを切り替える。スタイリングはほぼなく動きのみ提供。
+タブ切り替え UI。タブクリックまたは左右キー・Home/End でコンテンツパネルを切り替える。縦並びにする場合は `listProps` で `aria-orientation="vertical"` を指定すると上下キーに切り替わる。スタイリングはほぼなく動きのみ提供。
 
 **構造:** `Tabs.Root > Tabs.Item > (Tabs.Tab + Tabs.Panel)`（`Tabs.List` も利用可能）
 

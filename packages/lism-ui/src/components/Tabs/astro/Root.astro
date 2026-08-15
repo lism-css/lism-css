@@ -33,7 +33,7 @@ const hasItems = btns.length > 0;
 
 <Lism class={atts(className, buildModifierClass('b--tabs', { variant }))} {...props}>
   {
-    btns && (
+    hasItems && (
       <TabList {...listProps}>
         {btns.map((btn, index) => {
           return <Fragment key={index} set:html={btn} />;
