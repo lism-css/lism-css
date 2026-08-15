@@ -85,11 +85,11 @@ describe('searchDocs', () => {
     const mixedCaseEntries: DocsEntry[] = [
       entry({ sourcePath: 'core-components/Group.mdx', title: 'Group', keywords: ['layout'] }),
       entry({ sourcePath: 'ui/DummyText.mdx', title: 'DummyText', keywords: ['text'] }),
-      entry({ sourcePath: 'ui/examples/Card.mdx', title: 'Card', keywords: ['example'] }),
+      entry({ sourcePath: 'ui/components/Card.mdx', title: 'Card', keywords: ['example'] }),
     ];
     expect(searchDocs(mixedCaseEntries, 'Group')[0].url).toBe('https://lism-css.com/docs/core-components/group/');
     expect(searchDocs(mixedCaseEntries, 'DummyText')[0].url).toBe('https://lism-css.com/docs/ui/dummytext/');
-    expect(searchDocs(mixedCaseEntries, 'Card')[0].url).toBe('https://lism-css.com/docs/ui/examples/card/');
+    expect(searchDocs(mixedCaseEntries, 'Card')[0].url).toBe('https://lism-css.com/docs/ui/components/card/');
   });
 
   it('マッチしない場合は空配列を返す', () => {
@@ -114,8 +114,15 @@ describe('searchDocs — nextTool', () => {
     expect(results[0].nextTool).toBe('get_component(name: "Accordion", package: "@lism-css/ui")');
   });
 
-  it('ui/examples/ 配下は category=ui でも null を返す（get_component で解決できないため）', () => {
-    const results = searchDocs([entry({ sourcePath: 'ui/examples/Card.mdx', title: 'Card', keywords: ['example'], category: 'ui' })], 'Card', {
+  it('ui/components/ 配下は category=ui でも null を返す（get_component で解決できないため）', () => {
+    const results = searchDocs([entry({ sourcePath: 'ui/components/Card.mdx', title: 'Card', keywords: ['example'], category: 'ui' })], 'Card', {
+      guideTopics,
+    });
+    expect(results[0].nextTool).toBeNull();
+  });
+
+  it('ui/block-examples/ 配下は category=ui でも null を返す（get_component で解決できないため）', () => {
+    const results = searchDocs([entry({ sourcePath: 'ui/block-examples/Chat.mdx', title: 'Chat', keywords: ['chat'], category: 'ui' })], 'Chat', {
       guideTopics,
     });
     expect(results[0].nextTool).toBeNull();

@@ -5,7 +5,7 @@
 ## 現時点のステータス
 
 - **方針は確定済み。確定内容はissue #557のコメントが正**（このメモの論点3は検討過程の案であり、確定方針では Patterns/Parts 新設ではなく ui/ 内の3分類「Blocks / Block Examples / Components」に変更された）。
-- Chatの`@lism-css/ui`からの削除とdocs作例化（`/ui/block-examples/chat/`）はPR①で実施済み。残りの再編（3分類の完成・Timeline/Table/Listのb--化など）はPR②で対応する。
+- Chatの`@lism-css/ui`からの削除とdocs作例化（`/ui/block-examples/chat/`）はPR①で実施済み。残りの再編（3分類の完成・Timeline/Table/Listのb--化など）もPR②で実施済み。
 
 ## 論点1: Chatを`@lism-css/ui`パッケージから削除するか
 

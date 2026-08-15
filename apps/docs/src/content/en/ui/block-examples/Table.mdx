@@ -1,44 +1,23 @@
 ---
 title: 'Table'
-description: 'Lism CSS で実装する、行・列の固定表示に対応した汎用テーブルレイアウトの実装例です。'
-draft: true
+description: 'An example of a table UI (b--table) built with Lism CSS, with support for sticky rows and columns.'
 ---
 
-import { Frame } from 'lism-css/astro';
-import Table from '@/components/ex/Table/index.jsx';
+import { Lism, Frame } from 'lism-css/astro';
+import '@/components/ex/Table/style.css';
 
 
-1行目・一列目を固定表示することにも対応させた、汎用的なTableレイアウトの作成例です。
+An example of a general-purpose table UI that also supports sticky display for the first row and column. It is built with Lism primitives and a small amount of CSS (`b--table`).
 
-変数でボーダースタイルを調整できるようにしておくことで、固定表示に対応できるように設計しています。
-
-
-## Create Component
-
-`Table`(`c--table`)というコンポーネントを作って利用する例を紹介していきます。
-
-### Source Code
-<Preview>
-  <PreviewCode slot="tab" label="index.jsx">
-    <SrcCode path="src/components/ex/Table/index.jsx" dir="docs" />
-  </PreviewCode>
-  <PreviewCode slot="tab" label="style.css">
-    <SrcCode path="src/components/ex/Table/style.css" dir="docs" />
-  </PreviewCode>
-</Preview>
-
-### Import
-<ImportPackage component="Table" packageName="@lism-css/ui" />
+The border styles are exposed as CSS variables, so the table also works well with sticky display while scrolling.
 
 
-
-## Usage
+## Overview
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20">
-    <Table>
-      {/* <caption class="">Caption</caption> */}
+  <PreviewArea resize p="20">
+    <Lism as="table" class="b--table">
       <thead>
         <tr>
           <th>Header 1</th>
@@ -75,24 +54,20 @@ import Table from '@/components/ex/Table/index.jsx';
           <td>Footer 4</td>
         </tr>
       </tfoot>
-    </Table>
+    </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Table>
-      <caption>Caption</caption>
+    <Lism as="table" class="b--table">
       <thead>...</thead>
       <tbody>...</tbody>
       <tfoot>...</tfoot>
-    </Table>
+    </Lism>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <table class="c--table">
-      <caption>
-        Caption
-      </caption>
+    <table class="b--table">
       <thead>
         ...
       </thead>
@@ -108,10 +83,43 @@ import Table from '@/components/ex/Table/index.jsx';
 </Preview>
 
 
+## Styles
+
+The Table base styles are defined in the following CSS. Copy this CSS into your project to use it.
+
+If you copy it with the `@layer lism-block` wrapper as is, it fits into the core CSS layer order and can be overridden from the `lism-custom` layer.
+
+<SrcCode dir="docs" path="src/components/ex/Table/style.css" title="table.css" />
+
+
+## Markup
+
+The markup consists of the following classes and attributes. Adjust the appearance using CSS variables.
+
+| Class / Attribute | Description |
+|---|---|
+| `b--table` | Root element. Applied to `<table>`. |
+| `data-table-sticky` | Sticky display while scrolling. Specify `col` (first-column cells) and/or `head` (`thead`), space-separated. |
+| `_nofix` | Add this to cells you want to exclude from sticky display when using `data-table-sticky="col"` — for example, due to `rowspan`. |
+| `--bdw-x` / `--bdw-y` | Cell border width (horizontal / vertical). Defaults to `1px`. |
+| `--bds` / `--bdc` | Cell border style / color. Defaults to `solid` / `var(--divider)`. |
+| `--th-bgc` / `--th-c` | Background color / text color of `th`. |
+| `--cells-min-sz` | Minimum cell width (`min-inline-size`). Set this when you want horizontal scrolling. |
+| `--cells-p` | Cell padding (`padding` of `td` / `th`). |
+
+Override the CSS variables via the `style` attribute (e.g., `style="--th-bgc:var(--base-2)"`).
+
+
+## Examples
+
+### Adjusting the border and `th` color
+
+Setting `--bdw-x` to `0px` removes the left/right borders, and `--th-bgc` lets you set the background color of `th`.
+
 <Preview>
-  <PreviewTitle>--bdwXで左右のボーダーをなくし、thのカラーリングを指定する例</PreviewTitle>
-  <PreviewArea p="20">
-    <Table thBgc="base-2" bdwX="0px">
+  <PreviewTitle>`--bdw-x` and `--th-bgc`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism as="table" class="b--table" style={{ '--th-bgc': 'var(--base-2)', '--bdw-x': '0px' }}>
       <thead>
         <tr>
           <th>Header 1</th>
@@ -148,20 +156,20 @@ import Table from '@/components/ex/Table/index.jsx';
           <td>Footer 4</td>
         </tr>
       </tfoot>
-    </Table>
+    </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Table thBgc="base-2" bdwX="0px">
+    ```jsx "'--th-bgc': 'var(--base-2)'" "'--bdw-x': '0px'"
+    <Lism as="table" class="b--table" style={{ '--th-bgc': 'var(--base-2)', '--bdw-x': '0px' }}>
       <thead>...</thead>
       <tbody>...</tbody>
       <tfoot>...</tfoot>
-    </Table>
+    </Lism>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    <table class="c--table" style="--bdw-x: 0px; --th-bgc: var(--base-2)">
+    ```html "--th-bgc:var(--base-2)" "--bdw-x:0px"
+    <table class="b--table" style="--th-bgc:var(--base-2);--bdw-x:0px">
       <thead>
         ...
       </thead>
@@ -177,29 +185,26 @@ import Table from '@/components/ex/Table/index.jsx';
 </Preview>
 
 
+### Sticky display while scrolling
 
-### スクロール時の固定表示
+The `data-table-sticky` attribute accepts the following values:
 
-`[data-table-sticky]`属性に以下を指定できます。
-
-- `col`: セル１列目を固定する
-- `head`: theadを固定する
-
-
+- `col`: Sticks the first column of cells
+- `head`: Sticks the `thead`
 
 <Preview>
-  <PreviewTitle>scroll時にtheadと、1列目のセルを固定する例</PreviewTitle>
+  <PreviewTitle>Example of sticking the `thead` and first-column cells while scrolling</PreviewTitle>
   <PreviewArea p="20" _dir="rtl">
     <Frame ov="auto" max-h="20rem">
-      <Table data-table-sticky="col head" thBgc="base-2" cellsMinSz="10rem">
+      <Lism as="table" class="b--table" data-table-sticky="col head" style={{ '--th-bgc': 'var(--base-2)', '--cells-min-sz': '10rem' }}>
         <thead>
           <tr>
             <th>Header 1</th>
             <th>Header 2</th>
             <th>Header 3</th>
-            <th>Header 3</th>
-            <th>Header 3</th>
-            <th>Header 3</th>
+            <th>Header 4</th>
+            <th>Header 5</th>
+            <th>Header 6</th>
           </tr>
         </thead>
         <tbody>
@@ -220,7 +225,7 @@ import Table from '@/components/ex/Table/index.jsx';
             <td>Cell 1-6</td>
           </tr>
           <tr>
-            <th rowSpan={2}>Cell 2-1</th>
+            <th rowspan="2">Cell 2-1</th>
             <td>Cell 2-2</td>
             <td>
               Cell 2-3
@@ -236,7 +241,7 @@ import Table from '@/components/ex/Table/index.jsx';
             </td>
           </tr>
           <tr>
-            <td className="_nofix">Cell 3-2</td>
+            <td class="_nofix">Cell 3-2</td>
             <td>Cell 3-3</td>
             <td>
               Cell 3-4
@@ -291,36 +296,41 @@ import Table from '@/components/ex/Table/index.jsx';
             <td>Cell 6-6</td>
           </tr>
         </tbody>
-      </Table>
+      </Lism>
     </Frame>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "data-table-sticky"
     <Frame ov="auto" max-h="20rem">
-      <Table data-table-sticky="col head" thBgc="base-2" cellsMinSz="10rem">
+      <Lism as="table" class="b--table" data-table-sticky="col head" style={{ '--th-bgc': 'var(--base-2)', '--cells-min-sz': '10rem' }}>
         <thead>...</thead>
-        <tbody>...</tbody>
-        <tfoot>...</tfoot>
-      </Table>
+        <tbody>
+          {/* Add _nofix to cells you want to exclude from sticky display */}
+          <tr>
+            <td class="_nofix">Cell 3-2</td>
+            ...
+          </tr>
+        </tbody>
+      </Lism>
     </Frame>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html "data-table-sticky"
-    <div class="l--frame -ov:auto" style="max-height: 20rem">
-      <table class="c--table" data-table-sticky="col head" style="--th-bgc: var(--base-2); --cells-min-sz: 10rem">
+    <div class="l--frame -ov:auto -max-h" style="--max-h:20rem">
+      <table class="b--table" data-table-sticky="col head" style="--th-bgc:var(--base-2);--cells-min-sz:10rem">
         <thead>
           ...
         </thead>
         <tbody>
-          ...
+          <!-- Add _nofix to cells you want to exclude from sticky display -->
+          <tr>
+            <td class="_nofix">Cell 3-2</td>
+            ...
+          </tr>
         </tbody>
-        <tfoot>
-          ...
-        </tfoot>
       </table>
     </div>
     ```
   </PreviewCode>
 </Preview>
-

@@ -8,6 +8,7 @@
  *
  * - frontmatter (title / description / url) は dist 側 index.html から抽出して同期を保つ
  * - 本文は content/{lang}/ui/ 配下の `.mdx` から組み立てる（`_` 始まり / `draft: true` は除外）
+ * - 見出しは Blocks（ui/ 直下）/ Block Examples（ui/block-examples/）/ Components（ui/components/）の3分類
  * - リンクは個別ページの `.md`（`convert-html-to-md` が生成済み）を指す
  */
 import fs from 'node:fs/promises';
@@ -53,8 +54,10 @@ export async function buildUiIndexMd(opts: {
 
   // _opt-in / _demo など `_` 始まりは公開対象外なので走査時に除外
   const files = await walkMdx(uiContentDir, { skipUnderscore: true });
+  // ui/ 直下（パッケージ提供）/ block-examples/ / components/ の3分類（#557）
+  const blocks: Entry[] = [];
+  const blockExamples: Entry[] = [];
   const components: Entry[] = [];
-  const examples: Entry[] = [];
 
   for (const rel of files) {
     const abs = path.join(uiContentDir, rel);
@@ -73,13 +76,15 @@ export async function buildUiIndexMd(opts: {
       description: fm.description ?? '',
       slug,
     };
-    if (rel.startsWith('examples/')) examples.push(entry);
-    else components.push(entry);
+    if (rel.startsWith('block-examples/')) blockExamples.push(entry);
+    else if (rel.startsWith('components/')) components.push(entry);
+    else blocks.push(entry);
   }
 
   const sortByTitle = (a: Entry, b: Entry) => a.title.localeCompare(b.title);
+  blocks.sort(sortByTitle);
+  blockExamples.sort(sortByTitle);
   components.sort(sortByTitle);
-  examples.sort(sortByTitle);
 
   const lines: string[] = ['---', `title: ${yamlString(meta.title)}`];
   if (meta.description) lines.push(`description: ${yamlString(meta.description)}`);
@@ -90,18 +95,25 @@ export async function buildUiIndexMd(opts: {
     lines.push(meta.description, '');
   }
 
+  if (blocks.length > 0) {
+    lines.push('## Blocks', '');
+    for (const e of blocks) lines.push(formatEntry(e, uiUrlPrefix));
+    lines.push('');
+  }
+  if (blockExamples.length > 0) {
+    lines.push('## Block Examples', '');
+    for (const e of blockExamples) lines.push(formatEntry(e, uiUrlPrefix));
+    lines.push('');
+  }
   if (components.length > 0) {
     lines.push('## Components', '');
     for (const e of components) lines.push(formatEntry(e, uiUrlPrefix));
     lines.push('');
   }
-  if (examples.length > 0) {
-    lines.push('## Examples', '');
-    for (const e of examples) lines.push(formatEntry(e, uiUrlPrefix));
-    lines.push('');
-  }
 
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, lines.join('\n'));
-  logger.info(`generated ${path.basename(outputPath)} (${components.length} components, ${examples.length} examples)`);
+  logger.info(
+    `generated ${path.basename(outputPath)} (${blocks.length} blocks, ${blockExamples.length} block examples, ${components.length} components)`
+  );
 }

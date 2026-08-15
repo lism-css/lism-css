@@ -222,16 +222,16 @@ const docsSidebar: SidebarSection[] = [
 // /ui/ セクション用のサイドバー設定
 const uiSidebar: SidebarSection[] = [
   {
-    label: 'Components',
-    dir: 'ui', // content/ja/ui/ 配下のMDXを自動取得
+    label: 'Blocks',
+    dir: 'ui', // content/ja/ui/ 直下のMDXを自動取得（パッケージ提供のUI）
   },
   {
     label: 'Block Examples',
     dir: 'ui/block-examples', // CSSをコピーして導入するb--部品の作例（#557）
   },
   {
-    label: 'Examples',
-    dir: 'ui/examples', // content/ja/ui/ 配下のMDXを自動取得
+    label: 'Components',
+    dir: 'ui/components', // 独自CSSなしで組み立てる実装例（#557）
   },
 ];
 

@@ -141,9 +141,10 @@ function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): strin
   if (withoutExt.startsWith('property-class/')) {
     return `get_props_system(prop: "${basename}")`;
   }
-  // ui/examples/ は実装例ページ（Card, Hero 等）で get_component では解決できないため誘導しない。
+  // ui/block-examples/（Chat, Timeline 等）と ui/components/（Card, Hero 等）は、
+  // パッケージが提供するコンポーネントではなく Lism CSS での実装例ページなので get_component では解決できない。
   // 詳細が必要な場合は検索結果の url を参照してもらう。
-  if (withoutExt.startsWith('ui/examples/')) {
+  if (withoutExt.startsWith('ui/block-examples/') || withoutExt.startsWith('ui/components/')) {
     return null;
   }
 
