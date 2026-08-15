@@ -1,6 +1,6 @@
 'use client';
 import { useState, useId, useEffect, Children, isValidElement } from 'react';
-import type { ElementType, KeyboardEvent, ReactElement, ReactNode } from 'react';
+import type { ElementType, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
 import { Grid, type LayoutComponentProps, type LismComponentProps } from 'lism-css/react';
 import type { GridLayoutProps } from 'lism-css/lib/types/LayoutProps';
 import atts from 'lism-css/lib/helper/atts';
@@ -87,6 +87,12 @@ export default function Tabs<T extends ElementType = 'div'>({
     const tabIndex = i + 1; // 1 はじまり
     const isActive = tabIndex === activeIndex;
 
+    // 利用者が Tabs.Tab へ渡したハンドラは上書きせず合成する（利用者側を先に呼び、preventDefault されたら内部処理を行わない）
+    const { onClick, onKeyDown } = tab.props as {
+      onClick?: (e: MouseEvent<HTMLElement>) => void;
+      onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
+    };
+
     btns.push(
       <Tab
         {...(tab.props as TabProps)}
@@ -94,8 +100,16 @@ export default function Tabs<T extends ElementType = 'div'>({
         index={tabIndex}
         key={tabIndex}
         isActive={isActive}
-        onClick={() => setSelectedIndex(tabIndex)}
-        onKeyDown={(e: KeyboardEvent<HTMLElement>) => handleTabKeyDown(e, tabIndex)}
+        onClick={(e: MouseEvent<HTMLElement>) => {
+          onClick?.(e);
+          if (e.defaultPrevented) return;
+          setSelectedIndex(tabIndex);
+        }}
+        onKeyDown={(e: KeyboardEvent<HTMLElement>) => {
+          onKeyDown?.(e);
+          if (e.defaultPrevented) return;
+          handleTabKeyDown(e, tabIndex);
+        }}
       />
     );
     if (panel) {

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { act } from 'react';
+import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import Tabs from './Root';
 import TabItem from './Item';
@@ -77,6 +78,76 @@ describe('Tabs (React) ディープリンク', () => {
     renderTabs();
 
     expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+  });
+});
+
+describe('Tabs (React) 利用者ハンドラとの合成', () => {
+  // 利用者の onClick / onKeyDown を1番目の Tab に渡してレンダリングする
+  const renderTabsWithHandlers = (
+    handlers: { onClick?: (e: ReactMouseEvent<HTMLElement>) => void; onKeyDown?: (e: ReactKeyboardEvent<HTMLElement>) => void },
+    defaultIndex = 1
+  ) => {
+    act(() => {
+      reactRoot.render(
+        <Tabs tabId="sample-tabs" defaultIndex={defaultIndex}>
+          <TabItem>
+            <Tab {...handlers}>Tab 1</Tab>
+            <TabPanel>Content 1</TabPanel>
+          </TabItem>
+          <TabItem>
+            <Tab>Tab 2</Tab>
+            <TabPanel>Content 2</TabPanel>
+          </TabItem>
+        </Tabs>
+      );
+    });
+  };
+
+  const getFirstTab = () => container.querySelector<HTMLElement>('[role="tab"]')!;
+
+  it('利用者の onKeyDown が呼ばれた上で、内部のタブ移動も行われる', () => {
+    const pressedKeys: string[] = [];
+    renderTabsWithHandlers({ onKeyDown: (e) => pressedKeys.push(e.key) });
+
+    act(() => {
+      getFirstTab().dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    });
+
+    expect(pressedKeys).toEqual(['ArrowRight']);
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+
+  it('利用者の onKeyDown で preventDefault すると内部のタブ移動は行われない', () => {
+    renderTabsWithHandlers({ onKeyDown: (e) => e.preventDefault() });
+
+    act(() => {
+      getFirstTab().dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    });
+
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+  });
+
+  it('利用者の onClick が呼ばれた上で、内部のタブ選択も行われる', () => {
+    let clicked = 0;
+    // 2番目を初期選択にしておき、1番目のタブをクリックで選択できることを確認する
+    renderTabsWithHandlers({ onClick: () => clicked++ }, 2);
+
+    act(() => {
+      getFirstTab().dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    });
+
+    expect(clicked).toBe(1);
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+  });
+
+  it('利用者の onClick で preventDefault すると内部のタブ選択は行われない', () => {
+    renderTabsWithHandlers({ onClick: (e) => e.preventDefault() }, 2);
+
+    act(() => {
+      getFirstTab().dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    });
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
   });
 });
 
