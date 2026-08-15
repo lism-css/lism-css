@@ -18,10 +18,10 @@ These are all defined comprehensively, making Lism CSS a framework that **takes 
 CSS specificity is managed through CSS Layers, organized in the following hierarchy:
 
 ```
-lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility
+lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility
 ```
 
-`lism-base` includes a `reset` sub-layer. `lism-trait` is the layer for Trait classes — `is--` (role declaration) and `has--` (feature attachment) — and `lism-primitive` is further divided into `layout` and `atomic` sub-layers. `lism-block` holds the base styles for common site-wide parts prefixed with `b--`, and `lism-custom` is the layer for your own custom classes and overrides.
+`lism-base` includes a `reset` sub-layer. `lism-block` holds the base styles for common site-wide parts prefixed with `b--` — placed low in the order so explicitly added classes (`is--` / `has--` / `l--`, etc.) always win. `lism-trait` is the layer for Trait classes — `is--` (role declaration) and `has--` (feature attachment) — and `lism-primitive` is further divided into `layout` and `atomic` sub-layers. `lism-custom` is the layer for your own custom classes and overrides.
 
 
 :::check

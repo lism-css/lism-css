@@ -26,7 +26,7 @@ Lism CSSは、Webサイトのレイアウトを素早く、かつ美しく構築
 - **軽量** — CSSバンドル全体で約30 KB（gzip圧縮時約8 KB）。
 - **ゼロビルドフレームワーク** — CDNまたはnpmでプレーンHTMLでも動作。ビルドツールや設定は不要。
 - **レイアウト優先プリミティブ** — プリビルトのレイアウトパターン: `l--flex`、`l--stack`、`l--grid`、`l--columns`、`l--center`、`l--withSide` など。
-- **CSSレイヤー構造** — `@layer`（lism-base → lism-trait → lism-primitive → lism-block → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-block` はベーススタイルをCSS側で管理する基礎部品（`b--`）用レイヤー、`lism-custom` はユーザーの独自クラスや上書き用のレイヤーです。詳細度の衝突を最小限に抑えます。
+- **CSSレイヤー構造** — `@layer`（lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-block` はベーススタイルをCSS側で管理する基礎部品（`b--`）用レイヤーで、明示的に付与したクラス（`is--` / `has--` / `l--` など）が必ず勝つように弱い位置へ配置されています。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-custom` はユーザーの独自クラスや上書き用のレイヤーです。詳細度の衝突を最小限に抑えます。
 - **デザイントークン** — カラー、余白、フォントサイズ、シャドウをCSSカスタムプロパティで管理。
 - **柔軟なProperty Class** — `-{prop}:{value}` 構文（例: `-p:20`、`-bgc:base-2`、`-fz:l`）。
 - **レスポンシブシステム** — ブレークポイントクラスとCSS変数（例: `-p_sm`、`-p_md`）にデフォルトでコンテナクエリを採用し、親要素ベースのレスポンシブデザインを実現。メディアクエリへの切り替えも可能。

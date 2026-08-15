@@ -39,6 +39,10 @@ export const WhsNw = ({children}) => {
       <td>Reset CSS、トークン定義や変数セット、要素の初期スタイルをセットするレイヤー。<br/>`set--{style}`クラスもここで定義されます。</td>
     </tr>
     <tr>
+      <td class='-whs:nowrap'>Block<br/>`lism-block`</td>
+      <td>サイト共通で繰り返し使う基礎部品（`b--{name}`）のベーススタイルを、ユーザーが `@layer lism-block` に定義するためのレイヤー。コアはレイヤー順序を宣言するだけで、スタイル定義は持ちません。<br/>後述のレイヤーより弱い位置にあるため、明示的に付与したクラス（`is--` / `has--` / `l--` など）が `b--` のベーススタイルに必ず勝ちます。</td>
+    </tr>
+    <tr>
       <td class='-whs:nowrap'>Trait<br/>`lism-trait`</td>
       <td>要素に「役割」や「機能」を宣言的に付与するクラス群（`is--{name}`, `has--{name}`）を定義するレイヤー。</td>
     </tr>
@@ -48,10 +52,6 @@ export const WhsNw = ({children}) => {
         レイアウトを組み立てるための積み木となる Primitive 群を定義するレイヤー。<br />
         `l--{layout}`, `a--{atomic}` がここで定義されます。
       </td>
-    </tr>
-    <tr>
-      <td class='-whs:nowrap'>Block<br/>`lism-block`</td>
-      <td>サイト共通で繰り返し使う基礎部品（`b--{name}`）のベーススタイルを、ユーザーが `@layer lism-block` に定義するためのレイヤー。コアはレイヤー順序を宣言するだけで、スタイル定義は持ちません。</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`lism-custom`</td>
@@ -169,8 +169,11 @@ Element は `_`（アンダースコア）一つ区切りです。
 本体クラス同士の併用（`.b--xxx.b--yyy`）は基本 NG です。
 
 :::point
-- `b--` と他クラスの併用は禁止ではありません。例外的な調整やブレイクポイント切り替え（`-p_sm` 等）には、`b--` より必ず強い Property Class が便利です。
-- `b--` はレイアウトスタイルもCSS側で持てますが、`l--`系クラスとの併用を前提にして組むことも可能です。ただし、レイヤー順序の優劣があるため、レイアウトのバリエーションは Modifierで定義するか Property Class で上書きするのが安全です。
+- `b--` と他クラスの併用は禁止ではありません。`lism-block` は `lism-trait` / `lism-primitive` より弱いレイヤーのため、`l--` / `a--` / `is--` / `has--` を足すと `b--` のベーススタイルより必ず優先されます（例: `.b--btn` に `.l--grid` を足すと `display: grid` が勝ちます）。
+- `b--` はレイアウトスタイルもCSS側で持てますし、`l--` 系クラスとの併用を前提にして組むこともできます。
+- 例外的な調整やブレイクポイント切り替え（`-p_sm` 等）には、`b--` より必ず強い Property Class が便利です。
+
+なお、この優先関係が保証されるのはレイヤーありの標準ビルド（`main.css` / `full.css`）だけです。`main_no_layer.css` / `full_no_layer.css` ではレイヤーの優先順位が効かないため、読み込み順と詳細度に依存します。
 :::
 
 
