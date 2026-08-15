@@ -88,8 +88,19 @@ describe('searchDocs', () => {
       entry({ sourcePath: 'ui/components/Card.mdx', title: 'Card', keywords: ['example'] }),
     ];
     expect(searchDocs(mixedCaseEntries, 'Group')[0].url).toBe('https://lism-css.com/docs/core-components/group/');
-    expect(searchDocs(mixedCaseEntries, 'DummyText')[0].url).toBe('https://lism-css.com/docs/ui/dummytext/');
-    expect(searchDocs(mixedCaseEntries, 'Card')[0].url).toBe('https://lism-css.com/docs/ui/components/card/');
+    expect(searchDocs(mixedCaseEntries, 'DummyText')[0].url).toBe('https://lism-css.com/ui/dummytext/');
+    expect(searchDocs(mixedCaseEntries, 'Card')[0].url).toBe('https://lism-css.com/ui/components/card/');
+  });
+
+  it('ui/ 配下の URL は /docs/ を付けずサイト直下になる', () => {
+    const uiEntries: DocsEntry[] = [
+      entry({ sourcePath: 'ui/Accordion.mdx', title: 'Accordion', keywords: ['ui'] }),
+      entry({ sourcePath: 'ui/components/Card.mdx', title: 'Card', keywords: ['example'] }),
+      entry({ sourcePath: 'ui/block-examples/Timeline.mdx', title: 'Timeline', keywords: ['timeline'] }),
+    ];
+    expect(searchDocs(uiEntries, 'Accordion')[0].url).toBe('https://lism-css.com/ui/accordion/');
+    expect(searchDocs(uiEntries, 'Card')[0].url).toBe('https://lism-css.com/ui/components/card/');
+    expect(searchDocs(uiEntries, 'Timeline')[0].url).toBe('https://lism-css.com/ui/block-examples/timeline/');
   });
 
   it('マッチしない場合は空配列を返す', () => {
