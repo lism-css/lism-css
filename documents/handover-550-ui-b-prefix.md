@@ -1,12 +1,13 @@
 # Issue #550 作業引き継ぎ: @lism-css/ui の b--/lism-block 移行
 
-> 作成日: 2026-08-13 / 最終更新: 2026-08-15（Tabs進捗反映、Modal MCP見出し同期）/ 基準: `feature/550-ui-b-prefix` ブランチ / `@lism-css/ui` v0.25.0
+> 作成日: 2026-08-13 / 最終更新: 2026-08-15（Tabs完了・残件のissue化・PR作成）/ 基準: `feature/550-ui-b-prefix` ブランチ / `@lism-css/ui` v0.25.0
 
 ## 要点
 
 - #550のクラス移行（`c--*`→`b--*`・`@layer lism-component`→`lism-block`）とリポジトリ内の参照追随は**すべて完了し、`68b14472`までコミット済み**。
-- 現在は「Props→CSS移行」を**1コンポーネントずつ**進めている。進捗は[進捗表](#進捗props→css移行)を参照。
-- docsの目視確認は独立タスクではなく、各コンポーネントの移行確認フローに統合して消化する。
+- 「Props→CSS移行」も**全コンポーネント完了・コミット済み**（最後のTabsは`4de0c932`）。進捗は[進捗表](#進捗props→css移行)を参照。
+- 残件はすべてissue化済み: **#556**（レイヤー順のdocs追随）・**#557**（Chat削除検討とdocs再編）・**#558**（旧表記の残存修正）。
+- docsの目視確認は独立タスクではなく、各コンポーネントの移行確認フローに統合して消化した。
 
 ## 進め方（ユーザー指示。厳守）
 
@@ -44,14 +45,14 @@
 | Chat | **完了・コミット済み（`34af1576`）** | Root `keycolor="gray"`（→`--keycolor: var(--gray)`）・`ji`/`jslf`（→`[data-chat-dir]`セレクタ）・Avatar `bgc/ar/bdrs`・Name `c/fs/fz/hl/py/px/aslf`・Body/Deco `pos`・Content `bdrs/p/hl`をCSSへ移行。**`flow="s"`は`.b--chat_content { --flow--base: var(--flow--s) }`の変数フックで移行**（`-flow:s`はレイヤー外クラスのためblockレイヤーへの単純移行はprimitiveの`--flow: var(--flow--base)`に負ける。`flow` propはデフォルト無しで存続）。Grid/Frame/Flowベースは維持（primitiveのデフォルトdisplayをそのまま使うため。`.l--grid > * { min-width: 0 }`も理由）。**`variant="think"`をdocsのOpt-inから`_style.css`標準スタイルへ昇格**。docs ja/enはHTMLスニペット追随＋think例をExamplesへ移動・HTMLタブ追加（ユーザー加筆分含む）。skillsの`flow`デフォルト表記修正・MCP headings同期（Opt-in削除） |
 | Accordion | **完了・コミット済み（`2973a310`）** | `g/w/ai/jc/p`をCSSへ移行（`.b--accordion_button`に`display: flex`＋`padding: var(--s15)`等、`.b--accordion_content`に`padding: var(--s15)`）。Root/ButtonをLismベース化（デフォルトの`l--stack`/`l--flex`出力を廃止。レイアウトが必要なら`layout="stack"`等を指定）、Panelの`pos/ov`もCSSへ。Headingの`set--plain`はdiv以外（見出しタグ指定時）のみ出力。docs ja/enはExamples再構成（Overviewをデフォルト表示化・「スタイリング例」新設・HTMLタブ拡充）、MCP headings同期 |
 | Details | **完了・コミット済み（`0f5cacfb`）** | Summary/TitleをLismベース化し、summaryのflex構成＋`padding: var(--s15)`と`.b--details_content`の`padding: var(--s15)`をCSSでデフォルト化（Accordionと同じ構成。paddingは閉時の余白残り回避のため`_body`ではなく`_content`）。Titleの`flex: 1`は`justify-content: space-between`に置換、`set--plain`はspan以外のみ出力。Contentの`flow="s"`を削除（素の`l--flow`に）。docs ja/enはAccordionと同構成へ再編（「スタイリング例」新設・「タイトルのHTMLタグを変更する」「複数同時展開を制限する」に分割・HTMLタブ追加・Propsに`open`追記）。MCP headings同期 |
-| Tabs | **a11y改修はコミット済み（`a20952aa`） / Props→CSS移行は実装中・コミット前** | **a11y（#87, `a20952aa`）:** パネルの`aria-hidden`を`hidden`属性へ移行、タブへ`type="button"`・`id="{tabId}-{index}-tab"`・roving tabindexを追加、パネルへ`aria-labelledby`・`tabindex="0"`を追加。キーボード操作（自動アクティベーション）を`tabsKeyNav.ts`（共有純関数）で実装。**APGに合わせ既定（水平）は左右キーのみ**とし、上下キーはブラウザのスクロールに残す。tablistの`aria-orientation="vertical"`（`listProps`経由で指定）を検知した場合のみ上下キーへ切り替える。Home/Endは向きに関わらず有効。`aria-orientation`は属性のためレスポンシブに出し分けられず、縦横が切り替わるレイアウトは既定（水平・左右）のまま使う方針をdocsに明記。`setTabs`は「同tablist内の全タブを同期」方式へ全面書き換え（選択中不在でも復帰可・`closest()`化・`data-hasTabLink`死にコード削除）。ディープリンク`?lism-tab=`をReact版にも実装（useEffect方式）。`defaultIndex`は1始まり維持で範囲外は1へフォールバック。Root.astroの`btns &&`空配列バグ修正。**Tabの`as`は既定値`button`のまま受け付ける**（Astro版はRoot側transformが`<button>`前提のため実質変更不可である旨をコメントで明記）。Tab/Panelの`tabId`既定値は`'__LISM_TAB_ID__'`（Accordionの`__LISM_ACC_ID__`と同じ規約）。テストは42件。**Props→CSS（作業ツリー、未コミット）:** Rootを`Lism`→`Grid`ベース化（`l--grid`の`display:grid`を使うため`.b--tabs`から`display:grid`を削除。Chatと同じ「primitiveのデフォルトをそのまま使う」判断）。`variant`初期値を`'default'`にし、既定装飾を`.b--tabs--default`へ隔離（独自variant指定時は打ち消し不要）。タブの`--hl`/`font-size: var(--fz--s)`/`padding: 0.375em 0.5em`とlistの`gap: 0.25em`をCSSへ。**`variant="line"`をOpt-inから`_style.css`標準へ昇格**（`_tabs-line.css`削除）。embossはOpt-inのまま、folderをOpt-in作例として新設。Tabの`set="plain"`はpropsのまま。docs ja/enはlineをExamplesへ移動し、Opt-inを独自variant作例（emboss/folder）に再編。skillsの`variant`説明とMCP headings/snippetも追随済み。**目視確認待ち・未コミット** |
-| Modal | **完了・コミット済み（`41cdb7c2`）。MCP見出し同期は作業ツリーに反映済み（未コミット）** | OpenBtn/CloseBtnへ`b--modal_openBtn`/`b--modal_closeBtn`を追加し、`d="inline-flex"`をCSSの`display: inline-flex`＋`align-items: center`へ移行。`set="plain"`/`hov="-o"`はpropsのまま維持。Rootの`--flow`を`!important`化し、既定アニメーションを0.3s、背景を`rgb(0 0 0 / 0.5)`、blurを4pxへ目視調整。docs ja/enはOverview・長いコンテンツ例・ドロワー例を再構成し、HTMLタブとBodyのスクロール説明を実装へ追随。MCP `docs-index.json`へ「コンテンツが長い場合の例」見出しを追加済み |
+| Tabs | **完了・コミット済み（a11y: `a20952aa` / Props→CSS: `4de0c932`）** | **a11y（#87, `a20952aa`）:** パネルの`aria-hidden`を`hidden`属性へ移行、タブへ`type="button"`・`id="{tabId}-{index}-tab"`・roving tabindexを追加、パネルへ`aria-labelledby`・`tabindex="0"`を追加。キーボード操作（自動アクティベーション）を`tabsKeyNav.ts`（共有純関数）で実装。**APGに合わせ既定（水平）は左右キーのみ**とし、上下キーはブラウザのスクロールに残す。tablistの`aria-orientation="vertical"`（`listProps`経由で指定）を検知した場合のみ上下キーへ切り替える。Home/Endは向きに関わらず有効。`aria-orientation`は属性のためレスポンシブに出し分けられず、縦横が切り替わるレイアウトは既定（水平・左右）のまま使う方針をdocsに明記。`setTabs`は「同tablist内の全タブを同期」方式へ全面書き換え（選択中不在でも復帰可・`closest()`化・`data-hasTabLink`死にコード削除）。ディープリンク`?lism-tab=`をReact版にも実装（useEffect方式）。`defaultIndex`は1始まり維持で範囲外は1へフォールバック。Root.astroの`btns &&`空配列バグ修正。**Tabの`as`は既定値`button`のまま受け付ける**（Astro版はRoot側transformが`<button>`前提のため実質変更不可である旨をコメントで明記）。Tab/Panelの`tabId`既定値は`'__LISM_TAB_ID__'`（Accordionの`__LISM_ACC_ID__`と同じ規約）。テストは42件。**Props→CSS（`4de0c932`）:** Rootを`Lism`→`Grid`ベース化（`l--grid`の`display:grid`を使うため`.b--tabs`から`display:grid`を削除。Chatと同じ「primitiveのデフォルトをそのまま使う」判断）。`variant`初期値を`'default'`にし、既定装飾を`.b--tabs--default`へ隔離（独自variant指定時は打ち消し不要）。タブの`--hl`/`font-size: var(--fz--s)`/`padding: 0.375em 0.5em`とlistの`gap: 0.25em`をCSSへ。**`variant="line"`をOpt-inから`_style.css`標準へ昇格**（`_tabs-line.css`削除）。embossはOpt-inのまま、folderをOpt-in作例として新設。Tabの`set="plain"`はpropsのまま。docs ja/enはlineをExamplesへ移動し、Opt-inを独自variant作例（emboss/folder）に再編。skillsの`variant`説明とMCP headings/snippetも追随済み。ユーザーの目視確認を経てコミット済み |
+| Modal | **完了・コミット済み（`41cdb7c2`。MCP見出し同期は`4de0c932`に同梱）** | OpenBtn/CloseBtnへ`b--modal_openBtn`/`b--modal_closeBtn`を追加し、`d="inline-flex"`をCSSの`display: inline-flex`＋`align-items: center`へ移行。`set="plain"`/`hov="-o"`はpropsのまま維持。Rootの`--flow`を`!important`化し、既定アニメーションを0.3s、背景を`rgb(0 0 0 / 0.5)`、blurを4pxへ目視調整。docs ja/enはOverview・長いコンテンツ例・ドロワー例を再構成し、HTMLタブとBodyのスクロール説明を実装へ追随。MCP `docs-index.json`へ「コンテンツが長い場合の例」見出しを追加済み |
 | NavMenu | **完了・コミット済み（`19418195`）** | Link/Root/NestをLismベース化し、デフォルトの`l--flex`/`l--stack`出力を廃止（レイアウトが必要なら`layout="flex"`等を指定）。`.b--navMenu_link`は`display: flex`＋`align-items: center`＋`gap: 0.5em`＋`padding: var(--_item-p)`（`--_item-p: 0.5em`）をCSS管理。`hov="-bgc"`と`itemP` propは存続。`--_item-g`/`itemG`は一度実装後に取り消し（gapは直書きで十分と判断）。docs ja/enはExamples再構成（節順入れ替え・ホバー例を全面刷新しメガメニュー追加・`fxd="row"`→`layout="flex"`）、en全面同期済み。skillsは変更なし、MCP headings同期済み |
 | ShapeDivider | **完了・コミット済み（`6495b27b`）** | デフォルトの`--level: 5`をCSSへ移し、`level`指定時だけインライン変数を出力する形へ変更（`level={0}`でDOMを出力しない挙動は維持）。`max-sz="full"`は単なる最大幅ではなく、`has--gutter`直下でガター外まで広げるレイアウト連携を担うためProperty Classのまま維持。docs ja/enはOverview HTMLタブからデフォルト値の`style="--level:5"`を削除し、不足していた4例にもHTMLタブを追加して全5 Previewへ表示。skills/MCPはAPI・見出しに変更がないため修正不要 |
 | Avatar | **完了・コミット済み（`d2a9e782`）** | **`c--avatar`→`b--avatar`へリネーム**し、`ar="1/1"`/`bdrs="99"`/デフォルトサイズをCSSへ移行（`--w: 2em`＋`width: var(--w)`。当初1.5emから目視確認で変更）。`size`prop指定時のみ`w`を出力（`getLismProps`はnull/undefinedのpropを出力しない）。Frameベース（`l--frame`）は維持し、react/astroに`_style.css`のimportを追加。docs ja/enはStylesのSrcCode化・`ImportPackage`に`css="style.css"`追加・size初期値2em。skills `components-ui.md`も追随 |
 | Alert / Callout | **完了・コミット済み（`5a3e3ab7`）** | 両方**`b--*`へリネーム**。Alert: `ai/p/g/bd/bdrs`をCSSへ移行（`-bd`の`--bds`/`--bdw`/`--bdc`変数フックは忠実移植）。`l--flex`は出力継続（displayはCSSに持たない）、`layout="withSide"`時は`l--withSide`＋`Icon`へ`isSide`直付与。アイコンの`Center`ラッパーを廃止して`Icon`直下化し、内側スタイルは`> .a--icon` / `> .l--flow`の子セレクタで管理（要素クラスなし）。Callout: `p/g/bdc/bd-s/bdw`をCSSへ移行、`l--stack`（Stackベース）維持。ボーダー色は**`--cbox-bdPct: 100%`**で純keycolorを保持（`--bdc`経由のため`bdc` propも従来通り有効）。要素クラスは`b--callout_title`（CSSあり）・`b--callout_body`（マーカーのみ）で、タイトル行の`Center`ラッパーも廃止。u--cboxは両方propsのまま。docs ja/enはStylesのSrcCode化・`ImportPackage`へ`css="style.css"`・HTMLタブ追随（Calloutは「`title`を指定しない場合」等の加筆あり）。skills追随。MCP headings同期は`6ccfa558` |
 
-残りのProps→CSS移行はTabsのみ（実装中・目視確認待ち。上記表を参照）。Modalの実装・docsは完了し、MCP見出し同期も作業ツリーへ反映済み。
+**Props→CSS移行は全コンポーネント完了・コミット済み**（最後のTabsは`4de0c932`）。#550の実装作業としては残タスクなし。
 
 ## 決定事項（ユーザー確認済み）
 
@@ -95,6 +96,7 @@
 | `41cdb7c2` | ui/docs: ModalのOpenBtn/CloseBtnへ専用クラスを追加し、inline-flexをCSSへ移行、docs ja/enを再構成 |
 | `cea1bb24` | docs: #550引き継ぎノートにModal移行の進捗を反映 |
 | `a20952aa` | ui/docs/mcp: Tabsのa11y改善（#87）。hidden化・aria-labelledby・roving tabindex・キーボード操作・ディープリンクReact対応 |
+| `4de0c932` | ui/docs/skills/mcp: TabsのベーススタイルをPropsからCSSへ移行、`variant="line"`を標準へ昇格。ModalのMCP見出し同期も同梱 |
 
 補足: React/Astroの出力クラスは移行前から完全一致しており、差異修正は不要だった。ChatのCSS末尾にある`@layer`外の2ルール（詳細度確保のため意図的）はレイヤー外のまま維持。
 
@@ -113,8 +115,8 @@
 - Accordion移行（`2973a310`）・Details移行（`0f5cacfb`）・Chat移行（`34af1576`）: `nr build:ui` / `nr typecheck` / `nr test` / `nr lint`成功、`dist/style.css`への反映とユーザーの目視確認済み。
 - NavMenu移行（`19418195`）: `nr build:ui` / `nr build:docs` / `nr typecheck` / `nr test` / `nr lint`成功、`dist/style.css`への反映とユーザーの目視確認済み。docs jaはユーザー自身が再構成し、enはjaの確定版へ全面同期。
 - ShapeDivider移行（`6495b27b`）: `nr build:ui` / `nr build:docs` / `nr typecheck` / `nr test` / `nr lint`成功。`dist/style.css`への`--level: 5`反映を確認済み。docs ja/enの全5 PreviewへHTMLタブを揃えた最終状態でも`nr build:docs`成功。ユーザーのコミット指示を受けて完了。
-- Modal移行（`41cdb7c2`）: `nr build:ui` / `nr build:docs` / `nr typecheck` / `nr test` / `nr lint`成功。`dist/style.css`へOpenBtn/CloseBtnの`display: inline-flex`と`align-items: center`が反映され、コンポーネントのデフォルト出力から`-d:inline-flex`が消えたことを確認済み。docs ja/en再構成後もビルド成功、ユーザーの目視確認済み。MCP見出し「コンテンツが長い場合の例」は作業ツリーへ追加済み（未コミット）。
-- Tabs a11y（`a20952aa`）: issue #87対応をコミット済み。Props→CSS移行（Gridベース化・`variant="default"`隔離・`line`の標準昇格・docs再編）は作業ツリーにあり、**目視確認待ち・未コミット**。
+- Modal移行（`41cdb7c2`）: `nr build:ui` / `nr build:docs` / `nr typecheck` / `nr test` / `nr lint`成功。`dist/style.css`へOpenBtn/CloseBtnの`display: inline-flex`と`align-items: center`が反映され、コンポーネントのデフォルト出力から`-d:inline-flex`が消えたことを確認済み。docs ja/en再構成後もビルド成功、ユーザーの目視確認済み。MCP見出し「コンテンツが長い場合の例」の追加は`4de0c932`に同梱。
+- Tabs（`a20952aa` / `4de0c932`）: a11y改修（#87）とProps→CSS移行（Gridベース化・`variant="default"`隔離・`line`の標準昇格・docs再編）をユーザーの目視確認後にコミット済み。
 
 ## 残タスク（Props→CSS移行以外）
 
@@ -125,10 +127,10 @@
 
 ### 別issueで対応するもの
 
-- レイヤー順変更（`22de723a`）のdocs・skills追随（cascade layers系ページ・skillsのレイヤー順記載）。uiの調整がすべて終わった後に行う。
-- Chatの`@lism-css/ui`からの削除検討＋docsのui/examples・Patterns再編。整理案は`documents/memo-chat-removal-examples-reorg.md`を参照（削除は破壊的変更のため、実施するならv0.26.0への同乗が望ましい点に注意）。
+- **#556**: レイヤー順変更（`22de723a`）のdocs・skills・MCP追随（cascade layers系ページ・skillsのレイヤー順記載）。uiの調整がすべて終わった後に行う。
+- **#557**: Chatの`@lism-css/ui`からの削除検討＋docsのui/examples・Patterns再編。整理案は`documents/memo-chat-removal-examples-reorg.md`を参照（削除は破壊的変更のため、実施するならv0.26.0への同乗が望ましい点に注意）。
 
-### スコープ外として未対応の既知残件
+### スコープ外として未対応の既知残件（**#558**にまとめて起票済み）
 
 - templates/blogの**英語版**記事（`.lang/en/`配下の`lism-css-intro`）に旧`lism-component`レイヤーの記述が残存（#553の翻訳追随漏れ。日本語版は更新済み）。
 - `apps/docs`の`core-components/Lism.mdx`用のMCP snippetに「classNameでc--クラスや任意クラスを指定」という表現あり（`b--`併記を検討してもよい。未対応）。
