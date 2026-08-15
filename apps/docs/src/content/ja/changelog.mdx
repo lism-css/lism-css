@@ -9,6 +9,58 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.26.0 (2026.08.16)
+
+### `lism-block` レイヤーの追加 (#546, #559)
+
+- ベーススタイルをCSS側で管理する基礎部品（`b--`）用に `lism-block` レイヤーを追加しました。コアでは空のレイヤーで、`@lism-css/ui` やユーザー定義のクラスがここに配置されます。
+- レイヤー順は `lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility` です。`lism-block` を `lism-base` の直後（弱い位置）に置くことで、`b--` のベーススタイルに対して、明示的に付与したクラス（`is--` / `has--` / `l--` など）が常に勝つようになります。
+- `lism-component` レイヤーは後方互換のため宣言に残しています（宣言から消すと、既存のユーザーCSS内の `@layer lism-component` が最後尾に再配置されて挙動が変わるため）。
+
+### 独自クラスの命名規約を2分類へ統一 (#546)
+
+- 独自クラスの分類を `b--`（Block Class）と `c--`（Custom Class）の2つに統一しました。
+- `c--` の呼称を Component Class から Custom Class へ変更しました（`lism-custom` レイヤーに対応する自由なカスタムクラスで、粒度は問いません）。
+- `p--` / `z--` の規約を廃止しました。
+
+### その他
+
+- 依存パッケージのセキュリティ更新を行いました。
+
+### `@lism-css/ui` v.0.26.0 (2026.08.16)
+
+**破壊的変更**を含むリリースです。`lism-css` v0.26.0 以上が必要です。
+
+**`b--` クラスと `lism-block` レイヤーへの移行 (#559)**
+
+- 全コンポーネントのクラスを `c--{name}` から `b--{name}` へ変更し、CSSの配置レイヤーを `@layer lism-component` から `@layer lism-block` へ移しました。要素（`_element`）とモディファイア（`--modifier`）の記法は変わりません。
+- 移行方法: CSSやマークアップ内の `.c--{name}` を `.b--{name}` へ置換してください。コンポーネントを上書きしているCSSは `@layer lism-block` へ移すか、`b--` より強く上書きしたい場合は `@layer lism-custom` に置いてください。
+
+**ベーススタイルをCSSへ移行 (#559)**
+
+- これまで Lism Props（Property Class）として出力していたベーススタイルの一部をCSSへ移し、利用者側のCSSから上書きできるようにしました。あわせて次の既定値が変わっています。
+- Badge: 既定の角丸をピル型（`--bdrs--99`）へ変更しました。
+- Tabs: `variant="line"` を標準スタイルへ昇格し、`variant` の初期値を `'default'` にしました。既定の装飾は `.b--tabs--default` へ隔離しています。
+- Avatar: 既定サイズを `--w: 2em` としてCSS側で管理するようにしました。
+- Button / Accordion.Root / Details / NavMenu: 既定で出力していた `l--flex` / `l--stack` を廃止しました。レイアウトが必要な場合は `layout="flex"` などを指定してください。
+- Details: Content の `flow="s"` を廃止し、子要素の間隔の既定が `--flow--base` になりました。従来の間隔を維持する場合は `.b--details_content { --flow--base: var(--flow--s) }` を指定してください。
+
+**Tabs / Modal のアクセシビリティ改善 (#559, #563)**
+
+- Tabs: roving tabindex と矢印 / Home / End キーによる操作に対応しました。パネルの `aria-hidden` を `hidden` 属性へ移行し、タブに `type="button"` と `id` を付与してパネルから `aria-labelledby` で参照するようにしました。React版でも `?lism-tab=` のディープリンクが使えます。
+- Tabs: `defaultIndex` が範囲外のときに操作不能になる問題を修正しました。
+- Modal: `Modal.OpenBtn` / `Modal.CloseBtn` に `type="button"` を、`Modal.OpenBtn` に `aria-haspopup="dialog"` を既定で付与するようにしました（props で上書きできます）。
+- Modal: `prefers-reduced-motion: reduce` のとき、開閉アニメーションを無効化するようにしました。
+- Modal: モーダル内でドラッグを開始して余白で離したときに、意図せず閉じてしまう問題を修正しました。
+- Modal: `<form method="dialog">` の送信など `closeDialog()` を経由しないクローズでも、`data-is-open` の削除と `scrollbar-gutter` の復元が行われるようにしました。
+- Modal: `setEvent` の非 `dialog` 要素サポートを廃止しました（フォーカストラップや背景の inert 化をネイティブ `dialog` に依存しているため）。
+
+**Chatコンポーネントの削除 (#564)**
+
+- Chat をパッケージから削除しました。マークアップの変更は不要です。ドキュメントの作例ページに掲載しているCSSを `@layer lism-block` ごとプロジェクトへコピーすれば、同じ見た目を再現できます。
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.25.0 (2026.08.06)
 
 ### 構造変数を lism.config から上書き可能に (#530)
