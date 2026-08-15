@@ -17,11 +17,11 @@ const { class: className, modalId = '', icon, srText = 'Close', ...props } = Ast
 
 {
   Astro.slots.has('default') ? (
-    <Lism as="button" class={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...props}>
+    <Lism as="button" type="button" class={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...props}>
       <slot />
     </Lism>
   ) : (
-    <Lism as="button" class={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...props}>
+    <Lism as="button" type="button" class={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...props}>
       <Icon icon={icon || 'x'} />
       <span class="u--srOnly">{srText || 'Close'}</span>
     </Lism>

@@ -37,11 +37,14 @@ const unlockScrollbarGutter = (): void => {
 /**
  * モーダルの開閉イベントを設定する
  */
-export function setEvent(modal: HTMLElement): void {
-  // modalがない、またはidがない場合は処理を終了
-  if (!modal || !modal.id) return;
+export function setEvent(target: HTMLElement): void {
+  // 対象がない、またはidがない場合は処理を終了
+  if (!target || !target.id) return;
 
-  const isDialog = modal instanceof HTMLDialogElement;
+  // フォーカストラップ・背景のinert化・Escクローズ等をネイティブ dialog に依存しているため、dialog 要素のみサポートする
+  if (!(target instanceof HTMLDialogElement)) return;
+
+  const modal = target;
 
   // オープンした時のトリガー要素を記憶する（data属性を戻すため）
   let theTrigger: HTMLElement | null = null;
@@ -60,13 +63,8 @@ export function setEvent(modal: HTMLElement): void {
     // その間の連打で showModal() が二重に呼ばれてしまう（dialog では InvalidStateError になる）
     if (modal.hasAttribute('open')) return;
 
-    // dialog 要素なら showModal()、それ以外は open 属性を付与
-    if (isDialog) {
-      lockScrollbarGutter(); // showModal() でスクロールバーが消える前にスクロールバー幅を予約する
-      modal.showModal();
-    } else {
-      modal.setAttribute('open', '');
-    }
+    lockScrollbarGutter(); // showModal() でスクロールバーが消える前にスクロールバー幅を予約する
+    modal.showModal();
 
     // 次フレームで data-is-open を付与（CSS側でフェードインアニメーション開始）
     requestAnimationFrame(() => {
@@ -90,13 +88,9 @@ export function setEvent(modal: HTMLElement): void {
     // アニメーション完了を待機
     await waitAnimation(modal);
 
-    // アニメーション終了後、dialog を閉じる（open属性の削除）
-    if (isDialog) {
-      modal.close();
-      unlockScrollbarGutter(); // close() の後に scrollbar-gutter を復元する
-    } else {
-      modal.removeAttribute('open');
-    }
+    // アニメーション終了後、dialog を閉じる
+    modal.close();
+    unlockScrollbarGutter(); // close() の後に scrollbar-gutter を復元する
   };
 
   // openボタンにイベント登録
@@ -119,27 +113,36 @@ export function setEvent(modal: HTMLElement): void {
   });
 
   // 余白クリックで閉じる
+  //   Point: click だけで判定すると、モーダル内で開始したドラッグ（テキスト選択等）を余白で離した場合にも
+  //          click のターゲットが共通祖先の modal になって閉じてしまうため、pointerdown の発生位置も併せて見る
+  let isPointerDownOnBackdrop = false;
+  modal.addEventListener('pointerdown', (e) => {
+    isPointerDownOnBackdrop = e.target === modal;
+  });
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
+    if (isPointerDownOnBackdrop && e.target === modal) {
       void closeDialog();
+    }
+    isPointerDownOnBackdrop = false;
+  });
+
+  // close 完了時の後処理。dialog はどの経路で閉じても close イベントが発火するため、
+  // <form method="dialog"> の送信など closeDialog() を経由しないクローズでも
+  // data-is-open の削除と scrollbar-gutter の復元が漏れないようにする（いずれも冪等）
+  modal.addEventListener('close', () => {
+    modal.removeAttribute('data-is-open');
+    unlockScrollbarGutter();
+    if (theTrigger) {
+      theTrigger.removeAttribute('data-target-opened');
+      theTrigger = null;
     }
   });
 
-  if (isDialog) {
-    // close() 完了時にトリガーのdata属性をリセット（dialog専用イベント）
-    modal.addEventListener('close', () => {
-      if (theTrigger) {
-        theTrigger.removeAttribute('data-target-opened');
-        theTrigger = null;
-      }
-    });
-
-    // ESCキーで閉じた時もアニメーションを実行する処理（dialog専用イベント）
-    modal.addEventListener('cancel', (e) => {
-      e.preventDefault(); // デフォルトの即時 close() を防ぐ
-      void closeDialog(); // 自分で用意したクローズ処理
-    });
-  }
+  // ESCキーで閉じた時もアニメーションを実行する処理
+  modal.addEventListener('cancel', (e) => {
+    e.preventDefault(); // デフォルトの即時 close() を防ぐ
+    void closeDialog(); // 自分で用意したクローズ処理
+  });
 }
 
 const setModal = () => {

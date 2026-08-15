@@ -12,6 +12,15 @@ type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
 const { class: className, modalId = '', ...props } = Astro.props;
 ---
 
-<Lism as="button" class={atts(className, 'b--modal_openBtn')} set="plain" hov="-o" data-modal-open={modalId} {...props}>
+<Lism
+  as="button"
+  type="button"
+  aria-haspopup="dialog"
+  class={atts(className, 'b--modal_openBtn')}
+  set="plain"
+  hov="-o"
+  data-modal-open={modalId}
+  {...props}
+>
   <slot />
 </Lism>
