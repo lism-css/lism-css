@@ -1,0 +1,59 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Flex, Center, Media, Layer, Icon, Text, Inline, Link, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+import './_style.css';
+---
+
+<DemoLayout title="Hero003">
+  {/* 画面高いっぱいのヒーロー。ヘッダー・中央コンテンツ・スクロール導線を背景の上に重ねる */}
+  <Stack isContainer pos="relative" min-h="100svh" c="white">
+    <Frame isLayer>
+      <Media isLayer src="https://cdn.lism-css.com/img/a-3.jpg" alt="" width="960" height="640" />
+      <Layer style={{ backdropFilter: 'blur(2px)' }} bgc="black:55%" />
+    </Frame>
+    {/* 上部ヘッダー */}
+    <Container as="header" isWrapper="l" hasGutter py="25" z="0">
+      <Flex ai="center" jc="between" g="30">
+        <Inline fz="l" fw="bold" lts="xl">MINE MOUNTAIN</Inline>
+        <Flex as="nav" ai="center" g="30" fz="s" d={['none', null, 'flex']}>
+          <Link href="#" set="plain" hasTransition hov="-o">宿について</Link>
+          <Link href="#" set="plain" hasTransition hov="-o">客室</Link>
+          <Link href="#" set="plain" hasTransition hov="-o">食事</Link>
+          <Link href="#" set="plain" hasTransition hov="-o">アクセス</Link>
+        </Flex>
+        <Flex ai="center" d={['flex', null, 'none']}>
+          <Icon icon="menu" fz="2xl" label="メニューを開く" />
+        </Flex>
+      </Flex>
+    </Container>
+    {/* 中央コンテンツ */}
+    <Container isWrapper="m" hasGutter my="auto" py="50" z="0">
+      <Stack g="40" ai="fs">
+        <Stack g="25">
+          <Inline class="u--trim" fz="s" ff="mono" lts="xl">STAY IN THE MOUNTAINS</Inline>
+          <Heading level="1" class="u--trim" fz="4xl" fw="bold" hl="s">標高1,400mの<br />朝に会いにいく。</Heading>
+          <Text class="u--trim" fz="m" hl="l" max-w="34em">
+            雲海の上で迎える朝、薪ストーブの前で過ごす夜。 季節ごとに表情を変える山の時間を、ゆっくり味わうための一棟貸しの宿です。
+          </Text>
+        </Stack>
+        <Flex g="15 20" fxw="wrap">
+          <Button href="#" bgc="white" c="black" py="15" px="35" bdrs="99" fw="bold" hasTransition hov={{ bgc: 'accent', c: 'white' }}>
+            宿泊プランを見る
+          </Button>
+          <Button href="#" variant="outline" c="white" py="15" px="35" bdrs="99" fw="bold" hasTransition hov={{ bgc: 'white', c: 'black' }}>
+            館内を見る
+          </Button>
+        </Flex>
+      </Stack>
+    </Container>
+    {/* 下部のスクロール導線 */}
+    <Center as="a" href="#" set="plain" py="30" z="0">
+      <Stack ai="center" g="10">
+        <Inline fz="2xs" ff="mono" lts="xl">SCROLL</Inline>
+        <Icon icon="arrow-down" fz="l" />
+      </Stack>
+    </Center>
+  </Stack>
+</DemoLayout>
