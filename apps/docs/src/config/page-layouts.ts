@@ -7,11 +7,18 @@
 
 import type { LangCode } from '@/config/site';
 
+// 関連ページへのリンク（言語プレフィックスなしのパスで保持し、表示時に言語を付与する）
+export interface PageLayoutRelatedLink {
+  label: string; // 表示ラベル
+  path: string; // 例: '/patterns/#hero'
+}
+
 // Page Layout アイテムの型
 export interface PageLayoutItem {
   id: string; // レイアウトID（例: one-column）
   title: string; // 表示タイトル（例: One Column）
   description: Record<LangCode, string>; // 言語別の説明文
+  related?: PageLayoutRelatedLink[]; // 関連ページへのリンク
   draft?: boolean; // 下書きフラグ（本番環境では非公開）
 }
 
@@ -84,9 +91,10 @@ const pageLayouts = {
         id: 'hero-fullscreen',
         title: 'Hero Fullscreen',
         description: {
-          ja: 'ビューポート全体を覆うヒーローセクション。背景画像にタイトルやサブテキストを重ねて表示します。',
-          en: 'A hero section that covers the entire viewport, with a title and subtitle overlaid on a background image.',
+          ja: 'ビューポート全体を覆うヒーローセクション。背景画像にタイトルやサブテキストを重ねて表示します。ここでは骨格のみを扱います。',
+          en: 'A hero section that covers the entire viewport, with a title and subtitle overlaid on a background image. This page covers the structure only.',
         },
+        related: [{ label: 'Patterns: Hero', path: '/patterns/#hero' }],
       },
       {
         id: 'one-side-bleed',

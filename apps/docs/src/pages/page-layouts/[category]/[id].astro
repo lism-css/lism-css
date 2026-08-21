@@ -8,7 +8,7 @@
  * プレビューiframeは /preview/page-layouts/{category}/{id}/ を参照
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Flow, Text, Group } from 'lism-css/astro';
+import { Stack, Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import SrcCode from '@/components/mdx/SrcCode.astro';
 import { pageLayouts, type PageLayoutCategoryId } from '@/config/page-layouts';
@@ -47,6 +47,15 @@ const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
       </Text>
       <h1 class="-fz:3xl -fw:bold">{layout.title}</h1>
       <Text c="text-2">{layout.description.ja}</Text>
+      {
+        layout.related && (
+          <Cluster g="15" fz="xs">
+            {layout.related.map((related) => (
+              <Link href={related.path}>{related.label}</Link>
+            ))}
+          </Cluster>
+        )
+      }
     </Stack>
     {
       layout.draft && (

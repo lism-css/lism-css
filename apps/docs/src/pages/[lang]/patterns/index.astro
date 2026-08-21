@@ -4,8 +4,8 @@
  * カテゴリ別にパターンを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, AutoColumns, Frame, BoxLink, Box, Lism, Text, Inline, Heading } from 'lism-css/astro';
-import { patterns, categoryIds, type PatternCategoryId } from '@/config/patterns';
+import { Stack, AutoColumns, Frame, BoxLink, Box, Lism, Text, Inline, Heading, Cluster, Link } from 'lism-css/astro';
+import { patterns, categoryIds, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
 import { filterDraftItems } from '@/lib/patterns';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
@@ -40,16 +40,31 @@ if (!isValidLang(lang)) {
     <Stack g="40">
       {
         categoryIds.map((categoryId: PatternCategoryId) => {
-          const category = patterns[categoryId];
+          // satisfies による推論では related を持たないカテゴリで型が絞られるため、共通の型で受ける
+          const category: PatternCategory = patterns[categoryId];
           const items = filterDraftItems(category.items);
           return (
-            <Box as="section">
+            /* idはリダイレクト元URLのアンカー先として使う */
+            <Box as="section" id={categoryId}>
               <Heading level="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
                 <span>{category.label}</span>
                 <Inline fz="xs" c="text-2" fw="normal">
                   ({items.length})
                 </Inline>
               </Heading>
+
+              <Stack g="5" mbs="15" px="5">
+                <Text fz="s" c="text-2">
+                  {category.description[lang]}
+                </Text>
+                {category.related && (
+                  <Cluster g="15" fz="xs">
+                    {category.related.map((related) => (
+                      <Link href={`/${lang}${related.path}`}>{related.label}</Link>
+                    ))}
+                  </Cluster>
+                )}
+              </Stack>
 
               <AutoColumns cols="24rem" g="20" mbs="20" class="patternList">
                 {items.map((item) => (

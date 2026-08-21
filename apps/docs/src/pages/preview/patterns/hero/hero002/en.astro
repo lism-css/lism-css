@@ -1,0 +1,35 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Columns, Stack, Flex, Frame, Media, Text, Inline, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+import './_style.css';
+---
+
+<DemoLayout title="Hero002">
+  <Container bgc="base-2">
+    {/* md 以下では1カラム、md 以上でテキストと画像の2カラムに切り替える */}
+    <Columns cols={['1', null, '2']}>
+      <Stack g="40" jc="center" p={['50 25', null, '60 50']}>
+        <Flex>
+          <Inline fz="xs" fw="bold" lts="l" c="white" bgc="brand" bdrs="99" px="15" py="5">NEW RELEASE</Inline>
+        </Flex>
+        <Stack g="25">
+          <Heading level="1" class="u--trim" fz="3xl" fw="bold" hl="s">Everything your team<br />needs, in one place.</Heading>
+          <Text class="u--trim" fz="m" hl="l">
+            Files, tasks, and meeting notes all come together for each project. Stop hunting for the thing you saw last week and give your team back
+            the time to do their real work.
+          </Text>
+        </Stack>
+        <Flex g="15 20" fxw="wrap">
+          <Button href="#" py="15" px="30" bdrs="10" fw="bold">Start for free</Button>
+          <Button href="#" variant="outline" py="15" px="30" bdrs="10" fw="bold">Download the overview</Button>
+        </Flex>
+        <Text class="u--trim" fz="xs" o="pp">No credit card required. Try every feature free for 14 days.</Text>
+      </Stack>
+      <Frame as="figure">
+        <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
+      </Frame>
+    </Columns>
+  </Container>
+</DemoLayout>
