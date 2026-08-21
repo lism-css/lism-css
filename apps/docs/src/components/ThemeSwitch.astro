@@ -100,12 +100,14 @@ const themeModes = [
   .c--themeModeSwitch_btn {
     cursor: pointer;
     border-radius: 0.25rem;
+    color: var(--gray-lo-c);
   }
   :global(html[data-theme-mode='system']) .c--themeModeSwitch_btn[data-theme-mode='system'],
   :global(html[data-theme-mode='light']) .c--themeModeSwitch_btn[data-theme-mode='light'],
   :global(html[data-theme-mode='dark']) .c--themeModeSwitch_btn[data-theme-mode='dark'] {
-    background-color: #fff;
+    background-color: var(--themeModeSwitch-btn-bg);
     color: var(--themeModeSwitch-btn);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
   }
 </style>
 
