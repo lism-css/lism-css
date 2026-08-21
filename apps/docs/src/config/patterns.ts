@@ -273,8 +273,8 @@ const patterns = {
         id: 'hero001',
         title: 'Hero001',
         description: {
-          ja: '背景画像にオーバーレイを重ね、見出し・リード文・CTAボタンを中央に配置したヒーローです。',
-          en: 'A hero with an overlay on a background image, centering the heading, lead text and CTA button.',
+          ja: '画面の高さいっぱいの背景画像に、ヘッダー・中央コンテンツ・スクロール導線を重ねたヒーローです。',
+          en: 'A full-height hero with a header, centered content and a scroll cue layered over a background image.',
         },
       },
       {
@@ -284,14 +284,7 @@ const patterns = {
           ja: 'テキストと画像を左右に並べたヒーローです。breakpoint「md」以下は1カラムになり、縦に並びます。',
           en: 'A hero with text and an image side by side. Below the "md" breakpoint, it switches to a single column layout.',
         },
-      },
-      {
-        id: 'hero003',
-        title: 'Hero003',
-        description: {
-          ja: '画面の高さいっぱいの背景画像に、ヘッダー・中央コンテンツ・スクロール導線を重ねたヒーローです。',
-          en: 'A full-height hero with a header, centered content and a scroll cue layered over a background image.',
-        },
+        draft: true,
       },
     ],
   },

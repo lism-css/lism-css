@@ -49,7 +49,14 @@ import { filterDraftItems } from '@/lib/patterns';
 
               <AutoColumns cols="24rem" g="20" mbs="20" class="patternList">
                 {items.map((item) => (
-                  <BoxLink class="patternList_link" layout="stack" href={`/patterns/${categoryId}/${item.id}`} p="10" g="20" set="hov">
+                  <BoxLink
+                    class={item.draft ? 'patternList_link _draft' : 'patternList_link'}
+                    layout="stack"
+                    href={`/patterns/${categoryId}/${item.id}`}
+                    p="10"
+                    g="20"
+                    set="hov"
+                  >
                     {/* スクリーンショット画像をサムネイルとして表示 */}
                     <Frame ar="3/2" bd bdrs="20" ov="hidden">
                       <img
