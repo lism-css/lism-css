@@ -103,6 +103,7 @@
 .c--preview_area + .c--preview_code {
   overflow: hidden;
   background-color: var(--codeBlock-bgc);
+  color: var(--codeBlock-fg);
   border-radius: var(--bdrs--20);
   margin-block-start: -2px;
   border-start-start-radius: 0;
@@ -123,7 +124,7 @@
     line-height: 1.25;
     padding: var(--s5) var(--s10);
     border-radius: 0.125rem;
-    background: var(--_isSelected, rgba(255, 255, 255, 0.2));
+    background: var(--_isSelected, var(--codeBlock-tab-bg));
     box-shadow: none;
     color: var(--codeBlock-fg);
   }
