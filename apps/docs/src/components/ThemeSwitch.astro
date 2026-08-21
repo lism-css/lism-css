@@ -46,12 +46,24 @@ const themeModes = [
 ];
 ---
 
-<Flex jc="center" ai="center" p="0.1875rem" bgc="var(--themeModeSwitch-bgc)" bdrs="var(--bdrs--15)" w="fit-content" class="c--themeModeSwitch">
+<Flex
+  jc="center"
+  ai="center"
+  p="0.1875rem"
+  bgc="var(--themeModeSwitch-bgc)"
+  bdrs="var(--bdrs--15)"
+  w="fit-content"
+  class="c--themeModeSwitch"
+  role="radiogroup"
+  aria-label={themeSwitch.ariaLabel}
+>
   {
     themeModes.map((mode) => (
       <Lism
         as="button"
         type="button"
+        role="radio"
+        aria-checked="false"
         p="0.375rem"
         h="1.75rem"
         bd="none"
@@ -123,6 +135,13 @@ const themeModes = [
   });
   */
 
+  function syncThemeModeChecked() {
+    const mode = document.documentElement.getAttribute('data-theme-mode') || 'system';
+    document.querySelectorAll<HTMLButtonElement>('.c--themeModeSwitch_btn').forEach((btn) => {
+      btn.setAttribute('aria-checked', btn.dataset.themeMode === mode ? 'true' : 'false');
+    });
+  }
+
   document.querySelectorAll<HTMLButtonElement>('.c--themeModeSwitch_btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const mode = btn.dataset.themeMode!;
@@ -130,8 +149,11 @@ const themeModes = [
       document.documentElement.setAttribute('data-theme', theme);
       document.documentElement.setAttribute('data-theme-mode', mode);
       localStorage.setItem('theme', mode);
+      syncThemeModeChecked();
     });
   });
+
+  syncThemeModeChecked();
 
   // システムモード選択中は、OS側のテーマ変更にリアルタイムで追従する
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {

@@ -10,7 +10,7 @@ import '../styles/main.scss';
 import { siteConfig } from '@/config/site';
 
 // 多言語対応
-import { getRootLang, type LangCode } from '@/lib/i18n';
+import { getRootLang, t, type LangCode } from '@/lib/i18n';
 
 // コンポーネント
 import Head from '../components/Head.astro';
@@ -72,7 +72,16 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         mt="20"
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="z--main c--shadow-box c--scroll" ov-y="auto">
+        <Container
+          isWrapper={toc ? true : 'l'}
+          hasGutter
+          py="40"
+          as="main"
+          class="z--main c--shadow-box c--scroll"
+          ov-y="auto"
+          tabindex={0}
+          aria-label={t(lang, 'main').ariaLabel}
+        >
           {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
           <span id="_top" class="c--scrollTarget" aria-hidden="true"></span>
           <slot />

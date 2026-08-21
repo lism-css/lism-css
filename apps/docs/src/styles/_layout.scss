@@ -74,6 +74,14 @@ html {
   height: calc(100svh - var(--header-h) - var(--s30));
   scroll-padding-top: var(--s40); // main の py="40" 分。ヘッダー高さは含めない
   scroll-behavior: smooth;
+
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--eyebrow-c);
+    outline-offset: -2px;
+  }
 }
 .z--footer {
   /* Main内に配置されるためgrid-areaは不要 */
