@@ -34,6 +34,38 @@ function writeUserConfig(root: string): string {
   return configPath;
 }
 
+/** 使用中の既定クラス + 未使用の custom prop クラス。後者はデフォルト known には無い。 */
+const CUSTOM_PROP_CSS = '.-p\\:20{padding:var(--s20)}.-myz\\:9{z-index:9}';
+
+function makeCssBundle(css = CUSTOM_PROP_CSS): Record<string, unknown> {
+  return {
+    'assets/main.css': {
+      type: 'asset',
+      fileName: 'assets/main.css',
+      source: css,
+    },
+    'assets/app.js': {
+      type: 'chunk',
+      fileName: 'assets/app.js',
+      code: 'const cls = "-p:20";',
+    },
+  };
+}
+
+async function callGenerateBundle(purge: Plugin, bundle: Record<string, unknown>): Promise<void> {
+  const ctx = { info: vi.fn(), warn: vi.fn() };
+  await (getHook(purge, 'generateBundle') as (this: unknown, opts: unknown, bundle: unknown, isWrite: boolean) => unknown).call(
+    ctx,
+    {},
+    bundle,
+    false
+  );
+}
+
+function cssSource(bundle: Record<string, unknown>): string {
+  return (bundle['assets/main.css'] as { source: string }).source;
+}
+
 describe('lismCss (umbrella / vite)', () => {
   test('purge なし: config alias + typegen + CSS ビルドの3プラグイン', () => {
     expect(lismCss().map((p) => p.name)).toEqual(['lism-css:config-alias', 'lism-css:typegen', 'lism-css:css']);
@@ -141,21 +173,6 @@ describe('lismCss (integrated / astro)', () => {
       fs.rmSync(tmp, { recursive: true, force: true });
     }
   });
-
-  test('astro:build:start は known を構築しても例外を投げない', async () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-astro-'));
-    writeUserConfig(tmp);
-    try {
-      const setup = lismCssForAstro({ purge: true })[0];
-      await setup.hooks['astro:config:setup']?.({
-        config: { root: pathToFileURL(tmp) },
-        updateConfig: vi.fn(),
-      } as never);
-      await expect(setup.hooks['astro:build:start']?.({} as never)).resolves.toBeUndefined();
-    } finally {
-      fs.rmSync(tmp, { recursive: true, force: true });
-    }
-  }, 15000);
 });
 
 describe('lismTypegen hooks', () => {
@@ -246,15 +263,28 @@ describe('lismConfigAlias handleHotUpdate', () => {
 });
 
 describe('lismCss known / purge hooks', () => {
-  test('known プラグインの buildStart は custom prop を known に載せる', async () => {
+  test('buildStart 前は custom クラスを unknown として残し、後は purge する', async () => {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-known-'));
     writeUserConfig(tmp);
     try {
       const plugins = lismCss({ purge: true });
       const knownPlugin = plugins.find((p) => p.name === 'lism-css:known');
+      const purge = plugins.find((p) => p.name === 'lism-css:purge');
       if (!knownPlugin) throw new Error('lism-css:known not found');
+      if (!purge) throw new Error('lism-css:purge not found');
+
+      const before = makeCssBundle();
+      await callGenerateBundle(purge, before);
+      expect(cssSource(before)).toContain('-p\\:20');
+      expect(cssSource(before)).toContain('-myz\\:9');
+
       getHook(knownPlugin, 'configResolved')({ root: tmp } as never);
-      await expect(getHook(knownPlugin, 'buildStart')()).resolves.toBeUndefined();
+      await getHook(knownPlugin, 'buildStart')();
+
+      const after = makeCssBundle();
+      await callGenerateBundle(purge, after);
+      expect(cssSource(after)).toContain('-p\\:20');
+      expect(cssSource(after)).not.toContain('-myz\\:9');
     } finally {
       fs.rmSync(tmp, { recursive: true, force: true });
     }
@@ -265,28 +295,59 @@ describe('lismCss known / purge hooks', () => {
     const purge = plugins.find((p) => p.name === 'lism-css:purge');
     if (!purge) throw new Error('lism-css:purge not found');
 
-    const bundle: Record<string, unknown> = {
-      'assets/main.css': {
-        type: 'asset',
-        fileName: 'assets/main.css',
-        source: '.-p\\:20{padding:var(--s20)}.-m\\:10{margin:var(--s10)}',
-      },
-      'assets/app.js': {
-        type: 'chunk',
-        fileName: 'assets/app.js',
-        code: 'const cls = "-p:20";',
-      },
-    };
-    const ctx = { info: vi.fn(), warn: vi.fn() };
-    await (getHook(purge, 'generateBundle') as (this: unknown, opts: unknown, bundle: unknown, isWrite: boolean) => unknown).call(
-      ctx,
-      {},
-      bundle,
-      false
-    );
+    const bundle = makeCssBundle('.-p\\:20{padding:var(--s20)}.-m\\:10{margin:var(--s10)}');
+    await callGenerateBundle(purge, bundle);
 
-    const source = (bundle['assets/main.css'] as { source: string }).source;
-    expect(source).toContain('-p\\:20');
-    expect(source).not.toContain('-m\\:10');
+    expect(cssSource(bundle)).toContain('-p\\:20');
+    expect(cssSource(bundle)).not.toContain('-m\\:10');
   });
+
+  test('astro:build:start 前は custom クラスを unknown として残し、後は purge する', async () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-astro-known-'));
+    const dist = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-astro-dist-'));
+    writeUserConfig(tmp);
+    const cssPath = path.join(dist, 'styles.css');
+    const writeDist = () => {
+      fs.writeFileSync(cssPath, CUSTOM_PROP_CSS);
+      fs.writeFileSync(path.join(dist, 'index.html'), '<div class="-p:20"></div>');
+    };
+    const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+    try {
+      const integrations = lismCssForAstro({ purge: true });
+      const setup = integrations[0];
+      const purge = integrations.find((i) => i.name === 'lism-css:purge');
+      if (!purge) throw new Error('lism-css:purge not found');
+
+      await setup.hooks['astro:config:setup']?.({
+        config: { root: pathToFileURL(tmp) },
+        updateConfig: vi.fn(),
+      } as never);
+
+      writeDist();
+      await purge.hooks['astro:build:done']?.({
+        dir: pathToFileURL(`${dist}/`),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+      expect(fs.readFileSync(cssPath, 'utf8')).toContain('-p\\:20');
+      expect(fs.readFileSync(cssPath, 'utf8')).toContain('-myz\\:9');
+
+      await setup.hooks['astro:build:start']?.({} as never);
+
+      writeDist();
+      await purge.hooks['astro:build:done']?.({
+        dir: pathToFileURL(`${dist}/`),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+      const after = fs.readFileSync(cssPath, 'utf8');
+      expect(after).toContain('-p\\:20');
+      expect(after).not.toContain('-myz\\:9');
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+      fs.rmSync(dist, { recursive: true, force: true });
+    }
+  }, 15000);
 });
