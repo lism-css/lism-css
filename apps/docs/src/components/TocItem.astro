@@ -1,5 +1,6 @@
 ---
 import type { TocItem as TocItemType } from '../lib/generateToc';
+import { PAGE_TITLE_ID } from '../lib/generateToc';
 import { Stack, ListItem } from 'lism-css/astro';
 import NavLink from '@parts/NavLink.astro';
 
@@ -9,11 +10,14 @@ interface Props {
 }
 
 const { item, depth = 0 } = Astro.props;
+// 先頭の Top は初期表示からカレントにする（JS 初期化待ちでワンテンポ遅れるのを防ぐ）
+// ハッシュ付きアクセス時は対象見出し側に任せる
+const isActive = item.slug === PAGE_TITLE_ID && !Astro.url.hash;
 ---
 
 <ListItem data-nested={depth > 0 ? depth : undefined} style={depth > 0 ? { '--nestedDepth': depth } : undefined}>
   {/* data-toc-link: スクロール連動でアクティブ状態を制御するための属性 */}
-  <NavLink href={`#${item.slug}`} data-toc-link={item.slug}>
+  <NavLink href={`#${item.slug}`} data-toc-link={item.slug} isActive={isActive}>
     {item.text}
   </NavLink>
   {

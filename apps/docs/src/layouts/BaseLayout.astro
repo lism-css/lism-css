@@ -73,7 +73,8 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
         <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="z--main c--shadow-box c--scroll" ov-y="auto">
-          <span class="u--srOnly" id="_top" aria-hidden="true"></span>
+          {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
+          <span id="_top" class="c--scrollTarget" aria-hidden="true"></span>
           <slot />
           <Footer />
         </Container>

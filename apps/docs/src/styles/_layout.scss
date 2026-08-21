@@ -112,6 +112,13 @@ html {
   list-style: none;
 }
 
+/* アンカー着地用（フロー内の高さ0。absolute の srOnly だとハッシュスクロールがずれる） */
+.c--scrollTarget {
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+
 /* .hero {} */
 .c--hero_content {
   min-width: 20rem;
