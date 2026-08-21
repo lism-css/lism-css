@@ -23,7 +23,7 @@ const EMBED_ON_VALUE = '1';
  */
 export type ViewerRoute = { view: 'gallery' } | { view: 'tokens' } | { view: 'page'; pageId: string; embed: boolean };
 
-function readRouteFromUrl(): ViewerRoute {
+export function readRouteFromUrl(): ViewerRoute {
   const params = new URLSearchParams(window.location.search);
 
   // `?page=` wins over `?view=`: a page is always addressed by its id, so an
