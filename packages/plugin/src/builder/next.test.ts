@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterAll, describe, expect, test } from 'vitest';
+import type { ConfigWatcher, WatchLismConfigOptions } from './config-watcher';
 import { withLism } from './next';
 
 // withLism は受け取った config 型 `T` をそのまま返すため、`{}` を渡すと turbopack/webpack が型に現れない。
@@ -96,22 +97,27 @@ describe('withLism', () => {
     const configPath = path.join(root, 'lism.config.js');
     fs.writeFileSync(configPath, 'export default { props: { myz: { prop: "zIndex", utils: { "9": "9" } } } };\n');
 
-    // dev フェーズで起動 → 初回生成 + watcher 起動（watcher は unref 済みなのでプロセスを保持しない）。
-    await withLism({}, { projectRoot: root })('phase-development-server');
+    // 実 fs.watch / debounce には頼らず、webpack.test.ts と同じくコールバックを捕捉して直接発火する。
+    let captured: WatchLismConfigOptions | undefined;
+    const watchConfig = (opts: WatchLismConfigOptions): ConfigWatcher => {
+      captured = opts;
+      return { close() {} };
+    };
+
+    await withLism({}, { projectRoot: root, watchConfig })('phase-development-server');
+    expect(captured?.configPath).toBe(configPath);
+    expect(typeof captured?.onChange).toBe('function');
+
     const dtsPath = path.join(root, 'lism-env.d.ts');
     const before = fs.readFileSync(dtsPath, 'utf8');
 
-    // config を変更（別 custom prop を追加）→ watcher が型を再生成して内容が変わるはず。
+    // config を変更（別 custom prop を追加）→ onChange が型を再生成して内容が変わる。
     fs.writeFileSync(
       configPath,
       'export default { props: { myz: { prop: "zIndex", utils: { "9": "9" } }, myw: { prop: "width", utils: { x: "10px" } } } };\n'
     );
 
-    // 各再生成は SCSS コンパイルを伴い重い。初回 + (FSEvents エコー) + 実変更の再生成が積み上がるため余裕を持たせる。
-    const start = Date.now();
-    while (Date.now() - start < 16000 && fs.readFileSync(dtsPath, 'utf8') === before) {
-      await new Promise((r) => setTimeout(r, 50));
-    }
+    await captured?.onChange();
     expect(fs.readFileSync(dtsPath, 'utf8')).not.toBe(before);
-  }, 20000);
+  }, 15000);
 });
