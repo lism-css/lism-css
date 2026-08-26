@@ -17,7 +17,7 @@
     --docs-bg: #fafafa;
     --docsLink-bgc: #f5f9ff;
     --card-bg: var(--base);
-    --searchBtn-bg: var(--lightgray-hi);
+    --searchBtn-bg: var(--base-2);
     --themeModeSwitch-bgc: var(--lightgray-hi);
     --themeModeSwitch-btn: var(--text);
     --themeModeSwitch-btn-bg: var(--base);
@@ -31,7 +31,7 @@
 
     --bxsh--base: 0 1px 4px 0 rgba(0, 0, 0, 0.03), 0 2px 16px 0 rgba(0, 0, 0, 0.05);
     --bxsh--code: 0 10px 50px 0 rgba(0, 0, 0, 0.2), 0 20px 30px 0 rgba(0, 0, 0, 0.3);
-    --bxsh--search-border: inset 0 0 0 1px #eee;
+    --bxsh--search-border: inset 0 0 0 1px var(--divider);
   }
 
   // .u--cbox {
@@ -45,8 +45,8 @@
     --brand: hsl(192, 72%, 56%);
     --accent: #ff5080;
     /* // base */
-    --base: hsl(228, 10%, 8%);
-    --base-2: hsl(228, 8%, 20%);
+    --base: hsl(228, 0%, 15%);
+    --base-2: hsl(228, 3%, 20%);
     /* #2b2c30 */
 
     /* // content */
@@ -70,7 +70,7 @@
     --cbox-bgPct: 6%;
 
     // 下層コンテンツ色設定
-    --docs-bg: var(--base-2);
+    --docs-bg: #000;
     --docsLink-bgc: color-mix(in srgb, var(--base), var(--eyebrow-c) 10%);
     // --card-bg: var(--divider);
     --searchBtn-bg: var(--base-2);
@@ -95,12 +95,12 @@
   .c--shadow-box {
     border-radius: var(--bdrs--15);
     background-color: var(--base);
-    // background-color: var(--card-bg);
     box-shadow: var(--bxsh--base);
   }
 
-  .z--header .c--shadow-box {
-    background-color: color-mix(in srgb, white, transparent 25%);
+  /* トップページのみ半透明＋blur（下層 docs は --base のまま） */
+  .p--front .z--header .c--shadow-box {
+    background-color: color-mix(in srgb, var(--base), transparent 25%);
     backdrop-filter: blur(32px);
   }
 

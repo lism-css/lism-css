@@ -35,7 +35,7 @@ const buildInitialHtml = (
   <a class="l--flex -ai:center -p:10 -bgc:base -bdrs:20 -td:none -lh:s" href="${urlPrefix}/docs/" data-modal-open="search-modal">
     <span class="-px:10">Search documentation...</span>
     <span class="-px:10 -py:5 -c:text -bgc:base-2 -bdrs:10 -fz:s -lh:1 -lts:s -d:none -d_md -bd" style="--d_md: inline-block">
-      ⌘ K
+      ⌘K
     </span>
   </a>
 </div>`;
