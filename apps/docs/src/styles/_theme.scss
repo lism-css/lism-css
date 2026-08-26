@@ -81,7 +81,7 @@
   }
 }
 
-@layer lism-component {
+@layer lism-custom {
   // ホバーエフェクト（文字色・背景色）のトランジション
   .c--iconBtn,
   .c--searchTrigger,
@@ -112,7 +112,7 @@
   }
 
   /* トップページのみ半透明＋blur（下層 docs は --base のまま） */
-  .p--front .z--header .c--shadow-box {
+  .p--front .c--siteHeader .c--shadow-box {
     background-color: color-mix(in srgb, var(--base), transparent 25%);
     backdrop-filter: blur(32px);
   }

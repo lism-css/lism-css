@@ -5,8 +5,8 @@ import SiteNav from './SiteNav.astro';
 // import LanguageSelect from './LanguageSelect.astro';
 ---
 
-<Stack as="aside" class="z--sidebar" isContainer g="10" {...Astro.props}>
-  <Stack class="z--sidebar__nav" fx="1" min-h="0">
+<Stack as="aside" class="c--siteSidebar" isContainer g="10" {...Astro.props}>
+  <Stack class="c--siteSidebar_nav" fx="1" min-h="0">
     <SiteNav />
   </Stack>
   <!-- <Flex jc="between" g="5" px="15">
@@ -17,5 +17,5 @@ import SiteNav from './SiteNav.astro';
 
 <script>
   // アクティブなナビリンクまでサイドバーをスクロール（instant: ページ読み込み時にアニメーションさせない）
-  document.querySelector('.z--sidebar__nav .c--navLink._active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+  document.querySelector('.c--siteSidebar_nav .c--navLink._active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
 </script>

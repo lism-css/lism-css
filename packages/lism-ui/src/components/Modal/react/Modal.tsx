@@ -18,7 +18,7 @@ const Modal = <T extends ElementType = 'dialog'>({ children, className, duration
 
   const mergedStyle = duration ? { ...style, '--duration': duration } : style;
   return (
-    <Lism forwardedRef={ref} as="dialog" className={atts(className, 'c--modal')} set="plain" style={mergedStyle} {...(props as object)}>
+    <Lism forwardedRef={ref} as="dialog" className={atts(className, 'b--modal')} set="plain" style={mergedStyle} {...(props as object)}>
       {children}
     </Lism>
   );

@@ -102,16 +102,25 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
 
-  const DOCS_BASE_URL = 'https://lism-css.com/docs';
-
   return scored.map(({ entry, score }) => ({
     sourcePath: entry.sourcePath,
-    url: `${DOCS_BASE_URL}/${sourcePathToUrlSlug(entry.sourcePath)}/`,
+    url: slugToPageUrl(sourcePathToUrlSlug(entry.sourcePath)),
     heading: entry.title,
     snippet: entry.snippet,
     score,
     nextTool: getNextTool(entry, guideTopics),
   }));
+}
+
+const SITE_BASE_URL = 'https://lism-css.com';
+
+/**
+ * URL スラッグを公開ページの URL に変換する。
+ * `ui/` 配下はサイト直下（`/ui/...`）、それ以外は `/docs/` 配下で公開される
+ * （apps/docs の `getPostUrl` と同じルーティング規則）。
+ */
+function slugToPageUrl(slug: string): string {
+  return slug.startsWith('ui/') ? `${SITE_BASE_URL}/${slug}/` : `${SITE_BASE_URL}/docs/${slug}/`;
 }
 
 /** `sourcePath`（拡張子なし）の末尾セグメントを返す（例: `primitives/l--flex` → `l--flex`） */
@@ -141,9 +150,10 @@ function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): strin
   if (withoutExt.startsWith('property-class/')) {
     return `get_props_system(prop: "${basename}")`;
   }
-  // ui/examples/ は実装例ページ（Card, Hero 等）で get_component では解決できないため誘導しない。
+  // ui/block-examples/（Chat, Timeline 等）と ui/components/（Card, Hero 等）は、
+  // パッケージが提供するコンポーネントではなく Lism CSS での実装例ページなので get_component では解決できない。
   // 詳細が必要な場合は検索結果の url を参照してもらう。
-  if (withoutExt.startsWith('ui/examples/')) {
+  if (withoutExt.startsWith('ui/block-examples/') || withoutExt.startsWith('ui/components/')) {
     return null;
   }
 

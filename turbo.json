@@ -24,6 +24,10 @@
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/skills/lism-css-guide/**"],
       "outputs": ["dist/**"]
     },
+    "@lism-css/mockup#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "types/**"]
+    },
     "build:css": {
       "inputs": [
         "$TURBO_DEFAULT$",
@@ -35,6 +39,14 @@
     },
     "test": {
       "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "@lism-css/plugin#test": {
+      "dependsOn": ["build", "^build"],
+      "outputs": []
+    },
+    "@lism-css/mockup#test": {
+      "dependsOn": ["build", "^build"],
       "outputs": []
     },
     "lint": {

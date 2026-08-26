@@ -1,0 +1,199 @@
+---
+title: 'List'
+description: 'An example of a decorative list UI with icons (b--list) built with Lism CSS.'
+draft: true
+---
+
+import { Lism } from 'lism-css/astro';
+import '@/components/ex/List/style.css';
+
+
+An example of a decorative list that displays an icon at the start of each item. It is built with Lism primitives and a small amount of CSS (`b--list`).
+
+The icon is drawn with a pseudo-element's `mask`, so you can swap its color or image using only CSS variables.
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism as="ul" class="b--list">
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Lism as="ul" class="b--list">
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <ul class="b--list">
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Styles
+
+The List base styles are defined in the following CSS. Copy this CSS into your project to use it.
+
+If you copy it with the `@layer lism-block` wrapper as is, it fits into the core CSS layer order and can be overridden from the `lism-custom` layer.
+
+<SrcCode dir="docs" path="src/components/ex/List/style.css" title="list.css" />
+
+
+## Markup
+
+The markup consists of the following classes and variables.
+
+| Class / Variable | Description |
+|---|---|
+| `b--list` | Root element. Applied to `<ul>` / `<ol>`. |
+| `b--list--check` | Modifier that switches the icon to a check mark. |
+| `--_icon-c` | Icon color (defaults to `var(--brand)`). |
+| `--_icon-img` | The image displayed as the icon (a `url()` passed to `mask`). |
+| `--_icon-size` | Icon size (defaults to `1em`). |
+| `--_li-ps` | Space reserved at the start of each `li` (defaults to `1.875em`). |
+
+Since the spacing is reserved via `padding-inline-start` on the `li` itself, you can apply border-related Property Classes (such as `-bd-be`) directly to the `li`.
+
+
+## Examples
+
+### Check mark list (`b--list--check`)
+
+Adding `b--list--check` switches the icon to a check mark. This example also adds a border to each `li`.
+
+<Preview>
+  <PreviewTitle>`b--list--check`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism as="ul" class="b--list b--list--check">
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 1</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 2</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 4</li>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'b--list--check'
+    <Lism as="ul" class="b--list b--list--check">
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 1</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 2</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 4</li>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html 'b--list--check'
+    <ul class="b--list b--list--check">
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 1</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 2</li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">
+        List item 3
+        <ul>
+          <li>Nested item</li>
+          <li>Nested item</li>
+        </ul>
+      </li>
+      <li class="-bd-be -bdc:divider" style="--bds:dashed">List item 4</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Swapping the icon (`--_icon-c` / `--_icon-img`)
+
+Override the color with `--_icon-c` and the image with `--_icon-img` to create a list with any icon you like.
+
+<Preview>
+  <PreviewTitle>`--_icon-c` and `--_icon-img`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism
+      as="ul"
+      class="b--list"
+      style={{
+        '--_icon-c': 'var(--purple)',
+        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+      }}
+    >
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "'--_icon-c'" "'--_icon-img'"
+    <Lism
+      as="ul"
+      class="b--list"
+      style={{
+        '--_icon-c': 'var(--purple)',
+        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+      }}
+    >
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--_icon-c" "--_icon-img"
+    <ul
+      class="b--list"
+      style="
+        --_icon-c: var(--purple);
+        --_icon-img: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>');
+      "
+    >
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>

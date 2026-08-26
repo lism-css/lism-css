@@ -120,15 +120,27 @@ describe('PropValueTypes', () => {
     >();
   });
 
-  it('cg（column-gap）には space トークンの値を設定できる（bp: 0 のため非レスポンシブ）', () => {
+  it('cg（column-gap）には space トークンの値を設定できる（bp: 1 なので Responsive でラップされる）', () => {
     expectTypeOf<PropValueTypes['cg']>().toEqualTypeOf<
-      '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+      Responsive<
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+      >
     >();
   });
 
-  it('rg（row-gap）には space トークンの値を設定できる（bp: 0 のため非レスポンシブ）', () => {
+  it('rg（row-gap）には space トークンの値を設定できる（bp: 1 なので Responsive でラップされる）', () => {
     expectTypeOf<PropValueTypes['rg']>().toEqualTypeOf<
-      '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+      Responsive<
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+      >
+    >();
+  });
+
+  it('pl（padding-left）には space トークンの値を設定できる（bp: 1 なので Responsive でラップされる）', () => {
+    expectTypeOf<PropValueTypes['pl']>().toEqualTypeOf<
+      Responsive<
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+      >
     >();
   });
 
@@ -194,6 +206,7 @@ describe('ResponsivePropValueTypes', () => {
     type GtcExists = 'gtc' extends keyof Props ? true : false;
     type CgExists = 'cg' extends keyof Props ? true : false;
     type RgExists = 'rg' extends keyof Props ? true : false;
+    type PlExists = 'pl' extends keyof Props ? true : false;
 
     expectTypeOf<FzExists>().toEqualTypeOf<true>();
     expectTypeOf<DExists>().toEqualTypeOf<true>();
@@ -201,8 +214,9 @@ describe('ResponsivePropValueTypes', () => {
     expectTypeOf<HExists>().toEqualTypeOf<true>();
     expectTypeOf<ArExists>().toEqualTypeOf<true>();
     expectTypeOf<GtcExists>().toEqualTypeOf<true>();
-    expectTypeOf<CgExists>().toEqualTypeOf<false>();
-    expectTypeOf<RgExists>().toEqualTypeOf<false>();
+    expectTypeOf<CgExists>().toEqualTypeOf<true>();
+    expectTypeOf<RgExists>().toEqualTypeOf<true>();
+    expectTypeOf<PlExists>().toEqualTypeOf<true>();
 
     // bp: 1 が設定されていないプロパティ（含まれないはず）
     type FwExists = 'fw' extends keyof Props ? true : false;

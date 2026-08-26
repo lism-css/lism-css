@@ -10,7 +10,7 @@ export default function Dummy({ lang = 'en', ...props }: LismComponentProps & { 
       : 'Lorem ipsum dolor sit amet... ⚠️Dummy is deprecated. Please use DummyText from @lism-css/ui';
 
   return (
-    <Lism as="p" {...(props as LismComponentProps)}>
+    <Lism as="p" {...props}>
       {message}
     </Lism>
   );

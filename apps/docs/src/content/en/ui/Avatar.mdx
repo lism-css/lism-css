@@ -7,19 +7,22 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
 
 A component for displaying avatar images.
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--avatar l--frame -ar:1/1 -w -bdrs:99" style="--w: 4rem">
+    <div class="b--avatar l--frame -w" style="--w: 4rem">
       <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async" />
     </div>
     ```
@@ -27,27 +30,33 @@ A component for displaying avatar images.
 </Preview>
 
 
+## Styles
+
+The Avatar base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Avatar/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar).
+:::
+
+
 ## Usage
 
-Provided as `Avatar` (`c--avatar`) from the `@lism-css/ui` package.
+Provided as `Avatar` (`b--avatar`) from the `@lism-css/ui` package.
 
 ### Import
 
-<ImportPackage component="Avatar" packageName="@lism-css/ui" />
+<ImportPackage component="Avatar" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
 
 | Prop | Description |
 |---|---|
-|`size`| Specifies the size of the avatar. |
+|`size`| Specifies the size of the avatar. Default: `"2em"` |
 |`src`| Path to the avatar image. |
 |`alt`| Alt text for the image. |
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar).
 
 
 ## Examples
@@ -68,10 +77,10 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--avatar l--frame -ar:1/1 -w -bdrs:99" style="--w: 4rem">
+    <div class="b--avatar l--frame -w" style="--w: 4rem">
       <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async" />
     </div>
-    <div class="c--avatar l--frame -ar:1/1 -w -bdrs:99 -bd -bxsh:20" style="--w: 5rem; --bdw: 2px; --bdc: var(--base)">
+    <div class="b--avatar l--frame -w -bd -bxsh:20" style="--w: 5rem; --bdw: 2px; --bdc: var(--base)">
       <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async" />
     </div>
     ```

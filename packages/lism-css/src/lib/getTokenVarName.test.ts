@@ -25,6 +25,11 @@ describe('getTokenVarName', () => {
       expect(getTokenVarName('color', 'brand')).toBe('--brand');
       expect(getTokenVarName('palette', 'red')).toBe('--red');
     });
+
+    test('vars（空プレフィックス: キーがそのまま変数名）', () => {
+      expect(getTokenVarName('vars', '--L')).toBe('--L');
+      expect(getTokenVarName('vars', '--fz-mol')).toBe('--fz-mol');
+    });
   });
 
   test('getMaybeTokenValue と同じ変数名を導出する（解決名と出力名の一致）', () => {

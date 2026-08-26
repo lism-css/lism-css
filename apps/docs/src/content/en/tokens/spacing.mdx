@@ -67,42 +67,39 @@ Reference: [On typography and spacing scaling design](https://css-notes.com/layo
 
 ## Supported Property Classes
 
-Spacing tokens work with `padding`, `margin`, and `gap` property classes, but **not every property has a preset class**.
+Spacing tokens work with every property class in the `padding`, `margin`, and `gap` families.
 
-### Full Support (Token Values 5–80)
+### Supported Properties (Token Values 5–80)
 
-The following properties have property classes for all spacing tokens: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`.
+The following properties have property classes for the spacing tokens `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`. All of them support breakpoint variants as well.
 
-| Property | CSS | Class examples | BP |
-|---|---|---|---|
-| `p` | `padding` | `-p:5`, `-p:20`, ... | ○ |
-| `px` | `padding-inline` | `-px:10`, `-px:30`, ... | ○ |
-| `py` | `padding-block` | `-py:15`, `-py:40`, ... | ○ |
-| `m` | `margin` | `-m:10`, `-m:20`, ... | ○ |
-| `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... | ○ |
-| `my` | `margin-block` | `-my:10`, `-my:20`, ... | ○ |
-| `mbs` | `margin-block-start` | `-mbs:10`, `-mbs:20`, ... | ○ |
-| `g` | `gap` | `-g:10`, `-g:20`, ... | ○ |
+| Property | CSS | Class examples |
+|---|---|---|
+| `p` | `padding` | `-p:5`, `-p:20`, ... |
+| `px` | `padding-inline` | `-px:10`, `-px:30`, ... |
+| `py` | `padding-block` | `-py:15`, `-py:40`, ... |
+| `ps` | `padding-inline-start` | `-ps:10`, `-ps:20`, ... |
+| `pe` | `padding-inline-end` | `-pe:10`, `-pe:20`, ... |
+| `pbs` | `padding-block-start` | `-pbs:10`, `-pbs:20`, ... |
+| `pbe` | `padding-block-end` | `-pbe:10`, `-pbe:20`, ... |
+| `pl`, `pr`, `pt`, `pb` | Physical direction padding | `-pl:10`, `-pt:20`, ... |
+| `m` | `margin` | `-m:10`, `-m:20`, ... |
+| `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... |
+| `my` | `margin-block` | `-my:10`, `-my:20`, ... |
+| `ms` | `margin-inline-start` | `-ms:10`, `-ms:20`, ... |
+| `me` | `margin-inline-end` | `-me:10`, `-me:20`, ... |
+| `mbs` | `margin-block-start` | `-mbs:10`, `-mbs:20`, ... |
+| `mbe` | `margin-block-end` | `-mbe:10`, `-mbe:20`, ... |
+| `ml`, `mr`, `mt`, `mb` | Physical direction margin | `-ml:10`, `-mt:20`, ... |
+| `g` | `gap` | `-g:10`, `-g:20`, ... |
+| `cg` | `column-gap` | `-cg:10`, `-cg:20`, ... |
+| `rg` | `row-gap` | `-rg:10`, `-rg:20`, ... |
 
 `gap` also supports `inherit`.
 
-### No Preset Classes
-
-These properties have no preset spacing-token classes, but you can still specify values via CSS custom properties (`--ps`, etc.) or JSX props (`ps="20"`, etc.).
-
-| Property | CSS |
-|---|---|
-| `ps` | `padding-inline-start` |
-| `pe` | `padding-inline-end` |
-| `pbs` | `padding-block-start` |
-| `pbe` | `padding-block-end` |
-| `pl`, `pr`, `pt`, `pb` | Physical direction padding |
-| `ms` | `margin-inline-start` |
-| `me` | `margin-inline-end` |
-| `mbe` | `margin-block-end` |
-| `ml`, `mr`, `mt`, `mb` | Physical direction margin |
-| `cg` | `column-gap` |
-| `rg` | `row-gap` |
+:::info
+Prefer logical direction properties (`ps`, `mbs`, etc.), which follow the writing direction, over physical direction ones (`pl`, `mt`, etc.).
+:::
 
 ### Margin Auto Support
 

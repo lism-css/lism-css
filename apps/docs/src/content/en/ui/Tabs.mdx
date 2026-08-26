@@ -6,8 +6,8 @@ description: 'Documentation for the Tabs component provided by @lism-css/ui.'
 import { Icon } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro/Tabs';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import '../../ja/ui/_opt-in/_tabs-line.css'
 import '../../ja/ui/_opt-in/_tabs-emboss.css'
+import '../../ja/ui/_opt-in/_tabs-folder.css'
 import '../../ja/ui/_opt-in/_tabs-keep-height.css'
 
 
@@ -15,53 +15,10 @@ A component for creating tab elements.
 Only interaction behavior is provided — visual styling is intentionally left for you to customize.
 
 
-## Usage
+## Overview
 
-Provided as `Tabs` from the `@lism-css/ui` package.
-
-
-### Import
-
-<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" />
-
-
-### Props
-
-| Prop | Description |
-|---|---|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `c--tabs--{variant}` class. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used as the value for `aria-controls` to identify each tab. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. |
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`c--tabs_list`) wrapping the tab buttons. |
-
-
-### Structure
-
-```jsx
-<Tabs.Root>
-  <Tabs.Item>
-    <Tabs.Tab>Tab label</Tabs.Tab>
-    <Tabs.Panel>...Contents...</Tabs.Panel>
-  </Tabs.Item>
-</Tabs.Root>
-```
-
-:::warning
-Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`. Both must always be used together.
-:::
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs).
-
-
-
-## Examples
-
-### Basic example
 <Preview>
-  <PreviewTitle>Example</PreviewTitle>
+  <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30">
     <Tabs.Root>
       <Tabs.Item>
@@ -84,7 +41,7 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
@@ -97,120 +54,87 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    ```
+```html
+<div class="b--tabs b--tabs--default l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
-
-### Default open tab
-
-Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
-(Index numbers start from `1`.)
-
-<Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p="30">
-    <Tabs.Root defaultIndex={2}>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx "defaultIndex=\{2\}"
-    <Tabs.Root defaultIndex={2}>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-    ```
-  </PreviewCode>
-</Preview>
+:::warning
+Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`. Both must always be used together.
+:::
 
 
-### Side-by-side tab layout
+## Styles
 
-Setting `grid-template: 'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`c--tabs`) places the tab list and content side by side.
+The Tabs base styles are defined in the following CSS.
 
-At the same time, changing the tab list (`c--tabs_list`) buttons to stack vertically (`flex-direction: column;`) achieves the following layout.
+<SrcCode dir="lism-ui" path="src/components/Tabs/_style.css" title="_style.css" />
 
-<Preview>
-  <PreviewTitle>Example: side-by-side layout on `@sm` and above</PreviewTitle>
-  <PreviewArea p="30" resize>
-    <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
-      <Tabs.Item>
-        <Tabs.Tab>
-          <Fragment>Tab 1</Fragment>
-        </Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>
-          <Fragment>Tab 2</Fragment>
-        </Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-    ```
-  </PreviewCode>
-</Preview>
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs).
+:::
 
 
-## Opt-in
+## Usage
+
+Provided as `Tabs` from the `@lism-css/ui` package.
 
 
-### Style variation examples
+### Import
 
-`c--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are handy for styling.
-(They can be used in the same way as `--_isHov` and `--_notHov` from [`set--hov`](/en/docs/property-class/hov#set--hov).)
+<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" css="style.css" />
 
-Here are a few styling examples.
 
-#### `c--tabs--line`
+### Props
 
-<PreviewTitle>Required additional CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-line.css" />
+| Prop | Description |
+|---|---|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`| Outputs the `b--tabs--{variant}` class. Defaults to `default`, and `line` is also provided out of the box. When you specify your own variant, the default variant's decoration (`b--tabs--default`) no longer applies, so you can build your own styles without resetting the initial ones. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used to generate each tab button's id (`{tabId}-{index}-tab`), each panel's id (`{tabId}-{index}`), and the value of `aria-controls`. If omitted, an ID is generated automatically. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. Values out of range (e.g. a number greater than the number of tabs) fall back to `1`. |
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`b--tabs_list`) wrapping the tab buttons. |
 
+{/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | Specifies the tab label text. | */}
+
+{/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`| Outputs `[data-tabs-height="keep"]`, fixing the overall height of the tabs to the tallest content panel. | */}
+
+
+### Keyboard interactions
+
+When a tab button has focus, the following keyboard interactions are available.
+
+| Key | Action |
+|---|---|
+|<kbd>←</kbd> <kbd>→</kbd>| Moves focus to the previous or next tab and selects it, looping to the opposite end when it reaches the first or last tab. |
+|<kbd>Home</kbd>| Moves to and selects the first tab. |
+|<kbd>End</kbd>| Moves to and selects the last tab. |
+
+For a vertical tab list, pass `aria-orientation="vertical"` through `listProps`. The arrow keys then switch to <kbd>↑</kbd> and <kbd>↓</kbd>.
+
+```jsx
+<Tabs.Root listProps={{ 'aria-orientation': 'vertical' }}>
+```
+
+:::note
+A horizontal tab list (the default) deliberately ignores <kbd>↑</kbd> and <kbd>↓</kbd> so that those keys keep their normal browser scrolling behavior.
+
+Note that `aria-orientation` is an HTML attribute, so its value cannot change with the viewport width. For layouts that switch between horizontal and vertical responsively, keep the default (horizontal, <kbd>←</kbd> <kbd>→</kbd>).
+:::
+
+
+## Examples
+
+### variant="line"
+
+Specify `variant="line"` for a line-style tab list that underlines the selected tab.
 
 <Preview>
   <PreviewTitle>`variant='line'`</PreviewTitle>
@@ -248,9 +172,145 @@ Here are a few styling examples.
     </Tabs.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--line l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
 </Preview>
 
-#### `c--tabs--emboss`
+
+### Default open tab
+
+Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
+(Index numbers start from `1`.)
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="30">
+    <Tabs.Root defaultIndex={2}>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "defaultIndex=\{2\}"
+    <Tabs.Root defaultIndex={2}>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: "/>
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Specify the initial tab via URL parameter
+
+Opening a page with `?lism-tab={tabId}-{index}` in the URL displays the specified tab as selected from the start.
+
+To use this feature, explicitly set `tabId` on `<Tabs.Root>`.
+(If `tabId` is omitted, an ID is generated automatically, so it can't be targeted from the URL.)
+
+```jsx 'tabId="sample-tabs"'
+<Tabs.Root tabId="sample-tabs">
+  <Tabs.Item>
+    <Tabs.Tab>Tab 1</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+  <Tabs.Item>
+    <Tabs.Tab>Tab 2</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+</Tabs.Root>
+```
+
+Visiting a page with the tabs above using `?lism-tab=sample-tabs-2` displays the second tab as selected.
+
+
+### Vertical tabs
+
+Setting `grid-template: 'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`b--tabs`) places the tab list and content side by side.
+
+At the same time, changing the tab list (`b--tabs_list`) buttons to stack vertically (`flex-direction: column;`) achieves the following layout.
+
+<Preview>
+  <PreviewTitle>Example: side-by-side layout on `@sm` and above</PreviewTitle>
+  <PreviewArea p="30" resize>
+    <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
+      <Tabs.Item>
+        <Tabs.Tab>
+          <Fragment>Tab 1</Fragment>
+        </Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>
+          <Fragment>Tab 2</Fragment>
+        </Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: "/>
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Opt-in
+
+This is an example of creating your own style variation.
+
+`b--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are handy for styling.
+(They can be used in the same way as `--_isHov` and `--_notHov` from [`set--hov`](/en/docs/property-class/hov#set--hov).)
+
+### variant="emboss"
 
 <PreviewTitle>Required additional CSS</PreviewTitle>
 <SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />
@@ -276,6 +336,52 @@ Here are a few styling examples.
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'variant="emboss"'
     <Tabs.Root variant="emboss">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### variant="folder"
+
+This is an example of a folder-style variation where the tab buttons appear connected to the panel.
+
+<PreviewTitle>Required additional CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-folder.css" />
+
+<Preview>
+  <PreviewTitle>`variant='folder'`</PreviewTitle>
+  <PreviewArea p="30">
+    <Tabs.Root variant="folder">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'variant="folder"'
+    <Tabs.Root variant="folder">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>

@@ -13,4 +13,4 @@ type Props<Tag extends HTMLTag = 'details'> = Polymorphic<{ as: Tag }> &
 const { class: className, as = 'details', open, ...props } = Astro.props;
 ---
 
-<Lism as={as} class={atts(className, 'c--details')} open={open} {...props}><slot /></Lism>
+<Lism as={as} class={atts(className, 'b--details')} open={open} {...props}><slot /></Lism>

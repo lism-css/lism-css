@@ -4,7 +4,7 @@
 
 共通の考え方:
 
-- セクションの外殻は`Group`（`as="header"`/`as="section"`/`as="footer"`）で意味付けし、サイト領域には`z--*`、ページ固有の領域には`p--*`を付ける（[`css-rules.md`](../css-rules.md#独自プレフィックス)）。
+- セクションの外殻は`Group`（`as="header"`/`as="section"`/`as="footer"`）で意味付けし、`c--siteHeader`のような何のパーツかを示す独自クラス名を付ける（ページ固有の領域も`c--frontHero`のようにslug等を含めて`c--`で命名する。[`css-rules.md`](../css-rules.md#独自クラスの選び方2分類)）。
 - 「全幅の背景＋中央寄せの本文幅」は、外殻`Group`（背景色・縦padding）＋`hasGutter`（サイト共通の左右余白）＋内側`Wrapper`（コンテンツ幅）の組み合わせで作る。`max-width`をpxで直書きしない。
 - 縦の並びは`Stack`、横並びは`Cluster`に任せ、余白はすべて`g`/`py`などのトークンPropsで表す。
 - セクションの高さをデザインpxで固定しない。高さは余白（`py`）とコンテンツが決める。
@@ -16,7 +16,7 @@
 ```jsx
 import { Group, Wrapper, Cluster, Link } from 'lism-css/astro';
 
-<Group as="header" className="z--header" bgc="base" py="20" hasGutter>
+<Group as="header" className="c--siteHeader" bgc="base" py="20" hasGutter>
   <Wrapper contentSize="xl">
     <Cluster jc="between" g="20">
       <Link href="/" fw="bold" fz="l">Site Name</Link>
@@ -40,7 +40,7 @@ import { Group, Wrapper, Cluster, Link } from 'lism-css/astro';
 ```jsx
 import { Group, Wrapper, Stack, Cluster, Heading, Text } from 'lism-css/astro';
 
-<Group as="section" className="p--frontHero" bgc="base-2" py={['60', null, '80']} hasGutter isContainer>
+<Group as="section" className="c--frontHero" bgc="base-2" py={['60', null, '80']} hasGutter isContainer>
   <Wrapper contentSize="l">
     <Stack g="30" ai="center" ta="center">
       <Heading level="1" fz={['3xl', null, '5xl']}>キャッチコピー</Heading>
@@ -60,7 +60,7 @@ import { Group, Wrapper, Stack, Cluster, Heading, Text } from 'lism-css/astro';
 ```jsx
 import { Group, Wrapper, Stack, AutoColumns, Text, Divider } from 'lism-css/astro';
 
-<Group as="footer" className="z--footer" bgc="text" c="base" py="60" hasGutter isContainer>
+<Group as="footer" className="c--siteFooter" bgc="text" c="base" py="60" hasGutter isContainer>
   <Wrapper contentSize="xl">
     <Stack g="40">
       <AutoColumns cols="12rem" g="40">
@@ -82,7 +82,7 @@ import { Group, Wrapper, Stack, AutoColumns, Text, Divider } from 'lism-css/astr
 ```jsx
 import { Group, Wrapper, Stack, Heading, Columns } from 'lism-css/astro';
 
-<Group as="section" className="p--frontFeatures" py="70" hasGutter isContainer>
+<Group as="section" className="c--frontFeatures" py="70" hasGutter isContainer>
   <Wrapper contentSize="l">
     <Stack g="40">
       <Heading level="2" fz="2xl" ta="center">Features</Heading>

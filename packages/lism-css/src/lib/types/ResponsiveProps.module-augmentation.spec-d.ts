@@ -75,13 +75,35 @@ describe('BreakpointRegistry module augmentation', () => {
     expectTypeOf(withTrait).toExtend<LismPropsBase>();
   });
 
-  it('FullModeRegistry 拡張で bp:0 だった props も responsive 指定が解禁される（#425）', () => {
-    // defaults では pl/ml/cg は bp:0、bg は bp 未設定（いずれも非レスポンシブ）。
+  it('full モードでも border ショートハンド（bd 系）はレスポンシブ化されず、サブプロパティが解禁される（#513）', () => {
+    // bd 系11キーは full preset の bp 拡張から除外されるため、レスポンシブ記法は型エラーになる
+    const invalidBd: PropValueTypes = {
+      // @ts-expect-error bd はレスポンシブ非対応（bds / bdw / bdc を使う）
+      bd: ['1px solid red', '2px solid blue'],
+    };
+    const invalidBdX: PropValueTypes = {
+      // @ts-expect-error bd-x はレスポンシブ非対応
+      'bd-x': { base: '1px solid red', md: '2px solid blue' },
+    };
+    // 代わりに border サブプロパティ（bds / bdc、bdw は defaults から対応済み）がレスポンシブ化される
+    const validSubProps: PropValueTypes = {
+      bds: ['dashed', 'dotted'],
+      bdc: { base: 'divider', md: 'accent' },
+      bdw: ['1px', '2px'],
+    };
+
+    expectTypeOf(invalidBd).toExtend<PropValueTypes>();
+    expectTypeOf(invalidBdX).toExtend<PropValueTypes>();
+    expectTypeOf(validSubProps).toExtend<PropValueTypes>();
+  });
+
+  it('FullModeRegistry 拡張で defaults では非レスポンシブな props も responsive 指定が解禁される（#425）', () => {
+    // defaults では ta/ff/fs/bg はいずれも bp 未設定（非レスポンシブ）。
     // full モードを型に反映すると、配列・オブジェクト記法が型エラーにならなくなる。
     const value: PropValueTypes = {
-      pl: ['10', '20'], // paddingLeft（space トークン値はそのまま）
-      ml: { base: '10', md: '20' }, // marginLeft
-      cg: ['10', '20'], // columnGap
+      ta: ['start', 'center'], // textAlign
+      ff: { base: 'base', md: 'mono' }, // fontFamily（ff トークン値はそのまま）
+      fs: ['italic', 'normal'], // fontStyle
       bg: { base: 'red', lg: 'blue' }, // フォールバック型でも responsive 化
     };
 

@@ -2,65 +2,18 @@
 title: 'NavMenu'
 description: 'Documentation for the NavMenu component provided by @lism-css/ui.'
 ---
-import { Lism, Icon, Spacer, Box } from 'lism-css/astro'
+import { Lism, Icon, Box, Flex, Stack, Frame } from 'lism-css/astro'
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 
 A component for creating navigation menu lists.
 
 
-## Usage
+## Overview
 
-Provided as `NavMenu` (`c--navMenu`) from the `@lism-css/ui` package.
-
-
-### Import
-
-<ImportPackage component="NavMenu" packageName="@lism-css/ui" css="style.css" />
-
-
-### Props
-
-| Prop | Description |
-|---|---|
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | Outputs `--hov-bgc`. (For use when `-hov:-bgc` is applied to `c--navMenu_link`.) |
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | Outputs `--hov-c`. (For use when `-hov:-c` is applied to `c--navMenu_link`.) |
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | Outputs the `--_item-p` variable. Adjusts the padding of each link at once. |
-| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | Specifies the hover style. Defaults to `-bgc`, changing the background color on hover. |
-
-
-### Structure
-
-```jsx
-<NavMenu.Root>
-  <NavMenu.Item>
-    <NavMenu.Link href="">Menu item</NavMenu.Link>
-  </NavMenu.Item>
-  <NavMenu.Item>
-    <NavMenu.Link href="">Menu item</NavMenu.Link>
-    <NavMenu.Nest>
-      <NavMenu.Item>
-        <NavMenu.Link href="">Nested item</NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Nest>
-  </NavMenu.Item>
-</NavMenu.Root>
-```
-
-Use `<NavMenu.Nest>` to create nested menus.
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu).
-
-
-## Examples
-
-### Simple example
 <Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p="20">
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="15">
     <NavMenu.Root>
       <NavMenu.Item>
         <NavMenu.Link href="#menu">
@@ -79,7 +32,7 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
       </NavMenu.Item>
     </NavMenu.Root>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <NavMenu.Root>
       <NavMenu.Item>
@@ -100,66 +53,60 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     </NavMenu.Root>
     ```
   </PreviewCode>
-</Preview>
-
-<Spacer h="10" />
-
-
-### Adding icons and badges
-<Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p="30">
-    <NavMenu.Root>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base">
-          <span>Menu item</span>
-          <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">New</Lism>
-          <Icon icon="caret-right" ms="auto" />
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base">
-          <span>Menu item</span>
-          <Icon icon="caret-right" ms="auto" />
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base">
-          <span>Menu item</span>
-          <Icon icon="caret-right" ms="auto" />
-        </NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Root>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <NavMenu.Root>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base">
-          <span>Menu item</span>
-          <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
-            New
-          </Lism>
-          <Icon icon="caret-right" ms="auto" />
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base">
-          <span>Menu item</span>
-          <Icon icon="caret-right" ms="auto" />
-        </NavMenu.Link>
-      </NavMenu.Item>
-      <NavMenu.Item>
-        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base">
-          <span>Menu item</span>
-          <Icon icon="caret-right" ms="auto" />
-        </NavMenu.Link>
-      </NavMenu.Item>
-    </NavMenu.Root>
-    ```
+  <PreviewCode slot="tab" label="HTML">
+```html
+<ul class="b--navMenu">
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc" href="#menu">Menu item 1</a>
+  </li>
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc" href="#menu">Menu item 2</a>
+  </li>
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc" href="#menu">Menu item 3</a>
+  </li>
+</ul>
+```
   </PreviewCode>
 </Preview>
 
+:::note
+Use `<NavMenu.Nest>` for nested structures.
+:::
+
+
+## Styles
+
+The NavMenu base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/NavMenu/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu).
+:::
+
+
+## Usage
+
+Provided as `NavMenu` (`b--navMenu`) from the `@lism-css/ui` package.
+
+
+### Import
+
+<ImportPackage component="NavMenu" packageName="@lism-css/ui" css="style.css" />
+
+
+### Props
+
+| Prop | Description |
+|---|---|
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | Outputs `--hov-bgc`. (For use when `-hov:-bgc` is applied to `b--navMenu_link`.) |
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | Outputs `--hov-c`. (For use when `-hov:-c` is applied to `b--navMenu_link`.) |
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | Outputs the `--_item-p` variable. Adjusts the padding of each link at once. |
+| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | Specifies the hover style. Defaults to `-bgc`, changing the background color on hover. |
+
+
+## Examples
 
 ### Setting common styles for all items at once
 
@@ -174,8 +121,8 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
 
 <Preview>
   <PreviewTitle>Common styles on the Root</PreviewTitle>
-  <PreviewArea p="30">
-    <NavMenu.Root bd itemP="30" hovBgc="text" hovC="base">
+  <PreviewArea p="15">
+    <NavMenu.Root bd itemP="20" hovBgc="text" hovC="base">
       <NavMenu.Item>
         <NavMenu.Link href="#menu1" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
@@ -187,9 +134,9 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
       </NavMenu.Item>
     </NavMenu.Root>
   </PreviewArea>
-  <PreviewCode>
-    ```jsx 'itemP="30"' 'hovBgc="text"' 'hovC="base"'
-    <NavMenu.Root bd itemP="30" hovBgc="text" hovC="base">
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'itemP="20"' 'hovBgc="text"' 'hovC="base"'
+    <NavMenu.Root bd itemP="20" hovBgc="text" hovC="base">
       <NavMenu.Item>
         <NavMenu.Link href="#menu1" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
@@ -202,16 +149,121 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
     </NavMenu.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<ul class="b--navMenu -bd" style="--hov-bgc:var(--text);--hov-c:var(--base);--_item-p:var(--s20)">
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc -hov:-c" href="#menu1">Menu item</a>
+  </li>
+  <li class="b--navMenu_item -bd-t">
+    <a class="b--navMenu_link -hov:-bgc -hov:-c" href="#menu2">Menu item</a>
+  </li>
+  <li class="b--navMenu_item -bd-t">
+    <a class="b--navMenu_link -hov:-bgc -hov:-c" href="#menu3">Menu item</a>
+  </li>
+</ul>
+```
+  </PreviewCode>
 </Preview>
 
+
+### Adding icons and badges
+
+{/* You can also wrap the text in a span and add -fx:1 */}
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="15">
+    <NavMenu.Root itemP="1em">
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu1" bgc="text" c="base">
+          <span>Menu item</span>
+          <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
+            <Fragment>New</Fragment>
+          </Lism>
+          <Icon icon="caret-right" ms="auto" />
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu2" bgc="text" c="base">
+          <span>Menu item</span>
+          <Icon icon="caret-right" ms="auto" />
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu3" bgc="text" c="base">
+          <span>Menu item</span>
+          <Icon icon="caret-right" ms="auto" />
+        </NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <NavMenu.Root>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu1" bgc="text" c="base">
+          <span>Menu item</span>
+          <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
+            New
+          </Lism>
+          <Icon icon="caret-right" ms="auto" />
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu2" bgc="text" c="base">
+          <span>Menu item</span>
+          <Icon icon="caret-right" ms="auto" />
+        </NavMenu.Link>
+      </NavMenu.Item>
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu3" bgc="text" c="base">
+          <span>Menu item</span>
+          <Icon icon="caret-right" ms="auto" />
+        </NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<ul class="b--navMenu" style="--_item-p:1em">
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc -bgc:text -c:base" href="#menu1">
+      <span>Menu item</span>
+      <span class="-bd -px:10 -bdrs:10 -fz:xs -fw:bold">New</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon -ms:auto" aria-hidden="true">
+        <path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path>
+      </svg>
+    </a>
+  </li>
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc -bgc:text -c:base" href="#menu2">
+      <span>Menu item</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon -ms:auto" aria-hidden="true">
+        <path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path>
+      </svg>
+    </a>
+  </li>
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc -bgc:text -c:base" href="#menu3">
+      <span>Menu item</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon -ms:auto" aria-hidden="true">
+        <path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path>
+      </svg>
+    </a>
+  </li>
+</ul>
+```
+  </PreviewCode>
+</Preview>
 
 
 ### Nested menus
 
 <Preview>
   <PreviewTitle>Nested menus</PreviewTitle>
-  <PreviewArea p="20">
-    <NavMenu.Root bd-y hovBgc="base-2">
+  <PreviewArea p="15">
+    <NavMenu.Root hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link href="#menu1">
           <Fragment>Menu item 1</Fragment>
@@ -248,9 +300,9 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
       </NavMenu.Item>
     </NavMenu.Root>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "NavMenu.Nest"
-    <NavMenu.Root bd-y hovBgc="base-2">
+    <NavMenu.Root hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link href="#menu1">
           Menu item 1
@@ -288,6 +340,34 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
     </NavMenu.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<ul class="b--navMenu" style="--hov-bgc:var(--base-2)">
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc" href="#menu1">Menu item 1</a>
+  </li>
+  <li class="b--navMenu_item -bd-t">
+    <a class="b--navMenu_link -hov:-bgc" href="#menu2">Menu item 2</a>
+    <ul class="b--navMenu_nest -bd-t">
+      <li class="b--navMenu_item">
+        <a class="b--navMenu_link -hov:-bgc" href="#child-menu1">Nested item</a>
+      </li>
+      <li class="b--navMenu_item -bd-t">
+        <a class="b--navMenu_link -hov:-bgc" href="#child-menu3">Nested item</a>
+        <ul class="b--navMenu_nest -bd-t">
+          <li class="b--navMenu_item">
+            <a class="b--navMenu_link -hov:-bgc" href="#child-menu4">Nested level 2 item</a>
+          </li>
+          <li class="b--navMenu_item -bd-t">
+            <a class="b--navMenu_link -hov:-bgc" href="#child-menu5">Nested level 2 item</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+```
+  </PreviewCode>
 </Preview>
 
 
@@ -298,8 +378,8 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p="20">
-    <NavMenu.Root bd-y hovBgc="base-2">
+  <PreviewArea p="15">
+    <NavMenu.Root bd-y itemP="0.75em" hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link href="#menu1">
           <Fragment>Menu item</Fragment>
@@ -313,7 +393,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
                 <Fragment>Menu item (Accordion)</Fragment>
               </Accordion.Button>
             </Accordion.Heading>
-            <Accordion.Panel>
+            <Accordion.Panel p="0">
               <NavMenu.Nest>
                 <NavMenu.Item>
                   <NavMenu.Link href="#child-menu1">
@@ -332,9 +412,9 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
       </NavMenu.Item>
     </NavMenu.Root>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "Accordion.Root" "NavMenu.Nest"
-    <NavMenu.Root bd-y hovBgc="base-2">
+    <NavMenu.Root bd-y itemP="0.75em" hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link href="#menu1">
           Menu item
@@ -348,7 +428,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
                 Menu item (Accordion)
               </Accordion.Button>
             </Accordion.Heading>
-            <Accordion.Panel>
+            <Accordion.Panel p="0">
               <NavMenu.Nest>
                 <NavMenu.Item>
                   <NavMenu.Link href="#child-menu1">
@@ -368,70 +448,304 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
     </NavMenu.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<ul class="b--navMenu -bd-y" style="--hov-bgc:var(--base-2);--_item-p:0.75em">
+  <li class="b--navMenu_item">
+    <a class="b--navMenu_link -hov:-bgc" href="#menu1">Menu item</a>
+  </li>
+  <li class="b--navMenu_item">
+    <div class="b--accordion">
+      <div class="b--accordion_item">
+        <div class="b--accordion_heading" role="heading">
+          <button
+            class="b--accordion_button set--plain -hov:-bgc -p"
+            style="--p:var(--_item-p)"
+            aria-controls="{id}"
+            aria-expanded="false"
+          >
+            Menu item (Accordion)
+            <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="b--accordion_panel" id="{id}" hidden="until-found">
+          <div class="b--accordion_content l--flow -p:0">
+            <ul class="b--navMenu_nest">
+              <li class="b--navMenu_item">
+                <a class="b--navMenu_link -hov:-bgc" href="#child-menu1">Nested item</a>
+              </li>
+              <li class="b--navMenu_item">
+                <a class="b--navMenu_link -hov:-bgc" href="#child-menu2">Nested item</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+```
+  </PreviewCode>
 </Preview>
 
 
 
-### Horizontal menu with hover-revealed submenu
+### Displaying submenus on hover
 
-An example of adding `fxd='row'` to `<NavMenu.Root>` to display items horizontally.
+Set `layout='flex'` on `<NavMenu.Root>` to lay out items horizontally, then add `set='hov'` to `<NavMenu.Item>` and `hov='in:show'` to the submenu element to reveal the child menu on hover.
 
 <Preview>
   <PreviewTitle>Showing nested menu on hover</PreviewTitle>
-  <PreviewArea p="20">
+  <PreviewArea p="15">
     <Box min-h="15rem">
-      <NavMenu.Root fxd="row" hl="s" itemP="10">
-        <NavMenu.Item>
-          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
-        </NavMenu.Item>
+      <NavMenu.Root layout="flex" hl="s" itemP="0.5em .75em" pos="relative">
         <NavMenu.Item set="hov" pos="relative">
-          <NavMenu.Link href="#menu3" ai="center" g="5">
+          <NavMenu.Link href="#menu3">
             <Fragment>
-              Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
+              Parent Item <Icon icon="caret-down" />
             </Fragment>
           </NavMenu.Link>
-          <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" ps="0" hl="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item>
-              <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
-            </NavMenu.Item>
-            <NavMenu.Item>
-              <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
-            </NavMenu.Item>
-          </NavMenu.Nest>
+          <Box hov="in:show" pos="absolute" t="100%" l="50%" w="12rem" pt="5" style={{ translate: '-50% 0' }}>
+            <Box fz="s" hl="s" bgc="base" bxsh="30" bd ov="hidden" p="5">
+              <NavMenu.Root>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu1">Nested item A</NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu2">Nested item B</NavMenu.Link>
+                </NavMenu.Item>
+              </NavMenu.Root>
+            </Box>
+          </Box>
         </NavMenu.Item>
-        <NavMenu.Item>
-          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
+        <NavMenu.Item set="hov" pos="static">
+          <NavMenu.Link href="#menu3">
+            <Fragment>
+              Parent Item <Icon icon="caret-down" />
+            </Fragment>
+          </NavMenu.Link>
+          <Box hov="in:show" pos="absolute" t="100%" l="0" w="100%" pt="5">
+            <Box fz="s" hl="s" bgc="base" bxsh="30" bd ov="hidden" p="5">
+              <NavMenu.Root layout="columns" cols="2" g="5" itemP="10">
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-a" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item A</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-b" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item B</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-c" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item C</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-d" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-4.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item D</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+              </NavMenu.Root>
+            </Box>
+          </Box>
         </NavMenu.Item>
       </NavMenu.Root>
     </Box>
   </PreviewArea>
-  <PreviewCode>
-    ```jsx 'fxd="row"'
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'layout="flex"'
     <Box min-h="15rem">
-      <NavMenu.Root fxd="row" hl="s" itemP="10">
-        <NavMenu.Item>
-          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
-        </NavMenu.Item>
+      <NavMenu.Root layout="flex" hl="s" itemP="0.5em .75em" pos="relative">
         <NavMenu.Item set="hov" pos="relative">
-          <NavMenu.Link href="#menu3" ai="center" g="5">
-            <Fragment>
-              Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
-            </Fragment>
+          <NavMenu.Link href="#menu3">
+              Parent Item <Icon icon="caret-down" />
           </NavMenu.Link>
-          <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" ps="0" hl="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item>
-              <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
-            </NavMenu.Item>
-            <NavMenu.Item>
-              <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
-            </NavMenu.Item>
-          </NavMenu.Nest>
+          <Box hov="in:show" pos="absolute" t="100%" l="50%" w="12rem" pt="5" style={{ translate: '-50% 0' }}>
+            <Box fz="s" hl="s" bgc="base" bxsh="30" bd ov="hidden" p="5">
+              <NavMenu.Root>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu1">Nested item A</NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu2">Nested item B</NavMenu.Link>
+                </NavMenu.Item>
+              </NavMenu.Root>
+            </Box>
+          </Box>
         </NavMenu.Item>
-        <NavMenu.Item>
-          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
+        <NavMenu.Item set="hov" pos="static">
+          <NavMenu.Link href="#menu3">
+            Parent Item <Icon icon="caret-down" />
+          </NavMenu.Link>
+          <Box hov="in:show" pos="absolute" t="100%" l="0" w="100%" pt="5">
+            <Box fz="s" hl="s" bgc="base" bxsh="30" bd ov="hidden" p="5">
+              <NavMenu.Root layout="columns" cols="2" g="5" itemP="10">
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-a" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item A</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-b" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item B</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-c" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item C</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+                <NavMenu.Item>
+                  <NavMenu.Link href="#child-menu-d" g="10">
+                    <Frame ar="1/1" bgc="base-2" w="3rem" bdrs="10">
+                      <img src="https://cdn.lism-css.com/img/a-4.jpg" alt="" width="960" height="640" />
+                    </Frame>
+                    <Stack>
+                      <span>Nested item D</span>
+                      <span class="-fz:s -o:p">This is the description for the item.</span>
+                    </Stack>
+                  </NavMenu.Link>
+                </NavMenu.Item>
+              </NavMenu.Root>
+            </Box>
+          </Box>
         </NavMenu.Item>
       </NavMenu.Root>
     </Box>
     ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="l--box -min-h" style="--min-h:15rem">
+  <ul class="b--navMenu l--flex -hl:s -pos:relative" style="--_item-p:0.5em .75em">
+    <li class="b--navMenu_item set--hov -pos:relative">
+      <a class="b--navMenu_link -hov:-bgc" href="#menu3">
+        <p>
+          Parent Item
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true">
+            <path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path>
+          </svg>
+        </p>
+      </a>
+      <div class="l--box -hov:in:show -pos:absolute -t:100% -l:50% -w -pt:5" style="translate:-50% 0;--w:12rem">
+        <div class="l--box -fz:s -hl:s -bgc:base -bxsh:30 -bd -ov:hidden -p:5">
+          <ul class="b--navMenu">
+            <li class="b--navMenu_item">
+              <a class="b--navMenu_link -hov:-bgc" href="#child-menu1">Nested item A</a>
+            </li>
+            <li class="b--navMenu_item">
+              <a class="b--navMenu_link -hov:-bgc" href="#child-menu2">Nested item B</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li class="b--navMenu_item set--hov -pos:static">
+      <a class="b--navMenu_link -hov:-bgc" href="#menu3">
+        <p>
+          Parent Item
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true">
+            <path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path>
+          </svg>
+        </p>
+      </a>
+      <div class="l--box -hov:in:show -pos:absolute -t:100% -l:0 -w:100% -pt:5">
+        <div class="l--box -fz:s -hl:s -bgc:base -bxsh:30 -bd -ov:hidden -p:5">
+          <ul class="b--navMenu l--columns -g:5" style="--_item-p:var(--s10);--cols:2">
+            <li class="b--navMenu_item">
+              <a class="b--navMenu_link -hov:-bgc -g:10" href="#child-menu-a">
+                <div class="l--frame -ar:1/1 -bgc:base-2 -w -bdrs:10" style="--w:3rem">
+                  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+                </div>
+                <div class="l--stack">
+                  <span>Nested item A</span>
+                  <span class="-fz:s -o:p">This is the description for the item.</span>
+                </div>
+              </a>
+            </li>
+            <li class="b--navMenu_item">
+              <a class="b--navMenu_link -hov:-bgc -g:10" href="#child-menu-b">
+                <div class="l--frame -ar:1/1 -bgc:base-2 -w -bdrs:10" style="--w:3rem">
+                  <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+                </div>
+                <div class="l--stack">
+                  <span>Nested item B</span>
+                  <span class="-fz:s -o:p">This is the description for the item.</span>
+                </div>
+              </a>
+            </li>
+            <li class="b--navMenu_item">
+              <a class="b--navMenu_link -hov:-bgc -g:10" href="#child-menu-c">
+                <div class="l--frame -ar:1/1 -bgc:base-2 -w -bdrs:10" style="--w:3rem">
+                  <img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" width="960" height="640" />
+                </div>
+                <div class="l--stack">
+                  <span>Nested item C</span>
+                  <span class="-fz:s -o:p">This is the description for the item.</span>
+                </div>
+              </a>
+            </li>
+            <li class="b--navMenu_item">
+              <a class="b--navMenu_link -hov:-bgc -g:10" href="#child-menu-d">
+                <div class="l--frame -ar:1/1 -bgc:base-2 -w -bdrs:10" style="--w:3rem">
+                  <img src="https://cdn.lism-css.com/img/a-4.jpg" alt="" width="960" height="640" />
+                </div>
+                <div class="l--stack">
+                  <span>Nested item D</span>
+                  <span class="-fz:s -o:p">This is the description for the item.</span>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+```
   </PreviewCode>
 </Preview>

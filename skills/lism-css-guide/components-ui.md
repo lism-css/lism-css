@@ -26,7 +26,6 @@ import { Button } from '@lism-css/ui/astro/Button';
 - [Badge](#badge)
 - [Button](#button)
 - [Callout](#callout)
-- [Chat](#chat)
 - [Details](#details)
 - [Modal](#modal)
 - [NavMenu](#navmenu)
@@ -52,7 +51,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 | `allowMultiple` | Root | `boolean` | — | 複数アイテムの同時展開を許可 |
 | `isOpen` | Item / Button / Panel | `boolean` | `false` | アイテムを初期展開。Item・Button・Panel の3つ揃えて指定（Item=`data-opened` 付与、Button=`aria-expanded`、Panel=`hidden` 解除） |
 | `as` | Heading | `string` | `div` | 見出しのHTMLタグ。`div` 時は `role='heading'` が自動付与。`h2`〜`h6` 指定時は role なし |
-| `flow` | Panel | `string` | — | パネル内コンテンツ領域（`c--accordion_content`）のフロー余白 |
+| `flow` | Panel | `string` | — | パネル内コンテンツ領域（`b--accordion_content`）のフロー余白 |
 
 ```jsx
 <Accordion.Root>
@@ -70,7 +69,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Alert/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert)
 
-短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。
+短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。`b--alert` クラスが付与される。
 プリセット: `alert`=alert/red, `point`=lightbulb/orange（`tip`も同じ）, `warning`=warning/yellow, `check`=check-circle/green, `help`=question/purple, `info`=info/blue, `note`=note/gray。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -90,13 +89,13 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Avatar/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar)
 
-アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`c--avatar` クラスが付与される。
+アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`b--avatar` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
 | `src` | `string` | — | 画像URL |
 | `alt` | `string` | — | 代替テキスト |
-| `size` | `string` | `'1.5em'` | アバターのサイズ |
+| `size` | `string` | `'2em'` | アバターのサイズ |
 
 ```jsx
 <Avatar src='/avatar.jpg' alt='User' size='48px' />
@@ -107,11 +106,11 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Badge/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge)
 
-バッジ（ラベル）コンポーネント。`span` 要素としてインライン表示。`c--badge` クラスが付与される。
+バッジ（ラベル）コンポーネント。`span` 要素としてインライン表示。`b--badge` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
-| `variant` | `string` | — | バリエーション（`'outline'` 等）。`c--badge--{variant}` クラスが出力 |
+| `variant` | `string` | — | バリエーション（`'outline'` 等）。`b--badge--{variant}` クラスが出力 |
 | `keycolor` | `string` | — | キーカラー |
 
 ```jsx
@@ -123,11 +122,11 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Button/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Button)
 
-ボタン型リンクコンポーネント。デフォルトで `a` 要素として出力。`c--button` クラスが付与される。
+ボタン型リンクコンポーネント。デフォルトで `a` 要素として出力。`b--button` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
-| `variant` | `string` | — | バリエーション（`'fill'`, `'outline'` 等）。`c--button--{variant}` クラスが出力 |
+| `variant` | `string` | — | バリエーション（`'fill'`, `'outline'` 等）。`b--button--{variant}` クラスが出力 |
 | `keycolor` | `string` | — | キーカラー |
 | `href` | `string` | — | リンク先URL |
 
@@ -140,7 +139,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Callout/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout)
 
-記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される（プリセット内容は [Alert](#alert) と同一）。
+記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される（プリセット内容は [Alert](#alert) と同一）。`b--callout` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
@@ -155,26 +154,6 @@ import { Button } from '@lism-css/ui/astro/Button';
 ```
 
 
-## Chat
-
-ソース: [Chat/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat)
-
-チャット風の吹き出しコンポーネント。Grid ベースの会話形式 UI。`c--chat` クラスが付与される。
-
-| Prop | 型 | デフォルト | 説明 |
-| --- | --- | --- | --- |
-| `name` | `string` | — | 発言者の名前 |
-| `avatar` | `string` | — | アバター画像の src |
-| `variant` | `'speak' \| 'think'` | `'speak'` | チャットタイプ |
-| `direction` | `'start' \| 'end'` | `'start'` | 表示位置 |
-| `keycolor` | `string` | `'gray'` | キーカラー |
-| `flow` | `string` | `'s'` | コンテンツ要素のフロー余白 |
-
-```jsx
-<Chat name='Alice' avatar='/alice.jpg'>Hello!</Chat>
-```
-
-
 ## Details
 
 ソース: [Details/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Details)
@@ -186,6 +165,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | Prop | 対象 | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- | --- |
 | `as` | Title | `string` | `'span'` | Title の HTML タグ |
+| `open` | Root | `boolean` | — | 初期展開状態（`details` 要素の `open` 属性） |
 | `--duration` | Root | `string` | — | 展開アニメーションの秒数（style 経由で指定） |
 
 ```jsx
@@ -230,7 +210,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ソース: [NavMenu/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu)
 
-ナビゲーションメニューコンポーネント。`c--navMenu` クラスが付与される。
+ナビゲーションメニューコンポーネント。`b--navMenu` クラスが付与される。
 
 **構造:** `NavMenu.Root > NavMenu.Item > NavMenu.Link`（`NavMenu.Nest` でネスト可能）
 
@@ -258,7 +238,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ソース: [Tabs/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs)
 
-タブ切り替え UI。タブクリックでコンテンツパネルを切り替える。スタイリングはほぼなく動きのみ提供。
+タブ切り替え UI。タブクリックまたは左右キー・Home/End でコンテンツパネルを切り替える。縦並びにする場合は `listProps` で `aria-orientation="vertical"` を指定すると上下キーに切り替わる。スタイリングはほぼなく動きのみ提供。
 
 **構造:** `Tabs.Root > Tabs.Item > (Tabs.Tab + Tabs.Panel)`（`Tabs.List` も利用可能）
 
@@ -267,6 +247,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `tabId` | Root | `string` | — | タブを特定するための ID 文字列 |
 | `defaultIndex` | Root | `number` | `1` | 初期アクティブタブ（1始まり） |
 | `listProps` | Root | `object` | — | タブボタンリスト要素へ渡す props |
+| `variant` | Root | `string` | `'default'` | バリエーション。`b--tabs--{variant}` クラスが出力。`'default'` のほか `'line'` を標準提供。独自 variant 指定時は既定バリアント（`b--tabs--default`）の装飾が適用されない |
 
 ```jsx
 <Tabs.Root>

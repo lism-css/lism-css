@@ -1,0 +1,337 @@
+---
+title: 'Table'
+description: 'Lism CSS で実装する、行・列の固定表示に対応したテーブルUI（b--table）の実装例です。'
+draft: true
+---
+
+import { Lism, Frame } from 'lism-css/astro';
+import '@/components/ex/Table/style.css';
+
+
+1行目・1列目の固定表示にも対応した、汎用的なテーブル UI の実装例です。Lism の primitives と少量の CSS（`b--table`）で構成します。
+
+ボーダーのスタイルを CSS 変数で調整できるようにしておくことで、スクロール時の固定表示にも対応できるように設計しています。
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism as="table" class="b--table">
+      <thead>
+        <tr>
+          <th>Header 1</th>
+          <th>Header 2</th>
+          <th>Header 3</th>
+          <th>Header 4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+        </tr>
+        <tr>
+          <td>Cell 2-1</td>
+          <td>Cell 2-2</td>
+          <td>Cell 2-3</td>
+          <td>Cell 2-4</td>
+        </tr>
+        <tr>
+          <td>Cell 3-1</td>
+          <td>Cell 3-2</td>
+          <td>Cell 3-3</td>
+          <td>Cell 3-4</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Footer 1</td>
+          <td>Footer 2</td>
+          <td>Footer 3</td>
+          <td>Footer 4</td>
+        </tr>
+      </tfoot>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Lism as="table" class="b--table">
+      <thead>...</thead>
+      <tbody>...</tbody>
+      <tfoot>...</tfoot>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <table class="b--table">
+      <thead>
+        ...
+      </thead>
+      <tbody>
+        ...
+      </tbody>
+      <tfoot>
+        ...
+      </tfoot>
+    </table>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Styles
+
+Table のベーススタイルは、以下の CSS で定義されています。この CSS をプロジェクトにコピーして利用してください。
+
+`@layer lism-block` のままコピーすると、コア CSS のレイヤー順にそのまま組み込まれ、`lism-custom` レイヤーから上書きできます。
+
+<SrcCode dir="docs" path="src/components/ex/Table/style.css" title="table.css" />
+
+
+## Markup
+
+マークアップは以下のクラス・属性で構成します。見た目の調整は CSS 変数で行います。
+
+| クラス / 属性 | 説明 |
+|---|---|
+| `b--table` | ルート要素。`<table>` に付与します。 |
+| `data-table-sticky` | スクロール時の固定表示。`col`（1列目のセル）・`head`（`thead`）をスペース区切りで指定します。 |
+| `_nofix` | `data-table-sticky="col"` の使用時、`rowspan` の都合などで固定表示から除外したいセルに付与します。 |
+| `--bdw-x` / `--bdw-y` | セルのボーダー幅（左右 / 上下）。デフォルトは `1px` です。 |
+| `--bds` / `--bdc` | セルのボーダーのスタイル・色。デフォルトは `solid` / `var(--divider)` です。 |
+| `--th-bgc` / `--th-c` | `th` の背景色・文字色。 |
+| `--cells-min-sz` | セルの最小幅（`min-inline-size`）。横スクロールさせたい場合に指定します。 |
+| `--cells-p` | セルの余白（`td` / `th` の `padding`）。 |
+
+CSS 変数は `style` 属性で上書きします（例: `style="--th-bgc:var(--base-2)"`）。
+
+
+## Examples
+
+### ボーダーと `th` の色を調整する
+
+`--bdw-x` を `0px` にすると左右のボーダーがなくなり、`--th-bgc` で `th` の背景色を指定できます。
+
+<Preview>
+  <PreviewTitle>`--bdw-x` と `--th-bgc`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism as="table" class="b--table" style={{ '--th-bgc': 'var(--base-2)', '--bdw-x': '0px' }}>
+      <thead>
+        <tr>
+          <th>Header 1</th>
+          <th>Header 2</th>
+          <th>Header 3</th>
+          <th>Header 4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+        </tr>
+        <tr>
+          <td>Cell 2-1</td>
+          <td>Cell 2-2</td>
+          <td>Cell 2-3</td>
+          <td>Cell 2-4</td>
+        </tr>
+        <tr>
+          <td>Cell 3-1</td>
+          <td>Cell 3-2</td>
+          <td>Cell 3-3</td>
+          <td>Cell 3-4</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Footer 1</td>
+          <td>Footer 2</td>
+          <td>Footer 3</td>
+          <td>Footer 4</td>
+        </tr>
+      </tfoot>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "'--th-bgc': 'var(--base-2)'" "'--bdw-x': '0px'"
+    <Lism as="table" class="b--table" style={{ '--th-bgc': 'var(--base-2)', '--bdw-x': '0px' }}>
+      <thead>...</thead>
+      <tbody>...</tbody>
+      <tfoot>...</tfoot>
+    </Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--th-bgc:var(--base-2)" "--bdw-x:0px"
+    <table class="b--table" style="--th-bgc:var(--base-2);--bdw-x:0px">
+      <thead>
+        ...
+      </thead>
+      <tbody>
+        ...
+      </tbody>
+      <tfoot>
+        ...
+      </tfoot>
+    </table>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### スクロール時の固定表示
+
+`data-table-sticky` 属性に以下を指定できます。
+
+- `col`: セルの1列目を固定する
+- `head`: `thead` を固定する
+
+<Preview>
+  <PreviewTitle>スクロール時に `thead` と1列目のセルを固定する例</PreviewTitle>
+  <PreviewArea p="20" _dir="rtl">
+    <Frame ov="auto" max-h="20rem">
+      <Lism as="table" class="b--table" data-table-sticky="col head" style={{ '--th-bgc': 'var(--base-2)', '--cells-min-sz': '10rem' }}>
+        <thead>
+          <tr>
+            <th>Header 1</th>
+            <th>Header 2</th>
+            <th>Header 3</th>
+            <th>Header 4</th>
+            <th>Header 5</th>
+            <th>Header 6</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Cell 1-1</th>
+            <td>
+              Cell 1-2
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 1-3</td>
+            <td>Cell 1-4</td>
+            <td>
+              Cell 1-5
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 1-6</td>
+          </tr>
+          <tr>
+            <th rowspan="2">Cell 2-1</th>
+            <td>Cell 2-2</td>
+            <td>
+              Cell 2-3
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 2-4</td>
+            <td>Cell 2-5</td>
+            <td>
+              Cell 2-6
+              <br />
+              Lorem ipsum text
+            </td>
+          </tr>
+          <tr>
+            <td class="_nofix">Cell 3-2</td>
+            <td>Cell 3-3</td>
+            <td>
+              Cell 3-4
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 3-5</td>
+            <td>Cell 3-6</td>
+          </tr>
+          <tr>
+            <th>Cell 4-1</th>
+            <td>
+              Cell 4-2
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 4-3</td>
+            <td>Cell 4-4</td>
+            <td>
+              Cell 4-5
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 4-6</td>
+          </tr>
+          <tr>
+            <th>Cell 5-1</th>
+            <td>Cell 5-2</td>
+            <td>
+              Cell 5-3
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 5-4</td>
+            <td>Cell 5-5</td>
+            <td>
+              Cell 5-6
+              <br />
+              Lorem ipsum text
+            </td>
+          </tr>
+          <tr>
+            <th>Cell 6-1</th>
+            <td>Cell 6-2</td>
+            <td>Cell 6-3</td>
+            <td>
+              Cell 6-4
+              <br />
+              Lorem ipsum text
+            </td>
+            <td>Cell 6-5</td>
+            <td>Cell 6-6</td>
+          </tr>
+        </tbody>
+      </Lism>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "data-table-sticky"
+    <Frame ov="auto" max-h="20rem">
+      <Lism as="table" class="b--table" data-table-sticky="col head" style={{ '--th-bgc': 'var(--base-2)', '--cells-min-sz': '10rem' }}>
+        <thead>...</thead>
+        <tbody>
+          {/* 固定表示から外したいセルには _nofix を付与します */}
+          <tr>
+            <td class="_nofix">Cell 3-2</td>
+            ...
+          </tr>
+        </tbody>
+      </Lism>
+    </Frame>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "data-table-sticky"
+    <div class="l--frame -ov:auto -max-h" style="--max-h:20rem">
+      <table class="b--table" data-table-sticky="col head" style="--th-bgc:var(--base-2);--cells-min-sz:10rem">
+        <thead>
+          ...
+        </thead>
+        <tbody>
+          <!-- 固定表示から外したいセルには _nofix を付与します -->
+          <tr>
+            <td class="_nofix">Cell 3-2</td>
+            ...
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

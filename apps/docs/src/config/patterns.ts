@@ -7,6 +7,12 @@
 
 import type { LangCode } from '@/config/site';
 
+// 関連ページへのリンク（言語プレフィックスなしのパスで保持し、表示時に言語を付与する）
+export interface PatternRelatedLink {
+  label: string; // 表示ラベル
+  path: string; // 例: '/page-layouts/sections/hero-fullscreen/'
+}
+
 // パターンアイテムの型
 export interface PatternItem {
   id: string; // パターンID（例: cta001）
@@ -18,6 +24,8 @@ export interface PatternItem {
 // カテゴリ情報の型
 export interface PatternCategory {
   label: string; // カテゴリ表示名
+  description: Record<LangCode, string>; // カテゴリの概要・利用時の注意書き
+  related?: PatternRelatedLink[]; // 関連ページへのリンク
   items: PatternItem[];
 }
 
@@ -25,6 +33,10 @@ export interface PatternCategory {
 const patterns = {
   cta: {
     label: 'CTA',
+    description: {
+      ja: '問い合わせや申し込みなど、次の行動を促すセクション。',
+      en: 'Sections that prompt the next action, such as making an inquiry or signing up.',
+    },
     items: [
       {
         id: 'cta001',
@@ -60,8 +72,37 @@ const patterns = {
       },
     ],
   },
+  faq: {
+    label: 'FAQ',
+    description: {
+      ja: 'よくある質問と回答をまとめたセクション。質問と回答の対応関係を示す場合はdl・dt・ddでマークアップします。',
+      en: 'Sections that collect frequently asked questions and answers. Use dl, dt and dd to express the question-answer relationship.',
+    },
+    items: [
+      {
+        id: 'faq001',
+        title: 'FAQ001',
+        description: {
+          ja: '質問と回答を常に表示するシンプルなFAQセクションです。dl・dt・ddでマークアップしています。',
+          en: 'A simple FAQ section that always shows both questions and answers, marked up with dl, dt and dd.',
+        },
+      },
+      {
+        id: 'faq002',
+        title: 'FAQ002',
+        description: {
+          ja: 'Accordionを使って回答を開閉できるFAQセクションです。項目数が多い場合に適しています。',
+          en: 'An FAQ section using Accordion so answers can be expanded and collapsed. Suited to lists with many items.',
+        },
+      },
+    ],
+  },
   feature: {
     label: 'Feature',
+    description: {
+      ja: 'サービスや商品の特徴・注目コンテンツを並べるセクション。',
+      en: 'Sections that line up the features or highlights of a service or product.',
+    },
     items: [
       {
         id: 'feature001',
@@ -195,6 +236,10 @@ const patterns = {
   },
   greeting: {
     label: 'Greeting',
+    description: {
+      ja: '挨拶文やメッセージを伝えるセクション。',
+      en: 'Sections that deliver a greeting or message.',
+    },
     items: [
       {
         id: 'greeting001',
@@ -216,8 +261,39 @@ const patterns = {
       { id: 'greeting004', title: 'Greeting004', description: { ja: '挨拶用のパターンです。', en: 'A greeting pattern.' } },
     ],
   },
+  hero: {
+    label: 'Hero',
+    description: {
+      ja: 'ページ冒頭に置く、見た目まで作り込んだヒーローセクション。骨格だけのレイアウトが必要な場合はPage Layoutsを参照してください。',
+      en: 'Fully styled hero sections placed at the top of a page. See Page Layouts when you need the bare structure instead.',
+    },
+    related: [{ label: 'Page Layouts: Hero Fullscreen', path: '/page-layouts/sections/hero-fullscreen/' }],
+    items: [
+      {
+        id: 'hero001',
+        title: 'Hero001',
+        description: {
+          ja: '画面の高さいっぱいの背景画像に、ヘッダー・中央コンテンツ・スクロール導線を重ねたヒーローです。',
+          en: 'A full-height hero with a header, centered content and a scroll cue layered over a background image.',
+        },
+      },
+      {
+        id: 'hero002',
+        title: 'Hero002',
+        description: {
+          ja: 'テキストと画像を左右に並べたヒーローです。breakpoint「md」以下は1カラムになり、縦に並びます。',
+          en: 'A hero with text and an image side by side. Below the "md" breakpoint, it switches to a single column layout.',
+        },
+        draft: true,
+      },
+    ],
+  },
   history: {
     label: 'History',
+    description: {
+      ja: '沿革や年表を時系列で伝えるセクション。',
+      en: 'Sections that present a history or timeline in chronological order.',
+    },
     items: [
       {
         id: 'history001',
@@ -239,6 +315,10 @@ const patterns = {
   },
   information: {
     label: 'Information',
+    description: {
+      ja: '所在地・営業時間などの基本情報を伝えるセクション。',
+      en: 'Sections that present basic information such as location and business hours.',
+    },
     items: [
       {
         id: 'information001',
@@ -276,6 +356,10 @@ const patterns = {
   },
   member: {
     label: 'Member',
+    description: {
+      ja: 'メンバーやスタッフを一覧で紹介するセクション。',
+      en: 'Sections that introduce team members or staff as a list.',
+    },
     items: [
       {
         id: 'member001',
@@ -329,6 +413,10 @@ const patterns = {
   },
   navigation: {
     label: 'Navigation',
+    description: {
+      ja: 'カテゴリや下層ページへの導線をまとめたセクション。',
+      en: 'Sections that gather links to categories or lower-level pages.',
+    },
     items: [
       {
         id: 'navigation001',
@@ -398,6 +486,10 @@ const patterns = {
   },
   news: {
     label: 'News',
+    description: {
+      ja: 'お知らせや新着情報を一覧で並べるセクション。',
+      en: 'Sections that list news and announcements.',
+    },
     items: [
       {
         id: 'news001',
@@ -451,6 +543,10 @@ const patterns = {
   },
   pricetable: {
     label: 'Price Table',
+    description: {
+      ja: '料金プランを比較できる形で並べるセクション。',
+      en: 'Sections that lay out pricing plans for comparison.',
+    },
     items: [
       {
         id: 'pricetable001',
@@ -486,8 +582,14 @@ const patterns = {
       },
     ],
   },
+  // カテゴリid・アイテムid・previewディレクトリは `section` のまま据え置き、表示ラベルのみ `General` にしている。
+  // 親グループ `Sections` とカテゴリ名が衝突するのを避けるため（#566）。
   section: {
-    label: 'Section',
+    label: 'General',
+    description: {
+      ja: '特定の用途に限定しない汎用的なセクション構成。見出し・本文・画像の組み合わせ方の作例です。',
+      en: 'General-purpose section structures that are not tied to a specific use case. Examples of combining headings, body text and images.',
+    },
     items: [
       { id: 'section001', title: 'Section001', description: { ja: 'セクション用のパターンです。', en: 'A section pattern.' } },
       {
@@ -661,6 +763,10 @@ const patterns = {
   },
   testimonials: {
     label: 'Testimonials',
+    description: {
+      ja: '利用者の声やレビューを紹介するセクション。',
+      en: 'Sections that showcase customer voices and reviews.',
+    },
     items: [
       {
         id: 'testimonials001',
@@ -682,6 +788,10 @@ const patterns = {
   },
   works: {
     label: 'Works',
+    description: {
+      ja: '制作実績や導入事例を一覧で並べるセクション。',
+      en: 'Sections that list portfolio works and case studies.',
+    },
     items: [
       {
         id: 'works001',

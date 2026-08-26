@@ -1,35 +1,47 @@
-@layer lism-component {
-  .c--accordion {
+@layer lism-block {
+  .b--accordion {
     --duration: var(--acc-duration, 0.25s);
   }
-  .c--accordion_item {
+  .b--accordion_item {
     --_panel-h: 0px;
     --_icon-transform: rotate(90deg);
   }
 
   /* 開いている時 */
-  .c--accordion_item[data-opened] {
+  .b--accordion_item[data-opened] {
     --_icon-transform: rotate(0deg);
     --_panel-h: auto; /* Note: アニメーション時、jsでセットされる */
   }
 
-  /* .c--accordion_button {} */
-  .c--accordion_panel {
+  .b--accordion_button {
+    display: flex;
+    gap: var(--s10);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--s15);
+    width: 100%;
+  }
+  .b--accordion_panel {
+    position: relative;
+    overflow: hidden;
     height: var(--_panel-h);
     transition: height var(--duration);
   }
-
-  /* コンテンツの paddingは __panel ではなくこっちにつける */
-  /* .c--accordion_content {} */
+  .b--accordion_content {
+    /* _panel に padding を付けると閉じた時に余白が残るので _content に付ける */
+    padding: var(--s15);
+  }
 
   /* パネルが完全に閉じている時にabsoluteで飛ばしておくと、Chromeでも検索時に正常にハイライトされるようになる（なぜかは不明） */
-  [hidden] > .c--accordion_content {
+  [hidden] > .b--accordion_content {
     position: absolute;
   }
 
   /* アイコンの描画 */
-  .c--accordion_icon {
+  .b--accordion_icon {
     display: grid;
+    place-items: center;
+    flex-shrink: 0;
     width: 1em;
     height: 1em;
 
@@ -50,7 +62,7 @@
   }
 
   /* フォーカス時のアウトラインを少し内側に寄せる( overflow:hidden によって途切れてしまうので)  */
-  .c--accordion_button:focus-visible {
+  .b--accordion_button:focus-visible {
     outline: solid 2px currentColor;
     outline-color: revert;
     outline-offset: -3px; /* offset 調整だけだとブラウザ間の差が大きい */
@@ -58,18 +70,18 @@
 
   /* --- 「視差効果を減らす」設定を考慮 --- */
   @media (prefers-reduced-motion: reduce) {
-    .c--accordion_item {
+    .b--accordion_item {
       --duration: 0s;
     }
   }
 
   /* --- JSオフ環境の考慮 --- */
   @media (scripting: none) {
-    .c--accordion_panel {
+    .b--accordion_panel {
       height: auto !important;
       content-visibility: visible !important;
     }
-    .c--accordion_content {
+    .b--accordion_content {
       position: static !important;
     }
   }

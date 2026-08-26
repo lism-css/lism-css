@@ -22,11 +22,6 @@ export default function getCalloutProps({ type = 'note', keycolor, icon, title, 
     util: 'cbox',
     // set: 'bxsh',
     keycolor: _keycolor,
-    p: '20',
-    g: '10',
-    bdc: 'keycolor',
-    'bd-s': true,
-    bdw: '3px',
     ...props,
   };
 }

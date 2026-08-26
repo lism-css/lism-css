@@ -6,7 +6,8 @@ import atts from 'lism-css/lib/helper/atts';
 
 type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
-const { class: className, ...props } = Astro.props;
+const { class: className, as = 'span', ...props } = Astro.props;
 ---
 
-<Lism as="span" fx="1" set="plain" class={atts(className, 'c--details_title')} {...props}><slot /></Lism>
+{/* as に見出しタグなどを指定した場合は set--plain でデフォルトスタイルをリセットする */}
+<Lism as={as} set={as === 'span' ? undefined : 'plain'} class={atts(className, 'b--details_title')} {...props}><slot /></Lism>

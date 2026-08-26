@@ -10,23 +10,60 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 svgで境界線を描画するコンポーネントです。
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize layout="">
     <Stack>
-      <ShapeDivider isEmpty level={2} />
-      <DummyText p="30" />
+      <p class="-p:30">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, ...</p>
       <ShapeDivider viewBox="0 0 100 10">
         <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z" />
       </ShapeDivider>
     </Stack>
   </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Stack>
+      <p class="-p:30">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, ...</p>
+      <ShapeDivider viewBox="0 0 100 10">
+        <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z" />
+      </ShapeDivider>
+    </Stack>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--stack">
+      <p class="-p:30">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, ...</p>
+      <div class="b--shapeDivider -max-sz:full" aria-hidden="true">
+        <div class="b--shapeDivider_inner">
+          <svg class="b--shapeDivider_svg" viewBox="0 0 100 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+            <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
+
+
+## Styles
+
+ShapeDivider のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/ShapeDivider/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider) で公開しています。
+:::
 
 
 ## How to use
 
-`@lism-css/ui` パッケージで`ShapeDivider`(`c--shapeDivider`)として提供しています。
+`@lism-css/ui` パッケージで`ShapeDivider`(`b--shapeDivider`)として提供しています。
 
 ### Import
 
@@ -44,10 +81,6 @@ svgで境界線を描画するコンポーネントです。
 | `flip` | `"X"`, `"Y"`, `"XY"` でシェイプの反転方向を指定できます。|
 | `isEmpty` | シェイプを表示せず、Spacerのように使用することができます。|
 | `isAnimation` | アニメーションをONにします。`data-has-animation="true"`が出力されます。|
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider) で公開しています。
 
 
 ## Examples
@@ -98,6 +131,35 @@ flipを指定して反転させることで、同じsvgパスを使って上下�
     </Wrapper>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="is--wrapper has--gutter -py:40">
+      <p>...Contents...</p>
+    </div>
+    <div class="b--shapeDivider -max-sz:full" style="--level:4" aria-hidden="true">
+      <div class="b--shapeDivider_inner">
+        <svg class="b--shapeDivider_svg" viewBox="0 0 10 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+          <path d="M10,10V0L0,9.5V10L10,10z"></path>
+        </svg>
+      </div>
+    </div>
+    <div class="is--wrapper has--gutter -bgc:text -c:base">
+      <div class="l--box -py:40">
+        <p>...Contents...</p>
+      </div>
+    </div>
+    <div class="b--shapeDivider -max-sz:full" style="--level:4" aria-hidden="true" data-flip="XY">
+      <div class="b--shapeDivider_inner">
+        <svg class="b--shapeDivider_svg" viewBox="0 0 10 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+          <path d="M10,10V0L0,9.5V10L10,10z"></path>
+        </svg>
+      </div>
+    </div>
+    <div class="is--wrapper has--gutter -py:40">
+      <p>...Contents...</p>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -141,6 +203,28 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
         <DummyText length="l" />
       </Box>
     </Wrapper>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="is--wrapper has--gutter -bgc:base">
+      <div class="b--shapeDivider -max-sz:full" style="--level:5" aria-hidden="true"></div>
+      <div class="l--box -py:20">
+        <p>...Contents...</p>
+      </div>
+      <div class="b--shapeDivider -max-sz:full" style="--level:5" aria-hidden="true">
+        <div class="b--shapeDivider_inner">
+          <svg class="b--shapeDivider_svg" viewBox="0 0 10 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+            <path d="M10,10V0L0,9.5V10L10,10z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="is--wrapper has--gutter -bgc:text -c:base">
+      <div class="l--box -py:40">
+        <p>...Contents...</p>
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -194,6 +278,32 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
     <Container isWrapper="s" hasGutter bgc="base" py="40">
       <DummyText length="l" />
     </Container>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="is--container has--gutter -pos:relative">
+      <div class="b--shapeDivider -max-sz:full" style="--level:7" aria-hidden="true"></div>
+      <div class="l--frame is--layer -z:-1 -max-w:100%">
+        <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        <div class="is--layer -bgc" style="--bgc:color-mix(in srgb, var(--black) 50%, transparent)"></div>
+      </div>
+      <div class="is--wrapper -contentSize:s -py:40 -c" style="--c:var(--white)">
+        <p>...Contents...</p>
+      </div>
+      <div class="b--shapeDivider -max-sz:full -c:base" style="--level:7" aria-hidden="true" data-has-animation="true">
+        <div class="b--shapeDivider_inner">
+          <svg class="b--shapeDivider_svg" viewBox="0 0 100 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+            <path opacity=".3" d="M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z"></path>
+            <path opacity=".3" d="M100,1.5C87.8,6.6,79.3,2.1,67.8,2.6S53,6.5,42.5,5.5S23,0,15,0S1,3,0,4v6h100V1.5z"></path>
+            <path d="M100,7.5C91.5,5,77.1,11.8,54,8C34.6,4.8,14.4,4.1,0,8.5V10h100V7.5z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="is--container is--wrapper has--gutter -bgc:base -py:40 -contentSize:s">
+      <p>...Contents...</p>
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -251,5 +361,35 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
     </Container>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="is--container is--wrapper has--gutter -bgc:base -py:40 -contentSize:s">
+      <div class="b--shapeDivider -max-sz:full" style="--level:4" aria-hidden="true"></div>
+      <p>...Contents...</p>
+    </div>
+    <div class="is--container has--gutter -pos:relative -c:base -bgc:text">
+      <div class="b--shapeDivider -max-sz:full -c:base" style="--level:8;--_inner-offset:-5%;--_inner-stretch:1.1" aria-hidden="true" data-flip="Y">
+        <div class="b--shapeDivider_inner">
+          <svg class="b--shapeDivider_svg" viewBox="0 0 100 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+            <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="is--wrapper -contentSize:s -py:40">
+        <p>...Contents...</p>
+      </div>
+      <div class="b--shapeDivider -max-sz:full -c:base" style="--level:8;--_inner-stretch:1.1" aria-hidden="true">
+        <div class="b--shapeDivider_inner">
+          <svg class="b--shapeDivider_svg" viewBox="0 0 100 10" width="100%" height="100%" fill="currentColor" focusable="false" preserveAspectRatio="none">
+            <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="is--container is--wrapper has--gutter -bgc:base -py:40 -contentSize:s">
+      <p>...Contents...</p>
+      <div class="b--shapeDivider -max-sz:full" style="--level:4" aria-hidden="true"></div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
-

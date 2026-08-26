@@ -243,7 +243,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 ## convert.ts — HTML ⇔ JSX 双方向変換
 
-デモ専用の軽量実装。lism-css の実行ロジックは import せず、**`lism-css/config` の `PROPS` / `TOKENS` / `BREAK_POINTS`（純データ、React 非依存）だけ**を参照する。これにより「どの属性名が Lism prop か」「どの prop が BP 対応か」「どの値がトークンか」の判定は本物の定義と一致しつつ、クライアントバンドルに React が入らない。
+デモ専用の軽量実装。lism-css の実行ロジックは import せず、**純データ（React 非依存）だけ**を参照する。`PROPS` / `TOKENS` は `lism-css/config` から、`BREAK_POINTS` は定義元の `lism-css/config/defaults/breakpoints` から読む（`lism-css/config` 経由の re-export はビルドのツリーシェイクで落ちるため）。これにより「どの属性名が Lism prop か」「どの prop が BP 対応か」「どの値がトークンか」の判定は本物の定義と一致しつつ、クライアントバンドルに React が入らない。
 
 ### アーキテクチャ: パーサー 2 つ + 共通プリンタ
 

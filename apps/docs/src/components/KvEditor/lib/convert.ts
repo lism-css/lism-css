@@ -24,7 +24,10 @@
 // - 上記以外のタグで Lism prop クラスを持つもの ⇔ <Lism as="tag">
 // - 変換できないクラスは className として保持
 // - 属性の正準形: HTML は class → style → その他、JSX は level/as → props → className → style → その他
-import { BREAK_POINTS, PROPS, TOKENS } from 'lism-css/config';
+import { PROPS, TOKENS } from 'lism-css/config';
+// BREAK_POINTS は定義元から直接読む。`lism-css/config` 経由の re-export は
+// ビルドのツリーシェイクで落ちるため（dist/config/index.js の export に含まれない）
+import { BREAK_POINTS } from 'lism-css/config/defaults/breakpoints';
 import { VOID_TAGS } from './validate';
 
 // 対応するレイアウトコンポーネント。クラス名は本物と同じ `l--{layout}` 規則（src/lib/getLayoutProps.ts）。

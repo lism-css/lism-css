@@ -2,17 +2,24 @@
 title: 'Skills'
 description: 'Place a SKILL.md file in your project to communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.'
 ---
-By placing the SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
+By placing a SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
 
+There are three skills available:
 
-GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide)
+| Skill | Purpose |
+|---|---|
+| `lism-css-guide` | Design rules, Props, tokens, and naming conventions for new implementations (design/requirements → code) |
+| `lism-css-refactor` | Refactors existing Lism CSS code into more idiomatic Lism style without changing its appearance or behavior |
+| `lism-mockup-guide` | Workflow and data contract for building mockups with [`@lism-css/mockup`](https://github.com/lism-css/lism-css/tree/main/packages/mockup) (requires `lism-css-guide` alongside) |
+
+GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor) / [lism-css/skills/lism-mockup-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-mockup-guide)
 
 
 ## Setup
 
 ### Via skills.sh
 
-With [skills.sh](https://skills.sh), you can easily fetch the skill using the following command:
+With [skills.sh](https://skills.sh), you can easily fetch a skill using the following command:
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
@@ -40,16 +47,18 @@ With [skills.sh](https://skills.sh), you can easily fetch the skill using the fo
 
 ### Via gh command
 
-If you use the [GitHub CLI](https://cli.github.com/), you can also fetch the skill with `gh skill install`:
+If you use the [GitHub CLI](https://cli.github.com/), you can also fetch a skill with `gh skill install`:
 
 ```bash frame="none"
 gh skill install lism-css/lism-css lism-css-guide@main
+gh skill install lism-css/lism-css lism-css-refactor@main
+gh skill install lism-css/lism-css lism-mockup-guide@main
 ```
 
 
 ### Via lism-cli
 
-You can also fetch the same skill with `lism-cli skill add`. It only supports installing into the project directory, but offers the `skill check` command to compare the bundled skill with your local files.
+You can also fetch the same skills with `lism-cli skill add`. It only supports installing into the project directory, but it offers the `skill check` command to compare the bundled skill with your local files. Running it without arguments targets all bundled skills (`lism-css-guide` / `lism-css-refactor` / `lism-mockup-guide`).
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
@@ -77,17 +86,22 @@ You can also fetch the same skill with `lism-cli skill add`. It only supports in
 In interactive mode, the CLI detects project-root markers (`.claude/`, `.cursor/`, etc.) and pre-checks matching destinations. To target tools non-interactively, pass the flags directly:
 
 ```bash frame="none"
-# Single tool
+# Install into a single tool (defaults to all bundled skills when the skill name is omitted)
 npx lism-cli skill add --claude
 
-# Multiple tools
+# Multiple tools at once
 npx lism-cli skill add --claude --cursor
 
 # All tools
 npx lism-cli skill add --all
+
+# Install a specific skill by name
+npx lism-cli skill add lism-css-refactor --claude
 ```
 
 #### Destinations
+
+Destinations shown here use `lism-css-guide` as an example. For the other skills, only the directory name changes (e.g. `.claude/skills/lism-css-refactor`).
 
 | Flag | Destination |
 |------|-------------|
@@ -103,7 +117,7 @@ npx lism-cli skill add --all
 
 #### Update
 
-You can diff your local files against the bundled skill and force-update as needed.
+You can diff your local files against the bundled skill before updating.
 
 ```bash frame="none"
 # Diff the bundled skill against local files (shows changed / added / removed summary)

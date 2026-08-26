@@ -10,6 +10,8 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 記事の中で、重要なポイントを示すためのコンポーネントです。
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30" resize>
@@ -17,7 +19,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
     </Callout>
   </PreviewArea>
-    <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Callout title="Calloutタイトル">
       <p>
@@ -27,35 +29,32 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    <div class="c--callout l--stack u--cbox -p:20 -g:10 -bd-s" style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw: 3px">
-      <div class="l--flex -c -fw:bold -ai:center -g:10" style="--c:var(--keycolor)">
-        <div class="l--center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 256 256"
-            width="1.25em"
-            height="1.25em"
-            fill="currentColor"
-            focusable="false"
-            class="a--icon"
-            aria-hidden="true"
-          >
-            <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z"></path>
-          </svg>
-        </div>
-        <span>Calloutタイトル</span>
-      </div>
-      <div class="l--flow -flow:s">
-        <p>
-          ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
-        </p>
-      </div>
-    </div>
-    ```
+```html
+<div class="b--callout l--stack u--cbox" style="--keycolor:var(--gray)">
+  <div class="b--callout_title l--flex">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1.25em" height="1.25em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true">
+      <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z"></path>
+    </svg>
+    <span>Calloutタイトル</span>
+  </div>
+  <div class="b--callout_body l--flow -flow:s">
+    <p>...Contents...</p>
+  </div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
+
+## Styles
+
+Callout のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Callout/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout) で公開しています。
+:::
 
 
 ## How to use
@@ -64,7 +63,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 
 ### Import
-<ImportPackage component="Callout" packageName="@lism-css/ui" />
+<ImportPackage component="Callout" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
@@ -77,11 +76,6 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 |`title`|タイトルテキストを指定します。|
 |`flow`|コンテンツを囲む`Flow`要素の`flow`プロパティに渡されます|
 {/* - `variant`: `'fill'` | `'outline'` ? */}
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout) で公開しています。
-
 
 
 ## Examples
@@ -125,6 +119,25 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Callout title='Callout: type="note"' type="note">...</Callout>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--stack -g:30">
+      <div class="b--callout l--stack u--cbox" style="--keycolor:var(--blue)">
+        <div class="b--callout_title l--flex">
+          <svg class="a--icon"...>...</svg>
+          <span>Callout: type="info"</span>
+        </div>
+        <div class="b--callout_body l--flow -flow:s">...Contents...</div>
+      </div>
+      <!-- type="alert" → --keycolor:var(--red) -->
+      <!-- type="warning" → --keycolor:var(--yellow) -->
+      <!-- type="point" → --keycolor:var(--orange) -->
+      <!-- type="check" → --keycolor:var(--green) -->
+      <!-- type="help" → --keycolor:var(--purple) -->
+      <!-- type="note" → --keycolor:var(--gray) -->
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 ### `icon`、`keycolor`を指定
@@ -143,12 +156,55 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     </Callout>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--callout l--stack u--cbox" style="--keycolor:var(--pink)">
+      <div class="b--callout_title l--flex">
+        <svg class="a--icon"...>...</svg>
+        <span>Heading text...</span>
+      </div>
+      <div class="b--callout_body l--flow -flow:s">
+        <p>...Contents...</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 ※ アイコンは、`title` の指定がある時のみ表示されます。
 
 
-## Only lism-css
+### `title` を指定しない場合
+
+`title` を省略すると、タイトル行（`b--callout_title`）は出力されず、本文だけのシンプルな表示になります。
+
+<Preview>
+  <PreviewTitle>`title`なし</PreviewTitle>
+  <PreviewArea p="30">
+    <Callout type="info">
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Callout>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Callout type="info">
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Callout>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--callout l--stack u--cbox" style="--keycolor:var(--blue)">
+      <div class="b--callout_body l--flow -flow:s">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Without @lism-css/ui
 
 コンポーネントを作らずに、lism-css のコア要素だけで構築する例も紹介しておきます。
 
@@ -186,8 +242,8 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
   ```html
-  <div class="l--stack u--cbox -p:20 -g:10 -bd-s" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 3px">
-    <div class="l--flex -c -fw:bold -ai:center -g:10" style="--c: var(--keycolor)">
+  <div class="l--stack u--cbox -p:20 -g:10 -bdc:keycolor -bd-s -bdrs:10" style="--keycolor: var(--blue); --bdw: 3px">
+    <div class="l--flex -c:keycolor -fw:bold -ai:center -g:10">
       <div class="l--center">
         <svg
           xmlns="http://www.w3.org/2000/svg"

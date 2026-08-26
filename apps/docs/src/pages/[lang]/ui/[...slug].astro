@@ -2,7 +2,7 @@
 /**
  * UIコンポーネント詳細ページ（非root言語用）
  * - 翻訳がない場合はroot言語にフォールバック（未翻訳の注意書き付き）
- * - URL例: /en/ui/Accordion, /en/ui/examples/Card
+ * - URL例: /en/ui/Accordion, /en/ui/block-examples/Chat, /en/ui/components/Card
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
@@ -72,7 +72,7 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
   date={entry.data.date}
 >
   {/* フォールバック（未翻訳）ページは検索対象から除外 */}
-  <Lism as="article" class="z--article set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
+  <Lism as="article" class="c--siteArticle set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
     {/* 未翻訳の注意書き */}
     {isFallback && <TranslationNotice lang={lang} />}
 

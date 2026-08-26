@@ -59,8 +59,9 @@ describe('classify', () => {
     expect(classify('skills.mdx')).toBe('Getting Started');
   });
 
-  it('ui/examples と property-class は Optional', () => {
-    expect(classify('ui/examples/Foo.mdx')).toBe('Optional');
+  it('ui/block-examples と ui/components と property-class は Optional', () => {
+    expect(classify('ui/block-examples/Chat.mdx')).toBe('Optional');
+    expect(classify('ui/components/Foo.mdx')).toBe('Optional');
     expect(classify('property-class/color.mdx')).toBe('Optional');
   });
 
@@ -83,7 +84,8 @@ describe('toUrl', () => {
 
   it('ui/ は /en/ 直下（slug は小文字化される）', () => {
     expect(toUrl('ui/Accordion.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/ui/accordion.md');
-    expect(toUrl('ui/examples/Banner.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/ui/examples/banner.md');
+    expect(toUrl('ui/components/Banner.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/ui/components/banner.md');
+    expect(toUrl('ui/block-examples/Chat.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/ui/block-examples/chat.md');
   });
 
   it('docs 系の casing は小文字化される（公開 slug と一致させる）', () => {

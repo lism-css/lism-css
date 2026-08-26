@@ -38,8 +38,8 @@
 
 - **見るもの**: 同じProperty Class束・Lism Props束・`c--*`構造・CSS宣言束が3箇所以上ある箇所。
 - **判定**: 同じ意味のUI部品として抽出できる→🔧。2箇所以下・一時的な局所重複→✅。値差分やslot構造をProps化する必要がある→⏸。説明用にあえて展開しているコード→⬜。
-- **直し方**: CSSへ逃がさず、React/Astroコンポーネントとして抽出する。`<Lism>`/`<Inline>`/`<Box>`/`<Stack>`等をベースにし、`className="c--*"`は意味名として残す。
-- **参照先**: [`components-core.md`](../../lism-css-guide/components-core.md)、[`components-ui.md`](../../lism-css-guide/components-ui.md)、[`css-rules.md#component-classc--`](../../lism-css-guide/css-rules.md#component-classc--)、[`property-class.md`](../../lism-css-guide/property-class.md)。実例は[`../examples/component-extraction.md`](../examples/component-extraction.md)。
+- **直し方**: CSSへ逃がさず、React/Astroコンポーネントとして抽出する。`<Lism>`/`<Inline>`/`<Box>`/`<Stack>`等をベースにし、`className="c--*"`は何のパーツかを示す名前として残す。
+- **参照先**: [`components-core.md`](../../lism-css-guide/components-core.md)、[`components-ui.md`](../../lism-css-guide/components-ui.md)、[`css-rules.md#custom-classc--`](../../lism-css-guide/css-rules.md#custom-classc--)、[`property-class.md`](../../lism-css-guide/property-class.md)。実例は[`../examples/component-extraction.md`](../examples/component-extraction.md)。
 - **NG→OK**: NG=`<span className="c--tag -fz:xs -px:10 -py:5 -bgc:base-2 -bdrs:10">`が3回以上 → OK=`function Tag({ children }) { return <Inline className="c--tag" fz="xs" px="10" py="5" bgc="base-2" bdrs="10">{children}</Inline> }`。
 - **注意**: `className`/`style`/`data-*`/ARIA/event handlerを渡し忘れない。レスポンシブPropsを単一値に潰さない。抽出でHTML要素が変わる場合は確認する。
 - **guideで確認すること**: 「同Property Class束3箇所以上→コンポーネント抽出」の方針。
@@ -73,10 +73,10 @@
 ## Pass6: 状態・バリエーションの確認
 
 - **見るもの**: `is--active`/`is--current`/`is--disabled`/`is--open`/`is--solid`/`is--outline`など、guide掲載外の`is--*`が状態や見た目違いに使われている箇所。
-- **判定**: 正規Trait（`is--container`/`is--wrapper`/`is--layer`/`is--boxLink`/`is--coverLink`/`is--skipFlow`/`is--side`、`has--transition`等）→✅。状態管理→🔧（`data-*`またはARIAへ）。見た目違い→🔧（`c--name--variant`へ）。独自Traitとして妥当だがguide外→⬜または⏸。
-- **直し方**: 状態は属性セレクタへ、見た目違いはModifierへ移す。CSSセレクタとJSの切り替え対象も同時に更新する。
-- **参照先**: [`antipatterns-layout.md#is---の誤用状態バリエーション`](../../lism-css-guide/antipatterns-layout.md#is---の誤用状態バリエーション)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`css-rules.md#component-classc--`](../../lism-css-guide/css-rules.md#component-classc--)。
-- **NG→OK**: NG=`<a className="c--catTab is--active">`＋`.c--catTab.is--active{}` → OK=`<a className="c--catTab" data-is-active>`＋`.c--catTab[data-is-active]{}`。NG=`<span className="c--tag is--solid">` → OK=`<span className="c--tag c--tag--solid">`。
+- **判定**: 正規Trait（`is--container`/`is--wrapper`/`is--layer`/`is--boxLink`/`is--coverLink`/`is--skipFlow`/`is--side`、`has--transition`等）→✅。状態管理→🔧（`data-*`またはARIAへ）。見た目違い→🔧（Blockと同じプレフィックスのModifierへ。`c--`なら`c--name--variant`、`b--`なら`b--name--variant`）。独自Traitとして妥当だがguide外→⬜または⏸。
+- **直し方**: 状態は属性セレクタへ、見た目違いはModifierへ移す。Modifierのプレフィックスは対象Blockに合わせ、`c--`と`b--`を混在させない。CSSセレクタとJSの切り替え対象も同時に更新する。
+- **参照先**: [`antipatterns-layout.md#is---の誤用状態バリエーション`](../../lism-css-guide/antipatterns-layout.md#is---の誤用状態バリエーション)、[`trait-class.md`](../../lism-css-guide/trait-class.md)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`css-rules.md#custom-classc--`](../../lism-css-guide/css-rules.md#custom-classc--)、[`css-rules.md#block-classb--`](../../lism-css-guide/css-rules.md#block-classb--)。
+- **NG→OK**: NG=`<a className="c--catTab is--active">`＋`.c--catTab.is--active{}` → OK=`<a className="c--catTab" data-is-active>`＋`.c--catTab[data-is-active]{}`。NG=`<div className="c--pricing is--featured">` → OK=`<div className="c--pricing c--pricing--featured">`。NG=`<button className="b--btn is--outline">`／`<button className="b--btn c--btn--outline">` → OK=`<button className="b--btn b--btn--outline">`。
 - **注意**: JSの`classList.toggle('is--active')`・テスト・CSSセレクタを直し忘れると状態表示が壊れる。`aria-current`などが使える箇所は意味も確認する。
 - **guideで確認すること**: 正規Trait一覧と、状態/variant/独自Traitの境界例。
 
@@ -84,13 +84,13 @@
 
 ## Pass7: 命名の確認
 
-- **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`、サイト領域を表す`c--header`/`c--sidebar`など。
-- **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
-- **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。ゾーニングは`z--*`、ページ固有は`p--*`へ寄せる。
-- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自プレフィックス`](../../lism-css-guide/css-rules.md#独自プレフィックス)、[`css-rules.md#z--p--c--の使い分け`](../../lism-css-guide/css-rules.md#z--p--c--の使い分け)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう`](../../lism-css-guide/antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう)。
-- **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.z--header{}`（再利用UIでない場合）。
+- **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`などの記法違反、ベーススタイルをCSSで管理しているのに`c--`のままの共通部品。
+- **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`（`b--`も同記法）に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
+- **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。ベーススタイルを CSS 側で管理する共通基礎部品は`b--*`、それ以外のカスタムクラス全般は`c--*`へ寄せる。
+- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自クラスの選び方2分類`](../../lism-css-guide/css-rules.md#独自クラスの選び方2分類)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#ベーススタイルを-css-側で持つ部品を-c---のままにする`](../../lism-css-guide/antipatterns-layout.md#ベーススタイルを-css-側で持つ部品を-c---のままにする)。
+- **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.c--siteHeader{}`（kebab-caseをcamelCaseに）。
 - **注意**: CSSだけrenameしてJS/テスト/HTML生成側を漏らさない。`c--block.c--otherBlock`のようなBlock併用を見逃さない。
-- **guideで確認すること**: `z--`/`p--`の使い分け例と、公開classを⏸にする判断基準。
+- **guideで確認すること**: `b--`と`c--`の使い分け例と、公開classを⏸にする判断基準。
 
 ---
 
@@ -110,7 +110,7 @@
 
 - **見るもの**: Primitiveが元々持つ挙動と同じProps/Property Classを重ねている箇所。例: `<Cluster fxw="wrap" ai="center">`・`<Frame ov="hidden">`・Frame直下メディアへの`-w:100% -h:100%`/`object-fit:cover`。
 - **判定**: guideに既定値として明記されていて同じ値を重ねている→🔧。既定値と違う意図的な上書き→✅または⬜。guide未整備のPrimitive既定値→⏸（判断材料がguideに無いため確定できない。guide側の整備が必要な旨を完了報告に書く）。詳細度が必要な上書き→⬜。
-- **直し方**: 重複しているProps/Property Classだけ削除し、Primitive自体と意味classは残す。Clusterの`g`は既定値ではないので消さない。
+- **直し方**: 重複しているProps/Property Classだけ削除し、Primitive自体と何のパーツかを示す名前は残す。Clusterの`g`は既定値ではないので消さない。
 - **参照先**: [`primitive-class.md`](../../lism-css-guide/primitive-class.md)、[`primitives/l--cluster.md`](../../lism-css-guide/primitives/l--cluster.md)、[`primitives/l--frame.md`](../../lism-css-guide/primitives/l--frame.md)、[`antipatterns-layout.md#primitive-既定値の重複指定`](../../lism-css-guide/antipatterns-layout.md#primitive-既定値の重複指定)。
 - **NG→OK**: NG=`<Cluster fxw="wrap" ai="center" g="15">` → OK=`<Cluster g="15">`。NG=`<Frame ar="16/9" ov="hidden"><img className="-w:100% -h:100%" style={{ objectFit: 'cover' }} /></Frame>` → OK=`<Frame ar="16/9"><img /></Frame>`。
 - **注意**: プロジェクトCSSでPrimitive既定値を上書きしていると、削除で見た目が変わる。直下メディア以外・`object-fit:contain`・`object-position`指定は消さない。
@@ -126,7 +126,7 @@
 - **判定**: [`common-mistakes.md`](./common-mistakes.md)の全項目と下記「判定の再審査」がOK→✅。自分の修正で元の動きを壊した→🔧。px丸めや挙動変更など、ユーザー確認が必要なものが残る→⏸。合意済みの例外→⬜。
 - **直し方**: 修正案を他人のPRとして読み直し、壊した箇所だけを直す。新規実装時の一般的なアンチパターンはguide側を見る。このファイルでは、リファクタで起こしやすい「元の動きを壊す変更」だけを見る。
 - **参照先**: [`common-mistakes.md`](./common-mistakes.md)。
-- **NG→OK**: NG=CSSを空にした勢いで`className="c--tag"`も削除 → OK=CSS宣言だけ移し、意味classは残す。NG=`is--active`→`data-is-active`に変えたがCSS/JSセレクタ未更新 → OK=markup/CSS/JS/testsを同時更新。
+- **NG→OK**: NG=CSSを空にした勢いで`className="c--tag"`も削除 → OK=CSS宣言だけ移し、何のパーツかを示す名前は残す。NG=`is--active`→`data-is-active`に変えたがCSS/JSセレクタ未更新 → OK=markup/CSS/JS/testsを同時更新。
 - **注意**: [`common-mistakes.md`](./common-mistakes.md)の全項目を確認する。
 - **guideで確認すること**: 不要。提示前の見直し項目はこのスキル側で持つ。
 

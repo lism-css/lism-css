@@ -7,7 +7,8 @@
 import { Flex, Lism, Inline, Icon } from 'lism-css/astro';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getRootLang, getLocalizedUrl, t, getPathWithoutLang, type LangCode } from '@/lib/i18n';
-import sidebarConfig, { type SidebarSection, isSeparator, getSiteSection, extractSlugFromUrl } from '@/config/sidebar';
+import sidebarConfig, { getSiteSection } from '@/config/sidebar';
+import { flattenPostsBySidebarOrder, getPostUrl } from '@/lib/sidebarPosts';
 
 interface Props {
   currentSlug: string;
@@ -23,78 +24,11 @@ const currentSection = getSiteSection(currentPathWithoutLang);
 // 現在のセクションに対応するサイドバー設定を取得
 const sectionItems = sidebarConfig.sections[currentSection];
 
-/**
- * slugからURLパスを生成するヘルパー
- * - ui/xxx → /ui/xxx/
- * - xxx → /docs/xxx/
- */
-function getPostUrl(slug: string): string {
-  if (slug.startsWith('ui/')) {
-    return `/${slug}/`;
-  }
-  return `/docs/${slug}/`;
-}
-
 // 指定言語の全記事を取得
 const allPosts = await getPostsByLang(lang);
 
-// カテゴリー（slugの最初の部分）でグループ化
-const postsByCategory = allPosts.reduce(
-  (acc, post) => {
-    const hasSlash = post.id.includes('/');
-    const category = hasSlash ? post.id.split('/')[0] : '/';
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(post);
-    return acc;
-  },
-  {} as Record<string, PostEntry[]>
-);
-
-// 各カテゴリー内を order → date 順にソート
-Object.values(postsByCategory).forEach((posts) => {
-  posts.sort((a, b) => {
-    const orderA = a.data.order ?? 999;
-    const orderB = b.data.order ?? 999;
-    if (orderA !== orderB) return orderA - orderB;
-    // order が同じ場合は日付順（新しい順）、date がない場合は 0 として扱う
-    const dateA = a.data.date?.valueOf() ?? 0;
-    const dateB = b.data.date?.valueOf() ?? 0;
-    return dateB - dateA;
-  });
-});
-
-// サイドバーセクションがdir指定かどうかをチェックするヘルパー
-function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: string } {
-  return 'dir' in item;
-}
-
-// sidebar.ts の順序で全記事をフラットに並べる
-const orderedPosts: PostEntry[] = [];
-for (const section of sectionItems) {
-  if (hasDirProperty(section)) {
-    // dir指定の場合：カテゴリ内の記事をソート順で追加
-    const posts = postsByCategory[section.dir];
-    if (posts && posts.length > 0) {
-      orderedPosts.push(...posts);
-    }
-  } else {
-    // items指定の場合：指定された順序で記事を追加
-    for (const navItem of section.items) {
-      // セパレータはスキップ
-      if (isSeparator(navItem)) continue;
-      // linkを取得（文字列の場合はそのまま、オブジェクトの場合は.linkプロパティ）
-      const link = typeof navItem === 'string' ? navItem : navItem.link;
-      // linkからslugを取得
-      const slug = extractSlugFromUrl(link);
-      const post = allPosts.find((p) => p.id === slug);
-      if (post) {
-        orderedPosts.push(post);
-      }
-    }
-  }
-}
+// sidebar.ts の順序（SiteNav と同じ最長dir一致・order順）で全記事をフラットに並べる
+const orderedPosts = flattenPostsBySidebarOrder(allPosts, sectionItems);
 
 // 現在の記事のインデックスを取得
 const currentIndex = orderedPosts.findIndex((post) => post.id === currentSlug);

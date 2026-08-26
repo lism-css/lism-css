@@ -4,7 +4,6 @@ export { Avatar } from './Avatar/astro';
 export { Badge } from './Badge/astro';
 export { Button } from './Button/astro';
 export { Callout } from './Callout/astro';
-export { Chat } from './Chat/astro';
 export { Details } from './Details/astro';
 export { Modal } from './Modal/astro';
 export { NavMenu } from './NavMenu/astro';

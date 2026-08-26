@@ -52,7 +52,7 @@ const representative = getAggregateRepresentative(category, templates) ?? templa
 const previewUrl = representative ? getPreviewUrl(representative, lang) : undefined;
 ---
 
-<Stack g="40" class="p--templates">
+<Stack g="40">
   {/* パンくず（一覧へ戻る） */}
   <Cluster g="10" fz="xs">
     <a href={templatesUrl} class="-c:text-2">{copy.backToList}</a>

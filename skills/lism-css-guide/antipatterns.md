@@ -11,7 +11,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 - [px / 固定値の直書き](#px--固定値の直書き)
 - [Property Class で書けるのに CSS で書く](#property-class-で書けるのに-css-で書く)
 - [Token typo（存在しない値）](#token-typo存在しない値)
-- [`c--*` CSS を `@layer lism-component` に入れない](#c---css-を-layer-lism-component-に入れない)
+- [独自クラスの CSS を所定の `@layer` に入れない](#独自クラスの-css-を所定の-layer-に入れない)
 - [hover を component CSS に書いて負ける](#hover-を-component-css-に書いて負ける)
 - [Reset 済みプロパティの再指定](#reset-済みプロパティの再指定)
 - [`--keycolor` の誤用](#--keycolor-の誤用)
@@ -20,6 +20,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 ### 構造・レイアウト・レスポンシブ系（antipatterns-layout.md）
 
 - [レイアウト選択ミス](./antipatterns-layout.md#レイアウト選択ミス)
+- [ベーススタイルを CSS 側で持つ部品を `c--` のままにする](./antipatterns-layout.md#ベーススタイルを-css-側で持つ部品を-c---のままにする)
 - [Astro/React Primitive を使わず素の HTML で組む](./antipatterns-layout.md#astroreact-primitive-を使わず素の-html-で組む)
 - [ボタン装飾を reset から自作する](./antipatterns-layout.md#ボタン装飾を-reset-から自作する)
 - [`Frame` 未使用のメディア枠手組み](./antipatterns-layout.md#frame-未使用のメディア枠手組み)
@@ -32,7 +33,6 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 - [レスポンシブ抜け](./antipatterns-layout.md#レスポンシブ抜け)
 - [レスポンシブ配列の冗長指定](./antipatterns-layout.md#レスポンシブ配列の冗長指定)
 - [`is--` の誤用（状態・バリエーション）](./antipatterns-layout.md#is---の誤用状態バリエーション)
-- [カスタムクラスを全て `c--` にしてしまう](./antipatterns-layout.md#カスタムクラスを全て-c---にしてしまう)
 - [クラス名の命名ミス](./antipatterns-layout.md#クラス名の命名ミス)
 
 ---
@@ -90,7 +90,9 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 
 CSS に残すのは、基本的には　`::before` / `> li` などの「Primitive / Trait / Property Class で書けないセレクタ」を伴う宣言。単一要素への装飾束は呼び出し側マークアップに移す。
 
-なお、CSS が空になっても `c--*` クラス名は意味名としてマークアップに残して構わない（→ [css-rules.md の作成例](./css-rules.md#作成例)）。
+なお、CSS が空になっても `c--*` クラス名は何のパーツかを示す名前としてマークアップに残して構わない（→ [css-rules.md の Custom Class](./css-rules.md#custom-classc--)）。
+
+ベーススタイルを CSS 側で管理することを前提にする部品（サイト共通で繰り返し使うボタン・バッジ・カード級）は、`c--*` ではなく `b--*` を使い、CSS を `@layer lism-block` に書く（→ [css-rules.md の Block Class](./css-rules.md#block-classb--)）。`b--` の3条件を満たさない `c--*` でこの節の規律を外してはいけない。
 
 ---
 
@@ -151,16 +153,17 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 
 ---
 
-## `c--*` CSS を `@layer lism-component` に入れない
+## 独自クラスの CSS を所定の `@layer` に入れない
 
-`.c--*`のCSSは基本的に`@layer lism-component`内に置く。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
+`.c--*`のCSSは基本的に`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。Astroの`<style>`内でも同じ。Layer外に置くと、Lism内部レイヤーやProperty Classとの優先順位設計が崩れる。
 
 | NG | OK |
 | --- | --- |
-| `.c--hero { padding: var(--s40); }` | `@layer lism-component { .c--hero::before { ... } }` |
-| `<style>.c--card { ... }</style>` | `<style>@layer lism-component { .c--card { ... } }</style>` |
+| `.c--hero { padding: var(--s40); }` | `@layer lism-custom { .c--hero::before { ... } }` |
+| `<style>.c--pricing { ... }</style>` | `<style>@layer lism-custom { .c--pricing { ... } }</style>` |
+| `@layer lism-custom { .b--btn { ... } }` | `@layer lism-block { .b--btn { ... } }` |
 
-ただし、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言は、Layerへ入れる前にマークアップ側へ移す。  
+ただし、`c--*`のクラスでは、`padding`/`gap`/`font-size`/`color`などProps/Property Classへ移せる宣言を、Layerへ入れる前にマークアップ側へ移す（`b--`のベーススタイルは対象外で、`@layer lism-block`で CSS 側で管理してよい）。  
 また、詳細度の関係で`@layer`の外で書く必要がある場合は外に出してよい。
 
 ---
@@ -171,7 +174,7 @@ hover効果は`-hov:*`、`hov={{}}`、`set--hov`、`has--transition`を優先す
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `.c--button:hover { box-shadow: var(--bxsh--20); }` | `<Button hov="-bxsh:20" hasTransition>` | hover用Property Classを使う |
+| `.c--button:hover { box-shadow: var(--bxsh--20); }` | `<Button hov={{ bxsh: '20' }} hasTransition>` | hover用Property Classを使う |
 | `.c--card:hover { background: var(--base-2); }` | `<Box hov={{ bgc: 'base-2' }} hasTransition>` | hover時の値はPropsで宣言できる |
 | `.c--link:hover { --keycolor: var(--brand); }` | `set--hov`や`hov={{ ... }}`を検討 | hover変数の仕組みに寄せる |
 
@@ -218,7 +221,7 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 ```html
 <!-- u--cbox や c--callout など、ボックス全体の色味を局所的に切り替える -->
 <div class="u--cbox" style="--keycolor: var(--red)">
-  <p class="-c" style="--c: var(--keycolor)">danger 用カラーリング</p>
+  <p class="-c:keycolor">danger 用カラーリング</p>
 </div>
 ```
 
@@ -253,5 +256,5 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `<Grid cg={['40', null, '80']}>` | `<Grid g={['40', null, '80']}>` または `<Grid cg="40">` | `cg` / `rg` は BP 非対応。レスポンシブにするなら BP 対応の `g` を使うか、単一値にする |
+| `<Box ta={['start', null, 'center']}>` | `<Box ta="center">` | `ta` / `fw` / `ov` などは BP 非対応。レスポンシブが必要なら SCSS 側で `bp: 1` を有効にするか、単一値にする |
 

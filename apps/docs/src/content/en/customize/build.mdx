@@ -30,15 +30,16 @@ import 'lism-css/full.css'; // For the version without @layer, use 'lism-css/ful
 
 In addition to everything in `main.css`, `full.css` includes:
 
-- Breakpoint support classes (such as `-pl_lg`) for all Property Classes except variable-only properties (`isVar` — these emit only a CSS variable, not a class)
-- `SPACE` token utility classes (such as `-pl:20`) for directional spacing properties like `pl` / `mt` / `cg`
+- Breakpoint support classes (such as `-ta_lg`) for all Property Classes except variable-only properties (`isVar` — these emit only a CSS variable, not a class) and border shorthands (`bd` and directional variants like `bd-x`)
+- Breakpoint support classes for the border sub-properties `bds` / `bdc` (`bdw` supports breakpoints in `main.css` already). Responsive borders are handled via sub-properties, not the shorthands
+- Classes for every color token on the color Property Classes (`bgc` / `c` / `bdc`), such as `-bgc:red`. `main.css` only outputs classes for a curated set of semantic colors plus `keycolor`, while `full.css` covers all tokens including the [palette colors](/en/docs/tokens/colors/)
 
 This makes the CSS larger than `main.css`, so **this build is intended to be used together with [CSS Purge](/en/docs/customize/purge/), which removes unused classes at build time**.
 
 
 ### isFullMode
 
-Importing `full.css` alone does not change how components behave — they still use the default configuration (for example, `pl="20"` is output as an inline style).
+Importing `full.css` alone does not change how components behave — they still use the default configuration (for example, `t="20"` is output as an inline style).
 
 To align the component output with `full.css`, enable `isFullMode` in your `lism.config.js`.
 
@@ -49,14 +50,14 @@ export default {
 };
 ```
 
-With `isFullMode: true`, the full preset is also applied to the component props configuration, so `pl="20"` is output as the `-pl:20` class. The configuration is merged in the order "defaults → full preset → `props` in `lism.config.js`", with later entries taking precedence.
+With `isFullMode: true`, the full preset is also applied to the component props configuration, so `t="20"` is output as the `-t` class and `--t` variable instead of an inline style. Breakpoint values (such as `ta={['start', 'center']}`) can also be used without warnings on the properties that get the breakpoint classes listed above. Note that the full preset does not add breakpoint support to variable-only (`isVar`) properties other than `bds` / `bdc`. So variable-only properties without breakpoint support by default (`lh`, `contentSize`, and so on) and border shorthands still trigger a warning when you pass breakpoint values, even with `isFullMode` enabled. The configuration is merged in the order "defaults → full preset → `props` in `lism.config.js`", with later entries taking precedence.
 
 :::warning
 - `isFullMode` assumes the corresponding styles are loaded via `full.css` (or a CLI rebuild with `isFullMode` enabled). If you keep the default `main.css`, the output classes will have no matching styles.
 - `isFullMode` is a build-time setting. It cannot be toggled at runtime via `window._LISM_CSS_CONFIG_`.
 :::
 
-Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `@lism-css/plugin`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `pl` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
+Types and completion can follow `isFullMode` as well. If you use the integrated plugin from `@lism-css/plugin`, `lism-env.d.ts` is generated automatically when `isFullMode: true`, so breakpoint usages (array / object notation) for props like `ta` no longer cause type errors. No hand-written extension is needed (commit `lism-env.d.ts` to git).
 
 If you do not use the integrated plugin, extend the type in a type definition file at your project root (e.g. `src/lism-env.d.ts`) like this:
 

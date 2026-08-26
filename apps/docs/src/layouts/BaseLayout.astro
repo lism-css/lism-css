@@ -64,7 +64,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
     <Box class="is--container" bgc="var(--docs-bg)">
       <Header />
       <Grid
-        class={`z--wrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
+        class={`c--siteWrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
         gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
         gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
         px="10"
@@ -74,11 +74,11 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         <Sidebar d={['none', null, 'flex']} layout="stack" />
         <Container
           as="main"
-          class="z--main c--shadow-box c--scrollPanel"
+          class="c--siteMain c--shadow-box c--scrollPanel"
           tabindex={-1}
           aria-label={t(lang, 'main').ariaLabel}
         >
-          <Box class="z--main__scroll c--scroll" fx="1" min-h="0" tabindex={0} ov-y="auto">
+          <Box class="c--siteMain_scroll c--scroll" fx="1" min-h="0" tabindex={0} ov-y="auto">
             <Container isWrapper={toc ? true : 'l'} hasGutter py="40">
               {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
               <span id="_top" class="c--scrollTarget" aria-hidden="true"></span>
@@ -89,7 +89,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         </Container>
         {
           toc && (
-            <Stack as="aside" class="z--toc c--shadow-box c--scrollPanel" isContainer g="15" d={['none', null, null, 'flex']} min-h="0">
+            <Stack as="aside" class="c--siteToc c--shadow-box c--scrollPanel" isContainer g="15" d={['none', null, null, 'flex']} min-h="0">
               <TableOfContents toc={toc} px="20" py="30" />
             </Stack>
           )

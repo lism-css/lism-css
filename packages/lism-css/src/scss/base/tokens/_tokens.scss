@@ -19,59 +19,16 @@
 }
 
 /* --------------------------------------------------
-  色・構造系トークン（手書き）
-    Memo: 多くのインライン値は tokens.ts → _tokens.gen.scss へ自動生成。色とスコープ用の構造変数だけ
-          ここに実値を残す（tokens.ts 側は '-' センチネル）。
+  構造系トークン（手書き）
+    Memo: トークンのインライン値は tokens.ts → _tokens.gen.scss へ自動生成される。
+          構造変数（--L / --C / --s-unit 等）も tokens.ts の vars グループへ移動したため、
+          ここに残すのは、カタログを持たない変数（--shc / --shsz--* / --gutter--base 等）だけ。
 -------------------------------------------------- */
 :root {
   /**
-   * カラーパレット
-   *   1. 赤を基準として 明度L・彩度C を決める。
-   *   2. 各色は 色相H を固定セット。 L,C は色によって微調整。
-   */
-  // 基準の明度と彩度（red)
-  --L: 60%;
-  --C: 0.2;
-
-  // パレットトークン
-  --red: oklch(var(--L) var(--C) 20);
-  --orange: oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48);
-  --yellow: oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80);
-  --green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152);
-  --blue: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264);
-  --purple: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288);
-  --pink: oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352);
-  --gray: oklch(calc(var(--L) - 4%) calc(var(--C) / 10) 240);
-
-  /**
-   * セマンティックカラー
-   */
-  --brand: #1e5f8c;
-  --accent: #d94a6a;
-
-  // base (background)
-  --base: #fff;
-  --base-2: hsl(220 4% 95%);
-
-  // text (contents)
-  --text: hsl(220 0% 8%);
-  --text-2: hsl(220 4% 32%);
-
-  // link color
-  --link: oklch(50% 0.3 240); //hsl(220, 90%, 48%);
-
-  // divider(border) color
-  --divider: hsl(220 4% 88%);
-
-  // shadow color
-  --shadow: hsl(220 4% 8% / 12%);
-
-  // ライトモード・ダークモードのどちらでもブレンドして使えるようなニュートラルカラー。
-  //  Memo: 黒からの変化の方がわかりづらいため、明るめにする。
-  --neutral: hsl(220, 2%, 80%);
-
-  /**
    * shadow の構造変数
+   *   Memo: 影色そのものは color.shadow（--shadow）として tokens.ts 側で定義している。
+   *         --shc はその別名で、.set--bxsh から上書きして使う。
    */
   --shc: var(--shadow);
   --shsz--10: 0px 1px 3px;
@@ -79,17 +36,6 @@
   --shsz--30: 0px 4px 12px;
   --shsz--40: 0px 8px 24px;
   --shsz--50: 0px 16px 48px;
-
-  /**
-   * typography トークンの構造変数
-   */
-  --fz-mol: 8; // 倍音列の分母（7~ に対応）
-  --hl-unit: calc(var(--fz--base) * 0.125); /* ハーフレディングの計算単位 ≒ 2px */
-
-  /**
-   * SPACE トークンの構造変数
-   */
-  --s-unit: calc(var(--fz--base) * 0.5); // 余白の計算単位 ≒ 8px（フィボナッチ数列ベース）
 
   /**
    * コンテンツの左右につける余白量

@@ -2,7 +2,7 @@
 /**
  * 記事詳細ページ（/ui/ セクション・root言語用）
  * - root言語（ja）の /ui/ コンテンツを表示
- * - URL例: /ui/test, /ui/components/button
+ * - URL例: /ui/Accordion, /ui/block-examples/Chat, /ui/components/Card
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
@@ -46,7 +46,7 @@ const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
   schemaType="TechArticle"
   date={entry.data.date}
 >
-  <Lism as="article" class="z--article set--cqUnit set--s" data-pagefind-body>
+  <Lism as="article" class="c--siteArticle set--cqUnit set--s" data-pagefind-body>
     {/* 記事タイトル */}
     <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
 

@@ -97,7 +97,6 @@ const mvLayeredKeyframesStyle = `@layer lism-custom {
 
 /**
  * 左右の高さ: Grid の `ai` stretch + 右列 `Flex` 内 `fx:1` の img（`min-h:0`）。
- * 旧実装: `syncAboutRightMaxHeight` + `--z--ryokan-about-right-max-h`（復元は git 履歴参照）
  */
 
 const aboutImgLeft = {
@@ -138,7 +137,7 @@ const feature2Bg = {
   height: 1080,
 } as const;
 
-/** 各要素の `src` に任意の画像URLを直指定（下記は従来どおりのプレースホルダー）。 */
+/** 各要素の `src` に任意の画像URLを直指定（下記はプレースホルダー）。 */
 const feature2GalleryPhotos = [
   { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-a', alt: '富士と朝焼けの風景' },
   { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-b', alt: '日本の山並みと雲海' },
@@ -239,19 +238,7 @@ const plans = [
 
 /** Lism プリセットアイコン名（ https://lism-css.com/docs/primitives/a--icon/ ） */
 type InformationIcon =
-  | 'home'
-  | 'clock'
-  | 'cart'
-  | 'gear'
-  | 'book'
-  | 'chat'
-  | 'heart'
-  | 'lightbulb'
-  | 'search'
-  | 'note'
-  | 'bookmark'
-  | 'user'
-  | 'lock';
+  'home' | 'clock' | 'cart' | 'gear' | 'book' | 'chat' | 'heart' | 'lightbulb' | 'search' | 'note' | 'bookmark' | 'user' | 'lock';
 
 type InformationItem = {
   icon: InformationIcon;
@@ -414,14 +401,14 @@ const reservationSites: readonly SiteCard[] = [
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400..700&family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
-  <Container class="z--ryokan-root">
+  <Container class="c--ryokan-root">
     <!-- Header -->
-    <Lism as="header" class="z--ryokan-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
-      <Container class="z--ryokan-header_bar" isWrapper="xl" mx="auto" hasGutter h="100%">
-        <Grid class="z--ryokan-header_inner" gtc="minmax(0,auto) 1fr" ai="center" h="100%" g="20">
-          <Stack class="z--ryokan-header_logo">
+    <Lism as="header" class="c--ryokan-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
+      <Container class="c--ryokan-header_bar" isWrapper="xl" mx="auto" hasGutter h="100%">
+        <Grid class="c--ryokan-header_inner" gtc="minmax(0,auto) 1fr" ai="center" h="100%" g="20">
+          <Stack class="c--ryokan-header_logo">
             <Link
-              class="z--ryokan-header_logoLink"
+              class="c--ryokan-header_logoLink"
               href="#"
               td="none"
               fw="normal"
@@ -435,13 +422,13 @@ const reservationSites: readonly SiteCard[] = [
               {logoLabel}
             </Link>
           </Stack>
-          <Flex class="z--ryokan-header_actions" jc="fe" g="20" ai="center">
-            <Flex class="z--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="center" p="0" fxw="nowrap" g={['15', null, '30']}>
+          <Flex class="c--ryokan-header_actions" jc="fe" g="20" ai="center">
+            <Flex class="c--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="center" p="0" fxw="nowrap" g={['15', null, '30']}>
               {
                 headerNavItems.map(({ href, ja, en }) => (
                   <ListItem>
                     <Link
-                      class="z--ryokan-headerNav_link"
+                      class="c--ryokan-headerNav_link"
                       href={href}
                       d="grid"
                       jc="center"
@@ -455,7 +442,7 @@ const reservationSites: readonly SiteCard[] = [
                       g="5"
                     >
                       <Inline>{ja}</Inline>
-                      <Inline as="span" class="z--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" hl="xs" ta="c" d="block">
+                      <Inline as="span" class="c--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" hl="xs" ta="c" d="block">
                         {en}
                       </Inline>
                     </Link>
@@ -476,14 +463,14 @@ const reservationSites: readonly SiteCard[] = [
       <Modal.Inner layout="stack" pos="relative" w="100%" p="30" bdrs="20" bxsh="50">
         <Modal.CloseBtn modalId="ryokan-menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
         <Modal.Body layout="stack" g="30" py="40">
-          <Stack as="ul" class="z--ryokan-header_menuNav" g="0" p="0" ov="clip">
+          <Stack as="ul" class="c--ryokan-header_menuNav" g="0" p="0" ov="clip">
             {
               headerNavItems.map(({ href, ja, en }) => (
                 <ListItem>
                   <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5" w="100%">
                     <Stack g="5">
                       <Inline>{ja}</Inline>
-                      <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" o="pp">
+                      <Inline as="span" class="c--ryokan-header_menuNav_en" fz="s" o="pp">
                         {en}
                       </Inline>
                     </Stack>
@@ -496,7 +483,7 @@ const reservationSites: readonly SiteCard[] = [
               <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5" w="100%">
                 <Stack g="5">
                   <Inline>ご予約はこちら</Inline>
-                  <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" o="pp"> Reservation </Inline>
+                  <Inline as="span" class="c--ryokan-header_menuNav_en" fz="s" o="pp"> Reservation </Inline>
                 </Stack>
                 <Icon icon="caret-right" fz="s" o="pp" />
               </BoxLink>
@@ -506,9 +493,9 @@ const reservationSites: readonly SiteCard[] = [
       </Modal.Inner>
     </Modal.Root>
     <!-- Main Content -->
-    <Container as="main" class="z--ryokan-main" pos="relative" z="0">
+    <Container as="main" class="c--ryokan-main" pos="relative" z="0">
       <Container
-        class="z--ryokan-mv"
+        class="c--ryokan-mv"
         as="section"
         pos="relative"
         w="100%"
@@ -517,24 +504,24 @@ const reservationSites: readonly SiteCard[] = [
         ov="clip"
         style={{
           minHeight: '100svh',
-          '--z--ryokan-mv-bgCycleDuration': `${mvBgCycleDuration}s`,
-          '--z--ryokan-mv-lineBlurMax': `${mvLineRevealBlurPx}px`,
-          '--z--ryokan-mv-lineDuration': `${mvLineRevealDuration}s`,
-          '--z--ryokan-mv-lineStartDelay': `${mvLineRevealStartDelay}s`,
-          '--z--ryokan-mv-lineStagger': `${mvLineRevealStagger}s`,
+          '--c--ryokan-mv-bgCycleDuration': `${mvBgCycleDuration}s`,
+          '--c--ryokan-mv-lineBlurMax': `${mvLineRevealBlurPx}px`,
+          '--c--ryokan-mv-lineDuration': `${mvLineRevealDuration}s`,
+          '--c--ryokan-mv-lineStartDelay': `${mvLineRevealStartDelay}s`,
+          '--c--ryokan-mv-lineStagger': `${mvLineRevealStagger}s`,
         }}
       >
-        <Frame isLayer class="z--ryokan-mv_bg">
+        <Frame isLayer class="c--ryokan-mv_bg">
           {
             mvResolvedImages.map((src, index) => {
               const mvLayerDelay = index * mvDurationPerImage - mvBgCycleDuration;
 
               return (
                 <div
-                  class="z--ryokan-mv_layer"
+                  class="c--ryokan-mv_layer"
                   style={{
-                    '--z--ryokan-mv-layerBgImage': `url('${src}')`,
-                    '--z--ryokan-mv-layerDelay': `${mvLayerDelay}s`,
+                    '--c--ryokan-mv-layerBgImage': `url('${src}')`,
+                    '--c--ryokan-mv-layerDelay': `${mvLayerDelay}s`,
                   }}
                 />
               );
@@ -556,10 +543,10 @@ const reservationSites: readonly SiteCard[] = [
           c="white"
           style={{ paddingBlockStart: 'calc(var(--header-h) + var(--s30))' }}
         >
-          <Lism as="p" class="z--ryokan-mv_copy">
+          <Lism as="p" class="c--ryokan-mv_copy">
             {
               mvResolvedCopyLines.map((line, i) => (
-                <span class="z--ryokan-mv_line" style={{ '--z--ryokan-mv-lineIndex': i }}>
+                <span class="c--ryokan-mv_line" style={{ '--c--ryokan-mv-lineIndex': i }}>
                   {line}
                 </span>
               ))
@@ -567,27 +554,27 @@ const reservationSites: readonly SiteCard[] = [
           </Lism>
         </Stack>
       </Container>
-      <!-- MV の動的 @keyframes はマージで抽出されないため、元コンポーネントと同じ set:html を明示注入 -->
+      <!-- MV の動的 @keyframes はマージで抽出されないため、set:html で明示注入 -->
       <style set:html={mvLayeredKeyframesStyle}></style>
 
-      <Lism as="section" id="about" class="z--ryokan-about" isContainer pbs="60" pbe="60" bgc="black" c="white">
-        <Grid class="z--ryokan-about_grid" gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 50%)']} g={['30', null, '0']} ai={['start', null, 'stretch']}>
+      <Lism as="section" id="about" class="c--ryokan-about" isContainer pbs="60" pbe="60" bgc="black" c="white">
+        <Grid class="c--ryokan-about_grid" gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 50%)']} g={['30', null, '0']} ai={['start', null, 'stretch']}>
           <Stack
-            class="z--ryokan-about_col z--ryokan-about_col--left"
+            class="c--ryokan-about_col c--ryokan-about_col--left"
             g={['40', null, '50']}
             pe={['0', null, '50']}
             h={['auto', null, '100%']}
             min-h="0"
             min-w="0"
           >
-            <Stack class="z--ryokan-about_stack" g="0" ai="start">
+            <Stack class="c--ryokan-about_stack" g="0" ai="start">
               <Text as="p" fz={['l', null, 'xl']} mb="10" lts="l" ff="base" c="white" o="pp"> About us </Text>
               <Heading level="2" fz={['2xl', null, '4xl']} fw="500" mb="50" lts="l"> 当宿について </Heading>
-              <Text class="z--ryokan-about_body" as="p" fz="m" hl="l" lts="s" c="white" o="p">
+              <Text class="c--ryokan-about_body" as="p" fz="m" hl="l" lts="s" c="white" o="p">
                 {aboutBodyCopy}
               </Text>
             </Stack>
-            <Frame as="figure" class="z--ryokan-about_figureLeft" ar={['16/10', null, '4/3']} ov="hidden">
+            <Frame as="figure" class="c--ryokan-about_figureLeft" ar={['16/10', null, '4/3']} ov="hidden">
               <img
                 src={aboutImgLeft.src}
                 alt={aboutImgLeft.alt}
@@ -598,10 +585,10 @@ const reservationSites: readonly SiteCard[] = [
               />
             </Frame>
           </Stack>
-          <Flex as="figure" class="z--ryokan-about_figureRight" fxd="column" h={['auto', null, '100%']} min-h="0" pbe={['0', null, '50']} ov="hidden">
+          <Flex as="figure" class="c--ryokan-about_figureRight" fxd="column" h={['auto', null, '100%']} min-h="0" pbe={['0', null, '50']} ov="hidden">
             <Lism
               as="img"
-              class="z--ryokan-about_mediaRightImg"
+              class="c--ryokan-about_mediaRightImg"
               src={aboutImgRight.src}
               alt={aboutImgRight.alt}
               fx={['0', null, '1']}
@@ -613,16 +600,16 @@ const reservationSites: readonly SiteCard[] = [
         </Grid>
       </Lism>
 
-      <Lism as="section" id="feature" class="z--ryokan-feature" bgc="base" c="text" py="60">
+      <Lism as="section" id="feature" class="c--ryokan-feature" bgc="base" c="text" py="60">
         <Container isWrapper="l" hasGutter isContainer pos="relative">
-          <Grid class="z--ryokan-feature_grid" gtc={['1fr', null, 'minmax(0, 1.05fr) minmax(0, 1fr)']} g={['40', null, '50']} ai="stretch">
-            <Lism as="figure" class="z--ryokan-feature_figure" ov="hidden" bdrs="10">
+          <Grid class="c--ryokan-feature_grid" gtc={['1fr', null, 'minmax(0, 1.05fr) minmax(0, 1fr)']} g={['40', null, '50']} ai="stretch">
+            <Lism as="figure" class="c--ryokan-feature_figure" ov="hidden" bdrs="10">
               <img src={featureImg.src} alt={featureImg.alt} width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" />
             </Lism>
-            <Stack class="z--ryokan-feature_textCol" pos="relative" g="0" ai="stretch" min-w="0" h="100%">
-              <Lism as="span" class="z--ryokan-feature_watermark" exProps={{ 'aria-hidden': 'true' }}> Experience </Lism>
+            <Stack class="c--ryokan-feature_textCol" pos="relative" g="0" ai="stretch" min-w="0" h="100%">
+              <Lism as="span" class="c--ryokan-feature_watermark" exProps={{ 'aria-hidden': 'true' }}> Experience </Lism>
               <Flex
-                class="z--ryokan-feature_copyRow"
+                class="c--ryokan-feature_copyRow"
                 fxd={['column', null, 'row']}
                 g={['50', null, '40']}
                 ai="stretch"
@@ -631,17 +618,17 @@ const reservationSites: readonly SiteCard[] = [
                 min-h="0"
                 w="100%"
               >
-                <Heading level="2" class="z--ryokan-feature_title" fz={['2xl', null, '3xl']} fw="600" lts="l">
-                  <Box class="z--ryokan-feature_titleInner" lts="l">
-                    <Inline class="z--ryokan-feature_titleLine1">特別な旅と</Inline>
-                    <Inline class="z--ryokan-feature_titleLine2">静寂の体験</Inline>
+                <Heading level="2" class="c--ryokan-feature_title" fz={['2xl', null, '3xl']} fw="600" lts="l">
+                  <Box class="c--ryokan-feature_titleInner" lts="l">
+                    <Inline class="c--ryokan-feature_titleLine1">特別な旅と</Inline>
+                    <Inline class="c--ryokan-feature_titleLine2">静寂の体験</Inline>
                   </Box>
                 </Heading>
-                <Stack class="z--ryokan-feature_bodyStack" g="30" ai="start" min-w="0">
-                  <Text as="p" class="z--ryokan-feature_lead" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
+                <Stack class="c--ryokan-feature_bodyStack" g="30" ai="start" min-w="0">
+                  <Text as="p" class="c--ryokan-feature_lead" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
                     {featureLead}
                   </Text>
-                  <Text as="p" class="z--ryokan-feature_body" fz="m" hl="l" lts="s" c="text" max-w="100%">
+                  <Text as="p" class="c--ryokan-feature_body" fz="m" hl="l" lts="s" c="text" max-w="100%">
                     {featureBody}
                   </Text>
                 </Stack>
@@ -651,7 +638,7 @@ const reservationSites: readonly SiteCard[] = [
         </Container>
       </Lism>
 
-      <Lism as="section" id="feature2" class="z--ryokan-feature2" pos="relative" ov-x="clip" c="white">
+      <Lism as="section" id="feature2" class="c--ryokan-feature2" pos="relative" ov-x="clip" c="white">
         <Frame isLayer>
           <Lism
             as="img"
@@ -718,7 +705,7 @@ const reservationSites: readonly SiteCard[] = [
               {
                 plans.map((plan) => (
                   <Flex fxd={['column', null, 'row-reverse']} ai="stretch" g={['30', null, '50']} w="100%">
-                    <Frame as="figure" class="z--ryokan-plans_media" ar="16/10" ov="hidden" bdrs="10" w="100%" min-w="0">
+                    <Frame as="figure" class="c--ryokan-plans_media" ar="16/10" ov="hidden" bdrs="10" w="100%" min-w="0">
                       <img
                         src={plan.image.src}
                         alt={plan.image.alt}
@@ -755,7 +742,7 @@ const reservationSites: readonly SiteCard[] = [
 
                         <Lism isContainer w="100%" min-w="0">
                           <Button
-                            class="z--ryokan-plans_reserve"
+                            class="c--ryokan-plans_reserve"
                             href="#contact"
                             layout="flex"
                             w="100%"
@@ -830,17 +817,17 @@ const reservationSites: readonly SiteCard[] = [
 
       <Lism as="section" id="faq" bgc="base" c="text" py="60">
         <Container isWrapper="l" hasGutter>
-          <Grid class="z--ryokan-faq_layout" w="100%" g="50" ai="stretch">
-            <Stack class="z--ryokan-faq_head" g="10" ai="center" ta="center">
+          <Grid class="c--ryokan-faq_layout" w="100%" g="50" ai="stretch">
+            <Stack class="c--ryokan-faq_head" g="10" ai="center" ta="center">
               <Text as="p" fz="m" lts="l" ff="base" c="text-2" o="pp"> FAQ </Text>
               <Heading level="2" fz={['2xl', null, '3xl']} fw="500" lts="l"> よくあるご質問 </Heading>
             </Stack>
 
-            <Frame as="figure" class="z--ryokan-faq_media" ar={['16/10', null, '1/1']} ov="hidden" bdrs="10" w="100%" min-w="0">
+            <Frame as="figure" class="c--ryokan-faq_media" ar={['16/10', null, '1/1']} ov="hidden" bdrs="10" w="100%" min-w="0">
               <img src={faqImage.src} alt={faqImage.alt} width={faqImage.width} height={faqImage.height} loading="lazy" decoding="async" />
             </Frame>
 
-            <Lism class="z--ryokan-faq_acc" min-w="0">
+            <Lism class="c--ryokan-faq_acc" min-w="0">
               <Accordion.Root g="0" p="0" ov="visible">
                 {
                   faqItems.map((item) => (
@@ -942,7 +929,7 @@ const reservationSites: readonly SiteCard[] = [
     </Container>
     <!-- Footer -->
 
-    <Lism as="footer" id="footer" class="z--ryokan-footer" bgc="black" c="white" py={['50', null, '60']}>
+    <Lism as="footer" id="footer" class="c--ryokan-footer" bgc="black" c="white" py={['50', null, '60']}>
       <Container isContainer isWrapper="xl" hasGutter>
         <Stack g={['40', null, '50']} ai="stretch" w="100%">
           <!-- キャッチコピーをロゴの左隣に。下揃え（flex-end） -->
@@ -957,7 +944,7 @@ const reservationSites: readonly SiteCard[] = [
           <Flex fxd={['column', null, 'row']} ai="end" jc="between" g={['30', null, '40']} w="100%">
             <Flex
               as="ul"
-              class="z--ryokan-footer_nav"
+              class="c--ryokan-footer_nav"
               fxd={['column', null, 'row']}
               ai="stretch"
               p="0"
@@ -971,7 +958,7 @@ const reservationSites: readonly SiteCard[] = [
                 footerNavItems.map(({ href, ja, en }) => (
                   <ListItem>
                     <BoxLink
-                      class="z--ryokan-footer_navLink"
+                      class="c--ryokan-footer_navLink"
                       href={href}
                       layout="grid"
                       gtc={['1fr auto', null, '1fr']}
@@ -984,13 +971,13 @@ const reservationSites: readonly SiteCard[] = [
                       c="inherit"
                       hov="-o"
                     >
-                      <Stack class="z--ryokan-footer_navStack" g="5">
+                      <Stack class="c--ryokan-footer_navStack" g="5">
                         <Inline>{ja}</Inline>
-                        <Inline as="span" class="z--ryokan-footer_navEn" fz="s" o="pp">
+                        <Inline as="span" class="c--ryokan-footer_navEn" fz="s" o="pp">
                           {en}
                         </Inline>
                       </Stack>
-                      <Icon class="z--ryokan-footer_navCaret" icon="caret-right" fz="s" o="pp" />
+                      <Icon class="c--ryokan-footer_navCaret" icon="caret-right" fz="s" o="pp" />
                     </BoxLink>
                   </ListItem>
                 ))
@@ -1015,7 +1002,7 @@ const reservationSites: readonly SiteCard[] = [
 
     <Lism pos="fixed" r="max(var(--s30), env(safe-area-inset-right))" b="max(var(--s30), env(safe-area-inset-bottom))" w="fit">
       <Button
-        class="z--ryokan-reservationFab"
+        class="c--ryokan-reservationFab"
         href="#reservation"
         z="99"
         layout="center"

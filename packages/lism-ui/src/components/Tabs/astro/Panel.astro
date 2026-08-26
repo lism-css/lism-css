@@ -11,10 +11,18 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
     isActive?: boolean;
   };
 
-const { tabId = 'tab', index = 0, isActive = false, class: className, as = 'div', ...props } = Astro.props;
+// tabId / index は Root 側の transformTabitems が置換するため、既定値はその目印となるプレースホルダー
+const { tabId = '__LISM_TAB_ID__', index = 0, isActive = false, class: className, as = 'div', ...props } = Astro.props;
 const controlId = `${tabId}-${index}`;
 ---
 
-<Lism as={as} id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} class={atts(className, 'c--tabs_panel')} {...props}
-  ><slot /></Lism
+<Lism
+  as={as}
+  id={controlId}
+  role="tabpanel"
+  aria-labelledby={`${controlId}-tab`}
+  tabindex="0"
+  hidden={!isActive}
+  class={atts(className, 'b--tabs_panel')}
+  {...props}><slot /></Lism
 >

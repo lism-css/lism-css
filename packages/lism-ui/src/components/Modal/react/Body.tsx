@@ -4,7 +4,7 @@ import atts from 'lism-css/lib/helper/atts';
 
 export default function ModalBody<T extends ElementType = 'div'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism className={atts(className, 'c--modal_body')} {...(props as object)}>
+    <Lism className={atts(className, 'b--modal_body')} {...(props as object)}>
       {children}
     </Lism>
   );

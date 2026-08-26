@@ -1,21 +1,21 @@
 ---
 name: lism-css-guide
-description: 'Lism CSSでUIやページを実装・修正する時に使う実装ガイド。Primitive選定・トークン照合・Property Class/Lism Props活用・レスポンシブ設計・アンチパターンセルフチェックを行う。c--*, l--*, a--*, is--*, has--*, set--*, u--*, -prop:value形式のクラスやトークンの逆引きにも使う。'
+description: 'Lism CSSでUIやページを実装・修正する時に使う実装ガイド。Primitive選定・トークン照合・Property Class/Lism Props活用・レスポンシブ設計・アンチパターンセルフチェックを行う。b--*, c--*, l--*, a--*, is--*, has--*, set--*, u--*, -prop:value形式のクラスやトークンの逆引きにも使う。'
 ---
 
-# Lism CSS実装ガイド
+# Lism CSS 実装ガイド
 
-Lism CSSでUI・ページ・コンポーネントを実装する時の判断の起点です。単なるリファレンスではなく、**実装前チェック→実装→提出前セルフチェック**を必ず通し、Primitive・トークン・Property Class・レスポンシブ設計の取りこぼしを防ぎます。
+Lism CSSでUI・ページ・コンポーネントを実装する時の判断の起点です。単なるリファレンスではなく、まず変更規模から「事前チェック実行レベル」を判定し、そのレベルに応じて**実装前チェック→実装→提出前セルフチェック**を通すことで、Primitive・トークン・Property Class・レスポンシブ設計の取りこぼしを防ぎます。
 
 公式ドキュメント: https://lism-css.com/docs/overview.md
 
-> **バージョン情報:** このガイドは`lism-css@0.24.0`/`@lism-css/ui@0.24.0`時点の情報に基づきます。プロジェクトで使用中のバージョンが異なる場合は、ユーザーにその旨を伝え、パッケージ側の更新・またはこのスキルの更新を案内してください。
+> **バージョン情報:** このガイドは`lism-css@0.26.0`/`@lism-css/ui@0.26.0`時点の情報に基づきます。プロジェクトで使用中のバージョンが異なる場合は、ユーザーにその旨を伝え、パッケージ側の更新・またはこのスキルの更新を案内してください。
 
 ## 実装フロー（厳守）
 
 資料確認は、コード上の操作の直前に行う。どの操作の手前で何を読むかは「資料確認トリガー」に従う。
 
-0. **実行レベル判定**: 変更規模から「事前チェック実行レベル」（不要/軽量/通常/値照合付き）を判定する。「不要」に該当する場合、以降の手順は省略してよい。
+0. **実行レベル判定**: 変更規模から「事前チェック実行レベル」（不要/軽量/通常/値照合付き）を判定する。判定に迷う場合は一つ上のレベルを選ぶ。「不要」の場合、手順6（実装）以外の手順1〜5・7は行わない（`.lism/`へのファイル作成もしない）。「軽量」の場合、手順7はチャット内の数行の確認に簡略化し、`.lism/review.md`は作らない。
 1. **初期確認**: SKILL.mdだけで実装しない。実装対象に明らかに関係する最小限の詳細ファイルだけを先に開き、実装プランに「初期確認した資料」を列挙する。リンク表を眺めただけは確認済みにしない。
 2. 目的別実装ガイドでPrimitive/コンポーネントの候補を選定する。
 3. 実装前チェック（C0–C8）を行い、初期確認した資料、使うPrimitive、コンポーネント、トークン、レスポンシブ方針を列挙した**実装プラン**を出す。未読のまま採用できない判断は🔁を付け、対応する「読む資料」を実装プランの判断行に紐づける。値照合付きレベルでは、実装プランをチャットの返答としてではなく`.lism/plan.md`として保存する（規約は[`references/verification.md`](./references/verification.md)）。
@@ -62,12 +62,12 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 ## 事前チェック実行レベル
 
-| レベル | 条件 | 確認するC | 出力 |
-| --- | --- | --- | --- |
-| 不要 | 説明のみ/コード変更なし/既存の書き方に沿った微修正 | — | — |
-| 軽量 | 数行の小変更・既存パターン内の変更 | C1・C5中心 | 3〜5行の箇条書き |
-| 通常 | 新規UI/コンポーネント/セクション | 必須=初期確認した資料、C0、C1、C5、C6。該当時だけC2/C3/C4/C7/C8 | 項目別の表 |
-| 値照合付き | Figma/スクショ等のデザイン再現 | 通常+C5/C7を詳しく確認 | 項目別の表＋トークン差分表（差分列必須）。`.lism/plan.md`へ保存 |
+| レベル | 条件 | 確認するC | 出力 | 提出前セルフチェック |
+| --- | --- | --- | --- | --- |
+| 不要 | 説明のみ/コード変更なし/既存の書き方に沿った微修正 | — | — | 行わない |
+| 軽量 | 数行の小変更・既存パターン内の変更 | C1・C5中心 | 3〜5行の箇条書き | チャット内で数行。`.lism/review.md`は作らない |
+| 通常 | 新規UI/コンポーネント/セクション | 必須=初期確認した資料、C0、C1、C5、C6。該当時だけC2/C3/C4/C7/C8 | 項目別の表 | 実施し、`.lism/review.md`へ保存 |
+| 値照合付き | Figma/スクショ等のデザイン再現 | 通常+C5/C7を詳しく確認 | 項目別の表＋トークン差分表（差分列必須）。`.lism/plan.md`へ保存 | 実施し、`.lism/review.md`へ保存 |
 
 通常レベルでも該当しないCは省略して構いません。表を形だけ埋めず、実装に影響する項目だけ列挙してください。
 
@@ -83,8 +83,8 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | hover/focus等の状態スタイルを書く | `property-class/hov.md`（必要に応じて`trait-class/has--transition.md`） |
 | トークン外の数値・色をコードに書く（丸める場合を含む。CSS/Props問わず） | `tokens.md`、`antipatterns.md`の「px / 固定値の直書き」節 |
 | レスポンシブの切替を決める | `responsive.md` |
-| `c--*`を新しく作る/名前を付ける | `naming.md`、`css-rules.md`の該当節 |
-| `c--*`のCSSを書く | `css-rules.md`の`@layer lism-component`/`c--*`節 |
+| 独自クラス（`b--*`/`c--*`）を新しく作る/名前を付ける | `naming.md`、`css-rules.md`の`独自クラスの選び方（2分類）`節 |
+| `b--*`/`c--*`のCSSを書く | `css-rules.md`の`Block Class（b--）`/`Custom Class（c--）`節 |
 | 状態・バリエーションを設計する | `trait-class.md` |
 
 「必要なら参照」などの曖昧な表現で代替しない。対象操作の直前に読む。
@@ -94,12 +94,13 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 次のルールを常に守る。迷う・例外にする・既存実装と衝突する場合は、該当資料を読んで🔁を✅または⏸へ解消する。
 
 - 構造は`<div>`+素のCSSよりPrimitiveを優先する。候補は「目的別実装ガイド」の表から選ぶ。
-- `c--*`命名はBlockをcamelCase、Elementを`_`ひとつ、Modifierを`--`ふたつにする。`c--feature-card`や`__`は使わない。
-- `c--*`のCSSは必ず`@layer lism-component`内に置く。
+- `c--*`/`b--*`命名はBlockをcamelCase、Elementを`_`ひとつ、Modifierを`--`ふたつにする。`c--feature-card`や`__`は使わない。
+- 独自クラスは2分類（ベーススタイルを CSS 側で管理する共通基礎部品→`b--`／それ以外のカスタムクラス全般→`c--`）で命名する。
+- 独自CSSは必ず`@layer lism-custom`内に置く（`b--`のベーススタイルだけ`@layer lism-block`）。
 - トークン外のpx/rem/em値を勝手に丸めたり直書きしたりしない。丸め・新規トークン・直書き例外は⏸にする（`antipatterns.md`の「直書きしてよい例外」に該当する場合のみ`✅例外`にできる）。
-- 単一要素にだけ効く宣言はCSSに書かず、まずLism Props/Property Classで表せないか確認する。CSSに残すのは擬似要素・子孫セレクタ・状態切替などProperty Classで書けない宣言だけにする。
+- `c--*`のクラスでは、単一要素にだけ効く宣言はCSSに書かず、まずLism Props/Property Classで表せないか確認する。CSSに残すのは擬似要素・子孫セレクタ・状態切替などProperty Classで書けない宣言だけにする。`b--*`のベーススタイルは対象外で、トークンを使って`@layer lism-block`にCSSとして書いてよい（BP切替・hover・例外的な調整はProperty Class）。
 - レスポンシブ値はbaseを必ず置く。container query運用なら必要な`isContainer`祖先を確認する。
-- 状態は`data-*`/ARIA、見た目バリエーションは`c--name--variant`で表す。`is--active`のようにTrait Classを状態名へ流用しない。
+- 状態は`data-*`/ARIA、見た目バリエーションはBlockと同じプレフィックスのModifier（`c--`なら`c--name--variant`、`b--`なら`b--name--variant`）で表す。`is--active`のようにTrait Classを状態名へ流用しない。
 
 ## 目的別実装ガイド
 
@@ -115,10 +116,12 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | `components-ui.md`、`set-class.md` |
 | hover効果 | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | `property-class/hov.md`、`trait-class/has--transition.md` |
 | ボックス・カードの全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | `trait-class/is--boxLink.md` |
-| 小さいUI部品 | `c--*`＋Property Class（`c--*`は意味名に留め、単一要素の見た目はProperty Class/Lism Propsへ） | `property-class.md`、`css-rules.md#component-classc--` |
+| 小さいUI部品 | `c--*`＋Property Class（`c--*`は何のパーツかを示す名前に留め、単一要素の見た目はProperty Class/Lism Propsへ）。ベーススタイルを CSS 側で管理する共通部品なら`b--*` | `property-class.md`、`css-rules.md#custom-classc--`、`css-rules.md#block-classb--` |
 | ページの定番セクション（ヒーロー・サイトヘッダー・フッター等） | `Group`＋`Wrapper`/`Stack`/`Cluster`の定番構成 | `references/page-sections.md` |
 
 ## 提出前セルフチェック
+
+**実行条件**: この節の照合と`.lism/review.md`の作成を行うのは、実行レベルが「通常」「値照合付き」の場合だけです。「不要」では行いません。「軽量」では、変更点に関係する最小ゲート項目だけをチャット内で数行確認し、ファイルは作りません。
 
 **検証の分離（評価サブエージェント）**: サブエージェント／タスク委任機能が使える環境では、この節の照合を実装した本人ではなく読み取り専用の評価サブエージェントに委任します（指示テンプレ・報告書式・再評価ループは[`references/verification.md`](./references/verification.md)）。評価報告は`.lism/review.md`へ保存し、違反ゼロの報告が出るまで修正→再評価を繰り返してから提出します。完了報告では`.lism/review.md`を参照します。委任機能が使えない環境では、同じ照合を本人がこの節の順に自分で実行します。
 
@@ -140,7 +143,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 
 - `✅例外`を含む✅判定を、最小ゲート・`antipatterns.md`の「直書きしてよい例外」・すり合わせ済みの値マッピング方針に再照合する。許可リスト外の`✅例外`は⏸へ戻す。
 - 値照合付きレベルでは、`.lism/plan.md`にトークン差分表（差分列付き）が存在するか確認する。無ければその実装プランは無効。差分表を作成して照合をやり直す。スケール前提（画像の書き出し倍率等）が実測・整合チェックで検証済みかどうかも確認する（未検証なら差分表全体が無効）。
-- 実行レベル判定が妥当だったかを見直す（「不要」「軽量」への過小判定でチェックを省略していないか。デザイン再現なのに「値照合付き」へ上げず、トークン差分表を回避していないか）。
+- 実行レベル判定が妥当だったかを見直す（デザイン再現なのに「値照合付き」へ上げず、トークン差分表を回避していないか）。
 
 **個別確認（最小ゲート・antipatternsでカバーされない項目）**
 
@@ -162,7 +165,7 @@ C0–C8の詳細と出力形式は[`references/authoring.md`](./references/autho
 | `set-class.md` | `set--plain`/`set--hov`等のセットクラス | reset済みボタン等を使う |
 | `tokens.md` | デザイントークンとCSS変数 | 余白・色・角丸・影・fzの照合 |
 | `naming.md` | 命名規則とProperty Class省略ルール | 命名・prefix・Property Class表記 |
-| `css-rules.md` | CSS設計・Layer構造・`c--*`・独自prefix | CSSレイヤー・`c--*`・カスタムCSS |
+| `css-rules.md` | CSS設計・Layer構造・`b--*`/`c--*`・独自クラスの分類 | CSSレイヤー・`b--*`/`c--*`・カスタムCSS |
 | `responsive.md` | BP・コンテナクエリ・レスポンシブProps | レスポンシブ・コンテナクエリ |
 | `base-styles.md` | Reset CSSとHTML要素の基本スタイル | 素のHTML要素の既定を確認 |
 | `components-core.md` | `lism-css`のReact/Astroコアコンポーネント | React/Astroコンポーネント |

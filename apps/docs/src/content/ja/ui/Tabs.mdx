@@ -6,8 +6,8 @@ description: '@lism-css/ui で提供する Tabs コンポーネントについ�
 import { Icon } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro/Tabs';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import './_opt-in/_tabs-line.css'
 import './_opt-in/_tabs-emboss.css'
+import './_opt-in/_tabs-folder.css'
 import './_opt-in/_tabs-keep-height.css'
 
 
@@ -15,55 +15,10 @@ import './_opt-in/_tabs-keep-height.css'
 スタイリングはほぼなく、動きに関わる部分だけを提供しています。表示スタイルは適宜カスタマイズしてご利用ください。
 
 
-## How to use
+## Overview
 
-`@lism-css/ui` パッケージで`Tabs`として提供しています。
-
-
-### Import
-
-<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" />
-
-
-### Props
-
-| プロパティ | 説明 |
-|---|---|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`|`c--tabs--{variant}`クラスが出力されます。|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`|`aria-controls`の値として使用されるタブを特定するためのIDを文字列で指定できます。|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`|最初に開いておくタブ番号を指定できます。|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`|タブボタンを囲むリスト要素(`c--tabs_list`)へ渡すpropsを指定できます。|
-{/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | タブテキストを指定します。 | */}
-
-{/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`|`[data-tabs-height="keep"]`が出力され、タブの高さを一番コンテンツ量の多いパネルに合わせて固定することができます。| */}
-
-
-### 基本構造
-
-```jsx
-<Tabs.Root>
-  <Tabs.Item>
-    <Tabs.Tab>Tab label</Tabs.Tab>
-    <Tabs.Panel>...Contents...</Tabs.Panel>
-  </Tabs.Item>
-</Tabs.Root>
-```
-
-:::warning
-`<Tabs.Item>`の子要素は`<Tabs.Tab>`と`<Tabs.Panel>`のみしか認識しません。また、この2つは必ず両方使用してください。
-:::
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs) で公開しています。
-
-
-## Examples
-
-### 基本例
 <Preview>
-  <PreviewTitle>例</PreviewTitle>
+  <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30">
     <Tabs.Root>
       <Tabs.Item>
@@ -76,6 +31,12 @@ import './_opt-in/_tabs-keep-height.css'
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -95,12 +56,160 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
+```html
+<div class="b--tabs b--tabs--default l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+:::warning
+`<Tabs.Item>`の子要素は`<Tabs.Tab>`と`<Tabs.Panel>`のみしか認識しません。また、この2つは必ず両方使用してください。
+:::
+
+
+## Styles
+
+Tabs のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Tabs/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs) で公開しています。
+:::
+
+
+## How to use
+
+`@lism-css/ui` パッケージで`Tabs`として提供しています。
+
+
+### Import
+
+<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" css="style.css" />
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`|`b--tabs--{variant}`クラスが出力されます。初期値は`default`で、`line`も標準で提供しています。独自のvariantを指定すると既定バリアント（`b--tabs--default`）の装飾は適用されなくなるため、初期スタイルを打ち消すことなく独自のスタイルを構築できます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`|タブを特定するためのIDを文字列で指定できます。タブボタンのid(`{tabId}-{index}-tab`)、パネルのid(`{tabId}-{index}`)、`aria-controls`の値の生成に使用されます。未指定の場合は自動生成されたIDが使われます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`|最初に開いておくタブ番号を指定できます。タブの数を超える番号など、範囲外の値を指定した場合は`1`にフォールバックします。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`|タブボタンを囲むリスト要素(`b--tabs_list`)へ渡すpropsを指定できます。|
+{/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | タブテキストを指定します。 | */}
+
+{/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`|`[data-tabs-height="keep"]`が出力され、タブの高さを一番コンテンツ量の多いパネルに合わせて固定することができます。| */}
+
+
+### キーボード操作
+
+タブボタンにフォーカスがある状態で、以下のキー操作が可能です。
+
+| キー | 動作 |
+|---|---|
+|<kbd>←</kbd> <kbd>→</kbd>|前後のタブへフォーカスを移動し、同時にそのタブを選択します。端まで移動すると反対側の端へループします。|
+|<kbd>Home</kbd>|先頭のタブへ移動して選択します。|
+|<kbd>End</kbd>|末尾のタブへ移動して選択します。|
+
+タブリストを縦並びにする場合は、`listProps`から`aria-orientation="vertical"`を指定してください。矢印キーが<kbd>↑</kbd> <kbd>↓</kbd>に切り替わります。
+
+```jsx
+<Tabs.Root listProps={{ 'aria-orientation': 'vertical' }}>
+```
+
+:::note
+横並び（既定）で<kbd>↑</kbd> <kbd>↓</kbd>を使わないのは、ブラウザ本来のスクロール操作を妨げないためです。
+
+なお、`aria-orientation`はHTML属性のため、画面幅に応じて横並びと縦並びが切り替わるレイアウトでは値を出し分けられません。その場合は既定（横並び・<kbd>←</kbd> <kbd>→</kbd>）のまま使ってください。
+:::
+
+
+## Examples
+
+### variant="line"
+
+`variant="line"`を指定すると、選択中のタブを下線で表示するラインスタイルになります。
+
+<Preview>
+  <PreviewTitle>`variant='line'`</PreviewTitle>
+  <PreviewArea p="30">
+    <Tabs.Root variant="line">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'variant="line"'
+    <Tabs.Root variant="line">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
     ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--line l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
@@ -126,6 +235,12 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -143,16 +258,63 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--default l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="false" tabindex="-1">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="true" tabindex="0">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
 
-### タブコンテンツを横並び配置にする
-`<Tabs.Root>`(`c--tabs`)に`grid-template:'list panel' auto / auto 1fr;` を指定すると、タブリストとコンテンツが横並びになります。
+### URLパラメータで初期タブを指定する
 
-それと同時に、タブリスト(`c--tabs_list`)のボタンを縦並び（`flex-direction:column;`）に変更すると、以下のようなレイアウトが実現できます。
+URLに`?lism-tab={tabId}-{index}`を付けてページを開くと、指定したタブが最初に選択された状態で表示されます。
+
+この機能を使う場合は、`<Tabs.Root>`の`tabId`を明示的に指定してください。  
+（未指定の場合はIDが自動生成されるため、URLから指定できません。）
+
+```jsx 'tabId="sample-tabs"'
+<Tabs.Root tabId="sample-tabs">
+  <Tabs.Item>
+    <Tabs.Tab>Tab 1</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+  <Tabs.Item>
+    <Tabs.Tab>Tab 2</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+  <Tabs.Item>
+    <Tabs.Tab>Tab 3</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
+</Tabs.Root>
+```
+
+上記のタブを設置したページに`?lism-tab=sample-tabs-2`を付けてアクセスすると、2番目のタブが選択された状態で表示されます。
+
+
+### 縦並びタブ
+`<Tabs.Root>`(`b--tabs`)に`grid-template:'list panel' auto / auto 1fr;` を指定すると、タブリストとコンテンツが横並びになります。
+
+それと同時に、タブリスト(`b--tabs_list`)のボタンを縦並び（`flex-direction:column;`）に変更すると、以下のようなレイアウトが実現できます。
 
 <Preview>
   <PreviewTitle>`@sm`サイズより大きい場合、コンテンツを横並びにする例</PreviewTitle>
@@ -174,9 +336,17 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>
+          <Fragment>Tab 3</Fragment>
+        </Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
       <Tabs.Item>
@@ -191,70 +361,40 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--default l--grid -gt_sm" style='--gt_sm:"list panel" auto / auto 1fr'>
+  <div class="b--tabs_list -fxd_sm" style="--fxd_sm:column" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
 
 ## Opt-in
 
+独自のスタイルバリエーションを作成する例です。
 
-### スタイルバリエーションの作成例
-
-`c--tabs_tab`では`--_isSelected` と `--_notSelected` 変数が使えるようになっていますので、活用していただくと便利です。
+`b--tabs_tab`では`--_isSelected` と `--_notSelected` 変数が使えるようになっていますので、活用していただくと便利です。
 （[`set--hov`](/docs/property-class/hov#set--hov)の`--_isHov`,`--_notHov`と同じようにして使用できます。）
 
-ここではいくつかのスタイリング例を紹介します。
-
-#### `c--tabs--line`
-
-<PreviewTitle>必要な追加CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-line.css" />
-
-
-<Preview>
-  <PreviewTitle>`variant='line'`</PreviewTitle>
-  <PreviewArea p="30">
-    <Tabs.Root variant="line">
-      <Tabs.Item>
-        <Tabs.Tab>Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'variant="line"'
-    <Tabs.Root variant="line">
-      <Tabs.Item>
-        <Tabs.Tab>Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab>Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-    ```
-  </PreviewCode>
-</Preview>
-
-#### `c--tabs--emboss`
-
-<PreviewTitle>必要な追加CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />
+### variant="emboss"
 
 <Preview>
   <PreviewTitle>`variant='emboss'`</PreviewTitle>
@@ -270,6 +410,12 @@ import './_opt-in/_tabs-keep-height.css'
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -289,19 +435,110 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--emboss l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
 </Preview>
 
+<PreviewTitle>必要な追加CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />
 
-### 高さを固定する方法
 
-タブ全体の高さを一番長いコンテンツパネルに合わせて固定する方法を紹介します。
+### variant="folder"
+
+<Preview>
+  <PreviewTitle>`variant='folder'`</PreviewTitle>
+  <PreviewArea p="30">
+    <Tabs.Root variant="folder">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'variant="folder"'
+    <Tabs.Root variant="folder">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--folder l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+タブボタンとパネルがつながって見える、フォルダー型スタイルの作成例です。
 
 <PreviewTitle>必要な追加CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-keep-height.css" />
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-folder.css" />
 
+
+### 高さを固定する
+
+タブ全体の高さを一番長いコンテンツパネルに合わせて固定する方法を紹介します。
 
 <Preview>
   <PreviewTitle>例（Tab 2の高さに固定されます）</PreviewTitle>
@@ -319,9 +556,15 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="xl" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "data-tabs-keep-height"
     <Tabs.Root data-tabs-keep-height g="15">
       <Tabs.Item>
@@ -336,7 +579,30 @@ import './_opt-in/_tabs-keep-height.css'
           <DummyText length="xl" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--default l--grid -g:15" data-tabs-keep-height="true">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain -px:10" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain -px:10" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain -px:10" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
 </Preview>
+
+<PreviewTitle>必要な追加CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-keep-height.css" />

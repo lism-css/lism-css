@@ -1,65 +1,78 @@
+import { resolveTabNavKey, toTabOrientation } from './tabsKeyNav';
+
 /**
  * タブ
  */
-function tabControl(e: MouseEvent): void {
-  e.preventDefault();
-  const clickedButton = e.currentTarget as HTMLElement;
-  toggleAriaData(clickedButton);
-}
 
-const toggleAriaData = (clickedButton: HTMLElement): void => {
-  const isOpend = 'true' === clickedButton.getAttribute('aria-selected');
-  if (isOpend) return;
+// タブリスト内のタブボタン一覧
+const getTabBtns = (root: HTMLElement): HTMLElement[] => Array.from(root.querySelectorAll<HTMLElement>('[role="tab"]'));
 
-  const targetID = clickedButton.getAttribute('aria-controls');
-  if (!targetID) return;
-  const targetBody = document.getElementById(targetID);
-  if (null === targetBody) return;
+// 同じタブリスト内の全タブを走査して選択状態を同期する
+const selectTab = (targetBtn: HTMLElement): void => {
+  const tabList = targetBtn.closest<HTMLElement>('[role="tablist"]');
+  if (!tabList) return;
 
-  const parentTabList = clickedButton.parentNode?.parentNode as HTMLElement | null;
-  if (!parentTabList) return;
+  getTabBtns(tabList).forEach((tabBtn) => {
+    const isSelected = tabBtn === targetBtn;
+    tabBtn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+    tabBtn.setAttribute('tabindex', isSelected ? '0' : '-1');
 
-  const selectedButton = parentTabList.querySelector<HTMLElement>('[aria-selected="true"]');
-  if (!selectedButton) return;
+    const panelId = tabBtn.getAttribute('aria-controls');
+    if (!panelId) return;
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
 
-  const displayedID = selectedButton.getAttribute('aria-controls');
-  if (!displayedID) return;
-  const displayedBody = document.getElementById(displayedID);
-
-  clickedButton.setAttribute('aria-selected', 'true');
-  selectedButton.setAttribute('aria-selected', 'false');
-  displayedBody?.setAttribute('aria-hidden', 'true');
-  targetBody.setAttribute('aria-hidden', 'false');
+    if (isSelected) {
+      panel.removeAttribute('hidden');
+    } else {
+      panel.setAttribute('hidden', '');
+    }
+  });
 };
 
+function tabControl(e: MouseEvent): void {
+  e.preventDefault();
+  selectTab(e.currentTarget as HTMLElement);
+}
+
+// 矢印 / Home / End でのタブ移動（フォーカス移動と選択を連動させる自動アクティベーション）
+function tabKeyControl(e: KeyboardEvent): void {
+  const currentBtn = e.currentTarget as HTMLElement;
+  const tabList = currentBtn.closest<HTMLElement>('[role="tablist"]');
+  if (!tabList) return;
+
+  const tabBtns = getTabBtns(tabList);
+  const currentIndex = tabBtns.indexOf(currentBtn) + 1; // 1始まり
+  if (currentIndex < 1) return;
+
+  const orientation = toTabOrientation(tabList.getAttribute('aria-orientation'));
+  const nextIndex = resolveTabNavKey(e.key, currentIndex, tabBtns.length, orientation);
+  if (null === nextIndex) return;
+
+  const nextBtn = tabBtns[nextIndex - 1];
+  if (!nextBtn) return;
+
+  e.preventDefault();
+  selectTab(nextBtn);
+  nextBtn.focus();
+}
+
 function setTabs(tabs: HTMLElement): void {
-  const tabBtns = tabs.querySelectorAll<HTMLElement>('[role="tab"]');
+  const tabBtns = getTabBtns(tabs);
   tabBtns.forEach((tabBtn) => {
-    tabBtn.addEventListener('click', function (e) {
-      tabControl(e);
-    });
+    tabBtn.addEventListener('click', tabControl);
+    tabBtn.addEventListener('keydown', tabKeyControl);
   });
 
+  // ディープリンク（?lism-tab={パネルのID}）
   const nowUrl = window?.location?.href;
   if (!nowUrl) return;
 
-  const hasTabLink = -1 !== nowUrl.indexOf('?lism-tab=');
-  if (!hasTabLink) return;
+  const targetPanelId = new URL(nowUrl).searchParams.get('lism-tab');
+  if (!targetPanelId) return;
 
-  const url = new URL(nowUrl);
-  const params = url.searchParams;
-
-  const targetTabId = params.get('lism-tab');
-  if (!targetTabId) return;
-
-  const target = tabs.querySelector<HTMLButtonElement>(`[aria-controls="${targetTabId}"]`);
-  if (target) {
-    tabs.dataset.hasTabLink = '1';
-    toggleAriaData(target);
-    setTimeout(() => {
-      delete tabs.dataset.hasTabLink;
-    }, 10);
-  }
+  const target = tabBtns.find((tabBtn) => tabBtn.getAttribute('aria-controls') === targetPanelId);
+  if (target) selectTab(target);
 }
 
 export default setTabs;

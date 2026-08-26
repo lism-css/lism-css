@@ -1,0 +1,400 @@
+---
+title: 'Card'
+description: 'Example implementation of card-style content layouts using Lism CSS.'
+---
+
+import { Box, Flex, Stack, Center, Grid, Frame, BoxLink, Layer, Columns, Media, WithSide, Group, Inline, Link, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro/DummyText';
+import Card from '@/components/ex/Card/index.jsx';
+
+
+Examples of card-style content layouts built with Lism.
+
+
+export const ExampleCard = (props) => {
+  return(
+    <WithSide isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden" {...props}>
+      <Frame isSide ar="16/9" >
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Stack g="30" p="30">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Inline d="inline-flex" ms="auto" mbs="auto" c="inherit" td="none" bd-b hl="s" p="10">View More →</Inline>
+      </Stack>
+    </WithSide>
+  )
+}
+
+export const ExampleImgCard = (props) => {
+  return(
+    <Frame pos="relative" ar="3/4" bdrs="30" bxsh="30" {...props}>
+      <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer bgc="rgb(0 0 0 / 20%)"/>
+      <Layer layout="stack" c="white" p="30" g="30">
+        <h3 util="trim" className="-fz:l -mbs:auto">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Center as="a" href="#" c="black" bgc="white" td="none" hl="s" p="15" bdrs="99" hov="-bgc">Link Text</Center>
+      </Layer>
+    </Frame>
+  )
+}
+
+
+## Examples
+
+### Card link with automatic vertical/horizontal layout switching
+
+By building with [`WithSide`](/en/docs/primitives/l--withSide/), the layout automatically switches to vertical when the display area becomes narrow.
+
+Additionally, [`is--boxLink`](/en/docs/trait-class/is--boxLink/) is applied to make the entire card content a link.
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea bg=":stripe" resize p="30">
+    <WithSide as="a" isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+      <Frame isSide ar="16/9">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Stack g="30" p="30">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Inline d="inline-flex" ms="auto" mbs="auto" c="inherit" td="none" bd-b hl="s" p="10">View More →</Inline>
+      </Stack>
+    </WithSide>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "WithSide" 'as="a" isBoxLink'
+    <WithSide as="a" isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+      <Frame isSide ar="16/9">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Stack g="30" p="30">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+        <Inline d="inline-flex" ms="auto" mbs="auto" c="inherit" td="none" bd-b hl="s" p="10">
+          View More →
+        </Inline>
+      </Stack>
+    </WithSide>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Placing an additional link inside the card
+
+When you want to make the entire card a link while also including a separate link inside, use [`is--coverLink`](/en/docs/trait-class/is--boxLink/).
+
+<Preview>
+  <PreviewTitle>Example using `is--coverLink`</PreviewTitle>
+  <PreviewArea bg=":stripe" resize p="30">
+    <WithSide isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+      <Frame isSide ar="16/9" pos="relative">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="-bgc">Category</Link>
+      </Frame>
+      <Stack g="30" p="30">
+        <h3 util="trim" className="-fz:l">
+          <Link isCoverLink href="#card-link">Card with .is--coverLink</Link>
+        </h3>
+        <Text util="trim" fz="s" hl="s" o="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Inline d="inline-flex" ms="auto" mbs="auto" c="inherit" td="none" bd-b hl="s" p="10">View More →</Inline>
+      </Stack>
+    </WithSide>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "isBoxLink" "isCoverLink"
+    <WithSide isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+      <Frame isSide ar="16/9" pos="relative">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="-bgc">
+          Category
+        </Link>
+      </Frame>
+      <Stack g="30" p="30">
+        <h3 util="trim" className="-fz:l">
+          <Link isCoverLink href="#card-link">
+            Card with .is--coverLink
+          </Link>
+        </h3>
+        <Text util="trim" fz="s" hl="s" o="p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+        <Inline d="inline-flex" ms="auto" mbs="auto" c="inherit" td="none" bd-b hl="s" p="10">
+          View More →
+        </Inline>
+      </Stack>
+    </WithSide>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Card example with content placed over an image
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea bg=":stripe" p="20">
+    <ExampleImgCard max-w="24em" />
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Frame pos="relative" ar="3/4" bdrs="30" bxsh="30" max-w="24em">
+      <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer bgc="rgb(0 0 0 / 20%)" />
+      <Layer layout="stack" c="white" p="30" g="30">
+        <h3 util="trim" className="-fz:l -mbs:auto">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+        <Center as="a" href="#" c="black" bgc="white" td="none" hl="s" p="15" bdrs="99" hov="-bgc">
+          Link Text
+        </Center>
+      </Layer>
+    </Frame>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--frame -pos:relative -ar -bdrs:30 -bxsh:30 -max-w" style="--ar: 3/4; --max-w: 24em">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+      <div class="is--layer -bgc" style="--bgc: rgb(0 0 0 / 20%)"></div>
+      <div class="l--stack is--layer -c -p:30 -g:30" style="--c: var(--white)">
+        <h3 class="u--trim -fz:l -mbs:auto">Card Title</h3>
+        <p class="u--trim -fz:s -hl:s -o:p">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <a class="l--center -c -bgc -td:none -hl:s -p:15 -bdrs:99 -hov:-bgc" style="--c: var(--black); --bgc: var(--white)" href="#">Link Text</a>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+
+### Rounded inner corners with `set--bdrsInner`
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea bg=":stripe" resize p="20">
+    <Stack p="15" g="20" c="text" bgc="base" bdrs="30" bxsh="30" className="set--bdrsInner" max-w="xs" mx="auto">
+      <Frame isSide ar="16/9">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" bdrs="inner" />
+      </Frame>
+      <Stack g="30" p="15">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Link href="#" d="inline-flex" ms="auto" c="base" bgc="text" td="none" hl="s" py="15" px="20" jc="center" hov="-bgc" bdrs="inner">View More →</Link>
+      </Stack>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Stack p="15" g="20" c="text" bgc="base" bdrs="30" bxsh="30" className="set--bdrsInner" max-w="xs" mx="auto">
+      <Frame isSide ar="16/9">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" bdrs="inner" />
+      </Frame>
+      <Stack g="30" p="15">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+        <Link href="#" d="inline-flex" ms="auto" c="base" bgc="text" td="none" hl="s" py="15" px="20" jc="center" hov="-bgc" bdrs="inner">
+          View More →
+        </Link>
+      </Stack>
+    </Stack>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--stack set--bdrsInner -p:15 -g:20 -c:text -bgc:base -bdrs:30 -bxsh:30 -mx:auto -max-w" style="--max-w: var(--sz--xs)">
+      <div class="l--frame is--side -ar:16/9">
+        <img class="-bdrs:inner" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+      </div>
+      <div class="l--stack -g:30 -p:15">
+        <h3 class="u--trim -fz:l">Card Title</h3>
+        <p class="u--trim -fz:s -hl:s -o:p">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <a class="-bdrs:inner -d:inline-flex -ms:auto -c:base -bgc:text -td:none -hl:s -py:15 -px:20 -jc:center -hov:-bgc" href="#">View More →</a>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Specifying an image aspect ratio while adapting to content height
+
+<Preview>
+  <PreviewTitle>Specifying an aspect ratio on the media side locks it when the content side is shorter.</PreviewTitle>
+  <PreviewArea bg=":stripe" resize p="20">
+    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="-bxsh" set="hov" hasTransition>
+      <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Stack fxg="1" g="30" p="30">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Inline d="inline-flex" ms="auto" mbs="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b hl="s" p="10">View More →</Inline>
+      </Stack>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'ar="1/1"'
+    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="-bxsh" set="hov" hasTransition>
+      <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Stack fxg="1" g="30" p="30">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+        <Inline d="inline-flex" ms="auto" mbs="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b hl="s" p="10">
+          View More →
+        </Inline>
+      </Stack>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Breakpoint-responsive horizontal/vertical layout with adaptive aspect ratio
+
+This example uses `Grid` to toggle between horizontal and vertical layouts at a breakpoint and adapts the media aspect ratio accordingly.
+
+<Preview>
+  <PreviewTitle>Switching layout at a breakpoint</PreviewTitle>
+  <PreviewArea bg=":stripe" resize p="20">
+    <BoxLink
+      href="#_"
+      layout="grid"
+      gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
+      ai="center"
+      g="15"
+      p="15"
+      bgc="base"
+      bd
+      bdw="2px"
+      bdc="base-2"
+      bdrs="20"
+      bxsh="10"
+      hov="-bxsh"
+      set="hov" hasTransition
+    >
+      <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
+        <Media css={{ scale: 'var(--_isHov, 1.25)' }} hasTransition src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Stack g="20" p="15">
+        <h3 className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Inline d="inline-flex" ms="auto" mbs="20" c="inherit" td="none" bd-b hl="0" p="10">View More →</Inline>
+      </Stack>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <BoxLink
+      href="#_"
+      layout="grid"
+      gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
+      ai="center"
+      g="15"
+      p="15"
+      bgc="base"
+      bd
+      bdw="2px"
+      bdc="base-2"
+      bdrs="20"
+      bxsh="10"
+      hov="-bxsh"
+      set="hov" hasTransition
+    >
+      <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
+        <Media css={{ scale: 'var(--_isHov, 1.25)' }} hasTransition src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Stack g="20" p="15">
+        <h3 className="-fz:l">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+        <Inline d="inline-flex" ms="auto" mbs="20" c="inherit" td="none" bd-b hl="0" p="10">
+          View More →
+        </Inline>
+      </Stack>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+
+### Revealing text on hover
+
+This example requires a custom `-hov:in:slide` class defined separately.
+
+{/* Note: Adding resize to PreviewArea may affect Filter behavior. */}
+<Preview css={`
+.-hov\\:in\\:slide {
+  opacity: var(--_notHov, 0);
+  grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
+  transition-property: margin-block, padding-block, opacity, grid-template;
+}`}>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea bg=":stripe" p="20">
+    <BoxLink href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
+      <Frame ar="1/1">
+        <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Layer bgc="rgba(0 0 0 / 10%)" />
+      <Stack pos="absolute" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
+        <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
+        <Box pos="relative" z="1" c="white" hl="s">
+          <h3 util="trim" className="-fz:l">Card Title</h3>
+          <Grid hasTransition hov="in:slide" my="15">
+            <Box ov="hidden">
+              <DummyText py="5" fz="s" hl="xs" />
+            </Box>
+          </Grid>
+          <Group util="trim" fz="xs" o="p">2000.01.01 / Author</Group>
+        </Box>
+      </Stack>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'set="hov"' 'hov="in:slide"'
+  <BoxLink href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
+    <Frame ar="1/1">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+    </Frame>
+    <Layer bgc="rgba(0 0 0 / 10%)" />
+    <Stack pos="absolute" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
+      <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
+      <Box pos="relative" z="1" c="white" hl="s">
+        <h3 util="trim" className="-fz:l">Card Title</h3>
+        <Grid hasTransition hov="in:slide" my="15">
+          <Box ov="hidden">
+            <DummyText py="5" fz="s" hl="xs" />
+          </Box>
+        </Grid>
+        <Group util="trim" fz="xs" o="p">
+          2000.01.01 / Author
+        </Group>
+      </Box>
+    </Stack>
+  </BoxLink>
+  ```
+  </PreviewCode>
+<PreviewCode slot="tab" label="Additional CSS">
+```css
+.-hov\:in\:slide {
+  opacity: var(--_notHov, 0);
+  grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
+  transition-property: margin-block, padding-block, opacity, grid-template-rows;
+}
+```
+</PreviewCode>
+</Preview>

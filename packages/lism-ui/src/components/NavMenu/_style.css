@@ -1,21 +1,26 @@
-@layer lism-component {
-  .c--navMenu {
+@layer lism-block {
+  .b--navMenu {
     --link-td: none;
     --hl: var(--hl--s);
-    --_item-p: var(--s20);
+    --_item-p: 0.5em;
     --focus-offset: -1px; /* アコーディオン化した時にoutlineが一部見えなくなるのを防ぐ */
   }
 
-  .c--navMenu_nest {
+  .b--navMenu_nest {
     --_item-p: inherit;
+    padding-inline-start: 1em;
   }
 
-  .c--navMenu_link {
+  .b--navMenu_link {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: inherit;
     padding: var(--_item-p);
   }
 
-  .c--navMenu_nest,
-  .c--navMenu_item {
+  .b--navMenu_nest,
+  .b--navMenu_item {
     --bdc: inherit;
   }
 }

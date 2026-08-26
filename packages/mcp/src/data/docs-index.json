@@ -6,7 +6,7 @@
     "category": "guide",
     "headings": ["Why Lism CSS?", "ゼロビルドでどんな環境でも使えます。", "Lism CSS のエコシステム", "JSXコンポーネントの使用例", "Inspirations"],
     "keywords": ["overview", "概要", "特徴", "レイアウトファースト", "ゼロビルド", "コンテナクエリ", "Every Layout", "framework"],
-    "snippet": "Lism CSS は、WEBサイトの骨組みをテンポ良く美しく作るための軽量なCSS設計フレームワーク。CSS設計不要でCDNから1行で導入可能。React/Astro向け専用コンポーネントも提供。エコシステムとして @lism-css/ui、@lism-css/cli、@lism-css/mcp も用意。"
+    "snippet": "Lism CSS は、WEBサイトの骨組みをテンポ良く美しく作るための軽量なCSS設計フレームワーク。CSS設計不要でCDNから1行で導入可能。React/Astro向け専用コンポーネントも提供。エコシステムとして @lism-css/ui、lism-cli、@lism-css/mcp も用意。"
   },
   {
     "sourcePath": "installation.mdx",
@@ -68,12 +68,12 @@
       "Set Class",
       "Primitive Class",
       "Trait Class",
-      "Component Class",
+      "Block Class",
+      "Custom Class",
       "Utility Class",
       "Property Class",
       "レスポンシブ対応の Property Class",
-      "独自クラスの命名と定義場所",
-      "独自分類の追加",
+      "既存クラスの追加・上書き",
       "動的な状態管理はdata属性"
     ],
     "keywords": [
@@ -87,13 +87,17 @@
       "Property Class",
       "Primitive Class",
       "Trait Class",
-      "Component Class",
+      "Custom Class",
       "Set Class",
       "Utility Class",
       "省略",
-      "Emmet"
+      "Emmet",
+      "b--",
+      "Block Class",
+      "c--",
+      "2分類"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility の順。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility の順（Property Class はレイヤーの外）。lism-block は trait / primitive より弱いレイヤーのため、`b--` のベーススタイルには明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝つ（この優先関係が保証されるのはレイヤーありの標準ビルド（`main.css` / `full.css`）のみで、`main_no_layer.css` / `full_no_layer.css` では読み込み順と詳細度に依存する）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Custom Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。独自クラスは、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理する。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
   },
   {
     "sourcePath": "naming.mdx",
@@ -137,6 +141,8 @@
       "カスタムプロパティ",
       "Property Class",
       "prefix",
+      "b--",
+      "Block Class",
       "camelCase",
       "token",
       "breakpoint",
@@ -144,7 +150,7 @@
       "max-",
       "min-"
     ],
-    "snippet": "Lism CSS の命名規則をまとめたページ。CSS変数はトークン変数 `--{prop}--{token}`、Property Class 用変数 `--{prop}` / `--{prop}_{bp}`、状態管理用の内部変数 `--_{varName}` などの形式で統一。クラスはプレフィックス（`c--`, `a--`, `l--`, `is--`, `set--`, `u--`）で分類を示し、続く名称は camelCase。Prop 名は Emmet を参考に 1 文字プロパティ（p, m, g, c, f, w, h, d, o, v, i, t, b, l, r, z）やグループ略称 + サブプロパティ形式（fz, bgc, gtc 等）で省略。方向サフィックスは `-t` / `-b` / `-l` / `-r` / `-x` / `-y` / `-s` / `-e` を使用し、p/m のみ最初のハイフンを省略（pt, px, my 等）。値は基本的に CSS の実値をそのまま使用し、トークン値を使う場合は `--{prop}--{value}` の `{value}` 部分を採用。"
+    "snippet": "Lism CSS の命名規則をまとめたページ。CSS変数はトークン変数 `--{prop}--{token}`、Property Class 用変数 `--{prop}` / `--{prop}_{bp}`、状態管理用の内部変数 `--_{varName}` などの形式で統一。クラスはプレフィックス（`b--`, `c--`, `a--`, `l--`, `is--`, `set--`, `u--`）で分類を示し、続く名称は camelCase。Prop 名は Emmet を参考に 1 文字プロパティ（p, m, g, c, f, w, h, d, o, v, i, t, b, l, r, z）やグループ略称 + サブプロパティ形式（fz, bgc, gtc 等）で省略。方向サフィックスは `-t` / `-b` / `-l` / `-r` / `-x` / `-y` / `-s` / `-e` を使用し、p/m のみ最初のハイフンを省略（pt, px, my 等）。値は基本的に CSS の実値をそのまま使用し、トークン値を使う場合は `--{prop}--{value}` の `{value}` 部分を採用。"
   },
   {
     "sourcePath": "tokens.mdx",
@@ -201,15 +207,9 @@
     "title": "余白トークン",
     "description": "Lism CSS のフィボナッチ数列に基づく余白トークンと、対応するpropertyクラスについて解説します。",
     "category": "guide",
-    "headings": [
-      "SPACE: 余白のスケーリング",
-      "対応する Property Class",
-      "フルサポート（トークン値 5〜80）",
-      "プリセットクラスなし",
-      "margin 系の auto 対応"
-    ],
+    "headings": ["SPACE: 余白のスケーリング", "対応する Property Class", "対応プロパティ（トークン値 5〜80）", "margin 系の auto 対応"],
     "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "property class", "set--s", "--s-unit"],
-    "snippet": "フィボナッチ数列ベースの余白スケーリング（--s5〜--s80、s25/s35 を含む12段階）を定義。--s-unit（calc(var(--fz--base) * 0.5) ≒ 8px）を基準単位として算出。set--s クラスを使うと --s-unit が 0.5em に切り替わり、余白がフォントサイズ基準で再計算される。p, px, py, m, mx, my, mbs, g 等のpropertyクラスでフルサポート（トークン値 5〜80）。ps/pe/pbs/pbe/pl/pr/pt/pb・ms/me/mbe・ml/mr/mt/mb・cg/rg はプリセットクラスなし（CSS変数やjsx propでの値指定は可）。"
+    "snippet": "フィボナッチ数列ベースの余白スケーリング（--s5〜--s80、s25/s35 を含む12段階）を定義。--s-unit（calc(var(--fz--base) * 0.5) ≒ 8px）を基準単位として算出。set--s クラスを使うと --s-unit が 0.5em に切り替わり、余白がフォントサイズ基準で再計算される。padding（p/px/py/ps/pe/pbs/pbe/pl/pr/pt/pb）・margin（m/mx/my/ms/me/mbs/mbe/ml/mr/mt/mb）・gap（g/cg/rg）の全propertyクラスがトークン値 5〜80 とブレイクポイント指定に対応。auto のプリセットクラスは m/mx/my/ms/me/mbs/mbe のみ。"
   },
   {
     "sourcePath": "property-class.mdx",
@@ -457,7 +457,7 @@
       "main_no_layer.css",
       "full_no_layer.css"
     ],
-    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。full.css には main.css 非収録の全 Property Class ブレイクポイント対応クラスやスペーシング系トークンユーティリティを含む。isFullMode（lism.config.js で設定）でコンポーネント出力も full.css に合わせられる。@lism-css/plugin の統合プラグイン使用時は型も isFullMode に自動追従（lism-env.d.ts 生成）。"
+    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。full.css には main.css 非収録の Property Class ブレイクポイント対応クラス（isVar 系・border ショートハンド系を除く。border は bds / bdc のサブプロパティで BP 対応）と、カラー系 Property Class（bgc / c / bdc）の全カラートークン分のクラス（-bgc:red など。main.css は厳選したセマンティックカラーと keycolor のみ）を含む。スペーシング系（padding / margin / gap）のトークンユーティリティは main.css に収録済み。isFullMode（lism.config.js で設定）でコンポーネント出力も full.css に合わせられる。@lism-css/plugin の統合プラグイン使用時は型も isFullMode に自動追従（lism-env.d.ts 生成）。"
   },
   {
     "sourcePath": "customize/config.mdx",
@@ -651,6 +651,22 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "lism-css v.0.26.0 (2026.08.16)",
+      "`lism-block` レイヤーの追加 (#546, #559)",
+      "独自クラスの命名規約を2分類へ統一 (#546)",
+      "その他",
+      "`@lism-css/ui` v.0.26.0 (2026.08.16)",
+      "lism-css v.0.25.0 (2026.08.06)",
+      "構造変数を lism.config から上書き可能に (#530)",
+      "spacing系の方向指定 props を main.css でもクラス化 (#531)",
+      "カラー系 Property Class の拡充 (#533)",
+      "その他",
+      "`@lism-css/plugin` v.0.4.2 (2026.08.06)",
+      "`@lism-css/ui` v.0.25.0 (2026.08.06)",
+      "lism-css v.0.24.0 (2026.07.06)",
+      "AI スキル群の刷新 (#459)",
+      "`@lism-css/plugin` v.0.4.0 (2026.07.06)",
+      "`@lism-css/ui` v.0.24.0 (2026.07.06)",
       "lism-css v.0.23.0 (2026.06.19)",
       "ビルド/プラグイン層を `@lism-css/plugin` へ分離 (#439)",
       "トークンを値付きの単一情報源に刷新 (#434)",
@@ -679,75 +695,27 @@
       "hover 色のデフォルト変更 (#381)",
       "その他",
       "`@lism-css/ui` v.0.20.0 (2026.05.20)",
-      "lism-css v.0.18.0 (2026.05.17)",
-      "`--sz--*` トークンを px 統一・80px 刻みで再設計 (#364)",
-      "spacing tokens 拡充と `set--var:s` の新設 (#377)",
-      "その他",
-      "lism-css v.0.17.0 (2026.05.09)",
-      "`-max-sz:bleed` の新設 (#360)",
-      "`--REM` 廃止と `--fz--base` の簡素化",
-      "`a` タグのリンク装飾スタイル廃止",
-      "Bug Fixes",
-      "その他",
-      "`@lism-css/ui` v.0.17.0 (2026.05.09)",
-      "lism-css v.0.16.1 (2026.04.29)",
-      "lism-css v.0.16.0 (2026.04.21)",
-      "`u--trimChildren` のリネームと除外方式の整理 (#324, #326)",
-      "`u--collapseGrid` のリネームと `u--divide` の追加 (#323)",
-      "opacity トークンの命名変更 (#316)",
-      "Layout Primitive の命名整理 (#319)",
-      "その他",
-      "`@lism-css/ui` v.0.16.0 (2026.04.21)",
-      "lism-css v.0.15.0 (2026.04.21)",
-      "CSSレイヤー構造の再編 (#304)",
-      "`set--` クラスの刷新 (#304)",
-      "`-hov:` クラスの命名整理 (#300)",
-      "シャドウトークンの刷新 (#311)",
-      "その他",
-      "`@lism-css/ui` v.0.15.0 (2026.04.21)",
-      "lism-css v.0.14.0 (2026.04.17)",
-      "Props システムの整理",
-      "Property Class のリネーム",
-      "Trait Class / トークンの整理",
-      "その他",
-      "`@lism-css/ui` v.0.14.0 (2026.04.17)",
-      "lism-css v.0.13.1 (2026.04.15)",
-      "`@lism-css/ui` v.0.13.1 (2026.04.15)",
-      "lism-css v.0.13.0 (2026.04.14)",
-      "Module → Primitive 概念リネーム",
-      "State → Trait 識別子の統一",
-      "set / util props の統一",
-      "Trait Class / 命名整理",
-      "その他",
-      "`@lism-css/ui` v.0.13.0 (2026.04.14)",
-      "`@lism-css/ui` v.0.12.0 (2026.04.10)",
-      "`@lism-css/ui` v.0.11.0 (2026.04.05)",
-      "v.0.12.0 (2026.04.10)",
-      "v.0.11.0 (2026.04.05)",
-      "v.0.10.5 (2026.04.05)",
-      "v.0.10.4 (2026.04.04)",
-      "v.0.10.3 (2026.04.04)",
-      "v.0.10.2 (2026.04.04)",
-      "v.0.10.1 (2026.04.03)",
-      "`<HTML.xxx>` を廃止し、セマンティックラッパーコンポーネントに置き換え",
-      "lism-css v.0.9.4 (2026.03.31)",
-      "`@lism-css/ui` v.0.9.3 (2026.03.30)",
-      "v.0.9.2 (2026.03.18)",
-      "v.0.9.1 (2026.03.18)",
-      "v.0.9.0 (2026.03.17)",
-      "v.0.8.3",
-      "v.0.8.2",
-      "v.0.8 (大幅な変更)",
-      "[重要] line-heightの仕様を変更しました。",
-      "レイアウトモジュールの変更点",
-      "ダイナミックモジュールの削除",
-      "トークン・CSS変数の変更点",
-      "Property Class の変更点",
-      "ユーティリティクラスの変更点",
-      "コンテンツサイズ管理クラスの変更点"
+      "v0.18.0 以前"
     ],
-    "keywords": ["changelog", "変更履歴", "更新", "バージョン", "u--cells", "u--enclose", "rename", "リネーム", "migration", "移行"],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.23.0 (2026.06.19) では破壊的変更としてビルド/プラグイン層を新パッケージ @lism-css/plugin へ分離（lism-css/vite 等のエクスポートを廃止）、tokens を「キー: 値」のフラットマップに刷新（tokenValues チャンネル廃止・c を color に改名）、xs ブレイクポイントのオプトイン対応・full.css / isFullMode の追加（#428, #423, #425）、標準 BP デフォルトを md → lg に拡大など。@lism-css/ui v.0.23.0 では Badge/Button/Chat の lh を hl へ移行。v.0.22.2 (2026.06.03) では --green 彩度微調整・alert アイコン変更、@lism-css/ui で Alert/Callout に tip プリセット追加・プリセット整理。v.0.22.1 (2026.05.30) では ':' 単体を true 相当のフラグとして対応・0.22.0 パッケージング修正、@lism-css/ui で NavMenu.Link にデフォルト hov 付与・Accordion.Item に isOpen prop 追加・Modal スクロールバーがたつき防止。v.0.22.0 (2026.05.28) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更、ユーティリティ・トークン名の整理（u--cells → u--enclose, --cells-p に整理, --gutter/--gutter--base 構造へ整理）、フォームコントロールのスタイル調整（border-radius 削除・padding を em 単位に変更）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（ps/pe/pbs/pbe、bd-s/bd-e/bd-bs/bd-be 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
+    "keywords": [
+      "changelog",
+      "変更履歴",
+      "更新",
+      "バージョン",
+      "u--cells",
+      "u--enclose",
+      "rename",
+      "リネーム",
+      "migration",
+      "移行",
+      "LismConfig",
+      "AIスキル",
+      "lism-block",
+      "Block Class",
+      "Custom Class",
+      "破壊的変更"
+    ],
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.26.0 (2026.08.16) ではベーススタイルをCSSで管理する `b--` 用の `lism-block` レイヤーを追加（`lism-base` の直後に配置し、`is--`/`has--`/`l--` など明示的に付与したクラスが常に勝つ設計、#546, #559）、独自クラスの命名規約を `b--`（Block Class）/ `c--`（Custom Class）の2分類へ統一し `p--`/`z--` を廃止（#546）。`@lism-css/ui` v.0.26.0（破壊的変更）では全コンポーネントのクラスを `c--` から `b--` へ移行しCSSレイヤーも `lism-component` から `lism-block` へ移行、Badge/Tabs/Avatar/Button/Accordion/Details/NavMenu 等のデフォルトスタイルをCSS管理へ移行、Tabs/Modalのアクセシビリティ改善（roving tabindex、reduced-motion対応等）、Chatコンポーネントを削除（#559, #563, #564）。v.0.25.0 (2026.08.06) では `--L`/`--C`/`--fz-mol` 等の構造変数をトークンの `vars` グループへ移動し `lism.config` の `tokens` から上書き可能に（#530）、spacing系の方向指定props（ps/pe/pl/pt等 全18種）をmain.cssでもトークンクラス・BPクラス化（#531）、カラー系Property Class拡充（`-c:keycolor`等をmain.cssへ追加、full.cssで全カラートークンクラス化、`-bgc:current`追加）（#533）。v.0.24.0 (2026.07.06) では config の値（utils/presets/token）から型を導出しコンポーネント補完に反映（#505）、lism.config 執筆用の LismConfig 型追加（#472）、body に display: flow-root 追加、pre のデフォルトスタイル変更（#477）。AIスキル群を刷新し lism-css-refactor を新設（#459）。@lism-css/plugin v.0.4.0 では lism.config.ts 読み込み対応（#461）、purge の Astro SSR/hybrid 対応強化（#495, #503）。v.0.23.0 (2026.06.19) では破壊的変更としてビルド/プラグイン層を新パッケージ @lism-css/plugin へ分離（lism-css/vite 等のエクスポートを廃止）、tokens を「キー: 値」のフラットマップに刷新（tokenValues チャンネル廃止・c を color に改名）、xs ブレイクポイントのオプトイン対応・full.css / isFullMode の追加（#428, #423, #425）、標準 BP デフォルトを md → lg に拡大など。@lism-css/ui v.0.23.0 では Badge/Button/Chat の lh を hl へ移行。v.0.22.2 (2026.06.03) では --green 彩度微調整・alert アイコン変更、@lism-css/ui で Alert/Callout に tip プリセット追加・プリセット整理。v.0.22.1 (2026.05.30) では ':' 単体を true 相当のフラグとして対応・0.22.0 パッケージング修正、@lism-css/ui で NavMenu.Link にデフォルト hov 付与・Accordion.Item に isOpen prop 追加・Modal スクロールバーがたつき防止。v.0.22.0 (2026.05.28) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更、ユーティリティ・トークン名の整理（u--cells → u--enclose, --cells-p に整理, --gutter/--gutter--base 構造へ整理）、フォームコントロールのスタイル調整（border-radius 削除・padding を em 単位に変更）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（ps/pe/pbs/pbe、bd-s/bd-e/bd-bs/bd-be 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v0.18.0 以前は主要な変更点のみ抜粋掲載（--sz--* トークンの px 統一、-max-sz:bleed 新設、ユーティリティ・Layout Primitive のリネーム、CSSレイヤー構造の再編など）。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
@@ -797,7 +765,7 @@
   {
     "sourcePath": "property-class/max-sz.mdx",
     "title": "-max-sz",
-    "description": "コンテンツの最大幅を制御する -max-sz プロパティクラスの使い方について解説します。",
+    "description": "コンテンツの最大幅を制御する -max-sz クラスの使い方について解説します。",
     "category": "property-class",
     "headings": ["full & bleed", "DEMOページ"],
     "keywords": ["max-sz", "max-inline-size", "最大サイズ", "幅", "full", "bleed"],
@@ -810,7 +778,7 @@
     "category": "core-components",
     "headings": ["Import", "Lism Props"],
     "keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "className", "layout", "atomic", "as", "exProps"],
-    "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。className で c-- クラスや任意クラスを指定、layout で l-- クラス、atomic で a-- クラス（divider / spacer / decorator）を指定可能。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
+    "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。className で b-- / c-- クラス（Block Class / Custom Class）や任意クラスを指定、layout で l-- クラス、atomic で a-- クラス（divider / spacer / decorator）を指定可能。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
   },
   {
     "sourcePath": "core-components/lism-props.mdx",
@@ -863,7 +831,7 @@
       "省略記法",
       "contentSize"
     ],
-    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で c-- クラス（Component Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
+    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で b-- / c-- クラス（Block Class / Custom Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
   },
   {
     "sourcePath": "core-components/Text.mdx",
@@ -1314,12 +1282,13 @@
     "description": "@lism-css/ui で提供する Accordion コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
       "Examples",
+      "スタイリング例",
       "見出しタグを変更する",
       "アニメーション時間を変更する",
       "最初の一つを開いた状態にする",
@@ -1344,7 +1313,7 @@
     "title": "Modal",
     "description": "@lism-css/ui で提供する Modal コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "基本構造", "ソースコード", "Examples", "ドロワーメニューの作成例"],
+    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "コンテンツが長い場合の例", "ドロワーメニューの作成例"],
     "keywords": ["Modal", "モーダル", "dialog", "ダイアログ", "ポップアップ", "popup"],
     "snippet": "モーダルダイアログUI。dialog要素を使用。@lism-css/uiパッケージで提供。"
   },
@@ -1354,20 +1323,21 @@
     "description": "@lism-css/ui で提供する Tabs コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
+      "キーボード操作",
       "Examples",
-      "基本例",
+      "variant=\"line\"",
       "最初に開いておくタブ番号を指定する",
-      "タブコンテンツを横並び配置にする",
+      "URLパラメータで初期タブを指定する",
+      "縦並びタブ",
       "Opt-in",
-      "スタイルバリエーションの作成例",
-      "c--tabs--line",
-      "c--tabs--emboss",
-      "高さを固定する方法"
+      "variant=\"emboss\"",
+      "variant=\"folder\"",
+      "高さを固定する"
     ],
     "keywords": [
       "Tabs",
@@ -1383,7 +1353,7 @@
       "Tabs.Panel",
       "--_isSelected"
     ],
-    "snippet": "タブ切り替えUI。Tabs.Root / Tabs.Item / Tabs.Tab / Tabs.Panel で構成。defaultIndex で初期タブ指定、listProps でタブリストへの props 渡しが可能。横並び配置やスタイルバリエーション（line/emboss 等）、高さ固定のOpt-in解説あり。@lism-css/uiパッケージで提供。"
+    "snippet": "タブ切り替えUI。Tabs.Root / Tabs.Item / Tabs.Tab / Tabs.Panel で構成。defaultIndex で初期タブ指定、listProps でタブリストへの props 渡しが可能。variant の初期値は default で、独自 variant 指定時は既定装飾（b--tabs--default）が外れる。左右キー・Home/End でのキーボード操作（listProps で aria-orientation=\"vertical\" を指定すると上下キー）と、URLパラメータ（?lism-tab=）での初期タブ指定に対応。line variant は標準提供。emboss / folder などの独自バリアント作成例や横並び配置、高さ固定の Opt-in 解説あり。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Details.mdx",
@@ -1391,14 +1361,16 @@
     "description": "@lism-css/ui で提供する Details コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
       "Examples",
-      "タイトルのHTMLタグを変更し、複数同時展開を制限する例",
-      "アニメーション時間を変更する例"
+      "スタイリング例",
+      "タイトルのHTMLタグを変更する",
+      "複数同時展開を制限する",
+      "アニメーション時間を変更する"
     ],
     "keywords": ["Details", "details", "summary", "開閉", "disclosure"],
     "snippet": "HTMLのdetails/summary要素をラップ。ネイティブのHTML要素を使用したアコーディオン。@lism-css/uiパッケージで提供。"
@@ -1409,17 +1381,17 @@
     "description": "@lism-css/ui で提供する Alert コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
       "カラーとアイコンを指定する例",
       "`l--withSide` を使ってレスポンシブ対応",
       "ボタン付き + ブレイクポイントによるレスポンシブ対応",
-      "`l--withSide` を使ったレスポンシブ対応",
       "type一覧",
-      "Only lism-css"
+      "Without @lism-css/ui"
     ],
     "keywords": ["Alert", "アラート", "注意", "notice", "warning", "info", "お知らせ", "通知", "type", "keycolor", "icon", "withSide", "layout"],
     "snippet": "短めの文言を目立たせて強調表示したい時に使えるコンポーネント。type prop（alert/point/warning/check/info/help/note/tip）でアイコンとキーカラーをまとめて設定。layout=\"withSide\" でコンテナ幅が狭い時に縦並び対応。@lism-css/uiパッケージで提供。"
@@ -1429,7 +1401,18 @@
     "title": "Callout",
     "description": "@lism-css/ui で提供する Callout コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "type一覧", "`icon`、`keycolor`を指定", "Only lism-css"],
+    "headings": [
+      "Overview",
+      "Styles",
+      "How to use",
+      "Import",
+      "Props",
+      "Examples",
+      "type一覧",
+      "`icon`、`keycolor`を指定",
+      "`title` を指定しない場合",
+      "Without @lism-css/ui"
+    ],
     "keywords": ["Callout", "コールアウト", "補足", "note", "注意書き", "強調ボックス", "highlight", "type", "keycolor", "icon", "title"],
     "snippet": "記事の中で重要なポイントを示すためのコンポーネント。type prop（info/alert/warning/point/check/help/note/tip）でアイコンとキーカラーをまとめて設定。title でタイトルテキストを表示。@lism-css/uiパッケージで提供。"
   },
@@ -1439,18 +1422,19 @@
     "description": "@lism-css/ui で提供する Button コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
       "variant: outline",
       "アイコンを使う例",
-      "サイズの調整",
+      "スタイルの調整",
       "Gridでアイコンを端に寄せる",
-      "Opt-in",
-      "hov=\"reverse\"",
-      "Only lism-css"
+      "Without @lism-css/ui",
+      "Opt-in Styles",
+      "hov=\"reverse\""
     ],
     "keywords": ["Button", "ボタン", "クリック", "outline", "action", "CTA", "submit"],
     "snippet": "ボタンコンポーネント。variant (outline 等) と keycolor でバリエーションを表現。@lism-css/uiパッケージで提供。"
@@ -1461,15 +1445,18 @@
     "description": "@lism-css/ui で提供する Badge コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
+      "カラーパレットの活用",
       "variant: outline",
       "u--cbox との併用",
+      "スタイルの調整例",
       "アイコンを使用する例",
-      "Only lism-css"
+      "Without @lism-css/ui"
     ],
     "keywords": ["Badge", "バッジ", "ラベル", "タグ", "status", "ステータス表示", "tag label", "カテゴリ表示"],
     "snippet": "バッジ (ラベル) コンポーネント。カテゴリやステータスの表示に使用。@lism-css/uiパッケージで提供。"
@@ -1479,18 +1466,18 @@
     "title": "Avatar",
     "description": "@lism-css/ui で提供する Avatar コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "Only lism-css"],
+    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "Without @lism-css/ui"],
     "keywords": ["Avatar", "アバター", "プロフィール", "画像", "丸", "user icon", "ユーザーアイコン"],
     "snippet": "アバター画像用のコンポーネント。円形の画像表示に使用。@lism-css/uiパッケージで提供。"
   },
   {
-    "sourcePath": "ui/Chat.mdx",
+    "sourcePath": "ui/block-examples/Chat.mdx",
     "title": "Chat",
-    "description": "@lism-css/ui で提供する Chat コンポーネントについて解説します。",
+    "description": "Lism CSS で実装するチャット風UI（b--chat）の実装例です。",
     "category": "ui",
-    "headings": ["How to use", "Import", "Props", "ソースコード", "Examples", "Opt-in", "variant=\"think\"", "Astroでのslotの活用"],
+    "headings": ["Overview", "Styles", "Markup", "Examples", "思考スタイル（b--chat--think）"],
     "keywords": ["Chat", "チャット", "吹き出し", "会話", "balloon", "message bubble", "speech bubble"],
-    "snippet": "チャット風の吹き出しコンポーネント。会話形式のUI表現に使用。@lism-css/uiパッケージで提供。"
+    "snippet": "チャット風の吹き出しUIの実装例。primitivesと少量のCSS（b--chat）で構成し、CSSをlism-blockレイヤーへコピーして利用。"
   },
   {
     "sourcePath": "ui/NavMenu.mdx",
@@ -1498,18 +1485,17 @@
     "description": "@lism-css/ui で提供する NavMenu コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "基本構造",
-      "ソースコード",
       "Examples",
-      "シンプルな例",
-      "アイコンやバッジを表示する例",
       "各リストの共通スタイルを一括で指定する方法",
+      "アイコンやバッジを表示する例",
       "メニューのネスト",
       "ネストしたメニューをアコーディオンで展開する",
-      "横並びメニューでホバー時に子メニューを表示する例"
+      "ホバー時にサブメニューを表示する例"
     ],
     "keywords": [
       "NavMenu",
@@ -1526,7 +1512,7 @@
       "NavMenu.Link",
       "NavMenu.Nest"
     ],
-    "snippet": "ナビゲーションメニューコンポーネント（c--navMenu）。NavMenu.Root / NavMenu.Item / NavMenu.Link / NavMenu.Nest で構成。hovBgc/hovC/itemP などの専用Props で一括スタイル指定が可能。ネスト構造・アコーディオン展開・横並びhoverドロップダウンなど様々なパターンを実装可能。@lism-css/uiパッケージで提供。"
+    "snippet": "ナビゲーションメニューコンポーネント（b--navMenu）。NavMenu.Root / NavMenu.Item / NavMenu.Link / NavMenu.Nest で構成。hovBgc/hovC/itemP などの専用Props で一括スタイル指定が可能。ネスト構造・アコーディオン展開・横並びhoverドロップダウンなど様々なパターンを実装可能。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/ShapeDivider.mdx",
@@ -1534,10 +1520,11 @@
     "description": "@lism-css/ui で提供する ShapeDivider コンポーネントについて解説します。",
     "category": "ui",
     "headings": [
+      "Overview",
+      "Styles",
       "How to use",
       "Import",
       "Props",
-      "ソースコード",
       "Examples",
       "シェイプをセクションの上下に配置する",
       "空のShapeDividerをスペーサーとして利用する",
@@ -1548,7 +1535,7 @@
     "snippet": "セクション間の波型などの装飾的な区切り要素。SVGベースの形状で区切りを表現。@lism-css/uiパッケージで提供。"
   },
   {
-    "sourcePath": "ui/examples/Card.mdx",
+    "sourcePath": "ui/components/Card.mdx",
     "title": "Card",
     "description": "Lism CSS で実装するカード型コンテンツレイアウトの実装例です。",
     "category": "ui",
@@ -1566,7 +1553,7 @@
     "snippet": "Lism CSS を使ったカードレイアウトの実装例。WithSide+is--boxLink で縦横自動切り替えカード、is--coverLink でカード内別リンク配置、set--bdrsInner での内側角丸活用、ホバーでテキストを出現させる例など多様なパターンを紹介。"
   },
   {
-    "sourcePath": "ui/examples/Banner.mdx",
+    "sourcePath": "ui/components/Banner.mdx",
     "title": "Banner",
     "description": "Lism CSS で実装するバナーリンクの実装例です。",
     "category": "ui",
@@ -1575,7 +1562,7 @@
     "snippet": "バナーの実装例。"
   },
   {
-    "sourcePath": "ui/examples/Hero.mdx",
+    "sourcePath": "ui/components/Hero.mdx",
     "title": "Hero",
     "description": "Lism CSS で実装するヒーローセクションの実装例です。",
     "category": "ui",
@@ -1584,16 +1571,7 @@
     "snippet": "ヒーローセクション（メインビジュアル）の実装例。"
   },
   {
-    "sourcePath": "ui/examples/FAQ.mdx",
-    "title": "FAQ",
-    "description": "Lism CSS で実装するQ&A（よくある質問）レイアウトの実装例です。",
-    "category": "ui",
-    "headings": ["Examples"],
-    "keywords": ["FAQ", "よくある質問", "example", "accordion"],
-    "snippet": "FAQ（よくある質問）セクションの実装例。"
-  },
-  {
-    "sourcePath": "ui/examples/Steps.mdx",
+    "sourcePath": "ui/components/Steps.mdx",
     "title": "Steps",
     "description": "Lism CSS で実装する、手順を示すステップレイアウトの実装例です。",
     "category": "ui",
@@ -1602,16 +1580,24 @@
     "snippet": "ステップ（手順）表示の実装例。"
   },
   {
-    "sourcePath": "ui/examples/Timeline.mdx",
+    "sourcePath": "ui/block-examples/Timeline.mdx",
     "title": "Timeline",
-    "description": "Lism CSS で実装するタイムラインレイアウトの実装例です。",
+    "description": "Lism CSS で実装するタイムラインUI（b--timeline）の実装例です。",
     "category": "ui",
-    "headings": ["Create Component", "Source Code", "Import", "Usage", "End, Startの指定, シェイプの協調", "アイコンの使用例", "横並び"],
-    "keywords": ["Timeline", "タイムライン", "年表", "example"],
-    "snippet": "タイムライン表示の実装例。"
+    "headings": [
+      "Overview",
+      "Styles",
+      "Markup",
+      "Examples",
+      "先頭・末尾の指定とシェイプの強調",
+      "アイコンの表示",
+      "横並び（b--timeline--horizontal）"
+    ],
+    "keywords": ["Timeline", "b--timeline", "タイムライン", "年表", "時系列", "沿革", "history"],
+    "snippet": "出来事を時系列に並べるタイムラインUIの実装例。primitivesと少量のCSS（b--timeline）で構成し、CSSをlism-blockレイヤーへコピーして利用。data-timelineで先頭・末尾を指定でき、b--timeline--horizontalで横並びにできる。"
   },
   {
-    "sourcePath": "ui/examples/Breadcrumb.mdx",
+    "sourcePath": "ui/components/Breadcrumb.mdx",
     "title": "Breadcrumb",
     "description": "Lism CSS で実装するパンくずリストナビゲーションの実装例です。",
     "category": "ui",
@@ -1620,7 +1606,7 @@
     "snippet": "パンくずリストの実装例。"
   },
   {
-    "sourcePath": "ui/examples/DividerLabel.mdx",
+    "sourcePath": "ui/components/DividerLabel.mdx",
     "title": "DividerLabel",
     "description": "Lism CSS で実装する、ラベル付き区切り線コンポーネントの実装例です。",
     "category": "ui",
@@ -1629,7 +1615,7 @@
     "snippet": "ラベル付き区切り線の実装例。"
   },
   {
-    "sourcePath": "ui/examples/Reel.mdx",
+    "sourcePath": "ui/components/Reel.mdx",
     "title": "Reel",
     "description": "Lism CSS で実装する、コンテンツを横スクロールで表示するリールコンポーネントの実装例です。",
     "category": "ui",
@@ -1638,7 +1624,7 @@
     "snippet": "横スクロール（リール）レイアウトの実装例。Flex/Grid両方の実装パターンを紹介。"
   },
   {
-    "sourcePath": "ui/examples/BalloonBox.mdx",
+    "sourcePath": "ui/components/BalloonBox.mdx",
     "title": "BalloonBox",
     "description": "Lism CSS で実装するふきだし風装飾ボックスの実装例です。",
     "category": "ui",
@@ -1647,7 +1633,7 @@
     "snippet": "ふきだし風装飾ボックスの作成例。variant でふきだしの方向、keycolor で色を指定。"
   },
   {
-    "sourcePath": "ui/examples/Decorations.mdx",
+    "sourcePath": "ui/components/Decorations.mdx",
     "title": "Decorations",
     "description": "Lism CSS で実装する装飾ボックスパターンの実装例です。",
     "category": "ui",
@@ -1656,16 +1642,23 @@
     "snippet": "装飾ボックスの実装例。Call, Kakko, Sticky など様々な装飾パターンを紹介。"
   },
   {
-    "sourcePath": "ui/examples/List.mdx",
+    "sourcePath": "ui/block-examples/List.mdx",
     "title": "List",
-    "description": "Lism CSS で実装する、アイコン付き装飾リストの実装例です。",
+    "description": "Lism CSS で実装する、アイコン付き装飾リストUI（b--list）の実装例です。",
     "category": "ui",
-    "headings": ["Create Component", "Source Code", "Import", "Usage"],
-    "keywords": ["List", "リスト", "アイコン", "装飾リスト", "example"],
-    "snippet": "アイコンを使った装飾リストの作成例。List(.c--list)コンポーネントの実装と使い方を紹介。"
+    "headings": [
+      "Overview",
+      "Styles",
+      "Markup",
+      "Examples",
+      "チェックマークのリスト（b--list--check）",
+      "アイコンを差し替える（--_icon-c / --_icon-img）"
+    ],
+    "keywords": ["List", "b--list", "リスト", "箇条書き", "アイコン", "チェックマーク", "checklist"],
+    "snippet": "行頭にアイコンを表示する装飾リストUIの実装例。primitivesと少量のCSS（b--list）で構成し、CSSをlism-blockレイヤーへコピーして利用。b--list--checkでチェックマークに切り替え、--_icon-c / --_icon-imgでアイコンの色・画像を変更できる。"
   },
   {
-    "sourcePath": "ui/examples/Others.mdx",
+    "sourcePath": "ui/components/Others.mdx",
     "title": "Others",
     "description": "Lism CSS で実装する、ステップナビゲーションやメニュー表などその他のUIパターンの実装例です。",
     "category": "ui",
@@ -1674,13 +1667,13 @@
     "snippet": "ステップナビゲーションやメニュー表など、その他のUIパターンの実装例。"
   },
   {
-    "sourcePath": "ui/examples/Table.mdx",
+    "sourcePath": "ui/block-examples/Table.mdx",
     "title": "Table",
-    "description": "Lism CSS で実装する、行・列の固定表示に対応した汎用テーブルレイアウトの実装例です。",
+    "description": "Lism CSS で実装する、行・列の固定表示に対応したテーブルUI（b--table）の実装例です。",
     "category": "ui",
-    "headings": ["Create Component", "Source Code", "Import", "Usage", "スクロール時の固定表示"],
-    "keywords": ["Table", "テーブル", "表", "固定", "スクロール", "example"],
-    "snippet": "行・列の固定表示に対応した汎用Tableレイアウトの実装例。CSS変数でボーダースタイルを調整可能。"
+    "headings": ["Overview", "Styles", "Markup", "Examples", "ボーダーと th の色を調整する", "スクロール時の固定表示"],
+    "keywords": ["Table", "b--table", "テーブル", "表", "固定表示", "スクロール", "sticky"],
+    "snippet": "行・列の固定表示に対応したテーブルUIの実装例。primitivesと少量のCSS（b--table）で構成し、CSSをlism-blockレイヤーへコピーして利用。data-table-stickyでtheadや1列目を固定でき、ボーダーやthの色はCSS変数で調整する。"
   },
   {
     "sourcePath": "utility-class.mdx",
@@ -1858,8 +1851,21 @@
     "description": "プロジェクトにSKILL.mdファイルを配置して、AIエージェントに Lism CSS の設計ルール・Props・トークン・命名規則を伝える方法。",
     "category": "guide",
     "headings": ["セットアップ", "skills.sh 経由", "gh コマンド経由", "lism-cli 経由", "配置先の対応表", "アップデート"],
-    "keywords": ["skills", "SKILL.md", "AIエージェント", "設計ルール", "Claude", "コーディング支援"],
-    "snippet": "プロジェクトにSKILL.mdファイルを配置することでAIエージェントにLism CSSの設計ルール・Props・トークン・命名規則を伝えられる。npxコマンドで導入・アップデート可能。"
+    "keywords": [
+      "skills",
+      "SKILL.md",
+      "AIエージェント",
+      "設計ルール",
+      "Claude",
+      "コーディング支援",
+      "lism-css-guide",
+      "lism-css-refactor",
+      "lism-mockup-guide",
+      "skills.sh",
+      "gh skill install",
+      "lism-cli skill"
+    ],
+    "snippet": "プロジェクトにSKILL.mdファイルを配置することでAIエージェントにLism CSSの設計ルール・Props・トークン・命名規則を伝えられる。配布スキルは新規実装向けの lism-css-guide、既存コードのリファクタ用 lism-css-refactor、@lism-css/mockup で画面モックアップを組むための lism-mockup-guide の3つ。skills.sh / gh skill install / lism-cli skill add の3通りの導入方法と、lism-cli skill check によるローカル差分確認・アップデート方法を解説。"
   },
   {
     "sourcePath": "trait-class.mdx",

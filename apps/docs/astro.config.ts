@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import { fileURLToPath } from 'node:url';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
@@ -138,12 +139,15 @@ export default defineConfig({
   ],
   // CodeFileコンポーネント用のシンタックスハイライト設定
   markdown: {
-    // remarkプラグイン: :::記法のパースと変換
-    remarkPlugins: [
-      remarkDirective, // :::記法をパース（最初に実行）
-      remarkDirectiveHandler, // directive を変換（Callout変換 & 不要な :text 記法を復元）
-    ],
-    // 外部リンクを別タブで開く設定 & blockquoteのcite変換 & tableの横スクロール対応
-    rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }], rehypeBlockquoteCite, rehypeWrapTable],
+    // remark/rehype パイプライン（unified）をプロセッサとして明示指定
+    processor: unified({
+      // remarkプラグイン: :::記法のパースと変換
+      remarkPlugins: [
+        remarkDirective, // :::記法をパース（最初に実行）
+        remarkDirectiveHandler, // directive を変換（Callout変換 & 不要な :text 記法を復元）
+      ],
+      // 外部リンクを別タブで開く設定 & blockquoteのcite変換 & tableの横スクロール対応
+      rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }], rehypeBlockquoteCite, rehypeWrapTable],
+    }),
   },
 });

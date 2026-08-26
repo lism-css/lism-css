@@ -7,7 +7,7 @@ npm publish とデプロイはユーザーが手動で行う。
 
 `$ARGUMENTS` をスペース区切りで解釈する:
 
-- 第1引数: パッケージ識別子（`lism-css` / `lism-ui` / `lism-cli`）
+- 第1引数: パッケージ識別子（`lism-css` / `lism-ui` / `lism-cli` / `plugin`）
 - 第2引数: リリースバージョン（例: `0.10.0`）
 
 ## パッケージマッピング
@@ -17,6 +17,11 @@ npm publish とデプロイはユーザーが手動で行う。
 | `lism-css` | `lism-css` | `packages/lism-css/` | `lism-css@v` | `nr publish:core` |
 | `lism-ui` | `@lism-css/ui` | `packages/lism-ui/` | `lism-ui@v` | `nr publish:ui` |
 | `lism-cli` | `lism-cli` + `create-lism` | `packages/lism-cli/` + `packages/create-lism/` | `lism-cli@v` | `nr publish:cli` |
+| `plugin` | `@lism-css/plugin` | `packages/plugin/` | `lism-plugin@v` | `nr publish:plugin` |
+
+識別子はディレクトリ名基準、タグプレフィックスは既存タグ基準のため、`plugin` だけ両者が一致しない（タグは `lism-plugin@v`）。
+
+**このコマンドの対象外のパッケージ**: `@lism-css/mcp` と `@lism-css/mockup` はタグ・GitHub リリースを運用していない。バージョンを上げて `nr publish:mcp` / `nr publish:mockup` を実行するだけでよい。
 
 ### lism-cli の特別ルール
 
@@ -27,12 +32,20 @@ npm publish とデプロイはユーザーが手動で行う。
 - **publish 前のチェック必須**: `packages/lism-cli/src/constants.ts` の `DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF` が `'main'` になっていることを確認する（PR ブランチや `'dev'` のままだと公開版 CLI が壊れる）
 - `create-lism` 側は `lism-cli` を bundle で内包しているため、CLI 本体に依存変更があった場合も `create-lism` の `dependencies` 追従は不要
 
+### plugin の特別ルール
+
+`@lism-css/mockup` が `@lism-css/plugin` に依存している（publish 時に `workspace:*` が固定バージョンへ置換される）。
+
+- plugin に **`@lism-css/mockup` が使う API の変更**（`@lism-css/plugin/vite` の export 追加・変更等）を入れた場合は、plugin を publish した後に `nr publish:mockup` も実行して追従させる
+- 追従しないと、npm 経由で `@lism-css/mockup` を入れた利用者だけが古い plugin を掴んで壊れる。ローカルの workspace では最新 plugin を参照するため、この不整合はテストでは検出できない
+
 ## 現在の状態
 
 - 現在のブランチ: !`git branch --show-current`
 - 既存タグ: !`git tag --list --sort=-version:refname | head -20`
 - lism-css の現在バージョン: !`node -p "require('./packages/lism-css/package.json').version"`
 - lism-ui の現在バージョン: !`node -p "require('./packages/lism-ui/package.json').version"`
+- plugin の現在バージョン: !`node -p "require('./packages/plugin/package.json').version"`
 
 ## 手順
 
@@ -49,6 +62,7 @@ npm publish とデプロイはユーザーが手動で行う。
 - 引数で指定されたバージョンと異なる場合:
   - `package.json` の `"version"` フィールドを更新する
   - **`lism-ui` の場合**: `nr build:ui` を実行し、`registry-index.json`（version 埋め込み・commit 対象の生成物）を再生成する。これを忘れると publish 時に `build:ui` が走って `registry-index.json` が更新され、git-checks（unclean working tree）で publish が失敗する
+  - **`plugin` の場合**: 上記「plugin の特別ルール」を確認し、`@lism-css/mockup` の追従 publish が必要かどうかを判断する
   - `git add` → `git commit -m "chore: {パッケージ識別子} v{バージョン}"`（`lism-ui` は再生成された `registry-index.json` も同コミットに含める）
   - ユーザーにpushしていいか確認 → `git push origin dev`
 - すでに一致している場合はスキップする
@@ -66,7 +80,8 @@ npm publish とデプロイはユーザーが手動で行う。
 
 - `packages/lism-css/` → lism-css
 - `packages/lism-ui/` → lism-ui
-- `apps/docs/` → Documentation（両パッケージ共通）
+- `packages/plugin/` → plugin
+- `apps/docs/` → Documentation（各パッケージ共通）
 - その他（ルート設定ファイル等）→ Other
 
 対象パッケージに関連する変更を中心にリリースノートを構成する。
@@ -102,16 +117,17 @@ npm publish とデプロイはユーザーが手動で行う。
 
 #### 5-B. changelog エントリ
 
-ここの changelog.mdx作成は `lism-css` と `@lism-css/ui` 更新時のみ。
+ここの changelog.mdx作成は `lism-css` / `@lism-css/ui` / `@lism-css/plugin` 更新時のみ（`lism-cli` は対象外）。
 
 リリースノートの内容をもとに、changelog.mdx 用の簡潔なエントリを日本語・英語の両方で生成する。
 
 ##### 構造ルール
 
-**親は常に `lism-css` のリリース（H2）**。`@lism-css/ui` 等の追従パッケージは、その中に H3 (`### @lism-css/ui v.X.Y.Z`) としてネスト配置する。
+**親は常に `lism-css` のリリース（H2）**。`@lism-css/plugin` / `@lism-css/ui` 等の追従パッケージは、その中に H3 (`### @lism-css/ui v.X.Y.Z`) としてネスト配置する。
 
 - `lism-css` 本体のリリースがない場合（`@lism-css/ui` 単独リリース等）のみ、H2 `## @lism-css/ui v.X.Y.Z (YYYY.MM.DD)` で独立エントリとする
-- 同日に `lism-css` と `@lism-css/ui` が両方リリースされる場合、必ず `lism-css` を親にして `@lism-css/ui` をネストする
+- 同日に `lism-css` と追従パッケージが両方リリースされる場合、必ず `lism-css` を親にして追従パッケージをネストする
+- 追従パッケージが複数ある場合の並び順は `@lism-css/plugin` → `@lism-css/ui`（既存エントリの並びに合わせる）
 
 ##### テンプレート（通常リリース）
 
@@ -123,11 +139,18 @@ npm publish とデプロイはユーザーが手動で行う。
 - 変更内容の簡潔な説明
 - ...
 
+### `@lism-css/plugin` v.{バージョン} (YYYY.MM.DD)
+
+- 変更内容の簡潔な説明
+- ...
+
 ### `@lism-css/ui` v.{バージョン} (YYYY.MM.DD)
 
 - 変更内容の簡潔な説明
 - ...
 ```
+
+追従パッケージのリリースがない場合、その H3 セクションごと省略する。
 
 ##### テンプレート（破壊的変更を含むリリース）
 
@@ -194,6 +217,7 @@ npm publish とデプロイはユーザーが手動で行う。
 
 - `lism-css` の場合: `lism-css@{旧バージョン}` を検索
 - `lism-ui` の場合: `@lism-css/ui@{旧バージョン}` を検索
+- `plugin` の場合: `@lism-css/plugin@{旧バージョン}` を検索
 
 **手順:**
 1. リポジトリ全体で上記パターンを検索し、該当箇所を特定する（changelog.mdx と package.json は除外）
@@ -258,6 +282,14 @@ publish とデプロイの完了をユーザーが確認した後:
 
 1. `git tag {タグ名}` でタグを作成（main の HEAD に付与される）
 2. `git push origin {タグ名}` でタグをプッシュ
-3. `gh release create {タグ名} --title "{タグ名}" --notes "{リリースノート}"` で GitHub リリースを作成
+3. リリースノートを `mktemp` で作成した一時ファイルに書き出し、`gh release create {タグ名} --title "{タグ名}" --notes-file "{一時ファイル}"` で GitHub リリースを作成する
+
+リリースノートはコードブロックやバッククォートを含むため、`--notes "..."` やHEREDOCで直接渡さない。ファイル指定のオプションは `--notes-file`（`-F`）であり、`gh issue create` / `gh pr create` の `--body-file` とは名前が違う点に注意する。
+
+```bash
+body=$(mktemp); printf '%s' "$NOTES" > "$body"
+gh release create "{タグ名}" --title "{タグ名}" --notes-file "$body"
+rm -f "$body"
+```
 
 完了後、元のブランチ（dev）に戻る。

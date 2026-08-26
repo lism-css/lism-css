@@ -19,7 +19,7 @@ React / Astro向けのコンポーネントも提供しており、propsを通�
 - **軽量** - CSSバンドル全体で約30 KB（gzip圧縮時約8 KB）と、軽量です。
 - **ゼロビルドフレームワーク** — CSSファイルを読み込むだけで、プレーンHTMLでも動作します。ビルドツール、プリプロセッサ、設定は不要。CDNまたはnpmで利用可能。
 - **レイアウト優先のプリミティブアーキテクチャ** — レイアウトプリミティブ（`l--flex`、`l--stack`、`l--grid`、`l--columns`、`l--center`、`l--withSide` など）で、カスタムCSSを書かずに一般的なレイアウトパターンを組み立てられます。
-- **CSSレイヤー構造** — `@layer`（lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-component` はBEM構造の `c--` コンポーネント用レイヤー、`lism-custom` はユーザー独自プレフィックスのクラス用レイヤーです。詳細度の衝突を最小限に抑えます。
+- **CSSレイヤー構造** — `@layer`（lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility）を使用した明確な詳細度管理。`lism-block` はベーススタイルをCSS側で管理する基礎部品（`b--`）用レイヤーで、明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝つように弱い位置へ配置されています。`lism-trait` は `is--` / `has--` のTraitクラス用レイヤー、`lism-primitive` の内部は `layout` / `atomic` のサブレイヤーに分かれています。`lism-custom` はユーザーの独自クラスや上書き用のレイヤーです。詳細度の衝突を最小限に抑えます。
 - **デザイントークン** — カラー、余白、フォントサイズ、シャドウ、ボーダー半径をCSSカスタムプロパティで管理。変数を上書きするだけで簡単にカスタマイズできます。
 - **柔軟なProperty Class** — `-{prop}:{value}` の命名規則（例: `-p:20`、`-bgc:base-2`、`-fz:l`）でCSSプロパティをユーティリティクラスにマッピングし、素早く読みやすいスタイリングを実現します。
 - **レスポンシブシステム** — ブレークポイント固有のクラスとCSS変数（例: `-p_sm`、`-p_md`）にデフォルトでコンテナクエリを採用し、親要素ベースのレスポンシブデザインを実現。メディアクエリへの切り替えも可能。
@@ -30,7 +30,7 @@ React / Astro向けのコンポーネントも提供しており、propsを通�
 ### CDN（ビルド不要）
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.24.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.26.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -150,6 +150,8 @@ Lism CSSは構造化された命名規則をCSSクラスに使用しています
 | レイアウトプリミティブ | `l--{name}` | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
 | Trait Class（役割） | `is--{name}` | `is--wrapper`, `is--container`, `is--layer`, `is--boxLink` |
 | Trait Class（機能） | `has--{name}` | `has--transition`, `has--gutter`, `has--snap` |
+| Block Class | `b--{name}` | `b--btn`, `b--badge` |
+| Custom Class | `c--{name}` | `c--siteHeader`, `c--pricing` |
 | Property Class | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | ブレークポイント | `-{prop}_{bp}` | `-p_sm`, `-g_md`, `-fz_lg` |
 | ユーティリティクラス | `u--{name}` | `u--cbox` |

@@ -1,34 +1,39 @@
-@layer lism-component {
-  .c--button {
+@layer lism-block {
+  .b--button {
     --c: var(--base);
     --bgc: var(--text);
     --bdc: var(--bgc);
+    --bdw: 1px;
+    --hl: var(--hl--s);
 
+    display: inline-flex;
     color: var(--c);
     background-color: var(--bgc);
-    border: solid 1px var(--bdc); /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
-
-    gap: var(--s10);
+    gap: 0.4em;
+    padding: 0.5em 0.875em;
     text-decoration: none;
+
+    /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
+    border: solid var(--bdw) var(--bdc);
+
+    /* flex / grid 両方に対応 */
     place-content: center;
     place-items: center;
+
+    /* l--gridを使用する場合の追加スタイル */
+    grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
   }
-  .c--button--outline {
+  .b--button--outline {
     --c: var(--text);
     --bgc: transparent;
     --bdc: var(--c);
   }
 
-  :where(.c--button) > .a--icon {
+  :where(.b--button) > .a--icon {
     scale: 1.05;
   }
 
-  /* l--gridを使用する場合の追加スタイル */
-  .c--button:where(.l--grid) {
-    grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
-    justify-items: center;
-  }
-  .c--button:where(.l--grid) > :not(.a--icon) {
+  :where(.b--button.l--grid) > :not(.a--icon) {
     grid-column: 2;
   }
 }

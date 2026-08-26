@@ -8,7 +8,7 @@
 
 | パッケージ | bin | 役割 |
 |---|---|---|
-| `lism-cli` | `lism-cli` | 本体（`create` / `ui` / `skill`） |
+| `lism-cli` | `lism-cli` | 本体（`create` / `init` / `ui` / `skill` / `mockup`）。`mockup` は `@lism-css/mockup` の案内表示のみ |
 | `create-lism` | `create-lism` | `pnpm create lism` 用ラッパー。`lism-cli` を **bundle で内包**（runtime 依存ナシ） |
 
 配信元はすべて giget で `github:lism-css/lism-css/...` から直 fetch（旧 HTTP Registry / `cli.lism-css.com` は廃止）。

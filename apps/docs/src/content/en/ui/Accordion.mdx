@@ -13,23 +13,17 @@ It is built with `<div>` / `<button>` elements rather than `<details>` / `<summa
 The panel uses `hidden="until-found"`, so its content can be discovered by the browser's in-page search even when the accordion is closed, and the panel will automatically expand when a match is found.
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20">
-    <Accordion.Root bd>
+  <PreviewArea>
+    <Accordion.Root>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+          <Accordion.Button>Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -40,17 +34,9 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
     <Accordion.Root>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example</Accordion.Button>
+          <Accordion.Button>Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -59,9 +45,41 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
+<div class="b--accordion">
+  <div class="b--accordion_item">
+    <div class="b--accordion_heading" role="heading">
+      <button class="b--accordion_button set--plain" aria-controls="{id}" aria-expanded="false">
+        Accordion Example 1
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id}" hidden="until-found">
+      <div class="b--accordion_content l--flow">
+        ...Contents...
+      </div>
+    </div>
+  </div>
+</div>
 ```
   </PreviewCode>
 </Preview>
+
+
+:::note
+`<Accordion.Button>` automatically includes `<Accordion.Icon>` at the end.
+The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no SVG specification is needed.
+:::
+
+
+## Styles
+
+The Accordion base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Accordion/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion).
+:::
 
 
 ## Usage
@@ -71,11 +89,11 @@ Provided as `Accordion` from the `@lism-css/ui` package.
 
 ### Import
 
-<ImportPackage component="Accordion" script="accordion.js" packageName="@lism-css/ui" />
+<ImportPackage component="Accordion" script="accordion.js" packageName="@lism-css/ui" css="style.css" />
 
 The following components are available:
 
-- `<Accordion.Root>`: The root element wrapping multiple accordion items (based on `Stack`)
+- `<Accordion.Root>`: The root element wrapping multiple accordion items (specify `layout="stack"` or similar if a layout is needed)
 - `<Accordion.Item>`: An individual accordion element
 - `<Accordion.Heading>`: Wrapper for the heading area (defaults to `<div role="heading">`)
 - `<Accordion.Button>`: The toggle button (automatically includes `<Accordion.Icon>` at the end)
@@ -91,38 +109,103 @@ The following components are available:
 | <PropBadge>`<Accordion.Item>`</PropBadge><br/>`isOpen` | Expands the item by default (adds `data-opened`). Use together with `isOpen` on `<Accordion.Button>` / `<Accordion.Panel>`. |
 | <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | Specifies the HTML tag for the heading. Defaults to `div` (with `role="heading"` added automatically). If `h2`–`h6` is specified, `role` is not added. |
 | <PropBadge>`<Accordion.Button>`</PropBadge><br/>`isOpen` | Sets `aria-expanded` to match the initial expanded state. |
-| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | Flow layout setting passed to the content area (`__content`) inside the panel. |
+| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`as` | Specifies the HTML tag for the outer panel element (`.b--accordion_panel`). Defaults to `div`. |
+| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>Lism Props | Props such as `p`, `pt`, and `flow` are passed to the inner content area (`.b--accordion_content`). `as`, `class` (Astro) / `className` (React), `accID`, and `isOpen` are applied to the outer panel element. |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`isOpen` | Shows the panel by default (removes `hidden`). |
 
 
-### Structure
-
-```jsx
-<Accordion.Root>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button>Accordion Label</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...Contents...
-    </Accordion.Panel>
-  </Accordion.Item>
-</Accordion.Root>
-```
-
-:::note
-`<Accordion.Button>` automatically includes `<Accordion.Icon>` at the end.
-The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no SVG specification is needed.
-:::
-
-
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion).
-
-
-
 ## Examples
+
+### Styling example
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Accordion.Root bd>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Accordion.Root bd>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--accordion -bd">
+  <div class="b--accordion_item">
+    <div class="b--accordion_heading" role="heading">
+      <button
+        class="b--accordion_button set--plain -p:20 -hov:-bgc"
+        style="--hov-bgc: var(--base-2)"
+        aria-controls="{id-1}"
+        aria-expanded="false"
+      >
+        Accordion Example 1
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id-1}" hidden="until-found">
+      <div class="b--accordion_content l--flow -p:20 -pt:15">
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.</p>
+      </div>
+    </div>
+  </div>
+  <div class="b--accordion_item -bd-t">
+    <div class="b--accordion_heading" role="heading">
+      <button
+        class="b--accordion_button set--plain -p:20 -hov:-bgc"
+        style="--hov-bgc: var(--base-2)"
+        aria-controls="{id-2}"
+        aria-expanded="false"
+      >
+        Accordion Example 2
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id-2}" hidden="until-found">
+      <div class="b--accordion_content l--flow -p:20 -pt:15">
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.</p>
+      </div>
+    </div>
+  </div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
 
 ### Changing the heading tag
 
@@ -134,17 +217,9 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+          <Accordion.Button>Accordion Label</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -155,31 +230,21 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+          <Accordion.Button>Accordion Label</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
+        ...
       </Accordion.Item>
     </Accordion.Root>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
   ```html "h3"
-  <div class="c--accordion l--stack">
-    <div class="c--accordion_item">
-      <h3 class="c--accordion_heading set--plain">
-        <button class="c--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between" aria-controls="{id}" aria-expanded="false">
+  <div class="b--accordion -bd">
+    <div class="b--accordion_item">
+      <h3 class="b--accordion_heading set--plain">
+        <button class="b--accordion_button set--plain" aria-controls="{id}" aria-expanded="false">
           Accordion Label
-          <span class="c--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
+          <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
         </button>
       </h3>
       ...
@@ -201,17 +266,17 @@ You can change it by setting the CSS variable on `<Accordion.Root>` (for all ite
     <Accordion.Root bd style={{ '--duration': '.15s' }}>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+          <Accordion.Button>Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
+          <Accordion.Button>Accordion Example 2</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -219,24 +284,17 @@ You can change it by setting the CSS variable on `<Accordion.Root>` (for all ite
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
 ```jsx "--duration"
-<Accordion.Root style={{ '--duration': '.15s' }}>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
-  ...
+<Accordion.Root bd style={{ '--duration': '.15s' }}>
+  <Accordion.Item>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
 </Accordion.Root>
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html "--duration"
-<div class="c--accordion l--stack" style="--duration: 0.15s">
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
+<div class="b--accordion -bd" style="--duration: 0.15s">
+  <div class="b--accordion_item">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
 </div>
 ```
   </PreviewCode>
@@ -258,17 +316,25 @@ On `<Accordion.Item>` it adds `data-opened` to set the panel height and icon to 
     <Accordion.Root bd>
       <Accordion.Item isOpen>
         <Accordion.Heading>
-          <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}} isOpen>Accordion Label 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5" isOpen>
+        <Accordion.Panel isOpen>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 2</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 3</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -279,31 +345,41 @@ On `<Accordion.Item>` it adds `data-opened` to set the panel height and icon to 
 <Accordion.Root bd>
   <Accordion.Item isOpen>
     <Accordion.Heading>
-      <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+      <Accordion.Button hov={{bgc:"base-2"}} isOpen>Accordion Label 1</Accordion.Button>
     </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5" isOpen>
-      ...
+    <Accordion.Panel isOpen>
+      <DummyText length="l" />
     </Accordion.Panel>
   </Accordion.Item>
-  <Accordion.Item bd-t>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
 </Accordion.Root>
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-```html "data-opened"
-<div class="c--accordion l--stack">
-  <div class="c--accordion_item" data-opened>
-    <!-- button: aria-expanded="true" / panel: no hidden -->
-    ...
+```html "data-opened" 'aria-expanded="true"'
+<div class="b--accordion -bd">
+  <div class="b--accordion_item" data-opened>
+    <div class="b--accordion_heading" role="heading">
+      <button
+        class="b--accordion_button set--plain -hov:-bgc"
+        style="--hov-bgc: var(--base-2)"
+        aria-controls="{id-1}"
+        aria-expanded="true"
+      >
+        Accordion Label 1
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id-1}">
+      <div class="b--accordion_content l--flow">
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+      </div>
+    </div>
   </div>
-  <div class="c--accordion_item">...</div>
+  <!-- Closed items keep aria-expanded="false" / hidden="until-found" -->
+  <div class="b--accordion_item -bd-t">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
 </div>
 ```
   </PreviewCode>
@@ -323,25 +399,25 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
     <Accordion.Root allowMultiple bd>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 2</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="xl" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 3</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 3</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -350,32 +426,18 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
   <PreviewCode slot="tab" label="JSX">
 ```jsx "allowMultiple"
 <Accordion.Root allowMultiple bd>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
-  <Accordion.Item bd-t>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
-  ...
+  <Accordion.Item>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
 </Accordion.Root>
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html "data-allow-multiple"
-<div class="c--accordion l--stack" data-allow-multiple>
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
+<div class="b--accordion -bd" data-allow-multiple>
+  <div class="b--accordion_item">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
 </div>
 ```
   </PreviewCode>

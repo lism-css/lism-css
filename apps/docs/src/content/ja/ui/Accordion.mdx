@@ -13,23 +13,17 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 パネルには `hidden="until-found"` を活用しているため、アコーディオンが閉じた状態でもブラウザのページ内検索でコンテンツを検出でき、ヒット時に自動的にパネルが展開されます。
 
 
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20">
-    <Accordion.Root bd>
+  <PreviewArea>
+    <Accordion.Root>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+          <Accordion.Button>Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -40,17 +34,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Accordion.Root>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example</Accordion.Button>
+          <Accordion.Button>Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -59,9 +45,40 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
+<div class="b--accordion">
+  <div class="b--accordion_item">
+    <div class="b--accordion_heading" role="heading">
+      <button class="b--accordion_button set--plain" aria-controls="{id}" aria-expanded="false">
+        Accordion Example 1
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id}" hidden="until-found">
+      <div class="b--accordion_content l--flow">
+        ...Contents...
+      </div>
+    </div>
+  </div>
+</div>
 ```
   </PreviewCode>
 </Preview>
+
+:::note
+`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。
+アイコンはCSSの疑似要素（`::before` / `::after`）で描画されるため、SVGの指定は不要です。
+:::
+
+
+## Styles
+
+Accordion のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Accordion/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion) で公開しています。
+:::
 
 
 ## How to use
@@ -71,11 +88,11 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ### Import
 
-<ImportPackage component="Accordion" script="accordion.js" packageName="@lism-css/ui" />
+<ImportPackage component="Accordion" script="accordion.js" packageName="@lism-css/ui" css="style.css" />
 
 以下のコンポーネントが利用できます。
 
-- `<Accordion.Root>`: 複数のアコーディオンアイテムをラップするルート要素（`Stack` ベース）
+- `<Accordion.Root>`: 複数のアコーディオンアイテムをラップするルート要素（レイアウトが必要な場合は `layout="stack"` などを指定できます）
 - `<Accordion.Item>`: 個別のアコーディオン要素
 - `<Accordion.Heading>`: 見出しエリアのラッパー（デフォルトは `<div role="heading">`）
 - `<Accordion.Button>`: 開閉トリガーのボタン（末尾に `<Accordion.Icon>` を自動で含みます）
@@ -91,38 +108,103 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 | <PropBadge>`<Accordion.Item>`</PropBadge><br/>`isOpen` | アイテムを初期状態で展開します（`data-opened` を付与）。`<Accordion.Button>` / `<Accordion.Panel>` の `isOpen` と併せて指定します。 |
 | <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | 見出しのHTMLタグを指定します。デフォルトは `div`（`role="heading"` が自動付与されます）。`h2`〜`h6` を指定すると `role` は付与されません。 |
 | <PropBadge>`<Accordion.Button>`</PropBadge><br/>`isOpen` | 初期展開状態に合わせて `aria-expanded` を設定します。 |
-| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | パネル内のコンテンツ領域（`__content`）に渡すフローレイアウトの設定。 |
+| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`as` | 外側のパネル要素（`.b--accordion_panel`）のHTMLタグを指定します。デフォルトは `div` です。 |
+| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>Lism Props | `p`、`pt`、`flow`などのPropsは、内側のコンテンツ領域（`.b--accordion_content`）に渡されます。`as`、`class`（Astro）／`className`（React）、`accID`、`isOpen`は外側のパネル要素に適用されます。 |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`isOpen` | パネルを初期表示します（`hidden` を解除）。 |
 
 
-### 基本構造
-
-```jsx
-<Accordion.Root>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button>Accordion Label</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...Contents...
-    </Accordion.Panel>
-  </Accordion.Item>
-</Accordion.Root>
-```
-
-:::note
-`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。
-アイコンはCSSの疑似要素（`::before` / `::after`）で描画されるため、SVGの指定は不要です。
-:::
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion) で公開しています。
-
-
-
 ## Examples
+
+### スタイリング例
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Accordion.Root bd>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Accordion.Root bd>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20" hov={{bgc:"base-2"}}>Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="15">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--accordion -bd">
+  <div class="b--accordion_item">
+    <div class="b--accordion_heading" role="heading">
+      <button
+        class="b--accordion_button set--plain -p:20 -hov:-bgc"
+        style="--hov-bgc: var(--base-2)"
+        aria-controls="{id-1}"
+        aria-expanded="false"
+      >
+        Accordion Example 1
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id-1}" hidden="until-found">
+      <div class="b--accordion_content l--flow -p:20 -pt:15">
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.</p>
+      </div>
+    </div>
+  </div>
+  <div class="b--accordion_item -bd-t">
+    <div class="b--accordion_heading" role="heading">
+      <button
+        class="b--accordion_button set--plain -p:20 -hov:-bgc"
+        style="--hov-bgc: var(--base-2)"
+        aria-controls="{id-2}"
+        aria-expanded="false"
+      >
+        Accordion Example 2
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id-2}" hidden="until-found">
+      <div class="b--accordion_content l--flow -p:20 -pt:15">
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.</p>
+      </div>
+    </div>
+  </div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
 
 ### 見出しタグを変更する
 
@@ -134,17 +216,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+          <Accordion.Button>Accordion Label</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -155,31 +229,21 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+          <Accordion.Button>Accordion Label</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item bd-t>
-        <Accordion.Heading as="h3">
-          <Accordion.Button p="20">Accordion Label</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          <DummyText length="l" />
-        </Accordion.Panel>
+        ...
       </Accordion.Item>
     </Accordion.Root>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
   ```html "h3"
-  <div class="c--accordion l--stack">
-    <div class="c--accordion_item">
-      <h3 class="c--accordion_heading set--plain">
-        <button class="c--accordion_button l--flex set--plain -g:10 -w:100% -ai:center -jc:between" aria-controls="{id}" aria-expanded="false">
+  <div class="b--accordion -bd">
+    <div class="b--accordion_item">
+      <h3 class="b--accordion_heading set--plain">
+        <button class="b--accordion_button set--plain" aria-controls="{id}" aria-expanded="false">
           Accordion Label
-          <span class="c--accordion_icon a--icon -pi:center -fxsh:0" aria-hidden="true"></span>
+          <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
         </button>
       </h3>
       ...
@@ -201,17 +265,17 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Accordion.Root bd style={{ '--duration': '.15s' }}>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+          <Accordion.Button>Accordion Example 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
+          <Accordion.Button>Accordion Example 2</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -219,24 +283,17 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
 ```jsx "--duration"
-<Accordion.Root style={{ '--duration': '.15s' }}>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
-  ...
+<Accordion.Root bd style={{ '--duration': '.15s' }}>
+  <Accordion.Item>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
 </Accordion.Root>
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html "--duration"
-<div class="c--accordion l--stack" style="--duration: 0.15s">
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
+<div class="b--accordion -bd" style="--duration: 0.15s">
+  <div class="b--accordion_item">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
 </div>
 ```
   </PreviewCode>
@@ -258,17 +315,25 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Accordion.Root bd>
       <Accordion.Item isOpen>
         <Accordion.Heading>
-          <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}} isOpen>Accordion Label 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5" isOpen>
+        <Accordion.Panel isOpen>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 2</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 3</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -279,31 +344,41 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 <Accordion.Root bd>
   <Accordion.Item isOpen>
     <Accordion.Heading>
-      <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+      <Accordion.Button hov={{bgc:"base-2"}} isOpen>Accordion Label 1</Accordion.Button>
     </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5" isOpen>
-      ...
+    <Accordion.Panel isOpen>
+      <DummyText length="l" />
     </Accordion.Panel>
   </Accordion.Item>
-  <Accordion.Item bd-t>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
 </Accordion.Root>
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-```html "data-opened"
-<div class="c--accordion l--stack">
-  <div class="c--accordion_item" data-opened>
-    <!-- button: aria-expanded="true" / panel: hidden なし -->
-    ...
+```html "data-opened" 'aria-expanded="true"'
+<div class="b--accordion -bd">
+  <div class="b--accordion_item" data-opened>
+    <div class="b--accordion_heading" role="heading">
+      <button
+        class="b--accordion_button set--plain -hov:-bgc"
+        style="--hov-bgc: var(--base-2)"
+        aria-controls="{id-1}"
+        aria-expanded="true"
+      >
+        Accordion Label 1
+        <span class="b--accordion_icon a--icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="b--accordion_panel" id="{id-1}">
+      <div class="b--accordion_content l--flow">
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+      </div>
+    </div>
   </div>
-  <div class="c--accordion_item">...</div>
+  <!-- 閉じた状態のアイテムは aria-expanded="false" / hidden="until-found" -->
+  <div class="b--accordion_item -bd-t">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
 </div>
 ```
   </PreviewCode>
@@ -323,25 +398,25 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     <Accordion.Root allowMultiple bd>
       <Accordion.Item>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 1</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 2</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="xl" />
         </Accordion.Panel>
       </Accordion.Item>
       <Accordion.Item bd-t>
         <Accordion.Heading>
-          <Accordion.Button p="20">Accordion Label 3</Accordion.Button>
+          <Accordion.Button hov={{bgc:"base-2"}}>Accordion Label 3</Accordion.Button>
         </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
+        <Accordion.Panel>
           <DummyText length="l" />
         </Accordion.Panel>
       </Accordion.Item>
@@ -350,32 +425,18 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <PreviewCode slot="tab" label="JSX">
 ```jsx "allowMultiple"
 <Accordion.Root allowMultiple bd>
-  <Accordion.Item>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
-  <Accordion.Item bd-t>
-    <Accordion.Heading>
-      <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
-    </Accordion.Heading>
-    <Accordion.Panel p="20" pt="5">
-      ...
-    </Accordion.Panel>
-  </Accordion.Item>
-  ...
+  <Accordion.Item>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
+  <Accordion.Item bd-t>...</Accordion.Item>
 </Accordion.Root>
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html "data-allow-multiple"
-<div class="c--accordion l--stack" data-allow-multiple>
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
-  <div class="c--accordion_item">...</div>
+<div class="b--accordion -bd" data-allow-multiple>
+  <div class="b--accordion_item">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
+  <div class="b--accordion_item -bd-t">...</div>
 </div>
 ```
   </PreviewCode>

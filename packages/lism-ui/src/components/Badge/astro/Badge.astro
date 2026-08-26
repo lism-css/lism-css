@@ -14,14 +14,4 @@ type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> &
 const { class: className, variant, ...props } = Astro.props;
 ---
 
-<Lism
-  as="span"
-  d="inline-flex"
-  fz="xs"
-  hl="xs"
-  py="5"
-  px="10"
-  bdrs="10"
-  class={atts(className, buildModifierClass('c--badge', { variant }))}
-  {...props}><slot /></Lism
->
+<Lism as="span" class={atts(className, buildModifierClass('b--badge', { variant }))} {...props}><slot /></Lism>

@@ -1,11 +1,11 @@
-/* 
+/*
 方針 : td,thにボーダーをつける。
     そのほうが特定のセルだけのボーダーカスタマイズもしやすい.
     ただし、スクロール時にsticky要素の border が表示されない問題に対応するため、変数でのプロパティ管理を行う。
 */
 
-@layer lism-component {
-  .c--table {
+@layer lism-block {
+  .b--table {
     --bds: solid;
     --bdc: var(--divider);
     --bdw-y: 1px;
@@ -22,59 +22,59 @@
     max-inline-size: 100%;
   }
 
-  .c--table :is(td, th),
-  .c--table :is(td, th)::before {
+  .b--table :is(td, th),
+  .b--table :is(td, th)::before {
     border-width: var(--bdw-y) var(--bdw-x);
     border-color: var(--bdc);
     border-style: var(--bds);
   }
 
-  .c--table :is(td, th) {
+  .b--table :is(td, th) {
     min-inline-size: var(--cells-min-sz, initial);
   }
-  .c--table th {
+  .b--table th {
     color: var(--th-c, inherit);
     background-color: var(--th-bgc, transparent);
   }
-  .c--table > thead {
+  .b--table > thead {
     border-block-end: var(--_thead-bd-be);
   }
-  .c--table > tfoot {
+  .b--table > tfoot {
     border-block-start: var(--_tfoot-bd-bs);
   }
-}
 
-/* ._nofix: rowspan の対応に使用するクラス */
+  /* ._nofix: rowspan の対応に使用するクラス */
 
-[data-table-sticky~='col'] tr > :first-child:not(._nofix) {
-  position: sticky;
-  left: 0;
-  z-index: 1; /* 他のセルが relative だと上に来てしまうので、 z-index を少し上げておく */
+  [data-table-sticky~='col'] tr > :first-child:not(._nofix) {
+    position: sticky;
+    left: 0;
+    z-index: 1; /* 他のセルが relative だと上に来てしまうので、 z-index を少し上げておく */
 
-  /* スクロール時にborderが表示されない問題への対処 */
-  border-inline: none;
-}
-[data-table-sticky~='col'] tr > :first-child:not(._nofix)::before {
-  content: '';
-  position: absolute;
-  inset: 0 calc(var(--bdw-x) * -1) 0 0;
-  border-block: none;
-}
+    /* スクロール時にborderが表示されない問題への対処 */
+    border-inline: none;
+  }
+  [data-table-sticky~='col'] tr > :first-child:not(._nofix)::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(var(--bdw-x) * -1) 0 0;
+    border-block: none;
+  }
 
-[data-table-sticky~='head'] > thead {
-  position: sticky;
-  top: 0;
-  z-index: 2; /* fix1st + 1 */
+  [data-table-sticky~='head'] > thead {
+    position: sticky;
+    top: 0;
+    z-index: 2; /* fix1st + 1 */
 
-  /* スクロール時にborderが表示されない問題への対処 */
-  border-block: none;
-}
+    /* スクロール時にborderが表示されない問題への対処 */
+    border-block: none;
+  }
 
-[data-table-sticky~='head'] > thead::before {
-  content: '';
-  position: absolute;
-  z-index: 2;
-  inset: 0 0 calc(var(--bdw-y) * -0.5) 0;
-  border-block: var(--bdw-y) var(--bds) var(--bdc);
-  border-block-end: var(--_thead-bd-be);
+  [data-table-sticky~='head'] > thead::before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    inset: 0 0 calc(var(--bdw-y) * -0.5) 0;
+    border-block: var(--bdw-y) var(--bds) var(--bdc);
+    border-block-end: var(--_thead-bd-be);
+  }
 }

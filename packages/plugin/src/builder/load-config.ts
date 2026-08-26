@@ -6,6 +6,7 @@
  * - `loadBuildConfigs`: lism-css の default-config / props-full preset / helper と
  *   projectRoot の `lism.config.{js,mjs,ts}` を読み込んでマージする。consumer 環境（インストール済みパッケージ）で実行される前提。
  *   user 設定は jiti（`moduleCache: false`）経由で import し、dev での `lism.config.*` 変更を再評価できるようにする。
+ * - `loadDefaultConfig`: マージ前の default-config だけが要る呼び出し向けの軽量版。
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -117,6 +118,18 @@ export function computeBuildConfigs({ defaultConfig, propsFull, userConfig, objD
   const mainConfig = isFullMode ? fullConfig : (objDeepMerge(base, userConfig) as unknown as BuildConfig);
 
   return { mainConfig, fullConfig, isFullMode };
+}
+
+/**
+ * マージ前の default-config だけを読み込む。
+ *
+ * `loadBuildConfigs()` は user 設定の読み込みと full preset の深いマージ（`fullConfig`）まで必ず走らせるが、
+ * default-config の値しか見ない呼び出し（トークンの既存キー判定など）にはそのどちらも要らない。
+ * dev watch で何度も呼ばれる経路のために、その分を省いた入口を用意している。
+ */
+export async function loadDefaultConfig(): Promise<BuildConfig> {
+  const { defaultConfig } = await loadCoreBuildDeps();
+  return defaultConfig;
 }
 
 export interface LoadBuildConfigsOptions {

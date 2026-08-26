@@ -4,13 +4,19 @@
 @use 'sass:meta';
 
 // レイヤー順序を明示的に宣言（詳細度: 上ほど弱い）
-@layer lism-base, lism-trait, lism-primitive, lism-component, lism-custom, lism-utility;
+@layer lism-base, lism-block, lism-trait, lism-primitive, lism-component, lism-custom, lism-utility;
 
 @layer lism-base {
   // resetは中でも layer定義済み。 lism-base.reset となる
   @include meta.load-css('reset');
 
   @include meta.load-css('base');
+}
+
+/* stylelint-disable-next-line block-no-empty -- ベーススタイルを CSS 側で管理する基礎部品（b--）用レイヤー。コアでは空、ユーザー定義クラスがここに配置される。
+   base 直後（trait / primitive より弱い位置）に置くことで、b-- のベーススタイルに利用者が明示的に足したクラス
+   （is--* / has--* / l--* 等）が常に勝つようにする（例: .b--button の display に .l--grid の display: grid が勝つ）。 */
+@layer lism-block {
 }
 
 // ユーザーが明示的に宣言する trait クラス（is--* / has--*）用レイヤー。
@@ -29,7 +35,7 @@
   }
 }
 
-/* stylelint-disable-next-line block-no-empty -- BEM 構造を持つ UI コンポーネント（c--）用レイヤー。コアでは空、@lism-css/ui やユーザー定義クラスがここに配置される。 */
+/* stylelint-disable-next-line block-no-empty -- 後方互換用レイヤー（旧 c-- の配置先・@lism-css/ui の旧版が使用）。宣言から消すと既存ユーザー CSS の @layer lism-component が初出扱いで最後尾に再配置され挙動が変わるため残している。 */
 @layer lism-component {
 }
 

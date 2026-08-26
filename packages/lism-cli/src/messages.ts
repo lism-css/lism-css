@@ -7,6 +7,7 @@
  *   - `init.*`   … `lism-cli init` サブコマンド
  *   - `ui.*`     … `lism-cli ui` 配下
  *   - `skill.*`  … `lism-cli skill` 配下
+ *   - `mockup.*` … `lism-cli mockup` 配下
  *   - `config.*` … lism.config.* まわりのエラー・警告
  *   - `common.*` … 汎用
  *
@@ -91,6 +92,12 @@ export const messages = {
   'cli.ui.opt.ref': {
     ja: '取得元の Git ref（ブランチ / タグ / コミット）',
     en: 'Git ref to fetch from (branch / tag / commit)',
+  },
+
+  // mockup
+  'cli.mockup.description': {
+    ja: '画面モックアップの案内を表示する（実体は @lism-css/mockup）',
+    en: 'Show guidance for mockups (provided by @lism-css/mockup)',
   },
 
   // skill
@@ -346,6 +353,24 @@ export const messages = {
   'ui.list.total': {
     ja: '合計: {count} コンポーネント',
     en: 'Total: {count} components',
+  },
+
+  // ---------------------------------------------------------------------------
+  // mockup
+  // ---------------------------------------------------------------------------
+  'mockup.guide': {
+    ja:
+      '画面モックアップ機能は別パッケージ @lism-css/mockup が提供します。\n\n' +
+      '  npx @lism-css/mockup init [dir]   … ひな形＋契約説明書の生成\n' +
+      '  npx @lism-css/mockup dev [dir]    … devサーバー起動（ブラウザ確認用）\n' +
+      '  npx @lism-css/mockup check [dir]  … 非対話の検証\n\n' +
+      'インストール済みの環境では bin の lism-mockup でも実行できます。',
+    en:
+      'Mockup features are provided by a separate package, @lism-css/mockup.\n\n' +
+      '  npx @lism-css/mockup init [dir]   ... Generate scaffolding and a contract document\n' +
+      '  npx @lism-css/mockup dev [dir]    ... Start the dev server (for browser preview)\n' +
+      '  npx @lism-css/mockup check [dir]  ... Run non-interactive checks\n\n' +
+      'If installed, you can also run it via the lism-mockup bin.',
   },
 
   // ---------------------------------------------------------------------------

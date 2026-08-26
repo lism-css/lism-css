@@ -1,0 +1,10 @@
+# Lism CSS は @layer / @container / color-mix() などのモダン CSS を前提とするため、
+# autoprefixer が参照するサポート対象ブラウザをここで明示する。
+#
+# 未指定だと browserslist のデフォルト（> 0.5%, last 2 versions, Firefox ESR, not dead）が使われ、
+# 更新の止まった KaiOS Browser 2.5（Firefox 48 相当）などが対象に含まれてしまう。
+# その結果、現行ブラウザでは不要な -moz-column-gap（Firefox 74 で削除済み）などが出力される。
+#
+# 下限は @layer 対応ブラウザ（Chrome 99+ / Firefox 97+ / Safari 15.4+ / Edge 99+）。
+supports css-cascade-layers
+not dead

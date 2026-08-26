@@ -8,17 +8,5 @@ type BadgeOwnProps = { variant?: string };
 
 export function Badge<T extends ElementType = 'span'>(props: LismComponentProps<T> & BadgeOwnProps) {
   const { variant, className, ...rest } = props as { variant?: string; className?: string } & Record<string, unknown>;
-  return (
-    <Lism
-      as="span"
-      d="inline-flex"
-      fz="xs"
-      hl="xs"
-      py="5"
-      px="10"
-      bdrs="10"
-      className={atts(className, buildModifierClass('c--badge', { variant }))}
-      {...rest}
-    />
-  );
+  return <Lism as="span" className={atts(className, buildModifierClass('b--badge', { variant }))} {...rest} />;
 }

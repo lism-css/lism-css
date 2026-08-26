@@ -23,7 +23,7 @@ import path from 'node:path';
 import { generateCssToDir } from './generated-css';
 import { buildWebpackAlias, buildTurbopackAlias } from './webpack-alias';
 import { syncLismEnvDts } from './typegen';
-import { watchLismConfig } from './config-watcher';
+import { watchLismConfig, type ConfigWatcher, type WatchLismConfigOptions } from './config-watcher';
 
 /** Next.js の dev サーバーフェーズ識別子（`next/constants` の PHASE_DEVELOPMENT_SERVER。next 非依存にするため直書き）。 */
 const PHASE_DEVELOPMENT_SERVER = 'phase-development-server';
@@ -41,6 +41,11 @@ export interface WithLismOptions {
   typegen?: boolean;
   /** full.css / full_no_layer.css も生成するか（既定: false。purge 併用時に有効化）。 */
   full?: boolean;
+  /**
+   * lism.config 監視の実装。未指定時は `watchLismConfig`。
+   * テストから差し替えて、実 `fs.watch` を介さず `onChange` を直接発火するために使う。
+   */
+  watchConfig?: (opts: WatchLismConfigOptions) => ConfigWatcher;
 }
 
 /** Turbopack 設定の最小構造（next 非依存。実際の型は `T` 側に従う）。 */
@@ -82,7 +87,8 @@ export function withLism<T extends Record<string, any>>(nextConfig?: T, opts?: W
     if (phase === PHASE_DEVELOPMENT_SERVER && generated.userConfigPath && !watchedConfigs.has(generated.userConfigPath)) {
       const userConfigPath = generated.userConfigPath;
       watchedConfigs.add(userConfigPath);
-      watchLismConfig({
+      const watch = opts?.watchConfig ?? watchLismConfig;
+      watch({
         configPath: userConfigPath,
         onChange: async () => {
           await generateCssToDir({ projectRoot, outDir, configPath: opts?.configPath, full: opts?.full ?? false, minify: false });
@@ -114,7 +120,7 @@ export function withLism<T extends Record<string, any>>(nextConfig?: T, opts?: W
         c.resolve.alias = { ...c.resolve.alias, ...wpAlias };
         return c;
       },
-    } as T;
+    };
   };
 }
 

@@ -97,6 +97,36 @@ export const astroRedirects: AstroRedirects = {
   // purge -> customize/purge 移動（Customize セクション化に伴う統合）
   '/docs/purge/': '/docs/customize/purge/',
   '/en/docs/purge/': '/en/docs/customize/purge/',
+  // Chat をパッケージから削除し、Block Examples の作例ページへ転換（#557）
+  '/ui/chat/': '/ui/block-examples/chat/',
+  '/en/ui/chat/': '/en/ui/block-examples/chat/',
+  // ui/examples/* -> ui/components/* へ移動（#557）
+  // draft のまま未公開だったページは公開実績のある URL のみ登録する方針に従い対象外
+  // Banner / Breadcrumb / Card / DividerLabel / Reel / Steps は ui/components/ に残るのでそのまま
+  '/ui/examples/banner/': '/ui/components/banner/',
+  '/ui/examples/breadcrumb/': '/ui/components/breadcrumb/',
+  '/ui/examples/card/': '/ui/components/card/',
+  '/ui/examples/dividerlabel/': '/ui/components/dividerlabel/',
+  '/ui/examples/reel/': '/ui/components/reel/',
+  '/ui/examples/steps/': '/ui/components/steps/',
+  '/en/ui/examples/banner/': '/en/ui/components/banner/',
+  '/en/ui/examples/breadcrumb/': '/en/ui/components/breadcrumb/',
+  '/en/ui/examples/card/': '/en/ui/components/card/',
+  '/en/ui/examples/dividerlabel/': '/en/ui/components/dividerlabel/',
+  '/en/ui/examples/reel/': '/en/ui/components/reel/',
+  '/en/ui/examples/steps/': '/en/ui/components/steps/',
+  // FAQ を patterns/ へ移管（#566）
+  // patterns にはカテゴリ単位のページがないため、一覧ページのカテゴリ見出し（アンカー）へ飛ばす。
+  // #564 で張った ui/examples/* -> ui/components/* のリダイレクトは、連鎖を避けるため最終 URL へ張り直している。
+  '/ui/components/faq/': '/patterns/#faq',
+  // Hero は MDX を draft 化して本番非公開にしたため、作例のある patterns へ誘導する
+  '/ui/components/hero/': '/patterns/#hero',
+  '/ui/examples/faq/': '/patterns/#faq',
+  '/ui/examples/hero/': '/patterns/#hero',
+  '/en/ui/components/faq/': '/en/patterns/#faq',
+  '/en/ui/components/hero/': '/en/patterns/#hero',
+  '/en/ui/examples/faq/': '/en/patterns/#faq',
+  '/en/ui/examples/hero/': '/en/patterns/#hero',
 };
 
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。

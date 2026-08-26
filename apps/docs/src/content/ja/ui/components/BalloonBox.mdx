@@ -1,0 +1,67 @@
+---
+title: 'BalloonBox'
+description: 'Lism CSS で実装するふきだし風装飾ボックスの実装例です。'
+draft: true
+---
+
+import { Grid, Stack, Flex, Decorator, Box, Spacer } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro/DummyText';
+import BalloonBox from '@/components/ex/BalloonBox/index.jsx';
+
+ふきだし風装飾ボックスの作成例を紹介します。
+
+チャットの会話風UI（吹き出しの連続表示）が必要な場合は、[Chat](/ui/block-examples/chat/) の実装例も参照してください。
+
+
+## Source Code
+<Preview>
+  <PreviewCode slot="tab" label="index.jsx">
+    <SrcCode path="src/components/ex/BalloonBox/index.jsx" dir="docs" />
+  </PreviewCode>
+</Preview>
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`variant`| ふきだしの方向を指定できます。`c--balloonBox--{variant}` クラスが出力されます。|
+|`keycolor`| ふきだしの色を指定できます。`u--cbox`も出力されます。|
+
+
+## Usage
+
+
+<Preview>
+  <PreviewTitle>BalloonBox</PreviewTitle>
+  <PreviewArea resize p="20">
+    <BalloonBox variant="left">
+      <DummyText />
+    </BalloonBox>
+    <BalloonBox variant="right" keycolor="blue">
+      <DummyText />
+    </BalloonBox>
+    <BalloonBox variant="top" bdw="2px" keycolor="red">
+      <DummyText />
+    </BalloonBox>
+    <BalloonBox variant="bottom" bgc="text" c="base">
+      <DummyText />
+    </BalloonBox>
+  </PreviewArea>
+  <PreviewCode>
+  ```jsx
+    <BalloonBox variant="left">
+      ロレム・イプサムの座り雨。
+    </BalloonBox>
+    <BalloonBox variant="right" keycolor="blue">
+      ロレム・イプサムの座り雨。
+    </BalloonBox>
+    <BalloonBox variant="top" bdw="2px" keycolor="red">
+      ロレム・イプサムの座り雨。
+    </BalloonBox>
+    <BalloonBox variant="bottom" bgc="text" c="base">
+      ロレム・イプサムの座り雨。
+    </BalloonBox>
+  ```
+  </PreviewCode>
+</Preview>
+

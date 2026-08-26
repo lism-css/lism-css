@@ -8,8 +8,9 @@ type TabPanelProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
   index?: number;
 };
 
+// tabId / index は Root から渡される。単体利用時のフォールバックとしてプレースホルダーを使う（Accordion の __LISM_ACC_ID__ と同様）
 export default function TabPanel<T extends ElementType = 'div'>({
-  tabId = 'tab',
+  tabId = '__LISM_TAB_ID__',
   isActive = false,
   index = 0,
   className,
@@ -21,8 +22,10 @@ export default function TabPanel<T extends ElementType = 'div'>({
     <Lism
       id={controlId}
       role="tabpanel"
-      aria-hidden={isActive ? 'false' : 'true'}
-      className={atts(className, 'c--tabs_panel')}
+      aria-labelledby={`${controlId}-tab`}
+      tabIndex={0}
+      hidden={!isActive}
+      className={atts(className, 'b--tabs_panel')}
       {...(props as object)}
     />
   );

@@ -7,19 +7,22 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
 
 アバター画像用のコンポーネントです。
 
+
+## Overview
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
   </PreviewArea>
-  <PreviewCode slot="tab" label="React / Astro">
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Avatar size="4rem" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" />
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--avatar l--frame -ar:1/1 -w -bdrs:99" style="--w:4rem">
+    <div class="b--avatar l--frame -w" style="--w:4rem">
       <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async">
     </div>
     ```
@@ -27,28 +30,34 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
 </Preview>
 
 
+## Styles
+
+Avatar のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Avatar/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar) で公開しています。
+:::
+
+
 ## How to use
 
-`@lism-css/ui` パッケージで`Avatar`(`c--avatar`)として提供しています。
+`@lism-css/ui` パッケージで`Avatar`(`b--avatar`)として提供しています。
 
 ### Import
 
-<ImportPackage component="Avatar" packageName="@lism-css/ui" />
+<ImportPackage component="Avatar" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
 
 | プロパティ | 説明 |
 |---|---|
-|`size`| アバターのサイズを指定します。|
+|`size`| アバターのサイズを指定します。初期値:`"2em"`|
 |`src`| アバター画像のパス |
 |`alt`| altテキスト |
 {/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
-
-
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar) で公開しています。
 
 
 ## Examples
@@ -69,10 +78,10 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--avatar l--frame -ar:1/1 -w -bdrs:99" style="--w: 4rem">
+    <div class="b--avatar l--frame -w" style="--w: 4rem">
       <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async" />
     </div>
-    <div class="c--avatar l--frame -ar:1/1 -w -bdrs:99 -bd -bxsh:20" style="--w: 5rem; --bdw: 2px; --bdc: var(--base)">
+    <div class="b--avatar l--frame -w -bd -bxsh:20" style="--w: 5rem; --bdw: 2px; --bdc: var(--base)">
       <img src="https://cdn.lism-css.com/img/avatar/a-02.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async" />
     </div>
     ```
@@ -80,7 +89,7 @@ import { Avatar } from '@lism-css/ui/astro/Avatar';
 </Preview>
 
 
-## Only lism-css
+## Without @lism-css/ui
 
 @lism-css/uiを使用せずに、lism-css のみで Avatar を構築するコード例を紹介します。
 
