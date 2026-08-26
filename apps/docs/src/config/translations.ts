@@ -12,7 +12,8 @@ type TranslationKeys = {
   toc: 'title' | 'open';
   search: 'title' | 'devMessage';
   header: 'openMenu';
-  themeSwitch: 'ariaLabel';
+  main: 'ariaLabel';
+  themeSwitch: 'ariaLabel' | 'system' | 'light' | 'dark';
   langSelect: 'ariaLabel' | 'menuAriaLabel';
   share: 'share' | 'copy' | 'copied';
   copyCode: 'copy' | 'copied';
@@ -46,8 +47,14 @@ export const translations: Record<LangCode, UITranslations> = {
     header: {
       openMenu: 'メニューを開く',
     },
+    main: {
+      ariaLabel: 'メインコンテンツ',
+    },
     themeSwitch: {
       ariaLabel: 'カラーテーマを切り替える',
+      system: 'システムに従う',
+      light: 'ライトモード',
+      dark: 'ダークモード',
     },
     langSelect: {
       ariaLabel: '言語を選択',
@@ -63,8 +70,8 @@ export const translations: Record<LangCode, UITranslations> = {
       copied: 'コードをコピーしました',
     },
     postNav: {
-      prev: '← 前の記事',
-      next: '次の記事 →',
+      prev: '前の記事',
+      next: '次の記事',
       ariaLabel: '記事ナビゲーション',
     },
     translationNotice: {
@@ -95,8 +102,14 @@ export const translations: Record<LangCode, UITranslations> = {
     header: {
       openMenu: 'Open menu',
     },
+    main: {
+      ariaLabel: 'Main content',
+    },
     themeSwitch: {
       ariaLabel: 'Toggle color theme',
+      system: 'Follow system',
+      light: 'Light mode',
+      dark: 'Dark mode',
     },
     langSelect: {
       ariaLabel: 'Select language',
@@ -112,8 +125,8 @@ export const translations: Record<LangCode, UITranslations> = {
       copied: 'Code copied!',
     },
     postNav: {
-      prev: '← Previous',
-      next: 'Next →',
+      prev: 'Previous',
+      next: 'Next',
       ariaLabel: 'Post navigation',
     },
     translationNotice: {

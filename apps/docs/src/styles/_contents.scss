@@ -30,25 +30,43 @@
 /* -------------------------- */
 /* 見出しデザイン */
 /* -------------------------- */
-// .articleTitle {}
-
 :is(.h2, .articleContent > h2) {
-  position: relative;
-  padding-left: var(--gutter--base);
-  &::after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: calc(50% - 0.5lh);
-    margin-block: auto;
-    // left: calc(0px - var(--gutter--base));
-    left: 0;
-    width: 12px;
-    height: 1lh;
-    background: linear-gradient(150deg in oklch, var(--green), var(--blue), var(--purple), var(--pink));
-    filter: brightness(120%);
-    clip-path: polygon(0 0, 0% 100%, calc(100% - 6px) 100%, 100% 50%, calc(100% - 6px) 0);
-    z-index: 1;
-    opacity: 0.6;
+  color: var(--gray-hi-c);
+  font-size: var(--fz--3xl);
+  font-weight: 700;
+  line-height: 1.75;
+  letter-spacing: calc(var(--lts--tight) * -1);
+  // position: relative;
+  // padding-left: var(--gutter--base);
+  // &::after {
+  //   content: '';
+  //   display: block;
+  //   position: absolute;
+  //   top: calc(50% - 0.5lh);
+  //   margin-block: auto;
+  //   // left: calc(0px - var(--gutter--base));
+  //   left: 0;
+  //   width: 12px;
+  //   height: 1lh;
+  //   background: linear-gradient(150deg in oklch, var(--green), var(--blue), var(--purple), var(--pink));
+  //   filter: brightness(120%);
+  //   clip-path: polygon(0 0, 0% 100%, calc(100% - 6px) 100%, 100% 50%, calc(100% - 6px) 0);
+  //   z-index: 1;
+  //   opacity: 0.6;
+  // }
+}
+:is(.h3, .articleContent > h3) {
+  color: var(--gray-hi-c);
+  font-size: 1.3125rem;
+  font-weight: 700;
+  line-height: 1.75;
+}
+
+/* -------------------------- */
+/* リストデザイン */
+/* -------------------------- */
+.articleContent > :is(ul, ol) {
+  li + li {
+    margin-block-start: var(--s15);
   }
 }

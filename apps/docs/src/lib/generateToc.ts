@@ -4,7 +4,7 @@ export interface TocItem extends MarkdownHeading {
   children: TocItem[];
 }
 
-export const PAGE_TITLE_ID = '';
+export const PAGE_TITLE_ID = '_top';
 const PAGE_TOP_TITLE = 'Top';
 const MIN_H_LEVEL = 2;
 const MAX_H_LEVEL = 3;

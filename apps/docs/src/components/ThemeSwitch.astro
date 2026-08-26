@@ -1,47 +1,122 @@
 ---
-import { Center, Icon } from 'lism-css/astro';
+import { Icon, Flex, Lism } from 'lism-css/astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 
 // 現在のURLから言語を取得
 const lang = getLangFromUrl(Astro.url);
 const themeSwitch = t(lang, 'themeSwitch');
+
+const themeModes = [
+  {
+    id: 'system',
+    label: themeSwitch.system,
+    iconPath: `
+      <path d="M13.334 2H2.66732C1.93094 2 1.33398 2.59695 1.33398 3.33333V10C1.33398 10.7364 1.93094 11.3333 2.66732 11.3333H13.334C14.0704 11.3333 14.6673 10.7364 14.6673 10V3.33333C14.6673 2.59695 14.0704 2 13.334 2Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M5.33398 14H10.6673" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M8 11.3335V14.0002" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+    `,
+  },
+  {
+    id: 'light',
+    label: themeSwitch.light,
+    iconPath: `
+      <g clip-path="url(#clip0_5430_1751)">
+        <path d="M7.99935 11.3332C9.8403 11.3332 11.3327 9.84079 11.3327 7.99984C11.3327 6.15889 9.8403 4.6665 7.99935 4.6665C6.1584 4.6665 4.66602 6.15889 4.66602 7.99984C4.66602 9.84079 6.1584 11.3332 7.99935 11.3332Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M8 0.666504V1.99984" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M8 14V15.3333" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M2.8125 2.81348L3.75917 3.76014" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M12.2402 12.2402L13.1869 13.1869" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M0.666016 8H1.99935" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M14 8H15.3333" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M2.8125 13.1869L3.75917 12.2402" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M12.2402 3.76014L13.1869 2.81348" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </g>
+      <defs>
+        <clipPath id="clip0_5430_1751"><rect width="16" height="16" fill="white"></rect></clipPath>
+      </defs>
+    `,
+  },
+  {
+    id: 'dark',
+    label: themeSwitch.dark,
+    iconPath: `
+      <path d="M13.9999 8.52667C13.8951 9.66147 13.4692 10.7429 12.7721 11.6445C12.075 12.5461 11.1356 13.2305 10.0637 13.6177C8.99188 14.0049 7.83192 14.0787 6.7196 13.8307C5.60728 13.5827 4.5886 13.023 3.78275 12.2172C2.97691 11.4113 2.41723 10.3927 2.16921 9.28033C1.92118 8.16801 1.99508 7.00806 2.38224 5.9362C2.7694 4.86434 3.45382 3.92491 4.35541 3.22784C5.257 2.53076 6.33846 2.10487 7.47327 2C6.80888 2.89884 6.48917 4.0063 6.57229 5.12094C6.65541 6.23559 7.13584 7.28337 7.9262 8.07373C8.71656 8.86409 9.76435 9.34452 10.879 9.42764C11.9936 9.51077 13.1011 9.19106 13.9999 8.52667Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+    `,
+  },
+];
 ---
 
-<Center as="button" type="button" class="c--themeSwitch" p="10" bd bgc="base" hov={{ bgc: 'base-2' }} aria-label={themeSwitch.ariaLabel}>
-  <Icon class="c--themeSwitch_icon -light" fz="l" viewBox="0 0 256 256">
-    <path
-      d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"
-    ></path>
-  </Icon>
-  <Icon class="c--themeSwitch_icon -dark" fz="l" viewBox="0 0 256 256">
-    <path
-      d="M240,96a8,8,0,0,1-8,8H216v16a8,8,0,0,1-16,0V104H184a8,8,0,0,1,0-16h16V72a8,8,0,0,1,16,0V88h16A8,8,0,0,1,240,96ZM144,56h8v8a8,8,0,0,0,16,0V56h8a8,8,0,0,0,0-16h-8V32a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16Zm72.77,97a8,8,0,0,1,1.43,8A96,96,0,1,1,95.07,37.8a8,8,0,0,1,10.6,9.06A88.07,88.07,0,0,0,209.14,150.33,8,8,0,0,1,216.77,153Zm-19.39,14.88c-1.79.09-3.59.14-5.38.14A104.11,104.11,0,0,1,88,64c0-1.79,0-3.59.14-5.38A80,80,0,1,0,197.38,167.86Z"
-    ></path>
-  </Icon>
-</Center>
+<Flex
+  jc="center"
+  ai="center"
+  p="0.1875rem"
+  bgc="var(--themeModeSwitch-bgc)"
+  bdrs="var(--bdrs--15)"
+  w="fit-content"
+  class="c--themeModeSwitch"
+  role="radiogroup"
+  aria-label={themeSwitch.ariaLabel}
+>
+  {
+    themeModes.map((mode) => (
+      <Lism
+        as="button"
+        type="button"
+        role="radio"
+        aria-checked="false"
+        p="0.375rem"
+        h="1.75rem"
+        bd="none"
+        bgc="transparent"
+        class="c--themeModeSwitch_btn"
+        aria-label={mode.label}
+        data-theme-mode={mode.id}
+      >
+        <Icon viewBox="0 0 16 16" size="var(--s20)" fill="none" d="block" set:html={mode.iconPath} />
+      </Lism>
+    ))
+  }
+</Flex>
 
 <style>
-  .c--themeSwitch {
+  .c--themeModeSwitch_btn {
     cursor: pointer;
+    border-radius: 0.25rem;
+    color: var(--gray-lo-c);
   }
-  .c--themeSwitch_icon {
-    display: none;
-  }
-  :global([data-theme='light']) .c--themeSwitch_icon.-light {
-    display: block;
-  }
-  :global([data-theme='dark']) .c--themeSwitch_icon.-dark {
-    display: block;
+  :global(html[data-theme-mode='system']) .c--themeModeSwitch_btn[data-theme-mode='system'],
+  :global(html[data-theme-mode='light']) .c--themeModeSwitch_btn[data-theme-mode='light'],
+  :global(html[data-theme-mode='dark']) .c--themeModeSwitch_btn[data-theme-mode='dark'] {
+    background-color: var(--themeModeSwitch-btn-bg);
+    color: var(--themeModeSwitch-btn);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
   }
 </style>
 
 <script>
-  document.querySelectorAll('.c--themeSwitch').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+  function syncThemeModeChecked() {
+    const mode = document.documentElement.getAttribute('data-theme-mode') || 'system';
+    document.querySelectorAll<HTMLButtonElement>('.c--themeModeSwitch_btn').forEach((btn) => {
+      btn.setAttribute('aria-checked', btn.dataset.themeMode === mode ? 'true' : 'false');
     });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.c--themeModeSwitch_btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.themeMode!;
+      const theme = mode === 'light' || mode === 'dark' ? mode : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-theme-mode', mode);
+      localStorage.setItem('theme', mode);
+      syncThemeModeChecked();
+    });
+  });
+
+  syncThemeModeChecked();
+
+  // システムモード選択中は、OS側のテーマ変更にリアルタイムで追従する
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (document.documentElement.getAttribute('data-theme-mode') !== 'system') return;
+    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
   });
 </script>

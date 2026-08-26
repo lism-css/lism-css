@@ -6,8 +6,9 @@
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
-import { Lism, Flow, Heading } from 'lism-css/astro';
+import { Lism, Flow } from 'lism-css/astro';
 import PostNavigation from '@parts/PostNavigation.astro';
+import ArticleTitle from '@parts/ArticleTitle.astro';
 import { getPostPathsForRoot } from '@/lib/pageHelpers';
 import { type LangCode } from '@/lib/i18n';
 import { render } from 'astro:content';
@@ -53,7 +54,7 @@ const ogImage = `/docs/og/${entry.id}.png`;
     }
 
     {/* 記事タイトル */}
-    <Heading level="1" class="articleTitle">{entry.data.title}</Heading>
+    <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
 
     {/* 記事本文 */}
     <Flow class="articleContent" mbs="40">

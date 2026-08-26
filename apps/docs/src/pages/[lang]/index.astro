@@ -170,7 +170,7 @@ const presets = [
 <SimpleLayout title={siteConfig.name} description="The official documentation site for Lism CSS." lang={lang} schemaType="HomePage" excludeFromSearch>
   {/* 背景動画：スクロールしても固定表示 */}
   {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
-  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" ov="hidden" bgc="base" inert aria-hidden="true" style={{ mixBlendMode: 'darken' }}>
+  <Box class="c--kvVideoBg" pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true">
     <Frame h="100%" ar="16/9">
       <video autoplay loop muted playsinline>
         <source src="/video/video-kv.mp4" type="video/mp4" />
@@ -375,11 +375,39 @@ const presets = [
     --fz-mol: 8;
   }
 
+  .c--kvVideoBg {
+    mix-blend-mode: darken;
+
+    :global([data-theme='dark']) & {
+      mix-blend-mode: lighten;
+    }
+  }
+
   video {
     position: absolute;
     top: 0;
     width: 100%;
     height: 150vh;
     object-fit: cover;
+  }
+
+  .c--kv-search {
+    padding: var(--s10) 0.875rem;
+    font-size: var(--fz--s);
+    width: 100%;
+    height: 100%;
+    border: none;
+    line-height: 1.5;
+    @container (min-width: 800px) {
+      padding-left: var(--s20);
+      font-size: var(--fz--base);
+    }
+  }
+
+  /* 検索トリガーボタン */
+  .c--searchTrigger {
+    box-shadow: var(--bxsh--search-border);
+    background: var(--lightgray-hi);
+    align-self: center;
   }
 </style>

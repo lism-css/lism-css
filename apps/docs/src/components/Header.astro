@@ -1,13 +1,19 @@
 ---
-import { Flex, Cluster, Container, Icon, Lism, Group, Link } from 'lism-css/astro';
+import { Flex, Cluster, Container, Icon, Lism, Group, Link, Inline } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 import { siteConfig } from '@/config/site';
 import SearchModal from './SearchModal.astro';
 import SiteNav from './SiteNav.astro';
 import SNSLinks from './SNSLinks.astro';
-import LanguageSelect from './LanguageSelect.astro';
+// import LanguageSelect from './LanguageSelect.astro';
 import ThemeSwitch from './ThemeSwitch.astro';
 import { getLangFromUrl, getLocalizedUrl, t } from '@/lib/i18n';
+
+interface Props {
+  hasMobileMenu?: boolean;
+}
+
+const { hasMobileMenu = true } = Astro.props;
 
 // 現在の言語を取得
 const currentLang = getLangFromUrl(Astro.url);
@@ -15,12 +21,12 @@ const currentLang = getLangFromUrl(Astro.url);
 const homeUrl = getLocalizedUrl('/', currentLang);
 // 翻訳テキスト
 const searchText = t(currentLang, 'search');
-// const headerText = t(currentLang, 'header');
+const headerText = t(currentLang, 'header');
 ---
 
-<Container as="header" class="z--header" layout="flex" ai="center">
+<Container as="header" class:list={['z--header', hasMobileMenu && '-subPage']} layout="flex" ai="center">
   {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
-  <Flex ai="center" w="100%" mx="auto" max-w={{ base: 'fit-content', md: '28.5rem' }} p="20" class="c--shadow-box">
+  <Flex ai="center" w="100%" mx="auto" p="20" class="c--shadow-box">
     <Group me="auto">
       <Link href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none">
         <img class="u--onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
@@ -53,7 +59,7 @@ const searchText = t(currentLang, 'search');
       py={{ base: '0', md: '5' }}
       ms={{ base: '15', md: '20' }}
       bd="none"
-      bgc="transparent"
+      bgc="base-2"
       g="5"
       bdrs="10"
       hov="-c"
@@ -77,38 +83,50 @@ const searchText = t(currentLang, 'search');
 
     <SearchModal />
 
-    {/* ハンバーガーメニューボタン（モバイルのみ表示） */}
-    <!-- <Modal.OpenBtn
-      modalId="site-nav"
-      class="c--menuTrigger l--center set--plain -bd -bdrs:10"
-      d={['grid', null, 'none']}
-      bgc="base"
-      bdrs="10"
-      hov={{ bgc: 'base-2' }}
-      aria-labelledby="menu-open-label"
-    >
-      <Icon icon="menu" fz={['xl', null, 'l']} viewBox="0 0 256 256">
-        <path
-          d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z"
-        ></path>
-      </Icon>
-      <Inline d="none" id="menu-open-label">{headerText.openMenu}</Inline>
-    </Modal.OpenBtn> -->
+    {/* ハンバーガーメニューボタン（モバイルのみ表示・hasMobileMenu が false なら出力しない） */}
+    {
+      hasMobileMenu && (
+        <Modal.OpenBtn
+          modalId="site-nav"
+          class="c--menuTrigger l--center set--plain"
+          d={['grid', null, 'none']}
+          w="1.75rem"
+          min-h="1.75rem"
+          bdrs="10"
+          ms="10"
+          hov={{ bgc: 'base-2' }}
+          aria-labelledby="menu-open-label"
+        >
+          {/* <Icon icon="menu" fz={['xl', null, 'l']} viewBox="0 0 256 256">
+            <path d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z" />
+          </Icon> */}
+          <Icon icon="menu" fz={['xl', null, 'l']} />
+          <Inline d="none" id="menu-open-label">
+            {headerText.openMenu}
+          </Inline>
+        </Modal.OpenBtn>
+      )
+    }
   </Flex>
 
-  <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
-    <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="20" pbs="30" bdrs="20" bxsh="40">
-      <Modal.CloseBtn modalId="site-nav" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" bxsh="10" bdrs="10" bgc="base-2" />
-      <Modal.Body layout="stack" g="40" px="30" pbs="40" ov-y="auto" z="0">
-        <SiteNav />
-      </Modal.Body>
-      <Cluster g="10" fz="l" bd-t pbs="20" px="30">
-        <SNSLinks />
-        <LanguageSelect />
-        <ThemeSwitch />
-      </Cluster>
-    </Modal.Inner>
-  </Modal.Root>
+  {/* モーダル（モバイルのみ表示・hasMobileMenu が false 出力しない） */}
+  {
+    hasMobileMenu && (
+      <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
+        <Modal.Inner class="c--siteNavModal_inner" layout="stack" g="0" w="100%" max-h="100%" pos="relative" py="20" pbs="30" bdrs="20" bgc="base">
+          <Modal.CloseBtn modalId="site-nav" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" bxsh="10" bdrs="10" bgc="base-2" />
+          <Modal.Body class="c--siteNavModal_body" layout="stack" fx="1" min-h="0" px="30" pbs="40" pbe="0" ov-y="auto" z="0">
+            <SiteNav />
+          </Modal.Body>
+          <Cluster class="c--siteNavModal_footer" g="10" fz="l" bd-t pbs="20" px="30">
+            <SNSLinks />
+            {/* <LanguageSelect /> */}
+            <ThemeSwitch />
+          </Cluster>
+        </Modal.Inner>
+      </Modal.Root>
+    )
+  }
 </Container>
 <style>
   /* logo */
@@ -144,21 +162,45 @@ const searchText = t(currentLang, 'search');
   }
 
   /* 検索トリガーボタン */
-  .c--menuTrigger {
+  /* .c--menuTrigger {
     padding: 0.5em;
-  }
+  } */
   .c--searchTrigger {
     @container (min-width: 800px) {
       & {
         box-shadow: var(--bxsh--search-border);
-        background: var(--search-button-c);
+        background: var(--searchBtn-bg);
+      }
+    }
+
+    .-subPage & {
+      box-shadow: var(--bxsh--search-border);
+      background: var(--searchBtn-bg);
+
+      @container (max-width: 799px) {
+        padding-block: 6px;
+        padding-inline: var(--s10);
+      }
+
+      .a--icon {
+        font-size: var(--s20);
       }
     }
   }
 
-  .c--searchTrigger_shortcut {
-    /* box-shadow: none; */
-    /* translate: unset; */
-    /* margin-inline-end: 2px; */
+  /* ハンバーガーメニュー（site-nav モーダル） */
+  :global(#site-nav.c--modal) .c--siteNavModal_inner {
+    background-color: var(--base);
+    box-shadow: var(--bxsh--base);
+  }
+
+  :global(#site-nav.c--modal) .c--siteNavModal_body {
+    /* Modal.Body の flex 子としてスクロール可能にする */
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(#site-nav.c--modal) .c--siteNavModal_footer {
+    flex-shrink: 0;
   }
 </style>
