@@ -9,13 +9,9 @@ astro-code: Astro の <Code>コンポーネント
 
 :root {
   --codeBlock-bgc: hsl(200, 18%, 95%) !important;
-  --codeBlock-fg: #24292e;
-  --codeBlock-tab-bg: rgb(0 0 0 / 0.08);
   --codeBlock-bdrs: var(--bdrs--10);
   --codeBlock-maxH: 32rem;
   --codeBlockCopy-bgc: color-mix(in srgb, var(--codeBlock-bgc), var(--text) 20%);
-  --codeBlockCopy-fgc: var(--codeBlock-fg);
-  --codeBlockCopy-bdr: var(--codeBlock-fg);
 
   --codeBlock-mark-c: rgba(138, 145, 150, 0.1);
   --codeBlock-mark-bgc: rgba(147, 153, 155, 0.15);
@@ -29,8 +25,6 @@ astro-code: Astro の <Code>コンポーネント
 }
 :root[data-theme='dark'] {
   --codeBlock-bgc: #24292e !important;
-  --codeBlock-fg: #f8f8f2;
-  --codeBlock-tab-bg: rgb(255 255 255 / 0.2);
 
   /* Preview コンポーネント用 */
   // --lsdoc-codeBlock-bgc: hsl(200, 12%, 12%);
@@ -260,7 +254,6 @@ pre {
       --ec-brdWd: 1px;
       --ec-frm-inlBtnBrdOpa: 0;
       --ec-frm-inlBtnBg: var(--codeBlockCopy-bgc);
-      --ec-frm-inlBtnFg: var(--codeBlockCopy-fgc);
       --ec-frm-inlBtnBrd: transparent;
       --ec-frm-copyIcon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='1em' height='1em' aria-hidden='true'><rect x='128' y='128' width='336' height='336' rx='57' ry='57' fill='none' stroke='currentColor' stroke-linejoin='round' stroke-width='32'></rect><path d='M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'></path></svg>");
       &:hover,
