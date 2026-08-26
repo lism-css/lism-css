@@ -148,7 +148,7 @@ const presets = [
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="HomePage" excludeFromSearch>
   {/* 背景動画：スクロールしても固定表示 */}
   {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
-  <Box pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true" style={{ mixBlendMode: 'darken' }}>
+  <Box class="c--kvVideoBg" pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true">
     <Frame h="100%" ar="16/9">
       <video autoplay loop muted playsinline>
         <source src="/video/video-kv.mp4" type="video/mp4" />
@@ -356,6 +356,14 @@ const presets = [
 </SimpleLayout>
 
 <style>
+  .c--kvVideoBg {
+    mix-blend-mode: darken;
+
+    :global([data-theme='dark']) & {
+      mix-blend-mode: lighten;
+    }
+  }
+
   video {
     position: absolute;
     top: 0;

@@ -170,7 +170,7 @@ const presets = [
 <SimpleLayout title={siteConfig.name} description="The official documentation site for Lism CSS." lang={lang} schemaType="HomePage" excludeFromSearch>
   {/* 背景動画：スクロールしても固定表示 */}
   {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
-  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" ov="hidden" bgc="base" inert aria-hidden="true" style={{ mixBlendMode: 'darken' }}>
+  <Box class="c--kvVideoBg" pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true">
     <Frame h="100%" ar="16/9">
       <video autoplay loop muted playsinline>
         <source src="/video/video-kv.mp4" type="video/mp4" />
@@ -373,6 +373,14 @@ const presets = [
   /* トップページは日本語版とフォントスケールを統一（_base.scss の html[lang='en'] { --fz-mol: 7 } を上書き） */
   :global(html) {
     --fz-mol: 8;
+  }
+
+  .c--kvVideoBg {
+    mix-blend-mode: darken;
+
+    :global([data-theme='dark']) & {
+      mix-blend-mode: lighten;
+    }
   }
 
   video {
