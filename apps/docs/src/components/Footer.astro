@@ -2,6 +2,7 @@
 import { Stack, Lism, Text } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
 import SNSLinks from '@/components/SNSLinks.astro';
+import ThemeSwitch from '@/components/ThemeSwitch.astro';
 ---
 
 <Lism as="footer" class="z--footer" mbs="auto" pt="5.125rem" pb="35" {...Astro.props}>
@@ -9,7 +10,8 @@ import SNSLinks from '@/components/SNSLinks.astro';
     <!-- <Text ta="center">
 			Powered by <a href="https://lism-css.com">Lism CSS</a>
 		</Text> -->
-    <SNSLinks icons={['github', 'discord']} style={{ '--snsLinks-space': 'var(--s15)' }} />
+    <ThemeSwitch />
+    <SNSLinks icons={['github', 'discord']} mt="5" style={{ '--snsLinks-space': 'var(--s15)' }} />
     <Text ta="center" translate="no" lh="1.5" fz={{ base: 's', md: 'base' }}> &copy; 2026 {siteConfig.name}. </Text>
   </Stack>
 </Lism>
