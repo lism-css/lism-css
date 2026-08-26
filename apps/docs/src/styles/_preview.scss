@@ -112,22 +112,6 @@
   &.c--tabs {
     gap: 0 !important;
   }
-
-  .c--tabs_list {
-    /* Memo: ov-x='auto' の時に margin がネガティブだと崩れるので、box-shadowで表現する。 */
-    box-shadow: inset 0 -1px 0 var(--codeBlock-fg);
-    padding: var(--s15);
-  }
-  .c--tabs_tab {
-    min-width: var(--s50);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    line-height: 1.25;
-    padding: var(--s5) var(--s10);
-    border-radius: 0.125rem;
-    background: var(--_isSelected, var(--codeBlock-tab-bg));
-    box-shadow: none;
-    color: var(--codeBlock-fg);
-  }
 }
 
 .u--scalePreview {
