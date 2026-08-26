@@ -59,7 +59,7 @@ const tocText = t(lang, 'toc');
     const headingIds = [...headingById.keys()];
     if (headingIds.length === 0) return;
 
-    const mainScrollEl = document.querySelector<HTMLElement>('.z--main');
+    const mainScrollEl = document.querySelector<HTMLElement>('.z--main__scroll');
 
     function setActiveLink(slug: string) {
       tocLinks.forEach((link) => {
@@ -90,7 +90,7 @@ const tocText = t(lang, 'toc');
       setActiveLink(current);
     }
 
-    // ハッシュ先へ .z--main 内をスクロール（リロード時にブラウザ任せだとずれる／動かないことがある）
+    // ハッシュ先へ main スクロール領域内をスクロール（リロード時にブラウザ任せだとずれる／動かないことがある）
     function scrollMainToHash() {
       const hash = decodeURIComponent(location.hash.slice(1));
       if (!hash || !mainScrollEl) return false;

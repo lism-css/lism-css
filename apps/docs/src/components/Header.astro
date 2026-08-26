@@ -113,12 +113,12 @@ const headerText = t(currentLang, 'header');
   {
     hasMobileMenu && (
       <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
-        <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="20" pbs="30" bdrs="20" bxsh="40">
+        <Modal.Inner class="c--siteNavModal_inner" layout="stack" g="0" w="100%" max-h="100%" pos="relative" py="20" pbs="30" bdrs="20" bgc="base">
           <Modal.CloseBtn modalId="site-nav" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" bxsh="10" bdrs="10" bgc="base-2" />
-          <Modal.Body layout="stack" g="40" px="30" pbs="40" ov-y="auto" z="0">
+          <Modal.Body class="c--siteNavModal_body" layout="stack" fx="1" min-h="0" px="30" pbs="40" pbe="0" ov-y="auto" z="0">
             <SiteNav />
           </Modal.Body>
-          <Cluster g="10" fz="l" bd-t pbs="20" px="30">
+          <Cluster class="c--siteNavModal_footer" g="10" fz="l" bd-t pbs="20" px="30">
             <SNSLinks />
             {/* <LanguageSelect /> */}
             <ThemeSwitch />
@@ -186,5 +186,21 @@ const headerText = t(currentLang, 'header');
         font-size: var(--s20);
       }
     }
+  }
+
+  /* ハンバーガーメニュー（site-nav モーダル） */
+  :global(#site-nav.c--modal) .c--siteNavModal_inner {
+    background-color: var(--base);
+    box-shadow: var(--bxsh--base);
+  }
+
+  :global(#site-nav.c--modal) .c--siteNavModal_body {
+    /* Modal.Body の flex 子としてスクロール可能にする */
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(#site-nav.c--modal) .c--siteNavModal_footer {
+    flex-shrink: 0;
   }
 </style>

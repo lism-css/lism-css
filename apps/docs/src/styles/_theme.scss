@@ -98,6 +98,19 @@
     box-shadow: var(--bxsh--base);
   }
 
+  // 角丸 shadow-box 内でスクロール。バーは右端、padding は .c--scroll__inner 側
+  .c--scrollPanel {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    > .c--scroll {
+      flex: 1;
+      min-height: 0;
+    }
+  }
+
   /* トップページのみ半透明＋blur（下層 docs は --base のまま） */
   .p--front .z--header .c--shadow-box {
     background-color: color-mix(in srgb, var(--base), transparent 25%);

@@ -183,8 +183,9 @@ function getPostUrl(slug: string): string {
   }
 
   {/* 通常のナビゲーションセクション */}
-  <Stack class="c--shadow-box" px="20" py="30" fx="1" min-h="0">
-    <Stack class="c--scroll" fx="1" g="30">
+  <Stack class="c--shadow-box c--scrollPanel siteNav_sections" fx="1" min-h="0">
+    <Stack class="c--scroll siteNav_sections_scroll" fx="1" min-h="0">
+      <Stack class="siteNav_sections_inner" g="30">
       {
         sectionItems.map((section) => {
           // セクションラベルを現在の言語で取得
@@ -295,6 +296,7 @@ function getPostUrl(slug: string): string {
           );
         })
       }
+      </Stack>
     </Stack>
   </Stack>
 </Stack>
@@ -319,6 +321,52 @@ function getPostUrl(slug: string): string {
       font-weight: 500;
     }
   }
+
+  .siteNav_sections_inner {
+    padding-block: var(--s30);
+    padding-inline: var(--s20);
+  }
+
+  /* SP モーダル: CSS Docs 含め Modal.Body 全体でスクロール。カード風の面は使わない */
+  :global(.c--modal_body) .siteNav {
+    flex: none;
+    min-height: auto;
+    gap: var(--s30);
+
+    .siteNav_toplinks,
+    .siteNav_sections {
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    .siteNav_toplinks {
+      padding: 0;
+    }
+
+    .siteNav_toplinks_inner {
+      background-color: transparent;
+      border-radius: 0;
+    }
+
+    .siteNav_sections {
+      flex: none !important;
+      min-height: auto !important;
+      overflow: visible !important;
+    }
+
+    .siteNav_sections_scroll,
+    .siteNav_sections_scroll.c--scroll {
+      flex: none !important;
+      min-height: auto !important;
+      overflow: visible !important;
+    }
+
+    .siteNav_sections_inner {
+      padding: 0;
+    }
+  }
+
   .siteNav_list > [data-nested] {
     /* padding-inline-start: var(--s20); */
     padding-inline-start: calc(var(--nestedDepth, 0) * var(--s20));

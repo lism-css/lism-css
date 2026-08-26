@@ -8,7 +8,7 @@
   --toc-w: 240px;
 }
 /* アンカーリンクでジャンプした際、ヘッダーの高さを考慮.
-   下層ページの本文スクロールは .z--main 側。ここはトップページなど document がスクロールする場合用 */
+   下層ページの本文スクロールは .z--main__scroll 側。ここはトップページなど document がスクロールする場合用 */
 html {
   scroll-padding-top: calc(var(--header-h) + 1rem);
   scroll-behavior: smooth;
@@ -72,15 +72,19 @@ html {
   position: sticky;
   top: calc(var(--header-h) + var(--s20));
   height: calc(100svh - var(--header-h) - var(--s30));
-  scroll-padding-top: var(--s40); // main の py="40" 分。ヘッダー高さは含めない
-  scroll-behavior: smooth;
+  overflow: hidden;
 
-  &:focus {
-    outline: none;
-  }
-  &:focus-visible {
-    outline: 2px solid var(--eyebrow-c);
-    outline-offset: -2px;
+  &__scroll {
+    scroll-padding-top: var(--s40); // inner の py="40" 分
+    scroll-behavior: smooth;
+
+    &:focus {
+      outline: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--eyebrow-c);
+      outline-offset: -2px;
+    }
   }
 }
 .z--footer {
