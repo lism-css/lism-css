@@ -5,7 +5,7 @@
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import KvEditor from '@/components/KvEditor/KvEditor.astro';
-import { Stack, Flex, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
+import { Stack, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { siteConfig } from '@/config/site';
 import { getLocalizedUrl, isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
@@ -96,9 +96,6 @@ const features = [
   },
 ];
 
-// 背景ストライプ
-const stripes = Array.from({ length: 50 });
-
 // AIツール連携
 const tools = [
   {
@@ -177,22 +174,7 @@ const presets = [
       </video>
     </Frame>
     <Box pos="absolute" i="0" style={{ backdropFilter: 'blur(80px)' }} />
-    <Box pos="absolute" i="0" style={{ mixBlendMode: 'overlay' }}>
-      <Flex pos="absolute" i="0" jc="center">
-        {
-          stripes.map(() => (
-            <Box
-              w="64px"
-              h="100%"
-              fxsh="0"
-              bd-l
-              bdc="rgba(255, 255, 255, 0.05)"
-              bg="linear-gradient(90deg, rgba(255, 255, 255, 0.30) 0%, rgba(34, 34, 34, 0.30) 60%, rgba(0, 0, 0, 0.30) 70%, rgba(34, 34, 34, 0.30) 80%, rgba(255, 255, 255, 0.30) 100%)"
-            />
-          ))
-        }
-      </Flex>
-    </Box>
+    <Box class="c--kvStripes" pos="absolute" i="0" style={{ mixBlendMode: 'overlay' }} />
   </Box>
   <Lism as="section" isWrapper="l" px="20">
     {
@@ -382,6 +364,22 @@ const presets = [
     :global([data-theme='dark']) & {
       mix-blend-mode: lighten;
     }
+  }
+
+  .c--kvStripes {
+    background-image:
+      linear-gradient(90deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px),
+      linear-gradient(
+        90deg,
+        rgb(255 255 255 / 0.3) 0%,
+        rgb(34 34 34 / 0.3) 60%,
+        rgb(0 0 0 / 0.3) 70%,
+        rgb(34 34 34 / 0.3) 80%,
+        rgb(255 255 255 / 0.3) 100%
+      );
+    background-position: calc(50% + 32px) 0;
+    background-repeat: repeat;
+    background-size: 64px 100%;
   }
 
   video {
