@@ -2,7 +2,22 @@
 // 脅威モデルは self-XSS のみ（入力者 = 閲覧者）なので、
 // スクリプト実行経路になる要素・属性だけを除去する方式で十分とする。
 
-const BANNED_TAGS = new Set(['script', 'style', 'link', 'meta', 'base', 'iframe', 'object', 'embed', 'form']);
+// SMILアニメーション要素（animate等）はhref等の属性を実行時に書き換えて静的チェックを迂回できるため除去する
+const BANNED_TAGS = new Set([
+  'script',
+  'style',
+  'link',
+  'meta',
+  'base',
+  'iframe',
+  'object',
+  'embed',
+  'form',
+  'animate',
+  'animatemotion',
+  'animatetransform',
+  'set',
+]);
 const URL_ATTRS = new Set(['href', 'src', 'srcset', 'xlink:href']);
 
 /** URL値が javascript: 等の危険スキームかどうか（制御文字・空白での偽装も除去して判定） */

@@ -315,7 +315,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 脅威モデルは **self-XSS のみ**（エディターの入力者 = 閲覧者。入力が保存・共有されることはない）。「安全なものだけ許可する」ホワイトリスト方式ではなく、「実行経路になるものだけ除去する」ブラックリスト方式で十分と判断した。`<template>` にパースして:
 
-- 実行経路になる要素を除去: `script, style, link, meta, base, iframe, object, embed, form`
+- 実行経路になる要素を除去: `script, style, link, meta, base, iframe, object, embed, form` と SMIL アニメーション要素（`animate, animateMotion, animateTransform, set`。`href` 等を実行時に書き換えて静的チェックを迂回できるため）
 - `on*` 属性を除去（大文字小文字不問）
 - `href/src/srcset/xlink:href` の `javascript:` / `data:text/html` スキームを除去（U+0000〜U+0020 の制御文字・空白を取り除いて正規化してから判定するので、`java\nscript:` のような偽装も検知する）
 
