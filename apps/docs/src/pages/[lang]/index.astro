@@ -242,9 +242,10 @@ const presets = [
     </Stack>
   </Lism>
 
-  <Lism as="section" isWrapper="l" hasGutter pos="relative">
+  <Lism as="section" isWrapper="l" hasGutter pos="relative" z="1">
     {/* AIツール連携セクション背景画像 */}
     <Group
+      class="c--ai-bg"
       pos="absolute"
       w={{ base: '121.875rem', md: '162.5rem' }}
       l="50%"
@@ -389,6 +390,10 @@ const presets = [
     width: 100%;
     height: 150vh;
     object-fit: cover;
+
+    :global([data-theme='dark']) & {
+      filter: invert(1);
+    }
   }
 
   .c--kv-search {
@@ -409,5 +414,11 @@ const presets = [
     box-shadow: var(--bxsh--search-border);
     background: var(--lightgray-hi);
     align-self: center;
+  }
+
+  .c--ai-bg {
+    :global([data-theme='dark']) & {
+      opacity: 0.2;
+    }
   }
 </style>
