@@ -21,7 +21,7 @@ import Sidebar from '../components/Sidebar.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import FixedToc from '../components/FixedToc.astro';
 // import ShareBtns from '../components/ShareBtns.astro';
-import type { TocItem } from '../lib/generateToc';
+import { PAGE_TITLE_ID, type TocItem } from '../lib/generateToc';
 import type { SchemaType } from '../lib/jsonLd';
 import { Grid, Stack, Container, Box } from 'lism-css/astro';
 
@@ -72,16 +72,11 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         mt="20"
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container
-          as="main"
-          class="c--siteMain c--shadow-box c--scrollPanel"
-          tabindex={-1}
-          aria-label={t(lang, 'main').ariaLabel}
-        >
+        <Container as="main" class="c--siteMain c--shadow-box c--scrollPanel" tabindex={-1} aria-label={t(lang, 'main').ariaLabel}>
           <Box class="c--siteMain_scroll c--scroll" fx="1" min-h="0" tabindex={0} ov-y="auto">
             <Container isWrapper={toc ? true : 'l'} hasGutter py="40">
               {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
-              <span id="_top" class="c--scrollTarget" aria-hidden="true"></span>
+              <span id={PAGE_TITLE_ID} class="c--scrollTarget" aria-hidden="true"></span>
               <slot />
               <Footer />
             </Container>

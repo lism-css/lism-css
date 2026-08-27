@@ -4,6 +4,7 @@ export interface TocItem extends MarkdownHeading {
   children: TocItem[];
 }
 
+// 目次Topリンクと本文先頭の着地点で共有するアンカーID
 export const PAGE_TITLE_ID = '_top';
 const PAGE_TOP_TITLE = 'Top';
 const MIN_H_LEVEL = 2;
