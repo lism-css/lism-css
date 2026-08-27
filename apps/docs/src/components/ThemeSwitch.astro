@@ -63,7 +63,8 @@ const themeModes = [
         as="button"
         type="button"
         role="radio"
-        aria-checked="false"
+        aria-checked={mode.id === 'system' ? 'true' : 'false'}
+        tabindex={mode.id === 'system' ? 0 : -1}
         p="0.375rem"
         h="1.75rem"
         bd="none"
@@ -97,7 +98,9 @@ const themeModes = [
   function syncThemeModeChecked() {
     const mode = document.documentElement.getAttribute('data-theme-mode') || 'system';
     document.querySelectorAll<HTMLButtonElement>('.c--themeModeSwitch_btn').forEach((btn) => {
-      btn.setAttribute('aria-checked', btn.dataset.themeMode === mode ? 'true' : 'false');
+      const selected = btn.dataset.themeMode === mode;
+      btn.setAttribute('aria-checked', selected ? 'true' : 'false');
+      btn.tabIndex = selected ? 0 : -1;
     });
   }
 
@@ -109,6 +112,21 @@ const themeModes = [
       document.documentElement.setAttribute('data-theme-mode', mode);
       localStorage.setItem('theme', mode);
       syncThemeModeChecked();
+    });
+
+    btn.addEventListener('keydown', (e) => {
+      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
+
+      const group = btn.closest('.c--themeModeSwitch');
+      if (!group) return;
+
+      e.preventDefault();
+      const buttons = [...group.querySelectorAll<HTMLButtonElement>('.c--themeModeSwitch_btn')];
+      const direction = e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 1;
+      const nextIndex = (buttons.indexOf(btn) + direction + buttons.length) % buttons.length;
+      const nextButton = buttons[nextIndex]!;
+      nextButton.focus();
+      nextButton.click();
     });
   });
 
