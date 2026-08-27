@@ -27,7 +27,6 @@ const langItemProps = {
   lh: '1.5',
   td: 'none',
   bdrs: 'calc(var(--bdrs--10) - 0.125em)',
-  role: 'menuitem',
 } as const;
 ---
 
@@ -64,7 +63,6 @@ const langItemProps = {
           bd="none"
           bgc="transparent"
           title={langSelectText.ariaLabel}
-          aria-haspopup="menu"
           aria-expanded="false"
           aria-label={langSelectText.ariaLabel}
         >
@@ -103,13 +101,12 @@ const langItemProps = {
           bgc="base"
           bdrs="10"
           bxsh="30"
-          role="menu"
           aria-label={langSelectText.menuAriaLabel}
         >
           {alternateUrls.map(({ lang, url }) => (
-            <ListItem role="none">
+            <ListItem>
               {lang === currentLang ? (
-                <Lism as="span" class="c--langMenu_item -current" c="text-2" o="pp" aria-disabled="true" lang={lang} {...langItemProps}>
+                <Lism as="span" class="c--langMenu_item -current" c="text-2" o="pp" aria-current="true" lang={lang} {...langItemProps}>
                   {getLangLabel(lang)}
                 </Lism>
               ) : (
@@ -205,7 +202,7 @@ const langItemProps = {
 
 <script>
   // 言語切替ドロップダウンのトグル動作
-  document.querySelectorAll('.c--langMenu').forEach((menu) => {
+  document.querySelectorAll<HTMLElement>('.c--langMenu').forEach((menu) => {
     const trigger = menu.querySelector<HTMLButtonElement>('.c--langMenu_trigger');
     const menuList = menu.querySelector('.c--langMenu_menu');
     if (!trigger || !menuList) return;
@@ -235,6 +232,12 @@ const langItemProps = {
     // Escキーで閉じる
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') close();
+    });
+
+    // Tab移動等でフォーカスがメニュー外へ出たら閉じる
+    // （focusout時点ではactiveElementがメニュー内に残っていないため、close()のフォーカス復元は発動しない）
+    menu.addEventListener('focusout', (e) => {
+      if (!menu.contains(e.relatedTarget as Node)) close();
     });
   });
 </script>
