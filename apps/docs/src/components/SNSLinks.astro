@@ -206,12 +206,15 @@ const langItemProps = {
 <script>
   // 言語切替ドロップダウンのトグル動作
   document.querySelectorAll('.c--langMenu').forEach((menu) => {
-    const trigger = menu.querySelector('.c--langMenu_trigger');
-    if (!trigger) return;
+    const trigger = menu.querySelector<HTMLButtonElement>('.c--langMenu_trigger');
+    const menuList = menu.querySelector('.c--langMenu_menu');
+    if (!trigger || !menuList) return;
 
     const close = () => {
+      const shouldRestoreFocus = menu.hasAttribute('data-open') && menuList.contains(document.activeElement);
       menu.removeAttribute('data-open');
       trigger.setAttribute('aria-expanded', 'false');
+      if (shouldRestoreFocus) trigger.focus();
     };
 
     // クリックでメニュー開閉
