@@ -25,7 +25,7 @@ export default {
   // セマンティックカラー
   color: {
     // base: 背景色
-    base: '#fff',
+    base: 'hsl(220 0% 99%)',
     'base-2': 'hsl(220 4% 95%)',
     // text: コンテンツの文字色
     text: 'hsl(220 0% 8%)',
