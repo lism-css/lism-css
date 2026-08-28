@@ -138,6 +138,9 @@
     --kvEditor-text: #e1e4e8; // コード既定色は github-dark に合わせる（ハイライト色は現行維持）
     --kvEditor-text-dim: #bfbfbf;
     --kvEditor-warning: #e3b341; // 警告色（github-dark の yellow 系。致命的でない通知に使う）
+    // ネオンの発光色（AIパネルの orb グラデーション先頭の teal と共通）。
+    // Live Demo トグルの点灯と、反映フラッシュ（.c--kvEditor_lineFlash）で使う
+    --kvEditor-neon: #89f9e1;
 
     // textarea の縮小率（= エディターの見た目のフォントサイズ ÷ 16px）。
     // iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームするため、
@@ -243,8 +246,6 @@
   .c--kvEditor_playToggle {
     // 再生中（playing）は ⏸、停止中（paused）は ▶
     --kvEditor-toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 2.5v11L13.5 8Z'/%3E%3C/svg%3E");
-    // ネオンの発光色（AIパネルの orb グラデーション先頭の teal と共通）
-    --kvEditor-neon: #89f9e1;
 
     display: flex;
     align-items: center;
@@ -384,6 +385,31 @@
     width: max-content;
     min-width: 100%;
     will-change: transform;
+  }
+
+  // ライブループ再生の「反映」フィードバック: ハンク確定の瞬間、書き換えた行の背景を
+  // ネオン色でひと呼吸だけ光らせる（位置決め・属性の付け外しは editor.ts の flashLines。
+  // アニメ終了で外される）。テキストの下に敷くため DOM 上 preInner より前に置いている。
+  // 減衰のみ（最大輝度から始める）の理由: 点灯の瞬間を「保存」の合図として立たせるため。
+  // 立ち上がりを挟むとピークが遅れ、ひと呼吸後に続くヒーロー反映との前後関係が曖昧になる
+  //（フラッシュ点灯 → ヒーロー反映の順序と「間」は code-anim.ts の PAUSE_FLASH_TO_APPLY が管理する）
+  .c--kvEditor_lineFlash {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 2px;
+    background-color: color-mix(in srgb, var(--kvEditor-neon), transparent 75%);
+    box-shadow: 0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 50%); // 行の上下へのにじみ
+    opacity: 0;
+    will-change: transform; // syncScroll が縦スクロールへ transform で追従させる
+  }
+
+  .c--kvEditor_lineFlash[data-kv-flash-active] {
+    animation: kvEditor-applied-flash 0.5s ease-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
   }
 
   .c--kvEditor_input {
@@ -726,6 +752,16 @@
 
 // 入力欄トリガーのキャレット点滅（is--typing は reduced-motion 時には付与されない）
 @keyframes kvEditor-caret-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// 反映フラッシュ（書き換えた行の背景）の減衰。輝度は .c--kvEditor_lineFlash 側の色が担う
+@keyframes kvEditor-applied-flash {
   from {
     opacity: 1;
   }

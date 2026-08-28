@@ -2,8 +2,9 @@
 // チャット型AIデモ（player.ts）とライブループ再生（loop.ts）の両方がこのモジュールを使う。
 // - 全文置換ではなく、行単位の LCS（diffLineHunks）で変更ハンクを検出し、ハンク内も
 //   文字単位の共通 prefix / suffix（diffCode）を除いた「実際に変わる文字」だけをタイピングする
-// - フレーム反映は editor.setViewText()、確定は snapTo（editor.setCode）。JSXタブでは
-//   タイピング途中が不正な JSX になるため表示のみ更新し、完了時に snapTo でモデルを確定する
+// - フレーム反映は editor.setViewText()（表示のみ）。ヒーローへの反映はハンク確定ごとの
+//   editor.commitView() と完了時の snapTo（editor.setCode）で行い、タイピング途中の
+//   不完全なコード（クラスの書きかけ等）で崩れた瞬間がヒーローに描画されるのを防ぐ
 import { htmlToJsx } from './convert';
 import { charBoundary, diffCode, diffLineHunks, type LineHunk } from './diff';
 import type { EditorApi } from './editor';
@@ -14,6 +15,7 @@ const CODE_INSERT_INTERVAL = 18;
 const CODE_DELETE_CHUNK = 2;
 const PAUSE_BETWEEN_EDITS = 350; // 離れた編集箇所（ハンク）へ移る間
 const PAUSE_AFTER_REVEAL = 300; // 編集位置へのスクロールを見せてから書き換え始めるまでの間
+const PAUSE_FLASH_TO_APPLY = 120; // 反映フラッシュの点灯からヒーロー反映までの間（「保存 → 結果が変わる」の因果を見せる）
 const MAX_CODE_ANIM_MS = 3000; // 書き換えアニメの想定所要時間の上限。超える場合はステップ開始コードへ復元してから再生する
 
 /** 再生の中断（AbortController の abort）を表す。想定内の脱出なので呼び出し側は握り潰してよい */
@@ -60,9 +62,14 @@ interface CodeAnimatorOptions {
    * 自動ループ再生はユーザーのスクロール位置を奪わないよう false にする（textarea 内部のスクロールのみ行う）
    */
   scrollWindowOnReveal?: boolean;
+  /**
+   * ヒーローへ反映する直前に、確定したハンクの行範囲（アクティブタブの表示上の行）を添えて呼ばれる
+   * （ライブループの反映フラッシュ演出用）。リセット系の snapTo では呼ばれない
+   */
+  onApply?: (range: { line: number; lineCount: number }) => void;
 }
 
-export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = true }: CodeAnimatorOptions = {}): CodeAnimator {
+export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = true, onApply }: CodeAnimatorOptions = {}): CodeAnimator {
   // MediaQueryList は 1 回だけ生成して使い回す（.matches は live なので再生中の設定変更にも追従する）
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const prefersReducedMotion = (): boolean => reducedMotionQuery.matches;
@@ -136,6 +143,7 @@ export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = t
     const target = isJsxTab() ? htmlToJsx(targetHtml) : targetHtml;
     const from = editor.getViewText();
 
+    // 変化なし・reduced-motion は即時確定のみ（反映フラッシュ演出も出さない）
     if (from === target || prefersReducedMotion()) {
       snapTo(targetHtml);
       return;
@@ -175,7 +183,20 @@ export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = t
       await animateHunk(before, after, lines.slice(start, end).join('\n'), toBlock.join('\n'), signal);
       lines = [...before, ...toBlock, ...after];
       lineShift += hunk.toEnd - hunk.toStart - (hunk.fromEnd - hunk.fromStart);
+      // ハンク完了 = 1つの編集の確定。ここでヒーローへ反映する。
+      // JSXタブでは閉じタグ側のハンクが未適用など変換できない途中状態がありうるため、反映できる時だけ行う。
+      // 演出があるときは書き換えた行のフラッシュを先に点灯し、ひと呼吸置いてから反映する
+      //（「保存 → 結果が変わる」の順序。反映されないのに光ると嘘になるため、可否は canCommitView で先に判定する）
+      if (editor.canCommitView()) {
+        if (onApply) {
+          // 光らせるのは適用後のブロック行（start から toBlock 行分）。純削除ハンクは継ぎ目の1行を光らせる
+          onApply({ line: start, lineCount: Math.max(1, toBlock.length) });
+          await sleep(PAUSE_FLASH_TO_APPLY, signal);
+        }
+        editor.commitView();
+      }
     }
+    // JSXタブで全ハンクが変換不能だった稀なケースも、ここでの確定で必ず反映される（演出なしを許容）
     snapTo(targetHtml);
   };
 

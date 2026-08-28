@@ -142,6 +142,7 @@ span.c--kvEditorEditHere[aria-hidden] … 手書き風 "Edit Here!!" 装飾（�
 │   │                             live ではタブの右に「Live Demo ▶/⏸」トグル（button.c--kvEditor_playToggle[data-kv-loop-toggle][data-kv-loop-state]）
 │   └── .c--kvEditor_editor[role="tabpanel"][id="kv-editor-panel"] … 重ねレイヤー（下記）。両タブ共有の 1 パネルで、aria-labelledby はアクティブタブの id
 │       ├── .c--kvEditor_pre[aria-hidden]      … 表示用（pointer-events: none）
+│       │   ├── span.c--kvEditor_lineFlash[data-kv-line-flash] … 反映フラッシュ（書き換えた行の背景。テキストの下に敷くため preInner より前）
 │       │   └── .c--kvEditor_preInner          … ★transform でスクロール追従
 │       │       └── shiki の <pre><code>
 │       ├── textarea.c--kvEditor_input         … 入力用（文字は透明・caret のみ表示）
@@ -189,7 +190,9 @@ const state = {
 
 ### ヒーロー描画
 
-`hero.innerHTML = sanitize(state.html)` を **rAF でスロットル**（フラグ 1 本で 1 フレーム 1 回に制限）。再生中のタイピングアニメは十数 ms 間隔で `setViewText` が呼ばれるため、毎回 DOM を書き換えないための措置。
+`hero.innerHTML = sanitize(state.html)` を **rAF でスロットル**（フラグ 1 本で 1 フレーム 1 回に制限）。同一フレーム内に複数回の反映要求（ハンク確定 + `snapTo` 等）が来ても DOM 書き換えは 1 回に抑える。
+
+再生アニメのタイピング中はヒーローへ反映しない（クラスの書きかけ等でヒーローが崩れた瞬間を描画してしまうため）。反映はハンク確定ごとの `commitView()` と完了時の `setCode()` で行う（`code-anim.ts` の節を参照）。
 
 ブラウザの HTML パーサーは寛容なので、再生中断などで閉じタグが欠けた状態でも描画は破綻しない（仕様として許容）。エディターを空にするとヒーローも空になるが、初期化時に初期表示の自然高さをインラインの `min-height` として固定し（高さは em ベースで幅に依存するため、ResizeObserver で幅が変わった時だけ再測定）、レイアウトが潰れて下のエディターがジャンプすることは防いでいる。JS 初期化前は CSS の `min-height: 2rem` がフォールバック。
 
@@ -249,7 +252,10 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 プレイヤーはこのインターフェース越しにのみエディターへ触る:
 
 - `setCode(code)` … コード全文の確定的な置き換え。モデル・ヒーロー・ハイライトを更新し、構文チェックをリセット。JSX タブがアクティブなら `htmlToJsx()` で変換した表記を表示する（表示テキストの決定は呼び出し側へ委ねず `setCode` 内で行い、表示とモデルの乖離を作らない）
-- `setViewText(text)` … タイピングアニメの 1 フレーム反映。HTML タブは部分的な HTML でも描画できるため**モデル・ヒーローも同期**し、JSX タブはタイピング途中が不正な JSX になるため**表示のみ**更新する（モデルの確定は `setCode` で行う）
+- `setViewText(text)` … タイピングアニメの 1 フレーム反映（**表示のみ**。ヒーローは描画しない）。HTML タブは部分的な HTML でもモデルとして保持できるため同期だけ行い、JSX タブは表示テキストの保持のみ（モデルの確定は `commitView` / `setCode` で行う）
+- `commitView()` … 現在の表示テキストをヒーローへ反映する（ハンク確定時にアニメーターが呼ぶ）。HTML タブはヒーロー描画のみ（モデルは `setViewText` が同期済み）、JSX タブは `jsxToHtml()` が通るときだけモデル更新 + 反映し、変換できない途中状態では何もしない
+- `canCommitView()` … `commitView()` で反映できる状態かの事前判定（HTML タブは常に true）。反映フラッシュを反映より先に点灯させるために使う（反映されないのに光ると嘘になるため）
+- `flashLines(line, lineCount)` … 書き換えた行範囲の背景をひと呼吸光らせる（反映フラッシュ。live モードの `onApply` が配線する）。位置は textarea のローカル座標（行番号 × line-height）を scale で視覚座標へ換算し、`.c--kvEditor_lineFlash` の top / height に反映。連続反映でもアニメが毎回リスタートするよう、属性を一度外してリフローを挟んでから付け直す
 - `revealPosition(line, linePrefix, scrollWindow?)` … 編集位置を可視範囲へスクロールする（再生アニメ用）。行位置は行番号 × line-height、横位置は `linePrefix`（行内の先行テキスト）を canvas の `measureText` で実測して求める（等幅前提にしないので日本語混在でも正確）。textarea 内部のスクロールに加え、編集行がページのビューポート外にある場合は window 側もスクロールする（SP でエディター下の AI パネルを見ている間に編集箇所が画面外、というケースへの対策）。`scrollWindow: false` で window 側のスクロールを行わない（ライブループ再生が自動でユーザーのスクロール位置を奪わないため。`code-anim.ts` の `scrollWindowOnReveal` オプション経由）。スクロールが発生したら true を返す（プレイヤー側が「間」を挟む判断に使う）。`prefers-reduced-motion` では smooth ではなく即時スクロール。scrollTop / clientWidth / フォント計測はすべて scale 変形前のローカル座標系で一貫しているためそのまま計算できる
 - `getCode()` / `getActiveTab()` / `getViewText()` … 読み取り
 - `textarea` / `tabButtons` … 中断トリガー（focus / pointerdown / タブクリック）のイベント登録用
@@ -382,7 +388,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 `loop.ts` / `player.ts` が共有する再生の中核。`createCodeAnimator(editor)` が以下を提供する（実装の詳細は後述の「コード書き換えアニメ」節。もともと `player.ts` 内にあったものを、ライブループ再生の追加時にそのまま切り出した）:
 
-- `animateCode(targetHtml, stepStartHtml, signal)` … 「現在のビュー → 目標コード」のハンク単位 diff タイピング。アクティブタブの表記で再生し、完了時に snapTo で確定する。想定所要時間が上限（`MAX_CODE_ANIM_MS`）を超える場合は `stepStartHtml` へ即時復元してから再生する
+- `animateCode(targetHtml, stepStartHtml, signal)` … 「現在のビュー → 目標コード」のハンク単位 diff タイピング。アクティブタブの表記で再生し、完了時に snapTo で確定する。想定所要時間が上限（`MAX_CODE_ANIM_MS`）を超える場合は `stepStartHtml` へ即時復元してから再生する。タイピング中のフレームは表示のみで、ヒーローへの反映はハンク確定ごとの `editor.commitView()`（JSX タブで変換できない途中状態はスキップ）と完了時の snapTo で行う。反映の直前に `onApply` オプション（`createCodeAnimator` の第 2 引数）へ確定したハンクの行範囲を渡して通知し、演出があるときはフラッシュ点灯 → ひと呼吸（`PAUSE_FLASH_TO_APPLY` = 120ms）→ 反映の順にする（「保存 → 結果が変わる」の因果を見せる。ライブループの「反映」演出用で、リセット系の snapTo では呼ばれない）
 - `snapTo(html)` … HTMLモデルとアクティブタブ表示の同時確定（`editor.setCode` の別名）
 - `ensureEditorVisible()` … リセット系のスナップでエディターがビューポート外へ出た場合の追従スクロール
 - `prefersReducedMotion()` … matchMedia の live な参照
@@ -395,6 +401,13 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 ### 再生サイクル
 
 再生ターゲットは「各ステップの `resultCode` + 末尾に初期コード」の循環列。最後の「初期コードへ戻す編集」も diff タイピングでアニメするため、ループの継ぎ目が自然につながる（チャット文言との整合が不要になったため、`player.ts` の done 後リスタートで却下していた「変更を取り消す編集の演出」がここでは逆に活きる）。ステップ間は `PAUSE_BETWEEN_STEPS`、周回の終わり（初期コードへ戻った後）は長めの `PAUSE_AFTER_CYCLE` を置く。
+
+### 「反映」フィードバック（書き換えた行のフラッシュ）
+
+ハンク確定の瞬間（`code-anim.ts` の `onApply` → `editor.flashLines`）に、いま書き換えた行の背景をネオン色でひと呼吸だけ光らせ、その少し後（`PAUSE_FLASH_TO_APPLY` = 120ms）にヒーローへ反映される。「この編集が保存されて → 結果が変わった」の因果を、編集箇所そのもので見せる演出。実体は `.c--kvEditor_pre` 内の `.c--kvEditor_lineFlash`（テキストの下に敷くため `preInner` より前に置く）で、`data-kv-flash-active` 属性で `kvEditor-applied-flash` アニメ（opacity 減衰。0.5 秒）を再生し `animationend` で外す。縦スクロールへは `syncScroll` が transform で追従させる（横は表示幅いっぱいに敷くため固定）。`prefers-reduced-motion` では CSS 側で `animation: none` にして無効化する。この演出は live モードだけが配線する（`player.ts` は `onApply` を渡さない）。
+
+- **減衰のみ（最大輝度から始める）の理由**: 点灯の瞬間を「保存」の合図として立たせるため。立ち上がりを挟むとピークが遅れ、後に続くヒーロー反映との前後関係が曖昧になる
+- 以前はエディターウィンドウの枠（内縁）グローだったが、「どこが変わったか」を示せる編集行のフラッシュに置き換えた
 
 ### 停止・再開のモデル
 
@@ -469,7 +482,7 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 1. 削除フェーズ: 後ろから数文字ずつ削る
 2. 挿入フェーズ: 新しい文字列を 1 文字ずつタイプ
 
-フレームの反映は `editor.setViewText()` を毎ティック呼ぶ。HTML タブではモデル・ヒーローも同期するが、JSX タブではタイピング途中が不正な JSX になるため**表示のみ**更新し、ステップ完了時に `snapTo()`（内部で `editor.setCode(html)`）でモデル（＝ヒーロー）を確定する。ヒーローは rAF スロットル・ハイライトは同期実行なので負荷は問題にならない。
+フレームの反映は `editor.setViewText()` を毎ティック呼ぶ（**表示のみ**。HTML タブはモデルの同期も行うがヒーローは描画しない）。タイピング途中は書きかけの不完全なコードになり、ヒーローが崩れた瞬間（レイアウトクラスの書きかけでボタンが全幅になる等）を描画してしまうため、ヒーローへの反映は**ハンク確定ごと**の `editor.commitView()` と、ステップ完了時の `snapTo()`（内部で `editor.setCode(html)`）で行う。JSX タブではハンク境界でも変換できない途中状態（閉じタグ側のハンクが未適用等）がありうるため、`commitView()` は変換が通るときだけ反映する（できなければ完了時の snapTo が唯一の反映になる）。ハイライトのフレーム描画は rAF スロットル + 同期実行なので負荷は問題にならない。
 
 ### reduced-motion
 

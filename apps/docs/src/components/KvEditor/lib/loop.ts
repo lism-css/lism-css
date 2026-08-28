@@ -2,6 +2,9 @@
 // チャット演出（player.ts）は使わず、シナリオのコード編集だけを自動でループ再生する。
 // - 各ステップの resultCode へ順に diff タイピングし、最後に「初期コードへ戻す編集」もアニメして循環する
 //   （チャット文言との整合が不要なため、編集を巻き戻す演出がそのままループの継ぎ目になる）
+// - ヒーローへの反映（editor.commitView）はハンク確定ごと。書き換えた行のフラッシュ
+//   （editor.flashLines）を先に点灯し、ひと呼吸置いて反映される
+//   （「保存 → 結果が変わる」の順序。タイミングは code-anim.ts が管理する）
 // - 自動一時停止: エディターへのホバー（マウス系ポインターのみ）/ 画面外 / 非アクティブタブ。
 //   条件が戻れば少し間を置いて、止まった位置の続きから自動再開する
 // - 完全停止: エディターへの focus / pointerdown / 入力、または ⏸ ボタン。自動では再開しない。
@@ -40,8 +43,12 @@ interface LoopPlayerOptions {
 }
 
 export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHtml, scenario }: LoopPlayerOptions): void {
-  // 自動再生がユーザーのスクロール位置を奪わないよう、reveal のページスクロールは無効にする
-  const animator = createCodeAnimator(editor, { scrollWindowOnReveal: false });
+  // 自動再生がユーザーのスクロール位置を奪わないよう、reveal のページスクロールは無効にする。
+  // onApply（ハンク確定の反映演出）は live モードだけの配線: 書き換えた行をフラッシュで光らせる
+  const animator = createCodeAnimator(editor, {
+    scrollWindowOnReveal: false,
+    onApply: ({ line, lineCount }) => editor.flashLines(line, lineCount),
+  });
 
   // 再生ターゲットの循環列: 各ステップの resultCode + 末尾に「初期コードへ戻す」ステップ
   const targets = [...scenario.map((step) => step.resultCode), initialHtml];

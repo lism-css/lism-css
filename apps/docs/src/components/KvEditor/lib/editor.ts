@@ -30,8 +30,17 @@ export interface EditorApi {
   getActiveTab(): EditorLang;
   /** アクティブタブに表示中の生テキスト */
   getViewText(): string;
-  /** タイピングアニメの1フレームを反映する（モデルの確定は setCode で行う） */
+  /** タイピングアニメの1フレームを反映する（表示のみ。ヒーロー反映は commitView / setCode で行う） */
   setViewText(text: string): void;
+  /**
+   * 現在の表示テキストをヒーローへ反映する（ハンク確定時にアニメーターが呼ぶ）。
+   * JSXタブで変換できない途中状態（閉じタグ側のハンクが未適用等）では何もしない
+   */
+  commitView(): void;
+  /** commitView で反映できる状態か。反映フラッシュを反映より先に点灯させるための事前判定 */
+  canCommitView(): boolean;
+  /** 書き換えた行範囲の背景をひと呼吸光らせる（ハンク確定時の反映フラッシュ。live モードが配線する） */
+  flashLines(line: number, lineCount: number): void;
   /**
    * 編集位置（行番号と行内の先行テキスト）を可視範囲へスクロールする。スクロールが発生したら true。
    * scrollWindow: false で textarea 内部のみスクロールし、ページ側は動かさない
@@ -52,6 +61,8 @@ export function initKvEditor(): void {
   const textarea = demo?.querySelector<HTMLTextAreaElement>('[data-kv-input]') ?? null;
   const preInner = demo?.querySelector<HTMLElement>('[data-kv-pre-inner]') ?? null;
   if (!hero || !demo || !textarea || !preInner) return;
+  // 反映フラッシュの行ハイライト。無くてもエディター自体は動く（演出だけがスキップされる）
+  const lineFlash = demo.querySelector<HTMLElement>('[data-kv-line-flash]');
 
   // SSR側（KvEditor.astro）が決めた言語を DOM 経由で受け取る（このスクリプトは全ページ共通バンドル）。
   // siteConfig.langs を情報源とする isValidLang で判定するため、言語追加時にここの修正は不要
@@ -117,6 +128,8 @@ export function initKvEditor(): void {
   let inputScale = 1;
   const syncScroll = (): void => {
     preInner.style.transform = `translate3d(${-textarea.scrollLeft * inputScale}px, ${-textarea.scrollTop * inputScale}px, 0)`;
+    // 行フラッシュは縦だけ追従する（横は表示幅いっぱいに敷くため固定）
+    if (lineFlash) lineFlash.style.transform = `translate3d(0, ${-textarea.scrollTop * inputScale}px, 0)`;
   };
   const updateInputScale = (): void => {
     const transform = getComputedStyle(textarea).transform;
@@ -186,6 +199,23 @@ export function initKvEditor(): void {
     }
     return scrolled;
   };
+
+  // ---- 反映フラッシュ（書き換えた行の背景をひと呼吸光らせる） ----------------
+  // 位置は textarea のローカル座標（行番号 × line-height）を scale で視覚座標へ換算する。
+  // スクロール追従は syncScroll が縦の transform で行う（見た目は _kv-editor.scss 側）
+  const flashLines = (line: number, lineCount: number): void => {
+    if (!lineFlash) return;
+    const cs = getComputedStyle(textarea);
+    const lineHeight = parseFloat(cs.lineHeight);
+    lineFlash.style.top = `${(parseFloat(cs.paddingTop) + line * lineHeight) * inputScale}px`;
+    lineFlash.style.height = `${lineHeight * lineCount * inputScale}px`;
+    // 連続反映でもアニメを毎回リスタートさせるため、属性を一度外しリフローを挟んでから付け直す
+    lineFlash.removeAttribute('data-kv-flash-active');
+    void lineFlash.offsetWidth;
+    lineFlash.setAttribute('data-kv-flash-active', '');
+  };
+  // アニメ終了で属性を外す（付けっぱなしにしない）
+  lineFlash?.addEventListener('animationend', () => lineFlash?.removeAttribute('data-kv-flash-active'));
 
   // ---- シンタックスハイライト（遅延ロード、初期化後は同期実行） --------------
   let highlightSyncFn: typeof HighlightSyncFn | null = null;
@@ -619,20 +649,37 @@ export function initKvEditor(): void {
     renderHighlight();
   };
 
-  // タイピングアニメの1フレーム反映。
-  // HTMLタブは部分的なHTMLでも描画できるためモデル・ヒーローへ同期し、
-  // JSXタブはタイピング途中が不正なJSXになるため表示のみ更新する（モデルの確定は setCode で行う）
+  // タイピングアニメの1フレーム反映（表示のみ）。
+  // タイピング途中は書きかけの不完全なコードになり、ヒーローに崩れた瞬間が描画されてしまうため
+  // フレームではヒーローを更新しない（反映はハンク確定ごとの commitView と完了時の setCode で行う）
   const setViewText = (text: string): void => {
     state.tabText[state.activeTab] = text;
     textarea.value = text;
     if (state.activeTab === 'html') {
+      // HTML表記は部分的でもモデルとして保持できるため同期だけしておく（描画はしない）
       state.html = text;
       state.stale.jsx = true;
-      renderHero();
     }
     saveSnapshot();
     queueHighlight();
   };
+
+  // ハンク確定時のヒーロー反映。JSXタブは変換が通るときだけモデルを更新して反映する
+  const commitView = (): void => {
+    if (state.activeTab === 'html') {
+      // モデルは setViewText がフレームごとに同期済みなのでヒーロー描画のみ
+      renderHero();
+      return;
+    }
+    const converted = jsxToHtml(textarea.value);
+    if (converted === null) return;
+    state.html = converted;
+    state.stale.html = true;
+    renderHero();
+  };
+
+  // commitView が反映できる状態かの事前判定（HTMLタブは常に反映可能）
+  const canCommitView = (): boolean => state.activeTab === 'html' || jsxToHtml(textarea.value) !== null;
 
   // リセット提案スナックバーの「Restore initial code」ボタン
   // NOTE: scheduleSyntaxCheck から参照されるが、呼び出しは常に初期化完了後（デバウンス発火時）
@@ -649,6 +696,9 @@ export function initKvEditor(): void {
     getActiveTab: () => state.activeTab,
     getViewText: () => textarea.value,
     setViewText,
+    commitView,
+    canCommitView,
+    flashLines,
     revealPosition,
     resetSyntaxCheck,
     syncRestorePrompt,
