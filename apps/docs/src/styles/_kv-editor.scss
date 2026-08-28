@@ -96,6 +96,39 @@
   }
 
   /* ----------------------------------------
+      "Edit Here!!" 手書き風装飾
+   ---------------------------------------- */
+  // エディター右上に浮かべる手書き風の誘導グラフィック。Figma 作成の透過 PNG（黒）を mask 化して
+  // background-color で着色し、--gray-hi-c がライト（#222）／ダーク（白系）のインク色反転を担う。
+  // .c--kvEditor は overflow: hidden のため内側に置けず、直前の高さ 0 の行を基準に絶対配置する。
+  .c--kvEditorEditHere {
+    display: none;
+
+    // ヒーロー下端の中央寄せコンテンツと重ならない幅でのみ表示する
+    @media (min-width: 960px) {
+      position: relative;
+      display: block;
+      height: 0; // フローには高さを足さず、エディター上端からの位置基準だけを作る
+      max-width: 56rem; // エディターウィンドウと同じ最大幅・中央寄せで右端を揃える
+      margin-inline: auto;
+      pointer-events: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        right: -5.6rem;
+        bottom: -3.125rem; // エディター上端（この行の 3.5rem 下）の少し上に矢印の先端が乗る位置
+        width: 10rem;
+        aspect-ratio: 426 / 281; // 書き出し PNG の実寸比
+        background-color: var(--gray-hi-c);
+        $editHere: url('/img/kv-edit-here.png');
+        mask: $editHere center / contain no-repeat;
+        -webkit-mask: $editHere center / contain no-repeat;
+      }
+    }
+  }
+
+  /* ----------------------------------------
       エディターウィンドウ + AIパネル
    ---------------------------------------- */
   .c--kvEditor {
@@ -114,7 +147,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) 12.6875rem;
     width: 100%;
-    max-width: 56.4375rem;
+    max-width: 56rem;
     height: 28rem;
     margin-block-start: 3.5rem;
     margin-inline: auto; // ラッパー幅がウィンドウ最大幅を超える場合も中央寄せ（ヒーローの中央揃えと揃える）

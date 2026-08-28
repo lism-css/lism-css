@@ -34,6 +34,12 @@ const highlighted = await highlight(initialHtml, 'html');
 
 <div class="c--kvEditorHero" data-kv-hero set:html={initialHtml} />
 
+{
+  /* 手書き風の "Edit Here!!" 誘導装飾（広い画面幅のみ表示）。エディターは overflow: hidden のため
+     内側に置けず、この高さ 0 の行を基準にエディター右上へ絶対配置する（_kv-editor.scss） */
+}
+<span class="c--kvEditorEditHere" aria-hidden="true"></span>
+
 <div class="c--kvEditor" data-kv-editor data-kv-lang={lang} data-kv-mode={DEMO_MODE}>
   <div class="c--kvEditor_window">
     <div class="c--kvEditor_bar">

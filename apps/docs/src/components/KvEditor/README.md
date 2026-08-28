@@ -131,6 +131,9 @@ frontmatter で `await highlight(initialHtml, 'html')` を実行し、ハイラ�
 ```
 .c--kvEditorHero[data-kv-hero]      … ヒーロー出力（set:html={initialHtml} で SSR）
 
+span.c--kvEditorEditHere[aria-hidden] … 手書き風 "Edit Here!!" 装飾（透過 PNG を CSS mask で着色。
+                                      エディター外の高さ 0 の行から右上へ絶対配置・広い画面幅のみ表示）
+
 .c--kvEditor[data-kv-editor][data-kv-lang][data-kv-mode]
                                     … ai: grid: エディター 1fr + パネル 12.6875rem。md未満は縦積み（エディター + 下段パネル 146px）
                                       live: 1 カラム（エディターが全幅。パネルは出力しない）
