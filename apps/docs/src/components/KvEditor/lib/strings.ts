@@ -8,4 +8,8 @@ export const STRINGS = {
   resume: 'Resume',
   done: 'Done',
   stopDemo: 'Stop the AI demo',
+  // ライブループ再生（mode: 'live'）の ▶/⏸ トグル
+  liveDemo: 'Live Demo',
+  playDemo: 'Play the live demo',
+  pauseDemo: 'Pause the live demo',
 } as const;

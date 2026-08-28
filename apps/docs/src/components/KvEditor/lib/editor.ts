@@ -13,6 +13,7 @@ import { MAX_CODE_LENGTH, findHtmlIssue } from './validate';
 import { createSnackbar } from './snackbar';
 import { STRINGS } from './strings';
 import type { EditorLang, highlightSync as HighlightSyncFn } from './highlight';
+import { createLoopPlayer } from './loop';
 import { createPlayer } from './player';
 
 // 構文チェックはタイピングが止まってから評価する（タグの書きかけを即エラー扱いしないため）
@@ -31,8 +32,12 @@ export interface EditorApi {
   getViewText(): string;
   /** タイピングアニメの1フレームを反映する（モデルの確定は setCode で行う） */
   setViewText(text: string): void;
-  /** 編集位置（行番号と行内の先行テキスト）を可視範囲へスクロールする。スクロールが発生したら true */
-  revealPosition(line: number, linePrefix: string): boolean;
+  /**
+   * 編集位置（行番号と行内の先行テキスト）を可視範囲へスクロールする。スクロールが発生したら true。
+   * scrollWindow: false で textarea 内部のみスクロールし、ページ側は動かさない
+   * （自動ループ再生がユーザーのスクロール位置を奪わないため）
+   */
+  revealPosition(line: number, linePrefix: string, scrollWindow?: boolean): boolean;
   /** 保留中の構文チェック（デバウンス評価）と表示中の通知を破棄する */
   resetSyntaxCheck(): void;
   /** 初期コードから変わっているかを評価し、リセット提案を出し入れする */
@@ -139,7 +144,7 @@ export function initKvEditor(): void {
     return measureCtx.measureText(text).width;
   };
 
-  const revealPosition = (line: number, linePrefix: string): boolean => {
+  const revealPosition = (line: number, linePrefix: string, scrollWindow = true): boolean => {
     const cs = getComputedStyle(textarea);
     const lineHeight = parseFloat(cs.lineHeight);
     const x = parseFloat(cs.paddingLeft) + measureTextWidth(linePrefix);
@@ -168,13 +173,16 @@ export function initKvEditor(): void {
     // ページ側のスクロール: SP ではエディターの下の AI パネルを見ている間に
     // 編集行がページのビューポート外へ出ていることがあるため、window 側も追従させる。
     // 編集行の視覚位置 = textarea の画面上の位置 + （内部スクロール適用後の行オフセット × scale）
-    const rect = textarea.getBoundingClientRect();
-    const scale = rect.width / textarea.offsetWidth;
-    const visualY = rect.top + (y - top) * scale;
-    const visualLineH = lineHeight * scale;
-    if (visualY < 0 || visualY + visualLineH > window.innerHeight) {
-      window.scrollBy({ top: visualY - window.innerHeight * 0.35, behavior });
-      scrolled = true;
+    // 自動ループ再生（scrollWindow: false）ではユーザーのスクロール位置を奪わないためスキップする
+    if (scrollWindow) {
+      const rect = textarea.getBoundingClientRect();
+      const scale = rect.width / textarea.offsetWidth;
+      const visualY = rect.top + (y - top) * scale;
+      const visualLineH = lineHeight * scale;
+      if (visualY < 0 || visualY + visualLineH > window.innerHeight) {
+        window.scrollBy({ top: visualY - window.innerHeight * 0.35, behavior });
+        scrolled = true;
+      }
     }
     return scrolled;
   };
@@ -207,6 +215,12 @@ export function initKvEditor(): void {
 
   // 初期表示はSSR済みなので、shiki本体はアイドル時に読み込む。
   // 初回操作まで遅らせる案は、読み込み前に打鍵されると全文が一度プレーンテキストへ落ちるため見送った
+  // ハイライターの準備完了（ライブループ再生の自動開始が待つ）。読み込み失敗時も resolve する
+  //（失敗してもプレーンテキストのフォールバックで再生自体は成立するため、待ち続けない）
+  let highlightReadyResolve: () => void = () => {};
+  const highlightReady = new Promise<void>((resolve) => {
+    highlightReadyResolve = resolve;
+  });
   const loadHighlighter = (): void => {
     void import('./highlight')
       .then(async (mod) => {
@@ -215,7 +229,8 @@ export function initKvEditor(): void {
         renderHighlight();
       })
       // 読み込み失敗（再デプロイ後の古いチャンク・オフライン等）はプレーンテキスト表示のまま続行する
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => highlightReadyResolve());
   };
   if ('requestIdleCallback' in window) {
     requestIdleCallback(loadHighlighter);
@@ -640,6 +655,17 @@ export function initKvEditor(): void {
     textarea,
     tabButtons,
   };
+
+  // デモの提示モードは SSR 側（KvEditor.astro の DEMO_MODE）が決め、data 属性で受け取る。
+  // 'live': チャット演出なしの自動ループ再生（▶/⏸ トグル）。'ai': AIアシスタント風のチャットデモ
+  if (demo.dataset.kvMode === 'live') {
+    const toggleButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-kv-loop-toggle]')];
+    // ▶/⏸ トグルは自動で動き続けるデモの停止手段（WCAG 2.2.2）なので、無ければ再生しない
+    if (toggleButtons.length > 0) {
+      createLoopPlayer({ editor: editorApi, root: demo, toggleButtons, ready: highlightReady, initialHtml, scenario: SCENARIO_BY_LANG[lang] });
+    }
+    return;
+  }
 
   const messages = demo.querySelector<HTMLElement>('[data-kv-messages]');
   const placeholder = demo.querySelector<HTMLElement>('[data-kv-placeholder]');

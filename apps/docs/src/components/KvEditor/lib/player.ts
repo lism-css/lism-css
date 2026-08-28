@@ -1,4 +1,4 @@
-// AIシナリオの再生エンジン。
+// AIシナリオの再生エンジン（mode: 'ai' のチャット型デモ）。
 // 「Ask AI to...」クリックで全ステップを順に一気に再生する。
 // - 各ステップ: ユーザー発話（入力欄でタイピング → 送信で吹き出しに一括表示）→ AI発話（タイピング）→ コード書き換え（変更行のハンクごとの diffタイピング）
 // - アクティブタブの表記で再生する（シナリオの resultCode は HTML。JSXタブでは htmlToJsx で変換してタイピング）
@@ -9,9 +9,9 @@
 //   AI発話は止まった文字位置から続け、コードは現在のビュー → 目標コードの差分で残りを書き換える）
 // - 全ステップ完了 → チャット末尾に "Done" ステータス行を表示。再クリックでチャットをクリアし初期コードへ戻して最初から
 // - prefers-reduced-motion: タイピングを省略し、結果を即時適用する
+// コード書き換えアニメの実体は code-anim.ts（ライブループ再生の loop.ts と共有）
 import type { ScenarioStep } from '../scenario';
-import { htmlToJsx } from './convert';
-import { charBoundary, diffCode, diffLineHunks, type LineHunk } from './diff';
+import { AbortedError, createCodeAnimator, sleep } from './code-anim';
 import type { EditorApi } from './editor';
 import { initScrollHint } from './scroll-hint';
 import { STRINGS } from './strings';
@@ -22,20 +22,14 @@ type PlayerStatus = 'idle' | 'playing' | 'interrupted' | 'done';
 // ステップ内のフェーズ。中断→再開で「止まった瞬間」の続きから再生するために使う
 type StepPhase = 'user' | 'ai' | 'code';
 
-// タイピング・ポーズの速度設定（ms）
+// タイピング・ポーズの速度設定（ms）。コード書き換え系の速度は code-anim.ts に集約している
 const USER_TYPE_INTERVAL = 30;
 const AI_TYPE_INTERVAL = 22;
-const CODE_DELETE_INTERVAL = 12;
-const CODE_INSERT_INTERVAL = 18;
-const CODE_DELETE_CHUNK = 2;
 const PAUSE_BEFORE_SEND = 300; // 入力欄タイピング完了 → 送信までの「間」
 const PAUSE_BEFORE_AI = 400;
 const PAUSE_BEFORE_CODE = 500;
-const PAUSE_BETWEEN_EDITS = 350; // 離れた編集箇所（ハンク）へ移る間
-const PAUSE_AFTER_REVEAL = 300; // 編集位置へのスクロールを見せてから書き換え始めるまでの間
 const PAUSE_BETWEEN_STEPS = 1400; // ステップ間の「間」（最後のステップの後には置かない）
 const PAUSE_REDUCED_MOTION = 900; // reduced-motion 時のステップ間の「間」
-const MAX_CODE_ANIM_MS = 3000; // 書き換えアニメの想定所要時間の上限。超える場合はステップ開始コードへ復元してから再生する
 
 interface PlayerOptions {
   editor: EditorApi;
@@ -51,29 +45,6 @@ interface PlayerOptions {
   scenario: ScenarioStep[];
 }
 
-class AbortedError extends Error {}
-
-const sleep = (ms: number, signal: AbortSignal): Promise<void> =>
-  new Promise((resolve, reject) => {
-    if (signal.aborted) {
-      reject(new AbortedError());
-      return;
-    }
-    const timer = setTimeout(() => {
-      signal.removeEventListener('abort', onAbort);
-      resolve();
-    }, ms);
-    const onAbort = () => {
-      clearTimeout(timer);
-      reject(new AbortedError());
-    };
-    signal.addEventListener('abort', onAbort, { once: true });
-  });
-
-/** 変更ブロック（複数行の文字列）を前後の行に挟んで全文を組み立てる。空文字は行として出力しない */
-const joinBlocks = (before: string[], middle: string, after: string[]): string =>
-  [...before, ...(middle === '' ? [] : [middle]), ...after].join('\n');
-
 export function createPlayer({ editor, messages, placeholder, playButtons, askTexts, liveRegion, initialHtml, scenario }: PlayerOptions): void {
   let status: PlayerStatus = 'idle';
   let currentStep = 0;
@@ -87,9 +58,9 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
   // 入力欄トリガーのプレースホルダー文言（送信・中断時にここへ戻す）
   const askPlaceholders = new Map(askTexts.map((el) => [el, el.textContent ?? '']));
 
-  // MediaQueryList は 1 回だけ生成して使い回す（.matches は live なので再生中の設定変更にも追従する）
-  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const prefersReducedMotion = (): boolean => reducedMotionQuery.matches;
+  // コード書き換えアニメ（diff タイピング・reveal スクロール・所要時間上限つき復元）の共有エンジン
+  const animator = createCodeAnimator(editor);
+  const prefersReducedMotion = (): boolean => animator.prefersReducedMotion();
 
   // SRへの告知。タイピング演出の途中経過は流さず、確定した文言だけをここから告知する。
   // 一度空にしてから rAF で本文を設定することで、連続して同一文言でも読み上げられる
@@ -117,27 +88,6 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
   };
 
   const isJsxTab = (): boolean => editor.getActiveTab() === 'jsx';
-
-  const editorRoot = editor.textarea.closest<HTMLElement>('[data-kv-editor]');
-
-  /** リセット系のスナップでヒーローが縮み、エディターがビューポート外へ出た場合に上下中央へ戻す */
-  const ensureEditorVisible = (): void => {
-    if (!editorRoot) return;
-    // ヒーローの再描画（snapTo → setCode → renderHero）は rAF スロットルされているため、
-    // snapTo 直後に同期で測るとまだ縮む前のレイアウトになる。ここで rAF を予約すれば
-    // 先に予約済みの renderHero と同じフレームのより後ろで実行され、
-    // getBoundingClientRect() が再レイアウトを強制するので縮小後の位置を正しく測れる
-    requestAnimationFrame(() => {
-      const rect = editorRoot.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) return;
-      editorRoot.scrollIntoView({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-    });
-  };
-
-  /** HTMLモデルとアクティブタブの表示を同時に確定する（JSXタブの表記変換は setCode 側で行われる） */
-  const snapTo = (html: string): void => {
-    editor.setCode(html);
-  };
 
   const appendBubble = (kind: 'user' | 'ai'): HTMLElement => {
     const bubble = document.createElement('p');
@@ -192,95 +142,6 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
     }
   };
 
-  /** 1ハンク分の書き換えアニメ。前後の行（before / after）は固定し、変更ブロックだけをタイピングする */
-  const animateHunk = async (before: string[], after: string[], fromBlock: string, toBlock: string, signal: AbortSignal): Promise<void> => {
-    // ハンク内でも共通の先頭・末尾は保持して、実際に変わる文字だけを書き換える
-    const { head, removed, inserted, tail } = diffCode(fromBlock, toBlock);
-    const frame = (middle: string): void => editor.setViewText(joinBlocks(before, middle, after));
-
-    // 編集開始位置がスクロール範囲外だと演出が見えない（特にモバイル）ため、
-    // 書き換え前に可視範囲へスクロールする。位置は head（ブロック内の共通 prefix）の末尾
-    const headLines = head.split('\n');
-    const scrolled = editor.revealPosition(before.length + headLines.length - 1, headLines[headLines.length - 1]);
-    if (scrolled) await sleep(PAUSE_AFTER_REVEAL, signal);
-
-    // 削除フェーズ（後ろから消す）。切る位置はサロゲートペアを割らない境界へ丸める
-    for (let len = removed.length - CODE_DELETE_CHUNK; len > 0; len -= CODE_DELETE_CHUNK) {
-      frame(head + removed.slice(0, charBoundary(removed, len)) + tail);
-      await sleep(CODE_DELETE_INTERVAL, signal);
-    }
-    if (removed.length > 0) {
-      frame(head + tail);
-      await sleep(CODE_DELETE_INTERVAL, signal);
-    }
-    // 挿入フェーズ（1文字ずつタイピング）
-    for (let len = 1; len <= inserted.length; len++) {
-      frame(head + inserted.slice(0, charBoundary(inserted, len)) + tail);
-      await sleep(CODE_INSERT_INTERVAL, signal);
-    }
-  };
-
-  /** ハンク列の書き換えアニメの想定所要時間（ms）。reveal 待ち等の細かいポーズは含めない（目的は桁の判定） */
-  const estimateCodeAnimMs = (fromLines: string[], toLines: string[], hunks: LineHunk[]): number => {
-    let total = Math.max(0, hunks.length - 1) * PAUSE_BETWEEN_EDITS;
-    for (const hunk of hunks) {
-      const fromBlock = fromLines.slice(hunk.fromStart, hunk.fromEnd).join('\n');
-      const toBlock = toLines.slice(hunk.toStart, hunk.toEnd).join('\n');
-      const { removed, inserted } = diffCode(fromBlock, toBlock);
-      total += Math.ceil(removed.length / CODE_DELETE_CHUNK) * CODE_DELETE_INTERVAL + inserted.length * CODE_INSERT_INTERVAL;
-    }
-    return total;
-  };
-
-  const animateCode = async (targetHtml: string, stepStartHtml: string, signal: AbortSignal): Promise<void> => {
-    // タイピングはアクティブタブの表記で行い、完了時に snapTo でHTMLモデルを確定する
-    // （JSXタブではタイピング途中が不正なJSXになるため、フレーム反映は setViewText = 表示のみ）
-    const target = isJsxTab() ? htmlToJsx(targetHtml) : targetHtml;
-    const from = editor.getViewText();
-
-    if (from === target || prefersReducedMotion()) {
-      snapTo(targetHtml);
-      return;
-    }
-
-    // 変更された行のまとまり（ハンク）だけを上から順に書き換える。
-    // <Flex>→<Stack> のように開始タグと閉じタグが離れて変わっても、間の子要素は再タイプしない
-    let fromLines = from.split('\n');
-    const toLines = target.split('\n');
-    let hunks = diffLineHunks(fromLines, toLines);
-
-    // 想定所要時間が上限を超える場合（上限いっぱいの貼り付け・空にしてからの Resume 等）は、
-    // ステップ開始コードへ即時復元してから再生する。復元後の diff は
-    // シナリオが意図した小さな編集そのものになり、チャット文言とコードの動きが一致する
-    if (estimateCodeAnimMs(fromLines, toLines, hunks) > MAX_CODE_ANIM_MS) {
-      snapTo(stepStartHtml);
-      ensureEditorVisible();
-      const restored = editor.getViewText();
-      // ステップ開始コードと目標が同一（異常系）なら即時確定で終える
-      if (restored === target) {
-        snapTo(targetHtml);
-        return;
-      }
-      fromLines = restored.split('\n');
-      hunks = diffLineHunks(fromLines, toLines);
-    }
-
-    let lines = fromLines;
-    let lineShift = 0; // 適用済みハンクによる行番号のズレ
-    for (const [index, hunk] of hunks.entries()) {
-      if (index > 0) await sleep(PAUSE_BETWEEN_EDITS, signal);
-      const start = hunk.fromStart + lineShift;
-      const end = hunk.fromEnd + lineShift;
-      const before = lines.slice(0, start);
-      const after = lines.slice(end);
-      const toBlock = toLines.slice(hunk.toStart, hunk.toEnd);
-      await animateHunk(before, after, lines.slice(start, end).join('\n'), toBlock.join('\n'), signal);
-      lines = [...before, ...toBlock, ...after];
-      lineShift += hunk.toEnd - hunk.toStart - (hunk.fromEnd - hunk.fromStart);
-    }
-    snapTo(targetHtml);
-  };
-
   // resume: このステップをどのフェーズから始めるか。中断→再開で「止まった瞬間」の続きを再生する
   const playStep = async (stepIndex: number, signal: AbortSignal, resume: StepPhase): Promise<void> => {
     const step = scenario[stepIndex];
@@ -322,7 +183,7 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
     // ステップ開始コード（前ステップの resultCode。最初のステップは初期コード）は、
     // アニメが長すぎる場合の復元先として渡す
     const stepStartCode = stepIndex === 0 ? initialHtml : scenario[stepIndex - 1].resultCode;
-    await animateCode(step.resultCode, stepStartCode, signal);
+    await animator.animateCode(step.resultCode, stepStartCode, signal);
   };
 
   // 中断ステータス行の Resume ボタンから参照するため先に器だけ用意する
@@ -443,8 +304,8 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
       // 全ステップ完了後: チャットをクリアし初期コードへ戻して最初から
       messages.innerHTML = '';
       updateScrollHint(); // クリアでフェード高さを 0 に戻す（前回分の残留を防ぐ）
-      snapTo(initialHtml);
-      ensureEditorVisible();
+      animator.snapTo(initialHtml);
+      animator.ensureEditorVisible();
       void run(0, 'user');
       return;
     }
@@ -453,8 +314,8 @@ export function createPlayer({ editor, messages, placeholder, playButtons, askTe
     // コードはスナップせず、現在のエディター内容から resultCode へ diff タイピングする
     // （ただしエディターが空のときは、全文タイピングの冗長さを避けるため初期コードへ即時復元してから再生する）
     if (editor.getViewText().trim() === '') {
-      snapTo(initialHtml);
-      ensureEditorVisible();
+      animator.snapTo(initialHtml);
+      animator.ensureEditorVisible();
     }
     void run(0, 'user');
   };

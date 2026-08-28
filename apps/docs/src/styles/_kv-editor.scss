@@ -134,6 +134,16 @@
     }
   }
 
+  // live モード（チャットパネルなしの自動ループ再生）: エディターがウィンドウ全幅を使う
+  .c--kvEditor[data-kv-mode='live'] {
+    grid-template-columns: minmax(0, 1fr);
+
+    @media not (min-width: 800px) {
+      grid-template-rows: minmax(0, 1fr);
+      height: 24.4375rem; // ai モードの SP 高さ（33.5625rem）からパネル下段（9.125rem）を除いた高さ
+    }
+  }
+
   .c--kvEditor_window {
     display: flex;
     flex-direction: column;
@@ -141,11 +151,11 @@
     min-height: 0;
   }
 
-  /* ウィンドウバー（信号ドット + タブ）。背景はウィンドウと同一（バーの色分けなし） */
+  /* ウィンドウバー（信号ドット + タブ + live モードの ▶/⏸）。背景はウィンドウと同一（バーの色分けなし）。
+     タブは margin の auto で右寄せする（space-between だと live モードでトグルが増えたときにタブが中央へ動くため） */
   .c--kvEditor_bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-shrink: 0;
     padding: 0.6rem 0.75rem 0.6rem 1rem;
   }
@@ -165,6 +175,7 @@
 
   .c--kvEditor_tabs {
     display: flex;
+    margin-inline-start: auto;
   }
 
   .c--kvEditor_tab {
@@ -192,6 +203,85 @@
     // 構文が不正な間の控えめなインジケーター（スナックバーと同じ warning トーン。両タブ共通）
     &[data-invalid] {
       color: var(--kvEditor-warning);
+    }
+  }
+
+  /* ライブループ再生の「Live Demo ▶/⏸」トグル（live モードのみ）。 */
+  .c--kvEditor_playToggle {
+    // 再生中（playing）は ⏸、停止中（paused）は ▶
+    --kvEditor-toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 2.5v11L13.5 8Z'/%3E%3C/svg%3E");
+    // ネオンの発光色（AIパネルの orb グラデーション先頭の teal と共通）
+    --kvEditor-neon: #89f9e1;
+
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    height: 1.75rem;
+    margin-inline-start: 0.5rem;
+    padding: 0 0.5rem;
+    border: none;
+    border-radius: 2px;
+    background: transparent;
+    color: var(--kvEditor-text-dim);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: var(--kvEditor-neon);
+    }
+
+    // 再生中: ネオン点灯（ラベル・アイコンとも発光色 + グロー、ラベルはゆっくり明滅）
+    &[data-kv-loop-state='playing'] {
+      --kvEditor-toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 2.5h3v11H4Zm5 0h3v11H9Z'/%3E%3C/svg%3E");
+
+      color: var(--kvEditor-neon);
+
+      // グローは mask 済みの ::before を内包する span 側に掛ける（アイコン形状の影になる）
+      .c--kvEditor_playToggleIcon {
+        filter: drop-shadow(0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 50%));
+      }
+
+      .c--kvEditor_playToggleLabel {
+        text-shadow:
+          0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 80%),
+          0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 40%);
+        animation: kvEditor-neon-pulse 1.5s ease-in-out infinite alternate;
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+    }
+  }
+
+  .c--kvEditor_playToggleLabel {
+    font-family: var(--ff--mono);
+    font-weight: 600;
+    font-size: 0.75em;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    white-space: nowrap;
+
+    // 320px級の極小幅ではバー（ドット + タブ 128px + トグル）が収まらないためラベルを畳む（アイコンは残る）
+    @media not (min-width: 360px) {
+      display: none;
+    }
+  }
+
+  /* ▶/⏸ アイコン（ラベルの右）。mask（形の切り抜き）と drop-shadow（グロー）は同一要素に掛けると
+     filter → mask の順で適用されて影ごと切り抜かれてしまうため、mask は ::before に分離している
+     （グローの filter は再生中に外側のこの span へ掛かる。playToggle 側を参照） */
+  .c--kvEditor_playToggleIcon {
+    flex-shrink: 0;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: currentColor;
+      mask: var(--kvEditor-toggle-icon) center / contain no-repeat;
+      -webkit-mask: var(--kvEditor-toggle-icon) center / contain no-repeat;
     }
   }
 
@@ -608,5 +698,20 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+// 「Live Demo」ラベルのネオン明滅（再生中のみ。reduced-motion 時は静的なグローに固定）。
+// 消灯までは落とさず、グローの強弱でゆらぎを出す
+@keyframes kvEditor-neon-pulse {
+  from {
+    text-shadow:
+      0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 55%),
+      0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 75%);
+  }
+  to {
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--kvEditor-neon), transparent 25%),
+      0 0 16px color-mix(in srgb, var(--kvEditor-neon), transparent 50%);
   }
 }
