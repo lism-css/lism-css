@@ -10,7 +10,11 @@
 // - 完全停止: エディターへの focus / pointerdown / 入力、または ⏸ ボタン。自動では再開しない。
 //   ▶ での再開は「停止時からコードが変わっていなければ続きから、変わっていれば初期コードへ戻して最初から」
 //   （ユーザーの編集を出発点に diff すると編集内容をアニメで上書きする動きになるため、編集後は必ずリセットする）
-// - タブ切替はループを止めない: 切替後の表記（HTML / JSX）で同じステップの続きを再生する
+// - 周回ごとに HTML / JSX タブを自動で交互に切り替え、両方の表記を順番に見せる。
+//   切替は周回の継ぎ目（初期コードへ戻った後）= 両タブが等価な初期コードを表示している瞬間に行う
+// - タブ切替はループを止めない: 切替後の表記（HTML / JSX）で同じステップの続きを再生する。
+//   手動切替の直後の周回は自動切替をスキップして表記を維持し（選んだ表記を最低1周見せる）、
+//   その次の周回から交互へ戻る
 // - 自動開始の抑制: prefers-reduced-motion では自動開始しない（▶ で明示的に開始した場合のみ、
 //   タイピングを省略した即時適用で再生する）。開始はハイライター（shiki）の準備完了も待つ
 //   （プレーンテキストでタイピングが始まるのを防ぐ）
@@ -28,6 +32,7 @@ const PAUSE_BETWEEN_STEPS = 1600; // 編集と次の編集の「間」
 const PAUSE_AFTER_CYCLE = 2800; // 初期コードへ戻ってから次の周回を始めるまでの「間」
 const RESUME_DELAY = 600; // ホバー解除・再表示から自動再開するまでの「間」
 const TAB_RESUME_DELAY = 800; // タブ切替後に新しい表記で再開するまでの「間」
+const PAUSE_AFTER_TAB_SWITCH = 800; // 周回の継ぎ目でタブを自動切替してから次の周回を始めるまでの「間」
 
 interface LoopPlayerOptions {
   editor: EditorApi;
@@ -60,6 +65,10 @@ export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHt
   let started = false; // 一度でも再生を開始したか（▶ の「続きから / 最初から」判定に使う）
   let manualStop = false; // ⏸・エディター操作による停止。自動では再開しない（▶ でのみ解除）
   let currentIndex = 0; // 再生中・中断中のターゲット位置
+  // 手動タブ切替の直後の周回は継ぎ目の自動切替をスキップする（選んだ表記を最低1周見せる）
+  let holdTabOnce = false;
+  // ループが把握しているアクティブタブ。手動切替の検出（クリックリスナー）と自動切替の両方が更新する
+  let knownTab = editor.getActiveTab();
   // 停止時点の表示テキスト。▶ でこれと一致すれば続きから、違えば（=編集されていれば）最初から
   let pausedViewText: string | null = null;
   // 自動開始・自動再開の抑制（reduced-motion）。▶ での明示的な開始で解除する
@@ -74,6 +83,17 @@ export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHt
       button.setAttribute('data-kv-loop-state', running ? 'playing' : 'paused');
       button.setAttribute('aria-label', running ? STRINGS.pauseDemo : STRINGS.playDemo);
     }
+  };
+
+  // 自動タブ切替の合図: 切り替わった先のタブ文字をネオン色でひと呼吸光らせる（見た目は _kv-editor.scss 側）。
+  // 手動切替では出さない（ユーザー自身の操作に合図は不要。自動で表記が変わったことだけを知らせる）
+  const flashTab = (tab: string): void => {
+    const button = editor.tabButtons.find((b) => b.dataset.kvTab === tab);
+    if (!button) return;
+    // 連続切替でもアニメを毎回リスタートさせるため、属性を一度外しリフローを挟んでから付け直す
+    button.removeAttribute('data-kv-tab-flash');
+    void button.offsetWidth;
+    button.setAttribute('data-kv-tab-flash', '');
   };
 
   /** 再生を止め、停止時点の表示テキストを控える（すべての停止経路がここを通る） */
@@ -98,6 +118,22 @@ export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHt
         await animator.animateCode(targets[i], startCodeOf(i), signal);
         const cycleEnd = i === targets.length - 1;
         await sleep(cycleEnd ? PAUSE_AFTER_CYCLE : PAUSE_BETWEEN_STEPS, signal);
+        if (!cycleEnd) continue;
+        // 周回の継ぎ目で HTML / JSX タブを交互に切り替える（両タブが等価な初期コードを
+        // 表示している瞬間なので表示が飛ばない）。手動切替の直後の周回は表記を維持する
+        if (holdTabOnce) {
+          holdTabOnce = false;
+          continue;
+        }
+        const nextTab = editor.getActiveTab() === 'html' ? 'jsx' : 'html';
+        // ボタンの .click() を経由すると自分自身の手動切替リスナー（中断 → 再開）が発火するため、API を直接呼ぶ
+        editor.switchTab(nextTab);
+        knownTab = nextTab;
+        flashTab(nextTab);
+        // 切替後のポーズ中に中断 → 再開しても継ぎ目を再実行しない（自動切替の二重実行防止）よう、
+        // 再開位置を先に次周回の先頭へ進めておく
+        currentIndex = 0;
+        await sleep(PAUSE_AFTER_TAB_SWITCH, signal);
       }
     } catch (e) {
       if (!(e instanceof AbortedError)) {
@@ -163,9 +199,8 @@ export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHt
     tryResume(RESUME_DELAY);
   });
 
-  // タブ切替はループを止めず、切替後の表記で同じステップの続きを再生する。
+  // 手動のタブ切替はループを止めず、切替後の表記で同じステップの続きを再生する。
   // editor.ts のリスナー（switchTab）が先に登録されているため、ここでは切替済みの状態が見える
-  let knownTab = editor.getActiveTab();
   for (const button of editor.tabButtons) {
     button.addEventListener('click', () => {
       const tab = editor.getActiveTab();
@@ -173,11 +208,16 @@ export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHt
       knownTab = tab;
       // 完全停止中のタブ切替はループに関与しない（表記が変わるため、▶ は「最初から」になる）
       if (manualStop) return;
+      // 選んだ表記を最低1周見せる: 次の継ぎ目の自動切替をスキップする
+      //（未開始の切替は対象外。最初の周回が選んだタブで再生されるので、スキップすると2周になってしまう）
+      if (started) holdTabOnce = true;
       if (running) abortRun();
       // 切替後の表記を比較基準にして続きから再開する
       pausedViewText = editor.getViewText();
       tryResume(TAB_RESUME_DELAY);
     });
+    // 自動タブ切替のフラッシュはアニメ終了で属性を外す（付けっぱなしにしない）
+    button.addEventListener('animationend', () => button.removeAttribute('data-kv-tab-flash'));
   }
 
   // 画面外・非アクティブタブでは再生しない（CPU・バッテリーへの配慮）
@@ -215,6 +255,8 @@ export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHt
     }
     // 編集されている（または未開始）→ 初期コードへ戻して最初から。
     // ユーザーの編集を出発点に diff すると編集内容をアニメで上書きする動きになるため必ずリセットする
+    // タブ維持フラグは持ち越さない（最初の周回が現在のタブで再生されるため、持ち越すと2周になる）
+    holdTabOnce = false;
     animator.snapTo(initialHtml);
     animator.ensureEditorVisible();
     void run(0);

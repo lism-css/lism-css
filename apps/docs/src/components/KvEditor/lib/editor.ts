@@ -28,6 +28,12 @@ export interface EditorApi {
   setCode(code: string): void;
   getCode(): string;
   getActiveTab(): EditorLang;
+  /**
+   * タブをプログラム的に切り替える（表示テキスト・aria 状態も更新される）。
+   * タブボタンの click は発火しないため、ループ再生の自動切替が
+   * 手動切替のリスナー（loop.ts の中断 → 再開）を巻き込まずに使える
+   */
+  switchTab(tab: EditorLang): void;
   /** アクティブタブに表示中の生テキスト */
   getViewText(): string;
   /** タイピングアニメの1フレームを反映する（表示のみ。ヒーロー反映は commitView / setCode で行う） */
@@ -694,6 +700,7 @@ export function initKvEditor(): void {
     setCode,
     getCode: () => state.html,
     getActiveTab: () => state.activeTab,
+    switchTab,
     getViewText: () => textarea.value,
     setViewText,
     commitView,

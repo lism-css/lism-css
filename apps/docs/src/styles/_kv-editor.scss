@@ -240,6 +240,16 @@
     &[data-invalid] {
       color: var(--kvEditor-warning);
     }
+    // 自動タブ切替の合図: 切り替わった先のタブ文字をネオン色でひと呼吸光らせる
+    //（属性の付け外しは loop.ts。手動切替では光らせない。
+    // 減衰のみ = 点灯の瞬間を合図として立たせる理由は反映フラッシュと同じ）
+    &[data-kv-tab-flash] {
+      animation: kvEditor-tab-flash 0.8s ease-out;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
   }
 
   /* ライブループ再生の「Live Demo ▶/⏸」トグル（live モードのみ）。 */
@@ -767,6 +777,22 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+// 自動タブ切替の合図（タブ文字のネオン点灯 → 通常色へ減衰）
+@keyframes kvEditor-tab-flash {
+  from {
+    color: var(--kvEditor-neon);
+    text-shadow:
+      0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 40%),
+      0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 20%);
+  }
+  to {
+    color: #fff;
+    text-shadow:
+      0 0 4px transparent,
+      0 0 12px transparent;
   }
 }
 
