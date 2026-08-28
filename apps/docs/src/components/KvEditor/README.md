@@ -279,6 +279,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 | `-fz:4xl -fz_md` class + `style="--fz_md: var(--fz--5xl)"` | `fz={['4xl', null, '5xl']}` | レスポンシブ表記（本物の Lism 出力と同形式）。`PROPS` の `bp: 1` の prop のみ・**配列記法のみ**。集約は往復ガード付き（後述） |
 | `-bd` などの bare クラス | `bd`（値なしの boolean prop） | key が `PROPS` に存在するもののみ（本物の `val === true` → `-{prop}` と同じ規則）。XML は値なし属性を書けないため前処理でマーカー化する（後述） |
 | `-hov:-o` などの class | `hov="-o"` prop | `hov` は `PROPS` 外の特別扱い prop（本物は `getLismProps` 内で分岐）。文字列形式のみ対応で、複数トークンはカンマ結合（`hov="-o,up"`） |
+| `u--trim` などの class | `util="trim"` prop | `util` も `PROPS` 外の特別扱い prop。複数は空白区切り（`util="a b"`。カンマ互換）。`-` prefix の除外指定は非対応（変換エラー → last-good） |
 | `l--stack` / `l--flex` / `l--box` | `<Stack>` / `<Flex>` / `<Box>` | タグが div 以外なら `as="tag"` を付与 |
 | `h1`〜`h6` | `<Heading level="n">` | Heading のデフォルト（level=2, タグ=`h{level}`）に準拠 |
 | `p` | `<Text>` | Text のデフォルトタグ = p |
@@ -287,7 +288,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 | 変換できないクラス | `className="…"` として保持 | 往復しても失われない |
 | その他の属性（href, data-* 等） | そのまま引き継ぎ（順序保持） | |
 
-属性の出力順も規則化している: `level` / `as` → Lism props（配列 prop は base トークンの出現位置）→ `className` → `style` → その他の属性、の順。JSX → HTML では `class` を先頭（レイアウトクラス → props 由来 → className 由来の順で連結）に、`style` をその直後に出す。順序が決定的だから往復で属性が並び替わらない。
+属性の出力順も規則化している: `level` / `as` → Lism props（配列 prop は base トークン、`util` / `hov` は最初のトークンの出現位置）→ `className` → `style` → その他の属性、の順。JSX → HTML では `class` を先頭に、`style` をその直後に出す。class 内の連結順は本物（`getLismProps` の `buildClassName`）に合わせて className 由来 → レイアウトクラス → util 由来 → props 由来。順序が決定的だから往復で属性が並び替わらない。
 
 ### JSX のパース
 
@@ -313,6 +314,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 - 配列 prop は `PROPS` の `bp: 1` の prop のみ。bp 非対応 prop（`bgc` / `c` 等）や `hov` への配列は変換エラー → last-good 動作
 - 値なし属性（boolean prop）は `PROPS` にある prop のみ。`PROPS` 外の値なし属性（`data-x` 等）は変換エラー → last-good 動作。同一 prop の bare クラスと BP クラスが同居する場合（`-p -p_md` + 変数）は、同名 prop の重複を避けるため集約せず素通しする
 - `hov` は文字列形式（`hov="-bgc"`）のみ。boolean 形式（値なしの `-hov` クラス）と オブジェクト形式（`hov={{bgc:'red'}}` — inline CSS 変数が絡む）は非対応で、`-hov` は className として保持される（`hov` は `PROPS` テーブル外のため boolean prop 変換の対象にもならない）
+- `util` は文字列形式（`util="trim"`）のみ。`-` prefix の除外指定（`util="-trim"`）は base の無い単発利用では意味を持たないため変換エラー → last-good 動作
 - prop 名の認識は本物と同期する一方、値の変換は `-prop:val` クラスへの機械変換のみ。本物の Lism がクラスでなく inline CSS 変数にする値（トークン外の任意値: `mbs="3.5rem"` 等）は、クラスにしてもビルド済み CSS に存在せず見た目には効かない
 - 名前付き文字実体は XML 定義済みの `&amp; &lt; &gt; &quot; &apos;` のみ対応。`&nbsp;` 等の XML 定義外の実体は JSX タブでは XML パースエラーになり last-good 動作
 - コメントノードは両方向とも無視（出力に含めない）
@@ -511,8 +513,8 @@ interface ScenarioStep {
 - **ソース上は全文を重複して持たない**: 各ステップは「前ステップのコードへの文字列置換」（`edits: [from, to][]`）として定義し、`resultCode` はモジュール初期化時に言語別初期コードから順に適用して導出する。これにより `initial-code.ts` の変更は自動で全ステップへ波及する（かつては全文スナップショットを 3 つ持っており、初期コードの変更を波及し忘れると再生時の diff が「変更を取り消す編集」をタイピングするバグがあった）
 - **fail-fast**: `edits` の置換前文字列がちょうど 1 回現れない場合（初期コード変更とのズレ・曖昧な指定）はモジュール初期化時に例外を投げる。沈黙して壊れず、開発中に必ず気づける。全言語を eager に導出するため、どの言語のズレも初期化時に検知される
 - `edits` はプリンタの整形ルールを保つ範囲で書くこと（シナリオは自動テストし、変更時は JSX タブとの往復も手動確認）
-- `aiMessage` / `aiMessageJsx` は表記の違い（`-c:brand` クラス vs `c="brand"` props 等）を文言にも反映するためのペア
-- 現在は仮の 3 ステップ: ①見出しに `-c:brand` ②ボタンを `-bdrs:99`（ピル型）③ラッパーを `l--flex` → `l--stack`（JSX タブで Flex → Stack の対応も見せられる）
+- `aiMessage` / `aiMessageJsx` は表記の違い（`-fw:900` クラス vs `fw="900"` props 等）を文言にも反映するためのペア
+- 現在は仮の 3 ステップ: ①見出しを `-fw:700` → `-fw:900`（太く）②ボタンを `-bdrs:99`（ピル型）③ラッパーを `l--flex` → `l--stack`（JSX タブで Flex → Stack の対応も見せられる）
 
 ## _kv-editor.scss — スタイルの要点
 

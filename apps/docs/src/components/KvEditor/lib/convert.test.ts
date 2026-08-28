@@ -84,6 +84,27 @@ describe('スペース区切りの prop 値', () => {
   });
 });
 
+describe('util prop（u-- クラス）', () => {
+  it('u--{name} クラスは util prop と往復する', () => {
+    expect(htmlToJsx('<h1 class="u--trim -fw:900">x</h1>')).toBe('<Heading level="1" util="trim" fw="900">x</Heading>');
+    expectRoundTrip('<h1 class="u--trim -fw:900">x</h1>');
+  });
+
+  it('u-- クラスの正準位置はレイアウトクラスの直後（prop クラスの前）', () => {
+    expect(jsxToHtml('<Box p="10" util="trim">x</Box>')).toBe('<div class="l--box u--trim -p:10">x</div>');
+    expectRoundTrip('<div class="l--box u--trim -p:10">x</div>');
+  });
+
+  it('複数の u-- クラスは空白区切りの util 値に集約される', () => {
+    expect(htmlToJsx('<div class="u--a u--b">x</div>')).toBe('<Lism util="a b">x</Lism>');
+    expectRoundTrip('<div class="u--a u--b">x</div>');
+  });
+
+  it('除外指定（- prefix）の util 値は変換不能', () => {
+    expect(jsxToHtml('<Box util="-trim">x</Box>')).toBeNull();
+  });
+});
+
 describe('レスポンシブ配列 prop', () => {
   it('全 BP キーが往復する', () => {
     const jsx = '<Box p={[10, 20, 30, 40, 50]}>x</Box>';

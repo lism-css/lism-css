@@ -18,11 +18,13 @@
 //   `--{prop}` 宣言を伴う場合は上のスペース区切り値として扱う）
 // - `-hov:val` クラス ⇔ `hov="val"` （hov は PROPS 外の特別扱い prop。文字列形式のみ・複数はカンマ結合。
 //   boolean（値なし -hov）/ オブジェクト形式（inline CSS 変数が絡む）は非対応で className 保持）
+// - `u--{name}` クラス ⇔ `util="{name}"` （util も PROPS 外の特別扱い prop。空白区切りで複数可。
+//   class 内の正準位置は本物の出力順と同じくレイアウトクラスの直後・prop クラスの前）
 // - `l--{layout}` ⇔ レイアウトコンポーネント（Box / Center / Cluster / Columns / Flex / Frame /
 //   Grid / Stack / TileGrid。タグが div 以外なら as="tag"）
 // - h1〜h6 ⇔ <Heading level="n">、p ⇔ <Text>
 // - 上記以外のタグで Lism prop クラスを持つもの ⇔ <Lism as="tag">
-// - 変換できないクラスは className として保持
+// - 変換できないクラスは className として保持（HTML へ戻す際は本物と同じく class の先頭へ出力する）
 // - 属性の正準形: HTML は class → style → その他、JSX は level/as → props → className → style → その他
 import { PROPS, TOKENS } from 'lism-css/config';
 // BREAK_POINTS は定義元から直接読む。`lism-css/config` 経由の re-export は
@@ -479,6 +481,7 @@ type ClassUnit =
   | { type: 'bp'; key: string; bp: string; slot: number; token: string }
   | { type: 'bool'; key: string; token: string }
   | { type: 'hov'; value: string }
+  | { type: 'util'; value: string }
   | { type: 'rest'; token: string };
 
 const htmlElementToJsx = (el: Element): PrintableElement => {
@@ -506,6 +509,8 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
   const units: ClassUnit[] = classTokens.map((token): ClassUnit => {
     const hovMatch = token.match(/^-hov:(.+)$/);
     if (hovMatch) return { type: 'hov', value: hovMatch[1] };
+    const utilMatch = token.match(/^u--(.+)$/);
+    if (utilMatch) return { type: 'util', value: utilMatch[1] };
     const parsed = parsePropToken(token);
     if (parsed) return { type: 'base', key: parsed[0], value: parsed[1], token };
     const bpMatch = token.match(BP_CLASS_RE);
@@ -575,11 +580,19 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
   const restClassTokens: string[] = [];
   const hovValues: string[] = [];
   let hovAttrIndex = -1;
+  // u--{name} クラスは util prop（空白区切りで複数可）へ。hov と同じく最初の出現位置に属性を出す
+  const utilValues: string[] = [];
+  let utilAttrIndex = -1;
   const emittedAggregations = new Set<string>();
   for (const unit of units) {
     if (unit.type === 'hov') {
       if (hovValues.length === 0) hovAttrIndex = propAttrs.length;
       hovValues.push(unit.value);
+      continue;
+    }
+    if (unit.type === 'util') {
+      if (utilValues.length === 0) utilAttrIndex = propAttrs.length;
+      utilValues.push(unit.value);
       continue;
     }
     if ((unit.type === 'base' || unit.type === 'bp') && aggregated.has(unit.key)) {
@@ -602,8 +615,13 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
     // 集約されなかった BP クラス（変数なし等）とその他のクラスは className へ
     restClassTokens.push(unit.token);
   }
-  if (hovValues.length > 0) {
-    propAttrs.splice(hovAttrIndex, 0, attrToString('hov', hovValues.join(',')));
+  // hov / util の挿入は出現位置の後ろ側から行う（先に前方へ挿入すると後方の index がズレるため）
+  const pendingAttrs: { index: number; attr: string }[] = [];
+  if (hovValues.length > 0) pendingAttrs.push({ index: hovAttrIndex, attr: attrToString('hov', hovValues.join(',')) });
+  if (utilValues.length > 0) pendingAttrs.push({ index: utilAttrIndex, attr: attrToString('util', utilValues.join(' ')) });
+  pendingAttrs.sort((a, b) => b.index - a.index);
+  for (const pending of pendingAttrs) {
+    propAttrs.splice(pending.index, 0, pending.attr);
   }
 
   // Lism prop クラスを持つがコンポーネントに割り当てられなかったタグは <Lism as="tag">
@@ -709,6 +727,7 @@ const jsxElementToHtml = (el: Element): PrintableElement => {
   const classTokens: string[] = layoutClass ? [layoutClass] : [];
   const restAttrs: string[] = [];
   let classNameTokens: string[] = [];
+  const utilTokens: string[] = [];
   const bpStyleDecls: StyleDecl[] = [];
   let jsxStyleValue: string | null = null;
   for (const attr of attrs) {
@@ -755,13 +774,25 @@ const jsxElementToHtml = (el: Element): PrintableElement => {
         if (/\s/.test(trimmed)) throw new JsxConvertError(`invalid hov value: ${trimmed}`);
         classTokens.push(`-hov:${trimmed}`);
       }
+    } else if (attr.name === 'util') {
+      // util prop（空白区切り。カンマ互換）を u--{name} クラスへ展開（本物の mergeSet と同じ分割規則）。
+      // `-` prefix の除外指定は base の無い単発利用では意味を持たないため変換不能として扱う
+      for (const value of attr.value.split(/[,\s]+/)) {
+        if (!value) continue;
+        if (value.startsWith('-')) throw new JsxConvertError(`unsupported util value: ${value}`);
+        utilTokens.push(`u--${value}`);
+      }
     } else if (attr.name === 'style') {
       jsxStyleValue = attr.value;
     } else {
       restAttrs.push(attrToString(attr.name, attr.value));
     }
   }
-  classTokens.push(...classNameTokens);
+  // class の組み立ては本物（getLismProps の buildClassName）と同じ出力順に合わせる:
+  // [className] [primitiveClass（レイアウト）] [uClasses] [propClasses...]。
+  // この順序で書かれた HTML が正準形となり、往復で保たれる
+  classTokens.splice(layoutClass ? 1 : 0, 0, ...utilTokens);
+  classTokens.unshift(...classNameTokens);
 
   const outAttrs: string[] = [];
   if (classTokens.length > 0) outAttrs.push(attrToString('class', classTokens.join(' ')));
