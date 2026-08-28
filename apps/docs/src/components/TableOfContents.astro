@@ -8,31 +8,31 @@ import type { Responsive } from 'lism-css/lib/types/ResponsiveProps';
 interface Props {
   toc: TocItem[];
   px?: Responsive<string | number>;
+  py?: Responsive<string | number>;
 }
 
-const { toc, px } = Astro.props;
+const { toc, px, py } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const tocText = t(lang, 'toc');
 ---
 
-<Stack fx="1" class="c--toc set--cqUnit set--s" g="20" ov-y="auto" px={px}>
-  <Heading level="3" fz="l">{tocText.title}</Heading>
-  <Stack as="ul" class="c--toc_list" g="0">
+<Stack fx="1" class="c--toc c--scroll set--cqUnit set--s" g="20" px={px} py={py}>
+  <Heading level="3" fz="0.6625rem" fw="normal" o="p" tt="upper" lh="1.5" c="var(--gray-lo-c)">{tocText.title}</Heading>
+  <Stack as="ul" class="c--toc_list" g="0" bd-s>
     {toc.map((item) => <TocItemComponent item={item} />)}
   </Stack>
 </Stack>
 
 <style is:global>
-  /* px prop（-px:15）を詳細度で打ち消すため、意図的に @layer の外に置いている */
-  .c--siteToc :is(.c--toc, .c--shareBtns) {
-    padding-inline-start: 0;
-  }
-  @layer lism-custom {
-    .c--toc_list ul {
-      padding-inline-start: 0.875em;
+  .c--toc_list {
+    ul {
+      a > span {
+        font-size: 0.975em;
+      }
     }
-    .c--toc_list ul a > span {
-      font-size: 0.975em;
+
+    [data-nested] {
+      padding-inline-start: calc(var(--nestedDepth, 0) * var(--s20));
     }
   }
 </style>
@@ -40,65 +40,95 @@ const tocText = t(lang, 'toc');
 <script>
   // スクロール位置に応じて目次のアクティブ状態を更新する
   function initTocHighlight() {
+    // FixedToc とデスクトップ TOC で script が二重になるため、前回分を片付けてから初期化する
+    const w = window as Window & { __tocHighlightCleanup?: () => void };
+    w.__tocHighlightCleanup?.();
+
     const tocLinks = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
     if (tocLinks.length === 0) return;
 
-    // 見出し要素を取得（data-toc-link の値と一致する id を持つ要素）
-    const headings: HTMLElement[] = [];
+    // 見出しを id で一意化（デスクトップ TOC と FixedToc で二重に存在する）
+    const headingById = new Map<string, HTMLElement>();
     tocLinks.forEach((link) => {
       const slug = link.dataset.tocLink;
-      if (slug) {
-        const heading = document.getElementById(slug);
-        if (heading) headings.push(heading);
-      }
+      if (!slug || headingById.has(slug)) return;
+      const heading = document.getElementById(slug);
+      if (heading) headingById.set(slug, heading);
     });
 
-    if (headings.length === 0) return;
+    const headingIds = [...headingById.keys()];
+    if (headingIds.length === 0) return;
 
-    // 現在アクティブな目次リンクを更新
+    const mainScrollEl = document.querySelector<HTMLElement>('.c--siteMain_scroll');
+
     function setActiveLink(slug: string) {
       tocLinks.forEach((link) => {
-        if (link.dataset.tocLink === slug) {
-          link.classList.add('_active');
-        } else {
-          link.classList.remove('_active');
-        }
+        link.classList.toggle('_active', link.dataset.tocLink === slug);
       });
     }
 
-    // IntersectionObserver で見出しの可視性を監視
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // 画面に入った見出しのうち、最も上にあるものをアクティブにする
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+    function getScrollPadding() {
+      if (!mainScrollEl) return 0;
+      return parseFloat(getComputedStyle(mainScrollEl).scrollPaddingTop) || 0;
+    }
 
-        if (visibleEntries.length > 0) {
-          // 複数の見出しが見えている場合、最も上にあるものを選択
-          const topEntry = visibleEntries.reduce((prev, curr) => {
-            return prev.boundingClientRect.top < curr.boundingClientRect.top ? prev : curr;
-          });
-          setActiveLink(topEntry.target.id);
+    // スクロール位置から「いまの見出し」を決める（常に1つ選ぶ）
+    function syncActiveFromScroll() {
+      const pad = getScrollPadding();
+      const rootTop = mainScrollEl?.getBoundingClientRect().top ?? 0;
+      let current = headingIds[0];
+
+      for (const id of headingIds) {
+        const el = headingById.get(id)!;
+        if (el.getBoundingClientRect().top <= rootTop + pad + 1) {
+          current = id;
+        } else {
+          break;
         }
-      },
-      {
-        // ビューポート上端を 80px 内側にずらす（ヘッダーの高さ分を除外）
-        // ビューポート下端を 70%内側にずらす（上部30%のエリアだけを判定領域にする）
-        rootMargin: '-80px 0px -70% 0px',
-        threshold: 0,
       }
-    );
 
-    // 全ての見出しを監視
-    headings.forEach((heading) => observer.observe(heading));
+      setActiveLink(current);
+    }
 
-    // スクロールが一番上の場合、最初の見出しをアクティブに
-    function checkTopScroll() {
-      if (window.scrollY < 100 && headings.length > 0) {
-        setActiveLink(headings[0].id);
+    // ハッシュ先へ main スクロール領域内をスクロール（リロード時にブラウザ任せだとずれる／動かないことがある）
+    function scrollMainToHash() {
+      const hash = decodeURIComponent(location.hash.slice(1));
+      if (!hash || !mainScrollEl) return false;
+
+      const el = headingById.get(hash) ?? document.getElementById(hash);
+      if (!el || !mainScrollEl.contains(el)) return false;
+
+      const pad = getScrollPadding();
+      const nextTop = mainScrollEl.scrollTop + (el.getBoundingClientRect().top - mainScrollEl.getBoundingClientRect().top) - pad;
+      mainScrollEl.scrollTo({ top: Math.max(0, nextTop), behavior: 'instant' });
+      return true;
+    }
+
+    // ハッシュなしなのに padding 分だけスクロールされている誤着地を戻す
+    function correctSpuriousTopScroll() {
+      if (location.hash || !mainScrollEl) return;
+      const pad = getScrollPadding();
+      if (pad > 0 && mainScrollEl.scrollTop > 0 && mainScrollEl.scrollTop <= pad + 1) {
+        mainScrollEl.scrollTop = 0;
       }
     }
-    checkTopScroll();
-    window.addEventListener('scroll', checkTopScroll, { passive: true });
+
+    function onHashChange() {
+      scrollMainToHash();
+      syncActiveFromScroll();
+    }
+
+    correctSpuriousTopScroll();
+    scrollMainToHash();
+    syncActiveFromScroll();
+
+    mainScrollEl?.addEventListener('scroll', syncActiveFromScroll, { passive: true });
+    window.addEventListener('hashchange', onHashChange);
+
+    w.__tocHighlightCleanup = () => {
+      mainScrollEl?.removeEventListener('scroll', syncActiveFromScroll);
+      window.removeEventListener('hashchange', onHashChange);
+    };
   }
 
   // DOMContentLoaded で初期化

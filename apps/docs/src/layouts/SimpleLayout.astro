@@ -23,7 +23,7 @@ import Head from '../components/Head.astro';
 import JsonLd from '../components/JsonLd.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { Lism } from 'lism-css/astro';
+import { Lism, Box } from 'lism-css/astro';
 
 interface Props {
   title: string;
@@ -44,11 +44,15 @@ const { title = siteConfig.name, description, ogImage, lang = getRootLang(), sch
   </Head>
   <body data-pagefind-ignore>
     <Lism layout="stack" class="is--container" min-h="100svh">
-      <Header />
-      <Lism as="main" isWrapper="l" hasGutter py="50">
-        <slot />
-      </Lism>
-      <Footer />
+      <Box class="p--front">
+        <Header hasMobileMenu={false} />
+      </Box>
+      <Box bgc="var(--docs-bg)" pos="relative" z="1">
+        <Lism as="main">
+          <slot />
+        </Lism>
+        <Footer />
+      </Box>
     </Lism>
   </body>
 </html>

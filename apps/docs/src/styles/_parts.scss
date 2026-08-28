@@ -24,9 +24,9 @@
 /* 前後記事ナビゲーション */
 /* -------------------------- */
 .c--postNav {
-  margin-block-start: var(--s40);
-  padding-block-start: var(--s40);
+  margin-block-start: 5rem;
   border-block-start: 1px solid var(--divider);
+  border-block-end: 1px solid var(--divider);
 }
 
 .c--postNav_item {
@@ -38,26 +38,44 @@
 }
 
 .c--postNav_link {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
   padding: var(--s20);
   border-radius: var(--bdrs--10);
   text-decoration: none;
   color: inherit;
   transition: background-color 0.2s;
+
+  .-prev & {
+    padding-inline-start: 1.75rem;
+  }
+  .-next & {
+    padding-inline-end: 1.75rem;
+  }
 }
-.c--postNav_link:hover {
-  background-color: var(--base-2);
+
+.c--postNav_icon {
+  transition: translate 0.2s;
+
+  .-prev & {
+    scale: -1 1;
+  }
+
+  .-prev .c--postNav_link:hover & {
+    translate: -0.25em 0;
+  }
+  .-next .c--postNav_link:hover & {
+    translate: 0.25em 0;
+  }
 }
 
 .c--postNav_label {
-  color: var(--text-2);
+  color: var(--gray-lo-c);
 }
 
 .c--postNav_title {
-  font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .c--postNav_empty {

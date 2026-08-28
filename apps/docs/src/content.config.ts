@@ -9,6 +9,7 @@ import { toContentSlug } from './lib/contentSlug';
 const postSchema = z.object({
   title: z.string(),
   navtitle: z.string().optional(), // サイドバーナビで表示するタイトル（省略時はtitleを使用）
+  eyebrow: z.string().optional(), // 記事タイトル上部に表示する小ラベル（例: Introduction）
   description: z.string(),
   date: z.date().optional(), // 公開日（ドキュメントでは任意）
   tags: z.array(z.string()).default([]).optional(), // タグ（ドキュメントでは不要）

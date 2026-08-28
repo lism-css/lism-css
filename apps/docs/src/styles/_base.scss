@@ -4,6 +4,12 @@
     /* line-break: strict; */
   }
 
+  /* フォントのアンチエイリアス設定 */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   /* ダイアログ展開時のガタツキを防ぐ */
   /* html:has(:modal[open]) {
 		scrollbar-gutter: stable;
@@ -68,6 +74,17 @@
 
       :where(td, th) {
         border-block: 1px solid var(--divider);
+
+        /* resetのoverflow-wrap:anywhereによって -ov-x:auto ラッパーの横スクロールが発動しなくなるため、単語単位の折り返しに戻す */
+        overflow-wrap: normal;
+
+        /* 日本語はそれでも全部折り返し可能なため、最小維持サイズも指定しておく */
+        min-inline-size: 5em;
+
+        code {
+          /* tableラッパーがスクロール可能なので、インラインcodeは一律nowrapにしておける */
+          white-space: nowrap;
+        }
       }
       thead {
         border-block-end: solid 2px;

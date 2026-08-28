@@ -6,8 +6,35 @@
     // --code-bgc: hsl(210, 10%, 94%);
     --code-bgc: color-mix(in srgb, var(--divider), transparent 40%);
 
-    --grad_01: rgb(61, 204, 240);
-    --grad_02: rgb(136, 103, 255);
+    --ff--base: 'Inter', 'Noto Sans JP', sans-serif;
+
+    // 基本背景はコアのデフォルト（hsl(220 0% 99%)）より白くする（docsサイトのみの調整）
+    --base: #fff;
+
+    --text: #111;
+    --eyebrow-c: #0073ff;
+    --gray-hi-c: #222;
+    --gray-lo-c: #888;
+    --lightgray-hi: #f6f6f6;
+
+    --docs-bg: #fafafa;
+    --docsLink-bgc: #f5f9ff;
+    --card-bg: var(--base);
+    --searchBtn-bg: var(--base-2);
+    --themeModeSwitch-bgc: var(--lightgray-hi);
+    --themeModeSwitch-btn: var(--text);
+    --themeModeSwitch-btn-bg: var(--base);
+
+    --cells-p: 0.375rem;
+
+    --lts--tighter: -0.02em;
+    --lts--tight: -0.01em;
+
+    --bdrs--15: 0.375rem; // 6px
+
+    --bxsh--base: 0 1px 4px 0 rgba(0, 0, 0, 0.03), 0 2px 16px 0 rgba(0, 0, 0, 0.05);
+    --bxsh--code: 0 10px 50px 0 rgba(0, 0, 0, 0.2), 0 20px 30px 0 rgba(0, 0, 0, 0.3);
+    --bxsh--search-border: inset 0 0 0 1px var(--divider);
   }
 
   // .u--cbox {
@@ -21,13 +48,17 @@
     --brand: hsl(192, 72%, 56%);
     --accent: #ff5080;
     /* // base */
-    --base: hsl(228, 10%, 8%);
-    --base-2: hsl(228, 8%, 20%);
+    --base: hsl(228, 0%, 15%);
+    --base-2: hsl(228, 3%, 20%);
     /* #2b2c30 */
 
     /* // content */
     --text: hsl(48, 12%, 95%); /* Cloud Dancer */
     --text-2: hsl(48, 8%, 84%);
+
+    --eyebrow-c: var(--link);
+    --gray-hi-c: var(--text);
+    --gray-lo-c: var(--text-2);
 
     // --code-bgc: hsl(205, 10%, 10%);
 
@@ -40,10 +71,62 @@
     /* // color mix */
     --cbox-cPct: 4%;
     --cbox-bgPct: 6%;
+
+    // 下層コンテンツ色設定
+    --docs-bg: hsl(228, 0%, 10%);
+    --docsLink-bgc: color-mix(in srgb, var(--base), var(--eyebrow-c) 10%);
+    // --card-bg: var(--divider);
+    --searchBtn-bg: var(--base-2);
+    --themeModeSwitch-bgc: var(--base-2);
+    --themeModeSwitch-btn: var(--base);
+    --themeModeSwitch-btn-bg: var(--text);
+    // --bxsh--base: 0 1px 4px 0 rgba(255, 255, 255, 0.03), 0 2px 16px 0 rgba(255, 255, 255, 0.05);
   }
 }
 
 @layer lism-custom {
+  // ホバーエフェクト（文字色・背景色）のトランジション
+  .c--iconBtn,
+  .c--searchTrigger,
+  .c--docsLink,
+  .c--button {
+    transition:
+      color 0.15s,
+      background-color 0.15s;
+  }
+
+  .c--shadow-box {
+    border-radius: var(--bdrs--15);
+    background-color: var(--base);
+    box-shadow: var(--bxsh--base);
+  }
+
+  // 角丸 shadow-box 内でスクロール。バーは右端、padding は .c--scroll__inner 側
+  .c--scrollPanel {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    > .c--scroll {
+      flex: 1;
+      min-height: 0;
+    }
+  }
+
+  /* トップページのみ半透明＋blur（下層 docs は --base のまま） */
+  .p--front .c--siteHeader .c--shadow-box {
+    background-color: color-mix(in srgb, var(--base), transparent 25%);
+    backdrop-filter: blur(32px);
+  }
+
+  // スクロールバーのスタイル
+  .c--scroll {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--divider) transparent;
+  }
+
   :root[data-theme='dark'] {
     .b--chat {
       --cbox-bgPct: 16%;

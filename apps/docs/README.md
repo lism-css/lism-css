@@ -109,7 +109,7 @@ src/
 │   ├── _parts.scss
 │   ├── _preview.scss
 │   ├── _code.scss
-│   ├── _lg.scss
+│   ├── _kv-editor.scss
 │   ├── _theme.scss
 │   ├── _docs/                # docs 系の個別スタイル
 │   └── _memo/                # 検証用メモスタイル

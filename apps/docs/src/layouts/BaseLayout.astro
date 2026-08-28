@@ -10,7 +10,7 @@ import '../styles/main.scss';
 import { siteConfig } from '@/config/site';
 
 // 多言語対応
-import { getRootLang, type LangCode } from '@/lib/i18n';
+import { getRootLang, t, type LangCode } from '@/lib/i18n';
 
 // コンポーネント
 import Head from '../components/Head.astro';
@@ -20,10 +20,10 @@ import Footer from '../components/Footer.astro';
 import Sidebar from '../components/Sidebar.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import FixedToc from '../components/FixedToc.astro';
-import ShareBtns from '../components/ShareBtns.astro';
-import type { TocItem } from '../lib/generateToc';
+// import ShareBtns from '../components/ShareBtns.astro';
+import { PAGE_TITLE_ID, type TocItem } from '../lib/generateToc';
 import type { SchemaType } from '../lib/jsonLd';
-import { Grid, Stack, Container } from 'lism-css/astro';
+import { Grid, Stack, Container, Box } from 'lism-css/astro';
 
 interface Props {
   title: string;
@@ -61,35 +61,41 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
     {schemaType && <JsonLd schemaType={schemaType} title={title} description={description} lang={lang} date={date} />}
   </Head>
   <body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
-    <div class="is--container">
+    <Box class="is--container" bgc="var(--docs-bg)">
       <Header />
       <Grid
         class={`c--siteWrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
         gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
         gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
-        min-h="100svh"
+        px="10"
+        pb="10"
+        mt="20"
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="c--siteMain">
-          <span class="u--srOnly" id="_top" aria-hidden="true"></span>
-          <slot />
-          <Footer />
+        <Container as="main" class="c--siteMain c--shadow-box c--scrollPanel" tabindex={-1} aria-label={t(lang, 'main').ariaLabel}>
+          <Box class="c--siteMain_scroll c--scroll" fx="1" min-h="0" tabindex={0} ov-y="auto">
+            <Container isWrapper={toc ? true : 'l'} hasGutter py="40">
+              {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
+              <span id={PAGE_TITLE_ID} class="c--scrollTarget" aria-hidden="true"></span>
+              <slot />
+              <Footer />
+            </Container>
+          </Box>
         </Container>
         {
           toc && (
-            <Stack as="aside" class="c--siteToc" isContainer g="15" py="20" d={['none', null, null, 'flex']}>
-              <TableOfContents toc={toc} px="15" />
-              <ShareBtns url={canonicalUrl} title={title} px="15" />
+            <Stack as="aside" class="c--siteToc c--shadow-box c--scrollPanel" isContainer g="15" d={['none', null, null, 'flex']} min-h="0">
+              <TableOfContents toc={toc} px="20" py="30" />
             </Stack>
           )
         }
       </Grid>
-    </div>
+    </Box>
     {
       toc && (
         <FixedToc>
           <TableOfContents toc={toc} px="30" />
-          <ShareBtns url={canonicalUrl} title={title} px="30" />
+          {/* <ShareBtns url={canonicalUrl} title={title} px="30" /> */}
         </FixedToc>
       )
     }
