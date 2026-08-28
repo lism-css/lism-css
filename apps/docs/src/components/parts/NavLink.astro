@@ -5,20 +5,8 @@ const { href, isActive, ...props } = Astro.props;
 ---
 
 {/* ヘッダー: Flexで横並び、両端揃え */}
-<Link
-  href={href}
-  class:list={['c--navLink', { _active: isActive }]}
-  d="block"
-  c="inherit"
-  td="none"
-  hl="s"
-  fz="xs"
-  hov="-bgc"
-  px="15"
-  py="5"
-  {...props}
->
-  <Inline class="c--navLink_inner" lh="1.5">
+<Link href={href} class:list={['c--navLink', { _active: isActive }]} d="block" c="inherit" td="none" hl="s" hov="-bgc" px="15" py="5" {...props}>
+  <Inline class="c--navLink_inner">
     <slot />
   </Inline>
 </Link>
@@ -26,6 +14,7 @@ const { href, isActive, ...props } = Astro.props;
 <style is:global>
   .c--navLink {
     position: relative;
+    font-size: var(--fz--s);
 
     &::before {
       content: '';
@@ -37,6 +26,7 @@ const { href, isActive, ...props } = Astro.props;
       background-color: var(--eyebrow-c);
       opacity: 0;
     }
+
     /* 現在位置のハイライトスタイル（NavLinkのデフォルトスタイルを上書き） */
     &:hover,
     &._active {
@@ -55,6 +45,10 @@ const { href, isActive, ...props } = Astro.props;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+  }
+
+  .c--toc .c--navLink {
+    font-size: var(--fz--xs);
   }
 
   /* .c--toc .c--navLink {
