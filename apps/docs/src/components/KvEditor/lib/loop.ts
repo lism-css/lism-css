@@ -5,7 +5,7 @@
 // - ヒーローへの反映（editor.commitView）はハンク確定ごと。書き換えた行のフラッシュ
 //   （editor.flashLines）を先に点灯し、ひと呼吸置いて反映される
 //   （「保存 → 結果が変わる」の順序。タイミングは code-anim.ts が管理する）
-// - 自動一時停止: エディターへのホバー（マウス系ポインターのみ）/ 画面外 / 非アクティブタブ。
+// - 自動一時停止: コード編集領域へのホバー（マウス系ポインターのみ。バーは対象外）/ 画面外 / 非アクティブタブ。
 //   条件が戻れば少し間を置いて、止まった位置の続きから自動再開する
 // - 完全停止: エディターへの focus / pointerdown / 入力、または ⏸ ボタン。自動では再開しない。
 //   ▶ での再開は「停止時からコードが変わっていなければ続きから、変わっていれば初期コードへ戻して最初から」
@@ -36,8 +36,10 @@ const PAUSE_AFTER_TAB_SWITCH = 800; // 周回の継ぎ目でタブを自動切�
 
 interface LoopPlayerOptions {
   editor: EditorApi;
-  /** エディターコンポーネントのルート（ホバー・可視判定の対象） */
+  /** エディターコンポーネントのルート（可視判定の対象） */
   root: HTMLElement;
+  /** ホバーによる自動一時停止の対象。バーを含まないコード編集領域を渡す（理由は pointerenter の配線） */
+  hoverTarget: HTMLElement;
   /** バーの ▶/⏸ トグルボタン */
   toggleButtons: HTMLButtonElement[];
   /** ハイライターの準備完了（読み込み失敗時も resolve される）。自動開始はこれを待つ */
@@ -47,7 +49,7 @@ interface LoopPlayerOptions {
   scenario: ScenarioStep[];
 }
 
-export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHtml, scenario }: LoopPlayerOptions): void {
+export function createLoopPlayer({ editor, root, hoverTarget, toggleButtons, ready, initialHtml, scenario }: LoopPlayerOptions): void {
   // 自動再生がユーザーのスクロール位置を奪わないよう、reveal のページスクロールは無効にする。
   // onApply（ハンク確定の反映演出）は live モードだけの配線: 書き換えた行をフラッシュで光らせる
   const animator = createCodeAnimator(editor, {
@@ -186,14 +188,17 @@ export function createLoopPlayer({ editor, root, toggleButtons, ready, initialHt
   editor.textarea.addEventListener('beforeinput', takeOver);
 
   // ホバー（マウス系ポインターのみ）: 覗き込み・編集への導線として一時停止し、離れたら続きから再開する。
+  // 対象はコード編集領域だけで、バー（タブ・▶/⏸ トグル）は含めない: トグルを含めると外から
+  // ボタンへポインターを移した時点で一時停止して running を失い、そのクリックが ▶（再生）側へ
+  // 入ってしまい、停止手段（WCAG 2.2.2）として機能しなくなる。
   // タッチはタップで pointerenter が発火し leave が来ないことがあるため対象外
   //（タッチの停止は textarea への pointerdown = 完全停止が担う）
-  root.addEventListener('pointerenter', (e) => {
+  hoverTarget.addEventListener('pointerenter', (e) => {
     if (e.pointerType === 'touch') return;
     hoverPaused = true;
     pauseAuto();
   });
-  root.addEventListener('pointerleave', (e) => {
+  hoverTarget.addEventListener('pointerleave', (e) => {
     if (e.pointerType === 'touch') return;
     hoverPaused = false;
     tryResume(RESUME_DELAY);

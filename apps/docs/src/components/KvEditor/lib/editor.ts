@@ -719,7 +719,17 @@ export function initKvEditor(): void {
     const toggleButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-kv-loop-toggle]')];
     // ▶/⏸ トグルは自動で動き続けるデモの停止手段（WCAG 2.2.2）なので、無ければ再生しない
     if (toggleButtons.length > 0) {
-      createLoopPlayer({ editor: editorApi, root: demo, toggleButtons, ready: highlightReady, initialHtml, scenario: SCENARIO_BY_LANG[lang] });
+      createLoopPlayer({
+        editor: editorApi,
+        root: demo,
+        // ホバー一時停止はコード編集領域だけを対象にする（バーの ▶/⏸ トグルを含めない）。
+        // パネルが引けない場合も textarea なら必ずバーの外側なので、そちらへ退避する
+        hoverTarget: tabPanel ?? textarea,
+        toggleButtons,
+        ready: highlightReady,
+        initialHtml,
+        scenario: SCENARIO_BY_LANG[lang],
+      });
     }
     return;
   }

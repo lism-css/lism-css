@@ -420,7 +420,8 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 停止は 2 段階に分かれる:
 
 - **自動一時停止**（位置を保ち、条件が戻れば少し間を置いて続きから自動再開する）
-  - エディターへのホバー（`pointerenter` / `pointerleave`。覗き込み・編集への導線。タップで enter だけ発火して leave が来ないことがあるため `pointerType: 'touch'` は対象外）
+  - コード編集領域へのホバー（`pointerenter` / `pointerleave`。覗き込み・編集への導線。タップで enter だけ発火して leave が来ないことがあるため `pointerType: 'touch'` は対象外）
+    - 対象はエディターのルートではなくパネル（`#kv-editor-panel`）だけで、バー（タブ・▶/⏸ トグル）は含めない。トグルを含めると外からボタンへポインターを移した時点で一時停止して `running` を失い、そのクリックが ▶（再生）側へ入って停止できなくなる
   - 画面外（IntersectionObserver）・非アクティブタブ（visibilitychange）— CPU・バッテリーへの配慮
 - **完全停止**（自動では再開しない。▶ ボタンでのみ再開）
   - エディターへの `focus` / `pointerdown` / `beforeinput`（編集意図とみなして明け渡す。`player.ts` の中断トリガーと同じ 3 点）
