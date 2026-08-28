@@ -435,7 +435,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 ### 自動開始の抑制
 
 - **prefers-reduced-motion では自動開始しない**（静的な初期表示のまま）。▶ で明示的に開始した場合のみ、タイピングを省略した即時適用 + ポーズで再生する（`animateCode` の reduced-motion 分岐がそのまま効く）
-- **ハイライター（shiki）の準備完了を待つ**: editor.ts のアイドル時ロード完了（失敗時も resolve）を `highlightReady` promise で受け取ってから開始する。プレーンテキストでタイピングが始まるのを防ぐ
+- **ハイライター（shiki）の準備完了を待つ**: editor.ts のアイドル時ロード完了（失敗時も resolve）を `highlightReady` promise で受け取ってから開始する。プレーンテキストでタイピングが始まるのを防ぐ。準備前に ▶ を押した場合も同じで、初期コードへのリセットだけを行い、再生の開始は準備完了後の `tryResume` に委ねる
 - **自動再生はページをスクロールしない**: reveal（編集位置の可視化）は textarea 内部のみ（`createCodeAnimator` の `scrollWindowOnReveal: false`）。ページ側のスクロール（`ensureEditorVisible`）はユーザー起動の ▶ リスタート時のみ行う
 
 ### 「Live Demo ▶/⏸」トグル・アクセシビリティ

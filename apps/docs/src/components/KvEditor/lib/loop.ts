@@ -264,6 +264,9 @@ export function createLoopPlayer({ editor, root, hoverTarget, toggleButtons, rea
     holdTabOnce = false;
     animator.snapTo(initialHtml);
     animator.ensureEditorVisible();
+    // ハイライター準備前の ▶ はここで開始せず、準備完了後の自動開始（ready.then → tryResume）へ委ねる。
+    // 自動開始と揃えてプレーンテキストでのタイピングを防ぐ（manualStop / autoBlocked は解除済みなのでゲートは通る）
+    if (!readyFlag) return;
     void run(0);
   };
   for (const button of toggleButtons) {
