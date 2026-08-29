@@ -9,11 +9,20 @@
 import { getRootLang, t, type LangCode } from '@/lib/i18n';
 import { INITIAL_HTML_BY_LANG } from './initial-code';
 import { highlight } from './lib/highlight';
+import { STRINGS } from './lib/strings';
 
 interface Props {
   /** 表示言語。省略時は root 言語（ja）。クライアント側へは data-kv-lang で受け渡す */
   lang?: LangCode;
 }
+
+// デモの提示モード。クライアント側へは data-kv-mode で受け渡す。
+// - 'live': チャット演出なしの自動ループ再生（AIパネル非表示・エディター全幅・バーに ▶/⏸ トグル）
+// - 'ai':   AIアシスタント風のチャットデモ（パネルのマークアップ・player.ts・シナリオ文言は温存
+//           しているため、ここを戻すだけで復活する）
+const DEMO_MODE: 'live' | 'ai' = 'live';
+// const はリテラル型へ絞り込まれ、リテラル同士の比較が ts(2367) になるため union へ広げてから判定する
+const isLiveMode = (DEMO_MODE as 'live' | 'ai') === 'live';
 
 const { lang = getRootLang() } = Astro.props;
 const initialHtml = INITIAL_HTML_BY_LANG[lang];
@@ -25,7 +34,13 @@ const highlighted = await highlight(initialHtml, 'html');
 
 <div class="c--kvEditorHero" data-kv-hero set:html={initialHtml} />
 
-<div class="c--kvEditor" data-kv-editor data-kv-lang={lang}>
+{
+  /* 手書き風の "Edit Here!!" 誘導装飾（広い画面幅のみ表示）。エディターは overflow: hidden のため
+     内側に置けず、この高さ 0 の行を基準にエディター右上へ絶対配置する（_kv-editor.scss） */
+}
+<span class="c--kvEditorEditHere" aria-hidden="true"></span>
+
+<div class="c--kvEditor" data-kv-editor data-kv-lang={lang} data-kv-mode={DEMO_MODE}>
   <div class="c--kvEditor_window">
     <div class="c--kvEditor_bar">
       <span class="c--kvEditor_dots" aria-hidden="true"></span>
@@ -51,11 +66,29 @@ const highlighted = await highlight(initialHtml, 'html');
           data-kv-tab="jsx">JSX</button
         >
       </div>
+      {
+        isLiveMode && (
+          /* ライブループ再生の「Live Demo ▶/⏸」トグル。自動で動き続けるデモの停止手段（WCAG 2.2.2）と、
+             ホバーを持たないタッチデバイスの再開導線を兼ねる。ラベルは「勝手に動いている」ことの説明で、
+             再生中はネオン風に発光する。アイコンは CSS（mask）で状態別に描画する。
+             アクセシブルネームは aria-label が担うためラベルは aria-hidden（可視文言 "live demo" を含むので WCAG 2.5.3 も満たす） */
+          <button class="c--kvEditor_playToggle" type="button" data-kv-loop-toggle data-kv-loop-state="paused" aria-label={STRINGS.playDemo}>
+            <span class="c--kvEditor_playToggleLabel" aria-hidden="true">
+              {STRINGS.liveDemo}
+            </span>
+            {/* アイコンは span 実要素。mask と drop-shadow を同一要素に掛けると filter → mask の順で
+                影ごと切り抜かれるため、mask は ::before・グローの filter は span 本体に分離する */}
+            <span class="c--kvEditor_playToggleIcon" aria-hidden="true" />
+          </button>
+        )
+      }
     </div>
     {/* パネルは両タブで共有する 1 つの領域。aria-labelledby は switchTab がアクティブタブの id へ更新する */}
     <div class="c--kvEditor_editor" role="tabpanel" id="kv-editor-panel" aria-labelledby="kv-tab-html">
       {/* preInner は textarea のスクロールに transform で追従する（要素自体は差し替えない） */}
       <div class="c--kvEditor_pre" aria-hidden="true">
+        {/* 反映フラッシュ（書き換えた行の背景をひと呼吸光らせる）。テキストの下に敷くため preInner より前に置く */}
+        <span class="c--kvEditor_lineFlash" data-kv-line-flash></span>
         <div class="c--kvEditor_preInner" data-kv-pre-inner set:html={highlighted} />
       </div>
       <textarea
@@ -74,19 +107,27 @@ const highlighted = await highlight(initialHtml, 'html');
       <div class="c--kvEditor_snackbarStack" id="kv-editor-notices" data-kv-snackbar role="status"></div>
     </div>
   </div>
-  <aside class="c--kvEditor_panel">
-    <div class="c--kvEditor_placeholder" data-kv-placeholder>
-      <span class="c--kvEditor_orb" aria-hidden="true"></span>
-      <p class="c--kvEditor_placeholderText">Just ask. The code writes itself.</p>
-    </div>
-    <div class="c--kvEditor_messages" data-kv-messages></div>
-    {/* SR向けの隠しライブリージョン。タイピング演出の途中経過は告知せず、確定した文言だけを player.ts が流し込む */}
-    <p class="u--srOnly" data-kv-live aria-live="polite"></p>
-    <button class="c--kvEditor_ask" type="button" data-kv-play aria-label="Ask AI to edit... (play the AI demo)">
-      <span class="c--kvEditor_askText" data-kv-ask-text>Ask AI to edit...</span>
-      <span class="c--kvEditor_askArrow" aria-hidden="true"><span>↑</span></span>
-    </button>
-  </aside>
+  {
+    !isLiveMode && (
+      <aside class="c--kvEditor_panel">
+        <div class="c--kvEditor_placeholder" data-kv-placeholder>
+          <span class="c--kvEditor_orb" aria-hidden="true" />
+          <p class="c--kvEditor_placeholderText">Just ask. The code writes itself.</p>
+        </div>
+        <div class="c--kvEditor_messages" data-kv-messages />
+        {/* SR向けの隠しライブリージョン。タイピング演出の途中経過は告知せず、確定した文言だけを player.ts が流し込む */}
+        <p class="u--srOnly" data-kv-live aria-live="polite" />
+        <button class="c--kvEditor_ask" type="button" data-kv-play aria-label="Ask AI to edit... (play the AI demo)">
+          <span class="c--kvEditor_askText" data-kv-ask-text>
+            Ask AI to edit...
+          </span>
+          <span class="c--kvEditor_askArrow" aria-hidden="true">
+            <span>↑</span>
+          </span>
+        </button>
+      </aside>
+    )
+  }
 </div>
 
 <script>

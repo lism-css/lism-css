@@ -8,6 +8,8 @@
 //       sm→md→lg の昇順で並べ、style 属性（`--{prop}_{bp}: 値`）は class の直後に置く。
 //       値はトークンなら `var(--{token}--{key})`（space は `var(--s{n})`）。ズレると JSX タブで
 //       配列 prop（`fz={['4xl', null, '5xl']}`）へ集約されず className 扱いになる。
+// NOTE: `u--{name}` クラスは JSX の util prop（`util="{name}"`）と往復する。class 内の正準位置は
+//       先頭（レイアウトクラスがある場合はその直後）。それ以外の位置に書くと往復で移動する。
 // NOTE: 言語で変わるのはリード2行と href のプレフィックスのみ。マークアップ構造・クラス属性は
 //       言語間で必ず揃えること（scenario.ts の edits がクラス属性への文字列置換で両言語に効く前提）。
 import type { LangCode } from '@/config/site';
@@ -18,17 +20,17 @@ const buildInitialHtml = (
   lead1: string,
   lead2: string,
   urlPrefix: string
-): string => `<h1 class="-fw:700 -fz:4xl -fz_md -ta:center" style="--fz_md: var(--fz--5xl)">
+): string => `<h1 class="u--trim -fw:700 -fz:4xl -fz_md -hl:l -ta:center" style="--fz_md: var(--fz--5xl)">
   The CSS Design Framework
   <br />
   for AI and Humans
 </h1>
-<p class="-fz:s -fz_md -ta:center -mbs:30" style="--fz_md: var(--fz--l)">
+<p class="-fz:s -fz_md -ta:center -my:40" style="--fz_md: var(--fz--l)">
   ${lead1}
   <br />
   ${lead2}
 </p>
-<div class="l--flex -jc:center -ai:center -g:15 -mbs:40">
+<div class="l--flex -jc:center -ai:center -g:15">
   <a class="l--flex -ai:center -p:10 -c:base -bdrs:20 -fw:500 -td:none -lh:s" href="${urlPrefix}/docs/installation/">
     <span class="-px:10">Get Started</span>
   </a>

@@ -32,20 +32,19 @@ interface ScenarioStepDef {
 const STEP_DEFS: ScenarioStepDef[] = [
   {
     userMessage: {
-      ja: 'キャッチコピーの色を変更して',
-      en: 'Change the headline color',
+      ja: 'キャッチコピーをもっと太くして',
+      en: 'Make the headline bolder',
     },
     aiMessage: {
-      ja: '見出しにブランドカラーを適用します。-c:brand クラスを追加しますね。',
-      en: "I'll apply the brand color to the heading by adding the -c:brand class.",
+      ja: '見出しの太さを -fw:900 に変更します。',
+      en: "I'll change the heading weight to -fw:900.",
     },
     aiMessageJsx: {
-      ja: '見出しにブランドカラーを適用します。c="brand" props を追加しますね。',
-      en: 'I\'ll apply the brand color to the heading by adding the c="brand" prop.',
+      ja: '見出しの太さを fw="900" に変更します。',
+      en: 'I\'ll change the heading weight to fw="900".',
     },
-    // 末尾の引用符まで含めて h1 の class 属性にだけ一致させる（リード p も -fz_md を持つが、
-    // p の class は -mbs:30 で終わるため衝突しない）
-    edits: [['-fz_md -ta:center"', '-fz_md -ta:center -c:brand"']],
+    // -fw:700 は h1 だけが持つ（Get Started ボタンは -fw:500）ため一意に一致する
+    edits: [['-fw:700', '-fw:900']],
   },
   {
     userMessage: {
@@ -75,7 +74,7 @@ const STEP_DEFS: ScenarioStepDef[] = [
       ja: 'レイアウトを Flex から Stack コンポーネントに切り替えて縦並びにします。',
       en: "I'll switch from the Flex to the Stack component to stack them vertically.",
     },
-    edits: [['<div class="l--flex -jc:center -ai:center -g:15 -mbs:40">', '<div class="l--stack -ai:center -g:10 -mbs:40">']],
+    edits: [['<div class="l--flex -jc:center -ai:center -g:15">', '<div class="l--stack -ai:center -g:10">']],
   },
 ];
 

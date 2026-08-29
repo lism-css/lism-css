@@ -18,13 +18,13 @@
     // 二重縮小になるため書かないこと。CSS 側が担うのはトークン化できない任意値
     // （色・行間・影など）のみ。
 
-    // 見出し色・本文色・行間は Lism のトークンクラスに無い任意値なので、
-    // エディター内容（INITIAL_HTML）ではなくここで既定として当てる。
+    // 見出し色・リードの本文色と行間は Lism のトークンクラスに無い任意値なので、
+    // エディター内容（INITIAL_HTML）ではなくここで既定として当てる
+    //（見出しの行間はトークンで表現できるため、エディター内容の -hl:l が担う）。
     // Property Class（-c:* 等）は非レイヤーでこの指定より強いため、
-    // シナリオが後から付ける -c:brand などは正しく上書きされる。
+    // エディターで後から付く -c:* などは正しく上書きされる。
     h1 {
       color: var(--gray-hi-c);
-      line-height: 1.25;
       letter-spacing: var(--lts--tight);
     }
     p {
@@ -96,6 +96,39 @@
   }
 
   /* ----------------------------------------
+      "Edit Here!!" 手書き風装飾
+   ---------------------------------------- */
+  // エディター右上に浮かべる手書き風の誘導グラフィック。Figma 作成の透過 PNG（黒）を mask 化して
+  // background-color で着色し、--gray-hi-c がライト（#222）／ダーク（白系）のインク色反転を担う。
+  // .c--kvEditor は overflow: hidden のため内側に置けず、直前の高さ 0 の行を基準に絶対配置する。
+  .c--kvEditorEditHere {
+    display: none;
+
+    // ヒーロー下端の中央寄せコンテンツと重ならない幅でのみ表示する
+    @media (min-width: 960px) {
+      position: relative;
+      display: block;
+      height: 0; // フローには高さを足さず、エディター上端からの位置基準だけを作る
+      max-width: 56rem; // エディターウィンドウと同じ最大幅・中央寄せで右端を揃える
+      margin-inline: auto;
+      pointer-events: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        right: -5.6rem;
+        bottom: -3.125rem; // エディター上端（この行の 3.5rem 下）の少し上に矢印の先端が乗る位置
+        width: 10rem;
+        aspect-ratio: 426 / 281; // 書き出し PNG の実寸比
+        background-color: var(--gray-hi-c);
+        $editHere: url('/img/kv-edit-here.png');
+        mask: $editHere center / contain no-repeat;
+        -webkit-mask: $editHere center / contain no-repeat;
+      }
+    }
+  }
+
+  /* ----------------------------------------
       エディターウィンドウ + AIパネル
    ---------------------------------------- */
   .c--kvEditor {
@@ -105,6 +138,9 @@
     --kvEditor-text: #e1e4e8; // コード既定色は github-dark に合わせる（ハイライト色は現行維持）
     --kvEditor-text-dim: #bfbfbf;
     --kvEditor-warning: #e3b341; // 警告色（github-dark の yellow 系。致命的でない通知に使う）
+    // ネオンの発光色（AIパネルの orb グラデーション先頭の teal と共通）。
+    // Live Demo トグルの点灯と、反映フラッシュ（.c--kvEditor_lineFlash）で使う
+    --kvEditor-neon: #89f9e1;
 
     // textarea の縮小率（= エディターの見た目のフォントサイズ ÷ 16px）。
     // iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームするため、
@@ -114,7 +150,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) 12.6875rem;
     width: 100%;
-    max-width: 56.4375rem;
+    max-width: 56rem;
     height: 28rem;
     margin-block-start: 3.5rem;
     margin-inline: auto; // ラッパー幅がウィンドウ最大幅を超える場合も中央寄せ（ヒーローの中央揃えと揃える）
@@ -134,6 +170,16 @@
     }
   }
 
+  // live モード（チャットパネルなしの自動ループ再生）: エディターがウィンドウ全幅を使う
+  .c--kvEditor[data-kv-mode='live'] {
+    grid-template-columns: minmax(0, 1fr);
+
+    @media not (min-width: 800px) {
+      grid-template-rows: minmax(0, 1fr);
+      height: 24.4375rem; // ai モードの SP 高さ（33.5625rem）からパネル下段（9.125rem）を除いた高さ
+    }
+  }
+
   .c--kvEditor_window {
     display: flex;
     flex-direction: column;
@@ -141,11 +187,11 @@
     min-height: 0;
   }
 
-  /* ウィンドウバー（信号ドット + タブ）。背景はウィンドウと同一（バーの色分けなし） */
+  /* ウィンドウバー（信号ドット + タブ + live モードの ▶/⏸）。背景はウィンドウと同一（バーの色分けなし）。
+     タブは margin の auto で右寄せする（space-between だと live モードでトグルが増えたときにタブが中央へ動くため） */
   .c--kvEditor_bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-shrink: 0;
     padding: 0.6rem 0.75rem 0.6rem 1rem;
   }
@@ -165,6 +211,7 @@
 
   .c--kvEditor_tabs {
     display: flex;
+    margin-inline-start: auto;
   }
 
   .c--kvEditor_tab {
@@ -192,6 +239,93 @@
     // 構文が不正な間の控えめなインジケーター（スナックバーと同じ warning トーン。両タブ共通）
     &[data-invalid] {
       color: var(--kvEditor-warning);
+    }
+    // 自動タブ切替の合図: 切り替わった先のタブ文字をネオン色でひと呼吸光らせる
+    //（属性の付け外しは loop.ts。手動切替では光らせない。
+    // 減衰のみ = 点灯の瞬間を合図として立たせる理由は反映フラッシュと同じ）
+    &[data-kv-tab-flash] {
+      animation: kvEditor-tab-flash 0.8s ease-out;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+  }
+
+  /* ライブループ再生の「Live Demo ▶/⏸」トグル（live モードのみ）。 */
+  .c--kvEditor_playToggle {
+    // 再生中（playing）は ⏸、停止中（paused）は ▶
+    --kvEditor-toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 2.5v11L13.5 8Z'/%3E%3C/svg%3E");
+
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    height: 1.75rem;
+    margin-inline-start: 0.5rem;
+    padding: 0 0.5rem;
+    border: none;
+    border-radius: 2px;
+    background: transparent;
+    color: var(--kvEditor-text-dim);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: var(--kvEditor-neon);
+    }
+
+    // 再生中: ネオン点灯（ラベル・アイコンとも発光色 + グロー、ラベルはゆっくり明滅）
+    &[data-kv-loop-state='playing'] {
+      --kvEditor-toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 2.5h3v11H4Zm5 0h3v11H9Z'/%3E%3C/svg%3E");
+
+      color: var(--kvEditor-neon);
+
+      // グローは mask 済みの ::before を内包する span 側に掛ける（アイコン形状の影になる）
+      .c--kvEditor_playToggleIcon {
+        filter: drop-shadow(0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 50%));
+      }
+
+      .c--kvEditor_playToggleLabel {
+        text-shadow:
+          0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 80%),
+          0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 40%);
+        animation: kvEditor-neon-pulse 1.5s ease-in-out infinite alternate;
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+    }
+  }
+
+  .c--kvEditor_playToggleLabel {
+    font-family: var(--ff--mono);
+    font-weight: 600;
+    font-size: 0.75em;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    white-space: nowrap;
+
+    // 320px級の極小幅ではバー（ドット + タブ 128px + トグル）が収まらないためラベルを畳む（アイコンは残る）
+    @media not (min-width: 360px) {
+      display: none;
+    }
+  }
+
+  /* ▶/⏸ アイコン（ラベルの右）。mask（形の切り抜き）と drop-shadow（グロー）は同一要素に掛けると
+     filter → mask の順で適用されて影ごと切り抜かれてしまうため、mask は ::before に分離している
+     （グローの filter は再生中に外側のこの span へ掛かる。playToggle 側を参照） */
+  .c--kvEditor_playToggleIcon {
+    flex-shrink: 0;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: currentColor;
+      mask: var(--kvEditor-toggle-icon) center / contain no-repeat;
+      -webkit-mask: var(--kvEditor-toggle-icon) center / contain no-repeat;
     }
   }
 
@@ -261,6 +395,31 @@
     width: max-content;
     min-width: 100%;
     will-change: transform;
+  }
+
+  // ライブループ再生の「反映」フィードバック: ハンク確定の瞬間、書き換えた行の背景を
+  // ネオン色でひと呼吸だけ光らせる（位置決め・属性の付け外しは editor.ts の flashLines。
+  // アニメ終了で外される）。テキストの下に敷くため DOM 上 preInner より前に置いている。
+  // 減衰のみ（最大輝度から始める）の理由: 点灯の瞬間を「保存」の合図として立たせるため。
+  // 立ち上がりを挟むとピークが遅れ、ひと呼吸後に続くヒーロー反映との前後関係が曖昧になる
+  //（フラッシュ点灯 → ヒーロー反映の順序と「間」は code-anim.ts の PAUSE_FLASH_TO_APPLY が管理する）
+  .c--kvEditor_lineFlash {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 2px;
+    background-color: color-mix(in srgb, var(--kvEditor-neon), transparent 75%);
+    box-shadow: 0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 50%); // 行の上下へのにじみ
+    opacity: 0;
+    will-change: transform; // syncScroll が縦スクロールへ transform で追従させる
+  }
+
+  .c--kvEditor_lineFlash[data-kv-flash-active] {
+    animation: kvEditor-applied-flash 0.5s ease-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
   }
 
   .c--kvEditor_input {
@@ -608,5 +767,46 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+// 反映フラッシュ（書き換えた行の背景）の減衰。輝度は .c--kvEditor_lineFlash 側の色が担う
+@keyframes kvEditor-applied-flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// 自動タブ切替の合図（タブ文字のネオン点灯 → 通常色へ減衰）
+@keyframes kvEditor-tab-flash {
+  from {
+    color: var(--kvEditor-neon);
+    text-shadow:
+      0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 40%),
+      0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 20%);
+  }
+  to {
+    color: #fff;
+    text-shadow:
+      0 0 4px transparent,
+      0 0 12px transparent;
+  }
+}
+
+// 「Live Demo」ラベルのネオン明滅（再生中のみ。reduced-motion 時は静的なグローに固定）。
+// 消灯までは落とさず、グローの強弱でゆらぎを出す
+@keyframes kvEditor-neon-pulse {
+  from {
+    text-shadow:
+      0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 55%),
+      0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 75%);
+  }
+  to {
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--kvEditor-neon), transparent 25%),
+      0 0 16px color-mix(in srgb, var(--kvEditor-neon), transparent 50%);
   }
 }
