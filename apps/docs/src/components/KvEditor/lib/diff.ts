@@ -1,8 +1,11 @@
 // シナリオ再生のコード書き換えアニメで使う diff 計算。
-// - diffLineHunks: 行単位のLCSで「変更された行のまとまり（ハンク）」を列挙する。
-//   開始タグと閉じタグのように離れた場所が変わっても、間の無変更行を巻き込まない
-//   （例: JSXタブの <Flex>→<Stack> で子要素を再タイプさせないため）
-// - diffCode: 文字単位で共通の先頭・末尾を除いた差分（ハンク内のタイピング範囲を絞る）
+// - diffLineHunks: 文字列列のLCSで「変更されたまとまり（ハンク）」を列挙する。
+//   行の配列を渡せば行単位（開始タグと閉じタグのように離れた場所が変わっても、
+//   間の無変更行を巻き込まない。例: JSXタブの <Flex>→<Stack> で子要素を再タイプさせない）、
+//   トークンの配列を渡せばトークン単位のハンクになる汎用実装
+// - diffCode: 文字単位で共通の先頭・末尾を除いた差分（タイピング範囲を絞る）
+// - diffTokenEdits: ハンク内を空白区切りトークンのLCSでさらに分割し、
+//   「必要な箇所だけを順に書き換える」編集列を返す（クラス1個の置換・削除ごとに1編集）
 
 export interface CodeDiff {
   head: string;
@@ -43,7 +46,7 @@ export const diffCode = (from: string, to: string): CodeDiff => {
   };
 };
 
-/** 変更行のまとまり。fromLines[fromStart, fromEnd) を toLines[toStart, toEnd) に置き換える */
+/** 変更のまとまり。fromLines[fromStart, fromEnd) を toLines[toStart, toEnd) に置き換える */
 export interface LineHunk {
   fromStart: number;
   fromEnd: number;
@@ -51,7 +54,7 @@ export interface LineHunk {
   toEnd: number;
 }
 
-/** 行単位のLCSで変更ハンクを列挙する（対象は高々数十行なので O(m*n) で十分） */
+/** 文字列列のLCSで変更ハンクを列挙する（対象は高々数十要素なので O(m*n) で十分） */
 export const diffLineHunks = (fromLines: string[], toLines: string[]): LineHunk[] => {
   const m = fromLines.length;
   const n = toLines.length;
@@ -84,4 +87,83 @@ export const diffLineHunks = (fromLines: string[], toLines: string[]): LineHunk[
     hunks.push({ fromStart, fromEnd: i, toStart, toEnd: j });
   }
   return hunks;
+};
+
+/** 空白の連続も1トークンとして保持する分割（join('') で元の文字列に戻る） */
+const tokenize = (text: string): string[] => text.split(/(\s+)/).filter((token) => token !== '');
+
+/** トークン列を「(先行する区切り +) 単語」のユニット列へまとめる（join('') で元に戻る） */
+const groupUnits = (tokens: string[]): string[] => {
+  const units: string[] = [];
+  let current = '';
+  let hasWord = false;
+  for (const token of tokens) {
+    if (/^\s/.test(token) && hasWord) {
+      units.push(current);
+      current = token;
+      hasWord = false;
+    } else {
+      current += token;
+      hasWord ||= !/^\s/.test(token);
+    }
+  }
+  if (current !== '') units.push(current);
+  return units;
+};
+
+/**
+ * ハンク内のユニットを左から1対1の組にし、余った側はまとめて1つの挿入 / 削除にする。
+ * LCS はタイブレーク次第で「置換 + 隣接する削除 / 挿入」を1ハンクに併合することがあり
+ * （シナリオの進行方向と巻き戻しで併合のされ方が逆になる）、そのままだと1つの大きな
+ * 書き換えに見えてしまうため、ユニット単位の編集へ分け直して方向によらず同じ分割にする
+ */
+const pairHunkUnits = (fromUnits: string[], toUnits: string[]): [from: string, to: string][] => {
+  const pairs: [string, string][] = [];
+  const pairCount = Math.min(fromUnits.length, toUnits.length);
+  for (let k = 0; k < pairCount; k++) pairs.push([fromUnits[k], toUnits[k]]);
+  const fromRest = fromUnits.slice(pairCount).join('');
+  const toRest = toUnits.slice(pairCount).join('');
+  if (fromRest !== '' || toRest !== '') pairs.push([fromRest, toRest]);
+  return pairs;
+};
+
+/**
+ * ブロック内をトークン単位の編集列に分解する（「必要な箇所だけを順に書き換える」ためのdiff）。
+ * 各編集はそれまでの編集を適用した後の全文に対する置換で、
+ * head + removed + tail = 適用前 / head + inserted + tail = 適用後。
+ * 変更トークンのまとまり（ハンク）をさらにユニットの組へ分け、組ごとに diffCode で
+ * 共通の先頭・末尾を保持する（例: クラス値 `-g:15` → `-g:20` は `15` → `20` の置換になる）
+ */
+export const diffTokenEdits = (from: string, to: string): CodeDiff[] => {
+  const fromTokens = tokenize(from);
+  const toTokens = tokenize(to);
+  const edits: CodeDiff[] = [];
+  let head = ''; // 適用済み範囲（to 側の表記 + ハンク間の共通トークン）
+  let fromIndex = 0;
+  for (const hunk of diffLineHunks(fromTokens, toTokens)) {
+    head += fromTokens.slice(fromIndex, hunk.fromStart).join('');
+    const tailAfterHunk = fromTokens.slice(hunk.fromEnd).join('');
+    const pieces = pairHunkUnits(groupUnits(fromTokens.slice(hunk.fromStart, hunk.fromEnd)), groupUnits(toTokens.slice(hunk.toStart, hunk.toEnd)));
+    for (const [index, [fromPiece, toPiece]] of pieces.entries()) {
+      const inner = diffCode(fromPiece, toPiece);
+      if (inner.removed === '' && inner.inserted === '') {
+        head += toPiece; // 差分のない組（ユニットが偶然一致）は編集を出さない
+        continue;
+      }
+      // 同一ハンク内の未処理の組は from 側の表記のまま tail に残る
+      const restFrom = pieces
+        .slice(index + 1)
+        .map(([fromRest]) => fromRest)
+        .join('');
+      edits.push({
+        head: head + inner.head,
+        removed: inner.removed,
+        inserted: inner.inserted,
+        tail: inner.tail + restFrom + tailAfterHunk,
+      });
+      head += toPiece;
+    }
+    fromIndex = hunk.fromEnd;
+  }
+  return edits;
 };

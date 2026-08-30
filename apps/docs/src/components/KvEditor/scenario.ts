@@ -48,18 +48,54 @@ const STEP_DEFS: ScenarioStepDef[] = [
   },
   {
     userMessage: {
+      ja: '斜体にもしてみて',
+      en: 'Make it italic too',
+    },
+    aiMessage: {
+      ja: '見出しに -fs:italic を追加して斜体にします。',
+      en: "I'll add -fs:italic to italicize the heading.",
+    },
+    aiMessageJsx: {
+      ja: '見出しに fs="italic" を追加して斜体にします。',
+      en: 'I\'ll add fs="italic" to italicize the heading.',
+    },
+    // -fw:900 は前ステップで h1 だけに入る
+    edits: [['-fw:900', '-fw:900 -fs:italic']],
+  },
+  {
+    userMessage: {
       ja: 'ボタンをピル型にしたい',
       en: 'Make the buttons pill-shaped',
     },
     aiMessage: {
-      ja: 'Get Started ボタンの角丸を -bdrs:99 に変更します。',
-      en: "I'll round the Get Started button with -bdrs:99.",
+      ja: 'Get Started ボタンの角丸を -bdrs:99 に、余白を -p:15 に変更します。',
+      en: "I'll round the Get Started button with -bdrs:99 and bump its padding to -p:15.",
     },
     aiMessageJsx: {
-      ja: 'Get Started ボタンの角丸を bdrs="99" に変更します。',
-      en: 'I\'ll round the Get Started button with bdrs="99".',
+      ja: 'Get Started ボタンの角丸を bdrs="99" に、余白を p="15" に変更します。',
+      en: 'I\'ll round the Get Started button with bdrs="99" and bump its padding to p="15".',
     },
-    edits: [['-bdrs:20 -fw:500', '-bdrs:99 -fw:500']],
+    // -p:10 は検索ボタンにもあるため、Get Started ボタン（a）だけが持つ並びで1編集にまとめて一意に一致させる
+    edits: [['-p:10 -c:base -bdrs:20 -fw:500', '-p:15 -c:base -bdrs:99 -fw:500']],
+  },
+  {
+    userMessage: {
+      ja: '検索ボタンも同じ見た目に揃えて',
+      en: 'Match the search button too',
+    },
+    aiMessage: {
+      ja: '検索ボタンも -p:15 と -bdrs:99 に揃え、⌘K の角丸も -bdrs:99 にします。',
+      en: "I'll apply -p:15 and -bdrs:99 to the search button, and round the ⌘K badge too.",
+    },
+    aiMessageJsx: {
+      ja: '検索ボタンも p="15" と bdrs="99" に揃え、⌘K の角丸も bdrs="99" にします。',
+      en: 'I\'ll apply p="15" and bdrs="99" to the search button, and round the ⌘K badge too.',
+    },
+    // -p:10 -bgc:base は検索ボタン（button）だけの並び。-bdrs:10 は ⌘K の span だけが持つ
+    edits: [
+      ['-p:10 -bgc:base -bdrs:20', '-p:15 -bgc:base -bdrs:99'],
+      ['-bdrs:10', '-bdrs:99'],
+    ],
   },
   {
     userMessage: {
@@ -74,7 +110,7 @@ const STEP_DEFS: ScenarioStepDef[] = [
       ja: 'レイアウトを Flex から Stack コンポーネントに切り替えて縦並びにします。',
       en: "I'll switch from the Flex to the Stack component to stack them vertically.",
     },
-    edits: [['<div class="l--flex -jc:center -ai:center -g:15">', '<div class="l--stack -ai:center -g:10">']],
+    edits: [['<div class="l--flex -jc:center -ai:center -g:15">', '<div class="l--stack -ai:center -g:20">']],
   },
 ];
 

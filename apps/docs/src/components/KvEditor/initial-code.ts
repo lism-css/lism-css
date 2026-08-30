@@ -8,8 +8,8 @@
 //       sm→md→lg の昇順で並べ、style 属性（`--{prop}_{bp}: 値`）は class の直後に置く。
 //       値はトークンなら `var(--{token}--{key})`（space は `var(--s{n})`）。ズレると JSX タブで
 //       配列 prop（`fz={['4xl', null, '5xl']}`）へ集約されず className 扱いになる。
-// NOTE: `u--{name}` クラスは JSX の util prop（`util="{name}"`）と往復する。class 内の正準位置は
-//       先頭（レイアウトクラスがある場合はその直後）。それ以外の位置に書くと往復で移動する。
+// NOTE: `set--{name}` / `u--{name}` クラスは JSX の set / util prop と往復する。class 内の正準位置は
+//       先頭（レイアウトクラスがある場合はその直後）に set-- → u-- の順。それ以外の位置に書くと往復で移動する。
 // NOTE: 言語で変わるのはリード2行と href のプレフィックスのみ。マークアップ構造・クラス属性は
 //       言語間で必ず揃えること（scenario.ts の edits がクラス属性への文字列置換で両言語に効く前提）。
 import type { LangCode } from '@/config/site';
@@ -34,12 +34,12 @@ const buildInitialHtml = (
   <a class="l--flex -ai:center -p:10 -c:base -bdrs:20 -fw:500 -td:none -lh:s" href="${urlPrefix}/docs/installation/">
     <span class="-px:10">Get Started</span>
   </a>
-  <a class="l--flex -ai:center -p:10 -bgc:base -bdrs:20 -td:none -lh:s" href="${urlPrefix}/docs/" data-modal-open="search-modal">
+  <button class="l--flex set--plain -ai:center -p:10 -bgc:base -bdrs:20 -lh:s" type="button" data-modal-open="search-modal">
     <span class="-px:10">Search documentation...</span>
     <span class="-px:10 -py:5 -c:text -bgc:base-2 -bdrs:10 -fz:s -lh:1 -lts:s -d:none -d_md -bd" style="--d_md: inline-block">
       ⌘K
     </span>
-  </a>
+  </button>
 </div>`;
 
 export const INITIAL_HTML_BY_LANG: Record<DemoLang, string> = {

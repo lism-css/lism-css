@@ -105,6 +105,32 @@ describe('util prop（u-- クラス）', () => {
   });
 });
 
+describe('set prop（set-- クラス）', () => {
+  it('set--{name} クラスは set prop と往復する', () => {
+    expect(htmlToJsx('<button class="l--flex set--plain -p:10" type="button">x</button>')).toBe(
+      '<Flex as="button" set="plain" p="10" type="button">x</Flex>'
+    );
+    expect(jsxToHtml('<Flex as="button" set="plain" p="10" type="button">x</Flex>')).toBe(
+      '<button class="l--flex set--plain -p:10" type="button">x</button>'
+    );
+    expectRoundTrip('<button class="l--flex set--plain -p:10" type="button">x</button>');
+  });
+
+  it('set-- クラスの正準位置はレイアウトクラスの直後（u-- クラスの前）', () => {
+    expect(jsxToHtml('<Box set="plain" util="trim" p="10">x</Box>')).toBe('<div class="l--box set--plain u--trim -p:10">x</div>');
+    expectRoundTrip('<div class="l--box set--plain u--trim -p:10">x</div>');
+  });
+
+  it('複数の set-- クラスは空白区切りの set 値に集約される', () => {
+    expect(htmlToJsx('<div class="set--a set--b">x</div>')).toBe('<Lism set="a b">x</Lism>');
+    expectRoundTrip('<div class="set--a set--b">x</div>');
+  });
+
+  it('除外指定（- prefix）の set 値は変換不能', () => {
+    expect(jsxToHtml('<Box set="-plain">x</Box>')).toBeNull();
+  });
+});
+
 describe('レスポンシブ配列 prop', () => {
   it('全 BP キーが往復する', () => {
     const jsx = '<Box p={[10, 20, 30, 40, 50]}>x</Box>';
@@ -125,6 +151,21 @@ describe('その他の要素', () => {
   it('見出し・段落がコンポーネントへ対応する', () => {
     expect(htmlToJsx('<h2 class="-fz:l">x</h2>')).toBe('<Heading level="2" fz="l">x</Heading>');
     expect(htmlToJsx('<p class="-fz:s">x</p>')).toBe('<Text fz="s">x</Text>');
+  });
+
+  it('prop クラスを持つ span は <Inline> と往復する', () => {
+    expect(htmlToJsx('<span class="-px:10">x</span>')).toBe('<Inline px="10">x</Inline>');
+    expect(jsxToHtml('<Inline px="10">x</Inline>')).toBe('<span class="-px:10">x</span>');
+    expectRoundTrip('<span class="-px:10">x</span>');
+  });
+
+  it('prop クラスを持たない span はそのまま', () => {
+    expectRoundTrip('<span>x</span>');
+  });
+
+  it('as 付き Inline / Lism as="span" も HTML へ戻る（正準形はそれぞれ Lism as / Inline）', () => {
+    expect(jsxToHtml('<Inline as="i" fz="s">x</Inline>')).toBe('<i class="-fz:s">x</i>');
+    expect(jsxToHtml('<Lism as="span" px="10">x</Lism>')).toBe('<span class="-px:10">x</span>');
   });
 
   it('void 要素は自己終了で出力される', () => {

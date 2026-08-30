@@ -85,7 +85,7 @@ KvEditor/
     ├── loop.ts          # ライブループ再生エンジン（mode: 'live'）
     ├── player.ts        # チャット型AIデモの再生エンジン（mode: 'ai'）
     ├── code-anim.ts     # コード書き換えアニメの共有エンジン（loop.ts / player.ts 共用）
-    ├── diff.ts          # 再生アニメ用のdiff計算（行ハンク + 文字単位）
+    ├── diff.ts          # 再生アニメ用のdiff計算（行ハンク + トークン単位の編集列 + 文字単位）
     ├── convert.ts       # HTML ⇔ JSX 双方向変換
     ├── sanitize.ts      # ヒーロー描画前の無害化
     ├── validate.ts      # 入力上限値 + HTMLタグバランスチェック
@@ -122,7 +122,7 @@ styles: src/styles/_kv-editor.scss（main.scss から @use）
 
 **制約**: `convert.ts` のプリンタ出力と同じ整形ルール（後述: 2 スペースインデント・単一テキスト子は 80 字以内でインライン化。レスポンシブ表記は正準形 = BP クラスを base の直後に昇順・`style` を class の直後）で書くこと。ズレると HTML → JSX → HTML の往復でコードが勝手に書き換わる。変換・検証・差分・シナリオには自動テストがあるが、タブ切替を含む UI の往復確認は対象外のため、変更したら JSX タブへ切り替えて HTML タブへ戻り、コードが書き換わらないことを手動確認すること。
 
-内容はヒーローの見出し（h1）・リード文（p）・2 つのボタン風リンク（`l--flex`）で構成し、`data-modal-open="search-modal"` 付きの検索アンカー（⌘K チップ入り）を含む。h1 とリード p はレスポンシブ表記（`-fz:4xl -fz_md` + `--fz_md: var(--fz--5xl)` 等）を持ち、SP 縮小の実装とレスポンシブの書き方のデモを兼ねる（JSX タブでは `fz={['4xl', null, '5xl']}` と表示される）。⌘K チップも同機構で SP では非表示（`-d:none -d_md` + `--d_md: inline-block`。キーボードショートカットはデスクトップ前提のため）。なお、デザインモックアップ（SVG）記載のクラスの一部（`-g:8` / `-bg:base-2` / `-fw:medium` 等）は Lism に実在しないため、ビルド済み `main.css` に存在するクラスだけで再構成している。
+内容はヒーローの見出し（h1）・リード文（p）・Get Started リンク（`l--flex` の a）・`data-modal-open="search-modal"` 付きの検索ボタン（`l--flex set--plain` の button。⌘K チップ入り）で構成する。検索ボタンの `set--plain` は JSX タブで `set="plain"` prop として表示され、UA スタイルのリセット機構のデモを兼ねる。h1 とリード p はレスポンシブ表記（`-fz:4xl -fz_md` + `--fz_md: var(--fz--5xl)` 等）を持ち、SP 縮小の実装とレスポンシブの書き方のデモを兼ねる（JSX タブでは `fz={['4xl', null, '5xl']}` と表示される）。⌘K チップも同機構で SP では非表示（`-d:none -d_md` + `--d_md: inline-block`。キーボードショートカットはデスクトップ前提のため）。なお、デザインモックアップ（SVG）記載のクラスの一部（`-g:8` / `-bg:base-2` / `-fw:medium` 等）は Lism に実在しないため、ビルド済み `main.css` に存在するクラスだけで再構成している。
 
 ## KvEditor.astro — SSR とマークアップ
 
@@ -280,15 +280,17 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 | `-bd` などの bare クラス | `bd`（値なしの boolean prop） | key が `PROPS` に存在するもののみ（本物の `val === true` → `-{prop}` と同じ規則）。XML は値なし属性を書けないため前処理でマーカー化する（後述） |
 | `-hov:-o` などの class | `hov="-o"` prop | `hov` は `PROPS` 外の特別扱い prop（本物は `getLismProps` 内で分岐）。文字列形式のみ対応で、複数トークンはカンマ結合（`hov="-o,up"`） |
 | `u--trim` などの class | `util="trim"` prop | `util` も `PROPS` 外の特別扱い prop。複数は空白区切り（`util="a b"`。カンマ互換）。`-` prefix の除外指定は非対応（変換エラー → last-good） |
+| `set--plain` などの class | `set="plain"` prop | `set` も `PROPS` 外の特別扱い prop。分割規則は `util` と同じ（本物は同じ `mergeSet` を共用） |
 | `l--stack` / `l--flex` / `l--box` | `<Stack>` / `<Flex>` / `<Box>` | タグが div 以外なら `as="tag"` を付与 |
 | `h1`〜`h6` | `<Heading level="n">` | Heading のデフォルト（level=2, タグ=`h{level}`）に準拠 |
 | `p` | `<Text>` | Text のデフォルトタグ = p |
-| prop クラスを持つその他のタグ（a, span 等） | `<Lism as="tag" …>` | Lism のデフォルトタグ = div |
+| prop クラスを持つ `span` | `<Inline …>` | Inline のデフォルトタグ = span |
+| prop クラスを持つその他のタグ（a 等） | `<Lism as="tag" …>` | Lism のデフォルトタグ = div |
 | prop クラスを持たないタグ | そのまま（小文字タグ） | |
 | 変換できないクラス | `className="…"` として保持 | 往復しても失われない |
 | その他の属性（href, data-* 等） | そのまま引き継ぎ（順序保持） | |
 
-属性の出力順も規則化している: `level` / `as` → Lism props（配列 prop は base トークン、`util` / `hov` は最初のトークンの出現位置）→ `className` → `style` → その他の属性、の順。JSX → HTML では `class` を先頭に、`style` をその直後に出す。class 内の連結順は本物（`getLismProps` の `buildClassName`）に合わせて className 由来 → レイアウトクラス → util 由来 → props 由来。順序が決定的だから往復で属性が並び替わらない。
+属性の出力順も規則化している: `level` / `as` → Lism props（配列 prop は base トークン、`set` / `util` / `hov` は最初のトークンの出現位置）→ `className` → `style` → その他の属性、の順。JSX → HTML では `class` を先頭に、`style` をその直後に出す。class 内の連結順は本物（`getLismProps` の `buildClassName`）に合わせて className 由来 → レイアウトクラス → set 由来 → util 由来 → props 由来。順序が決定的だから往復で属性が並び替わらない。
 
 ### JSX のパース
 
@@ -314,7 +316,7 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 - 配列 prop は `PROPS` の `bp: 1` の prop のみ。bp 非対応 prop（`bgc` / `c` 等）や `hov` への配列は変換エラー → last-good 動作
 - 値なし属性（boolean prop）は `PROPS` にある prop のみ。`PROPS` 外の値なし属性（`data-x` 等）は変換エラー → last-good 動作。同一 prop の bare クラスと BP クラスが同居する場合（`-p -p_md` + 変数）は、同名 prop の重複を避けるため集約せず素通しする
 - `hov` は文字列形式（`hov="-bgc"`）のみ。boolean 形式（値なしの `-hov` クラス）と オブジェクト形式（`hov={{bgc:'red'}}` — inline CSS 変数が絡む）は非対応で、`-hov` は className として保持される（`hov` は `PROPS` テーブル外のため boolean prop 変換の対象にもならない）
-- `util` は文字列形式（`util="trim"`）のみ。`-` prefix の除外指定（`util="-trim"`）は base の無い単発利用では意味を持たないため変換エラー → last-good 動作
+- `util` は文字列形式（`util="trim"`）のみ。`-` prefix の除外指定（`util="-trim"`）は base の無い単発利用では意味を持たないため変換エラー → last-good 動作。`set` も同様（`set="-plain"` は変換エラー）
 - prop 名の認識は本物と同期する一方、値の変換は `-prop:val` クラスへの機械変換のみ。本物の Lism がクラスでなく inline CSS 変数にする値（トークン外の任意値: `mbs="3.5rem"` 等）は、クラスにしてもビルド済み CSS に存在せず見た目には効かない
 - 名前付き文字実体は XML 定義済みの `&amp; &lt; &gt; &quot; &apos;` のみ対応。`&nbsp;` 等の XML 定義外の実体は JSX タブでは XML パースエラーになり last-good 動作
 - コメントノードは両方向とも無視（出力に含めない）
@@ -472,7 +474,7 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 
 吹き出しは `<p class="c--kvEditor_msg is--user / is--ai">` を `[data-kv-messages]` へ追記する。中断時（"Interrupted" のラベル + `.c--kvEditor_statusBtn` の Resume ボタン）・完了時（"Done" のラベルのみ）のステータス行も同じ領域へ `<p class="c--kvEditor_status">` として追記する。スクリーンリーダーへの通知は可視のチャット領域ではなく、隠しライブリージョン（`u--srOnly` + `[data-kv-live]`・`aria-live="polite"`）へ `announce()` で流す。1 文字ずつのタイピング途中は告知せず、確定した文言のみ（ユーザー吹き出しの表示時・AI 発話のタイピング完了時・中断時 "Interrupted"・完了時 "Done"）を告知する。連続して同一文言でも読み上げられるよう、一度空にしてから rAF で本文を設定する。
 
-タイピング・ポーズの速度は各モジュール先頭の定数に集約している（ms）: ユーザー入力 30 / AI 発話 22、送信前 300 / AI 応答前 400 / コード書き換え前 500 / ステップ間 1400（reduced-motion 時は 900）は `player.ts`。コード削除 12（2 文字ずつ）/ コード挿入 18（1 文字ずつ）/ ハンク間 350 / 編集位置へのスクロール後 300 は `code-anim.ts`。ループ再生のポーズ（ステップ間 1600 / 周回後 2800 / タブ自動切替後 800 / 自動再開までの間 600・800）は `loop.ts`。
+タイピング・ポーズの速度は各モジュール先頭の定数に集約している（ms）: ユーザー入力 30 / AI 発話 22、送信前 300 / AI 応答前 400 / コード書き換え前 500 / ステップ間 1400（reduced-motion 時は 900）は `player.ts`。コード削除 12（2 文字ずつ）/ コード挿入 18（1 文字ずつ）/ ハンク間 350 / ハンク内のマイクロ編集間 200 / 編集位置へのスクロール後 300 は `code-anim.ts`。ループ再生のポーズ（ステップ間 1600 / 周回後 2800 / タブ自動切替後 800 / 自動再開までの間 600・800）は `loop.ts`。
 
 ### コード書き換えアニメ（ハンク単位の diff タイピング）
 
@@ -480,14 +482,16 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 
 全文置換ではなく、行単位の LCS（`lib/diff.ts` の `diffLineHunks()`）で**変更された行のまとまり（ハンク）**を検出し、上から順に 1 ハンクずつ書き換える。`<Flex>` → `<Stack>` のように開始タグと閉じタグが離れて変わるケースでも、間の無変更な子要素を巻き込んで再タイプしない。ハンク間には短いポーズ（`PAUSE_BETWEEN_EDITS`）を挟み、編集箇所を移動している演出にする。適用済みハンクで行数が増減するため、行番号のズレ（`lineShift`）を補正しながら順に適用する。
 
-アニメ開始前にハンク列から想定所要時間（削除・挿入のティック数 × 各インターバル + ハンク間ポーズ）を見積もり、上限（`MAX_CODE_ANIM_MS` = 3 秒）を超える場合はステップ開始コードへ即時復元してから diff を取り直して再生する（前述のステートマシン節の例外を参照）。
+アニメ開始前にハンク列から想定所要時間（削除・挿入のティック数 × 各インターバル + ハンク間・マイクロ編集間ポーズ）を見積もり、上限（`MAX_CODE_ANIM_MS` = 3 秒）を超える場合はステップ開始コードへ即時復元してから diff を取り直して再生する（前述のステートマシン節の例外を参照）。
 
-各ハンクの書き換え前に、編集開始位置（`diffCode()` の共通 prefix `head` の末尾）を `editor.revealPosition()` で可視範囲へスクロールする。モバイルでは編集箇所が textarea のスクロール範囲外（横に長い行）やページのビューポート外にあり演出が見えないことがあるための措置で、スクロールが発生した場合は短い「間」（`PAUSE_AFTER_REVEAL`）を挟んでから書き換えを始める。
+各ハンクの書き換え前に、編集開始位置（最初のマイクロ編集の `head` の末尾）を `editor.revealPosition()` で可視範囲へスクロールする。モバイルでは編集箇所が textarea のスクロール範囲外（横に長い行）やページのビューポート外にあり演出が見えないことがあるための措置で、スクロールが発生した場合は短い「間」（`PAUSE_AFTER_REVEAL`）を挟んでから書き換えを始める。
 
-各ハンク内はさらに文字単位で共通 prefix / suffix を除き（`diffCode()`）、実際に変わる文字だけを:
+各ハンク内はさらに空白区切りトークンの LCS（`lib/diff.ts` の `diffTokenEdits()`。ハンク検出と同じ `diffLineHunks()` をトークン列に使う）で**変更トークンのまとまりごとのマイクロ編集列**に分解し、「必要な箇所だけ」を左から順に書き換える。例: `l--flex -jc:center -ai:center -g:15` → `l--stack -ai:center -g:20` は「`flex` → `stack`」「`-jc:center` の削除」「`15` → `20`」の 3 編集になり、間の無変更クラス `-ai:center` は再タイプしない（右から全部消して打ち直す動きにならない）。LCS はタイブレーク次第で「置換 + 隣接する削除 / 挿入」を 1 ハンクに併合してしまう（進行方向と巻き戻しで併合のされ方が逆になる）ため、ハンク内は「(先行する区切り +) 単語」ユニットの 1 対 1 の組へ分け直してから diff する（`pairHunkUnits()`）。これでシナリオの進行方向とループ継ぎ目の巻き戻し（`l--stack` → `l--flex` へ戻す編集）が対称な分かれ方になる。各マイクロ編集内は `diffCode()` で共通の先頭・末尾を保持し、実際に変わる文字だけを:
 
 1. 削除フェーズ: 後ろから数文字ずつ削る
 2. 挿入フェーズ: 新しい文字列を 1 文字ずつタイプ
+
+マイクロ編集の間には短いポーズ（`PAUSE_BETWEEN_MICRO_EDITS` = 200ms）を挟み、カーソルが次の変更トークンへ移る演出にする。
 
 フレームの反映は `editor.setViewText()` を毎ティック呼ぶ（**表示のみ**。HTML タブはモデルの同期も行うがヒーローは描画しない）。タイピング途中は書きかけの不完全なコードになり、ヒーローが崩れた瞬間（レイアウトクラスの書きかけでボタンが全幅になる等）を描画してしまうため、ヒーローへの反映は**ハンク確定ごと**の `editor.commitView()` と、ステップ完了時の `snapTo()`（内部で `editor.setCode(html)`）で行う。JSX タブではハンク境界でも変換できない途中状態（閉じタグ側のハンクが未適用等）がありうるため、`commitView()` は変換が通るときだけ反映する（できなければ完了時の snapTo が唯一の反映になる）。ハイライトのフレーム描画は rAF スロットル + 同期実行なので負荷は問題にならない。
 
@@ -519,7 +523,7 @@ interface ScenarioStep {
 - **fail-fast**: `edits` の置換前文字列がちょうど 1 回現れない場合（初期コード変更とのズレ・曖昧な指定）はモジュール初期化時に例外を投げる。沈黙して壊れず、開発中に必ず気づける。全言語を eager に導出するため、どの言語のズレも初期化時に検知される
 - `edits` はプリンタの整形ルールを保つ範囲で書くこと（シナリオは自動テストし、変更時は JSX タブとの往復も手動確認）
 - `aiMessage` / `aiMessageJsx` は表記の違い（`-fw:900` クラス vs `fw="900"` props 等）を文言にも反映するためのペア
-- 現在は仮の 3 ステップ: ①見出しを `-fw:700` → `-fw:900`（太く）②ボタンを `-bdrs:99`（ピル型）③ラッパーを `l--flex` → `l--stack`（JSX タブで Flex → Stack の対応も見せられる）
+- 現在は仮の 5 ステップ: ①見出しを `-fw:700` → `-fw:900`（太く）②見出しに `-fs:italic` を追加（斜体）③ボタンを `-bdrs:99` + `-p:15`（ピル型）④検索ボタンも `-p:15` + `-bdrs:99` に揃え、⌘K も `-bdrs:10` → `-bdrs:99` ⑤ラッパーを `l--flex` → `l--stack`（JSX タブで Flex → Stack の対応も見せられる）
 
 ## _kv-editor.scss — スタイルの要点
 
@@ -569,7 +573,7 @@ interface ScenarioStep {
 ## index.astro / [lang]/index.astro の変更
 
 - ヒーロー（旧 Heading / Text / Button / kv-search 入力）と TODO のダミー SVG `<Group>` を `<KvEditor />` に置換
-- 旧 `#kv-search` の inline script（Enter で検索モーダルを開いて入力を転送する処理）と `.c--kv-search` スタイルを削除（検索はモックアップ準拠のアンカー + ⌘K チップに置き換わり、クリックでモーダルが開く）
+- 旧 `#kv-search` の inline script（Enter で検索モーダルを開いて入力を転送する処理）と `.c--kv-search` スタイルを削除（検索はモックアップ準拠の `set--plain` ボタン + ⌘K チップに置き換わり、クリックでモーダルが開く）
 - `main.scss` に `@use './kv-editor'` を追加
 - 背景動画・後続セクションは変更なし
 - `[lang]/index.astro`（en）も同様の置換を実施（`<KvEditor lang={lang} />`）。ページ側の `:global(html) { --fz-mol: 8 }`（トップページのフォントスケールを ja と統一するオーバーライド）は維持している。旧英語ヒーローのみが使っていた `_theme.scss` の `.c--line-height` は削除済み

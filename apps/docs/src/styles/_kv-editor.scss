@@ -33,10 +33,11 @@
       line-height: 1.75;
     }
 
-    // 検索ボックスの色と影。どちらも Lism トークンクラスでは表現できない任意値なので、
-    // エディター内容ではなくここで当てる（color は更新前の input プレースホルダー相当の薄いグレー、
-    // box-shadow は docsローカルの --bxsh--base）。
-    a[data-modal-open] {
+    // 検索ボックス（set--plain 付きの button）の色と影。どちらも Lism トークンクラスでは
+    // 表現できない任意値なので、エディター内容ではなくここで当てる（color は更新前の input
+    // プレースホルダー相当の薄いグレー、box-shadow は docsローカルの --bxsh--base）。
+    // set--plain（lism-base レイヤー）の color: inherit より lism-component が強いため color も効く
+    button[data-modal-open] {
       color: #757575;
       box-shadow: var(--bxsh--base);
     }
@@ -81,7 +82,7 @@
 
     // 検索ボックス：ダーク背景では --bxsh--base の影がほぼ見えないため、
     // ヘッダー検索ボタンの --bxsh--search-border と同様に境界線で輪郭を出す
-    a[data-modal-open] {
+    button[data-modal-open] {
       color: hsl(220, 4%, 60%); // プレースホルダー相当の薄いグレー（ダーク用）
       box-shadow: inset 0 0 0 1px var(--divider);
     }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { charBoundary, diffCode } from './diff';
+import { charBoundary, diffCode, diffTokenEdits, type CodeDiff } from './diff';
 
 // サロゲートペア（UTF-16 で 2 単位）の素材。😀 = HIGH + LOW_A、😁 = HIGH + LOW_B
 const HIGH = '\ud83d';
@@ -46,5 +46,73 @@ describe('diffCode', () => {
     expect(d.tail).toBe('');
     expect(d.head + d.removed + d.tail).toBe(from);
     expect(d.head + d.inserted + d.tail).toBe(to);
+  });
+});
+
+describe('diffTokenEdits', () => {
+  /** 編集列を順に適用し、各編集の整合（head + removed + tail = 適用前の全文）も検証する */
+  const applyEdits = (from: string, edits: CodeDiff[]): string =>
+    edits.reduce((current, edit) => {
+      expect(edit.head + edit.removed + edit.tail).toBe(current);
+      return edit.head + edit.inserted + edit.tail;
+    }, from);
+
+  it('変更トークンのまとまりごとに1編集へ分かれる（間の無変更トークンは巻き込まない）', () => {
+    const from = '<div class="l--flex -jc:center -ai:center -g:15">';
+    const to = '<div class="l--stack -ai:center -g:20">';
+    const edits = diffTokenEdits(from, to);
+    // flex → stack、-jc:center の削除、-g の値変更、の3編集（-ai:center は再タイプしない）
+    expect(edits.map(({ removed, inserted }) => [removed, inserted])).toEqual([
+      ['flex', 'stack'],
+      [' -jc:center', ''],
+      ['15', '20'],
+    ]);
+    expect(applyEdits(from, edits)).toBe(to);
+  });
+
+  it('巻き戻し方向（ループの継ぎ目）も同じ分かれ方になる', () => {
+    const from = '<div class="l--stack -ai:center -g:20">';
+    const to = '<div class="l--flex -jc:center -ai:center -g:15">';
+    const edits = diffTokenEdits(from, to);
+    // stack → flex、-jc:center の挿入、-g の値変更、の3編集（往路と対称）
+    expect(edits.map(({ removed, inserted }) => [removed, inserted])).toEqual([
+      ['stack', 'flex'],
+      ['', '-jc:center '],
+      ['20', '15'],
+    ]);
+    expect(applyEdits(from, edits)).toBe(to);
+  });
+
+  it('複数行ブロック（JSX表記）でも同様に分かれ、無変更の子要素行は巻き込まない', () => {
+    const from = '<Flex jc="center" ai="center" g="15">\n  <a href="/docs/">x</a>\n</Flex>';
+    const to = '<Stack ai="center" g="20">\n  <a href="/docs/">x</a>\n</Stack>';
+    const edits = diffTokenEdits(from, to);
+    expect(edits.map(({ removed, inserted }) => [removed, inserted])).toEqual([
+      ['Flex', 'Stack'],
+      [' jc="center"', ''],
+      ['15', '20'],
+      ['Flex', 'Stack'],
+    ]);
+    expect(applyEdits(from, edits)).toBe(to);
+
+    // 巻き戻し方向も対称に分かれる
+    const reverse = diffTokenEdits(to, from);
+    expect(reverse.map(({ removed, inserted }) => [removed, inserted])).toEqual([
+      ['Stack', 'Flex'],
+      ['', 'jc="center" '],
+      ['20', '15'],
+      ['Stack', 'Flex'],
+    ]);
+    expect(applyEdits(to, reverse)).toBe(from);
+  });
+
+  it('変更がなければ空の編集列', () => {
+    expect(diffTokenEdits('a b c', 'a b c')).toEqual([]);
+  });
+
+  it('全トークンが変わる場合も1編集として成立する', () => {
+    const edits = diffTokenEdits('abc', 'xyz');
+    expect(edits).toHaveLength(1);
+    expect(applyEdits('abc', edits)).toBe('xyz');
   });
 });

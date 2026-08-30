@@ -1,12 +1,14 @@
 // コード書き換えアニメの共有エンジン。
 // チャット型AIデモ（player.ts）とライブループ再生（loop.ts）の両方がこのモジュールを使う。
 // - 全文置換ではなく、行単位の LCS（diffLineHunks）で変更ハンクを検出し、ハンク内も
-//   文字単位の共通 prefix / suffix（diffCode）を除いた「実際に変わる文字」だけをタイピングする
+//   トークン単位の編集列（diffTokenEdits）へ分解して「必要な箇所だけ」を順に書き換える
+//   （例: `l--flex` → `l--stack` の行は flex→stack・-jc:center 削除・-g の値変更の3編集になり、
+//   間の無変更クラスは巻き込まない）
 // - フレーム反映は editor.setViewText()（表示のみ）。ヒーローへの反映はハンク確定ごとの
 //   editor.commitView() と完了時の snapTo（editor.setCode）で行い、タイピング途中の
 //   不完全なコード（クラスの書きかけ等）で崩れた瞬間がヒーローに描画されるのを防ぐ
 import { htmlToJsx } from './convert';
-import { charBoundary, diffCode, diffLineHunks, type LineHunk } from './diff';
+import { charBoundary, diffTokenEdits, diffLineHunks, type LineHunk } from './diff';
 import type { EditorApi } from './editor';
 
 // タイピング速度・ポーズ（ms）
@@ -14,6 +16,7 @@ const CODE_DELETE_INTERVAL = 12;
 const CODE_INSERT_INTERVAL = 18;
 const CODE_DELETE_CHUNK = 2;
 const PAUSE_BETWEEN_EDITS = 350; // 離れた編集箇所（ハンク）へ移る間
+const PAUSE_BETWEEN_MICRO_EDITS = 200; // ハンク内でカーソルを次の変更トークンへ移す間
 const PAUSE_AFTER_REVEAL = 300; // 編集位置へのスクロールを見せてから書き換え始めるまでの間
 const PAUSE_FLASH_TO_APPLY = 120; // 反映フラッシュの点灯からヒーロー反映までの間（「保存 → 結果が変わる」の因果を見せる）
 const MAX_CODE_ANIM_MS = 3000; // 書き換えアニメの想定所要時間の上限。超える場合はステップ開始コードへ復元してから再生する
@@ -97,31 +100,38 @@ export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = t
     editor.setCode(html);
   };
 
-  /** 1ハンク分の書き換えアニメ。前後の行（before / after）は固定し、変更ブロックだけをタイピングする */
+  /**
+   * 1ハンク分の書き換えアニメ。前後の行（before / after）は固定し、変更ブロック内を
+   * トークン単位の編集列（diffTokenEdits）に分けて「必要な箇所だけ」を左から順に書き換える
+   */
   const animateHunk = async (before: string[], after: string[], fromBlock: string, toBlock: string, signal: AbortSignal): Promise<void> => {
-    // ハンク内でも共通の先頭・末尾は保持して、実際に変わる文字だけを書き換える
-    const { head, removed, inserted, tail } = diffCode(fromBlock, toBlock);
+    const edits = diffTokenEdits(fromBlock, toBlock);
+    if (edits.length === 0) return;
     const frame = (middle: string): void => editor.setViewText(joinBlocks(before, middle, after));
 
     // 編集開始位置がスクロール範囲外だと演出が見えない（特にモバイル）ため、
-    // 書き換え前に可視範囲へスクロールする。位置は head（ブロック内の共通 prefix）の末尾
-    const headLines = head.split('\n');
+    // 書き換え前に可視範囲へスクロールする。位置は最初の編集の head の末尾
+    const headLines = edits[0].head.split('\n');
     const scrolled = editor.revealPosition(before.length + headLines.length - 1, headLines[headLines.length - 1], scrollWindowOnReveal);
     if (scrolled) await sleep(PAUSE_AFTER_REVEAL, signal);
 
-    // 削除フェーズ（後ろから消す）。切る位置はサロゲートペアを割らない境界へ丸める
-    for (let len = removed.length - CODE_DELETE_CHUNK; len > 0; len -= CODE_DELETE_CHUNK) {
-      frame(head + removed.slice(0, charBoundary(removed, len)) + tail);
-      await sleep(CODE_DELETE_INTERVAL, signal);
-    }
-    if (removed.length > 0) {
-      frame(head + tail);
-      await sleep(CODE_DELETE_INTERVAL, signal);
-    }
-    // 挿入フェーズ（1文字ずつタイピング）
-    for (let len = 1; len <= inserted.length; len++) {
-      frame(head + inserted.slice(0, charBoundary(inserted, len)) + tail);
-      await sleep(CODE_INSERT_INTERVAL, signal);
+    for (const [index, { head, removed, inserted, tail }] of edits.entries()) {
+      // 編集間のポーズ = カーソルが次の変更トークンへ移る間
+      if (index > 0) await sleep(PAUSE_BETWEEN_MICRO_EDITS, signal);
+      // 削除フェーズ（後ろから消す）。切る位置はサロゲートペアを割らない境界へ丸める
+      for (let len = removed.length - CODE_DELETE_CHUNK; len > 0; len -= CODE_DELETE_CHUNK) {
+        frame(head + removed.slice(0, charBoundary(removed, len)) + tail);
+        await sleep(CODE_DELETE_INTERVAL, signal);
+      }
+      if (removed.length > 0) {
+        frame(head + tail);
+        await sleep(CODE_DELETE_INTERVAL, signal);
+      }
+      // 挿入フェーズ（1文字ずつタイピング）
+      for (let len = 1; len <= inserted.length; len++) {
+        frame(head + inserted.slice(0, charBoundary(inserted, len)) + tail);
+        await sleep(CODE_INSERT_INTERVAL, signal);
+      }
     }
   };
 
@@ -131,8 +141,11 @@ export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = t
     for (const hunk of hunks) {
       const fromBlock = fromLines.slice(hunk.fromStart, hunk.fromEnd).join('\n');
       const toBlock = toLines.slice(hunk.toStart, hunk.toEnd).join('\n');
-      const { removed, inserted } = diffCode(fromBlock, toBlock);
-      total += Math.ceil(removed.length / CODE_DELETE_CHUNK) * CODE_DELETE_INTERVAL + inserted.length * CODE_INSERT_INTERVAL;
+      const edits = diffTokenEdits(fromBlock, toBlock);
+      total += Math.max(0, edits.length - 1) * PAUSE_BETWEEN_MICRO_EDITS;
+      for (const { removed, inserted } of edits) {
+        total += Math.ceil(removed.length / CODE_DELETE_CHUNK) * CODE_DELETE_INTERVAL + inserted.length * CODE_INSERT_INTERVAL;
+      }
     }
     return total;
   };

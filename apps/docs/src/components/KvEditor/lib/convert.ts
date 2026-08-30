@@ -18,11 +18,15 @@
 //   `--{prop}` 宣言を伴う場合は上のスペース区切り値として扱う）
 // - `-hov:val` クラス ⇔ `hov="val"` （hov は PROPS 外の特別扱い prop。文字列形式のみ・複数はカンマ結合。
 //   boolean（値なし -hov）/ オブジェクト形式（inline CSS 変数が絡む）は非対応で className 保持）
-// - `u--{name}` クラス ⇔ `util="{name}"` （util も PROPS 外の特別扱い prop。空白区切りで複数可。
-//   class 内の正準位置は本物の出力順と同じくレイアウトクラスの直後・prop クラスの前）
+// - `u--{name}` クラス ⇔ `util="{name}"` （util も PROPS 外の特別扱い prop。空白区切りで複数可）
+// - `set--{name}` クラス ⇔ `set="{name}"` （set も util と同じ分割規則＝本物の mergeSet。
+//   `-` prefix の除外指定はどちらも非対応 → 変換エラー = last-good 維持）
+// - set / util の class 内の正準位置は本物の buildClassName の出力順と同じ:
+//   レイアウトクラスの直後に set-- → u-- → prop クラスの順
 // - `l--{layout}` ⇔ レイアウトコンポーネント（Box / Center / Cluster / Columns / Flex / Frame /
 //   Grid / Stack / TileGrid。タグが div 以外なら as="tag"）
 // - h1〜h6 ⇔ <Heading level="n">、p ⇔ <Text>
+// - Lism prop クラスを持つ span ⇔ <Inline>（Inline のデフォルトタグ = span）
 // - 上記以外のタグで Lism prop クラスを持つもの ⇔ <Lism as="tag">
 // - 変換できないクラスは className として保持（HTML へ戻す際は本物と同じく class の先頭へ出力する）
 // - 属性の正準形: HTML は class → style → その他、JSX は level/as → props → className → style → その他
@@ -482,6 +486,7 @@ type ClassUnit =
   | { type: 'bool'; key: string; token: string }
   | { type: 'hov'; value: string }
   | { type: 'util'; value: string }
+  | { type: 'set'; value: string }
   | { type: 'rest'; token: string };
 
 const htmlElementToJsx = (el: Element): PrintableElement => {
@@ -511,6 +516,8 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
     if (hovMatch) return { type: 'hov', value: hovMatch[1] };
     const utilMatch = token.match(/^u--(.+)$/);
     if (utilMatch) return { type: 'util', value: utilMatch[1] };
+    const setMatch = token.match(/^set--(.+)$/);
+    if (setMatch) return { type: 'set', value: setMatch[1] };
     const parsed = parsePropToken(token);
     if (parsed) return { type: 'base', key: parsed[0], value: parsed[1], token };
     const bpMatch = token.match(BP_CLASS_RE);
@@ -580,9 +587,12 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
   const restClassTokens: string[] = [];
   const hovValues: string[] = [];
   let hovAttrIndex = -1;
-  // u--{name} クラスは util prop（空白区切りで複数可）へ。hov と同じく最初の出現位置に属性を出す
+  // u--{name} / set--{name} クラスは util / set prop（空白区切りで複数可）へ。
+  // hov と同じく最初の出現位置に属性を出す
   const utilValues: string[] = [];
   let utilAttrIndex = -1;
+  const setValues: string[] = [];
+  let setAttrIndex = -1;
   const emittedAggregations = new Set<string>();
   for (const unit of units) {
     if (unit.type === 'hov') {
@@ -593,6 +603,11 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
     if (unit.type === 'util') {
       if (utilValues.length === 0) utilAttrIndex = propAttrs.length;
       utilValues.push(unit.value);
+      continue;
+    }
+    if (unit.type === 'set') {
+      if (setValues.length === 0) setAttrIndex = propAttrs.length;
+      setValues.push(unit.value);
       continue;
     }
     if ((unit.type === 'base' || unit.type === 'bp') && aggregated.has(unit.key)) {
@@ -615,20 +630,26 @@ const htmlElementToJsx = (el: Element): PrintableElement => {
     // 集約されなかった BP クラス（変数なし等）とその他のクラスは className へ
     restClassTokens.push(unit.token);
   }
-  // hov / util の挿入は出現位置の後ろ側から行う（先に前方へ挿入すると後方の index がズレるため）
+  // hov / util / set の挿入は出現位置の後ろ側から行う（先に前方へ挿入すると後方の index がズレるため）
   const pendingAttrs: { index: number; attr: string }[] = [];
   if (hovValues.length > 0) pendingAttrs.push({ index: hovAttrIndex, attr: attrToString('hov', hovValues.join(',')) });
   if (utilValues.length > 0) pendingAttrs.push({ index: utilAttrIndex, attr: attrToString('util', utilValues.join(' ')) });
+  if (setValues.length > 0) pendingAttrs.push({ index: setAttrIndex, attr: attrToString('set', setValues.join(' ')) });
   pendingAttrs.sort((a, b) => b.index - a.index);
   for (const pending of pendingAttrs) {
     propAttrs.splice(pending.index, 0, pending.attr);
   }
 
-  // Lism prop クラスを持つがコンポーネントに割り当てられなかったタグは <Lism as="tag">
+  // Lism prop クラスを持つがコンポーネントに割り当てられなかったタグは
+  // span なら <Inline>（デフォルトタグ = span）、それ以外は <Lism as="tag">
   if (!name) {
     if (propAttrs.length > 0) {
-      name = 'Lism';
-      if (tag !== 'div') headAttrs.push(attrToString('as', tag));
+      if (tag === 'span') {
+        name = 'Inline';
+      } else {
+        name = 'Lism';
+        if (tag !== 'div') headAttrs.push(attrToString('as', tag));
+      }
     } else {
       name = tag;
     }
@@ -710,6 +731,8 @@ const jsxElementToHtml = (el: Element): PrintableElement => {
       tag = `h${level}`;
     } else if (name === 'Text') {
       tag = takeAttr('as') ?? 'p';
+    } else if (name === 'Inline') {
+      tag = takeAttr('as') ?? 'span';
     } else if (name === 'Lism') {
       tag = takeAttr('as') ?? 'div';
     } else {
@@ -728,6 +751,7 @@ const jsxElementToHtml = (el: Element): PrintableElement => {
   const restAttrs: string[] = [];
   let classNameTokens: string[] = [];
   const utilTokens: string[] = [];
+  const setTokens: string[] = [];
   const bpStyleDecls: StyleDecl[] = [];
   let jsxStyleValue: string | null = null;
   for (const attr of attrs) {
@@ -782,6 +806,13 @@ const jsxElementToHtml = (el: Element): PrintableElement => {
         if (value.startsWith('-')) throw new JsxConvertError(`unsupported util value: ${value}`);
         utilTokens.push(`u--${value}`);
       }
+    } else if (attr.name === 'set') {
+      // set prop を set--{name} クラスへ展開（util と同じ mergeSet の分割規則・除外指定も同様に非対応）
+      for (const value of attr.value.split(/[,\s]+/)) {
+        if (!value) continue;
+        if (value.startsWith('-')) throw new JsxConvertError(`unsupported set value: ${value}`);
+        setTokens.push(`set--${value}`);
+      }
     } else if (attr.name === 'style') {
       jsxStyleValue = attr.value;
     } else {
@@ -789,9 +820,9 @@ const jsxElementToHtml = (el: Element): PrintableElement => {
     }
   }
   // class の組み立ては本物（getLismProps の buildClassName）と同じ出力順に合わせる:
-  // [className] [primitiveClass（レイアウト）] [uClasses] [propClasses...]。
+  // [className] [primitiveClass（レイアウト）] [setClasses] [uClasses] [propClasses...]。
   // この順序で書かれた HTML が正準形となり、往復で保たれる
-  classTokens.splice(layoutClass ? 1 : 0, 0, ...utilTokens);
+  classTokens.splice(layoutClass ? 1 : 0, 0, ...setTokens, ...utilTokens);
   classTokens.unshift(...classNameTokens);
 
   const outAttrs: string[] = [];

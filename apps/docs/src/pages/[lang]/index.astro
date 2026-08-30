@@ -5,7 +5,7 @@
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import KvEditor from '@/components/KvEditor/KvEditor.astro';
-import { Stack, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
+import { Stack, Lism, Inline, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { siteConfig } from '@/config/site';
 import { getLocalizedUrl, isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
@@ -303,7 +303,7 @@ const presets = [
         px="10"
         g="0"
       >
-        <Lism as="span" px={{ base: '0.375rem', md: '10' }}>View More</Lism>
+        <Inline px={{ base: '0.375rem', md: '10' }}>View More</Inline>
         <Icon icon="caret-right" style={{ scale: '1' }} />
       </Button>
       <Box mbs={{ base: '50', md: '60' }} mx="clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)" cg="10" style={{ columnCount: 3 }}>
@@ -344,7 +344,7 @@ const presets = [
           px="10"
           g="0"
         >
-          <Lism as="span" px={{ base: '6px', md: '10' }}>Get Started</Lism>
+          <Inline px={{ base: '6px', md: '10' }}>Get Started</Inline>
           <Icon icon="caret-right" style={{ scale: '1' }} />
         </Button>
       </Center>
