@@ -529,7 +529,7 @@ interface ScenarioStep {
 
 ## _kv-editor.scss — スタイルの要点
 
-`@layer lism-component` に記述（lism-base のベーススタイルより優先させるため）。
+`@layer lism-custom` に記述（lism-base のベーススタイルより優先させるため）。
 
 ### ウィンドウ全体
 
@@ -545,7 +545,7 @@ interface ScenarioStep {
 
 - **フォントメトリクスの視覚上の完全統一**: `pre` / `.fallback` は 14px（SP 12px）・line-height 1.25（初期コード 21 行がエディターに縦スクロールなしで収まる）・padding `0.5rem 1rem` 等を共通ルールで適用。1px でもズレると caret 位置が狂う
 - **iOS の自動ズーム対策（textarea の scale 縮小）**: iOS はフォーカスした入力欄の font-size が 16px 未満だと画面ごと自動ズームする。これを避けるため textarea だけ `font-size: 16px` とし、`transform: scale(var(--kvEditor-input-scale))`（`0.875` = 14/16、SP は `0.75` = 12/16）で pre レイヤーと同じ見た目に縮小する。width / height / padding は縮小率の逆数（`calc(… / var(--kvEditor-input-scale))`）で拡大して視覚上一致させる。このとき lism-css の reset（`@layer reset`）にある `textarea { max-inline-size: 100% }` が拡大後の width をクランプしてしまう（スクロールバーが内側に寄る）ため、`max-inline-size: none` で解除している。textarea の文字自体は透明なので pre レイヤーと合うべきは caret・選択範囲の位置だけであり、等幅フォントの字送りはサイズに対して線形（16px × 0.75 = 12px の字送りと厳密一致）なのでズレない。スクロール座標の換算は editor.ts の `syncScroll` が行う（前述）
-- **`.c--kvEditor_pre pre *` への強制継承**: lism-css のベースに `* { line-height: calc(1em + var(--hl) * 2) }` という全要素対象ルールがあり、shiki の `code` / `.line` スパンに直接当たって textarea とズレる。これを打ち消すため子孫全部に `inherit` を明示（lism-component レイヤーは lism-base より強い）
+- **`.c--kvEditor_pre pre *` への強制継承**: lism-css のベースに `* { line-height: calc(1em + var(--hl) * 2) }` という全要素対象ルールがあり、shiki の `code` / `.line` スパンに直接当たって textarea とズレる。これを打ち消すため子孫全部に `inherit` を明示（lism-custom レイヤーは lism-base より強い）
 - textarea は文字を透明（`color: transparent`）にして caret（`caret-color`）だけ表示。選択範囲も `::selection` で色を敷きつつ文字は透明のまま
 - `preInner` は `width: max-content` + `will-change: transform`（横スクロール時にハイライトが切れず、transform 追従を合成レイヤーで行う）
 
