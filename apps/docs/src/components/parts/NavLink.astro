@@ -14,7 +14,7 @@ const { href, isActive, ...props } = Astro.props;
 <style is:global>
   .c--navLink {
     position: relative;
-    font-size: var(--fz--s);
+    font-size: 0.875em;
 
     &::before {
       content: '';
@@ -47,11 +47,8 @@ const { href, isActive, ...props } = Astro.props;
     }
   }
 
-  .c--toc .c--navLink {
-    font-size: var(--fz--xs);
-  }
-
   /* .c--toc .c--navLink {
+    font-size: var(--fz--xs);
     padding-block: var(--s5);
   } */
 </style>
