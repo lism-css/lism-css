@@ -28,10 +28,10 @@
     // エディターで後から付く -c:* などは正しく上書きされる。
     h1 {
       color: var(--gray-hi-c);
-      letter-spacing: var(--lts--tight);
+      letter-spacing: -0.01em;
     }
     p {
-      color: #333;
+      color: var(--text-2);
       // 和文の既定。欧文は下の html[lang='en'] で詰める（SP / PC 共通）
       line-height: 1.75;
     }
@@ -79,10 +79,6 @@
   // ダークモード時のヒーロー配色。#333 / #757575 などトークン化されていない
   // 任意色のみここで上書きする（h1 とボタン背景は --gray-hi-c のダーク値で自動対応）
   :root[data-theme='dark'] .c--kvEditorHero {
-    p {
-      color: var(--text-2);
-    }
-
     // 検索ボックス：ダーク背景では --bxsh--base の影がほぼ見えないため、
     // ヘッダー検索ボタンの --bxsh--search-border と同様に境界線で輪郭を出す
     button[data-modal-open] {
@@ -307,7 +303,7 @@
     font-family: var(--ff--mono);
     font-weight: 600;
     font-size: 0.75em;
-    letter-spacing: 0.02em;
+    letter-spacing: var(--lts--l);
     line-height: 1;
     white-space: nowrap;
 
@@ -638,7 +634,7 @@
     margin: 0;
     color: var(--kvEditor-text-dim);
     font-size: 0.75rem;
-    letter-spacing: -0.025em;
+    letter-spacing: var(--lts--s);
     line-height: 1.25;
     text-align: center;
   }
@@ -737,7 +733,7 @@
     width: 100%;
     color: var(--kvEditor-text-dim);
     font-size: 0.75rem;
-    letter-spacing: -0.02em;
+    letter-spacing: var(--lts--s);
     line-height: 1.25;
     text-align: left;
 

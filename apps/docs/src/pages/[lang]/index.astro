@@ -5,7 +5,7 @@
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import KvEditor from '@/components/KvEditor/KvEditor.astro';
-import { Stack, Lism, Inline, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
+import { Stack, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { siteConfig } from '@/config/site';
 import { getLocalizedUrl, isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
@@ -188,23 +188,23 @@ const presets = [
 
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
-      <Stack ai="center" g="15">
-        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Features</Text>
-        <Heading level="2" ta="center" fz={{ base: '2xl', md: '3rem' }} fw="700" lh="1.5" c="var(--gray-hi-c)">A Sophisticated Design Theory</Heading>
+      <Stack ai="center" g={['20', '25']}>
+        <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Features</Text>
+        <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>A Sophisticated Design Theory</Heading>
       </Stack>
-      <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'l' }} lh="1.75" max-w="48em">
+      <Text ta="center" mbs={['20', '25', '35']} fz={['s', 'm', 'l']} max-w="48em">
         Lism CSS is a lightweight CSS framework for building the structural foundation of your website quickly and smoothly. Its CSS architecture is
         designed from the ground up to bring a natural, pleasing rhythm to your designs.
       </Text>
 
-      <Columns cols={{ base: 1, md: 2, lg: 3 }} g="10" mbs={{ base: '50', md: '60' }}>
+      <Columns cols={[1, null, 2, 3]} g="10" mbs={{ base: '50', md: '60' }}>
         {
           features.map((card) => (
-            <Stack class="c--shadow-box" p="40">
-              <Text fw="700" lh="1.5" c="var(--gray-hi-c)" lts="var(--lts--tight)" fz={{ base: 'base', md: '1.5rem' }}>
+            <Stack class="c--shadow-box" p={['35', '40']}>
+              <Heading level="3" class="c--topHeading u--trim" fz={['l', null, 'xl']}>
                 {card.title}
-              </Text>
-              <Text fz={{ base: 's', md: 'base' }} lh="1.75" mt="20" fxg="1">
+              </Heading>
+              <Text fz={['s', null, 'base']} mt="25" fxg="1">
                 {card.desc}
               </Text>
               <Media
@@ -213,7 +213,7 @@ const presets = [
                 width={card.width}
                 height={card.height}
                 mx="auto"
-                mt="50"
+                mt={['40', '50']}
                 ar={card.ar}
                 w={{ base: card.widthBase, md: card.widthMd }}
               />
@@ -240,11 +240,11 @@ const presets = [
       <Media src="/img/ai-bg.png" alt="" width="2600" height="1559" w="100%" h="auto" />
     </Group>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
-      <Stack ai="center" g="15">
-        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Artificial Intelligence</Text>
-        <Heading level="2" ta="center" fz={{ base: '2xl', md: '3rem' }} fw="700" lh="1.5" c="var(--gray-hi-c)">AI Tool Integration</Heading>
+      <Stack ai="center" g={['20', '25']}>
+        <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Artificial Intelligence</Text>
+        <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>AI Tool Integration</Heading>
       </Stack>
-      <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'l' }} lh="1.75" max-w="48em">
+      <Text ta="center" mbs={['20', '30', '35']} fz={['s', 'm', 'l']} max-w="48em">
         Lism CSS is designed with AI agents in mind. With an MCP server, Skills, and machine-readable documentation, AI tools like Claude Code and
         Cursor can accurately understand the Lism system and generate code that matches your intent.
       </Text>
@@ -254,11 +254,11 @@ const presets = [
       <Columns cols={{ base: 1, md: 2 }} g="10" w="100%" mt="50">
         {
           tools.map((item) => (
-            <Stack class="c--shadow-box" p="40">
-              <Text c="var(--gray-hi-c)" fw="700" fz={{ base: 'base', md: '1.5rem' }} lh="1.5" lts="var(--lts--tight)">
+            <Stack class="c--shadow-box" p={['35', '40']}>
+              <Heading level="3" class="c--topHeading u--trim" fz={['l', 'xl', '2xl']}>
                 {item.title}
-              </Text>
-              <Text fz={{ base: 's', md: 'base' }} lh="1.75" mt="20" max-w={{ base: '100%', md: '24rem' }} fxg="1">
+              </Heading>
+              <Text fz={['s', null, 'base']} mt="25" max-w={{ base: '100%', md: '24rem' }} fxg="1">
                 {item.body}
               </Text>
               <Media
@@ -266,7 +266,7 @@ const presets = [
                 alt=""
                 width={item.width}
                 height={item.height}
-                mbs={{ base: '50', md: '35' }}
+                mbs="40"
                 ms="auto"
                 me={{ base: 'auto', md: '0' }}
                 w="auto"
@@ -281,30 +281,16 @@ const presets = [
 
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
-      <Stack ai="center" g="15">
-        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Templates</Text>
-        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)" lts="var(--lts--tight)"
-          >Lism CSS Templates</Heading
-        >
+      <Stack ai="center" g={['20', '25']}>
+        <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Templates</Text>
+        <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>Lism CSS Templates</Heading>
       </Stack>
-      <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'l' }} lh="1.75" max-w="35em">
+      <Text ta="center" mbs={['20', '30', '35']} fz={['s', 'm', 'l']} max-w="35em">
         Use them as a base for your design, or copy and paste just the parts you need to instantly add polished layouts to your project.
       </Text>
-      <Button
-        href={getLocalizedUrl('/templates/', lang)}
-        fz={{ base: 's', md: 'base' }}
-        bdrs="var(--bdrs--15)"
-        bd="none"
-        bgc="var(--gray-hi-c)"
-        hov={{ bgc: 'var(--link)' }}
-        mt="40"
-        fw="500"
-        lh="1.5"
-        px="10"
-        g="0"
-      >
-        <Inline px={{ base: '0.375rem', md: '10' }}>View More</Inline>
-        <Icon icon="caret-right" style={{ scale: '1' }} />
+      <Button class="c--lpButton" href={getLocalizedUrl('/templates/', lang)} fz={['s', null, 'base']} hov={{ bgc: 'var(--link)' }} mt="40">
+        <span>View More</span>
+        <Icon icon="caret-right" />
       </Button>
       <Box mbs={{ base: '50', md: '60' }} mx="clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)" cg="10" style={{ columnCount: 3 }}>
         {
@@ -320,32 +306,18 @@ const presets = [
 
   {/* CTA */}
   <Lism as="section" isWrapper="l" hasGutter>
-    <Stack as="div" ai="center" pt="10.625rem">
-      <Center class="c--shadow-box" ai="center" w="100%" max-w="l" min-h="calc(100svh - 21.25rem)" px={{ base: '15', md: '40' }} py="40">
-        <Stack ai="center" g="15">
-          <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Get Started</Text>
-          <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)" lts="var(--lts--tight)"
-            >Lism CSS Works Everywhere</Heading
-          >
+    <Stack as="div" ai="center" pt={['60', '70']}>
+      <Center class="c--shadow-box" ai="center" w="100%" max-w="l" min-h="min(125vw, calc(100svh - 21.25rem))" px={{ base: '25', md: '40' }} py="40">
+        <Stack ai="center" g={['20', '25']}>
+          <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Get Started</Text>
+          <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>Lism CSS Works Everywhere</Heading>
         </Stack>
-        <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75" lts="var(--lts--tight)">
+        <Text ta="center" mbs={['20', '30', '35']} fz={['s', null, 'base']}>
           No build process, no setup required.<br />Just load a single CSS file to add Lism CSS to your site.
         </Text>
-        <Button
-          href={getLocalizedUrl('/docs/installation/', lang)}
-          fz={{ base: 's', md: 'base' }}
-          bdrs="var(--bdrs--15)"
-          bd="none"
-          bgc="var(--gray-hi-c)"
-          hov={{ bgc: 'var(--link)' }}
-          mt="40"
-          fw="500"
-          lh="1.5"
-          px="10"
-          g="0"
-        >
-          <Inline px={{ base: '6px', md: '10' }}>Get Started</Inline>
-          <Icon icon="caret-right" style={{ scale: '1' }} />
+        <Button class="c--lpButton" href={getLocalizedUrl('/docs/installation/', lang)} fz={['s', null, 'base']} hov={{ bgc: 'var(--link)' }} mt="40">
+          <span>Get Started</span>
+          <Icon icon="caret-right" />
         </Button>
       </Center>
     </Stack>
@@ -356,47 +328,5 @@ const presets = [
   /* トップページは日本語版とフォントスケールを統一（_base.scss の html[lang='en'] { --fz-mol: 7 } を上書き） */
   :global(html) {
     --fz-mol: 8;
-  }
-
-  .c--kvVideoBg {
-    mix-blend-mode: darken;
-
-    :global([data-theme='dark']) & {
-      mix-blend-mode: lighten;
-    }
-  }
-
-  .c--kvStripes {
-    background-image:
-      linear-gradient(90deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px),
-      linear-gradient(
-        90deg,
-        rgb(255 255 255 / 0.3) 0%,
-        rgb(34 34 34 / 0.3) 60%,
-        rgb(0 0 0 / 0.3) 70%,
-        rgb(34 34 34 / 0.3) 80%,
-        rgb(255 255 255 / 0.3) 100%
-      );
-    background-position: calc(50% + 32px) 0;
-    background-repeat: repeat;
-    background-size: 64px 100%;
-  }
-
-  video {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 150vh;
-    object-fit: cover;
-
-    :global([data-theme='dark']) & {
-      filter: invert(1);
-    }
-  }
-
-  .c--ai-bg {
-    :global([data-theme='dark']) & {
-      opacity: 0.2;
-    }
   }
 </style>

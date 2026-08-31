@@ -11,7 +11,7 @@
    下層ページの本文スクロールは .c--siteMain_scroll 側。ここはトップページなど document がスクロールする場合用 */
 html {
   scroll-padding-top: calc(var(--header-h) + 1rem);
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -82,7 +82,7 @@ html {
 
     &_scroll {
       scroll-padding-top: var(--s40); // inner の py="40" 分
-      scroll-behavior: smooth;
+      // scroll-behavior: smooth;
 
       @media (prefers-reduced-motion: reduce) {
         scroll-behavior: auto;
