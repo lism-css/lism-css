@@ -48,18 +48,19 @@ const headerText = t(currentLang, 'header');
       ms={{ base: 'calc(var(--s30) - var(--s15) / 2)', md: 'auto' }}>Docs</Link
     >
 
-    <SNSLinks d="flex" ms={{ base: 'calc(var(--s30) - var(--s15) / 2)', md: '30' }} />
+    <SNSLinks icons={['github', 'lang']} d="flex" ms={{ base: 'calc(var(--s30) - var(--s15) / 2)', md: '30' }} />
 
     <!-- 検索トリガーボタン -->
     <Lism
       as="button"
       type="button"
-      class="c--searchTrigger l--flex -ai:center"
-      px={{ base: '0', md: '10' }}
+      set="plain"
+      class="c--searchTrigger"
+      d="inline-flex"
+      ai="center"
+      px={{ base: '0', md: '.4rem' }}
       py={{ base: '0', md: '5' }}
       ms={{ base: '15', md: '20' }}
-      bd="none"
-      bgc="base-2"
       g="5"
       bdrs="10"
       hov="-c"
@@ -70,13 +71,14 @@ const headerText = t(currentLang, 'header');
       <Lism
         as="kbd"
         class="c--searchTrigger_shortcut"
+        set="plain"
         d={{ base: 'none', md: 'block' }}
-        p="0"
+        pe=".125rem"
         bxsh="none"
-        bd="none"
-        fz="base"
+        fz=".95em"
+        o="mp"
         ff="base"
-        lh="1.25"
+        hl="xs"
         lts="var(--lts--tighter)">⌘K</Lism
       >
     </Lism>
@@ -133,17 +135,6 @@ const headerText = t(currentLang, 'header');
 
   .siteTitle {
     font-family: var(--ff--mono);
-
-    /* &::after {
-      content: 'β';
-      margin-inline-start: 0.5em;
-      line-height: 1;
-      font-size: var(--fz--s);
-      letter-spacing: -0.125em;
-      order: 2;
-      padding: 1px;
-      color: var(--brand);
-    } */
   }
   .siteTitle > img {
     width: clamp(6rem, 15vw, 7.1875rem);
@@ -162,28 +153,11 @@ const headerText = t(currentLang, 'header');
   }
 
   /* 検索トリガーボタン */
-  /* .c--menuTrigger {
-    padding: 0.5em;
-  } */
   .c--searchTrigger {
     @container (min-width: 800px) {
       & {
         box-shadow: var(--bxsh--search-border);
-        background: var(--searchBtn-bg);
-      }
-    }
-
-    .-subPage & {
-      box-shadow: var(--bxsh--search-border);
-      background: var(--searchBtn-bg);
-
-      @container (max-width: 799px) {
-        padding-block: 6px;
-        padding-inline: var(--s10);
-      }
-
-      .a--icon {
-        font-size: var(--s20);
+        background: var(--base-2);
       }
     }
   }
