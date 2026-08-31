@@ -87,7 +87,27 @@ const enableGA = !isDev && siteConfig.publish;
     })();
   </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script is:inline>
+    (function () {
+      var viewport = document.querySelector('meta[name="viewport"]');
+      if (!viewport) return;
+
+      var defaultViewport = 'width=device-width, initial-scale=1';
+      var minimumViewport = 'width=360';
+
+      function updateViewport() {
+        // viewport設定の影響を受けない画面幅で判定する
+        var content = window.outerWidth < 360 ? minimumViewport : defaultViewport;
+        if (viewport.getAttribute('content') !== content) {
+          viewport.setAttribute('content', content);
+        }
+      }
+
+      window.addEventListener('resize', updateViewport);
+      updateViewport();
+    })();
+  </script>
   <meta name="generator" content={Astro.generator} />
 
   {/* 基本メタタグ */}
