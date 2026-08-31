@@ -35,6 +35,7 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
 |`s`|`--hl--s`|`calc(var(--hl-unit) * 2)`|
 |`base`|`--hl--base`|`calc(var(--hl-unit) * 3)`|
 |`l`|`--hl--l`|`calc(var(--hl-unit) * 4)`|
+|`xl`|`--hl--xl`|`calc(var(--hl-unit) * 6)`|
 
 上記の`--hl-unit`は次のように定義されています。
 
@@ -64,6 +65,9 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
 .-hl\:l {
   --hl: var(--hl--l);
 }
+.-hl\:xl {
+  --hl: var(--hl--xl);
+}
 .-hl\:0 {
   --hl: 0px; /* ハーフレディングなし */
 }
@@ -77,6 +81,7 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
     <DummyText pre='<code class="-fz:s">s:</code> ' hl="s" />
     <DummyText pre='<code class="-fz:s">base:</code> ' hl="base" />
     <DummyText pre='<code class="-fz:s">l:</code> ' hl="l" />
+    <DummyText pre='<code class="-fz:s">xl:</code> ' hl="xl" />
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
@@ -84,6 +89,7 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
     <p class="-hl:s">Lorem ipsum ...</p>
     <p class="-hl:base">Lorem ipsum ...</p>
     <p class="-hl:l">Lorem ipsum ...</p>
+    <p class="-hl:xl">Lorem ipsum ...</p>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
@@ -92,6 +98,7 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
     <Text hl="s">Lorem ipsum ...</Text>
     <Text hl="base">Lorem ipsum ...</Text>
     <Text hl="l">Lorem ipsum ...</Text>
+    <Text hl="xl">Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>
@@ -105,7 +112,7 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
 
 |指定|挙動|
 |---|---|
-|`lh="base"` / `"xs"` / `"s"` / `"l"`|`hl` と同じトークンを参照（`--hl` を制御）|
+|`lh="base"` / `"xs"` / `"s"` / `"l"` / `"xl"`|`hl` と同じトークンを参照（`--hl` を制御）|
 |`lh="1"`|ハーフレディングなし（`hl="0"` と等価）|
 |`lh="1.7"` などの任意の数値|従来どおり CSS の `line-height` をそのまま出力|
 
@@ -140,4 +147,3 @@ line-heightを`1.6`などの一般的な値でセットした場合、フォン�
 さらに、ユーティリティクラスによるハーフレディング除去も簡単になります。
 
 <DocsLink path="/docs/utility-class/#u--trim--u--trimall" />
-

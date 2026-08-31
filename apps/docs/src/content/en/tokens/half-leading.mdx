@@ -34,6 +34,7 @@ Tokens are provided under `--hl--`.
 |`s`|`--hl--s`|`calc(var(--hl-unit) * 2)`|
 |`base`|`--hl--base`|`calc(var(--hl-unit) * 3)`|
 |`l`|`--hl--l`|`calc(var(--hl-unit) * 4)`|
+|`xl`|`--hl--xl`|`calc(var(--hl-unit) * 6)`|
 
 The `--hl-unit` above is defined as follows:
 
@@ -63,6 +64,9 @@ Half-leading is specified with the `hl` (half-leading) property. The `-hl:*` cla
 .-hl\:l {
   --hl: var(--hl--l);
 }
+.-hl\:xl {
+  --hl: var(--hl--xl);
+}
 .-hl\:0 {
   --hl: 0px; /* no half-leading */
 }
@@ -76,6 +80,7 @@ Half-leading is specified with the `hl` (half-leading) property. The `-hl:*` cla
     <DummyText pre='<code class="-fz:s">s:</code> ' hl="s" />
     <DummyText pre='<code class="-fz:s">base:</code> ' hl="base" />
     <DummyText pre='<code class="-fz:s">l:</code> ' hl="l" />
+    <DummyText pre='<code class="-fz:s">xl:</code> ' hl="xl" />
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
@@ -83,6 +88,7 @@ Half-leading is specified with the `hl` (half-leading) property. The `-hl:*` cla
     <p class="-hl:s">Lorem ipsum ...</p>
     <p class="-hl:base">Lorem ipsum ...</p>
     <p class="-hl:l">Lorem ipsum ...</p>
+    <p class="-hl:xl">Lorem ipsum ...</p>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
@@ -91,6 +97,7 @@ Half-leading is specified with the `hl` (half-leading) property. The `-hl:*` cla
     <Text hl="s">Lorem ipsum ...</Text>
     <Text hl="base">Lorem ipsum ...</Text>
     <Text hl="l">Lorem ipsum ...</Text>
+    <Text hl="xl">Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>
@@ -104,7 +111,7 @@ For cases where you prefer to think in terms of `line-height`, `lh` is available
 
 |Value|Behavior|
 |---|---|
-|`lh="base"` / `"xs"` / `"s"` / `"l"`|References the same tokens as `hl` (controls `--hl`)|
+|`lh="base"` / `"xs"` / `"s"` / `"l"` / `"xl"`|References the same tokens as `hl` (controls `--hl`)|
 |`lh="1"`|No half-leading (equivalent to `hl="0"`)|
 |Arbitrary numbers like `lh="1.7"`|Output as a raw CSS `line-height`, as before|
 
@@ -139,4 +146,3 @@ By fixing the half-leading to a constant value, the distance between lines stays
 Utility classes are also available to remove half-leading.
 
 <DocsLink path="/docs/utility-class/#u--trim--u--trimchildren" />
-

@@ -32,7 +32,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | --- | --- | --- | --- |
 | 余白 (space) | `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80` | `--s{N}` | `--s20` |
 | フォントサイズ (fz) | `base`, `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, `4xl`, `5xl` | `--fz--{key}` | `--fz--l` |
-| ハーフレディング・行間 (hl/lh) | `base`, `xs`, `s`, `l` | `--hl--{key}` | `--hl--s` |
+| ハーフレディング・行間 (hl/lh) | `base`, `xs`, `s`, `l`, `xl` | `--hl--{key}` | `--hl--s` |
 | 字間 (lts) | `base`, `xs`, `s`, `l`, `xl` | `--lts--{key}` | `--lts--s` |
 | フォント (ff) | `base`, `accent`, `mono` | `--ff--{key}` | `--ff--mono` |
 | ウェイト (fw) | `light`, `normal`, `bold` | `--fw--{key}` | `--fw--bold` |
@@ -117,6 +117,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--hl--s` | `calc(var(--hl-unit) * 2)` | 小さめの行間（≒ 4px） |
 | `--hl--base` | `calc(var(--hl-unit) * 3)` | 基本の行間（≒ 6px） |
 | `--hl--l` | `calc(var(--hl-unit) * 4)` | 大きめの行間（≒ 8px） |
+| `--hl--xl` | `calc(var(--hl-unit) * 6)` | より大きな行間（≒ 12px） |
 
 
 ## 字間 (lts)

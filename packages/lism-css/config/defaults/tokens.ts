@@ -98,10 +98,11 @@ export default {
     xs: 'var(--hl-unit)',
     s: 'calc(var(--hl-unit) * 2)',
     l: 'calc(var(--hl-unit) * 4)',
+    xl: 'calc(var(--hl-unit) * 6)',
   },
 
-  // line-height: CSS 変数を持たないカタログ専用（prop 側で解釈）。
-  lh: { base: '-', xs: '-', s: '-', l: '-' },
+  // line-height: 専用CSS変数は持たず、 props.ts 側との組み合わせで hl を流用する仕組み
+  lh: { base: '-', xs: '-', s: '-', l: '-', xl: '-' },
 
   // letter-spacing
   lts: { base: 'normal', xs: '-0.05em', s: '-0.025em', l: '0.05em', xl: '0.1em' },
