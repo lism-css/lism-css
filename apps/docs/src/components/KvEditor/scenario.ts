@@ -36,31 +36,31 @@ const STEP_DEFS: ScenarioStepDef[] = [
       en: 'Make the headline bolder',
     },
     aiMessage: {
-      ja: '見出しの太さを -fw:900 に変更します。',
-      en: "I'll change the heading weight to -fw:900.",
+      ja: '見出しの太さを -fw:800 に変更します。',
+      en: "I'll change the heading weight to -fw:800.",
     },
     aiMessageJsx: {
-      ja: '見出しの太さを fw="900" に変更します。',
-      en: 'I\'ll change the heading weight to fw="900".',
+      ja: '見出しの太さを fw="800" に変更します。',
+      en: 'I\'ll change the heading weight to fw="800".',
     },
     // -fw:700 は h1 だけが持つ（Get Started ボタンは -fw:500）ため一意に一致する
-    edits: [['-fw:700', '-fw:900']],
+    edits: [['-fw:700', '-fw:800']],
   },
   {
     userMessage: {
-      ja: '斜体にもしてみて',
-      en: 'Make it italic too',
+      ja: '今度はぐっと細くして、斜体にしてみて',
+      en: 'Now make it much thinner and italic',
     },
     aiMessage: {
-      ja: '見出しに -fs:italic を追加して斜体にします。',
-      en: "I'll add -fs:italic to italicize the heading.",
+      ja: '見出しの太さを -fw:400 に変更し、-fs:italic で斜体にします。',
+      en: "I'll change the heading weight to -fw:400 and italicize it with -fs:italic.",
     },
     aiMessageJsx: {
-      ja: '見出しに fs="italic" を追加して斜体にします。',
-      en: 'I\'ll add fs="italic" to italicize the heading.',
+      ja: '見出しの太さを fw="400" に変更し、fs="italic" で斜体にします。',
+      en: 'I\'ll change the heading weight to fw="400" and italicize it with fs="italic".',
     },
-    // -fw:900 は前ステップで h1 だけに入る
-    edits: [['-fw:900', '-fw:900 -fs:italic']],
+    // -fw:800 は前ステップで h1 だけに入る（Get Started ボタンは -fw:500）
+    edits: [['-fw:800', '-fw:400 -fs:italic']],
   },
   {
     userMessage: {
@@ -99,18 +99,19 @@ const STEP_DEFS: ScenarioStepDef[] = [
   },
   {
     userMessage: {
-      ja: 'ボタンまわりを縦並びにできる？',
-      en: 'Can you stack the buttons vertically?',
+      ja: 'ボタンの間隔をもう少し広げて',
+      en: 'Add a bit more space between the buttons',
     },
     aiMessage: {
-      ja: 'レイアウトを l--flex から l--stack に切り替えて縦並びにします。',
-      en: "I'll switch the layout from l--flex to l--stack to stack them vertically.",
+      ja: 'ボタンまわりの gap を -g:20 に広げます。',
+      en: "I'll widen the gap to -g:20.",
     },
     aiMessageJsx: {
-      ja: 'レイアウトを Flex から Stack コンポーネントに切り替えて縦並びにします。',
-      en: "I'll switch from the Flex to the Stack component to stack them vertically.",
+      ja: 'ボタンまわりの gap を g="20" に広げます。',
+      en: 'I\'ll widen the gap with g="20".',
     },
-    edits: [['<div class="l--flex -jc:center -ai:center -g:15">', '<div class="l--stack -ai:center -g:20">']],
+    // -g:15 はボタンまわりのラッパー（l--cluster）だけが持つ
+    edits: [['-g:15', '-g:20']],
   },
 ];
 

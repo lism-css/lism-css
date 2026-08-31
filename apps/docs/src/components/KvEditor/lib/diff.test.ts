@@ -47,6 +47,28 @@ describe('diffCode', () => {
     expect(d.head + d.removed + d.tail).toBe(from);
     expect(d.head + d.inserted + d.tail).toBe(to);
   });
+
+  it('数字の連なりを末尾側で分断しない（-fw:700 → -fw:800 は数値まるごと書き換え）', () => {
+    const d = diffCode('-fw:700', '-fw:800');
+    expect(d.head).toBe('-fw:');
+    expect(d.removed).toBe('700');
+    expect(d.inserted).toBe('800');
+    expect(d.tail).toBe('');
+  });
+
+  it('数字の連なりを先頭側で分断しない（-p:10 → -p:15）', () => {
+    const d = diffCode('-p:10', '-p:15');
+    expect(d.head).toBe('-p:');
+    expect(d.removed).toBe('10');
+    expect(d.inserted).toBe('15');
+  });
+
+  it('数字に隣接するだけの編集は数字を巻き込まない', () => {
+    const d = diffCode('-p:10 x', '-p:10y x');
+    expect(d.head).toBe('-p:10');
+    expect(d.removed).toBe('');
+    expect(d.inserted).toBe('y');
+  });
 });
 
 describe('diffTokenEdits', () => {
@@ -104,6 +126,14 @@ describe('diffTokenEdits', () => {
       ['Stack', 'Flex'],
     ]);
     expect(applyEdits(to, reverse)).toBe(from);
+  });
+
+  it('数字だけが変わるトークンは数値まるごと1編集で書き換える', () => {
+    const from = '<h1 class="u--trim -fw:700 -ta:center">';
+    const to = '<h1 class="u--trim -fw:800 -ta:center">';
+    const edits = diffTokenEdits(from, to);
+    expect(edits.map(({ removed, inserted }) => [removed, inserted])).toEqual([['700', '800']]);
+    expect(applyEdits(from, edits)).toBe(to);
   });
 
   it('変更がなければ空の編集列', () => {

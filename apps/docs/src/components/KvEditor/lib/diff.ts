@@ -3,7 +3,8 @@
 //   行の配列を渡せば行単位（開始タグと閉じタグのように離れた場所が変わっても、
 //   間の無変更行を巻き込まない。例: JSXタブの <Flex>→<Stack> で子要素を再タイプさせない）、
 //   トークンの配列を渡せばトークン単位のハンクになる汎用実装
-// - diffCode: 文字単位で共通の先頭・末尾を除いた差分（タイピング範囲を絞る）
+// - diffCode: 文字単位で共通の先頭・末尾を除いた差分（タイピング範囲を絞る）。
+//   ただし数字の連なりは分断しない（`-fw:700` → `-fw:800` は `700` → `800` のまるごと書き換え）
 // - diffTokenEdits: ハンク内を空白区切りトークンのLCSでさらに分割し、
 //   「必要な箇所だけを順に書き換える」編集列を返す（クラス1個の置換・削除ごとに1編集）
 
@@ -16,6 +17,8 @@ export interface CodeDiff {
 
 const isHighSurrogate = (code: number): boolean => code >= 0xd800 && code <= 0xdbff;
 const isLowSurrogate = (code: number): boolean => code >= 0xdc00 && code <= 0xdfff;
+
+const isDigit = (ch: string | undefined): boolean => ch !== undefined && ch >= '0' && ch <= '9';
 
 /**
  * サロゲートペアを割らない位置まで index を戻す。
@@ -37,6 +40,14 @@ export const diffCode = (from: string, to: string): CodeDiff => {
   while (suffix < maxSuffix && from[from.length - 1 - suffix] === to[to.length - 1 - suffix]) suffix++;
   // 末尾側の切れ目が下位サロゲートから始まる場合は 1 つ縮めてペアを保つ
   if (suffix > 0 && isLowSurrogate(from.charCodeAt(from.length - suffix))) suffix--;
+
+  // 数字の連なり（クラス値の数値など）は分断しない: `-fw:700` → `-fw:800` を「7 → 8」の
+  // 1文字置換にするとアニメが一瞬で終わり何が起きたか読み取れないため、数値のどこかが
+  // 変わる場合は連なり全体を削除 → 再タイプの対象へ広げる。数字に隣接するだけの編集
+  //（変わる側の文字が数字でない）は広げない
+  while (prefix > 0 && isDigit(from[prefix - 1]) && (isDigit(from[prefix]) || isDigit(to[prefix]))) prefix--;
+  while (suffix > 0 && isDigit(from[from.length - suffix]) && (isDigit(from[from.length - suffix - 1]) || isDigit(to[to.length - suffix - 1])))
+    suffix--;
 
   return {
     head: from.slice(0, prefix),
