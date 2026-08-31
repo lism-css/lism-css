@@ -55,7 +55,7 @@ const themeModes = [
   ai="center"
   p="5"
   g="5"
-  bgc="base:50%"
+  bgc="base-2:50%"
   bd
   bdc="base-2"
   bdrs="var(--bdrs--15)"
@@ -75,7 +75,6 @@ const themeModes = [
         p="0.375rem"
         h="1.75rem"
         bd="none"
-        bgc="transparent"
         class="c--themeModeSwitch_btn"
         aria-label={mode.label}
         data-theme-mode={mode.id}
@@ -86,18 +85,35 @@ const themeModes = [
   }
 </Flex>
 
-<style>
-  .c--themeModeSwitch_btn {
-    cursor: pointer;
-    border-radius: 0.25rem;
-    color: var(--gray-lo-c);
+<style is:global>
+  @layer lism-base {
+    html {
+      --themeModeSwitch-btn: var(--text);
+      --themeModeSwitch-btn-bg: var(--base);
+    }
+    html[data-theme='dark'] {
+      --themeModeSwitch-btn: var(--base);
+      --themeModeSwitch-btn-bg: var(--text);
+    }
   }
-  :global(html[data-theme-mode='system']) .c--themeModeSwitch_btn[data-theme-mode='system'],
-  :global(html[data-theme-mode='light']) .c--themeModeSwitch_btn[data-theme-mode='light'],
-  :global(html[data-theme-mode='dark']) .c--themeModeSwitch_btn[data-theme-mode='dark'] {
-    background-color: var(--themeModeSwitch-btn-bg);
-    color: var(--themeModeSwitch-btn);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+</style>
+
+<style>
+  @layer lism-custom {
+    .c--themeModeSwitch_btn {
+      cursor: pointer;
+      border-radius: 0.25rem;
+      color: var(--gray-lo-c);
+      background-color: transparent;
+    }
+    /* アクティブなボタン */
+    :global(html[data-theme-mode='system']) .c--themeModeSwitch_btn[data-theme-mode='system'],
+    :global(html[data-theme-mode='light']) .c--themeModeSwitch_btn[data-theme-mode='light'],
+    :global(html[data-theme-mode='dark']) .c--themeModeSwitch_btn[data-theme-mode='dark'] {
+      background-color: var(--themeModeSwitch-btn-bg);
+      color: var(--themeModeSwitch-btn);
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+    }
   }
 </style>
 
