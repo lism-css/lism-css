@@ -440,7 +440,8 @@ lism-ui の `setModal.ts` は初期化時に `document.querySelectorAll('[data-m
 
 - **prefers-reduced-motion では自動開始しない**（静的な初期表示のまま）。▶ で明示的に開始した場合のみ、タイピングを省略した即時適用 + ポーズで再生する（`animateCode` の reduced-motion 分岐がそのまま効く）
 - **ハイライター（shiki）の準備完了を待つ**: editor.ts のアイドル時ロード完了（失敗時も resolve）を `highlightReady` promise で受け取ってから開始する。プレーンテキストでタイピングが始まるのを防ぐ。準備前に ▶ を押した場合も同じで、初期コードへのリセットだけを行い、再生の開始は準備完了後の `tryResume` に委ねる
-- **自動再生はページをスクロールしない**: reveal（編集位置の可視化）は textarea 内部のみ（`createCodeAnimator` の `scrollWindowOnReveal: false`）。ページ側のスクロール（`ensureEditorVisible`）はユーザー起動の ▶ リスタート時のみ行う
+- **初回は条件成立から2秒待つ**: ハイライターの準備完了とIntersectionObserverの表示判定がどちらの順で届いても、両方が揃ってから`INITIAL_START_DELAY`を置いて開始する。ホバー解除・再表示・タブ切替による自動再開は既存の短い遅延を使う
+- **自動再生はページをスクロールしない**: reveal（編集位置の可視化）は textarea 内部のみ（`createCodeAnimator` の `scrollWindowOnReveal: false`）。長時間アニメの開始コード復元でも`scrollWindowOnRestore: false`にしてページ位置を維持する。ページ側のスクロール（`ensureEditorVisible`）はユーザー起動の ▶ リスタート時のみ行う
 
 ### 「Live Demo ▶/⏸」トグル・アクセシビリティ
 
@@ -476,7 +477,7 @@ idle ──click──▶ playing ──全ステップ完遂──▶ done ─�
 
 吹き出しは `<p class="c--kvEditor_msg is--user / is--ai">` を `[data-kv-messages]` へ追記する。中断時（"Interrupted" のラベル + `.c--kvEditor_statusBtn` の Resume ボタン）・完了時（"Done" のラベルのみ）のステータス行も同じ領域へ `<p class="c--kvEditor_status">` として追記する。スクリーンリーダーへの通知は可視のチャット領域ではなく、隠しライブリージョン（`u--srOnly` + `[data-kv-live]`・`aria-live="polite"`）へ `announce()` で流す。1 文字ずつのタイピング途中は告知せず、確定した文言のみ（ユーザー吹き出しの表示時・AI 発話のタイピング完了時・中断時 "Interrupted"・完了時 "Done"）を告知する。連続して同一文言でも読み上げられるよう、一度空にしてから rAF で本文を設定する。
 
-タイピング・ポーズの速度は各モジュール先頭の定数に集約している（ms）: ユーザー入力 30 / AI 発話 22、送信前 300 / AI 応答前 400 / コード書き換え前 500 / ステップ間 1400（reduced-motion 時は 900）は `player.ts`。コード削除 12（2 文字ずつ）/ コード挿入 18（1 文字ずつ）/ ハンク間 350 / ハンク内のマイクロ編集間 200 / 編集位置へのスクロール後 300 は `code-anim.ts`。ループ再生のポーズ（ステップ間 1600 / 周回後 2800 / タブ自動切替後 800 / 自動再開までの間 600・800）は `loop.ts`。
+タイピング・ポーズの速度は各モジュール先頭の定数に集約している（ms）: ユーザー入力 30 / AI 発話 22、送信前 300 / AI 応答前 400 / コード書き換え前 500 / ステップ間 1400（reduced-motion 時は 900）は `player.ts`。コード削除 12（2 文字ずつ）/ コード挿入 18（1 文字ずつ）/ ハンク間 350 / ハンク内のマイクロ編集間 200 / 編集位置へのスクロール後 300 は `code-anim.ts`。ループ再生のポーズ（初回開始2000 / ステップ間 1600 / 周回後 2800 / タブ自動切替後 800 / 自動再開までの間 600・800）は `loop.ts`。
 
 ### コード書き換えアニメ（ハンク単位の diff タイピング）
 

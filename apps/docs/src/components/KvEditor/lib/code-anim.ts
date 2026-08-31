@@ -66,13 +66,21 @@ interface CodeAnimatorOptions {
    */
   scrollWindowOnReveal?: boolean;
   /**
+   * 長時間アニメの開始コード復元後にページ側のスクロールを許可するか（既定:true）。
+   * 自動ループ再生ではfalseにし、ユーザーのスクロール位置を維持する
+   */
+  scrollWindowOnRestore?: boolean;
+  /**
    * ヒーローへ反映する直前に、確定したハンクの行範囲（アクティブタブの表示上の行）を添えて呼ばれる
    * （ライブループの反映フラッシュ演出用）。リセット系の snapTo では呼ばれない
    */
   onApply?: (range: { line: number; lineCount: number }) => void;
 }
 
-export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = true, onApply }: CodeAnimatorOptions = {}): CodeAnimator {
+export function createCodeAnimator(
+  editor: EditorApi,
+  { scrollWindowOnReveal = true, scrollWindowOnRestore = true, onApply }: CodeAnimatorOptions = {}
+): CodeAnimator {
   // MediaQueryList は 1 回だけ生成して使い回す（.matches は live なので再生中の設定変更にも追従する）
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const prefersReducedMotion = (): boolean => reducedMotionQuery.matches;
@@ -173,7 +181,7 @@ export function createCodeAnimator(editor: EditorApi, { scrollWindowOnReveal = t
     // シナリオが意図した小さな編集そのものになり、チャット文言とコードの動きが一致する
     if (estimateCodeAnimMs(fromLines, toLines, hunks) > MAX_CODE_ANIM_MS) {
       snapTo(stepStartHtml);
-      ensureEditorVisible();
+      if (scrollWindowOnRestore) ensureEditorVisible();
       const restored = editor.getViewText();
       // ステップ開始コードと目標が同一（異常系）なら即時確定で終える
       if (restored === target) {

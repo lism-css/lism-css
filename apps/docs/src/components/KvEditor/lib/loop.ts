@@ -30,6 +30,7 @@ import { STRINGS } from './strings';
 // ポーズ設定（ms）
 const PAUSE_BETWEEN_STEPS = 1600; // 編集と次の編集の「間」
 const PAUSE_AFTER_CYCLE = 2800; // 初期コードへ戻ってから次の周回を始めるまでの「間」
+const INITIAL_START_DELAY = 2000; // 表示・ハイライター準備完了から初回再生までの「間」
 const RESUME_DELAY = 600; // ホバー解除・再表示から自動再開するまでの「間」
 const TAB_RESUME_DELAY = 800; // タブ切替後に新しい表記で再開するまでの「間」
 const PAUSE_AFTER_TAB_SWITCH = 800; // 周回の継ぎ目でタブを自動切替してから次の周回を始めるまでの「間」
@@ -54,6 +55,7 @@ export function createLoopPlayer({ editor, root, hoverTarget, toggleButtons, rea
   // onApply（ハンク確定の反映演出）は live モードだけの配線: 書き換えた行をフラッシュで光らせる
   const animator = createCodeAnimator(editor, {
     scrollWindowOnReveal: false,
+    scrollWindowOnRestore: false,
     onApply: ({ line, lineCount }) => editor.flashLines(line, lineCount),
   });
 
@@ -155,10 +157,11 @@ export function createLoopPlayer({ editor, root, hoverTarget, toggleButtons, rea
   const tryResume = (delayMs: number): void => {
     clearTimeout(resumeTimer);
     if (!readyFlag || running || manualStop || autoBlocked || gatesBlocked()) return;
+    const effectiveDelay = started ? delayMs : INITIAL_START_DELAY;
     resumeTimer = setTimeout(() => {
       if (!readyFlag || running || manualStop || autoBlocked || gatesBlocked()) return;
       void run(started ? currentIndex : 0);
-    }, delayMs);
+    }, effectiveDelay);
   };
 
   /** 自動一時停止（ホバー・画面外・非アクティブタブ）。位置を保ち、条件が戻れば tryResume で続きから */
@@ -274,7 +277,8 @@ export function createLoopPlayer({ editor, root, hoverTarget, toggleButtons, rea
   }
 
   // ---- 自動開始 -----------------------------------------------------------
-  // ハイライターの準備完了を待ってから開始する（ゲート不成立ならイベント駆動の tryResume に委ねる）
+  // ハイライターと表示条件が揃ってから初回の間を置いて開始する
+  //（ゲート不成立ならイベント駆動の tryResume に委ねる）
   void ready.then(() => {
     readyFlag = true;
     tryResume(0);
