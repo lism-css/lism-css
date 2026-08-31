@@ -451,6 +451,14 @@
       background-color: rgba(56, 139, 253, 0.4);
       color: transparent;
     }
+
+    // フォーカスを枠線で可視化する（WCAG 2.4.7）。文字入力要素の :focus-visible は
+    // クリックでもマッチするため、編集中は常に「エディターがアクティブ」の合図として表示される。
+    // 太さは scale 縮小の逆数で補正して視覚上 2px にし、親の overflow: hidden に切られないよう内側へ引く
+    &:focus-visible {
+      outline: calc(2px / var(--kvEditor-input-scale)) solid var(--kvEditor-neon);
+      outline-offset: calc(-2px / var(--kvEditor-input-scale));
+    }
   }
 
   /* 通知スタック（エディター右下）。複数の通知を新しいものが下（角側）に来るよう縦積みする。

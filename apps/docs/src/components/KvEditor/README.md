@@ -146,6 +146,7 @@ span.c--kvEditorEditHere[aria-hidden] … 手書き風 "Edit Here!!" 装飾（�
 │       │   └── .c--kvEditor_preInner          … ★transform でスクロール追従
 │       │       └── shiki の <pre><code>
 │       ├── textarea.c--kvEditor_input         … 入力用（文字は透明・caret のみ表示）
+│       ├── p.u--srOnly[id="kv-editor-keyhint"] … Tab キー挙動と脱出方法の sr-only 案内（WCAG 2.1.2）
 │       └── .c--kvEditor_snackbarStack[id="kv-editor-notices"][data-kv-snackbar][role="status"] … 通知スタック（JS が折りたたみラッパー + カードを動的追記）
 └── aside.c--kvEditor_panel     … AIパネル（mode: 'ai' のみ出力。SPでは下段に全幅表示）
     ├── .c--kvEditor_placeholder … 空状態: グラデーション円形ロゴ（orb）+ "Just ask. The code writes itself."
@@ -160,8 +161,9 @@ span.c--kvEditorEditHere[aria-hidden] … 手書き風 "Edit Here!!" 装飾（�
 - textarea の中身は Astro が自動エスケープする。閉じタグ直前に空白を入れない（入れると初期値に混入する）
 - タブは ARIA タブパターンを完全実装: `role="tablist"` / `role="tab"` / `aria-selected` に加え、`aria-controls` で共有 tabpanel（`.c--kvEditor_editor`）を参照し、roving tabindex（選択タブのみ `tabindex="0"`）+ ArrowLeft / ArrowRight / Home / End の矢印キー操作（automatic activation）に対応。キー操作は対象タブの `.focus()` + `.click()` を経由し、再生中断リスナー等のクリック処理も発火させる。ハイライトレイヤーは `aria-hidden`（読み上げ対象は textarea 側のみ）
 - 「Ask AI to edit...」トリガーは `aria-label="Ask AI to edit... (play the AI demo)"` でデモ再生ボタンであることを明示（可視テキスト先頭・WCAG 2.5.3 準拠。タイピング演出で中身が変わってもアクセシブルネームが安定する）。再生中はクリックが「停止（中断）」として機能するため、`aria-label` を `Stop the AI demo` に切り替え、再生を抜けたら元のラベルへ戻す（機能し続けるボタンなので `aria-disabled` は使わない）
-- textarea 内では Tab キーで 2 スペース（プリンタの整形ルールと同じ）のインデントを挿入する。選択が複数行にまたがる場合は選択を置換せず、選択範囲に触れる各行の行頭へ 2 スペースを挿入する（一般的なコードエディターの動き）。Shift+Tab はアウトデント（選択範囲に触れる各行の行頭から先頭のスペースを最大 2 つ削除。削除対象がない場合も既定のフォーカス移動はさせない）。キーボードトラップにならないよう（WCAG 2.1.2）、Esc → 直後の Tab / Shift+Tab が既定のフォーカス移動になり脱出できる。複数行の一括処理中は行ごとの再変換・再ハイライトを抑止し、完了後に 1 回だけ反映する（行数ぶんの同期全文ハイライトで固まらないため）
-- textarea は構文エラー時に `aria-invalid="true"` が付き、`aria-describedby="kv-editor-notices"` でスナックバー（通知スタック）を常設参照する
+- textarea 内では Tab キーで 2 スペース（プリンタの整形ルールと同じ）のインデントを挿入する。選択が複数行にまたがる場合は選択を置換せず、選択範囲に触れる各行の行頭へ 2 スペースを挿入する（一般的なコードエディターの動き）。Shift+Tab はアウトデント（選択範囲に触れる各行の行頭から先頭のスペースを最大 2 つ削除。削除対象がない場合も既定のフォーカス移動はさせない）。複数行の一括処理中は行ごとの再変換・再ハイライトを抑止し、完了後に 1 回だけ反映する（行数ぶんの同期全文ハイライトで固まらないため）
+- Tab のキャプチャはキーボードトラップにならないようアーミング制で制御する（WCAG 2.1.2）: クリック（pointerdown）由来のフォーカスは即キャプチャ、キーボード遷移（Tab）で入った直後はキャプチャ無効で素通りでき、修飾キー単独以外のキー入力で編集を始めたらキャプチャ有効になる。有効後も Esc → 直後の Tab / Shift+Tab が既定のフォーカス移動になり脱出できる。この挙動は sr-only の案内（`#kv-editor-keyhint`）で説明する
+- textarea は構文エラー時に `aria-invalid="true"` が付き、`aria-describedby="kv-editor-keyhint kv-editor-notices"` で Tab キー挙動の案内とスナックバー（通知スタック）を常設参照する。フォーカス時は `:focus-visible` の内側 outline（`--kvEditor-neon`）でフォーカス位置を可視化する（WCAG 2.4.7。文字入力要素はクリックでもマッチするため、編集中は常時表示）
 - `data-kv-*` 属性が JS のフックで、クラス名はスタイル専用（フックと見た目の分離）
 
 ## editor.ts — コントローラ

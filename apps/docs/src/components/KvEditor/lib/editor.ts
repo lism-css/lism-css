@@ -324,9 +324,10 @@ export function initKvEditor(): void {
   // ---- Tabキーでのインデント操作（キーボードトラップ回避付き） ---------------
   // コードエディターとして Tab で 2 スペース（プリンタの整形ルールと同じ）を挿入し、
   // Shift+Tab でアウトデント（各行の行頭から先頭のスペースを最大 2 つ削除）する。
-  // WCAG 2.1.2（キーボードトラップ禁止）のための脱出手段:
-  // Esc → 直後の Tab / Shift+Tab は既定のフォーカス移動に任せる
-  let tabCaptureEnabled = true;
+  // WCAG 2.1.2（キーボードトラップ禁止）のための脱出手段（KvEditor.astro の sr-only ヒントで案内）:
+  // - キーボード遷移（Tab）で入った直後はキャプチャ無効 = 素通りできる。編集を始めたら有効化
+  // - Esc → 直後の Tab / Shift+Tab は既定のフォーカス移動に任せる
+  let tabCaptureEnabled = false;
 
   // 複数行の execCommand ループ中は input イベントごとの処理（変換・全文ハイライト）を抑止する。
   // 行数ぶんの同期全文ハイライトが 1 回の Tab 押下で走ってメインスレッドが固まるのを防ぐため、
@@ -444,12 +445,24 @@ export function initKvEditor(): void {
       }
       return;
     }
-    // 修飾キー単独以外のキーが押されたら再アーム（Esc で解除した後に入力を続けた場合）
+    // 修飾キー単独以外のキーが押されたらアーム（キーボード遷移で入った後や Esc 解除後に、編集を始めた場合）
     if (!['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) tabCaptureEnabled = true;
   });
-  // フォーカスが戻ってきたら再アーム（解除状態を持ち越さない）
-  textarea.addEventListener('focus', () => {
+  // クリック（pointerdown）由来のフォーカスだけ即キャプチャする。キーボード遷移（Tab）で
+  // 通りすがっただけのユーザーは捕まえず、上のキー入力アームで編集を始めるまで素通りさせる
+  let focusedByPointer = false;
+  textarea.addEventListener('pointerdown', () => {
+    // フォーカス済みの textarea をクリックして編集位置を選んだ場合（focus は発火しない）も編集意図とみなす
     tabCaptureEnabled = true;
+    focusedByPointer = true;
+  });
+  textarea.addEventListener('focus', () => {
+    tabCaptureEnabled = focusedByPointer;
+    focusedByPointer = false;
+  });
+  // フォーカス済みへの pointerdown で focus が発火しなかった場合のフラグ残りを、離脱時に掃除する
+  textarea.addEventListener('blur', () => {
+    focusedByPointer = false;
   });
 
   // ---- 構文チェック・空チェック（デバウンス評価 → スナックバー） -------------

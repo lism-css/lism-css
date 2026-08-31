@@ -101,8 +101,10 @@ const highlighted = await highlight(initialHtml, 'html');
         autocorrect="off"
         wrap="off"
         aria-label={kvEditorT.editorAriaLabel}
-        aria-describedby="kv-editor-notices">{initialHtml}</textarea
+        aria-describedby="kv-editor-keyhint kv-editor-notices">{initialHtml}</textarea
       >
+      {/* Tabキャプチャの挙動と脱出方法の案内（WCAG 2.1.2）。SR向けに aria-describedby で紐付ける */}
+      <p class="u--srOnly" id="kv-editor-keyhint">{kvEditorT.keyboardHint}</p>
       {/* 通知スタック（上限超過・構文エラー・空提案）。子要素を縦に積み重ねて表示する */}
       <div class="c--kvEditor_snackbarStack" id="kv-editor-notices" data-kv-snackbar role="status"></div>
     </div>

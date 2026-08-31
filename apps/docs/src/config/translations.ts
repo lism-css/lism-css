@@ -21,7 +21,7 @@ type TranslationKeys = {
   translationNotice: 'title' | 'description';
   demo: 'openNewTab' | 'lismNote';
   preview: 'resize';
-  kvEditor: 'tablistAriaLabel' | 'editorAriaLabel';
+  kvEditor: 'tablistAriaLabel' | 'editorAriaLabel' | 'keyboardHint';
 };
 
 /**
@@ -88,6 +88,7 @@ export const translations: Record<LangCode, UITranslations> = {
     kvEditor: {
       tablistAriaLabel: 'コード表記の切り替え',
       editorAriaLabel: 'ライブコードエディター',
+      keyboardHint: 'Tabキーはインデントの挿入に使われます。エディターの外へフォーカスを移動するには、Escキーを押してからTabキーを押してください。',
     },
   },
   en: {
@@ -143,6 +144,7 @@ export const translations: Record<LangCode, UITranslations> = {
     kvEditor: {
       tablistAriaLabel: 'Switch code format',
       editorAriaLabel: 'Live code editor',
+      keyboardHint: 'The Tab key inserts indentation. To move focus out of the editor, press Escape and then Tab.',
     },
   },
 };
