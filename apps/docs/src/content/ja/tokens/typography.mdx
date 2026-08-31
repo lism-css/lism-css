@@ -6,7 +6,7 @@ description: 'Lism CSS で使用するフォントファミリー、フォント
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import { FzDemos } from "@/content/token-previews.jsx";
+import { FzDemos, LthDemos } from "@/content/token-previews.jsx";
 
 フォントファミリー、フォントサイズ、行間など、タイポグラフィに関するデザイントークンについて解説します。
 
@@ -172,6 +172,7 @@ Lism CSSでは、`line-height` をハーフレディングの値で管理する�
 |トークン|変数|クラス|初期値
 |---|---|---|---|
 |`base`|`--lts--base`|`-lts:base`|`normal`|
+|`xs`|`--lts--xs`|`-lts:xs`|`-0.05em`|
 |`s`|`--lts--s`|`-lts:s`|`-0.025em`|
 |`l`|`--lts--l`|`-lts:l`|`0.05em`|
 |`xl`|`--lts--xl`|`-lts:xl`|`0.1em`|
@@ -179,10 +180,7 @@ Lism CSSでは、`line-height` をハーフレディングの値で管理する�
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s">
-    <DummyText length="s" pre="<code>s:</code> " lts="s" />
-    <DummyText length="s" pre="<code>base:</code> " lts="base" />
-    <DummyText length="s" pre="<code>l:</code> " lts="l" />
-    <DummyText length="s" pre='<code>xl:</code> ' lts="xl" />
+    <LthDemos />
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html

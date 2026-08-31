@@ -104,7 +104,7 @@ export default {
   lh: { base: '-', xs: '-', s: '-', l: '-' },
 
   // letter-spacing
-  lts: { base: 'normal', s: '-0.025em', l: '0.05em', xl: '0.1em' },
+  lts: { base: 'normal', xs: '-0.05em', s: '-0.025em', l: '0.05em', xl: '0.1em' },
 
   // opacity（音楽の強弱記号 piano 系列に由来）
   o: { mp: '0.9', p: '0.75', pp: '0.5', ppp: '0.25' },
