@@ -78,7 +78,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
   {/* トップレベルリンク */}
   {
     topLevelLinks.length > 0 && (
-      <div class="siteNav_toplinks c--shadow-box">
+      <div class="siteNav_toplinks b--shadowBox">
         <Stack class="siteNav_toplinks_inner" my="-0.3rem">
           {topLevelLinks.map((item) => {
             // 言語対応のパスを生成
@@ -103,7 +103,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
   }
 
   {/* 通常のナビゲーションセクション */}
-  <Stack class="c--shadow-box c--scrollPanel siteNav_sections" fx="1" min-h="0">
+  <Stack class="b--shadowBox c--scrollPanel siteNav_sections" fx="1" min-h="0">
     <Stack class="c--scroll siteNav_sections_scroll" fx="1" min-h="0">
       <Stack class="siteNav_sections_inner" g="30">
         {

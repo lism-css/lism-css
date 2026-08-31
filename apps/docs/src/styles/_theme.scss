@@ -83,7 +83,7 @@
       background-color 0.15s;
   }
 
-  .c--shadow-box {
+  .b--shadowBox {
     border-radius: var(--bdrs--15);
     background-color: var(--base);
     box-shadow: var(--bxsh--base);
@@ -102,8 +102,8 @@
     }
   }
 
-  /* トップページのみ半透明＋blur（下層 docs は --base のまま） */
-  .p--front .c--siteHeader .c--shadow-box {
+  /* トップページのヘッダーのみ半透明＋blur（下層 docs は --base のまま） */
+  .p--front .c--siteHeader .b--shadowBox {
     background-color: color-mix(in srgb, var(--base), transparent 25%);
     backdrop-filter: blur(32px);
   }

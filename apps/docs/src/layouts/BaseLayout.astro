@@ -72,7 +72,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         mt="20"
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container as="main" class="c--siteMain c--shadow-box c--scrollPanel" tabindex={-1} aria-label={t(lang, 'main').ariaLabel}>
+        <Container as="main" class="c--siteMain b--shadowBox c--scrollPanel" tabindex={-1} aria-label={t(lang, 'main').ariaLabel}>
           <Box class="c--siteMain_scroll c--scroll" fx="1" min-h="0" tabindex={0} ov-y="auto">
             <Container isWrapper={toc ? true : 'l'} hasGutter py="40">
               {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
@@ -84,7 +84,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         </Container>
         {
           toc && (
-            <Stack as="aside" class="c--siteToc c--shadow-box c--scrollPanel" isContainer g="15" d={['none', null, null, 'flex']} min-h="0">
+            <Stack as="aside" class="c--siteToc b--shadowBox c--scrollPanel" isContainer g="15" d={['none', null, null, 'flex']} min-h="0">
               <TableOfContents toc={toc} px="20" py="30" />
             </Stack>
           )
