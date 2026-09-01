@@ -180,6 +180,8 @@ Lism CSSでは、`line-height` をハーフレディング（行間の上下余�
 
 `--hl-unit` はデフォルトで `0.125rem`（≒ 2px）です。
 
+`--fz--base` を `clamp()` 等を使って流体値にしているサイトで、行間もフォントサイズ基準にして流体的に変化させたい場合は、`:root` で `--hl-unit: calc(var(--fz--base) * 0.125);` のように上書きしてください。
+
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s">
