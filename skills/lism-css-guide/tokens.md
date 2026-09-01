@@ -117,7 +117,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--hl--s` | `calc(var(--hl-unit) * 2)` | 小さめの行間（≒ 4px） |
 | `--hl--base` | `calc(var(--hl-unit) * 3)` | 基本の行間（≒ 6px） |
 | `--hl--l` | `calc(var(--hl-unit) * 4)` | 大きめの行間（≒ 8px） |
-| `--hl--xl` | `calc(var(--hl-unit) * 6)` | より大きな行間（≒ 12px） |
+| `--hl--xl` | `calc(var(--hl-unit) * 5)` | より大きな行間（≒ 10px） |
 
 
 ## 字間 (lts)

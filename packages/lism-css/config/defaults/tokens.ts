@@ -98,7 +98,7 @@ export default {
     xs: 'var(--hl-unit)',
     s: 'calc(var(--hl-unit) * 2)',
     l: 'calc(var(--hl-unit) * 4)',
-    xl: 'calc(var(--hl-unit) * 6)',
+    xl: 'calc(var(--hl-unit) * 5)',
   },
 
   // line-height: 専用CSS変数は持たず、 props.ts 側との組み合わせで hl を流用する仕組み
