@@ -27,88 +27,14 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
 
 ## トークン
 
-`--hl--` でトークンを用意しています。
+`--hl` にセットする値として `--hl--xs`〜`--hl--xl` のトークンを用意しています。一覧とプレビューは [タイポグラフィトークン](/docs/tokens/typography/#lh-line-height) を参照してください。
 
-|トークン|変数|初期値
-|---|---|---|
-|`xs`|`--hl--xs`|`var(--hl-unit)`|
-|`s`|`--hl--s`|`calc(var(--hl-unit) * 2)`|
-|`base`|`--hl--base`|`calc(var(--hl-unit) * 3)`|
-|`l`|`--hl--l`|`calc(var(--hl-unit) * 4)`|
-|`xl`|`--hl--xl`|`calc(var(--hl-unit) * 6)`|
-
-上記の`--hl-unit`は次のように定義されています。
-
-```css
-:root {
-  --hl-unit: calc(var(--fz--base) * 0.125); /* ≒ 2px */
-}
-```
-
-（`--fz--base` はデフォルト `1rem` のため、`--hl-unit` は `2px`前後の値となる想定です。）
+<DocsLink path="/docs/tokens/typography/#lh-line-height" />
 
 
-## `hl` クラス
+## `lh`（互換ショートカット）
 
-ハーフレディングは `hl`（half-leading）プロパティで指定します。`-hl:*` クラス（`<Lism>` 系コンポーネントでは `hl` prop）の内部で、これらの変数を `--hl` にセットしています。
-
-```css
-.-hl\:base {
-  --hl: var(--hl--base);
-}
-.-hl\:xs {
-  --hl: var(--hl--xs);
-}
-.-hl\:s {
-  --hl: var(--hl--s);
-}
-.-hl\:l {
-  --hl: var(--hl--l);
-}
-.-hl\:xl {
-  --hl: var(--hl--xl);
-}
-.-hl\:0 {
-  --hl: 0px; /* ハーフレディングなし */
-}
-```
-
-<Preview>
-  <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20" flow="s" style={{'--halfLead':'1em'}}>
-    <DummyText pre='<code class="-fz:s">0:</code> ' hl="0" />
-    <DummyText pre='<code class="-fz:s">xs:</code> ' hl="xs" />
-    <DummyText pre='<code class="-fz:s">s:</code> ' hl="s" />
-    <DummyText pre='<code class="-fz:s">base:</code> ' hl="base" />
-    <DummyText pre='<code class="-fz:s">l:</code> ' hl="l" />
-    <DummyText pre='<code class="-fz:s">xl:</code> ' hl="xl" />
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-    ```html
-    <p class="-hl:xs">Lorem ipsum ...</p>
-    <p class="-hl:s">Lorem ipsum ...</p>
-    <p class="-hl:base">Lorem ipsum ...</p>
-    <p class="-hl:l">Lorem ipsum ...</p>
-    <p class="-hl:xl">Lorem ipsum ...</p>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Text hl="xs">Lorem ipsum ...</Text>
-    <Text hl="s">Lorem ipsum ...</Text>
-    <Text hl="base">Lorem ipsum ...</Text>
-    <Text hl="l">Lorem ipsum ...</Text>
-    <Text hl="xl">Lorem ipsum ...</Text>
-    ```
-  </PreviewCode>
-</Preview>
-
-`hl` はブレイクポイント指定にも対応しており、`hl={['s', null, 'l']}`（`-hl_md:l`）のようにレスポンシブに切り替えられます。
-
-
-### `lh`（互換ショートカット）
-
-`line-height` の感覚で指定したい場合のために、`lh` を互換ショートカットとして用意しています。
+ハーフレディングは通常 `hl`（half-leading）プロパティ（`-hl:*` クラス、`<Lism>` 系コンポーネントでは `hl` prop）で指定しますが、`line-height` の感覚で指定したい場合のために、`lh` を互換ショートカットとして用意しています。
 
 |指定|挙動|
 |---|---|

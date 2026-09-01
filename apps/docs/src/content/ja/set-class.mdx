@@ -152,6 +152,9 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 ```css
 :root,
 .set--s {
+  /* 余白単位 ≒ 8px */
+  --s-unit: calc(var(--fz--base) * 0.5);
+
   --s5: calc(var(--s-unit) * 0.5);
   --s10: var(--s-unit);
   --s15: calc(var(--s-unit) * 1.5);
@@ -165,15 +168,25 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
   --s70: calc(var(--s-unit) * 21);
   --s80: calc(var(--s-unit) * 34);
 }
+
+.set--s {
+  --s-unit: 0.5em;
+}
 ```
+
+`set--s`を指定したスコープでは`--s-unit`が`0.5em`に切り替わり、`--s10`〜`--s80`がフォントサイズ基準で再計算されます。
 
 ```html
+<!-- ボタンの padding が button 自身の font-size に追従する -->
 <button class="set--s -fz:s -py:10 -px:20">...</button>
+
+<!-- --s-unit を任意の値で上書きすることも可能 -->
+<button class="set--s -p:10" style="--s-unit: .4375em">...</button>
 ```
 
-詳しくは[余白トークン](/docs/tokens/spacing/)を参照してください。
+余白トークンのスケーリング規則は[デザイントークン（SPACE）](/docs/tokens/#space)を参照してください。
 
-<DocsLink path="/docs/tokens/spacing/" />
+<DocsLink path="/docs/tokens/" />
 
 
 ## `set--hov`

@@ -127,6 +127,12 @@ export const astroRedirects: AstroRedirects = {
   '/en/ui/components/hero/': '/en/patterns/#hero',
   '/en/ui/examples/faq/': '/en/patterns/#faq',
   '/en/ui/examples/hero/': '/en/patterns/#hero',
+  // tokens/spacing ページを廃止し、tokens ページの SPACE セクションへ統合
+  '/docs/tokens/spacing/': '/docs/tokens/#space',
+  '/en/docs/tokens/spacing/': '/en/docs/tokens/#space',
+  // half-leading を tokens/ 配下から CSS設計の独立ページへ移動
+  '/docs/tokens/half-leading/': '/docs/half-leading/',
+  '/en/docs/tokens/half-leading/': '/en/docs/half-leading/',
 };
 
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。

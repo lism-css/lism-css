@@ -5,6 +5,7 @@ description: 'Lism CSS で定義されているカラー、余白、シャドウ
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
+import { SpacingDemos } from "@/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
   return <Cluster g="10">
@@ -46,25 +47,8 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 
 各トークンの詳細やスケーリング規則は [タイポグラフィトークン](/docs/tokens/typography/) を参照してください。
 
+<DocsLink path="/docs/tokens/typography" />
 
-## [SPACE](/docs/tokens/spacing/)
-
-|トークン値|変数|概算値|
-|---|---|---|
-|`5`|`--s5`|`4px`|
-|`10`|`--s10`|`8px`|
-|`15`|`--s15`|`12px`|
-|`20`|`--s20`|`16px`|
-|`25`|`--s25`|`20px`|
-|`30`|`--s30`|`24px`|
-|`35`|`--s35`|`32px`|
-|`40`|`--s40`|`40px`|
-|`50`|`--s50`|`64px`|
-|`60`|`--s60`|`104px`|
-|`70`|`--s70`|`168px`|
-|`80`|`--s80`|`272px`|
-
-フィボナッチ数列ベースの調和スケールに、前半部分の中間値を補完した余白スケール。対応する property class の詳細は [余白トークン](/docs/tokens/spacing/) を参照してください。
 
 
 ## `RADIUS`
@@ -127,6 +111,8 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 |`--shsz--40`|`0px 8px 24px`|
 |`--shsz--50`|`0px 16px 48px`|
 
+シャドウサイズは、オフセットとぼかしが毎段2倍になる公比2の等比数列のスケールです。ぼかしは常にオフセットの3倍で統一されています。
+
 {/* `bxsh`は、`1` ~ `4`, `-1` ~ `-4` までの値に対してユーティリティクラスを用意していますが、内部では2段階のshadowを組み合わせることでより立体的で美しいシャドウを表現できるようになっています。 */}
 
 <Preview>
@@ -152,6 +138,70 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
     ```
   </PreviewCode>
 </Preview>
+
+
+## `SPACE`
+
+|トークン値|変数|概算値|
+|---|---|---|
+|`5`|`--s5`|`4px`|
+|`10`|`--s10`|`8px`|
+|`15`|`--s15`|`12px`|
+|`20`|`--s20`|`16px`|
+|`25`|`--s25`|`20px`|
+|`30`|`--s30`|`24px`|
+|`35`|`--s35`|`32px`|
+|`40`|`--s40`|`40px`|
+|`50`|`--s50`|`64px`|
+|`60`|`--s60`|`104px`|
+|`70`|`--s70`|`168px`|
+|`80`|`--s80`|`272px`|
+
+`--s40` 以降の主軸はフィボナッチ数列 ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...) に基づくスケールです。`--s-unit`（デフォルト `calc(var(--fz--base) * 0.5)` ＝ ≒ 8px）を基準単位として算出しています。
+
+それだけだと前半部分が粗いため、`--s5` (4px) / `--s15` (12px) / `--s25` (20px) / `--s35` (32px) を、主軸トークン間を補う中間値として追加しています。
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s" resize>
+    <SpacingDemos spaces={[5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80]} isValueLabel />
+  </PreviewArea>
+</Preview>
+
+```css
+:root,
+.set--s {
+  /* 余白単位 ≒ 8px */
+  --s-unit: calc(var(--fz--base) * 0.5);
+
+  --s10: var(--s-unit);            /* ≒ 8px */
+  --s20: calc(var(--s-unit) * 2);  /* ≒ 16px */
+  --s30: calc(var(--s-unit) * 3);  /* ≒ 24px */
+  --s40: calc(var(--s-unit) * 5);  /* ≒ 40px */
+  --s50: calc(var(--s-unit) * 8);  /* ≒ 64px */
+  --s60: calc(var(--s-unit) * 13); /* ≒ 104px */
+  --s70: calc(var(--s-unit) * 21); /* ≒ 168px */
+  --s80: calc(var(--s-unit) * 34); /* ≒ 272px */
+
+  /* ~40 までの前半部分は間を埋める */
+  --s5:  calc(var(--s-unit) * 0.5); /* ≒ 4px */
+  --s15: calc(var(--s-unit) * 1.5); /* ≒ 12px */
+  --s25: calc(var(--s-unit) * 2.5); /* ≒ 20px */
+  --s35: calc(var(--s-unit) * 4);   /* ≒ 32px */
+}
+
+.set--s {
+  --s-unit: 0.5em;
+}
+```
+
+余白トークンは、`padding`, `margin`, `gap` 系のすべての property class で利用できます。詳細は [Property Class](/docs/property-class/#spacing) の一覧表を参照してください。
+
+また、<a href="/docs/set-class/#set--s"><code>set--s</code></a> クラスを使うと `--s-unit` が `0.5em` に切り替わり、余白を現在のフォントサイズ基準で再計算できます。
+
+:::info
+参考資料: [タイポグラフィと余白のスケーリング設計について](https://css-notes.com/layout/typography-scaling/)
+:::
 
 
 ## `OPACITY`
