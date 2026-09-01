@@ -180,8 +180,6 @@ The following tokens are available for `--hl`.
 
 `--hl-unit` defaults to `0.125rem` (≈ 2px).
 
-If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want line heights to change fluidly along with the font size, override the unit on `:root`, e.g. `--hl-unit: calc(var(--fz--base) * 0.125);`.
-
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s">
@@ -211,6 +209,8 @@ If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want line h
     ```
   </PreviewCode>
 </Preview>
+
+If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want line heights to change fluidly along with the font size, override the unit on `:root`, e.g. `--hl-unit: calc(var(--fz--base) * 0.125);`.
 
 For the design rationale and the `lh` compat shortcut, see [Half-Leading (line-height)](/en/docs/half-leading/).
 
