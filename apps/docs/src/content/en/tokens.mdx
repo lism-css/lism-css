@@ -153,7 +153,7 @@ The shadow sizes form a geometric progression with a common ratio of 2: both the
 |`70`|`--s70`|`168px`|
 |`80`|`--s80`|`272px`|
 
-The main scale from `--s40` upward follows the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...). The base unit is `--s-unit` (default `calc(var(--fz--base) * 0.5)` ≈ 8px).
+The main scale from `--s40` upward follows the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...). The base unit is `--s-unit` (default `0.5rem` ≈ 8px).
 
 Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px), `--s15` (12px), `--s25` (20px), and `--s35` (32px) are added as selected filler values between the main scale tokens.
 
@@ -168,7 +168,7 @@ Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px),
 :root,
 .set--s {
   /* Spacing base unit ≈ 8px */
-  --s-unit: calc(var(--fz--base) * 0.5);
+  --s-unit: 0.5rem;
 
   --s10: var(--s-unit);            /* ≒ 8px */
   --s20: calc(var(--s-unit) * 2);  /* ≒ 16px */
@@ -194,6 +194,8 @@ Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px),
 Spacing tokens work with every property class in the `padding`, `margin`, and `gap` families. See the [Property Class](/en/docs/property-class/#spacing) reference table for details.
 
 Additionally, the <a href="/en/docs/set-class/#set--s"><code>set--s</code></a> class swaps `--s-unit` to `0.5em`, recalculating spacing against the current font size.
+
+If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want spacing to change fluidly along with the font size, override the unit on `:root`, e.g. `--s-unit: calc(var(--fz--base) * 0.5);`.
 
 :::info
 Reference: [On typography and spacing scaling design](https://css-notes.com/layout/typography-scaling/)
