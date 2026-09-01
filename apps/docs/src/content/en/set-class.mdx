@@ -152,6 +152,9 @@ A class that recalculates spacing tokens (`--s5` through `--s80`) against the cu
 ```css
 :root,
 .set--s {
+  /* Spacing base unit ≈ 8px */
+  --s-unit: 0.5rem;
+
   --s5: calc(var(--s-unit) * 0.5);
   --s10: var(--s-unit);
   --s15: calc(var(--s-unit) * 1.5);
@@ -165,15 +168,25 @@ A class that recalculates spacing tokens (`--s5` through `--s80`) against the cu
   --s70: calc(var(--s-unit) * 21);
   --s80: calc(var(--s-unit) * 34);
 }
+
+.set--s {
+  --s-unit: 0.5em;
+}
 ```
+
+Within a `set--s` scope, `--s-unit` swaps to `0.5em`, and `--s10`–`--s80` are recalculated against the current font size.
 
 ```html
+<!-- Button padding scales with the button's own font-size -->
 <button class="set--s -fz:s -py:10 -px:20">...</button>
+
+<!-- You can also override --s-unit with any value -->
+<button class="set--s -p:10" style="--s-unit: .4375em">...</button>
 ```
 
-For details, see [Spacing Tokens](/en/docs/tokens/spacing/).
+For the spacing scale rules, see [Design Tokens (SPACE)](/en/docs/tokens/#space).
 
-<DocsLink path="/docs/tokens/spacing/" />
+<DocsLink path="/docs/tokens/" />
 
 
 ## `set--hov`

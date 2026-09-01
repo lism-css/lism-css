@@ -158,11 +158,63 @@ Lism CSS では、デフォルトでは、**分子8の調和数列**ベースに
 
 
 
-## [LH: line-height](/docs/tokens/half-leading/)
+## LH: line-height
 
-Lism CSSでは、`line-height` をハーフレディングの値で管理する独自の仕組みを採用しています。
+Lism CSSでは、`line-height` をハーフレディング（行間の上下余白）の値で管理する独自の仕組みを採用しており、`--hl` 変数にセットした値から `line-height` が算出されます。
 
-詳細は [ハーフレディング（line-height）](/docs/tokens/half-leading/) を参照してください。
+```css
+* {
+  line-height: calc(1em + var(--hl) * 2);
+}
+```
+
+`--hl` にセットする値として、次のトークンを用意しています。
+
+|トークン|変数|クラス|初期値|
+|---|---|---|---|
+|`xs`|`--hl--xs`|`-hl:xs`|`var(--hl-unit)`|
+|`s`|`--hl--s`|`-hl:s`|`calc(var(--hl-unit) * 2)`|
+|`base`|`--hl--base`|`-hl:base`|`calc(var(--hl-unit) * 3)`|
+|`l`|`--hl--l`|`-hl:l`|`calc(var(--hl-unit) * 4)`|
+|`xl`|`--hl--xl`|`-hl:xl`|`calc(var(--hl-unit) * 5)`|
+
+`--hl-unit` はデフォルトで `0.125rem`（≒ 2px）です。
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s">
+    <DummyText pre='<code class="-fz:s">0:</code> ' hl="0" />
+    <DummyText pre='<code class="-fz:s">xs:</code> ' hl="xs" />
+    <DummyText pre='<code class="-fz:s">s:</code> ' hl="s" />
+    <DummyText pre='<code class="-fz:s">base:</code> ' hl="base" />
+    <DummyText pre='<code class="-fz:s">l:</code> ' hl="l" />
+    <DummyText pre='<code class="-fz:s">xl:</code> ' hl="xl" />
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <p class="-hl:xs">Lorem ipsum ...</p>
+    <p class="-hl:s">Lorem ipsum ...</p>
+    <p class="-hl:base">Lorem ipsum ...</p>
+    <p class="-hl:l">Lorem ipsum ...</p>
+    <p class="-hl:xl">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Text hl="xs">Lorem ipsum ...</Text>
+    <Text hl="s">Lorem ipsum ...</Text>
+    <Text hl="base">Lorem ipsum ...</Text>
+    <Text hl="l">Lorem ipsum ...</Text>
+    <Text hl="xl">Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>
+
+`--fz--base` を `clamp()` 等を使って流体値にしているサイトで、行間もフォントサイズ基準にして流体的に変化させたい場合は、`:root` で `--hl-unit: calc(var(--fz--base) * 0.125);` のように上書きしてください。
+
+この設計の背景や `lh`（互換ショートカット）などの詳細は [ハーフレディング（line-height）](/docs/half-leading/) を参照してください。
+
+<DocsLink path="/docs/half-leading/" />
 
 
 ## LTS: letter-spacing

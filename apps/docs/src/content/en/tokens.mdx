@@ -5,6 +5,7 @@ description: 'A reference of all design tokens in Lism CSS, including colors, sp
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
+import { SpacingDemos } from "@/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
   return <Cluster g="10">
@@ -46,25 +47,7 @@ For palette colors (`--red`, `--blue`, `--green`, etc.) and customization, see [
 
 For details on each token and scaling rules, see [Typography Tokens](/en/docs/tokens/typography/).
 
-
-## [SPACE](/en/docs/tokens/spacing/)
-
-| Token value | Variable | Approx. |
-|---|---|---|
-|`5`|`--s5`|`4px`|
-|`10`|`--s10`|`8px`|
-|`15`|`--s15`|`12px`|
-|`20`|`--s20`|`16px`|
-|`25`|`--s25`|`20px`|
-|`30`|`--s30`|`24px`|
-|`35`|`--s35`|`32px`|
-|`40`|`--s40`|`40px`|
-|`50`|`--s50`|`64px`|
-|`60`|`--s60`|`104px`|
-|`70`|`--s70`|`168px`|
-|`80`|`--s80`|`272px`|
-
-A Fibonacci-based harmonic scale, with selected lower-end filler values. See [Spacing Tokens](/en/docs/tokens/spacing/) for the full list of supported Property Classes.
+<DocsLink path="/docs/tokens/typography" />
 
 
 ## `RADIUS`
@@ -120,12 +103,14 @@ Each `--bxsh--{token}` value is built from the following component variables.
 
 | Component variable | Default value |
 |---|---|
-|`--shc`|`hsl(220 4% 8% / 15%)`|
+|`--shc`|`hsl(220 4% 8% / 12%)`|
 |`--shsz--10`|`0px 1px 3px`|
 |`--shsz--20`|`0px 2px 6px`|
 |`--shsz--30`|`0px 4px 12px`|
 |`--shsz--40`|`0px 8px 24px`|
 |`--shsz--50`|`0px 16px 48px`|
+
+The shadow sizes form a geometric progression with a common ratio of 2: both the offset and the blur double at each step, and the blur is always 3x the offset.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -149,6 +134,72 @@ Each `--bxsh--{token}` value is built from the following component variables.
     ```
   </PreviewCode>
 </Preview>
+
+
+## `SPACE`
+
+| Token value | Variable | Approx. |
+|---|---|---|
+|`5`|`--s5`|`4px`|
+|`10`|`--s10`|`8px`|
+|`15`|`--s15`|`12px`|
+|`20`|`--s20`|`16px`|
+|`25`|`--s25`|`20px`|
+|`30`|`--s30`|`24px`|
+|`35`|`--s35`|`32px`|
+|`40`|`--s40`|`40px`|
+|`50`|`--s50`|`64px`|
+|`60`|`--s60`|`104px`|
+|`70`|`--s70`|`168px`|
+|`80`|`--s80`|`272px`|
+
+The main scale from `--s40` upward follows the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...). The base unit is `--s-unit` (default `0.5rem` ≈ 8px).
+
+Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px), `--s15` (12px), `--s25` (20px), and `--s35` (32px) are added as selected filler values between the main scale tokens.
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s" resize>
+    <SpacingDemos spaces={[5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80]} isValueLabel />
+  </PreviewArea>
+</Preview>
+
+```css
+:root,
+.set--s {
+  /* Spacing base unit ≈ 8px */
+  --s-unit: 0.5rem;
+
+  --s10: var(--s-unit);            /* ≒ 8px */
+  --s20: calc(var(--s-unit) * 2);  /* ≒ 16px */
+  --s30: calc(var(--s-unit) * 3);  /* ≒ 24px */
+  --s40: calc(var(--s-unit) * 5);  /* ≒ 40px */
+  --s50: calc(var(--s-unit) * 8);  /* ≒ 64px */
+  --s60: calc(var(--s-unit) * 13); /* ≒ 104px */
+  --s70: calc(var(--s-unit) * 21); /* ≒ 168px */
+  --s80: calc(var(--s-unit) * 34); /* ≒ 272px */
+
+  /* Lower-end fillers (up to s40) */
+  --s5:  calc(var(--s-unit) * 0.5); /* ≒ 4px */
+  --s15: calc(var(--s-unit) * 1.5); /* ≒ 12px */
+  --s25: calc(var(--s-unit) * 2.5); /* ≒ 20px */
+  --s35: calc(var(--s-unit) * 4);   /* ≒ 32px */
+}
+
+.set--s {
+  --s-unit: 0.5em;
+}
+```
+
+Spacing tokens work with every property class in the `padding`, `margin`, and `gap` families. See the [Property Class](/en/docs/property-class/#spacing) reference table for details.
+
+Additionally, the <a href="/en/docs/set-class/#set--s"><code>set--s</code></a> class swaps `--s-unit` to `0.5em`, recalculating spacing against the current font size.
+
+If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want spacing to change fluidly along with the font size, override the unit on `:root`, e.g. `--s-unit: calc(var(--fz--base) * 0.5);`.
+
+:::info
+Reference: [On typography and spacing scaling design](https://css-notes.com/layout/typography-scaling/)
+:::
 
 
 ## `OPACITY`

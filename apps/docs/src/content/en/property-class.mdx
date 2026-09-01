@@ -102,8 +102,8 @@ Each table covers one group of properties.
 |`ff`|`font-family`|[`FF`](/en/docs/tokens/typography/#ff-font-family)|-|
 |`fw`|`font-weight`|[`FW`](/en/docs/tokens/typography/#fw--font-weight)|-|
 |`fs`|`font-style`|`italic`|-|
-|`hl`|`line-height` (half-leading)|[`LH`](/en/docs/tokens/half-leading/), <br/>`0`|✔|
-|`lh`|`line-height` (compat)|[`LH`](/en/docs/tokens/half-leading/), <br/>`1`|-|
+|`hl`|`line-height` (half-leading)|[`LH`](/en/docs/half-leading/), <br/>`0`|✔|
+|`lh`|`line-height` (compat)|[`LH`](/en/docs/half-leading/), <br/>`1`|-|
 |`lts`|`letter-spacing`|[`LTS`](/en/docs/tokens/typography/#lts-letter-spacing)|-|
 |`ta`|`text-align`|`center`<br/>`left`<br/>`right`|-|
 |`td`|`text-decoration`|`none`|-|
@@ -172,7 +172,7 @@ Related tokens: <a href="/en/docs/tokens/colors/"><code>COLOR</code></a>
 
 ## Spacing
 
-export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</code></a>;
+export const LinkSPACE = () => <a href="/en/docs/tokens/#space"><code>SPACE</code></a>;
 
 ### Padding
 
@@ -205,6 +205,10 @@ export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</c
 |`mr`|`margin-right`|<LinkSPACE/>|✔|
 |`mt`|`margin-top`|<LinkSPACE/>|✔|
 |`mb`|`margin-bottom`|<LinkSPACE/>|✔|
+
+:::info
+Prefer logical direction properties (`ps`, `mbs`, etc.), which follow the writing direction, over physical direction ones (`pl`, `mt`, etc.).
+:::
 
 
 <Spacer h="1rem" />

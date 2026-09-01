@@ -157,9 +157,23 @@
     "title": "デザイントークン",
     "description": "Lism CSS で定義されているカラー、余白、シャドウなどのデザイントークン一覧を紹介します。",
     "category": "guide",
-    "headings": ["COLOR", "Typography", "SPACE", "RADIUS", "SHADOW", "OPACITY", "SIZE"],
-    "keywords": ["token", "トークン", "design token", "shadow", "radius", "opacity", "size", "color", "spacing", "typography"],
-    "snippet": "デザイントークンの一覧ページ。COLOR, Typography, SPACE, RADIUS, SHADOW, OPACITY, SIZE トークンを掲載。SPACEは --s5〜--s80（s25/s35 を含む12段階）、SHADOWは --bxsh--10〜--bxsh--50（5段階）、OPACITYは音楽強弱記号に由来するセマンティック命名（mp/p/pp/ppp）を採用。カラー・タイポグラフィ・余白は個別ページでも詳細を解説。"
+    "headings": ["COLOR", "Typography", "RADIUS", "SHADOW", "SPACE", "OPACITY", "SIZE"],
+    "keywords": [
+      "token",
+      "トークン",
+      "design token",
+      "shadow",
+      "radius",
+      "opacity",
+      "size",
+      "color",
+      "spacing",
+      "余白",
+      "フィボナッチ",
+      "--s-unit",
+      "typography"
+    ],
+    "snippet": "デザイントークンの一覧ページ。COLOR, Typography, RADIUS, SHADOW, SPACE, OPACITY, SIZE トークンを掲載。SPACEはフィボナッチ数列ベースの余白スケール --s5〜--s80（s25/s35 を含む12段階）で、--s-unit（デフォルト 0.5rem ≒ 8px）を基準単位として算出。SHADOWは --bxsh--10〜--bxsh--50（5段階）、OPACITYは音楽強弱記号に由来するセマンティック命名（mp/p/pp/ppp）を採用。カラー・タイポグラフィは個別ページでも詳細を解説。"
   },
   {
     "sourcePath": "tokens/colors.mdx",
@@ -190,26 +204,17 @@
       "LH: line-height",
       "LTS: letter-spacing"
     ],
-    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size"],
-    "snippet": "フォントサイズ（調和数列ベース）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
+    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size", "line-height", "hl", "行間"],
+    "snippet": "フォントサイズ（調和数列ベース）、行間（ハーフレディングトークン --hl--xs〜xl と -hl:{token} クラス）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
   },
   {
-    "sourcePath": "tokens/half-leading.mdx",
+    "sourcePath": "half-leading.mdx",
     "title": "ハーフレディング（line-height）",
-    "description": "Lism CSS のハーフレディングによる line-height 管理の仕組みと、関連するデザイントークンについて解説します。",
+    "description": "Lism CSS が line-height をハーフレディングで管理する仕組みと、その設計のメリットについて解説します。",
     "category": "guide",
-    "headings": ["仕組み", "トークン", "hl クラス", "lh（互換ショートカット）", "ハーフレディング管理のメリット"],
+    "headings": ["仕組み", "トークン", "lh（互換ショートカット）", "ハーフレディング管理のメリット"],
     "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "hl", "lh", "--hl"],
-    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理する仕組み。`calc(1em + var(--hl) * 2)` によりフォントサイズに依存しない一定の行間を実現。--hl--xs/s/base/l/xl のトークンと -hl:{token} クラス（正規）・-lh:{token}（互換ショートカット）の使い方を解説。"
-  },
-  {
-    "sourcePath": "tokens/spacing.mdx",
-    "title": "余白トークン",
-    "description": "Lism CSS のフィボナッチ数列に基づく余白トークンと、対応するpropertyクラスについて解説します。",
-    "category": "guide",
-    "headings": ["SPACE: 余白のスケーリング", "対応する Property Class", "対応プロパティ（トークン値 5〜80）", "margin 系の auto 対応"],
-    "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "property class", "set--s", "--s-unit"],
-    "snippet": "フィボナッチ数列ベースの余白スケーリング（--s5〜--s80、s25/s35 を含む12段階）を定義。--s-unit（calc(var(--fz--base) * 0.5) ≒ 8px）を基準単位として算出。set--s クラスを使うと --s-unit が 0.5em に切り替わり、余白がフォントサイズ基準で再計算される。padding（p/px/py/ps/pe/pbs/pbe/pl/pr/pt/pb）・margin（m/mx/my/ms/me/mbs/mbe/ml/mr/mt/mb）・gap（g/cg/rg）の全propertyクラスがトークン値 5〜80 とブレイクポイント指定に対応。auto のプリセットクラスは m/mx/my/ms/me/mbs/mbe のみ。"
+    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理するCSS設計を解説。`calc(1em + var(--hl) * 2)` によりフォントサイズに依存しない一定の行間を実現。-lh:{token}（互換ショートカット）の挙動と、ハーフレディング管理のメリットも紹介。トークン一覧（--hl--xs〜xl）と -hl:{token} クラスのプレビューはタイポグラフィトークンのページに掲載。"
   },
   {
     "sourcePath": "property-class.mdx",

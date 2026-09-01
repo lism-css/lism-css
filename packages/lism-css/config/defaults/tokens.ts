@@ -17,10 +17,10 @@ export default {
     '--C': '0.2',
     // フォントサイズ倍音列の分母（7~ に対応）
     '--fz-mol': '8',
-    // ハーフレディングの計算単位 ≒ 2px
-    '--hl-unit': 'calc(var(--fz--base) * 0.125)',
-    // 余白の計算単位 ≒ 8px（フィボナッチ数列ベース）
-    '--s-unit': 'calc(var(--fz--base) * 0.5)',
+    // ハーフレディングの計算単位（≒ 2px）。
+    '--hl-unit': '0.125rem',
+    // 余白の計算単位（≒ 8px）。
+    '--s-unit': '0.5rem',
   },
   // セマンティックカラー
   color: {
@@ -98,7 +98,7 @@ export default {
     xs: 'var(--hl-unit)',
     s: 'calc(var(--hl-unit) * 2)',
     l: 'calc(var(--hl-unit) * 4)',
-    xl: 'calc(var(--hl-unit) * 6)',
+    xl: 'calc(var(--hl-unit) * 5)',
   },
 
   // line-height: 専用CSS変数は持たず、 props.ts 側との組み合わせで hl を流用する仕組み

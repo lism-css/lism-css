@@ -86,7 +86,7 @@ Tokens for `font-size`.
 
 | Token | Variable | Class | Default value |
 |---|---|---|---|
-|`base`|`--fz--base`|`-fz:base`|`--REM`|
+|`base`|`--fz--base`|`-fz:base`|`1rem`|
 |`2xs`|`--fz--2xs`|`-fz:2xs`|`1em * 8 / 11`|
 |`xs`|`--fz--xs`|`-fz:xs`|`1em * 8 / 10`|
 |`s`|`--fz--s`|`-fz:s`|`1em * 8 / 9`|
@@ -158,11 +158,63 @@ On this documentation site, `--fz-mol` is set to `7` for English pages.
 
 
 
-## [LH: line-height](/en/docs/tokens/half-leading/)
+## LH: line-height
 
-Lism CSS takes a distinctive approach to `line-height`, managing it through **half-leading values**.
+Lism CSS takes a distinctive approach to `line-height`, managing it through **half-leading values** (the spacing above and below each line): `line-height` is computed from the `--hl` variable.
 
-For details, see [Half-Leading (line-height)](/en/docs/tokens/half-leading/).
+```css
+* {
+  line-height: calc(1em + var(--hl) * 2);
+}
+```
+
+The following tokens are available for `--hl`.
+
+| Token | Variable | Class | Default value |
+|---|---|---|---|
+|`xs`|`--hl--xs`|`-hl:xs`|`var(--hl-unit)`|
+|`s`|`--hl--s`|`-hl:s`|`calc(var(--hl-unit) * 2)`|
+|`base`|`--hl--base`|`-hl:base`|`calc(var(--hl-unit) * 3)`|
+|`l`|`--hl--l`|`-hl:l`|`calc(var(--hl-unit) * 4)`|
+|`xl`|`--hl--xl`|`-hl:xl`|`calc(var(--hl-unit) * 5)`|
+
+`--hl-unit` defaults to `0.125rem` (≈ 2px).
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s">
+    <DummyText pre='<code class="-fz:s">0:</code> ' hl="0" />
+    <DummyText pre='<code class="-fz:s">xs:</code> ' hl="xs" />
+    <DummyText pre='<code class="-fz:s">s:</code> ' hl="s" />
+    <DummyText pre='<code class="-fz:s">base:</code> ' hl="base" />
+    <DummyText pre='<code class="-fz:s">l:</code> ' hl="l" />
+    <DummyText pre='<code class="-fz:s">xl:</code> ' hl="xl" />
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <p class="-hl:xs">Lorem ipsum ...</p>
+    <p class="-hl:s">Lorem ipsum ...</p>
+    <p class="-hl:base">Lorem ipsum ...</p>
+    <p class="-hl:l">Lorem ipsum ...</p>
+    <p class="-hl:xl">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Text hl="xs">Lorem ipsum ...</Text>
+    <Text hl="s">Lorem ipsum ...</Text>
+    <Text hl="base">Lorem ipsum ...</Text>
+    <Text hl="l">Lorem ipsum ...</Text>
+    <Text hl="xl">Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>
+
+If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want line heights to change fluidly along with the font size, override the unit on `:root`, e.g. `--hl-unit: calc(var(--fz--base) * 0.125);`.
+
+For the design rationale and the `lh` compat shortcut, see [Half-Leading (line-height)](/en/docs/half-leading/).
+
+<DocsLink path="/docs/half-leading/" />
 
 
 ## LTS: letter-spacing

@@ -104,8 +104,8 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |`ff`|`font-family`|[`FF`](/docs/tokens/typography/#ff-font-family)|-|
 |`fw`|`font-weight`|[`FW`](/docs/tokens/typography/#fw--font-weight)|-|
 |`fs`|`font-style`|`italic`|-|
-|`hl`|`line-height`（ハーフレディング）|[`LH`](/docs/tokens/half-leading/), <br/>`0`|✔|
-|`lh`|`line-height`（互換）|[`LH`](/docs/tokens/half-leading/), <br/>`1`|-|
+|`hl`|`line-height`（ハーフレディング）|[`LH`](/docs/half-leading/), <br/>`0`|✔|
+|`lh`|`line-height`（互換）|[`LH`](/docs/half-leading/), <br/>`1`|-|
 |`lts`|`letter-spacing`|[`LTS`](/docs/tokens/typography/#lts-letter-spacing)|-|
 |`ta`|`text-align`|`center`<br/>`left`<br/>`right`|-|
 |`td`|`text-decoration`|`none`|-|
@@ -174,7 +174,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 ## Spacing
 
-export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code></a>;
+export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code></a>;
 
 ### Padding
 
@@ -207,6 +207,10 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 |`mr`|`margin-right`|<LinkSPACE/>|✔|
 |`mt`|`margin-top`|<LinkSPACE/>|✔|
 |`mb`|`margin-bottom`|<LinkSPACE/>|✔|
+
+:::info
+物理方向（`pl` / `mt` など）よりも、書字方向に追従する論理方向（`ps` / `mbs` など）の利用を推奨しています。
+:::
 
 
 <Spacer h="1rem" />
