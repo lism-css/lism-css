@@ -59,7 +59,7 @@ const ogImage = `/${lang}/docs/og/${slug}.png`;
   date={entry.data.date}
 >
   {/* フォールバック（未翻訳）ページは検索対象から除外 */}
-  <Stack as="article" class="c--siteArticle set--cqUnit set--s" g="40" {...!isFallback && { 'data-pagefind-body': true }}>
+  <Stack as="article" class="c--article set--cqUnit set--s" g="40" {...!isFallback && { 'data-pagefind-body': true }}>
     {/* 未翻訳の注意書き */}
     {isFallback && <TranslationNotice lang={lang} />}
 
@@ -76,7 +76,7 @@ const ogImage = `/${lang}/docs/og/${slug}.png`;
     <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
 
     {/* 記事本文 */}
-    <Flow class="articleContent" mbs="40">
+    <Flow class="c--content" mbs="40">
       <Content components={mdxComponents} />
     </Flow>
 

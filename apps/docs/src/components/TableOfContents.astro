@@ -16,19 +16,18 @@ const lang = getLangFromUrl(Astro.url);
 const tocText = t(lang, 'toc');
 ---
 
-<Stack fx="1" class="c--toc c--scroll set--cqUnit set--s" g="20" px={px} py={py}>
-  <Heading level="3" fz="0.6625rem" fw="normal" o="p" tt="upper" lh="1.5" c="var(--gray-lo-c)">{tocText.title}</Heading>
+<Stack class="c--toc set--cqUnit set--s" g="15" px={px} py={py}>
+  <Heading level="3" class="b--eyebrow" tt="upper">{tocText.title}</Heading>
   <Stack as="ul" class="c--toc_list" g="0" bd-s>
     {toc.map((item) => <TocItemComponent item={item} />)}
   </Stack>
 </Stack>
 
 <style is:global>
+  /* 入れ子 (h3) はさらに少し小さく */
   .c--toc_list {
-    ul {
-      a > span {
-        font-size: 0.975em;
-      }
+    ul a > span {
+      font-size: 0.975em;
     }
 
     [data-nested] {

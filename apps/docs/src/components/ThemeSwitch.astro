@@ -73,13 +73,12 @@ const themeModes = [
         aria-checked={mode.id === defaultMode ? 'true' : 'false'}
         tabindex={mode.id === defaultMode ? 0 : -1}
         p="0.375rem"
-        h="1.75rem"
         bd="none"
         class="c--themeModeSwitch_btn"
         aria-label={mode.label}
         data-theme-mode={mode.id}
       >
-        <Icon viewBox="0 0 16 16" size="var(--s20)" fill="none" d="block" set:html={mode.iconPath} />
+        <Icon viewBox="0 0 16 16" size="1rem" fill="none" d="block" set:html={mode.iconPath} />
       </Lism>
     ))
   }
@@ -103,7 +102,7 @@ const themeModes = [
     .c--themeModeSwitch_btn {
       cursor: pointer;
       border-radius: 0.25rem;
-      color: var(--gray-lo-c);
+      color: var(--text-2);
       background-color: transparent;
     }
     /* アクティブなボタン */
@@ -112,7 +111,7 @@ const themeModes = [
     :global(html[data-theme-mode='dark']) .c--themeModeSwitch_btn[data-theme-mode='dark'] {
       background-color: var(--themeModeSwitch-btn-bg);
       color: var(--themeModeSwitch-btn);
-      box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+      box-shadow: var(--bxsh--10);
     }
   }
 </style>

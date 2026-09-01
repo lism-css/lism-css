@@ -9,7 +9,7 @@
  *   > -- [出典元の名前](https://example.com)
  *
  * 出力（HTML）:
- *   <figure class="c--blockquote">
+ *   <figure class="b--blockquote">
  *     <blockquote cite="https://example.com">
  *       <p>これは引用文です。</p>
  *     </blockquote>
@@ -25,7 +25,7 @@
  *   > -- 出典元の名前
  *
  * 出力（HTML）:
- *   <figure class="c--blockquote">
+ *   <figure class="b--blockquote">
  *     <blockquote>
  *       <p>これは引用文です。</p>
  *     </blockquote>
@@ -162,7 +162,7 @@ export function rehypeBlockquoteCite() {
       const figureElement: Element = {
         type: 'element',
         tagName: 'figure',
-        properties: { className: ['c--blockquote'] },
+        properties: { className: ['b--blockquote'] },
         children: [
           {
             type: 'element',

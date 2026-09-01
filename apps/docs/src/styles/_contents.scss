@@ -1,51 +1,145 @@
-/* mdx 自動変換後の blockquote（figure構造） */
-.c--blockquote {
-  margin-block: var(--s40);
-  display: grid;
-  gap: 0.25em;
-
-  > figcaption {
-    font-size: var(--fz--xs);
-    color: var(--text-2);
-    margin-left: auto;
-    font-style: italic;
-    padding-inline: 0.5em;
-
-    /* ダッシュを付ける */
-    &::before {
-      content: ' — ';
+@layer lism-base {
+  /* 記事本文の基本スタイリング (プレビューエリアには影響がないようにしている） */
+  .c--content :not(.c--preview_area *) {
+    :not(pre) > code:is(&) {
+      display: inline-flex;
+      color: var(--code-c);
+      background-color: var(--code-bgc);
+      font-size: 0.9em;
+      font-family: var(--ff--mono);
+      --hl: 1px;
+      padding: 0.2em 0.25em;
+      margin-inline: 0.125em;
+      border-radius: 0.2em;
+    }
+    a > code:is(&) {
+      text-decoration: inherit;
     }
 
-    > a {
-      color: inherit;
-      text-decoration: underline;
+    :where(p, li, td) > a:is(&) {
+      --focus-offset: 4px;
+    }
 
-      &:hover {
-        color: var(--link);
+    kbd:is(&) {
+      display: inline-block;
+      padding: 0.375em;
+      font-size: 0.95em;
+      font-family: inherit;
+      line-height: 1;
+      border: solid 1px var(--divider);
+      border-radius: 0.25em;
+      box-shadow: 0 2px 0 var(--divider);
+      translate: 0 -1px;
+    }
+
+    p > small:is(&) {
+      font-size: var(--fz--s);
+      vertical-align: 0.025em;
+    }
+
+    blockquote:is(&) {
+      font-style: italic;
+      font-size: var(--fz--s);
+      color: var(--text-2);
+      background-color: var(--base);
+      border-inline-start: solid 3px;
+      border-color: var(--text-2);
+    }
+
+    table:is(&) {
+      font-size: 0.95em;
+      max-inline-size: 100%;
+      border: none;
+      --hl: var(--hl--s);
+      --cells-p: 0.625em 0.75em;
+
+      /* memo: oveflow の指定によっては separate にしないとborderが表示されない場合があるので横スクロール時には注意。 */
+      border-collapse: collapse;
+      border-spacing: 0;
+      isolation: isolate;
+
+      :where(td, th) {
+        border-block: 1px solid var(--divider);
+
+        /* resetのoverflow-wrap:anywhereによって -ov-x:auto ラッパーの横スクロールが発動しなくなるため、単語単位の折り返しに戻す */
+        overflow-wrap: normal;
+
+        /* 日本語はそれでも全部折り返し可能なため、最小維持サイズも指定しておく */
+        min-inline-size: 5em;
+
+        code {
+          /* tableラッパーがスクロール可能なので、インラインcodeは一律nowrapにしておける */
+          white-space: nowrap;
+        }
       }
+      thead {
+        border-block-end: solid 2px;
+      }
+
+      small {
+        color: var(--text-2);
+        font-size: var(--fz--xs);
+      }
+    }
+  }
+
+  /* -------------------------- */
+  /* 見出しデザイン */
+  /* -------------------------- */
+  :is(.h2, .c--content > h2) {
+    color: var(--gray-hi-c);
+    font-size: var(--fz--2xl);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  :is(.h3, .c--content > h3) {
+    color: var(--gray-hi-c);
+    font-weight: 700;
+  }
+
+  /* -------------------------- */
+  /* リストデザイン */
+  /* -------------------------- */
+  .c--content > :is(ul, ol) {
+    li + li {
+      margin-block-start: 0.375em;
     }
   }
 }
 
-/* -------------------------- */
-/* 見出しデザイン */
-/* -------------------------- */
-:is(.h2, .articleContent > h2) {
-  color: var(--gray-hi-c);
-  font-size: var(--fz--2xl);
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-:is(.h3, .articleContent > h3) {
-  color: var(--gray-hi-c);
-  font-weight: 700;
-}
+@layer lism-block {
+  /* 
+    以下のように figurecaption をつけた時の figure > blockquote 構造の時のスタイル（rehypeで変換）
 
-/* -------------------------- */
-/* リストデザイン */
-/* -------------------------- */
-.articleContent > :is(ul, ol) {
-  li + li {
-    margin-block-start: 0.375em;
+    > 引用文
+    >
+    > -- 出典
+  */
+  .b--blockquote {
+    margin-block: var(--s40);
+    display: grid;
+    gap: 0.25em;
+
+    > figcaption {
+      font-size: var(--fz--xs);
+      color: var(--text-2);
+      margin-left: auto;
+      font-style: italic;
+      padding-inline: 0.5em;
+
+      /* ダッシュを付ける */
+      &::before {
+        content: ' — ';
+      }
+
+      > a {
+        color: inherit;
+        text-decoration: underline;
+
+        &:hover {
+          color: var(--link);
+        }
+      }
+    }
   }
 }

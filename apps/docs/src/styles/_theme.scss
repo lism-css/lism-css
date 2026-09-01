@@ -3,7 +3,7 @@
     // --divider: hsl(224, 20%, 92%);
 
     --code-c: currentColor;
-    --code-bgc: color-mix(in srgb, var(--divider), transparent 50%);
+    --code-bgc: color-mix(in srgb, var(--divider), transparent 60%);
 
     --ff--base: 'Inter', 'Noto Sans JP', sans-serif;
 
@@ -11,21 +11,26 @@
     --base: #fff;
 
     --text: #111;
-    --eyebrow-c: #0073ff;
+    --brand: hsl(213, 100%, 50%);
     --gray-hi-c: #222;
-    --gray-lo-c: #888;
+    --eyebrow-c: #999;
 
     --docs-bg: #fafafa;
-    --docsLink-bgc: #f5f9ff;
     --card-bg: var(--base);
-
-    --cells-p: 0.375rem;
 
     --bdrs--15: 0.375rem; // 6px
 
-    --bxsh--base: 0 1px 4px 0 rgba(0, 0, 0, 0.03), 0 2px 16px 0 rgba(0, 0, 0, 0.05);
+    // --bxsh--base: 0 1px 4px 0 rgba(0, 0, 0, 0.03), 0 2px 16px 0 rgba(0, 0, 0, 0.05);
+    --bxsh--base: var(--bxsh--20);
     --bxsh--code: 0 10px 50px 0 rgba(0, 0, 0, 0.2), 0 20px 30px 0 rgba(0, 0, 0, 0.3);
     --bxsh--search-border: inset 0 0 0 1px var(--divider);
+
+    // レイアウト
+    --sz--m: 55rem; // 880px
+    // --sc--siteHeader: 26.25rem; // 420px
+    --header-h: 3.875rem; // 62px
+    --sidebar-w: clamp(240px, 16vw, 320px);
+    --toc-w: clamp(240px, 16vw, 300px);
   }
 
   // .u--cbox {
@@ -33,27 +38,22 @@
   // }
 
   :root[data-theme='dark'] {
-    --L: 72%;
+    --L: 76%;
     --C: 0.25;
 
-    --brand: hsl(192, 72%, 56%);
+    --brand: oklch(76% 0.5 212);
     --accent: #ff5080;
-    /* // base */
     --base: hsl(228, 0%, 15%);
     --base-2: hsl(228, 3%, 20%);
-    /* #2b2c30 */
 
     /* // content */
     --text: hsl(48, 12%, 95%); /* Cloud Dancer */
     --text-2: hsl(48, 8%, 84%);
 
-    --eyebrow-c: var(--link);
     --gray-hi-c: var(--text);
-    --gray-lo-c: var(--text-2);
+    --eyebrow-c: #afafaf;
 
-    // --code-bgc: hsl(205, 10%, 10%);
-
-    --link: oklch(72% 0.2 224);
+    --link: oklch(76% 0.25 224);
     --divider: hsl(224 4% 24%);
 
     /* // shadow color */
@@ -65,58 +65,106 @@
 
     // 下層コンテンツ色設定
     --docs-bg: hsl(228, 0%, 10%);
-    --docsLink-bgc: color-mix(in srgb, var(--base), var(--eyebrow-c) 10%);
-    // --card-bg: var(--divider);
-    // --bxsh--base: 0 1px 4px 0 rgba(255, 255, 255, 0.03), 0 2px 16px 0 rgba(255, 255, 255, 0.05);
   }
+
+  /* scroll-padding-top: アンカーリンクでジャンプした際、ヘッダーの高さを考慮.
+     下層ページの本文スクロールは .c--siteMain_scroll 側。ここはトップページなど document がスクロールする場合用 */
+  html {
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+    // scroll-behavior: smooth;
+
+    // text-spacing-trim: trim-start;
+    /* line-break: strict; */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* フォントのアンチエイリアス設定 */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ダイアログ展開時のガタツキを防ぐ */
+  /* html:has(:modal[open]) {
+		scrollbar-gutter: stable;
+	} */
+
+  /* モーダル背景 */
+  dialog:modal {
+    backdrop-filter: blur(16px);
+  }
+
+  /* markのプロントスタイル */
+  /* see: https://adrianroselli.com/2025/04/tweaking-text-level-styles-reprised.html#MarkPrint */
+  @media print {
+    mark {
+      border: 1pt dotted;
+    }
+  }
+
+  /* ------------------------------------------------------------
+		text-autospace
+	------------------------------------------------------------ */
+  body {
+    text-autospace: normal;
+  }
+  pre,
+  input,
+  textarea {
+    text-autospace: no-autospace;
+  }
+
+  a:where(:hover, :focus-visible) {
+    text-decoration-thickness: 0.2em;
+    text-decoration-skip-ink: none;
+  }
+
+  html[lang='en'] {
+    --fz-mol: 7;
+  }
+
+  /* ------------------------------------------------------------
+	折り返し制御
+	------------------------------------------------------------ */
+  /* :is(h1, h2, h3, h4, h5, h6) {
+		text-wrap: balance;
+	} */
 }
 
-@layer lism-custom {
-  // ホバーエフェクト（文字色・背景色）のトランジション
-  .c--iconBtn,
-  .c--searchTrigger,
-  .c--docsLink,
-  .c--button {
-    transition:
-      color 0.15s,
-      background-color 0.15s;
-  }
-
+@layer lism-block {
   .b--shadowBox {
     border-radius: var(--bdrs--15);
     background-color: var(--base);
     box-shadow: var(--bxsh--base);
   }
 
-  // 角丸 shadow-box 内でスクロール。バーは右端、padding は .c--scroll__inner 側
-  .c--scrollPanel {
+  .b--eyebrow {
+    --hl: var(--hl--xs);
+    color: var(--eyebrow-c);
+    font-size: 0.65rem;
+    font-weight: 400;
+  }
+}
+
+@layer lism-trait {
+  // 角丸のボックス内でスクロール。直下の子がスクロール要素になる（子は1つ前提）
+  .is--scrollPanel {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     min-height: 0;
 
-    > .c--scroll {
+    // スクロールバーは子の右端に出る。内側の余白は子より下で付けること
+    > * {
       flex: 1;
       min-height: 0;
-    }
-  }
-
-  /* トップページのヘッダーのみ半透明＋blur（下層 docs は --base のまま） */
-  .p--front .c--siteHeader .b--shadowBox {
-    background-color: color-mix(in srgb, var(--base), transparent 30%);
-    backdrop-filter: blur(32px);
-  }
-
-  // スクロールバーのスタイル
-  .c--scroll {
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--divider) transparent;
-  }
-
-  :root[data-theme='dark'] {
-    .b--chat {
-      --cbox-bgPct: 16%;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--divider) transparent;
     }
   }
 }

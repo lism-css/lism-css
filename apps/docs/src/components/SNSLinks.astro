@@ -190,12 +190,12 @@ const langItemProps = {
   }
 
   /* モーダル内では下端で見切れないよう上方向に展開 */
-  :global(.c--modal) .c--langMenu_menu {
+  :global(.b--modal) .c--langMenu_menu {
     top: auto;
     bottom: calc(100% + 0.25em);
     transform: translateY(0.25em);
   }
-  :global(.c--modal) .c--langMenu[data-open] .c--langMenu_menu {
+  :global(.b--modal) .c--langMenu[data-open] .c--langMenu_menu {
     transform: translateY(0);
   }
 </style>

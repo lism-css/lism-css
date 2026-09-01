@@ -72,7 +72,7 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
   date={entry.data.date}
 >
   {/* フォールバック（未翻訳）ページは検索対象から除外 */}
-  <Lism as="article" class="c--siteArticle set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
+  <Lism as="article" class="c--article set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
     {/* 未翻訳の注意書き */}
     {isFallback && <TranslationNotice lang={lang} />}
 
@@ -88,7 +88,7 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
     </Lism>
 
     {/* 記事本文 */}
-    <Flow class="articleContent" mbs="40">
+    <Flow class="c--content" mbs="40">
       <Content components={mdxComponents} />
     </Flow>
 

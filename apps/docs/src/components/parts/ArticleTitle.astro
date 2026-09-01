@@ -17,7 +17,7 @@ const { title, eyebrow, ...props } = Astro.props;
 <Heading level="1" d="flex" fxd="column" rg="10" fz="base" pbe="35" bd-be bdw="1px" bdc="var(--divider)" {...props}>
   {
     eyebrow && (
-      <Inline aria-hidden="true" c="var(--gray-lo-c)" fz="xs" fw="400" lh="1.17">
+      <Inline class="b--eyebrow" aria-hidden="true" fz="xs">
         {eyebrow}
       </Inline>
     )

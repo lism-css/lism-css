@@ -43,7 +43,7 @@ const ogImage = `/docs/og/${entry.id}.png`;
   schemaType="TechArticle"
   date={entry.data.date}
 >
-  <Lism as="article" class="c--siteArticle set--cqUnit set--s" data-pagefind-body>
+  <Lism as="article" class="c--article set--cqUnit set--s" data-pagefind-body>
     {/* アイキャッチ画像 */}
     {
       // (
@@ -57,7 +57,7 @@ const ogImage = `/docs/og/${entry.id}.png`;
     <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
 
     {/* 記事本文 */}
-    <Flow class="articleContent" mbs="40">
+    <Flow class="c--content" mbs="40">
       <Content components={mdxComponents} />
     </Flow>
 

@@ -46,7 +46,7 @@ const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
   schemaType="TechArticle"
   date={entry.data.date}
 >
-  <Lism as="article" class="c--siteArticle set--cqUnit set--s" data-pagefind-body>
+  <Lism as="article" class="c--article set--cqUnit set--s" data-pagefind-body>
     {/* 記事タイトル */}
     <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
 
@@ -59,7 +59,7 @@ const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
     </Lism>
 
     {/* 記事本文 */}
-    <Flow class="articleContent" mbs="40">
+    <Flow class="c--content" mbs="40">
       <Content components={mdxComponents} />
     </Flow>
 

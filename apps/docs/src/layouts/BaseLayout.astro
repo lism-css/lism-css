@@ -61,35 +61,37 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
     {schemaType && <JsonLd schemaType={schemaType} title={title} description={description} lang={lang} date={date} />}
   </Head>
   <body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
-    <Box class="is--container" bgc="var(--docs-bg)">
-      <Header />
-      <Grid
-        class={`c--siteWrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
-        gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
-        gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
-        px="10"
-        pb="10"
-        mt="20"
-      >
-        <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container as="main" class="c--siteMain b--shadowBox c--scrollPanel" tabindex={-1} aria-label={t(lang, 'main').ariaLabel}>
-          <Box class="c--siteMain_scroll c--scroll" fx="1" min-h="0" tabindex={0} ov-y="auto">
-            <Container isWrapper={toc ? true : 'l'} hasGutter py="40">
-              {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
-              <span id={PAGE_TITLE_ID} class="c--scrollTarget" aria-hidden="true"></span>
-              <slot />
-              <Footer />
-            </Container>
-          </Box>
-        </Container>
-        {
-          toc && (
-            <Stack as="aside" class="c--siteToc b--shadowBox c--scrollPanel" isContainer g="15" d={['none', null, null, 'flex']} min-h="0">
-              <TableOfContents toc={toc} px="20" py="30" />
-            </Stack>
-          )
-        }
-      </Grid>
+    <Box class="c--root" bgc="var(--docs-bg)" data-layout="BaseLayout">
+      <Box isContainer>
+        <Header />
+        <Grid
+          class={`c--siteWrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
+          gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
+          gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
+          px="10"
+          pb="10"
+          mt="20"
+        >
+          <Sidebar d={['none', null, 'flex']} layout="stack" />
+          <Container as="main" class="c--siteMain b--shadowBox is--scrollPanel" tabindex={-1} aria-label={t(lang, 'main').ariaLabel}>
+            <Box class="c--siteMain_scroll" tabindex={0}>
+              <Container isWrapper={toc ? true : 'l'} hasGutter py="40">
+                {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
+                <span id={PAGE_TITLE_ID} class="c--scrollTarget" aria-hidden="true"></span>
+                <slot />
+                <Footer />
+              </Container>
+            </Box>
+          </Container>
+          {
+            toc && (
+              <Stack as="aside" class="c--siteToc b--shadowBox is--scrollPanel" isContainer g="15" d={['none', null, null, 'flex']} min-h="0">
+                <TableOfContents toc={toc} px="20" py="30" />
+              </Stack>
+            )
+          }
+        </Grid>
+      </Box>
     </Box>
     {
       toc && (

@@ -103,8 +103,8 @@ function getDirNestedDepth(postId: string, dir: string): number {
   }
 
   {/* 通常のナビゲーションセクション */}
-  <Stack class="b--shadowBox c--scrollPanel siteNav_sections" fx="1" min-h="0">
-    <Stack class="c--scroll siteNav_sections_scroll" fx="1" min-h="0">
+  <Stack class="b--shadowBox is--scrollPanel siteNav_sections" fx="1" min-h="0">
+    <Stack class="siteNav_sections_scroll">
       <Stack class="siteNav_sections_inner" g="30">
         {
           sectionItems.map((section) => {
@@ -122,7 +122,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
             return (
               <Stack class="siteNav_group" g="5">
                 {/* セクションのラベル（見出し） */}
-                <Heading level="3" class="siteNav_title" fz="0.6625rem" fw="normal" o="p" tt="upper" lh="xs" c="var(--gray-lo-c)">
+                <Heading level="3" class="siteNav_title b--eyebrow" tt="upper">
                   {sectionLabel}
                 </Heading>
 
@@ -231,7 +231,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
 
     &:hover,
     &[data-active='true'] {
-      color: var(--eyebrow-c);
+      color: var(--brand);
       font-weight: 500;
     }
   }
@@ -242,7 +242,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
   }
 
   /* SP モーダル: CSS Docs 含め Modal.Body 全体でスクロール。カード風の面は使わない */
-  :global(.c--modal_body) .siteNav {
+  :global(.b--modal_body) .siteNav {
     flex: none;
     min-height: auto;
     gap: var(--s30);
@@ -269,8 +269,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
       overflow: visible !important;
     }
 
-    .siteNav_sections_scroll,
-    .siteNav_sections_scroll.c--scroll {
+    .siteNav_sections_scroll {
       flex: none !important;
       min-height: auto !important;
       overflow: visible !important;

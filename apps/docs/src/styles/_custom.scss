@@ -1,25 +1,56 @@
-:root {
-  --sz--m: 55rem; // 880px
-  // --sc--siteHeader: 26.25rem; // 420px
-
-  // レイアウト
-  --header-h: 3.875rem; // 62px
-  --sidebar-w: 240px;
-  --toc-w: 240px;
-}
-/* アンカーリンクでジャンプした際、ヘッダーの高さを考慮.
-   下層ページの本文スクロールは .c--siteMain_scroll 側。ここはトップページなど document がスクロールする場合用 */
-html {
-  scroll-padding-top: calc(var(--header-h) + 1rem);
-  // scroll-behavior: smooth;
-}
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+/* -------------------------- */
+/* 下書き記事のスタイル（開発環境のみ） */
+/* -------------------------- */
+/* Property Class より強くしておきたいので非レイヤーのまま */
+._draft {
+  position: relative;
+  > * {
+    opacity: 0.7;
+  }
+  *::before {
+    content: '✍️';
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--base-2);
+    line-height: 1;
+    font-size: 16px;
+    padding: 2px;
+    border-radius: 3px;
+    z-index: 1;
   }
 }
 
 @layer lism-custom {
+  .c--root[data-layout='BaseLayout'] > .l--box {
+    max-width: 2000px;
+    margin-inline: auto;
+  }
+
+  // ホバーエフェクト（文字色・背景色）のトランジション
+  .c--iconBtn,
+  .c--searchTrigger,
+  .c--button {
+    transition:
+      color 0.15s,
+      background-color 0.15s;
+  }
+
+  /* トップページのヘッダーのみ半透明＋blur（下層 docs は --base のまま） */
+  .p--front .c--siteHeader .b--shadowBox {
+    background-color: color-mix(in srgb, var(--base), transparent 30%);
+    backdrop-filter: blur(32px);
+  }
+
+  :root[data-theme='dark'] {
+    .b--chat {
+      --cbox-bgPct: 16%;
+    }
+  }
+
+  /* -------------------------- */
+  /* サイト全体のレイアウト */
+  /* -------------------------- */
   .c--siteWrapper {
     --wrapper-gta: 'header' 'main';
     --wrapper-gtc: 1fr;
@@ -92,7 +123,7 @@ html {
         outline: none;
       }
       &:focus-visible {
-        outline: 2px solid var(--eyebrow-c);
+        outline: 2px solid var(--link);
         outline-offset: -2px;
       }
     }
@@ -148,5 +179,81 @@ html {
 
   .c--hero h1 {
     font-feature-settings: 'palt';
+  }
+
+  /* -------------------------- */
+  /* 前後記事ナビゲーション */
+  /* -------------------------- */
+  .c--postNav {
+    margin-block-start: 5rem;
+    border-block-start: 1px solid var(--divider);
+    border-block-end: 1px solid var(--divider);
+  }
+
+  .c--postNav_icon {
+    transition: translate 0.2s;
+
+    .-prev & {
+      scale: -1 1;
+    }
+
+    .-prev .c--postNav_link:hover & {
+      translate: -0.25em 0;
+    }
+    .-next .c--postNav_link:hover & {
+      translate: 0.25em 0;
+    }
+  }
+
+  .c--postNav_empty {
+    display: none;
+  }
+
+  /* -------------------------- */
+  /* ページネーション */
+  /* -------------------------- */
+  .c--pagination {
+    margin-block-start: var(--s40);
+  }
+
+  .c--pagination_arrow,
+  .c--pagination_page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5em;
+    height: 2.5em;
+    padding: 0.25em 0.5em;
+    border-radius: var(--bdrs--10);
+    text-decoration: none;
+    font-weight: 500;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  a.c--pagination_arrow,
+  a.c--pagination_page {
+    color: var(--link);
+  }
+  a.c--pagination_arrow:hover,
+  a.c--pagination_page:hover {
+    background-color: var(--base-2);
+  }
+
+  .c--pagination_arrow.-disabled {
+    color: var(--text-2);
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .c--pagination_page.-current {
+    background-color: var(--brand);
+    color: white;
+  }
+
+  .c--pagination_ellipsis {
+    padding: 0 0.25em;
+    color: var(--text-2);
   }
 }

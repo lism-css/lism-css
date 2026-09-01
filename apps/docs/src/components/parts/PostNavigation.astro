@@ -4,7 +4,7 @@
  * sidebar.ts の順序に従って前後の記事へのリンクを表示
  * カテゴリ内に記事がない場合は次のカテゴリを探す
  */
-import { Flex, Lism, Inline, Icon } from 'lism-css/astro';
+import { Flex, Stack, Lism, Inline, Link, Icon } from 'lism-css/astro';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getRootLang, getLocalizedUrl, t, getPathWithoutLang, type LangCode } from '@/lib/i18n';
 import sidebarConfig, { getSiteSection } from '@/config/sidebar';
@@ -49,30 +49,38 @@ const label = t(lang, 'postNav');
     <nav class="c--postNav" aria-label={label.ariaLabel}>
       <Flex fxw="wrap" g="20" jc="space-between">
         {/* 前の記事 */}
-        <Lism class="c--postNav_item -prev">
+        <Lism class="c--postNav_item -prev" fx="1">
           {prevPost ? (
-            <a href={getLocalizedUrl(getPostUrl(prevPost.id), lang)} class="c--postNav_link">
-              <Icon icon="arrow-right" size="var(--s25)" class="c--postNav_icon" pos="absolute" i-y="0" l="0" my="auto" />
-              <Inline class="c--postNav_label" fz="0.625rem" o="p" lh="1.5">
-                {label.prev}
-              </Inline>
-              <Inline class="c--postNav_title">{prevPost.data.navtitle || prevPost.data.title}</Inline>
-            </a>
+            <Link href={getLocalizedUrl(getPostUrl(prevPost.id), lang)} class="c--postNav_link" set="plain" layout="flex" g="15" p="20" ps="0">
+              <Icon icon="arrow-right" size="1.25em" class="c--postNav_icon" o="mp" my="auto" />
+              <Stack>
+                <Inline class="c--postNav_label b--eyebrow" hl="s">
+                  {label.prev}
+                </Inline>
+                <Inline class="c--postNav_title" hl="s">
+                  {prevPost.data.navtitle || prevPost.data.title}
+                </Inline>
+              </Stack>
+            </Link>
           ) : (
             <Lism class="c--postNav_empty" />
           )}
         </Lism>
 
         {/* 次の記事 */}
-        <Lism class="c--postNav_item -next">
+        <Lism class="c--postNav_item -next" ta="right" fx="1">
           {nextPost ? (
-            <a href={getLocalizedUrl(getPostUrl(nextPost.id), lang)} class="c--postNav_link">
-              <Icon icon="arrow-right" size="var(--s25)" class="c--postNav_icon" pos="absolute" i-y="0" r="0" my="auto" />
-              <Inline class="c--postNav_label" fz="0.625rem" o="p" lh="1.5">
-                {label.next}
-              </Inline>
-              <Inline class="c--postNav_title">{nextPost.data.navtitle || nextPost.data.title}</Inline>
-            </a>
+            <Link href={getLocalizedUrl(getPostUrl(nextPost.id), lang)} class="c--postNav_link" set="plain" layout="flex" g="15" p="20" pe="0">
+              <Stack ms="auto">
+                <Inline class="c--postNav_label b--eyebrow" hl="s">
+                  {label.next}
+                </Inline>
+                <Inline class="c--postNav_title" hl="s">
+                  {nextPost.data.navtitle || nextPost.data.title}
+                </Inline>
+              </Stack>
+              <Icon icon="arrow-right" size="1.25em" class="c--postNav_icon" o="mp" my="auto" />
+            </Link>
           ) : (
             <Lism class="c--postNav_empty" />
           )}

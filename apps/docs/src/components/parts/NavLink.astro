@@ -23,7 +23,7 @@ const { href, isActive, ...props } = Astro.props;
       left: calc((var(--bdw, 1px)) * -1 - var(--nestedDepth, 0) * var(--s20));
       width: var(--bdw, 1px);
       height: 100%;
-      background-color: var(--eyebrow-c);
+      background-color: var(--brand);
       opacity: 0;
     }
 
@@ -31,7 +31,7 @@ const { href, isActive, ...props } = Astro.props;
     &:hover,
     &._active {
       background-color: transparent;
-      color: var(--eyebrow-c);
+      color: var(--brand);
       font-weight: 500;
 
       &::before {
