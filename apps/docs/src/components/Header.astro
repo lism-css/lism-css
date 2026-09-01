@@ -24,11 +24,11 @@ const searchText = t(currentLang, 'search');
 const headerText = t(currentLang, 'header');
 ---
 
-<Container as="header" class:list={['c--siteHeader', hasMobileMenu && '-subPage']} layout="flex" ai="center">
+<Container as="header" class="c--siteHeader" layout="flex" ai="center">
   {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
   <Flex ai="center" w="100%" mx="auto" p="20" class="b--shadowBox">
     <Group me="auto">
-      <Link href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none">
+      <Link href={homeUrl} class="c--siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none">
         <img class="u--onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
         <img class="u--onlyDarkMode" src="/logo-white.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
         <span id="site-logo-label" class="u--srOnly" translate="no">{siteConfig.name}</span>
@@ -132,10 +132,10 @@ const headerText = t(currentLang, 'header');
 <style>
   /* logo */
 
-  .siteTitle {
+  .c--siteTitle {
     font-family: var(--ff--mono);
   }
-  .siteTitle > img {
+  .c--siteTitle > img {
     width: clamp(6rem, 15vw, 7.1875rem);
     height: auto;
   }

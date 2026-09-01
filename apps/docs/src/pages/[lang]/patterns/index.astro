@@ -31,7 +31,7 @@ if (!isValidLang(lang)) {
 ---
 
 <BaseLayout title="Patterns" description="Web site patterns built with Lism CSS" excludeFromSearch>
-  <Stack g="40" class="patterns">
+  <Stack g="40">
     <Stack as="header" g="20">
       <h1>Web Patterns</h1>
       <Text c="text-2">A collection of copy-and-paste ready web site patterns built with Lism CSS.</Text>
@@ -66,10 +66,10 @@ if (!isValidLang(lang)) {
                 )}
               </Stack>
 
-              <AutoColumns cols="24rem" g="20" mbs="20" class="patternList">
+              <AutoColumns cols="24rem" g="20" mbs="20" class="c--patternList">
                 {items.map((item) => (
                   <BoxLink
-                    class={item.draft ? 'patternList_link _draft' : 'patternList_link'}
+                    class={item.draft ? 'c--patternList_link _draft' : 'c--patternList_link'}
                     layout="stack"
                     href={`/${lang}/patterns/${categoryId}/${item.id}`}
                     p="10"
@@ -82,7 +82,7 @@ if (!isValidLang(lang)) {
                         alt={item.title}
                         loading="lazy"
                         decoding="async"
-                        class="patternList_thumb"
+                        class="c--patternList_thumb"
                       />
                     </Frame>
                     <Lism layout="cluster" g="10" class="u--trim -ff:mono -fz:s">
@@ -101,14 +101,14 @@ if (!isValidLang(lang)) {
 
 <style>
   /* サムネイルカードのスタイル */
-  .patternList_link > .l--frame {
+  .c--patternList_link > .l--frame {
     --bdw: 2px;
     transition: box-shadow 0.2s;
     box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--10));
   }
 
   /* サムネイル画像のスタイル */
-  .patternList_thumb {
+  .c--patternList_thumb {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -117,7 +117,7 @@ if (!isValidLang(lang)) {
   }
 
   /* ホバー時のズーム効果 */
-  .patternList_link:hover .patternList_thumb {
+  .c--patternList_link:hover .c--patternList_thumb {
     transform: scale(1.02);
   }
 </style>

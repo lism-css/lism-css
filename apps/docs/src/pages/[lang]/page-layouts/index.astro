@@ -31,7 +31,7 @@ if (!isValidLang(lang)) {
 ---
 
 <BaseLayout title="Page Layouts" description="Full-page layout examples built with Lism CSS layout primitives." lang={lang} excludeFromSearch>
-  <Stack g="40" class="pageLayouts">
+  <Stack g="40">
     <Stack as="header" g="20">
       <h1>Page Layouts</h1>
       <Text c="text-2"> Full-page layout examples built with Lism CSS layout primitives. </Text>
@@ -53,16 +53,23 @@ if (!isValidLang(lang)) {
                 </Inline>
               </Heading>
 
-              <AutoColumns cols="24rem" g="20" mbs="20" class="pageLayoutList">
+              <AutoColumns cols="24rem" g="20" mbs="20" class="c--pageLayoutList">
                 {items.map((item) => (
-                  <BoxLink class="pageLayoutList_link" layout="stack" href={`/${lang}/page-layouts/${categoryId}/${item.id}`} p="10" g="20" set="hov">
+                  <BoxLink
+                    class="c--pageLayoutList_link"
+                    layout="stack"
+                    href={`/${lang}/page-layouts/${categoryId}/${item.id}`}
+                    p="10"
+                    g="20"
+                    set="hov"
+                  >
                     <Frame ar="3/2" bd bdrs="20" ov="hidden">
                       <img
                         src={`/screenshots/page-layouts/${categoryId}/${item.id}.png`}
                         alt={item.title}
                         loading="lazy"
                         decoding="async"
-                        class="pageLayoutList_thumb"
+                        class="c--pageLayoutList_thumb"
                       />
                     </Frame>
                     <Lism layout="cluster" g="10" class="u--trim -ff:mono -fz:s">
@@ -81,14 +88,14 @@ if (!isValidLang(lang)) {
 
 <style>
   /* サムネイルカードのスタイル */
-  .pageLayoutList_link > .l--frame {
+  .c--pageLayoutList_link > .l--frame {
     --bdw: 2px;
     transition: box-shadow 0.2s;
     box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--10));
   }
 
   /* サムネイル画像のスタイル */
-  .pageLayoutList_thumb {
+  .c--pageLayoutList_thumb {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -97,7 +104,7 @@ if (!isValidLang(lang)) {
   }
 
   /* ホバー時のズーム効果 */
-  .pageLayoutList_link:hover .pageLayoutList_thumb {
+  .c--pageLayoutList_link:hover .c--pageLayoutList_thumb {
     transform: scale(1.02);
   }
 </style>

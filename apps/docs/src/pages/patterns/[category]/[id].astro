@@ -40,7 +40,7 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
 ---
 
 <BaseLayout title={`${pattern.title} - Patterns`} description={pattern.description.ja} excludeFromSearch noindex>
-  <Flow g="30" class="patternPage">
+  <Flow g="30" class="c--patternPage">
     <Stack as="header" g="10">
       <Text fz="xs" c="text-2" tt="uppercase" lts="l">
         {categoryData.label}
@@ -50,7 +50,7 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
     </Stack>
     {
       pattern.draft && (
-        <Group class="draftBadge" fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
+        <Group fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
           DRAFT
         </Group>
       )
@@ -81,20 +81,12 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
       <PreviewTitle>コード</PreviewTitle>
       <SrcCode dir="docs" path={patternPath + '/index.astro'} title="index.astro" />
       <SrcCode dir="docs" path={patternPath + '/_style.css'} title="style.css" />
-      <!-- <Frame ov-y="auto" max-h="25rem" class="code-embed">
-				<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(githubBasePath)}&${queryMeta}`} loading="lazy"></script>
-			</Frame> -->
     </Stack>
   </Flow>
 </BaseLayout>
 
 <style>
-  .patternPage {
+  .c--patternPage {
     /* 詳細ページ固有のスタイル */
-  }
-
-  .code-embed {
-    border-radius: var(--bdrs--10);
-    overflow: hidden;
   }
 </style>

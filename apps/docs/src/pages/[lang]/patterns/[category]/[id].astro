@@ -59,7 +59,7 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
 ---
 
 <BaseLayout title={`${pattern.title} - Patterns`} description={pattern.description[lang]} lang={lang} excludeFromSearch noindex>
-  <Flow g="30" class="patternPage">
+  <Flow g="30" class="c--patternPage">
     <Stack as="header" g="10">
       <Text fz="xs" c="text-2" tt="uppercase" lts="l">
         {categoryData.label}
@@ -69,7 +69,7 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
     </Stack>
     {
       pattern.draft && (
-        <Group class="draftBadge" fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
+        <Group fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
           DRAFT
         </Group>
       )
@@ -105,12 +105,7 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
 </BaseLayout>
 
 <style>
-  .patternPage {
+  .c--patternPage {
     /* 詳細ページ固有のスタイル */
-  }
-
-  .code-embed {
-    border-radius: var(--bdrs--10);
-    overflow: hidden;
   }
 </style>
