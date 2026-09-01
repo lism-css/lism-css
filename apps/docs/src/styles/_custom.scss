@@ -110,22 +110,22 @@
     top: calc(var(--header-h) + var(--s20));
     height: calc(100svh - var(--header-h) - var(--s30));
     overflow: hidden;
+  }
 
-    &_scroll {
-      scroll-padding-top: var(--s40); // inner の py="40" 分
-      // scroll-behavior: smooth;
+  .c--siteMain_inner {
+    scroll-padding-top: var(--s40); // inner の py="40" 分
 
-      @media (prefers-reduced-motion: reduce) {
-        scroll-behavior: auto;
-      }
+    // scroll-behavior: smooth;
+    // @media (prefers-reduced-motion: reduce) {
+    //   scroll-behavior: auto;
+    // }
 
-      &:focus {
-        outline: none;
-      }
-      &:focus-visible {
-        outline: 2px solid var(--link);
-        outline-offset: -2px;
-      }
+    &:focus {
+      outline: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--link);
+      outline-offset: -2px;
     }
   }
   .c--siteFooter {

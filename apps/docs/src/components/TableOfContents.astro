@@ -58,7 +58,7 @@ const tocText = t(lang, 'toc');
     const headingIds = [...headingById.keys()];
     if (headingIds.length === 0) return;
 
-    const mainScrollEl = document.querySelector<HTMLElement>('.c--siteMain_scroll');
+    const mainScrollEl = document.querySelector<HTMLElement>('.c--siteMain_inner');
 
     function setActiveLink(slug: string) {
       tocLinks.forEach((link) => {
