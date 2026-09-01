@@ -101,7 +101,7 @@
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 | --- | --- | --- | --- |
-| `bdrs` | `border-radius` | `-bdrs:0`, `-bdrs:10`, `-bdrs:20`, `-bdrs:30`, `-bdrs:40`, `-bdrs:99`, `-bdrs:inner` | ✔ |
+| `bdrs` | `border-radius` | `-bdrs:0`, `-bdrs:10`, `-bdrs:20`, `-bdrs:30`, `-bdrs:40`, `-bdrs:50`, `-bdrs:99`, `-bdrs:inner` | ✔ |
 | `bdrs-tl` | `border-top-left-radius` | — | — |
 | `bdrs-tr` | `border-top-right-radius` | — | — |
 | `bdrs-br` | `border-bottom-right-radius` | — | — |
