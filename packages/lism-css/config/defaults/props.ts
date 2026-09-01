@@ -31,12 +31,14 @@ export default {
   },
   ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
   fs: { prop: 'fontStyle', presets: ['italic'], shorthands: { i: 'italic' } },
+  // 実 line-height（unitless比率）を --lh で管理する。既定の行間管理は hl（half-leading）。
+  // トークン値も任意数値も --lh 経由で出力する（素の line-height 出力だと * ルールに阻まれ子要素へ継承されないため）。
   lh: {
-    prop: '--hl',
-    isVar: 1,
-    token: 'hl',
+    prop: 'lineHeight',
+    token: 'lh',
     tokenClass: 1,
-    utils: { '1': '0px' },
+    utils: { '1': '1' },
+    alwaysVar: 1,
   },
   hl: {
     prop: '--hl',
@@ -44,8 +46,7 @@ export default {
     token: 'hl',
     tokenClass: 1,
     bp: 1,
-    // hl="0" で half-leading なし (--hl:0px) を表現できるようにする互換ユーティリティ。
-    // lh="1"（互換ショートカット）の .-lh:1 と同じ出力にし、正規 prop の hl 側でも揃えられるようにする。
+    // hl="0" で half-leading なし (--hl:0px) を表現できるようにするユーティリティ。
     utils: { '0': '0px' },
   },
   lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },

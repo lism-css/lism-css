@@ -201,20 +201,21 @@
       "FW : font-weight",
       "FZ: font-size",
       "フォントサイズのスケーリング規則について",
+      "HL: half-leading",
       "LH: line-height",
       "LTS: letter-spacing"
     ],
-    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size", "line-height", "hl", "行間"],
-    "snippet": "フォントサイズ（調和数列ベース）、行間（ハーフレディングトークン --hl--xs〜xl と -hl:{token} クラス）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
+    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size", "line-height", "hl", "lh", "行間"],
+    "snippet": "フォントサイズ（調和数列ベース）、行間（ハーフレディングトークン --hl--xs〜xl と -hl:{token} クラス、line-height比率トークン --lh--xs〜xl と -lh:{token} クラス）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
   },
   {
     "sourcePath": "half-leading.mdx",
     "title": "ハーフレディング（line-height）",
     "description": "Lism CSS が line-height をハーフレディングで管理する仕組みと、その設計のメリットについて解説します。",
     "category": "guide",
-    "headings": ["仕組み", "トークン", "lh（互換ショートカット）", "ハーフレディング管理のメリット"],
-    "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "hl", "lh", "--hl"],
-    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理するCSS設計を解説。`calc(1em + var(--hl) * 2)` によりフォントサイズに依存しない一定の行間を実現。-lh:{token}（互換ショートカット）の挙動と、ハーフレディング管理のメリットも紹介。トークン一覧（--hl--xs〜xl）と -hl:{token} クラスのプレビューはタイポグラフィトークンのページに掲載。"
+    "headings": ["仕組み", "トークン", "lh（line-height）", "hl との棲み分け", "ハーフレディング管理のメリット"],
+    "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "hl", "lh", "--hl", "--lh"],
+    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理するCSS設計を解説。`var(--lh, calc(1em + var(--hl) * 2))` によりフォントサイズに依存しない一定の行間を実現。line-heightは全要素ルールで管理されるため素のCSS指定は子要素へ継承されない点、実line-height（unitless比率）を--lh経由で管理する独立プロパティlh（-lh:{token}・任意数値）とhlとの棲み分け、ハーフレディング管理のメリットも紹介。"
   },
   {
     "sourcePath": "property-class.mdx",

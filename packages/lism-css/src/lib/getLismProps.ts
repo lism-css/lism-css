@@ -313,14 +313,6 @@ export class LismPropsData {
       }
     }
 
-    // lh は hl の互換エイリアスだが、任意値だけは従来どおり CSS line-height として扱う。
-    if (propKey === 'lh' && !bpKey) {
-      if (typeof val === 'string' || typeof val === 'number') {
-        this.addStyle('lineHeight', val);
-        return;
-      }
-    }
-
     // .-prop: だけ出力するケース
     if (true === val) {
       this.addProp(utilName);

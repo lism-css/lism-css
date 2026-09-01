@@ -26,13 +26,13 @@
 | `ff` | `font-family` | `-ff:base`, `-ff:accent`, `-ff:mono` | — |
 | `fs` | `font-style` | `-fs:italic` | — |
 | `hl` | `--hl`（ハーフレディング） | `-hl:base`, `-hl:xs`, `-hl:s`, `-hl:l`, `-hl:xl`, `-hl:0` | ✔ |
-| `lh` | `line-height`（`--hl` 経由・互換） | `-lh:base`, `-lh:xs`, `-lh:s`, `-lh:l`, `-lh:xl`, `-lh:1` | — |
+| `lh` | `line-height`（倍率・`--lh` 経由） | `-lh:xs`, `-lh:s`, `-lh:m`, `-lh:l`, `-lh:xl`, `-lh:1` | — |
 | `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |
 | `tt` | `text-transform` | `-tt:upper`, `-tt:lower` | — |
 
-**注意:** Lism はハーフレディングで `line-height` を管理します（`line-height: calc(1em + var(--hl) * 2)`）。正規のプロパティは `hl` で、`--hl` にトークン値をセットします（`hl="0"` でハーフレディングなし、BP 指定可）。`lh` は互換ショートカットで、トークン値・`1` は `--hl` を制御し、`lh="1.7"` のような任意値はそのまま CSS `line-height` を出力します。新規コードでは `hl` を推奨します。
+**注意:** `line-height` は全要素で `var(--lh, calc(1em + var(--hl) * 2))` として管理されます。基本は `hl`（fz 非依存の固定量）を使い、fz に比例した行送りを保ちたい場合だけ `lh`（倍率）を使います。`lh` を指定した要素の子孫では `hl` は効きません。
 
 ### 表示・可視性
 

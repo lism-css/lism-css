@@ -24,7 +24,8 @@ export type FullBpIsVarKey = (typeof FULL_BP_ISVAR_KEYS)[number];
 // isVar 系（state 変数扱いの props）は BP 拡張の対象外。
 // デフォルトで bp を持つもの（bdw, cols, rows）はデフォルト値のまま維持される。
 type NonVarPropKey = { [K in PropKey]: (typeof PROPS)[K] extends { isVar: 1 } ? never : K }[PropKey];
-type FullPropKey = Exclude<NonVarPropKey, FullBpExcludedKey> | FullBpIsVarKey;
+// lh は unitless比率が画面サイズに依らず維持されるのが本領のため、full でも BP 拡張しない（#582）。
+type FullPropKey = Exclude<NonVarPropKey, FullBpExcludedKey | 'lh'> | FullBpIsVarKey;
 
 /** full 用オーバーライドの値。BP サポートに加え、カラー系のみ tokenClass を持つ。 */
 type FullPropOverride = { bp: 1; tokenClass?: 1 };
@@ -41,7 +42,9 @@ type FullPropOverride = { bp: 1; tokenClass?: 1 };
  */
 const propsFull = Object.fromEntries(
   Object.entries(PROPS)
-    .filter(([key, config]) => !('isVar' in config && config.isVar === 1) && !(FULL_BP_EXCLUDED_KEYS as readonly string[]).includes(key))
+    .filter(
+      ([key, config]) => !('isVar' in config && config.isVar === 1) && !(FULL_BP_EXCLUDED_KEYS as readonly string[]).includes(key) && key !== 'lh'
+    )
     .map(([key]) => [key, { bp: 1 }])
 ) as Record<FullPropKey, FullPropOverride>;
 

@@ -106,7 +106,7 @@ function unknownKeyMessage(rules: TokenFileRules, group: string, key: string, kn
     return `${rules.filename}: "${group}.${key}" is not an existing token. Only "color" accepts new keys; other groups can override existing values only (${group}: ${knownKeys.join(', ')}).`;
   }
   const head = `${rules.filename}: "${group}.${key}" does not exist in the light theme.`;
-  // 種別ごと上書き不可（`lh` / `flow` のように実値を手書き SCSS が持つもの）なら、
+  // 種別ごと上書き不可（`flow` のように実値を手書き SCSS が持つもの）なら、
   // 空の候補リストを出しても直し方が分からないので、そう書く。
   if (knownKeys.length === 0) {
     return `${head} No token in "${group}" can be overridden: the light theme declares no CSS variable for this group.`;
