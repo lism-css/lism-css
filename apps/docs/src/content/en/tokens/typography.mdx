@@ -160,13 +160,7 @@ On this documentation site, `--fz-mol` is set to `7` for English pages.
 
 ## HL: half-leading
 
-Lism CSS takes a distinctive approach to `line-height`, managing it through **half-leading values** (the spacing above and below each line): `line-height` is computed from the `--hl` variable.
-
-```css
-* {
-  line-height: var(--lh, calc(1em + var(--hl) * 2));
-}
-```
+Lism CSS takes a [distinctive approach](/en/docs/half-leading/) to `line-height`, managing it on every element through **half-leading values** (the spacing above and below each line): `line-height` is computed from the `--hl` variable.
 
 The following tokens are available for `--hl`.
 
@@ -210,8 +204,6 @@ The following tokens are available for `--hl`.
   </PreviewCode>
 </Preview>
 
-If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want line heights to change fluidly along with the font size, override the unit on `:root`, e.g. `--hl-unit: calc(var(--fz--base) * 0.125);`.
-
 For the design rationale, see [Half-Leading (line-height)](/en/docs/half-leading/).
 
 <DocsLink path="/docs/half-leading/" />
@@ -219,7 +211,7 @@ For the design rationale, see [Half-Leading (line-height)](/en/docs/half-leading
 
 ## LH: line-height
 
-Tokens for `--lh`, which manages the actual `line-height` as a unitless ratio. When `--lh` is set, it takes precedence over the half-leading fallback in the universal rule above, and the ratio is inherited by child elements.
+Tokens for `--lh`, which sets `line-height` as a ratio of the font size. Use them when line spacing should scale with the font size.
 
 | Token | Variable | Class | Default value |
 |---|---|---|---|
@@ -229,11 +221,12 @@ Tokens for `--lh`, which manages the actual `line-height` as a unitless ratio. W
 |`l`|`--lh--l`|`-lh:l`|`2`|
 |`xl`|`--lh--xl`|`-lh:xl`|`2.25`|
 
-The values are chosen to match the default `hl` scale at the base font size (16px), so `-lh:m` roughly corresponds to the default body line spacing.
+Each value matches the default `hl` scale at the base font size (1rem).
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s">
+    <DummyText pre='<code class="-fz:s">1:</code> ' lh="1" />
     <DummyText pre='<code class="-fz:s">xs:</code> ' lh="xs" />
     <DummyText pre='<code class="-fz:s">s:</code> ' lh="s" />
     <DummyText pre='<code class="-fz:s">m:</code> ' lh="m" />

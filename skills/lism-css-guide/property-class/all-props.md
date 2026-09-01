@@ -26,13 +26,13 @@
 | `ff` | `font-family` | `-ff:base`, `-ff:accent`, `-ff:mono` | — |
 | `fs` | `font-style` | `-fs:italic` | — |
 | `hl` | `--hl`（ハーフレディング） | `-hl:base`, `-hl:xs`, `-hl:s`, `-hl:l`, `-hl:xl`, `-hl:0` | ✔ |
-| `lh` | `line-height`（`--lh` 経由・unitless 比率） | `-lh:xs`, `-lh:s`, `-lh:m`, `-lh:l`, `-lh:xl`, `-lh:1` | — |
+| `lh` | `line-height`（倍率・`--lh` 経由） | `-lh:xs`, `-lh:s`, `-lh:m`, `-lh:l`, `-lh:xl`, `-lh:1` | — |
 | `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |
 | `tt` | `text-transform` | `-tt:upper`, `-tt:lower` | — |
 
-**注意:** Lism は `line-height` を全要素で管理します（`line-height: var(--lh, calc(1em + var(--hl) * 2))`）。既定のプロパティは `hl` で、`--hl` にハーフレディング（fz 非依存の固定量）をセットします（`hl="0"` でハーフレディングなし、BP 指定可）。`lh` は実 line-height（unitless 比率）を `--lh` で管理する独立プロパティで、トークン値・`1`・`lh="1.7"` のような任意値のすべてを `--lh` 経由で出力します（比率は子要素へ継承される）。基本は `hl` を使い、fz に比例した行送りを維持したいグラフィカルなタイポグラフィでだけ `lh` を使います。`lh` スコープ内の子孫では `--lh` が優先されるため `hl` 指定は効きません。
+**注意:** `line-height` は全要素で `var(--lh, calc(1em + var(--hl) * 2))` として管理されます。基本は `hl`（fz 非依存の固定量）を使い、fz に比例した行送りを保ちたい場合だけ `lh`（倍率）を使います。`lh` を指定した要素の子孫では `hl` は効きません。
 
 ### 表示・可視性
 

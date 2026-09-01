@@ -24,7 +24,7 @@ export type FullBpIsVarKey = (typeof FULL_BP_ISVAR_KEYS)[number];
 // isVar 系（state 変数扱いの props）は BP 拡張の対象外。
 // デフォルトで bp を持つもの（bdw, cols, rows）はデフォルト値のまま維持される。
 type NonVarPropKey = { [K in PropKey]: (typeof PROPS)[K] extends { isVar: 1 } ? never : K }[PropKey];
-// lh は unitless 比率が画面サイズに依らず維持されるのが本領のため、full でも BP 拡張しない（#582）。
+// lh は unitless比率が画面サイズに依らず維持されるのが本領のため、full でも BP 拡張しない（#582）。
 type FullPropKey = Exclude<NonVarPropKey, FullBpExcludedKey | 'lh'> | FullBpIsVarKey;
 
 /** full 用オーバーライドの値。BP サポートに加え、カラー系のみ tokenClass を持つ。 */

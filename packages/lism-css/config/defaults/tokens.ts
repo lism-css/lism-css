@@ -101,7 +101,7 @@ export default {
     xl: 'calc(var(--hl-unit) * 5)',
   },
 
-  // line-height: unitless 比率。fz に比例した行送りを維持したい場合に使う（既定の行間管理は hl）。
+  // line-height: unitless比率。fz に比例した行送りを維持したい場合に使う（既定の行間管理は hl）。
   //  hl と違い body 等で base 値としてセットしないため、中央キーは base ではなく m。
   lh: { xs: '1.25', s: '1.5', m: '1.75', l: '2', xl: '2.25' },
 

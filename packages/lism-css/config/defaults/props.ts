@@ -31,7 +31,7 @@ export default {
   },
   ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
   fs: { prop: 'fontStyle', presets: ['italic'], shorthands: { i: 'italic' } },
-  // 実 line-height（unitless 比率）を --lh で管理する。既定の行間管理は hl（half-leading）。
+  // 実 line-height（unitless比率）を --lh で管理する。既定の行間管理は hl（half-leading）。
   // トークン値も任意数値も --lh 経由で出力する（素の line-height 出力だと * ルールに阻まれ子要素へ継承されないため）。
   lh: {
     prop: 'lineHeight',

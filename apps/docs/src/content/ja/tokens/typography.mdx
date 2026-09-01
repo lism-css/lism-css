@@ -160,13 +160,7 @@ Lism CSS では、デフォルトでは、**分子8の調和数列**ベースに
 
 ## HL: half-leading
 
-Lism CSSでは、`line-height` をハーフレディング（行間の上下余白）の値で管理する独自の仕組みを採用しており、`--hl` 変数にセットした値から `line-height` が算出されます。
-
-```css
-* {
-  line-height: var(--lh, calc(1em + var(--hl) * 2));
-}
-```
+Lism CSSでは、全要素に対して `line-height` をハーフレディング（行間の上下余白）の値で管理する[独自の仕組み](/docs/half-leading/)を採用しており、`--hl` 変数にセットした値から `line-height` が算出されます。
 
 `--hl` にセットする値として、次のトークンを用意しています。
 
@@ -210,8 +204,6 @@ Lism CSSでは、`line-height` をハーフレディング（行間の上下余�
   </PreviewCode>
 </Preview>
 
-`--fz--base` を `clamp()` 等を使って流体値にしているサイトで、行間もフォントサイズ基準にして流体的に変化させたい場合は、`:root` で `--hl-unit: calc(var(--fz--base) * 0.125);` のように上書きしてください。
-
 この設計の背景は [ハーフレディング（line-height）](/docs/half-leading/) を参照してください。
 
 <DocsLink path="/docs/half-leading/" />
@@ -219,7 +211,7 @@ Lism CSSでは、`line-height` をハーフレディング（行間の上下余�
 
 ## LH: line-height
 
-実際の `line-height`（unitless 比率）を管理する `--lh` 用のトークンです。`--lh` をセットすると、上記の全要素ルールのハーフレディング計算（fallback）よりも優先され、比率が子要素にも継承されます。
+`line-height` を倍率で指定する `--lh` 用のトークンです。フォントサイズに比例した行送りを保ちたい場合に使います。
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
@@ -229,11 +221,12 @@ Lism CSSでは、`line-height` をハーフレディング（行間の上下余�
 |`l`|`--lh--l`|`-lh:l`|`2`|
 |`xl`|`--lh--xl`|`-lh:xl`|`2.25`|
 
-各値は、基準フォントサイズ（16px）におけるデフォルトの `hl` スケールと一致するように設定されており、`-lh:m` がデフォルト本文の行送りとほぼ対応します。
+各値は、基準フォントサイズ（1rem）におけるデフォルトの `hl` スケールと一致します。
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s">
+    <DummyText pre='<code class="-fz:s">1:</code> ' lh="1" />
     <DummyText pre='<code class="-fz:s">xs:</code> ' lh="xs" />
     <DummyText pre='<code class="-fz:s">s:</code> ' lh="s" />
     <DummyText pre='<code class="-fz:s">m:</code> ' lh="m" />
