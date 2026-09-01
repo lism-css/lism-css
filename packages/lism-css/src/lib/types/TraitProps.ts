@@ -17,6 +17,7 @@ type TraitsConfig = typeof TRAITS;
 // → boolean のみ受け付ける（true/false でクラスの付与を制御）
 //
 // isWrapper は現行仕様として、boolean に加えて contentSize 相当の文字列値も受け付ける。
+// hasTransition は boolean に加えて、--transitionProps に出力する文字列（例: 'color, opacity'）も受け付ける。
 //
 // ============================================================
 
@@ -35,8 +36,9 @@ type ContentSizeStringValue = Extract<NonNullable<PropValueTypes['contentSize']>
  * config/index.ts の TRAITS から自動生成される Trait Props の型
  * config/index.ts の TRAITS に新しいトレイトを追加すると自動的に反映される
  */
-export type TraitProps = Omit<GeneratedTraitProps, 'isWrapper'> & {
+export type TraitProps = Omit<GeneratedTraitProps, 'isWrapper' | 'hasTransition'> & {
   isWrapper?: boolean | ContentSizeStringValue;
+  hasTransition?: boolean | string;
 };
 
 /** set prop で使われるプリセット値（エディタ補完用） */

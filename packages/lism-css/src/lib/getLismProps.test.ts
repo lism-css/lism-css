@@ -407,6 +407,28 @@ describe('getLismProps', () => {
       expect(result.className).not.toContain('-contentSize:s');
     });
 
+    test('hasTransition: true の場合クラスのみが追加される', () => {
+      const result = getLismProps({ hasTransition: true });
+      expect(result.className).toContain('has--transition');
+      expect(result.style).toBeUndefined();
+    });
+
+    test('hasTransition: 文字列の場合、クラスと --transitionProps 変数が出力される', () => {
+      const result = getLismProps({ hasTransition: 'scale, opacity' });
+      expect(result.className).toContain('has--transition');
+      expect(result.style?.['--transitionProps']).toBe('scale, opacity');
+    });
+
+    test('hasTransition: 前後の空白は除去される', () => {
+      const result = getLismProps({ hasTransition: '  color ' });
+      expect(result.style?.['--transitionProps']).toBe('color');
+    });
+
+    test('hasTransition: 空文字の場合は何も出力されない', () => {
+      const result = getLismProps({ hasTransition: '' });
+      expect(result).toEqual({});
+    });
+
     test('contentSize: 単独でプリセット値を指定すると、クラスのみが出力される', () => {
       const result = getLismProps({ contentSize: 'l' });
       expect(result.className).toContain('-contentSize:l');

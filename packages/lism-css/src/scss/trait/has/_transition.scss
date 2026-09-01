@@ -2,7 +2,8 @@
   --duration: var(--transition-duration, 0.25s);
   --ease: ease;
   --delay: 0s;
-  --transitionProps: all;
+  // `all` は読み込み時やレイアウト変化時に意図しないアニメーションを起こすため、対象を見た目系プロパティに限定する。
+  --transitionProps: color, background-color, border-color, box-shadow, scale, rotate, translate, transform, opacity, filter, backdrop-filter;
   transition: var(--duration) var(--ease) var(--delay);
   transition-property: var(--transitionProps);
 }

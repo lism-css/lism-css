@@ -190,6 +190,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 | `isSide` | `is--side` |
 | `isSkipFlow` | `is--skipFlow` |
 | `hasTransition` | `has--transition` |
+| `hasTransition="{props}"` | `has--transition` + `--transitionProps:{props}` |
 | `hasGutter` | `has--gutter` |
 | `hasSnap` | `has--snap` |
 | `hasMask` | `has--mask` |

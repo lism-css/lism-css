@@ -34,10 +34,14 @@ Sets the `transition` property using dedicated variables.
 
 <SrcCode path="src/scss/trait/has/_transition.scss" />
 
+By default, the transitioned properties (`--transitionProps`) are limited to colors, shadows, opacity, transform-related, and filter-related properties. Using `all` tends to cause unintended animations (flickering) on page load or layout changes.
+
+We recommend explicitly listing only the properties that actually change via `--transitionProps`. In Lism components, passing a string to `hasTransition` outputs it as `--transitionProps`.
+
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p="30">
-    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+    <Lism hasTransition="color" hov={{c: 'red'}}>Example</Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
     ```html
@@ -46,7 +50,7 @@ Sets the `transition` property using dedicated variables.
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
     ```jsx
-    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+    <Lism hasTransition="color" hov={{c: 'red'}}>Example</Lism>
     ```
   </PreviewCode>
 </Preview>

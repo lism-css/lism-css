@@ -141,7 +141,7 @@ Trait Class (`is--*` / `has--*`) に対応する Props です。
 | `isContainer` | `is--container` | コンテナクエリ対象 |
 | `isSide` | `is--side` | サイド要素 |
 | `isSkipFlow` | `is--skipFlow` | Flow 余白をスキップ |
-| `hasTransition` | `has--transition` | `transition` プロパティを CSS 変数でセット |
+| `hasTransition(='{props}')` | `has--transition` + `--transitionProps:{props}` | `transition` プロパティを CSS 変数でセット。文字列を渡すとトランジション対象のプロパティを指定できる |
 | `hasGutter` | `has--gutter` | 左右に統一ガター（`--gutter` / `--gutter--base`）を確保 |
 | `hasSnap` | `has--snap` | `scroll-snap-*` プロパティを CSS 変数でセット |
 | `hasMask` | `has--mask` | `mask` プロパティを CSS 変数でセット |

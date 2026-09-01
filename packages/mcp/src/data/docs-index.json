@@ -1786,8 +1786,8 @@
     "description": "CSS変数を用いてtransitionプロパティをセットする Trait クラス。",
     "category": "guide",
     "headings": ["has--transition"],
-    "keywords": ["has--transition", "トランジション", "アニメーション", "transition"],
-    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--hov と組み合わせてスムーズなホバーアニメーションを実現。"
+    "keywords": ["has--transition", "hasTransition", "--transitionProps", "トランジション", "アニメーション", "transition"],
+    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。--transitionProps の初期値は all ではなく color, background-color, border-color, box-shadow, scale, rotate, translate, transform, opacity, filter, backdrop-filter に限定。実際に変化させるプロパティを --transitionProps で明示指定することを推奨。Lismコンポーネントでは hasTransition=\"color, opacity\" のように文字列を渡すと --transitionProps として出力。set--hov と組み合わせてスムーズなホバーアニメーションを実現。"
   },
   {
     "sourcePath": "set-class.mdx",

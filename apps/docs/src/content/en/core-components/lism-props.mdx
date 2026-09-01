@@ -141,7 +141,7 @@ Props corresponding to Trait Classes (`is--*` / `has--*`).
 | `isContainer` | `is--container` | Container query target |
 | `isSide` | `is--side` | Side element |
 | `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
-| `hasTransition` | `has--transition` | Sets `transition` properties via CSS variables |
+| `hasTransition(='{props}')` | `has--transition` + `--transitionProps:{props}` | Sets `transition` properties via CSS variables. Pass a string to specify which properties to transition |
 | `hasGutter` | `has--gutter` | Reserves a unified horizontal gutter (`--gutter` / `--gutter--base`) |
 | `hasSnap` | `has--snap` | Sets `scroll-snap-*` properties via CSS variables |
 | `hasMask` | `has--mask` | Sets `mask` property via CSS variables |
