@@ -17,31 +17,44 @@ In Lism, the following style is applied to all elements:
 
 ```css
 * {
-  line-height: calc(1em + var(--hl) * 2);
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
 }
 ```
 
-This ties `line-height` to the `--hl` variable (the half-leading amount), so **the spacing between text stays consistent regardless of font size**.
+This ties `line-height` to the `--hl` variable (the half-leading amount) by default, so **the spacing between text stays consistent regardless of font size**.
+
+When `--lh` (a unitless ratio) is set, it takes precedence (this is what the `lh` property described below uses).
+
+:::note
+Because `line-height` is managed by this universal rule, setting `line-height` directly in plain CSS does not cascade to child elements (each child is recalculated by the `*` rule as well). Always control line spacing through the `--hl` / `--lh` variables (the `hl` / `lh` properties).
+:::
 
 
 ## Tokens
 
-The tokens `--hl--xs` through `--hl--xl` are provided as values for `--hl`. See [Typography Tokens](/en/docs/tokens/typography/#lh-line-height) for the full list and a preview.
+The tokens `--hl--xs` through `--hl--xl` are provided as values for `--hl`. See [Typography Tokens](/en/docs/tokens/typography/#hl-half-leading) for the full list and a preview.
 
-<DocsLink path="/docs/tokens/typography/#lh-line-height" />
+<DocsLink path="/docs/tokens/typography/#hl-half-leading" />
 
 
-## `lh` (Compatibility Shortcut)
+## `lh` (line-height)
 
-Half-leading is normally specified with the `hl` (half-leading) property (`-hl:*` classes, or the `hl` prop on `<Lism>`-based components). For cases where you prefer to think in terms of `line-height`, `lh` is available as a compatibility shortcut.
+Line spacing is normally specified with the `hl` (half-leading) property (`-hl:*` classes, or the `hl` prop on `<Lism>`-based components). For cases where you want to manage the actual `line-height` as a unitless ratio, the independent `lh` property is available.
 
 |Value|Behavior|
 |---|---|
-|`lh="base"` / `"xs"` / `"s"` / `"l"` / `"xl"`|References the same tokens as `hl` (controls `--hl`)|
-|`lh="1"`|No half-leading (equivalent to `hl="0"`)|
-|Arbitrary numbers like `lh="1.7"`|Output as a raw CSS `line-height`, as before|
+|`lh="xs"` / `"s"` / `"m"` / `"l"` / `"xl"`|Sets an [LH token](/en/docs/tokens/typography/#lh-line-height) (`1.25`–`2.25`) on `--lh`|
+|`lh="1"`|`--lh: 1` (no extra line spacing)|
+|Arbitrary numbers like `lh="1.7"`|Sets `--lh: 1.7`|
 
-Official examples use `hl` by default. Use `lh` only when you want to specify a raw `line-height` value.
+All of these are output through the `--lh` variable, so the unitless ratio is inherited by child elements and the line spacing is recalculated against each element's font size.
+
+### `hl` vs `lh`
+
+- `hl`: Manages line spacing as a fixed amount independent of font size. Use this by default.
+- `lh`: Manages line spacing as a ratio of the font size. Use it for graphical typography where the font size changes significantly across screen sizes (e.g. hero headings) and you want the spacing to scale proportionally.
+
+Note that inside an `lh` scope, descendants inherit `--lh`, which takes precedence — so `hl` (`--hl`) has no effect there.
 
 
 ## Why Use Half-Leading?

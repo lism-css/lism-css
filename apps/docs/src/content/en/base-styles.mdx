@@ -76,12 +76,12 @@ In Lism CSS, the following style is applied to **all elements**.
 
 ```scss
 * {
-  line-height: calc(1em + var(--hl) * 2);
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
 }
 ```
 
 Unlike a typical declaration such as `line-height: 1.6`, this approach produces a **fixed line spacing that does not depend on font size**.
-The formula works by defining the half-leading amount first, then adding it above and below the cap height (approximately `1em`).
+The formula works by defining the half-leading amount first, then adding it above and below the cap height (approximately `1em`). When `--lh` (a unitless ratio) is set, it takes precedence.
 
 Because line spacing doesn't grow with font size, it unifies the "**vertical rhythm**" of your typography, letting you compose layouts with harmonious spacing from headings down to body text.
 

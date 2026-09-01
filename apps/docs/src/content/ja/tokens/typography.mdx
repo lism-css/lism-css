@@ -158,13 +158,13 @@ Lism CSS では、デフォルトでは、**分子8の調和数列**ベースに
 
 
 
-## LH: line-height
+## HL: half-leading
 
 Lism CSSでは、`line-height` をハーフレディング（行間の上下余白）の値で管理する独自の仕組みを採用しており、`--hl` 変数にセットした値から `line-height` が算出されます。
 
 ```css
 * {
-  line-height: calc(1em + var(--hl) * 2);
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
 }
 ```
 
@@ -212,9 +212,55 @@ Lism CSSでは、`line-height` をハーフレディング（行間の上下余�
 
 `--fz--base` を `clamp()` 等を使って流体値にしているサイトで、行間もフォントサイズ基準にして流体的に変化させたい場合は、`:root` で `--hl-unit: calc(var(--fz--base) * 0.125);` のように上書きしてください。
 
-この設計の背景や `lh`（互換ショートカット）などの詳細は [ハーフレディング（line-height）](/docs/half-leading/) を参照してください。
+この設計の背景は [ハーフレディング（line-height）](/docs/half-leading/) を参照してください。
 
 <DocsLink path="/docs/half-leading/" />
+
+
+## LH: line-height
+
+実際の `line-height`（unitless 比率）を管理する `--lh` 用のトークンです。`--lh` をセットすると、上記の全要素ルールのハーフレディング計算（fallback）よりも優先され、比率が子要素にも継承されます。
+
+|トークン|変数|クラス|初期値|
+|---|---|---|---|
+|`xs`|`--lh--xs`|`-lh:xs`|`1.25`|
+|`s`|`--lh--s`|`-lh:s`|`1.5`|
+|`m`|`--lh--m`|`-lh:m`|`1.75`|
+|`l`|`--lh--l`|`-lh:l`|`2`|
+|`xl`|`--lh--xl`|`-lh:xl`|`2.25`|
+
+各値は、基準フォントサイズ（16px）におけるデフォルトの `hl` スケールと一致するように設定されており、`-lh:m` がデフォルト本文の行送りとほぼ対応します。
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s">
+    <DummyText pre='<code class="-fz:s">xs:</code> ' lh="xs" />
+    <DummyText pre='<code class="-fz:s">s:</code> ' lh="s" />
+    <DummyText pre='<code class="-fz:s">m:</code> ' lh="m" />
+    <DummyText pre='<code class="-fz:s">l:</code> ' lh="l" />
+    <DummyText pre='<code class="-fz:s">xl:</code> ' lh="xl" />
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <p class="-lh:xs">Lorem ipsum ...</p>
+    <p class="-lh:s">Lorem ipsum ...</p>
+    <p class="-lh:m">Lorem ipsum ...</p>
+    <p class="-lh:l">Lorem ipsum ...</p>
+    <p class="-lh:xl">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Text lh="xs">Lorem ipsum ...</Text>
+    <Text lh="s">Lorem ipsum ...</Text>
+    <Text lh="m">Lorem ipsum ...</Text>
+    <Text lh="l">Lorem ipsum ...</Text>
+    <Text lh="xl">Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>
+
+`hl` との棲み分けは [ハーフレディング（line-height）](/docs/half-leading/) を参照してください。
 
 
 ## LTS: letter-spacing

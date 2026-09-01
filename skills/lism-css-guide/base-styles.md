@@ -39,7 +39,7 @@ Reset CSS に加え、`@layer lism-base` 内で HTML タグに基本スタイル
 
 | 変数 | 用途 |
 | --- | --- |
-| `--hl` | half-leading（行間の上下余白量）。`line-height: calc(1em + var(--hl) * 2)` として全要素に適用 |
+| `--hl` | half-leading（行間の上下余白量）。`line-height: var(--lh, calc(1em + var(--hl) * 2))` として全要素に適用（`--lh` セット時はそちらが優先） |
 
 ### body
 

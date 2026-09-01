@@ -158,13 +158,13 @@ On this documentation site, `--fz-mol` is set to `7` for English pages.
 
 
 
-## LH: line-height
+## HL: half-leading
 
 Lism CSS takes a distinctive approach to `line-height`, managing it through **half-leading values** (the spacing above and below each line): `line-height` is computed from the `--hl` variable.
 
 ```css
 * {
-  line-height: calc(1em + var(--hl) * 2);
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
 }
 ```
 
@@ -212,9 +212,55 @@ The following tokens are available for `--hl`.
 
 If your site uses a fluid `--fz--base` (e.g. with `clamp()`) and you want line heights to change fluidly along with the font size, override the unit on `:root`, e.g. `--hl-unit: calc(var(--fz--base) * 0.125);`.
 
-For the design rationale and the `lh` compat shortcut, see [Half-Leading (line-height)](/en/docs/half-leading/).
+For the design rationale, see [Half-Leading (line-height)](/en/docs/half-leading/).
 
 <DocsLink path="/docs/half-leading/" />
+
+
+## LH: line-height
+
+Tokens for `--lh`, which manages the actual `line-height` as a unitless ratio. When `--lh` is set, it takes precedence over the half-leading fallback in the universal rule above, and the ratio is inherited by child elements.
+
+| Token | Variable | Class | Default value |
+|---|---|---|---|
+|`xs`|`--lh--xs`|`-lh:xs`|`1.25`|
+|`s`|`--lh--s`|`-lh:s`|`1.5`|
+|`m`|`--lh--m`|`-lh:m`|`1.75`|
+|`l`|`--lh--l`|`-lh:l`|`2`|
+|`xl`|`--lh--xl`|`-lh:xl`|`2.25`|
+
+The values are chosen to match the default `hl` scale at the base font size (16px), so `-lh:m` roughly corresponds to the default body line spacing.
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s">
+    <DummyText pre='<code class="-fz:s">xs:</code> ' lh="xs" />
+    <DummyText pre='<code class="-fz:s">s:</code> ' lh="s" />
+    <DummyText pre='<code class="-fz:s">m:</code> ' lh="m" />
+    <DummyText pre='<code class="-fz:s">l:</code> ' lh="l" />
+    <DummyText pre='<code class="-fz:s">xl:</code> ' lh="xl" />
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <p class="-lh:xs">Lorem ipsum ...</p>
+    <p class="-lh:s">Lorem ipsum ...</p>
+    <p class="-lh:m">Lorem ipsum ...</p>
+    <p class="-lh:l">Lorem ipsum ...</p>
+    <p class="-lh:xl">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Text lh="xs">Lorem ipsum ...</Text>
+    <Text lh="s">Lorem ipsum ...</Text>
+    <Text lh="m">Lorem ipsum ...</Text>
+    <Text lh="l">Lorem ipsum ...</Text>
+    <Text lh="xl">Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>
+
+For when to use `hl` vs `lh`, see [Half-Leading (line-height)](/en/docs/half-leading/).
 
 
 ## LTS: letter-spacing
