@@ -37,7 +37,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | フォント (ff) | `base`, `accent`, `mono` | `--ff--{key}` | `--ff--mono` |
 | ウェイト (fw) | `light`, `normal`, `bold` | `--fw--{key}` | `--fw--bold` |
 | 透明度 (o) | `mp`, `p`, `pp`, `ppp` | `--o--{key}` | `--o--p` |
-| 角丸 (bdrs) | `10`, `20`, `30`, `40`, `99`, `inner` | `--bdrs--{key}` | `--bdrs--20` |
+| 角丸 (bdrs) | `10`, `20`, `30`, `40`, `50`, `99`, `inner` | `--bdrs--{key}` | `--bdrs--20` |
 | 影 (bxsh) | `10`, `20`, `30`, `40`, `50` | `--bxsh--{N}` | `--bxsh--20` |
 | サイズ (sz) | `xs`, `s`, `m`, `l`, `xl` | `--sz--{key}` | `--sz--l` |
 | アスペクト比 (ar) | `og` | `--ar--{key}` | `--ar--og` |
@@ -165,14 +165,17 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 ## 角丸 (bdrs)
 
+増分が0.125remずつ大きくなる二階等差数列のスケール。
+
 | CSS変数 | 値 | 説明 |
 | --- | --- | --- |
 | `--bdrs--10` | `0.25rem` | ≒ 4px |
-| `--bdrs--20` | `0.5rem` | ≒ 8px |
-| `--bdrs--30` | `1rem` | ≒ 16px |
-| `--bdrs--40` | `1.5rem` | ≒ 24px |
+| `--bdrs--20` | `0.375rem` | ≒ 6px |
+| `--bdrs--30` | `0.625rem` | ≒ 10px |
+| `--bdrs--40` | `1rem` | ≒ 16px |
+| `--bdrs--50` | `1.5rem` | ≒ 24px |
 | `--bdrs--99` | `99rem` | 完全な丸（pill） |
-| `--bdrs--inner` | `calc(var(--bdrs, 0px) - var(--p, 0px))` | 内側の角丸（親要素に合わせる） |
+| `--bdrs--inner` | `calc(var(--bdrs, 0px) - var(--p, 0px) + 1px)` | 内側の角丸（親要素に合わせる） |
 
 
 ## 影 (bxsh)

@@ -110,8 +110,8 @@ export default {
   // opacity（音楽の強弱記号 piano 系列に由来）
   o: { mp: '0.9', p: '0.75', pp: '0.5', ppp: '0.25' },
 
-  // border-radius: inner は .set 系の計算値（手書き SCSS）でカタログ専用。
-  bdrs: { '10': '0.25rem', '20': '0.5rem', '30': '1rem', '40': '1.5rem', '99': '99rem', inner: '-' },
+  // +0.125 → +0.25 → +0.375 → + 0.5 と 二階等差数列で増えつつ、10~40がフィボナッチ数列。inner は .set--bdrsInner で計算
+  bdrs: { '10': '0.25rem', '20': '0.375rem', '30': '0.625rem', '40': '1rem', '50': '1.5rem', '99': '99rem', inner: '-' },
 
   // box-shadow: 構造変数 --shsz--*（手書き SCSS）と影色 --shc を合成。.set--bxsh で再宣言され影色 --shc を上書きできる。
   //  Memo: --shc は color.shadow（--shadow）の別名（手書き SCSS で定義）。
