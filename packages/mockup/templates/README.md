@@ -138,7 +138,7 @@ create it only when the mockup needs a dark theme. **No file, no dark CSS.**
 - Only tokens the light side really has as a CSS variable may be overridden —
   the Lism CSS defaults plus whatever `tokens.json` added. **New keys are never
   allowed here**, not even under `color`, and keys with no real light value
-  (`lh.*`, `bdrs.inner`, `flow.s`, `palette.keycolor`, …) are an error too.
+  (`bdrs.inner`, `flow.s`, `palette.keycolor`, …) are an error too.
 - Any group may be overridden (`color`, `palette`, `space`, `fz`, `bxsh`,
   `vars`, …). Violations stop `dev` and `check`, same as `tokens.json`.
 - The values land in a `.set--dark` class, so `className="set--dark"` turns dark

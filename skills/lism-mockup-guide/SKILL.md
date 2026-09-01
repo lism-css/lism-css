@@ -115,7 +115,7 @@ lism.config互換の`tokens`オブジェクト（`lism.config.js`の`tokens`に�
 ダーク時の値だけを書くファイル。形式は`tokens.json`と同じで、**ファイルの有無＝ダーク対応の有無**（`init`では生成されないので、必要になったら自分で作る）。
 
 - 書けるのは**ライト側がCSS変数として実際に持っているトークンの上書きだけ**。基準はマージ後のライト（Lismデフォルト＋`tokens.json`が追加したキー）なので、`tokens.json`に書いていない`color.base` / `color.text`もダークだけで指定できる
-- **新キーの追加は不可**（`color`の例外はダークには適用されない）。ライト側が実値を持たないキー（`lh.*` / `bdrs.inner` / `flow.s` / `palette.keycolor`など）もエラー。ただし`tokens.json`で実値を与えていれば上書きできる
+- **新キーの追加は不可**（`color`の例外はダークには適用されない）。ライト側が実値を持たないキー（`bdrs.inner` / `flow.s` / `palette.keycolor`など）もエラー。ただし`tokens.json`で実値を与えていれば上書きできる
 - グループの制限は無い（`color` / `palette` / `space` / `fz` / `bxsh` / `vars`など全て）。違反は`tokens.json`と同じくエラー
 - 値は`.set--dark`クラスの中に出力される（`:root.set--dark`ではない）。**ページ全体でも一部でも、`className="set--dark"`を付けた箱の中だけダークになる**
 - `@media (prefers-color-scheme: dark)`は出力されない。OS設定への追従やモード切替UIが要る場合はページ側で用意する
