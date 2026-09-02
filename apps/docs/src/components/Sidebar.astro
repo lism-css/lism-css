@@ -5,7 +5,8 @@ import SiteNav from './SiteNav.astro';
 // import LanguageSelect from './LanguageSelect.astro';
 ---
 
-<Stack as="aside" class="c--siteSidebar" isContainer g="10" {...Astro.props}>
+{/* 中身はサイトナビだけなので aside（補足ランドマーク）にはしない。nav は SiteNav 側 */}
+<Stack class="c--siteSidebar" isContainer g="10" {...Astro.props}>
   <Stack class="c--siteSidebar_nav" fx="1" min-h="0">
     <SiteNav />
   </Stack>
