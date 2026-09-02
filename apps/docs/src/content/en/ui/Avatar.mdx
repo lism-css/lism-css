@@ -5,7 +5,7 @@ description: 'Documentation for the Avatar component provided by @lism-css/ui.'
 import { Flex, Center, Frame } from 'lism-css/astro';
 import { Avatar } from '@lism-css/ui/astro/Avatar';
 
-A component for displaying avatar images.
+A component for displaying avatar images. When no image is available, it can show the first letter of a name as a placeholder.
 
 
 ## Overview
@@ -55,8 +55,9 @@ Provided as `Avatar` (`b--avatar`) from the `@lism-css/ui` package.
 | Prop | Description |
 |---|---|
 |`size`| Specifies the size of the avatar. Default: `"2em"` |
-|`src`| Path to the avatar image. |
-|`alt`| Alt text for the image. |
+|`src`| Path to the avatar image. When omitted, the initial of `name` is shown instead. |
+|`name`| User name. When `src` is omitted, its first character is shown as the initial. Also used as the alt text when `alt` is not specified. |
+|`alt`| Alt text. Takes precedence over `name` when specified. Use `alt=""` to treat the avatar as decorative, e.g. when the name is displayed right next to it. |
 
 
 ## Examples
@@ -86,6 +87,48 @@ Provided as `Avatar` (`b--avatar`) from the `@lism-css/ui` package.
     ```
   </PreviewCode>
 </Preview>
+
+
+### Initial fallback
+
+When `src` is omitted, the first character of `name` is rendered (`b--avatar_initial`). Uppercasing is handled by CSS (`text-transform: uppercase`), and the font size scales with the avatar size (`--w`).
+
+The background color for the initial is applied to the root element, so it can be overridden with props such as `bgc`.
+
+<Preview>
+  <PreviewTitle>Showing an initial by omitting `src`</PreviewTitle>
+  <PreviewArea p="20" bg=":stripe">
+    <Flex layout="cluster" g="20" ai="center">
+      <Avatar size="4rem" name="Yamada Taro" />
+      <Avatar size="4rem" name="鈴木" bgc="brand" c="base" />
+      <Avatar size="4rem" name="Yamada Taro" alt="" />
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Avatar size="4rem" name="Yamada Taro" />
+    <Avatar size="4rem" name="鈴木" bgc="brand" c="base" />
+    <Avatar size="4rem" name="Yamada Taro" alt="" />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--avatar l--frame -w" style="--w: 4rem">
+      <span class="b--avatar_initial" role="img" aria-label="Yamada Taro">Y</span>
+    </div>
+    <div class="b--avatar l--frame -w -bgc:brand -c:base" style="--w: 4rem">
+      <span class="b--avatar_initial" role="img" aria-label="鈴木">鈴</span>
+    </div>
+    <div class="b--avatar l--frame -w" style="--w: 4rem">
+      <span class="b--avatar_initial" aria-hidden="true">Y</span>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::note
+There is no automatic switch to the initial when the image fails to load. Since the Astro version renders static HTML, client-side load-state tracking is intentionally not included.
+:::
 
 
 ## Without @lism-css/ui

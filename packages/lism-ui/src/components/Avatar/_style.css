@@ -5,5 +5,24 @@
     width: var(--w);
     aspect-ratio: 1/1;
     border-radius: var(--bdrs--99);
+
+    /* イニシャル表示時の背景。ルート側に置くことで bgc 等の Property Class で上書きできる */
+    &:has(> .b--avatar_initial) {
+      background-color: var(--base-2);
+    }
+  }
+
+  /* src 未指定時のイニシャル表示 */
+  .b--avatar_initial {
+    display: grid;
+    place-items: center;
+
+    /* l--frame の子要素ルールは img/video/iframe 限定のため自前で広げる */
+    width: 100%;
+    height: 100%;
+    font-size: calc(var(--w) / 2.5);
+    line-height: 1;
+    text-transform: uppercase;
+    user-select: none;
   }
 }

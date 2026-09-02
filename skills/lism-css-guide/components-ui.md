@@ -89,16 +89,19 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Avatar/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar)
 
-アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`b--avatar` クラスが付与される。
+アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`b--avatar` クラスが付与される。`src` 未指定時は `name` の先頭1文字をイニシャル（`span.b--avatar_initial`）として表示する（画像ロード失敗時の自動切替は無い）。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
-| `src` | `string` | — | 画像URL |
-| `alt` | `string` | — | 代替テキスト |
+| `src` | `string` | — | 画像URL。未指定なら `name` のイニシャルを表示 |
+| `name` | `string` | — | ユーザー名。イニシャルの生成元。`alt` 未指定時は代替テキストにも使う |
+| `alt` | `string` | — | 代替テキスト。指定時は `name` より優先。`alt=''` で装飾扱い（イニシャル表示時は `aria-hidden`） |
 | `size` | `string` | `'2em'` | アバターのサイズ |
 
 ```jsx
 <Avatar src='/avatar.jpg' alt='User' size='48px' />
+<Avatar name='Yamada Taro' size='48px' /> {/* イニシャル "Y" を表示 */}
+<Avatar name='Yamada Taro' bgc='brand' c='base' /> {/* 背景色はルートの Prop で上書き可 */}
 ```
 
 

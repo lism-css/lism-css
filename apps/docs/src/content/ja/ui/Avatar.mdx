@@ -5,7 +5,7 @@ description: '@lism-css/ui で提供する Avatar コンポーネントについ
 import { Flex, Center, Frame } from 'lism-css/astro';
 import { Avatar } from '@lism-css/ui/astro/Avatar';
 
-アバター画像用のコンポーネントです。
+アバター画像用のコンポーネントです。画像がない場合は、名前のイニシャル1文字をプレースホルダーとして表示できます。
 
 
 ## Overview
@@ -55,8 +55,9 @@ Avatar のベーススタイルは、以下のCSSで定義されています。
 | プロパティ | 説明 |
 |---|---|
 |`size`| アバターのサイズを指定します。初期値:`"2em"`|
-|`src`| アバター画像のパス |
-|`alt`| altテキスト |
+|`src`| アバター画像のパス。未指定の場合は`name`のイニシャルを表示します。 |
+|`name`| ユーザー名。`src`未指定時に先頭1文字をイニシャルとして表示します。`alt`未指定時は代替テキストとしても使われます。 |
+|`alt`| 代替テキスト。指定時は`name`より優先されます。隣に名前テキストが並ぶなど読み上げが二重になる場合は`alt=""`で装飾扱いにできます。 |
 {/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
 
 
@@ -87,6 +88,48 @@ Avatar のベーススタイルは、以下のCSSで定義されています。
     ```
   </PreviewCode>
 </Preview>
+
+
+### イニシャル表示
+
+`src`を省略すると、`name`の先頭1文字（`b--avatar_initial`）を表示します。大文字化はCSSの`text-transform: uppercase`で行い、文字サイズはアバターのサイズ（`--w`）に比例します。
+
+イニシャル表示時の背景色はルート要素側に当てているため、`bgc`などのPropで上書きできます。
+
+<Preview>
+  <PreviewTitle>`src`を省略してイニシャルを表示する</PreviewTitle>
+  <PreviewArea p="20" bg=":stripe">
+    <Flex layout="cluster" g="20" ai="center">
+      <Avatar size="4rem" name="Yamada Taro" />
+      <Avatar size="4rem" name="鈴木" bgc="brand" c="base" />
+      <Avatar size="4rem" name="Yamada Taro" alt="" />
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Avatar size="4rem" name="Yamada Taro" />
+    <Avatar size="4rem" name="鈴木" bgc="brand" c="base" />
+    <Avatar size="4rem" name="Yamada Taro" alt="" />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--avatar l--frame -w" style="--w: 4rem">
+      <span class="b--avatar_initial" role="img" aria-label="Yamada Taro">Y</span>
+    </div>
+    <div class="b--avatar l--frame -w -bgc:brand -c:base" style="--w: 4rem">
+      <span class="b--avatar_initial" role="img" aria-label="鈴木">鈴</span>
+    </div>
+    <div class="b--avatar l--frame -w" style="--w: 4rem">
+      <span class="b--avatar_initial" aria-hidden="true">Y</span>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::note
+画像の読み込み失敗時にイニシャルへ切り替える機能はありません。Astro版が静的HTMLのため、クライアントJSでのロード状態監視は持ち込まない方針です。
+:::
 
 
 ## Without @lism-css/ui
