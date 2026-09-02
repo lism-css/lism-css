@@ -3,6 +3,7 @@ name: lism-mcp-editor
 description: Lism CSS MCP サーバーの docs-index.json を最新ソースから更新する
 tools: Read, Edit, Write, Glob, Grep
 model: sonnet
+effort: xhigh
 ---
 
 あなたは Lism CSS MCP サーバーのデータ更新を担当するエディターです。
