@@ -92,36 +92,31 @@ Avatar のベーススタイルは、以下のCSSで定義されています。
 
 ### イニシャル表示
 
-`src`を省略すると、ルートに`b--avatar--initial`が付き、`name`の先頭1文字を中央に表示します。大文字化はCSSの`text-transform: uppercase`で行い、文字サイズはアバターのサイズ（`--w`）に比例します。
+`src`を省略すると、ルートが`l--frame`から`l--center`に切り替わり、`b--avatar--initial`が付いて`name`の先頭1文字を中央に表示します。大文字化はCSSの`text-transform: uppercase`で行い、文字サイズはアバターのサイズ（`--w`）に比例します。
 
 スタイルはルートの`b--avatar--initial`に当てているため、背景色は`bgc`などのPropで上書きできます。
 
 <Preview>
   <PreviewTitle>`src`を省略してイニシャルを表示する</PreviewTitle>
-  <PreviewArea p="20" bg=":stripe">
-    <Flex layout="cluster" g="20" ai="center">
-      <Avatar size="4rem" name="Yamada Taro" />
-      <Avatar size="4rem" name="鈴木" bgc="brand" c="base" />
-      <Avatar size="4rem" name="Yamada Taro" alt="" />
+    <PreviewArea p="20" bg=":stripe">
+    <Flex layout="cluster" g="15">
+      <Avatar size="2.5rem" name="Yamada Taro" />
+      <Avatar size="3rem" name="鈴木" bgc="brand" c="base" />
     </Flex>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Avatar size="4rem" name="Yamada Taro" />
-    <Avatar size="4rem" name="鈴木" bgc="brand" c="base" />
-    <Avatar size="4rem" name="Yamada Taro" alt="" />
+    <Avatar size="2.5rem" name="Yamada Taro" />
+    <Avatar size="3rem" name="鈴木" bgc="brand" c="base" />
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="b--avatar b--avatar--initial l--frame -w" style="--w: 4rem">
+    <div class="b--avatar b--avatar--initial l--center -w" style="--w: 2.5rem">
       <span role="img" aria-label="Yamada Taro">Y</span>
     </div>
-    <div class="b--avatar b--avatar--initial l--frame -w -bgc:brand -c:base" style="--w: 4rem">
+    <div class="b--avatar b--avatar--initial l--center -w -bgc:brand -c:base" style="--w: 3rem">
       <span role="img" aria-label="鈴木">鈴</span>
-    </div>
-    <div class="b--avatar b--avatar--initial l--frame -w" style="--w: 4rem">
-      <span aria-hidden="true">Y</span>
     </div>
     ```
   </PreviewCode>
