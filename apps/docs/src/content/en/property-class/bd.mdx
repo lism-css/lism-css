@@ -15,7 +15,7 @@ Border-related properties in Lism follow a slightly different convention.
 
 <PreviewTitle>css</PreviewTitle>
 ```scss
-/* Only the variable defaults live in the weak position (@layer lism-base) */
+/* Only the variable defaults live in the weak position (@layer lism-base in the layered build, :where() in the no_layer build) */
 :where(.-bd, [class*=' -bd-'], [class^='-bd-']) {
   --bds: solid;
   --bdw: 1px;
