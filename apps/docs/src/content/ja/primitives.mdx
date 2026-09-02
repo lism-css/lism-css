@@ -1,10 +1,10 @@
 ---
 title: 'Primitive Class'
-description: 'Lism CSS のプリミティブクラス（l--, a--）の分類と使い方について解説します。'
+description: 'Lism CSS の Primitive Class（l--, a--）の分類と使い方について解説します。'
 ---
 
 
-Lism では、レイアウトを組み立てる小さな積み木として **Primitive クラス** を提供しています。
+Lism では、レイアウトを組み立てる小さな積み木として **Primitive Class** を提供しています。
 
 - `l--{name}`: レイアウトの構成単位となる Layout Primitive。
 - `a--{name}`: レイアウトの最小単位となる Atomic Primitive。
@@ -97,7 +97,7 @@ Lism では、レイアウトを組み立てる小さな積み木として **Pri
 </WithSide>
 ```
 
-メディア側を `isSide` として先に置き、`fxd="row-reverse"` を併用すれば、横並び時は左右が交互の配置、縦並び時はメディアが上に統一されるレイアウトも作れます。
+メディア側を `isSide` として先に置き、組ごとに `fxd="row-reverse"` を交互に併用すれば、メディア＋本文の組を複数並べたときに、横並び時はメディアの左右が交互になり、縦並び時はメディアが上に統一されるレイアウトも作れます。
 
 ブレイクポイントで明示的に切り替えたい場合は <ModLink slug="l--grid" /> を `gta` のテンプレ切替で組むことでも同じ見た目を実現できます（`l--withSide` のほうが宣言的でシンプル）。
 

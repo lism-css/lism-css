@@ -208,7 +208,7 @@ Use this to place an absolutely positioned element at the start of flow content.
 ## Notes on nesting `l--flow`
 
 
-When `l--flow` is nested directly inside another `l--flow` and a custom `--flow` is set on the child, that value also affects the child's own `margin-block-start`.
+When `l--flow` is nested directly inside another `l--flow` and a custom `--flow` is set on the child, that value affects not only the spacing between the child's own children but also the child's own `margin-block-start`.
 (This issue can be avoided by wrapping the nested `l--flow` in an additional element to avoid being a direct child.)
 
 <Preview>

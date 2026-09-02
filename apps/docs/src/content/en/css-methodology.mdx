@@ -38,7 +38,7 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
     </tr>
     <tr>
       <td>Base<br/>`lism-base`</td>
-      <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`set--{state}` classes are also defined here.</td>
+      <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`set--{name}` classes are also defined here.</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Block<br/>`lism-block`</td>
@@ -93,7 +93,7 @@ This section explains the design rationale behind the core class groups in Lism 
 
 | Category | Format | Example |
 |---|---|---|
-|Set Class|`set--{style}`|`set--plain`,<br />`set--hov`,<br />`set--bxsh`|
+|Set Class|`set--{name}`|`set--plain`,<br />`set--hov`,<br />`set--bxsh`|
 
 ### Primitive Class
 
@@ -106,9 +106,9 @@ These are further categorized into several types:
 |Layout Primitives<br /><small>Primitives that serve as layout building blocks</small>|`l--{name}`|`l--grid`,<br />`l--columns`|
 |Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`a--{name}`|`a--divider`,<br />`a--icon`|
 
-Primitive classes are standalone — they have no variations or child element classes. Only [Block Class](#block-class) (`b--`) and [Custom Class](#custom-class) (`c--`), described later, follow a BEM structure.
+Primitive Classes are standalone — they have no variations or child element classes. Only [Block Class](#block-class) (`b--`) and [Custom Class](#custom-class) (`c--`), described later, follow a BEM structure.
 
-Combining Primitive classes follows these rules:
+Combining Primitive Classes follows these rules:
 
 | Combination | Allowed | Notes |
 |---|---|---|
@@ -203,7 +203,7 @@ Utility classes with a clear decorative or functional purpose are defined as fol
 
 | Category | Format | Example |
 |---|---|---|
-|Utility Class|`u--{style}`|`u--cbox`,<br/>`u--trim`|
+|Utility Class|`u--{name}`|`u--cbox`,<br/>`u--trim`|
 
 
 

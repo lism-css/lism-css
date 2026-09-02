@@ -6,7 +6,7 @@ import { Lism, Container, Wrapper, Box, Columns, Media, Flex, Stack, Spacer, Fra
 import { Button } from '@lism-css/ui/astro/Button';
 
 
-Classes defined in the `lism-base` layer follow the `set--{className}` format. They handle base styling for HTML elements and CSS variable setup.
+Classes defined in the `lism-base` layer follow the `set--{name}` format. They handle base styling for HTML elements and CSS variable setup.
 
 The set-- classes fall into two categories:
 
@@ -282,7 +282,7 @@ See the [`hover` documentation page](/en/docs/property-class/hov#set--hov) for u
 
 ## `set--bleed`
 
-A class that generates the `--bleed` variable, useful for building one-side bleed layouts.
+A class that generates the `--bleed` variable, used for building bleed layouts where only one side extends to the edge of the screen.
 The amount of space outside the content width (`--contentSize`) is set as its value. The gutter width (`--gutter` / `--gutter--base`) acts as the lower bound — if the computed value falls below the gutter width, the gutter width is returned instead.
 
 <SrcCode path="src/scss/base/set/_bleed.scss" />
@@ -382,7 +382,7 @@ Add the `set--bdrsInner` class to the parent element and specify `-bdrs:inner` o
 
 <Spacer h="1rem" />
 
-Because `p` and `bdrs` are tracked as CSS variables even at different breakpoints, `set--bdrsInner` supports responsive border radii automatically.
+Because `p` and `bdrs` are managed as CSS variables, `set--bdrsInner`'s border radius automatically follows their values even when you change them at a breakpoint.
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>

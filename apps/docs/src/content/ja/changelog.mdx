@@ -9,7 +9,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.26.0 (2026.08.16)
+## lism-css v0.26.0 (2026.08.16)
 
 ### `lism-block` レイヤーの追加 (#546, #559)
 
@@ -27,7 +27,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 - 依存パッケージのセキュリティ更新を行いました。
 
-### `@lism-css/ui` v.0.26.0 (2026.08.16)
+### `@lism-css/ui` v0.26.0 (2026.08.16)
 
 **破壊的変更**を含むリリースです。`lism-css` v0.26.0 以上が必要です。
 
@@ -40,7 +40,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 - これまで Lism Props（Property Class）として出力していたベーススタイルの一部をCSSへ移し、利用者側のCSSから上書きできるようにしました。あわせて次の既定値が変わっています。
 - Badge: 既定の角丸をピル型（`--bdrs--99`）へ変更しました。
-- Tabs: `variant="line"` を標準スタイルへ昇格し、`variant` の初期値を `'default'` にしました。既定の装飾は `.b--tabs--default` へ隔離しています。
+- Tabs: `variant="line"` を標準スタイルへ昇格し、`variant` の初期値を `'default'` にしました。既定の装飾は `.b--tabs--default` へ分離しています。
 - Avatar: 既定サイズを `--w: 2em` としてCSS側で管理するようにしました。
 - Button / Accordion.Root / Details / NavMenu: 既定で出力していた `l--flex` / `l--stack` を廃止しました。レイアウトが必要な場合は `layout="flex"` などを指定してください。
 - Details: Content の `flow="s"` を廃止し、子要素の間隔の既定が `--flow--base` になりました。従来の間隔を維持する場合は `.b--details_content { --flow--base: var(--flow--s) }` を指定してください。
@@ -61,7 +61,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.25.0 (2026.08.06)
+## lism-css v0.25.0 (2026.08.06)
 
 ### 構造変数を lism.config から上書き可能に (#530)
 
@@ -84,39 +84,39 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - `set--plain` が `input` のフォーム既定スタイルに詳細度で負ける問題を修正しました。(#537)
 - `.browserslistrc` を追加し、不要なベンダープレフィックスを除去しました。
 
-### `@lism-css/plugin` v.0.4.2 (2026.08.06)
+### `@lism-css/plugin` v0.4.2 (2026.08.06)
 
 - カラー系 Property Class のクラス生成を `color` ∪ `palette` の和集合に揃え、`full.css` のビルド結果をランタイム側の解決規則と一致させました。(#533)
 - マージ前の default-config だけを読み込む `loadDefaultConfig()` を追加しました。(#539)
 
-### `@lism-css/ui` v.0.25.0 (2026.08.06)
+### `@lism-css/ui` v0.25.0 (2026.08.06)
 
 - `lism-css` v0.25.0 への追従リリースです。コンポーネントの変更はありません。
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.24.1 (2026.08.04)
+## lism-css v0.24.1 (2026.08.04)
 
 - `full.css` で border 用の Property Class（`.-bd` 系）が効かなくなっていた競合を修正しました。(#513)
 - ブラウザ標準スタイル由来の `text-align`（button）と `letter-spacing`（フォーム要素）が打ち消されていなかった問題を修正しました。(#516)
 - CSSに実装されていなかった `flow` トークンの `l` を `tokens.ts` から削除しました。
 - 依存パッケージの更新と内部の型定義の整理を行いました。（APIの変更はありません）
 
-### `@lism-css/ui` v.0.24.1 (2026.08.04)
+### `@lism-css/ui` v0.24.1 (2026.08.04)
 
 - `lism-css` v0.24.1 への追従リリースです。コンポーネントの変更はありません。
 - 依存パッケージを更新しました。
 
 <Divider bds="dashed" my="40" />
 
-## @lism-css/plugin v.0.4.1 (2026.08.04)
+## @lism-css/plugin v0.4.1 (2026.08.04)
 
 - `@lism-css/plugin/vite` から `lismConfigAlias` をエクスポート (#521)
 - 依存パッケージを更新（Dependabot alert 44件対応） (#509)
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.24.0 (2026.07.06)
+## lism-css v0.24.0 (2026.07.06)
 
 - config の値（utils / presets / token）を導出してコンポーネント側の補完に反映 (#505)
 - `lism.config` 執筆用の `LismConfig` 型を追加 (#472)
@@ -130,21 +130,21 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - 検証プロセスのサブエージェント分離やチェックの素通り防止など、実装精度を改善 (#469, #473)
 - アンチパターン集を拡充 (#488)
 
-### `@lism-css/plugin` v.0.4.0 (2026.07.06)
+### `@lism-css/plugin` v0.4.0 (2026.07.06)
 
 - `lism.config.ts`（TypeScript 形式の設定ファイル）の読み込みに対応 (#461)
 - config の値（utils / presets / token）から型を導出し、コンポーネント側の補完に反映 (#505)
 - purge: Astro の SSR / hybrid 構成で server 出力もスキャン・参照書き換えの対象に (#495)
 - purge: ハッシュ判定を厳格化し、レポートを実バイト数ベースに改善 (#503)
 
-### `@lism-css/ui` v.0.24.0 (2026.07.06)
+### `@lism-css/ui` v0.24.0 (2026.07.06)
 
 - lism-css v0.24.0 への追従リリース（コンポーネントの機能変更はありません）
 - Accordion / Modal / Tabs にユニットテストを追加 (#365)
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.23.0 (2026.06.19)
+## lism-css v0.23.0 (2026.06.19)
 
 **破壊的変更**を含むリリースです。
 
@@ -170,7 +170,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - デフォルトフォントファミリーを見直し（`--ff--base` / `--ff--accent`）
 - props の冗長な `bp:0` 明示を削除（出力不変）
 
-### `@lism-css/plugin` v.0.3.0 (2026.06.19)
+### `@lism-css/plugin` v0.3.0 (2026.06.19)
 
 新パッケージ。`lism-css` のビルド／フレームワーク統合レイヤーを提供します。
 
@@ -179,19 +179,19 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - Next.js 16（`@lism-css/plugin/next`）/ WordPress（`@lism-css/plugin/wordpress`）アダプタ
 - `breakpoints` から `lism-env.d.ts` を自動生成
 
-### `@lism-css/ui` v.0.23.0 (2026.06.19)
+### `@lism-css/ui` v0.23.0 (2026.06.19)
 
 - `Badge` / `Button` / `Chat` の `lh` を `hl` 推奨プロパティへ移行（lism-css v0.23.0 の `hl` 追加に追従）
 - CSS ビルド層を `@lism-css/plugin` の `compileCssTree` へ移行
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.22.2 (2026.06.03)
+## lism-css v0.22.2 (2026.06.03)
 
 - カラートークン `--green` の彩度を微調整
 - Icon presets の `alert` アイコンを八角形（warning-octagon）スタイルに変更
 
-### `@lism-css/ui` v.0.22.2 (2026.06.03)
+### `@lism-css/ui` v0.22.2 (2026.06.03)
 
 - `Alert` / `Callout` に `tip` プリセットを追加（`point` のエイリアス）
 - `Alert` / `Callout` のプリセットを統一・整理（`Callout` に `info` を追加、`note` を gray に変更、`Alert` に `note` を追加）
@@ -199,13 +199,13 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.22.1 (2026.05.30)
+## lism-css v0.22.1 (2026.05.30)
 
 - `:` 単体を `true` 相当のフラグとして扱うように対応（テキストフォーム等 boolean を渡せない経路向け）
 - 0.22.0 のパッケージング不具合を修正（`./config` / `./default-config` の参照先と配布ファイルを是正）
 - 廃止済みの `./next-js/*` エクスポートを削除
 
-### `@lism-css/ui` v.0.22.1 (2026.06.02)
+### `@lism-css/ui` v0.22.1 (2026.06.02)
 
 - `NavMenu.Link` に `hov="-bgc"` をデフォルト付与（ホバー時に背景色が付くように）
 - `Accordion.Item` に `isOpen` prop を追加し、初期状態で展開できるよう対応（開閉アイコンの表示も調整）
@@ -213,7 +213,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.22.0 (2026.05.28)
+## lism-css v0.22.0 (2026.05.28)
 
 **破壊的変更**を含むリリースです。
 
@@ -237,13 +237,13 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 - ロゴアイコンの整理・大きさを調整
 
-### `@lism-css/ui` v.0.22.0 (2026.05.28)
+### `@lism-css/ui` v0.22.0 (2026.05.28)
 
 - lism-css v0.22.0 への追従リリース
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.21.0 (2026.05.26)
+## lism-css v0.21.0 (2026.05.26)
 
 **破壊的変更**を含むリリースです。
 
@@ -262,16 +262,16 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 ### その他
 
 - `isWrapper="xl"` プリセットに対応
-- `pos`・`order` プロパティにブレークポイント対応（`bp: 1`）を追加
+- `pos`・`order` プロパティにブレイクポイント対応（`bp: 1`）を追加
 - `InlineAllowedTag` に `label` タグを追加
 
-### `@lism-css/ui` v.0.21.0 (2026.05.26)
+### `@lism-css/ui` v0.21.0 (2026.05.26)
 
 - lism-css 本体の set クラス命名整理（`set--var:xxx` → `set--xxx`）に追従
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.20.0 (2026.05.20)
+## lism-css v0.20.0 (2026.05.20)
 
 **破壊的変更**を含むリリースです。
 
@@ -283,7 +283,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - inset: `i-x-s/i-x-e/i-y-s/i-y-e` → `i-s/i-e/i-bs/i-be`
 - CSS変数 `--list-px-s` → `--list-ps`
 
-### ブレークポイント対応プロパティの整理 (#394)
+### ブレイクポイント対応プロパティの整理 (#394)
 
 - main.css のサイズ削減のため、bp デフォルトサポートを見直し
 - bp サポート廃止: `pl/pr/pt/pb`, `ml/mr/mt/mb`, `hl`, `lts`, `cg`, `rg`, `bg`
@@ -301,7 +301,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - `--flow` デフォルト値の定義位置を root へ移動し、`lang="ja"` で少し広めに設定
 - base スタイルの微調整
 
-### `@lism-css/ui` v.0.20.0 (2026.05.20)
+### `@lism-css/ui` v0.20.0 (2026.05.20)
 
 - Modal にデフォルトの背景ブラー（`backdrop-filter`）を追加（`--modal-blur` で変更可能）
 - Callout / Alert からデフォルトの box-shadow を除去し、よりフラットな見た目に調整

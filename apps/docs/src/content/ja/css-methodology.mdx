@@ -36,7 +36,7 @@ export const WhsNw = ({children}) => {
     </tr>
     <tr>
       <td>Base<br/>`lism-base`</td>
-      <td>Reset CSS、トークン定義や変数セット、要素の初期スタイルをセットするレイヤー。<br/>`set--{style}`クラスもここで定義されます。</td>
+      <td>Reset CSS、トークン定義や変数セット、要素の初期スタイルをセットするレイヤー。<br/>`set--{name}`クラスもここで定義されます。</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Block<br/>`lism-block`</td>
@@ -91,7 +91,7 @@ Lism CSS の中心的なクラス群について、その設計思想を説明�
 
 |分類|形式|例|
 |---|---|---|
-|Set Class|`set--{style}`|`set--plain`,<br />`set--hov`,<br />`set--bxsh`|
+|Set Class|`set--{name}`|`set--plain`,<br />`set--hov`,<br />`set--bxsh`|
 
 ### Primitive Class
 
@@ -104,9 +104,9 @@ Lism CSS の中心的なクラス群について、その設計思想を説明�
 |Layout Primitives<br /><small>レイアウトの構成単位となる Primitive</small>|`l--{name}`|`l--grid`,<br />`l--columns`|
 |Atomic Primitives<br /><small>レイアウトの最小単位となる Primitive</small>|`a--{name}`|`a--divider`,<br />`a--icon`|
 
-Primitive クラスはバリエーションや子要素クラスを持たない、単体で機能するクラスです。BEM 構造を持つのは、後述の [Block Class](#block-class)（`b--`）と [Custom Class](#custom-class)（`c--`）のみです。
+Primitive Class はバリエーションや子要素クラスを持たない、単体で機能するクラスです。BEM 構造を持つのは、後述の [Block Class](#block-class)（`b--`）と [Custom Class](#custom-class)（`c--`）のみです。
 
-また、Primitive クラスの併用は以下のルールに従ってください。
+また、Primitive Class の併用は以下のルールに従ってください。
 
 | 組み合わせ | 可否 | 備考 |
 |---|---|---|
@@ -171,7 +171,7 @@ Element は `_`（アンダースコア）一つ区切りです。
 :::point
 - `b--` は他クラスと併用もできます。すべて CSS 側に書かなくてはいけないというわけではありません。
 - `b--` はレイアウトスタイルも CSS 側で持てますし、`l--` 系クラスとの併用を前提にして組むこともできます。
-- ブレイクポイント切り替え（`-p_sm` 等）、hover 系スタイル、その他例外的な調整には Property Class での調整が便利です。
+- ブレイクポイント切り替え（`-p_sm` 等）、hover 系スタイル、その他例外的な調整には Property Class が便利です。
 :::
 
 
@@ -202,7 +202,7 @@ Element は `_`（アンダースコア）一つ区切りです。
 
 |分類|形式|例|
 |---|---|---|
-|Utility Class|`u--{style}`|`u--cbox`,<br/>`u--trim`|
+|Utility Class|`u--{name}`|`u--cbox`,<br/>`u--trim`|
 
 
 
@@ -224,7 +224,7 @@ Property Class には以下の3種類の形式があります。
 
 :::warning
 \* 全てのCSSプロパティに対応するクラスがデフォルトで用意されているわけではありません。  
-\* ブレークポイント対応クラスも、さらにその中で主要な一部のプロパティのみ標準でサポートされています。
+\* ブレイクポイント対応クラスも、さらにその中で主要な一部のプロパティのみ標準でサポートされています。
 :::
 
 
@@ -268,7 +268,7 @@ Lism CSS の各クラス分類（`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, 
 
 なお、Lism の既存クラスを上書きしたい場合は、該当するレイヤー内で行ってください。
 
-例えば、`set--` クラスの再定義は `@layer lism-base` で行います。この時、lismの`main.css`よりあとで読み込むスタイルで定義するか、`.set--xxx.set--xxx` のように同じクラス名を続けることで優先度をあげるなどして上書きすること。
+例えば、`set--` クラスの再定義は `@layer lism-base` で行います。この時、lismの`main.css`よりあとで読み込むスタイルで定義するか、`.set--xxx.set--xxx` のように同じクラス名を続けることで優先度をあげるなどして上書きしてください。
 
 ```css
 @layer lism-base {
@@ -283,7 +283,7 @@ Lism CSS の各クラス分類（`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, 
 
 ## 動的な状態管理はdata属性
 
-Javascriptで動的に付け外しされるような状態管理には、data属性を使用します。
+JavaScriptで動的に付け外しされるような状態管理には、data属性を使用します。
 
 例: `[data-opened]`, `[data-active]`
 

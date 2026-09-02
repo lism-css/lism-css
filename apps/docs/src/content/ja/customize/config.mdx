@@ -237,7 +237,7 @@ dev サーバー起動中に `lism.config.js` を変更すると HMR で CSS が
 
 ### 軽微な追加なら手書きで済ませる
 
-カスタムトークンが少数で済むなら、Lism Props の `:value` 記法と `global.css` への手書きで十分です。
+カスタムトークンが少数で済むなら、Lism Props の [`:value` 記法](/docs/core-components/lism-props/#output-utility)と `global.css` への手書きで十分です。
 
 ```css
 /* global.css */
@@ -297,8 +297,6 @@ npx lism-css build
   }
 }
 ```
-
-ビルド処理はパッケージを更新する度に再実行する必要があります。
 
 :::warning
 パッケージのスタイルを再ビルドするコマンドのため、パッケージ更新ごとにビルドが必要です。

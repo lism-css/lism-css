@@ -289,7 +289,7 @@ Visually hides an element while keeping it accessible to screen readers.
 <SrcCode path="src/scss/utility/_divide.scss" />
 
 :::info
-- Both are implemented using `box-shadow` (not actual borders), so some care is needed when using them.
+- Both draw their lines using a child element's `box-shadow` and `gap`, not `border`. Because of this, border-related properties such as `bds` (border-style) have no effect; use the `--bdw` variable to set the line width.
 - `u--divide` applies `overflow: clip` internally. Be aware that descendant elements intended to overflow the container — such as tooltips or dropdowns — will be unintentionally clipped.
 :::
 
@@ -385,7 +385,7 @@ Visually hides an element while keeping it accessible to screen readers.
 </Preview>
 
 
-Adding `bd` to a grid with `u--divide` produces a calendar-like layout where empty cells are blank.
+Adding `bd` to a grid with `u--divide` gives you a calendar-like look, where cells with no content stay blank while their gridlines remain.
 
 <Preview>
   <PreviewTitle>With `bd` applied</PreviewTitle>

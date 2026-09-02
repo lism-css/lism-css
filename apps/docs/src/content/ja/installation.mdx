@@ -87,7 +87,7 @@ React(.tsx)、Astro(.astro)形式のコンポーネントを `lism-css`として
 ### 1. パッケージ(`lism-css`)のインストール
 
 <Preview>
-  <PreviewTitle>パッケージのインポート</PreviewTitle>
+  <PreviewTitle>パッケージのインストール</PreviewTitle>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
   npm i lism-css
@@ -186,7 +186,7 @@ const nextConfig = {};
 export default withLism(nextConfig);
 ```
 
-`withLism()` は `lism.config.js` を読み込み、設定を反映した CSS を `.lism-css/css/` 以下へ事前生成します。そのうえで `lism-css/main.css` などの import を生成済み CSS へ差し替え（alias）ます。Next.js には Vite / Astro のような「import をその場で変換する仕組み」が無いため、この方式を取っています。既存の `nextConfig` は壊さずにマージされます。
+`withLism()` は `lism.config.js` を読み込み、設定を反映した CSS を `.lism-css/css/` 以下へ事前生成します。そのうえで `lism-css/main.css` などの import を生成済み CSS へ差し替えます（alias）。Next.js には Vite / Astro のような「import をその場で変換する仕組み」が無いため、この方式を取っています。既存の `nextConfig` は壊さずにマージされます。
 
 ### 3. CSS とコンポーネントの読み込み
 
@@ -277,7 +277,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 ```
 
 :::tip[個別パスでの import を推奨します]
-`@lism-css/ui/react` / `@lism-css/ui/astro` から複数コンポーネントを一括で import することもできますが、ビルド環境によっては未使用コンポーネントのコードや CSS まで bundle に含まれてしまう可能性があります。**本番ビルドでは、上記のようにコンポーネント単位の deep path から import することを推奨します。**
+`@lism-css/ui/react` / `@lism-css/ui/astro` から複数コンポーネントを一括で import することもできますが、ビルド環境によっては未使用コンポーネントのコードや CSS まで bundle に含まれてしまう可能性があります。**本番ビルドでは、上記のようにコンポーネント単位の個別パスから import することを推奨します。**
 
 ```jsx
 // 一括 import も動作はしますが、推奨はしません

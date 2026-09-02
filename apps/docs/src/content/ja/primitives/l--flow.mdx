@@ -204,7 +204,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 ## `l--flow` を入れ子にする時の注意点
 
 
-`l--flow`の直下で`l--flow`をネストしてカスタム値を設定（`--flow`を変数で直接指定）すると、その子側の`l--flow`自身の`margin-block-start`にも影響が出ることに注意してください。  
+`l--flow`の直下で`l--flow`をネストしてカスタム値を設定（`--flow`を変数で直接指定）すると、その内側の子要素の間隔だけでなく、子側の`l--flow`自身の`margin-block-start`にも影響が出ることに注意してください。  
 (直下にネストしなければ問題ないため、一階層さらに別要素でラップすることでこの問題は回避できます)
 
 <Preview>

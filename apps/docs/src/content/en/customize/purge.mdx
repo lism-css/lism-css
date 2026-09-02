@@ -56,7 +56,7 @@ You can also use the standalone plugins directly: `lismPurge` from `@lism-css/pl
 
 At build time, the plugin scans the generated HTML / JS for class names that follow Lism CSS conventions (the `c--` / `a--` / `l--` / `is--` / `has--` / `set--` / `u--` prefixes, plus `-prop:value` style Property Classes). It then parses the CSS files and keeps only the rules whose selectors reference the collected classes.
 
-- Only targets CSS produced by Lism CSS (detected via a file-header signature)
+- Only targets CSS that contains selectors matching the Lism naming conventions above (CSS without any matching selector passes through unchanged)
 - Does not touch your own classes or styles from other libraries
 - Classes inside `:not()` / `:has()` are excluded from the keep test, since they describe negation / descendant conditions
 - Attribute selectors such as `[class*="-p:"]` are matched against used classes and the safelist so nothing is dropped by mistake
