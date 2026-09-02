@@ -1,5 +1,5 @@
 @layer lism-block {
-  /* Note: l--frame との併用を前提としています. */
+  /* Note: src ありは l--frame、イニシャル表示は l--center との併用を前提としています. */
   .b--avatar {
     --w: 2em; /* size prop未指定時のデフォルトサイズ */
     width: var(--w);
@@ -7,10 +7,8 @@
     border-radius: var(--bdrs--99);
   }
 
-  /* src 未指定時: name のイニシャル1文字を中央に表示する。ルートに当てることで bgc 等の Property Class で上書きできる */
+  /* src 未指定時: name のイニシャル1文字を表示する。ルートに当てることで bgc 等の Property Class で上書きできる */
   .b--avatar--initial {
-    display: grid;
-    place-items: center;
     background-color: var(--base-2);
     line-height: 1;
     text-transform: uppercase;
