@@ -13,19 +13,21 @@
 
   .b--tooltip_popup {
     --duration: var(--tooltip-duration, 0.15s);
+    --lh: 1.25;
     z-index: 10;
-    width: max-content;
-    max-width: min(20rem, 90vw);
-    padding: var(--s5) var(--s10);
+    inline-size: max-content;
+    max-inline-size: min(20rem, 90vw);
+    padding: 0.375em 0.625em;
     border-radius: var(--bdrs--10);
     background-color: var(--text);
     color: var(--base);
     font-size: var(--fz--s);
     visibility: hidden; /* pointer-events は使わない。transition しないため退場猶予中の当たり判定が消え、橋渡しが効かなくなる */
     opacity: 0;
+
+    /* --tooltip-delay-out: 退場猶予 */
+    transition: var(--duration) var(--tooltip-delay-out, 0.15s);
     transition-property: opacity, visibility;
-    transition-duration: var(--duration);
-    transition-delay: var(--tooltip-delay-out, 0.15s); /* 退場猶予: トリガー→ポップアップへポインタを渡す橋渡し */
   }
 
   /* 表示: ルートのホバー、またはトリガーのキーボードフォーカス（Popup は同じ Root 直下に置く前提） */
