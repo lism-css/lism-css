@@ -11,12 +11,16 @@ import '../_style.css';
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
   AstroLismBaseProps & {
     popoverId?: string;
+    offset?: string;
   };
 
-const { as = 'div', popoverId: _popoverId, class: className, ...restProps } = Astro.props;
+const { as = 'div', popoverId: _popoverId, class: className, offset, style, ...restProps } = Astro.props;
 
 // popovertarget / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
 const popoverId = _popoverId || uuid();
+
+// offset は --popover-offset 変数として Root のインラインに出し、CSS 側で Root が受け取る
+const mergedStyle = offset ? { ...(style as object), '--popover-offset': offset } : style;
 
 // 子要素のHTMLを取得し、プレースホルダーの有無で出力方法を切り替え
 // - プレースホルダーあり → 置換して set:html で出力
@@ -28,9 +32,9 @@ const slotHtml = rendered.includes('__LISM_POPOVER_ID__') ? rendered.replaceAll(
 
 {
   slotHtml !== null ? (
-    <Lism as={as} class={atts(className, 'b--popover')} set:html={slotHtml} {...restProps} />
+    <Lism as={as} class={atts(className, 'b--popover')} style={mergedStyle} set:html={slotHtml} {...restProps} />
   ) : (
-    <Lism as={as} class={atts(className, 'b--popover')} {...restProps}>
+    <Lism as={as} class={atts(className, 'b--popover')} style={mergedStyle} {...restProps}>
       <slot />
     </Lism>
   )

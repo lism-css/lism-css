@@ -94,11 +94,11 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 | プロパティ | 説明 |
 |---|---|
 |<PropBadge>`<Popover.Root>`</PropBadge><br/>`popoverId`|`<Popover.Trigger>` / `<Popover.Close>`の`popovertarget`と、`<Popover.Popup>`の`id`に使われるIDを指定します。未指定の場合は自動生成されたIDが使われます。|
+|<PropBadge>`<Popover.Root>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--popover-offset`として出力されます。|
 |<PropBadge>`<Popover.Trigger>`</PropBadge><br/>`popoverId`|`popovertarget`の値として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `start` / `end`で、初期値は`bottom`です。`start` / `end`は横方向の向きで、書字方向に追従します（`dir="ltr"`では`start`が左、`end`が右です）。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`align`|ポップアップの揃え位置を指定します。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えです。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
-|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--popover-offset`として出力されます。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`type`|`popover`属性の値として出力されます。指定できる値は`auto` / `manual`で、初期値は`auto`です。`manual`にすると、外側のクリックや<kbd>Esc</kbd>キーで閉じる動作（light dismiss）が無効になり、`<Popover.Close>`などの`popovertarget`を持つボタンでしか閉じられなくなります。|
 |<PropBadge>`<Popover.Close>`</PropBadge><br/>`popoverId`|`popovertarget`の値として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Popover.Close>`</PropBadge><br/>`icon`|子要素を渡さない場合に表示されるアイコンを指定します。（初期値: `x`）|
@@ -113,7 +113,7 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 
 ### CSS変数
 
-見た目の調整には、以下のCSS変数が使えます。
+見た目の調整には、以下のCSS変数が使えます。いずれも`<Popover.Root>`（`.b--popover`）で受け取るため、`<Popover.Root>`またはその祖先要素に指定してください。`<Popover.Popup>`に指定しても効きません。
 
 | 変数 | 初期値 | 説明 |
 |---|---|---|

@@ -94,11 +94,11 @@ Provided as `Popover` from the `@lism-css/ui` package.
 | Prop | Description |
 |---|---|
 |<PropBadge>`<Popover.Root>`</PropBadge><br/>`popoverId`|Specifies the ID used for `<Popover.Trigger>` / `<Popover.Close>`'s `popovertarget` and `<Popover.Popup>`'s `id`. If omitted, an automatically generated ID is used.|
+|<PropBadge>`<Popover.Root>`</PropBadge><br/>`offset`|Specifies the gap between the trigger and the popup. Output as the `--popover-offset` variable.|
 |<PropBadge>`<Popover.Trigger>`</PropBadge><br/>`popoverId`|Output as the value of `popovertarget`. Only specify this when using the component standalone, outside `<Popover.Root>`.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`id`|Output as the `id` attribute. Only specify this when using the component standalone, outside `<Popover.Root>`.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|Specifies the side the popup appears on. Output as the `data-side` attribute. Accepts `top` / `bottom` / `start` / `end`. `start` / `end` are the horizontal sides and follow the writing direction (`start` is left and `end` is right in `dir="ltr"`). Default: `bottom`.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`align`|Specifies the alignment along the axis perpendicular to `side`. Output as the `data-align` attribute. Accepts `start` / `center` / `end`. Default: `center`.|
-|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`offset`|Specifies the gap between the trigger and the popup. Output as the `--popover-offset` variable.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`type`|Output as the value of the `popover` attribute. Accepts `auto` / `manual`. Default: `auto`. Setting `manual` disables automatic closing (light dismiss) on outside click or <kbd>Esc</kbd>, so the popover can only be closed with a button that has a `popovertarget`, such as `<Popover.Close>`.|
 |<PropBadge>`<Popover.Close>`</PropBadge><br/>`popoverId`|Output as the value of `popovertarget`. Only specify this when using the component standalone, outside `<Popover.Root>`.|
 |<PropBadge>`<Popover.Close>`</PropBadge><br/>`icon`|Specifies the icon shown when no children are passed. (Default: `x`)|
@@ -113,7 +113,7 @@ The child-level `popoverId` / `id` props exist for placing the parts apart from 
 
 ### CSS variables
 
-Use the following CSS variables to adjust the appearance.
+Use the following CSS variables to adjust the appearance. They're all read on `<Popover.Root>` (`.b--popover`), so set them on `<Popover.Root>` or one of its ancestors. Setting them on `<Popover.Popup>` has no effect.
 
 | Variable | Default | Description |
 |---|---|---|

@@ -87,11 +87,11 @@ Provided as `Tooltip` from the `@lism-css/ui` package.
 |---|---|
 |<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`tooltipId`|Specifies the ID used for `<Tooltip.Trigger>`'s `aria-describedby` and `<Tooltip.Popup>`'s `id`. If omitted, an automatically generated ID is used.|
 |<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`delay`|Specifies the delay before the popup appears. Output as the `--tooltip-delay` variable.|
+|<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`offset`|Specifies the gap between the trigger and the popup. Output as the `--tooltip-offset` variable.|
 |<PropBadge>`<Tooltip.Trigger>`</PropBadge><br/>`tooltipId`|Output as the value of `aria-describedby`. Only specify this when using the component standalone, outside `<Tooltip.Root>`.|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`id`|Output as the `id` attribute. Only specify this when using the component standalone, outside `<Tooltip.Root>`.|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|Specifies the side the popup appears on. Output as the `data-side` attribute. Accepts `top` / `bottom` / `start` / `end`. `start` / `end` are the horizontal sides and follow the writing direction (`start` is left and `end` is right in `dir="ltr"`). Default: `top`.|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`align`|Specifies the alignment along the axis perpendicular to `side`. Output as the `data-align` attribute. Accepts `start` / `center` / `end`. Default: `center`.|
-|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`offset`|Specifies the gap between the trigger and the popup. Output as the `--tooltip-offset` variable.|
 
 :::warning
 Don't set individual IDs on `<Tooltip.Trigger>` or `<Tooltip.Popup>` when they're inside `<Tooltip.Root>`. If you need to set an explicit ID, use only the `tooltipId` prop on `<Tooltip.Root>`.
@@ -102,13 +102,13 @@ The child-level `tooltipId` / `id` props exist for placing the parts apart from 
 
 ### CSS variables
 
-Use the following CSS variables to adjust the appearance.
+Use the following CSS variables to adjust the appearance. They're all read on `<Tooltip.Root>` (`.b--tooltip`), so set them on `<Tooltip.Root>` or one of its ancestors. Setting them on `<Tooltip.Popup>` has no effect.
 
 | Variable | Default | Description |
 |---|---|---|
 |`--tooltip-offset`|`var(--s5)`|The gap between the trigger and the popup.|
 |`--tooltip-delay`|`0.4s`|The delay before the popup appears.|
-|`--tooltip-delay-out`|`0.15s`|The grace period before the popup hides. Keeps the popup visible while the pointer moves from the trigger to the popup.|
+|`--tooltip-delay--close`|`0.15s`|The grace period before the popup hides. Keeps the popup visible while the pointer moves from the trigger to the popup.|
 |`--tooltip-duration`|`0.15s`|The duration of the fade transition. Set to `0s` when `prefers-reduced-motion: reduce` is set.|
 
 Override the color, spacing, border radius, and shadow using Lism properties (`bgc`, `c`, `p`, `bdrs`, `bxsh`, etc.). By default, the tooltip uses an inverted color scheme with `--text` as the background and `--base` as the text color.
@@ -290,7 +290,7 @@ When `side` is `top` / `bottom`, the `start` / `end` values of `align` follow th
 
 ### Changing the delay and offset
 
-Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Root>`, and the gap from the trigger with the `offset` prop on `<Tooltip.Popup>`.
+Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Root>`, and the gap from the trigger with the `offset` prop.
 
 <Preview>
   <PreviewTitle>Setting `delay` and `offset`</PreviewTitle>
@@ -304,11 +304,11 @@ Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Roo
           <Fragment>delay="0s"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-09" delay="1s">
+      <Tooltip.Root tooltipId="tt-09" delay="1s" offset="1rem">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
           <Fragment>Show after 1s</Fragment>
         </Tooltip.Trigger>
-        <Tooltip.Popup offset="1rem">
+        <Tooltip.Popup>
           <Fragment>delay="1s" / offset="1rem"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
@@ -321,9 +321,9 @@ Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Roo
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">Show instantly</Tooltip.Trigger>
         <Tooltip.Popup>delay="0s"</Tooltip.Popup>
       </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-09" delay="1s">
+      <Tooltip.Root tooltipId="tt-09" delay="1s" offset="1rem">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">Show after 1s</Tooltip.Trigger>
-        <Tooltip.Popup offset="1rem">delay="1s" / offset="1rem"</Tooltip.Popup>
+        <Tooltip.Popup>delay="1s" / offset="1rem"</Tooltip.Popup>
       </Tooltip.Root>
     </Cluster>
     ```
@@ -335,9 +335,9 @@ Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Roo
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-08">Show instantly</button>
         <span class="b--tooltip_popup" role="tooltip" id="tt-08" data-side="top" data-align="center">delay="0s"</span>
       </span>
-      <span class="b--tooltip" style="--tooltip-delay:1s">
+      <span class="b--tooltip" style="--tooltip-delay:1s;--tooltip-offset:1rem">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-09">Show after 1s</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-09" data-side="top" data-align="center" style="--tooltip-offset:1rem">delay="1s" / offset="1rem"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-09" data-side="top" data-align="center">delay="1s" / offset="1rem"</span>
       </span>
     </div>
     ```
@@ -386,4 +386,4 @@ Tooltip positioning uses [CSS Anchor Positioning](https://developer.mozilla.org/
 
 In browsers without support (e.g. Firefox ESR 140), it falls back to absolute positioning relative to `<Tooltip.Root>` (the element that wraps the trigger). In this case, the automatic flip when the popup doesn't fit within the viewport doesn't happen, so the tooltip may get clipped. The `offset` (`--tooltip-offset`) gap also isn't applied.
 
-Firefox doesn't support transitioning the `display` property, so in Firefox 147 and later, where Anchor Positioning is active, the fade-out and the `--tooltip-delay-out` grace period don't apply and the tooltip disappears as soon as the pointer leaves. The fade-in and its delay still work.
+Firefox doesn't support transitioning the `display` property, so in Firefox 147 and later, where Anchor Positioning is active, the fade-out and the `--tooltip-delay--close` grace period don't apply and the tooltip disappears as soon as the pointer leaves. The fade-in and its delay still work.

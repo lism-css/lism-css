@@ -1732,7 +1732,7 @@
       "b--tooltip",
       "Esc"
     ],
-    "snippet": "ホバーやキーボードフォーカスで補足テキストを表示するツールチップ。表示切り替えはCSSのみで行い、JavaScriptはEscで閉じる処理だけを担当する。Tooltip.Root / Tooltip.Trigger / Tooltip.Popupで構成し、side（top/bottom/start/end、初期値top）・align（start/center/end、初期値center）・delay（表示までの待ち時間）・offset（トリガーとの間隔）で調整できる。CSS変数は--tooltip-offset・--tooltip-delay・--tooltip-delay-out・--tooltip-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザではTooltip.Root基準の絶対配置にフォールバックする（自動反転とoffsetは無効）。@lism-css/uiパッケージで提供。"
+    "snippet": "ホバーやキーボードフォーカスで補足テキストを表示するツールチップ。表示切り替えはCSSのみで行い、JavaScriptはEscで閉じる処理だけを担当する。Tooltip.Root / Tooltip.Trigger / Tooltip.Popupで構成し、side（top/bottom/start/end、初期値top）・align（start/center/end、初期値center）はTooltip.Popup、delay（表示までの待ち時間）・offset（トリガーとの間隔）はTooltip.Rootのpropsで調整できる。CSS変数は--tooltip-offset・--tooltip-delay・--tooltip-delay--close（退場猶予、初期値0.15s）・--tooltip-durationで、いずれもRoot（.b--tooltip）で受け取るためRootかその祖先に指定する（Popupに指定しても効かない）。配置にCSS Anchor Positioningを使用し、未対応ブラウザではTooltip.Root基準の絶対配置にフォールバックする（自動反転とoffsetは無効）。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Popover.mdx",
@@ -1768,7 +1768,7 @@
       "role=dialog",
       "Esc"
     ],
-    "snippet": "クリックで開閉するポップオーバー。ブラウザ標準のPopover API（popover属性・popovertarget属性）のみで動作し、クライアントJavaScriptは不要。Popover.Root / Popover.Trigger / Popover.Popup / Popover.Closeで構成し、side（top/bottom/start/end、初期値bottom）・align（start/center/end、初期値center）・offset・type（auto/manual、初期値auto）で調整する。type=\"manual\"にするとlight dismissが無効になりPopover.Closeでのみ閉じられる。CSS変数は--popover-offset・--popover-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザでは画面中央配置にフォールバックする（side/align/offsetは無効、開閉・light dismiss・フォーカス制御はPopover APIのためそのまま動作）。@lism-css/uiパッケージで提供。"
+    "snippet": "クリックで開閉するポップオーバー。ブラウザ標準のPopover API（popover属性・popovertarget属性）のみで動作し、クライアントJavaScriptは不要。Popover.Root / Popover.Trigger / Popover.Popup / Popover.Closeで構成し、side（top/bottom/start/end、初期値bottom）・align（start/center/end、初期値center）・type（auto/manual、初期値auto）はPopover.Popup、offset（トリガーとの間隔）はPopover.Rootのpropsで調整する。type=\"manual\"にするとlight dismissが無効になりPopover.Closeでのみ閉じられる。CSS変数は--popover-offset・--popover-durationで、いずれもRoot（.b--popover）で受け取るためRootかその祖先に指定する（Popupに指定しても効かない）。配置にCSS Anchor Positioningを使用し、未対応ブラウザでは画面中央配置にフォールバックする（side/align/offsetは無効、開閉・light dismiss・フォーカス制御はPopover APIのためそのまま動作）。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "utility-class.mdx",

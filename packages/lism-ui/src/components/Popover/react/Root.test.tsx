@@ -19,6 +19,7 @@ const render = (ui: ReactNode) => {
   });
 };
 
+const getRoot = () => container.querySelector<HTMLElement>('.b--popover')!;
 const getTrigger = () => container.querySelector<HTMLElement>('.b--popover_trigger')!;
 const getPopup = () => container.querySelector<HTMLElement>('.b--popover_popup')!;
 const getClose = () => container.querySelector<HTMLElement>('.b--popover_close')!;
@@ -134,15 +135,19 @@ describe('Popover (React) Popup の属性', () => {
     expect(popup.getAttribute('data-side')).toBe('top');
     expect(popup.getAttribute('data-align')).toBe('end');
   });
+});
 
-  it('offset が --popover-offset として style に出力される', () => {
+describe('Popover (React) Root の属性', () => {
+  it('offset が --popover-offset として Root の style に出力される', () => {
     render(
-      <Popup id="x" offset="20px">
-        コンテンツ
-      </Popup>
+      <Root offset="20px">
+        <Trigger>開く</Trigger>
+        <Popup>コンテンツ</Popup>
+      </Root>
     );
 
-    expect(getPopup().style.getPropertyValue('--popover-offset')).toBe('20px');
+    expect(getRoot().style.getPropertyValue('--popover-offset')).toBe('20px');
+    expect(getPopup().style.getPropertyValue('--popover-offset')).toBe('');
   });
 });
 

@@ -12,14 +12,19 @@ type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> &
   AstroLismBaseProps & {
     tooltipId?: string;
     delay?: string;
+    offset?: string;
   };
 
-const { class: className, tooltipId: _tooltipId, delay, style, ...props } = Astro.props;
+const { class: className, tooltipId: _tooltipId, delay, offset, style, ...props } = Astro.props;
 
 // aria-describedby / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
 const tooltipId = _tooltipId || uuid();
 
-const mergedStyle = delay ? { ...(style as object), '--tooltip-delay': delay } : style;
+// delay / offset は --tooltip-* 変数として Root のインラインに出し、CSS 側で Root が受け取る
+const mergedStyle =
+  delay || offset
+    ? { ...(style as object), ...(delay ? { '--tooltip-delay': delay } : {}), ...(offset ? { '--tooltip-offset': offset } : {}) }
+    : style;
 
 // 子要素のHTMLを取得し、プレースホルダーの有無で出力方法を切り替え
 // - プレースホルダーあり → 置換して set:html で出力

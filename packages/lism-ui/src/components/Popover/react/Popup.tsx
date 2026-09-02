@@ -14,7 +14,6 @@ type PopupProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
   id?: string;
   side?: PopoverSide;
   align?: PopoverAlign;
-  offset?: string;
   type?: PopoverType;
 };
 
@@ -28,25 +27,14 @@ export default function Popup<T extends ElementType = 'div'>({
   id,
   side = 'bottom',
   align = 'center',
-  offset,
   type = 'auto',
-  style,
   ...props
 }: PopupProps<T>) {
   const ctx = useContext(PopoverContext);
   const theId = id || ctx?.popoverId || '__LISM_POPOVER_ID__';
-  const mergedStyle = offset ? { ...style, '--popover-offset': offset } : style;
 
   return (
-    <Lism
-      className={atts(className, 'b--popover_popup')}
-      id={theId}
-      popover={type}
-      data-side={side}
-      data-align={align}
-      style={mergedStyle}
-      {...(props as object)}
-    >
+    <Lism className={atts(className, 'b--popover_popup')} id={theId} popover={type} data-side={side} data-align={align} {...(props as object)}>
       {children}
     </Lism>
   );

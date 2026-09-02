@@ -4,7 +4,10 @@
  * UA 既定の中央配置（inset: 0; margin: auto）に戻してカードとして整えるだけにする。
  */
 @layer lism-block {
+  /* 調整用の変数は Root で受ける（Root の props がインラインに書く --popover-* をここで拾う） */
   .b--popover {
+    --duration: var(--popover-duration, 0.15s);
+    --offset: var(--popover-offset, var(--s5));
     display: inline-block;
     anchor-scope: --popover;
   }
@@ -13,7 +16,6 @@
   }
 
   .b--popover_popup {
-    --duration: var(--popover-duration, 0.15s);
     border: none;
 
     font-size: var(--fz--s);
@@ -49,7 +51,6 @@
    */
   @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
     .b--popover_popup {
-      --offset: var(--popover-offset, var(--s5));
       --_span: span-all;
       position-anchor: --popover;
       position-area: var(--_side) var(--_span);
@@ -116,10 +117,10 @@
     }
   }
 
-  /* 減速設定時はフェードを無効化 */
+  /* 減速設定時はフェードを無効化。インラインの --duration 指定よりも優先させるため !important */
   @media (prefers-reduced-motion: reduce) {
-    .b--popover_popup {
-      --popover-duration: 0s;
+    .b--popover {
+      --duration: 0s !important;
     }
   }
 }

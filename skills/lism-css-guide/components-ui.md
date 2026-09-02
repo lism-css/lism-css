@@ -251,12 +251,13 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | --- | --- | --- | --- | --- |
 | `popoverId` | Root | `string` | 自動生成 | Trigger の `popovertarget`・Popup の `id`・Close の `popovertarget` に配布する ID。Root 配下では子に ID を指定しない |
 | `popoverId` | Trigger / Close | `string` | — | Root 外で単体利用するときだけ指定（Popup の `id` と揃える） |
+| `offset` | Root | `string` | `var(--s5)` | トリガーとの距離。`--popover-offset` 変数として出力 |
 | `side` | Popup | `'top' \| 'bottom' \| 'start' \| 'end'` | `'bottom'` | 表示位置。`data-side` として出力。`start`/`end` は横方向で、書字方向に追従する inline 軸の論理方向（LTR では `start`=左）。viewport 端で自動反転 |
 | `align` | Popup | `'start' \| 'center' \| 'end'` | `'center'` | トリガーに対する揃え。`data-align` として出力。`side` が `top`/`bottom` のとき書字方向、横方向のとき `start`=上・`end`=下 |
-| `offset` | Popup | `string` | `var(--s5)` | トリガーとの距離。`--popover-offset` 変数として出力 |
 | `type` | Popup | `'auto' \| 'manual'` | `'auto'` | `popover` 属性の値。`manual` は light dismiss と Esc が無効になるので `Close` を必ず置く |
 | `icon` / `srText` | Close | `string` | `'x'` / `'Close'` | 子要素が無いときのアイコンとスクリーンリーダー向けテキスト |
 
+- CSS 変数（`--popover-offset`・`--popover-duration`）は Root（`.b--popover`）で受け取る。Root かその祖先に指定する。Popup に書いても効かない。
 - Trigger / Close は `button` 要素でなければ `popovertarget` が効かない。
 - 色・余白・角丸・影は Lism props（`bgc`・`p`・`bdrs`・`bxsh` 等）で上書きする。開閉フェードの時間は `--popover-duration`。
 - フォームを含む場合は Popup に `role='dialog'` と `aria-label` を付ける。
@@ -313,11 +314,12 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | --- | --- | --- | --- | --- |
 | `tooltipId` | Root | `string` | 自動生成 | Trigger の `aria-describedby` と Popup の `id` に配布する ID。Root 配下では子に ID を指定しない |
 | `tooltipId` | Trigger | `string` | — | Root 外で単体利用するときだけ指定（Popup の `id` と揃える） |
-| `delay` | Root | `string` | `0.4s` | 表示までのディレイ。`--tooltip-delay` 変数として出力（退場猶予は `--tooltip-delay-out`、既定 `0.15s`） |
+| `delay` | Root | `string` | `0.4s` | 表示までのディレイ。`--tooltip-delay` 変数として出力（退場猶予は `--tooltip-delay--close`、既定 `0.15s`） |
+| `offset` | Root | `string` | `var(--s5)` | トリガーとの距離。`--tooltip-offset` 変数として出力 |
 | `side` | Popup | `'top' \| 'bottom' \| 'start' \| 'end'` | `'top'` | 表示位置。`data-side` として出力。`start`/`end` は横方向で、書字方向に追従する inline 軸の論理方向（LTR では `start`=左）。viewport 端で自動反転 |
 | `align` | Popup | `'start' \| 'center' \| 'end'` | `'center'` | `side` と直交する方向の揃え。`data-align` として出力。`side` が `top`/`bottom` のとき `start`/`end` は書字方向に追従 |
-| `offset` | Popup | `string` | `var(--s5)` | トリガーとの距離。`--tooltip-offset` 変数として出力 |
 
+- CSS 変数（`--tooltip-offset`・`--tooltip-delay`・`--tooltip-delay--close`・`--tooltip-duration`）は Root（`.b--tooltip`）で受け取る。Root かその祖先に指定する。Popup に書いても効かない。
 - Trigger の既定は `button`。`as='span'` 等にするなら `tabindex='0'` でフォーカス可能にする。
 - 既定は反転配色（`--text` 背景・`--base` 文字）。色・余白・角丸は Lism props（`bgc`・`c`・`p`・`bdrs` 等）で上書きする。フェード時間は `--tooltip-duration`。
 

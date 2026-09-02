@@ -87,11 +87,11 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 |---|---|
 |<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`tooltipId`|`<Tooltip.Trigger>`の`aria-describedby`と`<Tooltip.Popup>`の`id`に使われるIDを指定します。未指定の場合は自動生成されたIDが使われます。|
 |<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`delay`|ポップアップが表示されるまでの待ち時間を指定します。インラインスタイルの`--tooltip-delay`として出力されます。|
+|<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--tooltip-offset`として出力されます。|
 |<PropBadge>`<Tooltip.Trigger>`</PropBadge><br/>`tooltipId`|`aria-describedby`の値として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `start` / `end`で、初期値は`top`です。`start` / `end`は横方向の向きで、書字方向に追従します（`dir="ltr"`では`start`が左、`end`が右です）。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`align`|ポップアップの揃え位置を指定します。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えです。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
-|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--tooltip-offset`として出力されます。|
 
 :::warning
 `<Tooltip.Root>`の配下では、`<Tooltip.Trigger>`や`<Tooltip.Popup>`に個別のIDを指定しないでください。IDを明示したい場合は`<Tooltip.Root>`の`tooltipId`だけを使います。
@@ -102,13 +102,13 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 ### CSS変数
 
-見た目の調整には、以下のCSS変数が使えます。
+見た目の調整には、以下のCSS変数が使えます。いずれも`<Tooltip.Root>`（`.b--tooltip`）で受け取るため、`<Tooltip.Root>`またはその祖先要素に指定してください。`<Tooltip.Popup>`に指定しても効きません。
 
 | 変数 | 初期値 | 説明 |
 |---|---|---|
 |`--tooltip-offset`|`var(--s5)`|トリガーとポップアップの間隔。|
 |`--tooltip-delay`|`0.4s`|表示されるまでの待ち時間。|
-|`--tooltip-delay-out`|`0.15s`|非表示になるまでの猶予時間。トリガーからポップアップへポインタを移動する間、表示を保つために使われます。|
+|`--tooltip-delay--close`|`0.15s`|非表示になるまでの猶予時間。トリガーからポップアップへポインタを移動する間、表示を保つために使われます。|
 |`--tooltip-duration`|`0.15s`|フェードにかかる時間。`prefers-reduced-motion: reduce`の環境では`0s`になります。|
 
 配色・余白・角丸・影は、Lismのプロパティ（`bgc`, `c`, `p`, `bdrs`, `bxsh`など）で上書きしてください。初期スタイルは`--text`を背景色、`--base`を文字色にした反転配色です。
@@ -290,7 +290,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 ### 待ち時間と間隔を変える
 
-`<Tooltip.Root>`の`delay`で表示までの待ち時間を、`<Tooltip.Popup>`の`offset`でトリガーとの間隔を調整できます。
+`<Tooltip.Root>`の`delay`で表示までの待ち時間を、`offset`でトリガーとの間隔を調整できます。
 
 <Preview>
   <PreviewTitle>`delay`と`offset`の指定例</PreviewTitle>
@@ -304,11 +304,11 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
           <Fragment>delay="0s"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-09" delay="1s">
+      <Tooltip.Root tooltipId="tt-09" delay="1s" offset="1rem">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
           <Fragment>1秒後に表示</Fragment>
         </Tooltip.Trigger>
-        <Tooltip.Popup offset="1rem">
+        <Tooltip.Popup>
           <Fragment>delay="1s" / offset="1rem"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
@@ -321,9 +321,9 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">すぐ表示</Tooltip.Trigger>
         <Tooltip.Popup>delay="0s"</Tooltip.Popup>
       </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-09" delay="1s">
+      <Tooltip.Root tooltipId="tt-09" delay="1s" offset="1rem">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">1秒後に表示</Tooltip.Trigger>
-        <Tooltip.Popup offset="1rem">delay="1s" / offset="1rem"</Tooltip.Popup>
+        <Tooltip.Popup>delay="1s" / offset="1rem"</Tooltip.Popup>
       </Tooltip.Root>
     </Cluster>
     ```
@@ -335,9 +335,9 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-08">すぐ表示</button>
         <span class="b--tooltip_popup" role="tooltip" id="tt-08" data-side="top" data-align="center">delay="0s"</span>
       </span>
-      <span class="b--tooltip" style="--tooltip-delay:1s">
+      <span class="b--tooltip" style="--tooltip-delay:1s;--tooltip-offset:1rem">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-09">1秒後に表示</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-09" data-side="top" data-align="center" style="--tooltip-offset:1rem">delay="1s" / offset="1rem"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-09" data-side="top" data-align="center">delay="1s" / offset="1rem"</span>
       </span>
     </div>
     ```
@@ -386,4 +386,4 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 未対応のブラウザ（Firefox ESR 140 など）では、`<Tooltip.Root>`（＝トリガーを内包する要素）を基準にした絶対配置にフォールバックします。この場合、画面の端に収まらないときの自動反転は行われず、ポップアップが見切れることがあります。また、`offset`（`--tooltip-offset`）による間隔も適用されません。
 
-Firefox は`display`プロパティのトランジションに対応していないため、Anchor Positioning が使える Firefox 147 以降では、非表示になるときのフェードと`--tooltip-delay-out`の猶予が効かず、ポインタが外れると即座に消えます。表示されるときのフェードと待ち時間は効きます。
+Firefox は`display`プロパティのトランジションに対応していないため、Anchor Positioning が使える Firefox 147 以降では、非表示になるときのフェードと`--tooltip-delay--close`の猶予が効かず、ポインタが外れると即座に消えます。表示されるときのフェードと待ち時間は効きます。

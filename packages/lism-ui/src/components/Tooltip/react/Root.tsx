@@ -11,16 +11,19 @@ import '../_style.css';
 type TooltipRootProps = {
   tooltipId?: string;
   delay?: string;
+  offset?: string;
 };
 
 /**
  * Trigger と Popup をまとめるルート要素（アンカーのスコープ）
+ * delay / offset は --tooltip-* 変数として Root のインラインに出し、CSS 側で Root が受け取る
  */
 export default function Root<T extends ElementType = 'span'>({
   children,
   className,
   tooltipId,
   delay,
+  offset,
   style,
   ...props
 }: TooltipRootProps & LismComponentProps<T>) {
@@ -32,7 +35,8 @@ export default function Root<T extends ElementType = 'span'>({
     setTooltip();
   }, []);
 
-  const mergedStyle = delay ? { ...style, '--tooltip-delay': delay } : style;
+  const mergedStyle =
+    delay || offset ? { ...style, ...(delay ? { '--tooltip-delay': delay } : {}), ...(offset ? { '--tooltip-offset': offset } : {}) } : style;
 
   return (
     <TooltipContext.Provider value={{ tooltipId: theTooltipId }}>

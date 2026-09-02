@@ -21,6 +21,7 @@ const mountInto = (target: HTMLElement, node: ReactNode) => {
   return root;
 };
 
+const getRoot = () => container.querySelector<HTMLElement>('.b--tooltip')!;
 const getTrigger = () => container.querySelector<HTMLElement>('.b--tooltip_trigger')!;
 const getPopup = () => container.querySelector<HTMLElement>('.b--tooltip_popup')!;
 
@@ -126,6 +127,23 @@ describe('Tooltip (React) side / align', () => {
 
     expect(getPopup()).toHaveAttribute('data-side', 'bottom');
     expect(getPopup()).toHaveAttribute('data-align', 'end');
+  });
+});
+
+describe('Tooltip (React) Root の属性', () => {
+  it('delay / offset が --tooltip-* として Root の style に出力される', () => {
+    act(() => {
+      reactRoot.render(
+        <Root delay="1s" offset="20px">
+          <Trigger>保存</Trigger>
+          <Popup>ショートカット</Popup>
+        </Root>
+      );
+    });
+
+    expect(getRoot().style.getPropertyValue('--tooltip-delay')).toBe('1s');
+    expect(getRoot().style.getPropertyValue('--tooltip-offset')).toBe('20px');
+    expect(getPopup().style.getPropertyValue('--tooltip-offset')).toBe('');
   });
 });
 

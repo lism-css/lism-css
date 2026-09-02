@@ -13,27 +13,15 @@ type PopupProps<T extends ElementType = 'span'> = LismComponentProps<T> & {
   id?: string;
   side?: TooltipSide;
   align?: TooltipAlign;
-  offset?: string;
 };
 
 /**
  * ツールチップの中身
  * id: 自身の prop → Context（Root）→ プレースホルダー の順で決まる（子の明示IDが Root より優先）
  */
-export default function Popup<T extends ElementType = 'span'>({
-  children,
-  className,
-  id,
-  side = 'top',
-  align = 'center',
-  offset,
-  style,
-  ...props
-}: PopupProps<T>) {
+export default function Popup<T extends ElementType = 'span'>({ children, className, id, side = 'top', align = 'center', ...props }: PopupProps<T>) {
   const ctx = useContext(TooltipContext);
   const theId = id || ctx?.tooltipId || '__LISM_TOOLTIP_ID__';
-
-  const mergedStyle = offset ? { ...style, '--tooltip-offset': offset } : style;
 
   return (
     <Lism
@@ -43,7 +31,6 @@ export default function Popup<T extends ElementType = 'span'>({
       data-side={side}
       data-align={align}
       className={atts(className, 'b--tooltip_popup')}
-      style={mergedStyle}
       {...(props as object)}
     >
       {children}

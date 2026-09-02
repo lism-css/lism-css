@@ -3,7 +3,12 @@
  * anchor 配置は @supports で囲い、非対応（部分対応の Chrome 128〜130 含む）はルート基準の absolute 配置に落とす。
  */
 @layer lism-block {
+  /* 調整用の変数は Root で受ける（Root の props がインラインに書く --tooltip-* をここで拾う） */
   .b--tooltip {
+    --duration: var(--tooltip-duration, 0.15s);
+    --delay: var(--tooltip-delay, 0.4s); /* 表示までの待ち */
+    --delay--close: var(--tooltip-delay--close, 0.15s); /* 退場猶予。トリガーからポップアップへポインタを移す間、表示を保つ */
+    --offset: var(--tooltip-offset, var(--s5));
     display: inline-block;
     anchor-scope: --tooltip;
   }
@@ -12,7 +17,6 @@
   }
 
   .b--tooltip_popup {
-    --duration: var(--tooltip-duration, 0.15s);
     --lh: 1.25;
     z-index: 10;
     inline-size: max-content;
@@ -24,9 +28,7 @@
     font-size: var(--fz--s);
     visibility: hidden; /* pointer-events は使わない。transition しないため退場猶予中の当たり判定が消え、橋渡しが効かなくなる */
     opacity: 0;
-
-    /* --tooltip-delay-out: 退場猶予 */
-    transition: var(--duration) var(--tooltip-delay-out, 0.15s);
+    transition: var(--duration) var(--delay--close);
     transition-property: opacity, visibility;
   }
 
@@ -35,7 +37,7 @@
   .b--tooltip_trigger:focus-visible ~ .b--tooltip_popup {
     visibility: visible;
     opacity: 1;
-    transition-delay: var(--tooltip-delay, 0.4s); /* 入場ディレイ */
+    transition-delay: var(--delay);
   }
 
   /* Esc で閉じた状態（setTooltip.ts が付与）。同じ詳細度なので表示ルールより後に置いて勝たせる */
@@ -53,7 +55,6 @@
    */
   @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
     .b--tooltip_popup {
-      --offset: var(--tooltip-offset, var(--s5));
       --_span: span-all;
       position: fixed;
       position-anchor: --tooltip;
@@ -182,10 +183,10 @@
     }
   }
 
-  /* 減速設定時はフェードを無効化（ディレイは残す） */
+  /* 減速設定時はフェードを無効化（ディレイは残す）。インラインの --duration 指定よりも優先させるため !important */
   @media (prefers-reduced-motion: reduce) {
-    .b--tooltip_popup {
-      --tooltip-duration: 0s;
+    .b--tooltip {
+      --duration: 0s !important;
     }
   }
 }
