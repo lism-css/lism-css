@@ -13,7 +13,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 
 | ファイル | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
-| `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・「クラス単位の詳細リファレンス」のリンク一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
+| `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・「クラス単位の詳細リファレンス」のファイル名一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
 | `set-class.md` | `set--`クラス (`set--plain`,`set--revert`,`set--bxsh`,`set--hov`,`set--bdrsInner`) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/`（`_tokens.scss` / `_tokens.gen.scss`） |
 | `primitive-class.md` | Primitive クラス (`l--`, `a--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/primitives/` |
@@ -176,7 +176,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 
 - `skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` / `trait-class/` / `property-class/` 配下の全ファイルを読み取る（限定チェック対象の `antipatterns*.md` / `references/` 配下も読む）
 - `packages/lism-css/package.json` と `packages/lism-ui/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記（`lism-css@x.y.z` / `@lism-css/ui@x.y.z`）と比較する
-- `primitives/` / `trait-class/` 配下の存在チェック: `packages/lism-css/src/scss/primitives/{layout,atomic}/` および `packages/lism-css/src/scss/trait/{is,has}/` 配下の SCSS と `primitives/*.md` / `trait-class/*.md` が 1:1 対応しているか（例外は「注意事項」参照）、さらに `SKILL.md` の「クラス単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
+- `primitives/` / `trait-class/` 配下の存在チェック: `packages/lism-css/src/scss/primitives/{layout,atomic}/` および `packages/lism-css/src/scss/trait/{is,has}/` 配下の SCSS と `primitives/*.md` / `trait-class/*.md` が 1:1 対応しているか（例外は「注意事項」参照）、さらに `SKILL.md` の「クラス単位の詳細リファレンス」セクションに挙がるファイル名と実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
 
 ### 2. ソースコードの読み取りと照合
 

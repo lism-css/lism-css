@@ -186,12 +186,12 @@ BP 専用クラス（`-{prop}_{bp}`）やコンポーネントの BP キー（`{
 
 ### ブレイクポイントの誤用
 
-Lism CSS の標準出力で有効な BP は `sm: 480px` / `md: 800px` / `lg: 1120px`。`xs` は BP キーとして存在しない。
+Lism CSS の標準出力で有効な BP は `sm: 480px` / `md: 800px` / `lg: 1120px`。`xs` / `xl` は opt-in で既定では無効（有効化は [responsive.md](./responsive.md#ブレイクポイント) / customize.md）。
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `<Box p={{ xs: 10, sm: 20 }}>` | `<Box p={{ base: 10, sm: 20 }}>` | デフォルトは `base`（`xs` キーは無い） |
-| `cols={[1, 2, 3, 4, 5]}` | `cols={[1, 2, 3, 4]}` | 標準出力では `[base, sm, md, lg]` までが有効。`xl` 以降は SCSS 設定が必要 |
+| `<Box p={{ xs: 10, sm: 20 }}>` | `<Box p={{ base: 10, sm: 20 }}>` | 最小サイズの値は `base` に置く。`xs` は既定で無効で、有効化しても「`xs` 以上」の意味なので `base` の代わりにならない |
+| `cols={[1, 2, 3, 4, 5]}` | `cols={[1, 2, 3, 4]}` | 標準出力では `[base, sm, md, lg]` までが有効。`xl` は `lism.config.js` の `breakpoints` または SCSS 設定で有効化してから使う |
 
 ## レスポンシブ配列の冗長指定
 

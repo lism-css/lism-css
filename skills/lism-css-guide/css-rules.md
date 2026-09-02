@@ -39,8 +39,7 @@ Settings（トークン定義）
 
 なお、レイヤーによるこの優先関係が保証されるのは標準ビルド（`main.css` / `full.css`）だけです。`main_no_layer.css` / `full_no_layer.css` では、Property Class は常に `!important`、`u--` クラスはセレクタ二重化（`.u--trim.u--trim` = 0-2-0）で「Property Class > Utility Class > 単一クラス」の序列だけを再現し、それ以外は読み込み順と詳細度に依存します。
 
-ユーザーが定義する独自クラス・上書きスタイルは、役割に合わせて適切なレイヤーに配置します。
-例えば、トークンやベーススタイルの上書きは `@layer lism-base`、`b--` のベーススタイルは `@layer lism-block`、それ以外の独自クラス（`c--`）は `@layer lism-custom` に置きます。
+独自クラス・上書きスタイルも対応するレイヤーに置きます。トークン・ベーススタイルの上書きは `@layer lism-base`、`b--` のベーススタイルは `@layer lism-block`、それ以外の独自クラス（`c--`）は `@layer lism-custom`（書き方は「カスタムCSS を追加する場合」）。
 
 ## クラス分類とプレフィックス
 
@@ -214,9 +213,9 @@ CSSが空になる場合は、CSSファイル側に`.c--myCard {}`を書かず�
 }
 ```
 
-カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。また、`c--` のクラスでは、`padding`/`border-radius`/`font-size`/`color`などProperty Class/Propsへ移せる宣言を、CSSに書く前にマークアップ側へ移します（NG→OK例は[antipatterns.md](./antipatterns.md#property-class-で書けるのに-css-で書く)を参照）。ただし`b--`のベーススタイルは対象外で、トークンを使って`@layer lism-block`で管理します。
+カスタムCSS内でも、できる限り Lism のCSS変数（トークン）を使ってください。`c--` でCSSに残す宣言の基準は [Custom Class（`c--`）](#custom-classc--)、`b--` は [Block Class（`b--`）](#block-classb--) を参照。
 
-明確にその数値に意図があり、トークン化・丸め・Property Class化ができない場合だけ、生のCSS値を例外として使用できます。その場合は実装プランに理由を残します。
+トークン外の生のCSS値は、[antipatterns.md の「直書きしてよい例外」](./antipatterns.md#px--固定値の直書き)に該当する場合だけ使い、実装プランに理由を残します。
 
 **レイヤー外に書く場合:**
 `@layer` の外（レイヤーなし）でカスタムCSSを書くのは、**Property Class（`-{prop}:{value}`）を拡張する場合のみ**としてください。それ以外のカスタムスタイルは必ずいずれかの `@layer` 内に記述します。
@@ -248,13 +247,6 @@ Lism のトークン変数のカスタマイズやベーススタイルの上書
 コンポーネント固有のスタイルは、そのコンポーネントを定義しているファイルに紐づけます。
 
 - `.jsx` / `.tsx` ファイル: CSS ファイルを `import` する
-- `.astro` ファイル: `import` するか、コンポーネントファイル内の `<style>` タグに記述
+- `.astro` ファイル: `import` するか、コンポーネントファイル内の `<style>` タグに記述（`<style>` 内でも `@layer` で囲む）
 
-```css
-/* 独自クラスの CSS は lism-custom 内に定義する（b-- のベーススタイルだけ lism-block） */
-@layer lism-custom {
-  .c--yourComponent {
-    ...
-  }
-}
-```
+置くレイヤーは「カスタムCSS を追加する場合」と同じです。
