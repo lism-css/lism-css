@@ -7,22 +7,18 @@
     border-radius: var(--bdrs--99);
   }
 
-  /* src 未指定時（イニシャル表示）の背景。ルート側に置くことで bgc 等の Property Class で上書きできる */
+  /* src 未指定時: name のイニシャル1文字を中央に表示する。ルートに当てることで bgc 等の Property Class で上書きできる */
   .b--avatar--initial {
-    background-color: var(--base-2);
-  }
-
-  /* src 未指定時のイニシャル文字 */
-  .b--avatar_initial {
     display: grid;
     place-items: center;
-
-    /* l--frame の子要素ルールは img/video/iframe 限定のため自前で広げる */
-    width: 100%;
-    height: 100%;
-    font-size: calc(var(--w) / 2.5);
+    background-color: var(--base-2);
     line-height: 1;
     text-transform: uppercase;
     user-select: none;
+
+    /* ルートに font-size を置くと --w: 2em の em が自身の font-size を参照して縮むため、子要素側に置く */
+    > * {
+      font-size: calc(var(--w) / 2.5);
+    }
   }
 }

@@ -89,7 +89,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ソース: [Avatar/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar)
 
-アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`b--avatar` クラスが付与される。`src` 未指定時はルートに `b--avatar--initial`（背景色 `--base-2`）が付き、`name` の先頭1文字をイニシャル（`span.b--avatar_initial`）として表示する（画像ロード失敗時の自動切替は無い）。
+アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`b--avatar` クラスが付与される。`src` 未指定時はルートに `b--avatar--initial`（背景色 `--base-2`・中央寄せ）が付き、`name` の先頭1文字をイニシャルとして `span` で表示する（画像ロード失敗時の自動切替は無い）。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |

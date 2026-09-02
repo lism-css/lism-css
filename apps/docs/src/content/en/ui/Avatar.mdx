@@ -91,9 +91,9 @@ Provided as `Avatar` (`b--avatar`) from the `@lism-css/ui` package.
 
 ### Initial fallback
 
-When `src` is omitted, the root gets `b--avatar--initial` and the first character of `name` is rendered (`b--avatar_initial`). Uppercasing is handled by CSS (`text-transform: uppercase`), and the font size scales with the avatar size (`--w`).
+When `src` is omitted, the root gets `b--avatar--initial` and the first character of `name` is rendered in the center. Uppercasing is handled by CSS (`text-transform: uppercase`), and the font size scales with the avatar size (`--w`).
 
-The background color is applied to `b--avatar--initial` (the root element), so it can be overridden with props such as `bgc`.
+The styles are applied to `b--avatar--initial` on the root element, so the background color can be overridden with props such as `bgc`.
 
 <Preview>
   <PreviewTitle>Showing an initial by omitting `src`</PreviewTitle>
@@ -114,13 +114,13 @@ The background color is applied to `b--avatar--initial` (the root element), so i
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="b--avatar b--avatar--initial l--frame -w" style="--w: 4rem">
-      <span class="b--avatar_initial" role="img" aria-label="Yamada Taro">Y</span>
+      <span role="img" aria-label="Yamada Taro">Y</span>
     </div>
     <div class="b--avatar b--avatar--initial l--frame -w -bgc:brand -c:base" style="--w: 4rem">
-      <span class="b--avatar_initial" role="img" aria-label="鈴木">鈴</span>
+      <span role="img" aria-label="鈴木">鈴</span>
     </div>
     <div class="b--avatar b--avatar--initial l--frame -w" style="--w: 4rem">
-      <span class="b--avatar_initial" aria-hidden="true">Y</span>
+      <span aria-hidden="true">Y</span>
     </div>
     ```
   </PreviewCode>
