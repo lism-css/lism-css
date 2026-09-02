@@ -10,19 +10,21 @@
 	--bdw を変化させることで方向を変化させたりできるようになっている。
 */
 
-// Memo: base レイヤーで初期値セット済み
-// bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
-// @layer ありビルドでは lism-base へ退避する（unlayered 位置だと :where() で詳細度 0 でも
-// 「unlayered > 全レイヤー」のルールで b-- 等の border 指定に勝ってしまうため）。
-// no_layer ビルドでは :where() で詳細度 0 にする。
+// 変数の初期値だけ弱い位置（lism-base / :where()）に置き、b-- 側の変数上書きを効かせる。
+// border-* まで弱い位置に置くと、上位レイヤーの `border: none` に太さ・色が負けて 3px の文字色ボーダーになる。
 @include mixin.in_base_layer {
   #{mixin.maybe_where('.-bd,[class*=" -bd-"],[class^="-bd-"]')} {
     --bds: solid;
     --bdw: 1px;
     --bdc: var(--divider);
-    border-width: var(--bdw) #{mixin.$maybe_important};
-    border-color: var(--bdc) #{mixin.$maybe_important};
   }
+}
+
+.-bd,
+[class*=' -bd-'],
+[class^='-bd-'] {
+  border-width: var(--bdw) #{mixin.$maybe_important};
+  border-color: var(--bdc) #{mixin.$maybe_important};
 }
 
 .-bd {

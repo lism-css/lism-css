@@ -15,10 +15,13 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <PreviewTitle>css</PreviewTitle>
 ```scss
+/* 変数の初期値だけ弱い位置（@layer lism-base）に置く */
 :where(.-bd, [class*=' -bd-'], [class^='-bd-']) {
   --bds: solid;
   --bdw: 1px;
   --bdc: var(--divider);
+}
+.-bd, [class*=' -bd-'], [class^='-bd-'] {
   border-width: var(--bdw);
   border-color: var(--bdc);
 }
