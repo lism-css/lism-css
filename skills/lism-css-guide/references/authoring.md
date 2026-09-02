@@ -74,11 +74,11 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 
 ### C6: レスポンシブ方針
 
-- **列挙**: 各値のbaseの値、切替BP（sm/md/lg）、container queryかmedia queryか、container運用なら祖先`isContainer`の有無、固定Grid化していないか。
-- **照合・判定**: baseの値あり・標準BP・必要な祖先あり→✅。base抜け・xs誤用→🔁。`$is_container_query:0`等でmedia query運用が確認できる場合は`isContainer`必須にしない→✅。固定列をレスポンシブ化するなど挙動変更→⏸。
-- **決め方**: baseの値を必ず置く。標準BPへ寄せる。同じ値の繰り返しは省略する。等幅カラムはまず`Columns cols={[1, null, 3]}`などPrimitiveのレスポンシブAPIで表せるか確認し、できない場合だけ`@container`/`@media`を自分で書く。
+- **列挙**: 各値のbaseと切替BP（sm/md/lg）、container queryかmedia queryか、container運用なら祖先`isContainer`の有無、固定Grid化していないか。
+- **照合・判定**: 標準BP・必要な祖先あり→✅。xs誤用→🔁。`$is_container_query:0`等でmedia query運用が確認できる場合は`isContainer`必須にしない→✅。固定列をレスポンシブ化するなど挙動変更→⏸。
+- **決め方**: 標準BPへ寄せる。同じ値の繰り返しは省略する。等幅カラムはまず`Columns cols={[1, null, 3]}`などPrimitiveのレスポンシブAPIで表せるか確認し、できない場合だけ`@container`/`@media`を自分で書く。
 - **参照先**: `responsive.md`、`trait-class/is--container.md`、`property-class.md`、`primitive-class.md#カラムレイアウト-primitive-の使い分けガイド`。
-- **よい例・避けたい例**: OK=`p={{ base: '20', md: '30' }}`+祖先`isContainer`、`<Columns cols={[1, null, 3]}>`。罠=`gtc="repeat(3,1fr)"`固定、カード列数のためだけに`@container`直書き、base抜け、container祖先なし。
+- **よい例・避けたい例**: OK=`p={{ base: '20', md: '30' }}`+祖先`isContainer`、`<Columns cols={[1, null, 3]}>`。罠=`gtc="repeat(3,1fr)"`固定、カード列数のためだけに`@container`直書き、container祖先なし。
 
 ### C7: CSSに書くもの/Propsに移すもの
 

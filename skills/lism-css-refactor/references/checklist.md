@@ -97,10 +97,10 @@
 ## Pass8: レスポンシブの確認
 
 - **見るもの**: 配列/オブジェクトProps、`-{prop}_{bp}`、`--{prop}_{bp}`、`xs`/`xl`キー、固定`gtc="repeat(3,1fr)"`、レスポンシブ値の祖先に`is--container`がない箇所。
-- **判定**: base値あり・sm/md/lg・祖先isContainerあり→✅。base抜け・xs誤用など明確なミス→🔧。isContainer追加位置や固定Gridのレスポンシブ化で挙動が変わる→⏸。SCSS設定でmedia query運用が確認済み（`$is_container_query:0`等）→⬜。
-- **直し方**: base値を補い、標準BPへ直し、必要な祖先へisContainerを追加する。固定3列→`Columns cols={3}`は同等だが、`cols={[1,2,3]}`化は挙動変更なので⏸で確認する。
+- **判定**: sm/md/lg・祖先isContainerあり→✅。xs誤用など明確なミス→🔧。isContainer追加位置や固定Gridのレスポンシブ化で挙動が変わる→⏸。SCSS設定でmedia query運用が確認済み（`$is_container_query:0`等）→⬜。
+- **直し方**: 標準BPへ直し、必要な祖先へisContainerを追加する。固定3列→`Columns cols={3}`は同等だが、`cols={[1,2,3]}`化は挙動変更なので⏸で確認する。
 - **参照先**: [`responsive.md`](../../lism-css-guide/responsive.md)、[`antipatterns-layout.md#レスポンシブ抜け`](../../lism-css-guide/antipatterns-layout.md#レスポンシブ抜け)、[`antipatterns-layout.md#レスポンシブ配列の冗長指定`](../../lism-css-guide/antipatterns-layout.md#レスポンシブ配列の冗長指定)、[`trait-class/is--container.md`](../../lism-css-guide/trait-class/is--container.md)、[`primitive-class.md#カラムレイアウト-primitive-の使い分けガイド`](../../lism-css-guide/primitive-class.md#カラムレイアウト-primitive-の使い分けガイド)。
-- **NG→OK**: NG=`<Box p={{ sm: '30' }}>` → OK=`<Box p={{ base: '20', sm: '30' }}>`（base値が既存見た目から確定できる場合）。NG=`<div className="-p_sm" style={{ '--p_sm': 'var(--s30)' }}>` → OK=`<div className="-p:20 -p_sm" style={{ '--p_sm': 'var(--s30)' }}>`。
+- **NG→OK**: NG=`<Box p={{ xs: 10, sm: 20 }}>` → OK=`<Box p={{ base: 10, sm: 20 }}>`（最小サイズの値は`base`。`xs`は既定で無効）。
 - **注意**: isContainerを置く位置でコンテナ幅・発火タイミングが変わる。重複配列を単一値に潰すと、breakpointごとの差分を消してしまう。
 - **guideで確認すること**: 冗長配列の圧縮ルール、`$is_container_query:0`時の扱い、container配置方針。
 

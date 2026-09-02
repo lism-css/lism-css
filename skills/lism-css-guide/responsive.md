@@ -85,6 +85,7 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 **仕組み:**
 - BPクラス `-{prop}_{bp}` は `@container (min-width: ...)` 内で発火し、`--{prop}_{bp}` 変数で切り替え先の値を指定
 - コンテナクエリ採用のため、レスポンシブ値を使うには祖先要素に `is--container` などコンテナ宣言が必要
+- base 値は任意。省くと BP 未満はそのプロパティの既定値のまま（例: `-d_sm` + `--d_sm: none` で sm 以上だけ非表示）
 - 出力形式はプロパティによって 2 パターン（基本 / 例外）
 
 **基本パターン** — BP 用変数を直接読む:
@@ -126,10 +127,6 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 ## Authoring時の確認ルール
 
 NG→OK例は [antipatterns-layout.md](./antipatterns-layout.md#レスポンシブ抜け) の「レスポンシブ抜け」「レスポンシブ配列の冗長指定」を参照。
-
-### base値を必ず置く
-
-BP専用値だけを書くと、BP未満で値が未指定になります。配列では先頭、オブジェクトでは`base`、HTMLでは`-{prop}:{value}`を必ず置きます。
 
 ### 冗長配列は圧縮する
 
