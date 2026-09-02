@@ -7,6 +7,7 @@ const meta: Meta<typeof Avatar> = {
   tags: ['autodocs'],
   argTypes: {
     src: { control: 'text' },
+    name: { control: 'text' },
     alt: { control: 'text' },
     size: { control: 'text' },
   },
@@ -38,5 +39,22 @@ export const Large: Story = {
     src: 'https://cdn.lism-css.com/dummy-image.jpg',
     alt: '',
     size: '8rem',
+  },
+};
+
+export const Initial: Story = {
+  name: 'イニシャル表示（src なし）',
+  args: {
+    name: 'Yamada Taro',
+    size: '4rem',
+  },
+};
+
+export const InitialDecorative: Story = {
+  name: 'イニシャル表示（装飾扱い）',
+  args: {
+    name: 'Yamada Taro',
+    alt: '',
+    size: '4rem',
   },
 };
