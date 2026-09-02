@@ -152,6 +152,16 @@ describe('no_layer エントリ', () => {
     expect(css).toMatch(/@layer lism-base \{\s*\.-bd, \[class\*=" -bd-"\], \[class\^=-bd-\] \{/);
   });
 
+  test('-bd は変数の初期値だけを lism-base に置き、border-width / border-color は unlayered に出す', () => {
+    const css = compileEntry('main.scss');
+
+    // lism-base 側は変数3つだけで閉じる（border-* を含めると上位レイヤーの border ショートハンドに負ける）
+    expect(css).toMatch(
+      /@layer lism-base \{\s*\.-bd, \[class\*=" -bd-"\], \[class\^=-bd-\] \{\s*--bds: solid;\s*--bdw: 1px;\s*--bdc: var\(--divider\);\s*\}\s*\}/
+    );
+    expect(css).toMatch(/\n\.-bd,\s*\[class\*=" -bd-"\],\s*\[class\^=-bd-\] \{\s*border-width: var\(--bdw\);\s*border-color: var\(--bdc\);\s*\}/);
+  });
+
   test('単体エントリ utility/index.scss は $layer_mode 既定のため二重化しない', () => {
     const css = compileEntry('utility/index.scss');
 
