@@ -47,8 +47,8 @@ const positions: { side: PopoverSide; align: PopoverAlign }[] = [
   { side: 'bottom', align: 'center' },
   { side: 'bottom', align: 'end' },
   { side: 'top', align: 'center' },
-  { side: 'right', align: 'start' },
-  { side: 'left', align: 'end' },
+  { side: 'end', align: 'start' },
+  { side: 'start', align: 'end' },
 ];
 
 export const Positions: Story = {

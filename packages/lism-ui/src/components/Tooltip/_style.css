@@ -101,7 +101,9 @@
         flip-inline,
         flip-block flip-inline;
     }
-    .b--tooltip_popup:where([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end']) {
+    .b--tooltip_popup:where([data-side='start'], [data-side='end']) {
+      --_spanStart: span-block-end;
+      --_spanEnd: span-block-start;
       --_placeStart: start auto;
       --_placeEnd: end auto;
       margin-inline: var(--offset);
@@ -110,25 +112,11 @@
         flip-block,
         flip-inline flip-block;
     }
-    .b--tooltip_popup:is([data-side='left'], [data-side='right']) {
-      --_spanStart: span-bottom;
-      --_spanEnd: span-top;
-    }
-    .b--tooltip_popup:is([data-side='start'], [data-side='end']) {
-      --_spanStart: span-block-end;
-      --_spanEnd: span-block-start;
-    }
     .b--tooltip_popup[data-side='top'] {
       --_side: top;
     }
     .b--tooltip_popup[data-side='bottom'] {
       --_side: bottom;
-    }
-    .b--tooltip_popup[data-side='left'] {
-      --_side: left;
-    }
-    .b--tooltip_popup[data-side='right'] {
-      --_side: right;
     }
     .b--tooltip_popup[data-side='start'] {
       --_side: inline-start;
@@ -164,12 +152,6 @@
     .b--tooltip_popup[data-side='bottom'] {
       top: 100%;
     }
-    .b--tooltip_popup[data-side='left'] {
-      right: 100%;
-    }
-    .b--tooltip_popup[data-side='right'] {
-      left: 100%;
-    }
     .b--tooltip_popup[data-side='start'] {
       inset-inline-end: 100%;
     }
@@ -177,7 +159,7 @@
       inset-inline-start: 100%;
     }
 
-    /* align: 上下の side は横方向、左右の side は縦方向の揃え。start / end は inset-inline-* で書字方向に追従させる */
+    /* align: side が top / bottom なら横方向（inset-inline-* で書字方向に追従）、start / end なら縦方向の揃え */
     .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='center'] {
       left: 50%;
       translate: -50% 0;
@@ -188,14 +170,14 @@
     .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='end'] {
       inset-inline-end: 0;
     }
-    .b--tooltip_popup:is([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end'])[data-align='center'] {
+    .b--tooltip_popup:is([data-side='start'], [data-side='end'])[data-align='center'] {
       top: 50%;
       translate: 0 -50%;
     }
-    .b--tooltip_popup:is([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end'])[data-align='start'] {
+    .b--tooltip_popup:is([data-side='start'], [data-side='end'])[data-align='start'] {
       top: 0;
     }
-    .b--tooltip_popup:is([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end'])[data-align='end'] {
+    .b--tooltip_popup:is([data-side='start'], [data-side='end'])[data-align='end'] {
       bottom: 0;
     }
   }

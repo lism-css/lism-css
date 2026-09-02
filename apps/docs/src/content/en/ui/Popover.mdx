@@ -96,7 +96,7 @@ Provided as `Popover` from the `@lism-css/ui` package.
 |<PropBadge>`<Popover.Root>`</PropBadge><br/>`popoverId`|Specifies the ID used for `<Popover.Trigger>` / `<Popover.Close>`'s `popovertarget` and `<Popover.Popup>`'s `id`. If omitted, an automatically generated ID is used.|
 |<PropBadge>`<Popover.Trigger>`</PropBadge><br/>`popoverId`|Output as the value of `popovertarget`. Only specify this when using the component standalone, outside `<Popover.Root>`.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`id`|Output as the `id` attribute. Only specify this when using the component standalone, outside `<Popover.Root>`.|
-|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|Specifies the side the popup appears on. Output as the `data-side` attribute. Accepts `top` / `bottom` / `left` / `right` / `start` / `end`, where `start` / `end` are the logical counterparts of `left` / `right` that follow the writing direction. Default: `bottom`.|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|Specifies the side the popup appears on. Output as the `data-side` attribute. Accepts `top` / `bottom` / `start` / `end`. `start` / `end` are the horizontal sides and follow the writing direction (`start` is left and `end` is right in `dir="ltr"`). Default: `bottom`.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`align`|Specifies the alignment along the axis perpendicular to `side`. Output as the `data-align` attribute. Accepts `start` / `center` / `end`. Default: `center`.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`offset`|Specifies the gap between the trigger and the popup. Output as the `--popover-offset` variable.|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`type`|Output as the value of the `popover` attribute. Accepts `auto` / `manual`. Default: `auto`. Setting `manual` disables automatic closing (light dismiss) on outside click or <kbd>Esc</kbd>, so the popover can only be closed with a button that has a `popovertarget`, such as `<Popover.Close>`.|
@@ -230,7 +230,7 @@ Use the `side` prop on `<Popover.Popup>` to set the direction, and `align` to se
 </Preview>
 
 :::note
-`left` / `right` refer to physical screen directions. The `start` / `end` values of `side` are logical directions that follow the writing direction, so they swap sides when `dir="rtl"` is set. The `start` / `end` values of `align` follow the writing direction in the same way when `side` is `top` / `bottom`.
+The `start` / `end` values of `side` are logical directions that follow the writing direction: `start` is left and `end` is right in `dir="ltr"`, and they swap sides when `dir="rtl"` is set. The `start` / `end` values of `align` follow the writing direction in the same way when `side` is `top` / `bottom`.
 
 The popup also automatically flips to the opposite side when it doesn't fit within the viewport.
 :::

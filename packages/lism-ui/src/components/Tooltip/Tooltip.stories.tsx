@@ -40,10 +40,10 @@ const positions: { side: TooltipSide; align: TooltipAlign }[] = [
   { side: 'top', align: 'center' },
   { side: 'top', align: 'end' },
   { side: 'bottom', align: 'center' },
-  { side: 'left', align: 'end' },
-  { side: 'right', align: 'start' },
   { side: 'start', align: 'center' },
+  { side: 'start', align: 'end' },
   { side: 'end', align: 'center' },
+  { side: 'end', align: 'start' },
 ];
 
 export const Positions: Story = {

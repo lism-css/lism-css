@@ -5,8 +5,8 @@ import atts from 'lism-css/lib/helper/atts';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import { TooltipContext } from './context';
 
-/** ポップアップを出す方向。left/right は物理方向、start/end は書字方向に追従する inline 軸の論理方向 */
-export type TooltipSide = 'top' | 'bottom' | 'left' | 'right' | 'start' | 'end';
+/** ポップアップを出す方向。start/end は書字方向に追従する inline 軸の論理方向 */
+export type TooltipSide = 'top' | 'bottom' | 'start' | 'end';
 export type TooltipAlign = 'start' | 'center' | 'end';
 
 type PopupProps<T extends ElementType = 'span'> = LismComponentProps<T> & {

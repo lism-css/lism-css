@@ -7,8 +7,8 @@ import atts from 'lism-css/lib/helper/atts';
 type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> &
   AstroLismBaseProps & {
     id?: string;
-    /** left/right は物理方向、start/end は書字方向に追従する inline 軸の論理方向 */
-    side?: 'top' | 'bottom' | 'left' | 'right' | 'start' | 'end';
+    /** start/end は書字方向に追従する inline 軸の論理方向 */
+    side?: 'top' | 'bottom' | 'start' | 'end';
     align?: 'start' | 'center' | 'end';
     offset?: string;
   };

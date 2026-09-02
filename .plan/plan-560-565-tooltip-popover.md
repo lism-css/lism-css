@@ -92,9 +92,9 @@ anchor配置のルールを`@supports (...)`で囲い、フォールバックの
 - ルート: `anchor-scope: --tooltip` / `--popover`。トリガー: `anchor-name`。ポップアップ: `position-anchor`。全部`_style.css`に書き、inline styleでは出さない。
 - Popoverのポップアップはトップレイヤーに乗るが、`anchor-scope`はDOMツリー基準なので問題ない（MDN記載。実機で要確認）。
 
-### 4. 方向のprop名と値はBase UIに揃える（`side`の論理値だけ短縮）
+### 4. 方向のprop名と値はBase UIに揃える（`side`の横方向は論理値`start`/`end`だけ）
 
-- **`side`**: `top | bottom | left | right | start | end`。Tooltipの既定`top`、Popoverの既定`bottom`。`left`/`right`は物理方向、`start`/`end`は書字方向（`dir="rtl"`）に追従するinline軸の論理方向（CSSの`position-area`では`inline-start`/`inline-end`）。Base UIの`inline-start`/`inline-end`は採用しない（理由は設計判断の根拠）。
+- **`side`**: `top | bottom | start | end`。Tooltipの既定`top`、Popoverの既定`bottom`。`start`/`end`は書字方向（`dir="rtl"`）に追従するinline軸の論理方向（CSSの`position-area`では`inline-start`/`inline-end`。LTRでは`start`が左）。Base UIの`left`/`right`（物理方向）と`inline-start`/`inline-end`は採用しない（理由は設計判断の根拠）。
 - **`align`**: `start | center | end`、既定`center`。`side`が`top`/`bottom`のとき`start`/`end`は書字方向に追従する（`span-x-*`と`place-self`のjustify側で実現）。`side`が横方向のときは縦方向の揃えになり、`start`=上・`end`=下（`place-self`のalign側で実現）。
 - DOMには`data-side` / `data-align`として出す。コンポーネント接頭辞は付けない（`.b--popover_popup[data-side]`のようにクラスでスコープされるため衝突しない）。
 
@@ -104,16 +104,14 @@ anchor配置のルールを`@supports (...)`で囲い、フォールバックの
 | --- | --- | --- | --- |
 | `top` | `top` | `top span-x-end`＋`justify-self: start` | `top span-x-start`＋`justify-self: end` |
 | `bottom` | `bottom` | `bottom span-x-end`＋`justify-self: start` | `bottom span-x-start`＋`justify-self: end` |
-| `left` | `left` | `left span-bottom`＋`align-self: start` | `left span-top`＋`align-self: end` |
-| `right` | `right` | `right span-bottom`＋`align-self: start` | `right span-top`＋`align-self: end` |
 | `start` | `inline-start` | `inline-start span-block-end`＋`align-self: start` | `inline-start span-block-start`＋`align-self: end` |
 | `end` | `inline-end` | `inline-end span-block-end`＋`align-self: start` | `inline-end span-block-start`＋`align-self: end` |
 
 - `center`列は単一キーワード（＝`span-all`）。直交軸は`anchor-center`の既定挙動でviewport内に自動シフトするので、`anchor-center`は明示しない。
 - `start`/`end`は`normal`の既定揃えに頼らず`place-self`で揃えを明示する。
-- CSSの組み立て（`@supports`内、両コンポーネント共通）: `position-area: var(--_side) var(--_span)`（`--_side`は主軸、`--_span`は交差軸のキーワード。後者は値が常に`span-*`になるのでこの名。既定は`span-all`）。`data-side`ごとに`--_side`を`center`列の値にする。side系統ごとのルールで、`align`が`start`/`end`のときの候補を`--_spanStart`/`--_spanEnd`（`span-*`。上下系・`left`/`right`・`start`/`end`の3グループ）と`--_placeStart`/`--_placeEnd`（`place-self`の値。上下系は`auto start`/`auto end`、横方向は`start auto`/`end auto`の2グループ）に定義し、`data-align`の`start`/`end`は`--_span: var(--_spanStart); place-self: var(--_placeStart)`のように選ぶだけにする。side×alignの組み合わせルールは持たない。変数は内部変数なので`--_{varName}`の命名に従う。
+- CSSの組み立て（`@supports`内、両コンポーネント共通）: `position-area: var(--_side) var(--_span)`（`--_side`は主軸、`--_span`は交差軸のキーワード。後者は値が常に`span-*`になるのでこの名。既定は`span-all`）。`data-side`ごとに`--_side`を`center`列の値にする。side系統ごとのルールで、`align`が`start`/`end`のときの候補を`--_spanStart`/`--_spanEnd`（`span-*`。上下系は`span-x-*`、`start`/`end`は`span-block-*`）と`--_placeStart`/`--_placeEnd`（`place-self`の値。上下系は`auto start`/`auto end`、`start`/`end`は`start auto`/`end auto`）の2グループに定義し、`data-align`の`start`/`end`は`--_span: var(--_spanStart); place-self: var(--_placeStart)`のように選ぶだけにする。side×alignの組み合わせルールは持たない。変数は内部変数なので`--_{varName}`の命名に従う。
 - `position-try-fallbacks`: `align`の`start`/`end`で直交軸にも溢れ得るので、両軸のflipまで並べて主軸を先に書く（`top`/`bottom`: `flip-block, flip-inline, flip-block flip-inline`。横方向のside: `flip-inline, flip-block, flip-inline flip-block`）。
-- オフセットは主軸のmarginで作る: `top`/`bottom`→`margin-block`、`left`/`right`/`start`/`end`→`margin-inline`。値は`--tooltip-offset` / `--popover-offset`（共通方針7）。両側に当ててもアンカー側は間隔、反対側はviewport端との余白になるだけなので、side別に書き分けずflip後もそのまま効く。`position-try-fallbacks`も同じ2グループにまとめる。
+- オフセットは主軸のmarginで作る: `top`/`bottom`→`margin-block`、`start`/`end`→`margin-inline`。値は`--tooltip-offset` / `--popover-offset`（共通方針7）。両側に当ててもアンカー側は間隔、反対側はviewport端との余白になるだけなので、side別に書き分けずflip後もそのまま効く。`position-try-fallbacks`も同じ2グループにまとめる。
 
 ### 5. パーツ名とクラス名
 
@@ -159,7 +157,7 @@ anchor配置のルールを`@supports (...)`で囲い、フォールバックの
 - ポップアップ（ゲートなし）: `z-index; width: max-content; max-width: min(20rem, 90vw); padding; border-radius; 配色; font-size`と表示制御。
 - ポップアップ（anchor配置・`@supports`内）: `position: fixed; position-anchor: --tooltip;`に共通方針4の組み立て（`position-area`・`place-self`・`position-try-fallbacks`・オフセットmargin）を足す。
 - ポップアップ（フォールバック・`@supports not`内）: ルートに`position: relative`、ポップアップに`position: absolute`。side軸とalign軸を別ルールにして打ち消しを不要にする（オフセットは持たない）:
-  - side軸: `top`→`bottom: 100%`、`bottom`→`top: 100%`、`left`→`right: 100%`、`right`→`left: 100%`、`start`→`inset-inline-end: 100%`、`end`→`inset-inline-start: 100%`
+  - side軸: `top`→`bottom: 100%`、`bottom`→`top: 100%`、`start`→`inset-inline-end: 100%`、`end`→`inset-inline-start: 100%`
   - align軸（`top`/`bottom`）: `center`→`left: 50%; translate: -50% 0`、`start`→`inset-inline-start: 0`、`end`→`inset-inline-end: 0`
   - align軸（横方向のside）: `center`→`top: 50%; translate: 0 -50%`、`start`→`top: 0`、`end`→`bottom: 0`
   - `data-align`が無い生HTMLではalign軸のルールが当たらずstatic positionに落ちる。コンポーネントは常に`data-align`を出すので、docsのHTML例にも常に書く。
@@ -280,7 +278,7 @@ components/Popover/
 
 - Tooltip: 中にリンク・ボタンを置かない（それはPopover）。重要な情報をツールチップだけに入れない（タッチでは確実に見えない）。トリガーはフォーカス可能要素にする（`tabindex="0"`）。
 - Popover: 重要な操作・情報をポップオーバーだけに置かない。フォームを含む用途では`role="dialog"`＋`aria-label`を付ける例を載せる。本文の説明は`type="auto"`の挙動として書き、Props節で`type="manual"`との差（light dismiss・Escによる自動クローズが無効。`Close`を必ず置く）を明記する。`Trigger`/`Close`は`button`でなければ動かない。
-- 共通: Root配下では子にIDを指定しない（共通方針6）。`side`の`left`/`right`は物理方向、`start`/`end`と`align`は書字方向に追従する。非対応ブラウザでの見え方（Tooltipは反転しない・クリップされ得る、Popoverは画面中央カード）。ポリフィルの案内は載せない（共通方針2）。
+- 共通: Root配下では子にIDを指定しない（共通方針6）。`side`の`start`/`end`と`align`の`start`/`end`は書字方向に追従する（LTRでは`start`が左）。非対応ブラウザでの見え方（Tooltipは反転しない・クリップされ得る、Popoverは画面中央カード）。ポリフィルの案内は載せない（共通方針2）。
 
 ## 作業手順
 
@@ -303,6 +301,7 @@ components/Popover/
 - **documentリスナーは永続シングルトン（Rootのunmountで解除しない）**: 各Rootのcleanupで解除すると、複数Rootの片方をunmountしただけで残りのTooltipのEscが死ぬ。参照カウント方式は状態管理が増えるわりに、常駐リスナー3つのコストは無視できる。`setTooltip()`を`void`にして誤ってcleanupに渡せないようにし、解除はテスト専用の`unsetTooltip()`に分ける。
 - **単一キーワードの`position-area`（span-all）**: 単一列（`bottom center`）だとポップアップがアンカー幅の列からはみ出しても横にシフトしない。span-allなら`anchor-center`既定でviewport内に収まる。
 - **`side`の論理値は`start`/`end`にし、`align`の`start`/`end`を`span-x-*`で書字方向に追従させる**: RTLでも位置決めCSSを書き分けずに済み、フォールバックも論理inset（`inset-inline-*`）で書けるので追加コストが小さい。値名をBase UIの`inline-start`/`inline-end`から短縮するのは、`side`のblock軸が`top`/`bottom`の物理値しか無く`start`/`end`がinline軸にしか解釈できないため`inline-`が冗長で、Lism本体の`-ps`/`-bd-s`等も`s`/`e`だけで`inline-start`/`inline-end`を表しているため。`align`の`start`/`end`と字面が重なるが、別属性なので衝突しない（2026-09-02に変更）。
+- **`side`に物理値`left`/`right`は持たない**: `align`が`top`/`bottom`で書字方向に追従する時点で完全に物理的な配置は存在せず、`left`/`right`だけ物理なのは中途半端。画面端では`flip-inline`が効くので「どちら側か」の厳密さより「トリガーの横」であることが重要で、`start`/`end`で足りる。Lism本体は`pl`/`ps`のように物理と論理を両方持つが、コンポーネントAPIはRTL対応を軸にした論理値だけに絞る。`left`と書いてもTSの型で弾かれるので移行の混乱は小さい（2026-09-02に削除）。
 - **Popoverのポップアップに`set="plain"`を使わない**: `width: auto`がUAの`inset: 0`と組み合わさると全幅になり、フォールバックの中央カードが壊れる。
 - **`Trigger`/`Popup`/`Close`と`side`/`align`の語彙**: Base UIと同じで、2コンポーネント間でも揃う。`Popup`にするのは、`Content`だと「常に見えている側」か「出てくる側」か分からないため。`Close`にするのは、`Modal`の`OpenBtn`/`CloseBtn`は対の命名であり、`Trigger`と組む`Popover`で片方だけ`Btn`を付ける理由がないため。
 - **Tooltipの非表示は、anchor配置側では`display: none`にする**: `visibility`だけだと非表示中もレイアウトされ、スクロールでアンカーが画面外に出た時点でflipが確定する。仕様（css-anchor-position-1 §6.5）は今の配置が収まる限り前回成功した配置（last successful position option）を維持して元の`side`を再評価しないため、戻ってきても反転したまま残る（docsで「セクションを通り過ぎてから戻り`top`をホバー」で再現）。boxを消せば表示のたびに現在位置で判定し直される。退場中は`transition-behavior: allow-discrete`で`display`を残し、入場は`@starting-style`で`visibility: hidden; opacity: 0`から始めて入場ディレイ中の当たり判定を従来どおり無くす。`allow-discrete`と`@starting-style`はanchor配置より古く（Chrome 117 / Safari 17.5 / Firefox 129）、`@supports`内に閉じるのでフォールバックは不要。代案の「非表示中だけ`position-try-fallbacks: none`にする」は、ポインタを外した瞬間に元の側へ飛んでからフェードアウトするため不採用（2026-09-02）。
@@ -349,7 +348,7 @@ components/Popover/
 
 ## 対象外・受容済みリスク
 
-- 縦書き（`writing-mode: vertical-*`）での配置。`inline-*`と`align`は横書きのLTR/RTLだけを想定する（`left`/`right`は物理方向のまま）。
+- 縦書き（`writing-mode: vertical-*`）での配置。`inline-*`と`align`は横書きのLTR/RTLだけを想定する。
 - `position-visibility`（アンカーが画面外に出た時に隠す）。
 - `Modal.OpenBtn`/`CloseBtn`の改名（別Issue）。
 - Accordionの既存ID優先順の食い違い（React=Context優先、Astro=子の明示ID優先）はこのPRで直さない（別Issue候補）。

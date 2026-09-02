@@ -41,7 +41,7 @@
   /*
    * anchor 配置。position-area は side と align の span を var() で合成し、
    * start / end は span-* で片側に伸ばして place-self でアンカー端に揃える。
-   * span キーワードと揃える軸は side の系統（物理 x / 物理 y / 論理 block）ごとに異なるので、
+   * span キーワードと揃える軸は side の系統（top / bottom と start / end）ごとに異なるので、
    * 系統側で --_spanStart / --_spanEnd / --_placeStart / --_placeEnd の候補を定義し、align 側はそれを選ぶだけにする。
    * top / bottom の align に span-x-* を使うのは、書字方向に従って RTL でも端に揃うため。
    * 物理（top/bottom）と論理（span-inline-*）の混在は文法上無効で宣言ごと落ちるので使わない。
@@ -67,7 +67,9 @@
         flip-inline,
         flip-block flip-inline;
     }
-    .b--popover_popup:where([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end']) {
+    .b--popover_popup:where([data-side='start'], [data-side='end']) {
+      --_spanStart: span-block-end;
+      --_spanEnd: span-block-start;
       --_placeStart: start auto;
       --_placeEnd: end auto;
       margin-inline: var(--offset);
@@ -76,25 +78,11 @@
         flip-block,
         flip-inline flip-block;
     }
-    .b--popover_popup:is([data-side='left'], [data-side='right']) {
-      --_spanStart: span-bottom;
-      --_spanEnd: span-top;
-    }
-    .b--popover_popup:is([data-side='start'], [data-side='end']) {
-      --_spanStart: span-block-end;
-      --_spanEnd: span-block-start;
-    }
     .b--popover_popup[data-side='top'] {
       --_side: top;
     }
     .b--popover_popup[data-side='bottom'] {
       --_side: bottom;
-    }
-    .b--popover_popup[data-side='left'] {
-      --_side: left;
-    }
-    .b--popover_popup[data-side='right'] {
-      --_side: right;
     }
     .b--popover_popup[data-side='start'] {
       --_side: inline-start;

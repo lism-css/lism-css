@@ -89,7 +89,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 |<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`delay`|ポップアップが表示されるまでの待ち時間を指定します。インラインスタイルの`--tooltip-delay`として出力されます。|
 |<PropBadge>`<Tooltip.Trigger>`</PropBadge><br/>`tooltipId`|`aria-describedby`の値として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
-|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `start` / `end`で、初期値は`top`です。`start` / `end`は`left` / `right`に対応する論理的な向きで、書字方向に追従します。|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `start` / `end`で、初期値は`top`です。`start` / `end`は横方向の向きで、書字方向に追従します（`dir="ltr"`では`start`が左、`end`が右です）。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`align`|ポップアップの揃え位置を指定します。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えです。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--tooltip-offset`として出力されます。|
 
@@ -142,29 +142,13 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-04">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>left</Fragment>
-        </Tooltip.Trigger>
-        <Tooltip.Popup side="left">
-          <Fragment>side="left"</Fragment>
-        </Tooltip.Popup>
-      </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-05">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>right</Fragment>
-        </Tooltip.Trigger>
-        <Tooltip.Popup side="right">
-          <Fragment>side="right"</Fragment>
-        </Tooltip.Popup>
-      </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-06">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
           <Fragment>start</Fragment>
         </Tooltip.Trigger>
         <Tooltip.Popup side="start">
           <Fragment>side="start"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-07">
+      <Tooltip.Root tooltipId="tt-05">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
           <Fragment>end</Fragment>
         </Tooltip.Trigger>
@@ -186,18 +170,10 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <Tooltip.Popup side="bottom">side="bottom"</Tooltip.Popup>
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-04">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">left</Tooltip.Trigger>
-        <Tooltip.Popup side="left">side="left"</Tooltip.Popup>
-      </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-05">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">right</Tooltip.Trigger>
-        <Tooltip.Popup side="right">side="right"</Tooltip.Popup>
-      </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-06">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">start</Tooltip.Trigger>
         <Tooltip.Popup side="start">side="start"</Tooltip.Popup>
       </Tooltip.Root>
-      <Tooltip.Root tooltipId="tt-07">
+      <Tooltip.Root tooltipId="tt-05">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">end</Tooltip.Trigger>
         <Tooltip.Popup side="end">side="end"</Tooltip.Popup>
       </Tooltip.Root>
@@ -216,20 +192,12 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <span class="b--tooltip_popup" role="tooltip" id="tt-03" data-side="bottom" data-align="center">side="bottom"</span>
       </span>
       <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-04">left</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-04" data-side="left" data-align="center">side="left"</span>
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-04">start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-04" data-side="start" data-align="center">side="start"</span>
       </span>
       <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-05">right</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-05" data-side="right" data-align="center">side="right"</span>
-      </span>
-      <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-06">start</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-06" data-side="start" data-align="center">side="start"</span>
-      </span>
-      <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-07">end</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-07" data-side="end" data-align="center">side="end"</span>
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-05">end</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-05" data-side="end" data-align="center">side="end"</span>
       </span>
     </div>
     ```
@@ -237,7 +205,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 </Preview>
 
 :::note
-`left` / `right`は画面上の物理的な向きを指します。`start` / `end`は書字方向に追従する論理的な向きで、`dir="rtl"`の環境では左右が入れ替わります。
+`start` / `end`は書字方向に追従する論理的な向きです。`dir="ltr"`では`start`が左、`end`が右になり、`dir="rtl"`の環境では左右が入れ替わります。
 
 また、いずれの向きを指定した場合でも、画面の端に収まらないときは自動的に反対側へ反転します。
 :::
@@ -245,7 +213,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 ### 揃え位置を変える
 
-`<Tooltip.Popup>`の`align`で、ポップアップの揃え位置を指定できます。`side`が`top` / `bottom`のときは横方向、`left` / `right` / `start` / `end`のときは縦方向の揃えになります。
+`<Tooltip.Popup>`の`align`で、ポップアップの揃え位置を指定できます。`side`が`top` / `bottom`のときは横方向、`start` / `end`のときは縦方向の揃えになります。
 
 <Preview>
   <PreviewTitle>`align`の指定例</PreviewTitle>
@@ -269,10 +237,10 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-13">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>right / start</Fragment>
+          <Fragment>end / start</Fragment>
         </Tooltip.Trigger>
-        <Tooltip.Popup side="right" align="start">
-          <Fragment>side="right" align="start"</Fragment>
+        <Tooltip.Popup side="end" align="start">
+          <Fragment>side="end" align="start"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
     </Cluster>
@@ -289,8 +257,8 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <Tooltip.Popup side="bottom" align="end">side="bottom" align="end"</Tooltip.Popup>
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-13">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">right / start</Tooltip.Trigger>
-        <Tooltip.Popup side="right" align="start">side="right" align="start"</Tooltip.Popup>
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">end / start</Tooltip.Trigger>
+        <Tooltip.Popup side="end" align="start">side="end" align="start"</Tooltip.Popup>
       </Tooltip.Root>
     </Cluster>
     ```
@@ -307,8 +275,8 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <span class="b--tooltip_popup" role="tooltip" id="tt-12" data-side="bottom" data-align="end">side="bottom" align="end"</span>
       </span>
       <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-13">right / start</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-13" data-side="right" data-align="start">side="right" align="start"</span>
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-13">end / start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-13" data-side="end" data-align="start">side="end" align="start"</span>
       </span>
     </div>
     ```
@@ -316,7 +284,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 </Preview>
 
 :::note
-`align`の`start` / `end`は、`side`が`top` / `bottom`のときは書字方向に追従し、`dir="rtl"`の環境では左右が入れ替わります。`side`が`left` / `right` / `start` / `end`のときは`start`が上、`end`が下です。
+`align`の`start` / `end`は、`side`が`top` / `bottom`のときは書字方向に追従し、`dir="rtl"`の環境では左右が入れ替わります。`side`が`start` / `end`のときは`start`が上、`end`が下です。
 :::
 
 
