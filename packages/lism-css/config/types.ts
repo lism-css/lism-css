@@ -36,6 +36,10 @@ export interface LismConfig {
   props?: Record<string, PropConfig>;
   traits?: Record<string, string>;
   breakpoints?: Partial<Record<BreakpointKey, string | number>>;
+  /**
+   * Property Class にデフォルトで `!important` を付与するか（ビルド時設定）。
+   * `@layer` ありビルド（main.css / full.css）にのみ効く。no_layer 系ビルドは常に付与する。
+   */
   defaultImportant?: boolean;
   isFullMode?: boolean;
   /** lism-cli の UI 設定。スキーマは lism-cli 側が管理するため緩い型にとどめる。 */

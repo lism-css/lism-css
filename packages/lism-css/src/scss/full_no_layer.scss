@@ -1,7 +1,9 @@
 /*
   full版（@layer なし）:
   full.css と同じく isVar系を除く全propsのBPサポートを lg まで拡張し、
-  main_no_layer.css と同じく @layer を使わずに出力するレガシー対応ビルド。
+  main_no_layer.css と同じく @layer を使わずに出力するビルド。
+  $layer_mode: 0 により、Property Class は常に !important、u-- 系はセレクタ二重化（0-2-0）で出力される
+  （解決ロジックは _mixin.scss を参照）。
   ※ @use ... with は対象モジュールの初回ロード前に行う必要があるため、
   setting → mixin の順で設定すること（mixin は内部で setting をロードする）。
 */

@@ -29,6 +29,9 @@
  * @use 'pkg:lism-css/scss/main_no_layer';   // configure 済みの setting を再利用
  * ```
  *
+ * NOTE: `main_no_layer` は Property Class の `!important` を `$layer_mode: 0` から常に付与する（`_mixin.scss`）ため、
+ * bridge で渡す `$default_important` は `@layer` ありエントリ（`main` 等）にだけ効く。
+ *
  * NOTE: SCSS の bridge 生成は webpack 評価とタイミングが異なる（消費側 build:css の冒頭で呼ぶ）ため、
  * `withLismWebpack` には畳み込まず、builder の独立 export とする。
  */

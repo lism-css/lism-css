@@ -19,6 +19,20 @@ You can disable `@layer` by importing `lism-css/main_no_layer.css` instead of `l
 
 Just swap the imported CSS file — no other changes needed.
 
+The `@layer`-free builds are intended for environments where you cannot control the cascade yourself, such as existing sites or WordPress themes. Since layers are not available for ordering, they reproduce the same "Property Class > Utility Class > single class" precedence as `main.css` in the following way.
+
+| Class | Output in the `@layer`-free builds | Specificity |
+|---|---|---|
+| Property Class (e.g. `-p:20`) | Always with `!important` | 0-1-0 + `!important` |
+| Utility Class (`u--trim` / `u--trimAll` / `u--cbox` / `u--divide` / `u--enclose`) | Doubled selector (`.u--trim.u--trim`) | 0-2-0 |
+| Other classes | Same as `main.css` | - |
+
+Keep the following in mind when using the `@layer`-free builds:
+
+- A Property Class wins even if you set the same property via the `style` attribute or JavaScript. To change the value, swap the class itself (for classes that read their value from a CSS variable, such as `-p` with `--p`, rewriting the variable also works).
+- Overriding a `u--` class in your own CSS requires a specificity of at least `.u--trim.u--trim`.
+- `defaultImportant: false` in `lism.config.js` and `$default_important: 0` in SCSS do not remove `!important` from the `@layer`-free builds.
+
 
 ## Full Build (full.css)
 

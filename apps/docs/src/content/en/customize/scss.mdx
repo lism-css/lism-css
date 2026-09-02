@@ -17,7 +17,7 @@ The variables defined in `lism-css/scss/_setting.scss` can be overridden via `@u
 |----------|---------|
 | `$breakpoints` | Breakpoint value definitions |
 | `$is_container_query` | Whether to use container queries (`1` = container query / `0` = media query) |
-| `$default_important` | Whether to add `!important` to Property Classes by default (`0` / `1`) |
+| `$default_important` | Whether to add `!important` to Property Classes by default (`0` / `1`). Ignored by the `@layer`-free builds, which always add it |
 | `$props` | Per-Property Class output configuration |
 
 
@@ -45,6 +45,7 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 
 :::info
 - Toggling `@layer` on or off is not controlled by a variable. Switch the `main.scss` file you import instead (see [CSS Builds](/en/docs/customize/build/)).
+- `main_no_layer.scss` / `full_no_layer.scss` always add `!important` to Property Classes, regardless of `$default_important`. If you really need to remove it, copy the contents of `main_no_layer.scss` into your own entry file and replace the first `@use` with `@use '../path-to/node_modules/lism-css/scss/mixin' with ($layer_mode: 0, $default_important: 0)`.
 - When using Astro, the `../path-to/node_modules/` prefix is not needed.
 :::
 

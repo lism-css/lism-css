@@ -37,7 +37,7 @@ Settings（トークン定義）
 
 `lism-block` は `lism-trait` / `lism-primitive` より弱い位置にあるため、`b--` のベーススタイルには、明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝ちます。
 
-なお、この優先関係が保証されるのはレイヤーありの標準ビルド（`main.css` / `full.css`）だけです。`main_no_layer.css` / `full_no_layer.css` にはレイヤーがないため、読み込み順と詳細度に依存します。
+なお、レイヤーによるこの優先関係が保証されるのは標準ビルド（`main.css` / `full.css`）だけです。`main_no_layer.css` / `full_no_layer.css` では、Property Class は常に `!important`、`u--` クラスはセレクタ二重化（`.u--trim.u--trim` = 0-2-0）で「Property Class > Utility Class > 単一クラス」の序列だけを再現し、それ以外は読み込み順と詳細度に依存します。
 
 ユーザーが定義する独自クラス・上書きスタイルは、役割に合わせて適切なレイヤーに配置します。
 例えば、トークンやベーススタイルの上書きは `@layer lism-base`、`b--` のベーススタイルは `@layer lism-block`、それ以外の独自クラス（`c--`）は `@layer lism-custom` に置きます。

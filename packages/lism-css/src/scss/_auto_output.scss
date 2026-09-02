@@ -5,6 +5,8 @@
 
 @use './query' as query;
 @use './setting' as setting;
+// $default_important は $layer_mode を加味した解決済みの値を mixin から読む（no_layer は常に 1）
+@use './mixin' as mixin;
 
 /*
 base_type:
@@ -86,7 +88,7 @@ $bp_support_list: (); // list
   $bp_support: map_get_with_default($data, bp, 0);
   $isVar: map_get_with_default($data, isVar, 0);
   $alwaysVar: map_get_with_default($data, alwaysVar, 0);
-  $important: map_get_with_default($data, important, setting.$default_important);
+  $important: map_get_with_default($data, important, mixin.$default_important);
 
   @if $prop == '' {
     @continue;
@@ -232,7 +234,7 @@ $bp_outputs: ();
       $prop_name: map.get($prop_data, prop);
       $isVar: map_get_with_default($prop_data, isVar, 0);
       $alwaysVar: map_get_with_default($prop_data, alwaysVar, 0);
-      $important: map_get_with_default($prop_data, important, setting.$default_important);
+      $important: map_get_with_default($prop_data, important, mixin.$default_important);
 
       @if $isVar == 1 {
         $important: 1;

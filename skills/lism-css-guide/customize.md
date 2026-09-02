@@ -22,7 +22,7 @@
 ## `@layer` をオフにする
 
 `lism-css/main.css` の代わりに `lism-css/main_no_layer.css` を読み込むだけで、`@layer` を使わない CSS に切り替えられます。
-なお、no-layer版ではレイヤーによる優先度管理（`b--`よりProperty Classが必ず強い等の保証）が効かず、読み込み順・詳細度に依存します。
+no-layer版は既存サイトや WordPress テーマなど、カスケードを制御できない環境向けです。レイヤーの代わりに、Property Class は常に `!important` 付き、`u--trim` / `u--trimAll` / `u--cbox` / `u--divide` / `u--enclose` はセレクタ二重化（`.u--trim.u--trim` = 0-2-0）で出力され、「Property Class > Utility Class > 単一クラス」の序列を再現します。`lism.config.js` の `defaultImportant: false` や `$default_important: 0` を指定しても `!important` は外れません。`b--` など上記以外のクラス同士の優先度は読み込み順・詳細度に依存します。
 
 ```js
 // 通常
@@ -48,7 +48,7 @@ import 'lism-css/main_no_layer.css';
 | --- | --- | --- |
 | `$breakpoints` | ブレイクポイント数値の定義（`0` は無効＝クエリを出力しない） | `('xs': 0, 'sm': '480px', 'md': '800px', 'lg': '1120px', 'xl': 0)` |
 | `$is_container_query` | コンテナクエリで出力するか（`1` = container query, `0` = media query） | `1` |
-| `$default_important` | Property Class にデフォルトで `!important` を付与するか | `0` |
+| `$default_important` | Property Class にデフォルトで `!important` を付与するか（no-layer版では無視され、常に付与） | `0` |
 | `$props` | Property Class ごとの個別出力設定 | `prop-config` のデフォルト |
 
 ### 基本フォーマット

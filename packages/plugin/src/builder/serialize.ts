@@ -33,6 +33,7 @@ export interface BuildConfig {
    * Property Class へデフォルトで `!important` を付与するか（Sass `$default_important`）。
    * lism.config.js のルートキー `defaultImportant: true` で有効化する。
    * これは CSS 生成時に決まるビルド時設定で、runtime injection では切り替えられない。
+   * `@layer` ありビルド（main / full）にのみ効く。no_layer 系エントリは常に付与する（`_mixin.scss` 参照）。
    */
   defaultImportant?: boolean;
 }
