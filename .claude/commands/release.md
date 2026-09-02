@@ -1,97 +1,94 @@
+---
+description: 指定パッケージのバージョン更新・changelog 追記・タグ付け・GitHub リリース作成を一貫して行う。npm publish とデプロイはユーザー手動
+argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
+---
+
 # Release
 
-指定されたパッケージのバージョン更新・タグ付け・リリースノート生成・GitHub リリース作成までを一貫して行う。
-npm publish とデプロイはユーザーが手動で行う。
+指定パッケージのバージョン更新・changelog 追記・タグ付け・リリースノート生成・GitHub リリース作成を一貫して行う。npm publish とデプロイはユーザーが手動で行う。
+
 
 ## 引数
 
-`$ARGUMENTS` をスペース区切りで解釈する:
+`$ARGUMENTS` をスペース区切りで解釈する。不足していればユーザーに確認する。
 
-- 第1引数: パッケージ識別子（`lism-css` / `lism-ui` / `lism-cli` / `plugin`）
-- 第2引数: リリースバージョン（例: `0.10.0`）
+1. パッケージ識別子: `lism-css` / `lism-ui` / `lism-cli` / `plugin`
+2. リリースバージョン（例: `0.10.0`）
 
-## パッケージマッピング
+
+## パッケージ
 
 | 識別子 | npm パッケージ名 | ディレクトリ | タグプレフィックス | publish コマンド |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `lism-css` | `lism-css` | `packages/lism-css/` | `lism-css@v` | `nr publish:core` |
 | `lism-ui` | `@lism-css/ui` | `packages/lism-ui/` | `lism-ui@v` | `nr publish:ui` |
 | `lism-cli` | `lism-cli` + `create-lism` | `packages/lism-cli/` + `packages/create-lism/` | `lism-cli@v` | `nr publish:cli` |
 | `plugin` | `@lism-css/plugin` | `packages/plugin/` | `lism-plugin@v` | `nr publish:plugin` |
 
-識別子はディレクトリ名基準、タグプレフィックスは既存タグ基準のため、`plugin` だけ両者が一致しない（タグは `lism-plugin@v`）。
-
-**このコマンドの対象外のパッケージ**: `@lism-css/mcp` と `@lism-css/mockup` はタグ・GitHub リリースを運用していない。バージョンを上げて `nr publish:mcp` / `nr publish:mockup` を実行するだけでよい。
+`@lism-css/mcp` と `@lism-css/mockup` は対象外。タグ・GitHub リリースを運用していないため、バージョンを上げて `nr publish:mcp` / `nr publish:mockup` を実行するだけでよい。
 
 ### lism-cli の特別ルール
 
-`lism-cli` は `lism-cli` と `create-lism` を **同時に同じバージョンで** publish する（`nr publish:cli` がまとめて処理する）。
-
-- `packages/lism-cli/package.json` と `packages/create-lism/package.json` の `version` を両方更新する
-- ディレクトリ判定では `packages/lism-cli/` または `packages/create-lism/` のいずれかへの変更を `lism-cli` として扱う
-- **publish 前のチェック必須**: `packages/lism-cli/src/constants.ts` の `DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF` が `'main'` になっていることを確認する（PR ブランチや `'dev'` のままだと公開版 CLI が壊れる）
-- `create-lism` 側は `lism-cli` を bundle で内包しているため、CLI 本体に依存変更があった場合も `create-lism` の `dependencies` 追従は不要
+- `lism-cli` と `create-lism` は同じバージョンで同時に publish する（`nr publish:cli` がまとめて処理する）。両方の `package.json` の `version` を更新する
+- 変更ファイルの振り分けでは `packages/create-lism/` も `lism-cli` として扱う
+- publish 前に `packages/lism-cli/src/constants.ts` の `DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF` が `'main'` であることを確認する（`'dev'` や PR ブランチのままだと公開版 CLI が壊れる）
+- `create-lism` は `lism-cli` を bundle で内包するため、`dependencies` の追従は不要
 
 ### plugin の特別ルール
 
-`@lism-css/mockup` が `@lism-css/plugin` に依存している（publish 時に `workspace:*` が固定バージョンへ置換される）。
+`@lism-css/mockup` は `@lism-css/plugin` に依存し、publish 時に `workspace:*` が固定バージョンへ置換される。plugin に mockup が使う API の変更（`@lism-css/plugin/vite` の export 追加・変更等）を含む場合は、plugin の publish 後に `nr publish:mockup` で追従させる（判断はステップ4、案内はステップ9）。追従しないと npm 経由の利用者だけが古い plugin を掴んで壊れ、workspace のテストでは検出できない。
 
-- plugin に **`@lism-css/mockup` が使う API の変更**（`@lism-css/plugin/vite` の export 追加・変更等）を入れた場合は、plugin を publish した後に `nr publish:mockup` も実行して追従させる
-- 追従しないと、npm 経由で `@lism-css/mockup` を入れた利用者だけが古い plugin を掴んで壊れる。ローカルの workspace では最新 plugin を参照するため、この不整合はテストでは検出できない
 
 ## 現在の状態
 
 - 現在のブランチ: !`git branch --show-current`
-- 既存タグ: !`git tag --list --sort=-version:refname | head -20`
+- プレフィックス別の最新タグ: !`git tag --list --sort=-version:refname | sort -s -t@ -k1,1 -u`
 - lism-css の現在バージョン: !`node -p "require('./packages/lism-css/package.json').version"`
 - lism-ui の現在バージョン: !`node -p "require('./packages/lism-ui/package.json').version"`
+- lism-cli の現在バージョン: !`node -p "require('./packages/lism-cli/package.json').version"`
 - plugin の現在バージョン: !`node -p "require('./packages/plugin/package.json').version"`
+
 
 ## 手順
 
 ### 1. dev ブランチの確認
 
-- 現在のブランチが dev であることを確認する
-- dev 以外にいる場合、ユーザーに警告し「dev に切り替えますか？」と確認する
-- `git pull origin dev` で最新状態にする
-- 引数（パッケージ識別子、バージョン）が不足している場合はユーザーに確認する
+- dev 以外にいる場合は警告し、dev に切り替えてよいか確認する
+- `git pull origin dev` で最新にする
 
 ### 2. バージョン更新
 
-- 対象パッケージの `package.json` の version を確認する
-- 引数で指定されたバージョンと異なる場合:
-  - `package.json` の `"version"` フィールドを更新する
-  - **`lism-ui` の場合**: `nr build:ui` を実行し、`registry-index.json`（version 埋め込み・commit 対象の生成物）を再生成する。これを忘れると publish 時に `build:ui` が走って `registry-index.json` が更新され、git-checks（unclean working tree）で publish が失敗する
-  - **`plugin` の場合**: 上記「plugin の特別ルール」を確認し、`@lism-css/mockup` の追従 publish が必要かどうかを判断する
-  - `git add` → `git commit -m "chore: {パッケージ識別子} v{バージョン}"`（`lism-ui` は再生成された `registry-index.json` も同コミットに含める）
-  - ユーザーにpushしていいか確認 → `git push origin dev`
-- すでに一致している場合はスキップする
+対象の `package.json` の `version` が引数と一致していればスキップする。異なる場合:
+
+1. `version` を更新する（更新前の値はステップ7で使う）
+2. `lism-ui` は `nr build:ui` を実行し、version を埋め込んだ commit 対象の `packages/lism-ui/registry-index.json` を再生成する。怠ると publish 時の build で更新され、git-checks（unclean working tree）で失敗する
+3. `git add` → `git commit -m "chore: {識別子} v{バージョン}"`（`registry-index.json` も同じコミット）
+4. push してよいか確認 → `git push origin dev`
 
 ### 3. 前回タグの特定
 
-- 既存タグから、同じタグプレフィックスを持つ直前のタグを探す
-- 前回タグがない場合は、リポジトリの最初のコミットからの全履歴を対象とする
+同じタグプレフィックスの最新タグを前回タグとする。無ければリポジトリの最初のコミットからを対象にする。
 
 ### 4. 変更の分析
 
-前回タグ（または最初のコミット）〜 dev の HEAD 間で `git log --oneline` と `git diff --stat` を取得する。
+前回タグ〜dev の HEAD で `git log --oneline` と `git diff --stat` を取得し、変更ファイルのパスで振り分ける。
 
-**パッケージの振り分けルール（変更ファイルのパスで判定）:**
+| パス | 振り分け |
+| --- | --- |
+| `packages/lism-css/` | lism-css |
+| `packages/lism-ui/` | lism-ui |
+| `packages/lism-cli/` `packages/create-lism/` | lism-cli |
+| `packages/plugin/` | plugin |
+| `apps/docs/` | Documentation（各パッケージ共通） |
+| その他 | Other |
 
-- `packages/lism-css/` → lism-css
-- `packages/lism-ui/` → lism-ui
-- `packages/plugin/` → plugin
-- `apps/docs/` → Documentation（各パッケージ共通）
-- その他（ルート設定ファイル等）→ Other
+対象パッケージのコード変更を伴うコミットだけをリリースノートの対象にする。`apps/docs/` のみの変更（docs 修正・翻訳同期等）は含めない。`plugin` は mockup が使う API の変更を含むかもここで判断する（plugin の特別ルール）。
 
-対象パッケージに関連する変更を中心にリリースノートを構成する。
-ドキュメントサイト（`apps/docs/`）のみに関する変更（docs修正、ドキュメント同期など）はリリースノートに含めない。パッケージのコード変更を伴うコミットのみを対象とする。
-
-### 5. リリースノートと changelog の生成
+### 5. リリースノートと changelog エントリの生成
 
 #### 5-A. GitHub リリースノート
 
-以下のフォーマットで日本語のリリースノートを生成する:
+日本語で生成する。コミットメッセージが日本語ならそのまま使う。空のカテゴリは省略する。
 
 ```markdown
 ## What's Changed
@@ -106,162 +103,100 @@ npm publish とデプロイはユーザーが手動で行う。
 - 変更内容の説明 (コミットハッシュ短縮形)
 ```
 
-**分類ルール:**
-
-- `feat` プレフィックス、または新機能追加 → Features
-- `fix` プレフィックス、またはバグ修正 → Bug Fixes
-- `docs` プレフィックス → ドキュメントのみの変更は除外する
-- `chore`, `refactor`, `style`, `perf`, `ci`, `build` → Other
-
-空のカテゴリは省略する。コミットメッセージが日本語の場合はそのまま使用する。
+| コミット | カテゴリ |
+| --- | --- |
+| `feat` または新機能追加 | Features |
+| `fix` またはバグ修正 | Bug Fixes |
+| `chore` `refactor` `style` `perf` `ci` `build` | Other |
+| `docs`（ドキュメントのみ） | 除外 |
 
 #### 5-B. changelog エントリ
 
-ここの changelog.mdx作成は `lism-css` / `@lism-css/ui` / `@lism-css/plugin` 更新時のみ（`lism-cli` は対象外）。
+`lism-css` / `lism-ui` / `plugin` のみ。`lism-cli` は 5-B・7・8 を省略する。
 
-リリースノートの内容をもとに、changelog.mdx 用の簡潔なエントリを日本語・英語の両方で生成する。
+リリースノートをもとに日本語・英語の両方で生成する。
 
-##### 構造ルール
+- 親は常に `lism-css` の H2。`@lism-css/plugin` / `@lism-css/ui` はその中に H3 でネストする
+- `lism-css` のリリースがない場合だけ `## @lism-css/ui v{バージョン} (YYYY.MM.DD)` の独立 H2 にする
+- 同日に `lism-css` と追従パッケージを両方リリースするなら必ずネストする
+- 追従パッケージの並びは `@lism-css/plugin` → `@lism-css/ui`
+- 大きな変更・トピックがあれば H3 でテーマ別に分け、PR 番号があれば末尾に付ける（例: `(#324)`）
+- `@lism-css/ui` 側のテーマ別見出しは、親との階層競合を避けるため H3 ではなく `**テーマ名**` にする
+- Features / Bug Fixes 等のカテゴリ分けとコミットハッシュは書かない
+- 日付は当日を `YYYY.MM.DD` 形式で書く
+- H2 エントリ間には必ず `<Divider bds="dashed" my="40" />` を入れる
+- 既存エントリ（v0.13.0 以降）のスタイルに合わせる
 
-**親は常に `lism-css` のリリース（H2）**。`@lism-css/plugin` / `@lism-css/ui` 等の追従パッケージは、その中に H3 (`### @lism-css/ui v.X.Y.Z`) としてネスト配置する。
-
-- `lism-css` 本体のリリースがない場合（`@lism-css/ui` 単独リリース等）のみ、H2 `## @lism-css/ui v.X.Y.Z (YYYY.MM.DD)` で独立エントリとする
-- 同日に `lism-css` と追従パッケージが両方リリースされる場合、必ず `lism-css` を親にして追従パッケージをネストする
-- 追従パッケージが複数ある場合の並び順は `@lism-css/plugin` → `@lism-css/ui`（既存エントリの並びに合わせる）
-
-##### テンプレート（通常リリース）
-
-```markdown
-<Divider bds="dashed" my="40" />
-
-## lism-css v.{バージョン} (YYYY.MM.DD)
-
-- 変更内容の簡潔な説明
-- ...
-
-### `@lism-css/plugin` v.{バージョン} (YYYY.MM.DD)
-
-- 変更内容の簡潔な説明
-- ...
-
-### `@lism-css/ui` v.{バージョン} (YYYY.MM.DD)
-
-- 変更内容の簡潔な説明
-- ...
-```
-
-追従パッケージのリリースがない場合、その H3 セクションごと省略する。
-
-##### テンプレート（破壊的変更を含むリリース）
-
-大きな変更やトピックがある場合は、H3 でテーマ別にセクション分けする。PR 番号があれば末尾に付与（例: `(#324)`）。
+テンプレート（`[...]` は該当時のみ。末尾の `<Divider>` が次の既存エントリとの区切り）:
 
 ```markdown
-<Divider bds="dashed" my="40" />
+## lism-css v{バージョン} (YYYY.MM.DD)
 
-## lism-css v.{バージョン} (YYYY.MM.DD)
+[**破壊的変更**を含むリリースです。]
 
-**破壊的変更**を含むリリースです。
-
-### {トピック名} (#PR)
-
-- ...
-
-### {トピック名} (#PR)
-
-- ...
-
-### その他
-
-- ...
-
-### `@lism-css/ui` v.{バージョン} (YYYY.MM.DD)
-
-**破壊的変更**を含むリリースです。
+[### {トピック名} (#PR)]
 
 - 変更内容の簡潔な説明
+...
+
+[### その他]
+
 - ...
+
+[### `@lism-css/plugin` v{バージョン} (YYYY.MM.DD)]
+
+- ...
+
+[### `@lism-css/ui` v{バージョン} (YYYY.MM.DD)]
+
+[**破壊的変更**を含むリリースです。]
+
+[**{トピック名} (#PR)**]
+
+- ...
+
+<Divider bds="dashed" my="40" />
 ```
 
-- `@lism-css/ui` 側に大きなテーマ別変更がある場合は、H3 はコア親との階層競合を避けるため使わず、強調太字（`**テーマ名**`）でサブ見出しを立てる
-
-##### 英語版のフレーズ対応
+英語版の定型句:
 
 | 日本語 | 英語 |
-|---|---|
+| --- | --- |
 | `**破壊的変更**を含むリリースです。` | `This release contains **breaking changes**.` |
 | `### その他` | `### Other` |
 
-##### その他のルール
-
-- リリースノートのカテゴリ分け（Features / Bug Fixes 等）は不要。H3 セクションまたはフラットな箇条書きでまとめる
-- コミットハッシュは含めない
-- 日付は `YYYY.MM.DD` 形式で、当日の日付を使用する
-- H2 リリース間には必ず `<Divider bds="dashed" my="40" />` を入れる
-- 既存エントリのスタイル（v0.13.0 以降）を参考にする
-
 ### 6. ユーザーに確認
 
-生成したリリースノートと changelog エントリ（ja/en）を表示し、以下を確認する:
+タグ名 `{タグプレフィックス}{バージョン}`、リリースノート、changelog エントリ（ja / en）を表示し、続行の許可を得る。修正の指示があれば従う。
 
-- タグ名: `{タグプレフィックス}{バージョン}`
-- GitHub リリースノートの内容
-- changelog エントリの内容（日本語・英語）
-- 続行してよいかの許可
+### 7. ドキュメント内のバージョン番号の更新
 
-ユーザーが内容を修正したい場合は、指示に従って調整する。
+承認後、リポジトリ全体で `{npm パッケージ名}@{旧バージョン}`（例: `lism-css@0.25.0`、`@lism-css/ui@0.25.0`、`@lism-css/plugin@0.4.1`）を検索し、新バージョンに置換する。旧バージョンはステップ2の更新前の値。`changelog.mdx` と `package.json` は除外する。該当がなければスキップし、あればステップ8と同じコミットに含める。
 
-### 6.5. ドキュメント内のバージョン番号更新
+### 8. changelog.mdx の更新
 
-リポジトリ全体で `{npm パッケージ名}@{旧バージョン}` を含むファイルを検索し、バージョン番号を新バージョンに更新する。
+`apps/docs/src/content/ja/changelog.mdx` と `apps/docs/src/content/en/changelog.mdx` にエントリを追記する。
 
-- `lism-css` の場合: `lism-css@{旧バージョン}` を検索
-- `lism-ui` の場合: `@lism-css/ui@{旧バージョン}` を検索
-- `plugin` の場合: `@lism-css/plugin@{旧バージョン}` を検索
+- 追記位置: 冒頭の `<Divider bds="dashed" my="40" />` の直後、既存の最初の H2 の直前。挿入後、新エントリと既存エントリの間に `<Divider>` があることを確認する
+- `lism-css` を先にリリース済みで、追従パッケージを後からリリースする場合: 既存の `## lism-css v{バージョン}` エントリの末尾（最後の H3 の下、次の `<Divider>` の前）に H3 をネスト追加する
+- 同時リリースの場合: 親 + ネストの新規エントリを一度に作る
 
-**手順:**
-1. リポジトリ全体で上記パターンを検索し、該当箇所を特定する（changelog.mdx と package.json は除外）
-   - 主な対象: `apps/docs/`、`.claude/skills/`、`README.md` 等
-2. 旧バージョン → 新バージョンに置換する
-3. 該当箇所がない場合はスキップする
+追記後、両ファイルを `git add` → `git commit -m "docs: v{バージョン} changelog 追記"` → push してよいか確認 → `git push origin dev`。
 
-旧バージョンは、ステップ2で確認した更新前の `package.json` の version 値を使用する。
+### 9. npm publish（ユーザー手動）
 
-この変更はステップ7の changelog 更新と同じコミットに含める。
-
-### 7. changelog.mdx の更新
-
-ユーザーの承認後、以下のファイルにエントリを追記する:
-
-- `apps/docs/src/content/ja/changelog.mdx`
-- `apps/docs/src/content/en/changelog.mdx`
-
-**追記位置:** 既存の最新エントリ（最初の `## lism-css v.` もしくは `## @lism-css/ui v.` 見出し）の直前に挿入する。挿入後、直前のエントリとの間に `<Divider bds="dashed" my="40" />` があることを確認する（なければ新エントリの末尾に追加）。
-
-**追従パッケージのネスト処理:**
-
-- `lism-css` 本体を先にリリース → 後から `@lism-css/ui` を追従リリースする場合、既存の `## lism-css v.X.Y.Z` エントリの末尾（最後の H3 セクションの下、かつ次の `<Divider>` の前）に `### @lism-css/ui v.X.Y.Z (YYYY.MM.DD)` をネスト追加する
-- `lism-css` と `@lism-css/ui` を同時リリースする場合、一度に親 + ネスト構造で新規エントリを作成する
-
-追記後:
-1. `git add apps/docs/src/content/ja/changelog.mdx apps/docs/src/content/en/changelog.mdx`
-2. `git commit -m "docs: v{バージョン} changelog 追記"`
-3. ユーザーにpushしていいか確認 → `git push origin dev`
-
-### 8. npm publish（ユーザー手動）
-
-ユーザーに以下を案内し、完了を待つ:
+`lism-cli` は案内前に「lism-cli の特別ルール」の `constants.ts` 確認を行う。`plugin` で mockup の追従が要る場合は `nr publish:mockup` も続けて案内する。案内して完了を待つ。
 
 ```
 pnpm publish を実行してください:
-  {対応する publish コマンド}
+  {publish コマンド}
 
 完了したら教えてください。
 ```
 
-### 9. デプロイ（ユーザー手動）
+### 10. デプロイ（ユーザー手動）
 
-ユーザーに以下を案内し、完了を待つ:
+案内して完了を待つ。
 
 ```
 デプロイを実行してください:
@@ -270,26 +205,11 @@ pnpm publish を実行してください:
 完了したら教えてください。
 ```
 
-### 10. main ブランチに切り替え
-
-publish とデプロイの完了をユーザーが確認した後:
-
-- `git checkout main && git pull origin main` で main の最新状態にする
-
 ### 11. タグ付けと GitHub リリースの作成
 
-以下を順番に実行する:
+publish とデプロイの完了をユーザーが確認した後に行う。
 
-1. `git tag {タグ名}` でタグを作成（main の HEAD に付与される）
-2. `git push origin {タグ名}` でタグをプッシュ
-3. リリースノートを `mktemp` で作成した一時ファイルに書き出し、`gh release create {タグ名} --title "{タグ名}" --notes-file "{一時ファイル}"` で GitHub リリースを作成する
-
-リリースノートはコードブロックやバッククォートを含むため、`--notes "..."` やHEREDOCで直接渡さない。ファイル指定のオプションは `--notes-file`（`-F`）であり、`gh issue create` / `gh pr create` の `--body-file` とは名前が違う点に注意する。
-
-```bash
-body=$(mktemp); printf '%s' "$NOTES" > "$body"
-gh release create "{タグ名}" --title "{タグ名}" --notes-file "$body"
-rm -f "$body"
-```
-
-完了後、元のブランチ（dev）に戻る。
+1. `git checkout main && git pull origin main`
+2. `git tag {タグ名}`（main の HEAD に付与）→ `git push origin {タグ名}`
+3. リリースノートを Write ツールで一時ファイルに書き、`gh release create {タグ名} --title "{タグ名}" --notes-file {パス}` で作成し、ファイルを消す。`gh release` のファイル指定は `--notes-file`（`-F`）で、`--body-file` ではない。`--notes "..."`・HEREDOC・`$(mktemp)`・リダイレクトは使わない（本文が壊れる、または許可リストで照合できず承認待ちで止まる）
+4. dev に戻る

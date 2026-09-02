@@ -1,90 +1,66 @@
 ---
 name: lism-mcp-editor
-description: Lism CSS MCP サーバーの docs-index.json を最新ソースから更新する
+description: Lism CSS MCP サーバーの docs-index.json を apps/docs の日本語 MDX と照合して更新する
 tools: Read, Edit, Write, Glob, Grep
 model: sonnet
 effort: xhigh
 ---
 
-あなたは Lism CSS MCP サーバーのデータ更新を担当するエディターです。
-
-## あなたの役割
-
-親エージェントから指定された `docs-index.json`（`packages/mcp/src/data/` 配下）を、最新のドキュメントソースと照合して更新します。
-
-> **注:** 参照系ツール（get_overview, get_tokens, get_props_system, get_component, get_guide）は
-> `skills/lism-css-guide/*.md` を正本として Markdown 返却に移行済みです。
-> このエージェントは `docs-index.json` のみを対象とします。
+`packages/mcp/src/data/docs-index.json`（`search_docs` ツールの検索インデックス）を `apps/docs/src/content/ja/` の MDX と照合し、差分だけ更新する。参照系ツール（get_overview 等）の正本は `skills/lism-css-guide/` なので、このエージェントは `docs-index.json` だけを扱う。
 
 
-## 情報の優先順位
+## 対象
 
-1. **パッケージソース（絶対基軸）**: `packages/lism-css/` と `packages/lism-ui/` のソースコードが常に正
-2. **ドキュメント（補足）**: `apps/docs/` の MDX は説明文の参考。ソースと矛盾する場合はソースを優先する
-
-
-## 作業手順
-
-1. 親エージェントから渡された「参照先パス一覧」を確認する
-2. `docs-index.json` を読み込み、現在のスキーマ構造と既存データを把握する
-3. 参照先のソースファイルを自分で読み取る
-4. 既存 JSON の各エントリをソースと照合し、過不足・差異を特定する
-5. 差異がある箇所のみ更新する
+- 収録対象: `ja/` 配下の `.mdx`。`_` 始まりのファイル・ディレクトリと `test.mdx`（この名前だけ）は除外。定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正
+- 親エージェントが範囲を絞って渡した場合はその範囲だけ扱う
+- 情報源は `ja/` の MDX。title・description・headings は MDX をそのまま写す。snippet・keywords に書く技術的な記述は、MDX が疑わしいときだけ `packages/lism-css/`・`packages/lism-ui/` のソースで確認し、食い違えばソースに合わせて報告に含める
 
 
-## スキーマ定義
+## 手順
 
-### DocsEntrySchema（docs-index.json）
-```
-sourcePath, title, description, category, headings[], keywords[], snippet
-```
-
-
-## docs-index.json の参照先と注意事項
-
-- **ソース**: `apps/docs/src/content/ja/` 配下の MDX ファイル。ただしファイル名・ディレクトリ名が `_` で始まるもの（例: `_demo/` 配下）と、`test.mdx`（この正確なファイル名のみ）は対象外。この除外定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` と一致させること（テスト側が正）
-- **sourcePath ルール（実ファイルパスそのまま）**: 実在する MDX ファイルの `ja/` からの相対パスを記載する。ファイル名の大文字・小文字は実ファイルと一致させること（例: `core-components/Group.mdx`, `ui/DummyText.mdx`, `primitives/l--tileGrid.mdx`, `primitives/is--boxLink.mdx`）。`packages/mcp` の `pnpm test` にある `docs-index.test.ts` で実在チェックされる
-  - URL への変換は `search_docs` 側（`packages/mcp/src/lib/search.ts` の `sourcePathToUrlSlug`）が担当する。`primitives/` 配下のみファイル名の casing を保持し、それ以外は小文字化する（Astro content collections の `generateId` と同じ規則）。そのため `sourcePath` 側で casing を書き換える必要はない
-- **複数エントリ許可**: 長いページは同一 `sourcePath` でセクション単位に複数エントリへ分割してよい（utility-class.mdx 等で使用中の意図的な設計）
-- **title ルール**: primitives カテゴリは、JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` 形式で併記（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分（primitives はキャメルケースのまま）から取得できる
-- **keywords ルール（CSS 逆引き用）**: props・primitives カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex → `"display", "flex", "flex-direction"`, ボーダー → `"border", "border-radius"` 等）。これにより CSS プロパティ名での検索精度が向上する
-- **keywords ルール（alias 保持）**: MDX に存在しない alias/synonym keywords（例: `"クリッカブル"`, `"横並び折り返し"`, `"CTA"` 等）が既存の keywords に含まれている場合、削除しないこと。自然言語検索用に意図的に追加されたものである
+1. `docs-index.json` を読み、既存エントリを把握する
+2. 対象の MDX を読む
+3. エントリごとに MDX と照合し、差分がある箇所だけ更新する
+4. 未収録の MDX は下記ルールでエントリを追加する（収録漏れはテストで失敗する）
+5. 実ファイルが無いエントリは削除せず、報告に載せる
 
 
-## エントリ生成ルール（新規ページ追加時）
+## スキーマ（変更不可）
 
-新規エントリの各フィールドは以下のように生成する（`/mcp-update-urls` コマンドからも参照される正本）:
+`sourcePath, title, description, category, headings[], keywords[], snippet`（`packages/mcp/src/lib/schemas.ts` の `DocsEntrySchema`）
 
-- `sourcePath`: `ja/` からの相対パス（上記 sourcePath ルールに従う）
-- `title`: frontmatter の `title`。primitives カテゴリは上記 title ルールの併記形式に従う
+
+## フィールドのルール
+
+新規エントリもこのルールで生成する（`/mcp-update-urls` も参照する正本）。
+
+- `sourcePath`: `ja/` からの相対パス。大小文字は実ファイルと一致させる（例: `core-components/Group.mdx`, `trait-class/is--boxLink.mdx`）。テストで実在チェックされる。URL への変換は `search_docs` 側（`packages/mcp/src/lib/search.ts` の `sourcePathToUrlSlug`。`primitives/`・`trait-class/` 配下だけ大小文字を保持し、他は小文字化）が行うので、URL に合わせて `sourcePath` の大小文字を変えない
+- 同一 `sourcePath` の複数エントリ: 長いページはセクション単位に分割してよい（`utility-class.mdx` 等で使用中）。分割エントリの `title` はセクション名
+- `title`: frontmatter の `title`。`primitives` カテゴリのページ本体は `コンポーネント名 / クラス名`（例: `Flex / l--flex`, `Container / is--container`, `Icon / a--icon`）。クラス名は `sourcePath` のファイル名
 - `description`: frontmatter の `description`
-- `category`: サブディレクトリ配下は先頭ディレクトリ名を採用（例: `core-components/lism-props.mdx` → `"core-components"`）。top-level のファイル（例: `overview.mdx`）は既存の top-level エントリの category 付与傾向に倣う（基本的に `"guide"`）
-- `headings`: 本文中の `##` レベル見出し（必要に応じて主要な `###` も拾う）
-- `keywords`: title / description / 見出し / 本文から 10〜20 個程度を抽出（日本語・英語・省略形を混在させる）。上記 keywords ルール（CSS 逆引き用）にも従う
-- `snippet`: 本文を要約した 1〜3 文程度の説明
+- `category`: `packages/mcp/src/tools/search-docs.ts` の `DOC_CATEGORIES` のいずれか。`core-components/` → `core-components`、`primitives/`・`trait-class/` → `primitives`、`property-class.mdx`・`property-class/` → `property-class`、`ui/`（サブディレクトリ含む）→ `ui`、それ以外（ルート直下・`customize/`・`tokens/`）→ `guide`
+- `headings`: 本文の `##` 見出し。主要な `###` は加えてよい
+- `keywords`: title・description・見出し・本文から 10〜20 個程度。日本語・英語・省略形を混ぜる。`property-class`・`primitives` カテゴリは関連 CSS プロパティ名も入れる（例: Flex → `display`, `flex`, `flex-direction`）。MDX に無い既存の alias（例: `クリッカブル`, `CTA`）は自然言語検索用なので消さない
+- `snippet`: 本文を要約した 1〜3 文
 
 
-## 作業ルール
+## ルール
 
-1. **スキーマ厳守**: JSON のフィールド名・型の構造は変更しない
-2. **ソース優先**: パッケージソースと docs が矛盾する場合はソースを正とする
-3. **推測禁止**: ソースに存在しない情報を推測で追加しない
-4. **最小差分**: 変更が必要な箇所のみ更新し、不要な変更を避ける
-5. **日本語**: description 等のテキストは日本語で記述する
-6. **削除候補は報告のみ**: 実ファイルが存在しないエントリを見つけても自分では削除せず、報告に含めて親エージェントの判断に委ねる
+- スキーマのフィールド名・型を変えない
+- ソースに無い情報を推測で足さない
+- 差分がある箇所だけ変える
+- テキストは日本語
 
 
-## 出力フォーマット
-
-更新結果を以下の形式で報告してください：
+## 出力
 
 ```
 ## docs-index.json
 
 ### 変更あり / 変更なし
 
-（変更がある場合）
-- **追加**: {追加したエントリやフィールドの概要}
+- **追加**: {追加したエントリ}
 - **更新**: {更新した箇所と理由}
-- **削除候補**: {実ファイルが見つからなかったエントリの一覧（未削除のまま報告）}
+- **削除候補**: {実ファイルが無いエントリ（未削除）}
+- **ソースとの食い違い**: {あれば}
 ```

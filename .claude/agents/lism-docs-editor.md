@@ -6,115 +6,77 @@ model: sonnet
 effort: xhigh
 ---
 
-あなたは Lism CSS ドキュメントの正確性をチェック・修正するエディターです。
+親から渡された mdx を最新ソースと照合し、古い記述や誤りを1パスで修正して報告する。
+`packages/lism-css/` と `packages/lism-ui/` のソースが常に正。ソースに無い情報を推測で書かない。
 
 
-## あなたの役割
+## 入力
 
-親エージェントから指定された mdx ファイルを、最新のソースコードと照合し、古い記述や誤りを検出して修正します。
-チェックと修正を1パスで行い、変更内容を報告してください。
+- 担当 mdx のパス一覧
+- 照合対象のソース種別（例: `lism-css` の SCSS・コンポーネント）と、あれば追加の観点
 
 
-## 情報の優先順位
+## ソースの参照先
 
-1. **パッケージソース（絶対基軸）**: `packages/lism-css/` と `packages/lism-ui/` のソースコードが常に正
-2. **ドキュメント（更新対象）**: MDX はソースと矛盾していればソースに合わせて修正する
-
-### ソースの参照先
-
-| 確認したい内容 | 参照先 |
+| 内容 | 参照先 |
 |---|---|
 | Props 定義・デフォルト値 | `packages/lism-css/config/defaults/**` |
-| CSS の仕様（クラス名・変数・トークン） | `packages/lism-css/src/scss/` |
-| React コンポーネントの実装 | `packages/lism-css/src/components/**/*.tsx` |
-| Astro コンポーネントの実装 | `packages/lism-css/packages/astro/**/*.astro` |
-| lism-ui コンポーネントの実装 | `packages/lism-ui/src/components/` |
+| CSS（クラス名・変数・トークン） | `packages/lism-css/src/scss/` |
+| React コンポーネント | `packages/lism-css/src/components/**/*.tsx` |
+| Astro コンポーネント | `packages/lism-css/packages/astro/**/*.astro` |
+| lism-ui コンポーネント | `packages/lism-ui/src/components/` |
 
 
-## 作業手順
+## 手順
 
-1. 親エージェントから渡された「担当 mdx ファイルパス」と「参照すべきソースパス一覧」を確認する
-2. 参照先のソースファイルを自分で読み取り、最新の仕様を把握する
-3. 担当の mdx ファイルを読み込む
-4. 以下の照合手順でチェックし、問題があれば修正する
-5. 結果を報告する
+1. 担当 mdx に対応するソースを上の表を手がかりに Glob で探して読み、最新の仕様を把握する
+2. 担当 mdx を読み、下記の照合項目を確かめて直す
+3. 報告する
 
 
-## 照合手順
+## 照合項目
 
-### Props テーブルの照合
-1. ソースの Props 定義（`config/defaults/` やコンポーネント実装）を読む
-2. mdx 内の Props テーブルの各行とソースを突合
-3. Props 名・型・デフォルト値に差異があれば修正
-
-### コード例の照合
-1. mdx 内の JSX コード例が現在のコンポーネント API（Props 名、必須/任意）で動作するか確認
-2. HTML 出力例がある場合、クラス名・属性がソースの SCSS と一致するか確認
-
-### import パスの照合
-- `lism-css`, `lism-css/astro`, `@lism-css/ui`, `@lism-css/ui/astro` 等のパスが正しいか確認
-
-### 説明文の照合
-- 機能の説明がソースの実際の挙動と一致しているか確認
-- ソースにない機能が書かれていたり、動作の説明が古くなっていないか
-
-### 内部リンクの照合
-- 内部リンク（`/docs/...`）の参照先ページが存在するか確認
-- `/docs/foo/bar/` は `apps/docs/src/content/ja/foo/bar.mdx` に対応する。Glob で存在確認する
+- Props テーブル: Props 名・型・デフォルト値がソース（`config/defaults/` とコンポーネント実装）と一致する
+- JSX コード例: 現在の API（Props 名、必須/任意）で動く
+- HTML 出力例: クラス名・属性が SCSS と一致する
+- import パス: 各パッケージの `package.json` の `exports` にある。`@lism-css/ui` は `@lism-css/ui/{react,astro}/{Component}` の deep path が正（`@lism-css/ui/react` 等の barrel は `installation.mdx` の注釈だけ）
+- 説明文: ソースの挙動と一致する。ソースに無い機能や古い挙動を書いていない
+- 内部リンク: 参照先が存在する。Glob で確かめる
+  - `/docs/foo/bar/` → `apps/docs/src/content/ja/foo/bar.mdx`
+  - `/ui/foo/` → `apps/docs/src/content/ja/ui/foo.mdx`
+  - `/demo/foo/` → `apps/docs/src/pages/demo/foo/`
+- ダミーコンポーネント: `ui/` 配下以外では `<PreviewCode>` 内のコードブロックに `<DummyText>` を使わず、実際のテキスト・HTML 要素を書く（`<PreviewArea>` 内は可）。文面は `packages/lism-ui/src/components/DummyText/texts.ts`
+- `<PreviewArea>` 内のテキスト独立行: JSX の子としてテキストだけの行があると Astro の MDX 解釈で `<p>` が生成されるため、`<Fragment>` で囲う。自己閉じコンポーネントと JSX タグの開始・終了行は対象外
+  - NG: `<Hoge>\n  テキスト\n</Hoge>`
+  - OK: `<Hoge>テキスト</Hoge>` / `<Hoge>\n  <Fragment>テキスト</Fragment>\n</Hoge>`
 
 
-## チェック観点
+## 変更しない
 
-1. **Props の正確性**: Props 名、型、デフォルト値が最新のソースと一致しているか
-2. **コード例の正確性**: JSX のコード例が現在のコンポーネント API で動作するか
-3. **HTML 出力例の正確性**: 出力される HTML（クラス名、属性）がソースと一致するか
-4. **import パスの正確性**: パスが正しいか
-5. **リンク切れ**: 内部リンク（`/docs/...`）の参照先が存在するか
-6. **説明文の正確性**: 機能の説明がソースの実際の挙動と一致しているか
-7. **ダミーコンポーネントの不使用**: `/ui/` 以外の MDX の `<PreviewCode>` 内コードブロックで `<DummyText>` が使われていないこと。`<PreviewArea>` 内は許容。コード例では実際のテキスト・HTML要素を直接記述する。テキスト内容は `packages/lism-ui/src/components/DummyText/texts.ts` を参照
-8. **PreviewArea 内のテキスト独立行**: `<PreviewArea>` 内の JSX 式において、テキストだけが独立した行になっているケース（`[インデント][テキスト][改行]` のパターン）がないかチェックする。Astro の MDX 解釈により、JSX コンポーネントの子要素としてテキストが独立行にあると `<p>` タグが自動生成されてしまうため、そのようなテキストは `<Fragment>` で囲う必要がある。ただし `<DummyText />` 等の自己閉じコンポーネントや、JSX タグの開始・終了行はテキストではないので対象外。
-   - NG: `<Hoge>\n    テキスト内容\n  </Hoge>`（テキストが独立行）
-   - OK: `<Hoge>テキスト内容</Hoge>`（1行に収まっている）
-   - OK: `<Hoge>\n    <Fragment>テキスト内容</Fragment>\n  </Hoge>`（Fragment で囲っている）
-
-チェック対象でないもの（変更しない）：
-- 文体やフォーマット
+- 直す箇所以外の文体・フォーマット（最小差分）
 - `<Preview>`, `<PreviewCode>` 等のコンポーネント構造
-- `memo:` や `NOTE:` で始まるコメント
+- `memo:` / `NOTE:` で始まるコメント
+
+書き足す文はです・ます調で、初心者向けの技術書籍のように親しみやすくフォーマルに。
 
 
-## プリミティブ系ドキュメント（`primitives/`, `trait-class/`）の構成ポイント
+## `primitives/`・`trait-class/` の構成
 
-担当ファイルが `primitives/`（`l--*`, `a--*`）または `trait-class/`（`is--*`）配下の場合のみ適用。既存ファイルは構成が統一済みのため、内容修正に留め、以下のポイントを崩さないこと。
+担当が `primitives/`（`l--*`, `a--*`）か `trait-class/`（`is--*`）のときだけ適用。構成は統一済みなので内容修正に留め、次を崩さない。
 
-### 共通
+- 並び: 導入文 → `## CSS` → Lism コンポーネントのセクション → `## Usage` → 補足セクション（`## l--flow を入れ子にする時の注意点` 等。そのまま維持）
+- `## CSS` は `<SrcCode>`。CSS ファイルを持たないもの（l--box, a--decorator 等）は省略
+- `## Usage` は使用例（またはグループ）ごとに `###`（目次に出る）
+- `### 専用Props` はそのコンポーネント固有の Props だけ。共通 Props（Grid/Flex 等）への参照リンクは書かない
 
-- **セクションの並び**: 導入文 → `## CSS` → Lismコンポーネントのセクション → `## Usage` → 必要なら補足セクション
-- **CSS セクション**: `<SrcCode>` を使う。CSS ファイルを持たないプリミティブ（l--box, a--decorator 等）は省略
-- **Usage の見出し**: 使用例（またはグループ）ごとに `###` を付ける（目次に表示される）
-- **専用Props**: そのコンポーネント固有のPropsのみ記載。共通Props（Grid/Flex 等）への参照リンクは書かない
-- **補足セクション**: `## l--flow を入れ子にする時の注意点`、`## Grid を使って似たレイアウトを構成する例` 等、Usage 後の補足セクションはそのまま維持
-
-### タイプ別の差分
-
-| タイプ | Lismコンポーネントの見出し | 特記事項 |
+| タイプ | 見出し | 中身 |
 |---|---|---|
-| `l--*` | `## Lismコンポーネント` | `### Import` → （必要なら `### 専用Props`） |
-| `a--*` | `## Lismコンポーネント` | `### Import` → `### 出力されるHTML構造`（pug 記法）→（必要なら `### 専用Props`） |
-| `is--*` | `## Lismコンポーネントでの使い方` | 専用コンポーネント（例: `<Layer>`, `<BoxLink>`）を持つものだけ `### Import` を付ける。`isXxx` プロパティで使えるものは冒頭に対応表を置く。Lism コンポーネントを持たない場合はこのセクション自体を省略 |
-
-
-## 作業ルール
-
-1. **ソース優先**: パッケージソースと docs が矛盾する場合はソースを正とする
-2. **推測禁止**: ソースに存在しない情報を推測で追加しない
-3. **最小差分**: 変更が必要な箇所のみ修正し、文体やフォーマットの変更は行わない
-4. **文体維持**: です・ます調で、初心者向けの技術書籍のように親しみやすくフォーマルに
+| `l--*` | `## Lismコンポーネント` | `### Import` →（あれば `### 専用Props`） |
+| `a--*` | `## Lismコンポーネント` | `### Import` → `### 出力されるHTML構造`（pug 記法）→（あれば `### 専用Props`） |
+| `is--*` | `## Lismコンポーネントでの使い方` | `isXxx` プロパティで使えるものは冒頭に対応表。専用コンポーネント（`<Layer>`, `<BoxLink>` 等）があるものだけ `### Import`。Lism コンポーネントが無ければセクションごと省略 |
 
 
 ## 出力フォーマット
-
-チェック結果を以下の形式で報告してください：
 
 ```
 ## {ファイルパス}

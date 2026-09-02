@@ -5,15 +5,15 @@
 
 ## コンテンツコレクション
 
-- `src/content/config.ts` - コレクションスキーマ定義（Frontmatter フィールドもここで定義）
+- `src/content.config.ts` - コレクションスキーマ定義（Frontmatter フィールドもここで定義）
 - 下書き（`draft: true`）は本番で除外、開発環境では `_draft` クラス付きで表示
 
 
 ## MDX グローバルコンポーネント
 
 - `src/components/mdx/index.ts` - エクスポート管理
-- `src/pages/[...slug].astro` - `<Content components={...} />` で注入
-- コンポーネント: `Callout`
+- `src/pages/{docs,ui}/[...slug].astro` と `src/pages/[lang]/{docs,ui}/[...slug].astro` - `<Content components={...} />` で注入
+- コンポーネント: `Callout`, `DocsLink`, `Spacer`, `Preview` 系（`Preview`, `PreviewTitle`, `PreviewArea`, `PreviewCode`, `PreviewFrame`）, `PropBadge`, `ImportPackage`, `SrcCode`, `ModLink`。一覧は `index.ts` が正
 
 
 ## Markdown 拡張記法
