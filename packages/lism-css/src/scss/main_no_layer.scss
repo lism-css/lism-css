@@ -1,5 +1,8 @@
 /*
-  @layerなし
+  @layerなし:
+  既存サイトや WP テーマなど、カスケードを制御できない環境向けのビルド。
+  $layer_mode: 0 により、Property Class は常に !important、u-- 系はセレクタ二重化（0-2-0）で出力される
+  （解決ロジックは _mixin.scss を参照）。
 */
 @use './mixin' with (
   $layer_mode: 0

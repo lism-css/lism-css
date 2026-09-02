@@ -85,7 +85,7 @@ lism-base → lism-block → lism-trait → lism-primitive → lism-custom → l
 | ファイル | 用途 |
 |----------|------|
 | `main.css` | モダンブラウザ（@layer 対応） |
-| `main_no_layer.css` | レガシー対応 |
+| `main_no_layer.css` | `@layer` なし。既存サイト・WP テーマ等カスケードを制御できない環境向け（Property Class は常に `!important`、`u--` はセレクタ二重化で 0-2-0） |
 
 ### 設定ファイル
 
@@ -94,6 +94,7 @@ lism-base → lism-block → lism-trait → lism-primitive → lism-custom → l
 | `_prop-config.scss` | Property Class の定義 |
 | `_query.scss` | ブレークポイント定義 |
 | `_auto_output.scss` | 自動出力処理 |
+| `_mixin.scss` | `$layer_mode` による出力切替（`maybe_double` / `maybe_where` / `in_base_layer`）と `!important` 既定値の解決 |
 
 
 ## Astro コンポーネントの注意点

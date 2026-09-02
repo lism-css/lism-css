@@ -1,13 +1,15 @@
+@use '../mixin' as mixin;
+
 /*
   ハーフレディングをトリミングするユーティリティクラス。
   (1em - 1lh) / 2 = ハーフレディングの負値。--hl に依存しないため、hl / lh どちらのスコープでも正しくトリムされる。
  */
-.u--trim {
+#{mixin.maybe_double('.u--trim')} {
   margin-block: calc((1em - 1lh) / 2);
 }
 
 // 子要素の一括トリミング
 // :empty → img, hr, input, br などにもマッチ。かつ中身のない装飾 a--divider や a--spacer もこれだけで除外できる
-.u--trimAll > :not(:empty, figure, picture, video, button, textarea, table) {
+#{mixin.maybe_double('.u--trimAll')} > :not(:empty, figure, picture, video, button, textarea, table) {
   margin-block: calc((1em - 1lh) / 2);
 }

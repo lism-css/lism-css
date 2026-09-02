@@ -25,6 +25,10 @@ export interface PropConfig {
   isVar?: 0 | 1;
   bp?: 0 | 1 | readonly BreakpointKey[];
   alwaysVar?: 0 | 1;
+  /**
+   * `!important` を付けて出力するか。未指定なら `defaultImportant` に従う。
+   * no_layer 系ビルドは常に付与するため、`0` を指定しても外れない。
+   */
   important?: 0 | 1;
   // 値が空文字（センチネル: キーだけ登録）か、プロパティ名→値の Record のいずれか。
   exUtility?: Record<string, string | Record<string, string>>;
@@ -36,6 +40,10 @@ export interface LismConfig {
   props?: Record<string, PropConfig>;
   traits?: Record<string, string>;
   breakpoints?: Partial<Record<BreakpointKey, string | number>>;
+  /**
+   * Property Class にデフォルトで `!important` を付与するか（ビルド時設定）。
+   * `@layer` ありビルド（main.css / full.css）にのみ効く。no_layer 系ビルドは常に付与する。
+   */
   defaultImportant?: boolean;
   isFullMode?: boolean;
   /** lism-cli の UI 設定。スキーマは lism-cli 側が管理するため緩い型にとどめる。 */

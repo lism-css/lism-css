@@ -5,6 +5,8 @@
 
 @use './query' as query;
 @use './setting' as setting;
+// !important の解決は mixin.resolve_important に任せる（no_layer は個別 important 指定より 1 を優先）
+@use './mixin' as mixin;
 
 /*
 base_type:
@@ -86,7 +88,7 @@ $bp_support_list: (); // list
   $bp_support: map_get_with_default($data, bp, 0);
   $isVar: map_get_with_default($data, isVar, 0);
   $alwaysVar: map_get_with_default($data, alwaysVar, 0);
-  $important: map_get_with_default($data, important, setting.$default_important);
+  $important: mixin.resolve_important(map.get($data, important));
 
   @if $prop == '' {
     @continue;
@@ -232,7 +234,7 @@ $bp_outputs: ();
       $prop_name: map.get($prop_data, prop);
       $isVar: map_get_with_default($prop_data, isVar, 0);
       $alwaysVar: map_get_with_default($prop_data, alwaysVar, 0);
-      $important: map_get_with_default($prop_data, important, setting.$default_important);
+      $important: mixin.resolve_important(map.get($prop_data, important));
 
       @if $isVar == 1 {
         $important: 1;
