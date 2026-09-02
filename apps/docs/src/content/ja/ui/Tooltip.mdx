@@ -46,15 +46,15 @@ import { Tooltip } from '@lism-css/ui/astro/Tooltip';
 
 - `<Tooltip.Root>`のホバー、または`<Tooltip.Trigger>`のキーボードフォーカス（`:focus-visible`）で表示されます。
 - ポップアップの上にポインタを移動しても消えません。
-- <kbd>Esc</kbd>を押すと消えます。いったんポインタやフォーカスを外してから戻すと、再び表示されます。（この状態は`<Tooltip.Root>`の`data-dismissed`属性で管理しています。）
+- <kbd>Esc</kbd>を押すと消えます。いったんポインタやフォーカスを外してから戻すと、再び表示されます。（<kbd>Esc</kbd>で閉じた状態は`<Tooltip.Root>`の`data-dismissed`属性で管理しています。）
 
 :::note
 `<Tooltip.Root>`の中に`<Tooltip.Trigger>`と`<Tooltip.Popup>`を並べて置くと、`aria-describedby`と`id`が自動で紐付きます。
 
-- `<Tooltip.Popup>`は、`<Tooltip.Trigger>`より後ろの兄弟要素として配置してください。フォーカス時の表示を兄弟セレクタで制御しているため、順番が逆になると表示されません。
-- ツールチップの中にリンクやボタンなどの操作要素を置かないでください。操作要素を含めたい場合は[Popover](/ui/Popover)を使用してください。
-- タッチデバイスではホバーが発生せず、ツールチップを確実に表示できません。**重要な情報をツールチップの中だけに置かないでください。**
-- `<Tooltip.Trigger>`はフォーカス可能な要素である必要があります。既定の`button`以外（`as="span"`など）にする場合は、`tabindex="0"`を指定してください。
+- `<Tooltip.Popup>`は、`<Tooltip.Trigger>`より後ろの兄弟要素として配置してください。フォーカス時の表示を兄弟セレクタで制御しているため、順番が逆になると、フォーカス時に表示されなくなります。
+- ポップアップの中にリンクやボタンなどの操作要素を置かないでください。操作要素を含めたい場合は[Popover](/ui/Popover)を使用してください。
+- タッチデバイスではホバーが発生しないため、ポップアップが表示されないことがあります。**重要な情報をポップアップの中だけに置かないでください。**
+- `<Tooltip.Trigger>`はフォーカス可能な要素である必要があります。初期値の`button`以外（`as="span"`など）にする場合は、`tabindex="0"`を指定してください。
 :::
 
 
@@ -89,14 +89,14 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 |<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`delay`|ポップアップが表示されるまでの待ち時間を指定します。インラインスタイルの`--tooltip-delay`として出力されます。|
 |<PropBadge>`<Tooltip.Trigger>`</PropBadge><br/>`tooltipId`|`aria-describedby`の値として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
-|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `start` / `end`で、初期値は`top`です。`start` / `end`は`left` / `right`の論理方向版で、書字方向に追従します。|
-|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`align`|`side`と直交する方向の揃え位置を指定します。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `start` / `end`で、初期値は`top`です。`start` / `end`は`left` / `right`に対応する論理的な向きで、書字方向に追従します。|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`align`|ポップアップの揃え位置を指定します。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えです。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--tooltip-offset`として出力されます。|
 
 :::warning
 `<Tooltip.Root>`の配下では、`<Tooltip.Trigger>`や`<Tooltip.Popup>`に個別のIDを指定しないでください。IDを明示したい場合は`<Tooltip.Root>`の`tooltipId`だけを使います。
 
-子要素側の`tooltipId` / `id`は、`<Tooltip.Root>`を使わずにパーツを離れた場所へ配置する（自分ですべてのパーツに同じIDを渡す）ための手段です。`<Tooltip.Root>`の配下で一部の子にだけ指定すると、紐付けが壊れてしまいます。
+子要素側の`tooltipId` / `id`は、`<Tooltip.Root>`を使わずにパーツを離れた場所へ配置する（各パーツに同じIDを手動で渡す）ための手段です。`<Tooltip.Root>`の配下で一部の子にだけ指定すると、紐付けが壊れてしまいます。
 :::
 
 
@@ -111,7 +111,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 |`--tooltip-delay-out`|`0.15s`|非表示になるまでの猶予時間。トリガーからポップアップへポインタを移動する間、表示を保つために使われます。|
 |`--tooltip-duration`|`0.15s`|フェードにかかる時間。`prefers-reduced-motion: reduce`の環境では`0s`になります。|
 
-配色・余白・角丸・影は、Lismのプロパティ（`bgc`, `c`, `p`, `bdrs`, `bxsh`など）で上書きしてください。初期状態は`--text`を背景色、`--base`を文字色にした反転配色です。
+配色・余白・角丸・影は、Lismのプロパティ（`bgc`, `c`, `p`, `bdrs`, `bxsh`など）で上書きしてください。初期スタイルは`--text`を背景色、`--base`を文字色にした反転配色です。
 
 
 ## Examples
@@ -124,14 +124,6 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
   <PreviewTitle>`side`の指定例</PreviewTitle>
   <PreviewArea p="30">
     <Cluster g="15">
-      <Tooltip.Root tooltipId="tt-02">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>top</Fragment>
-        </Tooltip.Trigger>
-        <Tooltip.Popup side="top">
-          <Fragment>side="top"</Fragment>
-        </Tooltip.Popup>
-      </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-02">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
           <Fragment>top</Fragment>
@@ -253,7 +245,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 ### 揃え位置を変える
 
-`<Tooltip.Popup>`の`align`で、`side`と直交する方向の揃え位置を指定できます。`side`が`top` / `bottom`のときは横方向、`left` / `right` / `start` / `end`のときは縦方向の揃えになります。
+`<Tooltip.Popup>`の`align`で、ポップアップの揃え位置を指定できます。`side`が`top` / `bottom`のときは横方向、`left` / `right` / `start` / `end`のときは縦方向の揃えになります。
 
 <Preview>
   <PreviewTitle>`align`の指定例</PreviewTitle>
@@ -324,7 +316,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 </Preview>
 
 :::note
-`align`の`start` / `end`は、`side`が`top` / `bottom`のときは書字方向に追従し、`dir="rtl"`の環境では左右が入れ替わります。`side`が横方向のときは`start`が上、`end`が下です。
+`align`の`start` / `end`は、`side`が`top` / `bottom`のときは書字方向に追従し、`dir="rtl"`の環境では左右が入れ替わります。`side`が`left` / `right` / `start` / `end`のときは`start`が上、`end`が下です。
 :::
 
 
@@ -422,8 +414,8 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 ## ブラウザ対応
 
-ツールチップの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
+ポップアップの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
 
-未対応のブラウザ（Firefox ESR 140 など）では、`<Tooltip.Root>`（＝トリガーを内包する要素）を基準にした絶対配置にフォールバックします。この場合、画面の端に収まらないときの自動反転は行われず、ツールチップが見切れることがあります。また、`offset`（`--tooltip-offset`）による間隔も適用されません。
+未対応のブラウザ（Firefox ESR 140 など）では、`<Tooltip.Root>`（＝トリガーを内包する要素）を基準にした絶対配置にフォールバックします。この場合、画面の端に収まらないときの自動反転は行われず、ポップアップが見切れることがあります。また、`offset`（`--tooltip-offset`）による間隔も適用されません。
 
-Firefox は`display`プロパティのトランジションに対応していないため、Anchor Positioning が有効な Firefox 147 以降では、非表示になるときのフェードと`--tooltip-delay-out`の猶予が効かず、ポインタが外れると即座に消えます。表示されるときのフェードとディレイは効きます。
+Firefox は`display`プロパティのトランジションに対応していないため、Anchor Positioning が使える Firefox 147 以降では、非表示になるときのフェードと`--tooltip-delay-out`の猶予が効かず、ポインタが外れると即座に消えます。表示されるときのフェードと待ち時間は効きます。

@@ -46,21 +46,21 @@ import { Popover } from '@lism-css/ui/astro/Popover';
   </PreviewCode>
 </Preview>
 
-ブラウザ標準の [Popover API](https://developer.mozilla.org/ja/docs/Web/API/Popover_API)（`popover`属性と`popovertarget`属性）だけで動作するため、クライアントJavaScriptは一切必要ありません。
+ブラウザ標準の [Popover API](https://developer.mozilla.org/ja/docs/Web/API/Popover_API)（`popover`属性と`popovertarget`属性）だけで動作するため、クライアント側のJavaScriptは一切必要ありません。
 
-初期値の`type="auto"`では、以下の挙動がすべてブラウザ側で提供されます。
+初期値の`type="auto"`では、以下の動作はすべてブラウザが行います。
 
 - トリガーのクリックによる開閉
 - 外側のクリックや<kbd>Esc</kbd>キーで閉じる（light dismiss）
 - 閉じたあと、トリガーへフォーカスを戻す
 - トリガーの`aria-expanded`の切り替え
 
-<kbd>Tab</kbd>キーでフォーカスがポップオーバーの外へ移動しても閉じません（Popover APIの仕様です）。フォーカスが外れたときに閉じたい場合は、`focusout`イベントで`hidePopover()`を呼ぶなど、利用側で実装してください。
+<kbd>Tab</kbd>キーでフォーカスがポップアップの外へ移動しても閉じません（Popover APIの仕様です）。フォーカスが外れたときに閉じたい場合は、`focusout`イベントで`hidePopover()`を呼ぶなど、利用側で実装してください。
 
 :::note
 `<Popover.Root>`の中に`<Popover.Trigger>`と`<Popover.Popup>`を置くと、`popovertarget`と`id`が自動で紐付きます。`<Popover.Close>`も同様です。
 
-- ポップオーバーは閉じている間、支援技術からも見えません。**重要な操作や情報をポップオーバーの中だけに置かないでください。**
+- ポップアップは閉じている間、支援技術からも見えません。**重要な操作や情報をポップアップの中だけに置かないでください。**
 - `<Popover.Trigger>`と`<Popover.Close>`は`button`要素である必要があります。`popovertarget`属性は`button`（および`input type="button"`など）でしか機能しません。
 - `<Popover.Popup>`には`role`を指定していません。フォームなど、まとまった操作を含む場合は`role="dialog"`と`aria-label`を指定してください。
 :::
@@ -96,18 +96,18 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 |<PropBadge>`<Popover.Root>`</PropBadge><br/>`popoverId`|`<Popover.Trigger>` / `<Popover.Close>`の`popovertarget`と、`<Popover.Popup>`の`id`に使われるIDを指定します。未指定の場合は自動生成されたIDが使われます。|
 |<PropBadge>`<Popover.Trigger>`</PropBadge><br/>`popoverId`|`popovertarget`の値として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
-|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `start` / `end`で、初期値は`bottom`です。`start` / `end`は`left` / `right`の論理方向版で、書字方向に追従します。|
-|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`align`|`side`と直交する方向の揃え位置を指定します。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `start` / `end`で、初期値は`bottom`です。`start` / `end`は`left` / `right`に対応する論理的な向きで、書字方向に追従します。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`align`|ポップアップの揃え位置を指定します。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えです。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--popover-offset`として出力されます。|
-|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`type`|`popover`属性の値として出力されます。指定できる値は`auto` / `manual`で、初期値は`auto`です。`manual`にすると、外側のクリックや<kbd>Esc</kbd>キーによる自動クローズ（light dismiss）が無効になり、`<Popover.Close>`などの`popovertarget`を持つボタンでしか閉じられなくなります。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`type`|`popover`属性の値として出力されます。指定できる値は`auto` / `manual`で、初期値は`auto`です。`manual`にすると、外側のクリックや<kbd>Esc</kbd>キーで閉じる動作（light dismiss）が無効になり、`<Popover.Close>`などの`popovertarget`を持つボタンでしか閉じられなくなります。|
 |<PropBadge>`<Popover.Close>`</PropBadge><br/>`popoverId`|`popovertarget`の値として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
-|<PropBadge>`<Popover.Close>`</PropBadge><br/>`icon`|子要素を渡さない場合に表示されるアイコンを指定します。（デフォルト: `x`）|
-|<PropBadge>`<Popover.Close>`</PropBadge><br/>`srText`|アイコン表示時にスクリーンリーダー向けに出力されるテキストを指定します。デフォルトは`Close`のため、日本語サイトでは`srText="閉じる"`の指定を推奨します。|
+|<PropBadge>`<Popover.Close>`</PropBadge><br/>`icon`|子要素を渡さない場合に表示されるアイコンを指定します。（初期値: `x`）|
+|<PropBadge>`<Popover.Close>`</PropBadge><br/>`srText`|アイコン表示時にスクリーンリーダー向けに出力されるテキストを指定します。初期値は`Close`のため、日本語サイトでは`srText="閉じる"`の指定を推奨します。|
 
 :::warning
 `<Popover.Root>`の配下では、`<Popover.Trigger>` / `<Popover.Popup>` / `<Popover.Close>`に個別のIDを指定しないでください。IDを明示したい場合は`<Popover.Root>`の`popoverId`だけを使います。
 
-子要素側の`popoverId` / `id`は、`<Popover.Root>`を使わずにパーツを離れた場所へ配置する（自分ですべてのパーツに同じIDを渡す）ための手段です。`<Popover.Root>`の配下で一部の子にだけ指定すると、紐付けが壊れてしまいます。
+子要素側の`popoverId` / `id`は、`<Popover.Root>`を使わずにパーツを離れた場所へ配置する（各パーツに同じIDを手動で渡す）ための手段です。`<Popover.Root>`の配下で一部の子にだけ指定すると、紐付けが壊れてしまいます。
 :::
 
 
@@ -127,7 +127,7 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 
 ### 表示位置を変える
 
-`<Popover.Popup>`の`side`で表示する向きを、`align`で直交方向の揃え位置を指定できます。
+`<Popover.Popup>`の`side`で表示する向きを、`align`で揃え位置を指定できます。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えになります。
 
 <Preview>
   <PreviewTitle>`side`と`align`の指定例</PreviewTitle>
@@ -298,8 +298,8 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 
 ## ブラウザ対応
 
-ポップオーバーの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
+ポップアップの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
 
-未対応のブラウザ（Firefox ESR 140 など）では、画面中央に表示されるカード（ブラウザ既定の配置）にフォールバックします。この場合、`side` / `align` / `offset` による位置調整は適用されません。
+未対応のブラウザ（Firefox ESR 140 など）では、ブラウザ既定の配置にフォールバックし、ポップアップは画面中央に表示されます。この場合、`side` / `align` / `offset` による位置調整は適用されません。
 
 開閉・light dismiss・フォーカス制御は Popover API の機能なので、フォールバック時もそのまま動作します。
