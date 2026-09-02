@@ -77,7 +77,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
             <Box class="c--siteMain_inner" tabindex={0}>
               <Container isWrapper={toc ? true : 'l'} hasGutter py="40">
                 {/* main は Footer を含めない（footer が main 内だと contentinfo ランドマークにならない）。スクロール領域の構造は維持する */}
-                <Box as="main" tabindex={-1} aria-label={t(lang, 'main').ariaLabel}>
+                <Box as="main" aria-label={t(lang, 'main').ariaLabel}>
                   {/* 目次「Top」の着地用。u--srOnly(absolute)だとリロード時のハッシュスクロールがずれる */}
                   <span id={PAGE_TITLE_ID} class="c--scrollTarget" aria-hidden="true"></span>
                   <slot />
