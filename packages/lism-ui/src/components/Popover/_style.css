@@ -50,6 +50,7 @@
    * side × align 別の配置。フォールバック側が常に勝つよう :where で詳細度を上げない。
    * center は単一キーワード（= span-all）で、直交軸は anchor-center の既定挙動で viewport 内に収まる。
    * start / end は span-* で片側に伸ばし、justify-self / align-self でアンカー端に揃える。flip で margin と揃えも反転する。
+   * top / bottom の start/end は span-inline-* を使い、RTL でも書字方向の端に揃える（span-x-* だと領域が物理軸のまま残る）。
    */
 
   /* side: top */
@@ -59,7 +60,7 @@
     margin-bottom: var(--_offset);
   }
   .b--popover_popup:where([data-side='top'][data-align='start']) {
-    position-area: top span-x-end;
+    position-area: top span-inline-end;
     justify-self: start;
     position-try-fallbacks:
       flip-block,
@@ -67,7 +68,7 @@
       flip-block flip-inline;
   }
   .b--popover_popup:where([data-side='top'][data-align='end']) {
-    position-area: top span-x-start;
+    position-area: top span-inline-start;
     justify-self: end;
     position-try-fallbacks:
       flip-block,
@@ -82,7 +83,7 @@
     margin-top: var(--_offset);
   }
   .b--popover_popup:where([data-side='bottom'][data-align='start']) {
-    position-area: bottom span-x-end;
+    position-area: bottom span-inline-end;
     justify-self: start;
     position-try-fallbacks:
       flip-block,
@@ -90,7 +91,7 @@
       flip-block flip-inline;
   }
   .b--popover_popup:where([data-side='bottom'][data-align='end']) {
-    position-area: bottom span-x-start;
+    position-area: bottom span-inline-start;
     justify-self: end;
     position-try-fallbacks:
       flip-block,
