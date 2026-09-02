@@ -1,0 +1,222 @@
+/*
+ * ネイティブ Popover API（popover 属性）で開閉し、CSS Anchor Positioning で配置する。
+ * 非対応ブラウザには @supports not ブロック内で UA 既定の中央配置（画面中央のカード）にフォールバックする。
+ *   Memo: anchor 配置側を @supports で囲うと OddBird ポリフィルが処理できないため、ゲートはフォールバック側に置く。
+ *   制約: anchor 配置側（ゲートなし）に書いたプロパティは、フォールバック側で必ず全部上書きする。
+ *         @supports not が真になるブラウザには部分対応（Chrome 128〜130: anchor-scope 未対応だが position-area 等は解釈する）が
+ *         含まれ、そこではゲートなし側の宣言が生きたまま残るため。anchor 系は初期値へ戻し、既知プロパティはフォールバック値で上書きする。
+ *   ポリフィル利用者は <html data-anchor-polyfill> を付けてフォールバックを外す。
+ */
+@layer lism-block {
+  .b--popover {
+    display: inline-block;
+    anchor-scope: --popover;
+  }
+  .b--popover_trigger {
+    anchor-name: --popover;
+  }
+
+  /* ① anchor 配置。全ブラウザに読ませる（ゲートなし） */
+  .b--popover_popup {
+    --_offset: var(--popover-offset, var(--s5));
+    --_duration: var(--popover-duration, 0.15s);
+    position-anchor: --popover;
+    /* UA 既定（inset: 0; margin: auto）の中央配置を解除して anchor 配置にする */
+    inset: auto;
+    margin: 0;
+    border: none;
+    padding: var(--s15);
+    border-radius: var(--bdrs--20);
+    background-color: var(--base);
+    color: inherit;
+    box-shadow: var(--bxsh--30);
+    overflow: auto;
+    opacity: 0;
+    transition:
+      opacity var(--_duration),
+      display var(--_duration) allow-discrete,
+      overlay var(--_duration) allow-discrete;
+  }
+  .b--popover_popup:popover-open {
+    opacity: 1;
+  }
+  @starting-style {
+    .b--popover_popup:popover-open {
+      opacity: 0;
+    }
+  }
+
+  /*
+   * side × align 別の配置。フォールバック側が常に勝つよう :where で詳細度を上げない。
+   * center は単一キーワード（= span-all）で、直交軸は anchor-center の既定挙動で viewport 内に収まる。
+   * start / end は span-* で片側に伸ばし、justify-self / align-self でアンカー端に揃える。flip で margin と揃えも反転する。
+   */
+
+  /* side: top */
+  .b--popover_popup:where([data-side='top']) {
+    position-area: top;
+    position-try-fallbacks: flip-block;
+    margin-bottom: var(--_offset);
+  }
+  .b--popover_popup:where([data-side='top'][data-align='start']) {
+    position-area: top span-x-end;
+    justify-self: start;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+  }
+  .b--popover_popup:where([data-side='top'][data-align='end']) {
+    position-area: top span-x-start;
+    justify-self: end;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+  }
+
+  /* side: bottom */
+  .b--popover_popup:where([data-side='bottom']) {
+    position-area: bottom;
+    position-try-fallbacks: flip-block;
+    margin-top: var(--_offset);
+  }
+  .b--popover_popup:where([data-side='bottom'][data-align='start']) {
+    position-area: bottom span-x-end;
+    justify-self: start;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+  }
+  .b--popover_popup:where([data-side='bottom'][data-align='end']) {
+    position-area: bottom span-x-start;
+    justify-self: end;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+  }
+
+  /* side: left */
+  .b--popover_popup:where([data-side='left']) {
+    position-area: left;
+    position-try-fallbacks: flip-inline;
+    margin-right: var(--_offset);
+  }
+  .b--popover_popup:where([data-side='left'][data-align='start']) {
+    position-area: left span-bottom;
+    align-self: start;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+  .b--popover_popup:where([data-side='left'][data-align='end']) {
+    position-area: left span-top;
+    align-self: end;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+
+  /* side: right */
+  .b--popover_popup:where([data-side='right']) {
+    position-area: right;
+    position-try-fallbacks: flip-inline;
+    margin-left: var(--_offset);
+  }
+  .b--popover_popup:where([data-side='right'][data-align='start']) {
+    position-area: right span-bottom;
+    align-self: start;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+  .b--popover_popup:where([data-side='right'][data-align='end']) {
+    position-area: right span-top;
+    align-self: end;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+
+  /* side: inline-start */
+  .b--popover_popup:where([data-side='inline-start']) {
+    position-area: inline-start;
+    position-try-fallbacks: flip-inline;
+    margin-inline-end: var(--_offset);
+  }
+  .b--popover_popup:where([data-side='inline-start'][data-align='start']) {
+    position-area: inline-start span-block-end;
+    align-self: start;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+  .b--popover_popup:where([data-side='inline-start'][data-align='end']) {
+    position-area: inline-start span-block-start;
+    align-self: end;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+
+  /* side: inline-end */
+  .b--popover_popup:where([data-side='inline-end']) {
+    position-area: inline-end;
+    position-try-fallbacks: flip-inline;
+    margin-inline-start: var(--_offset);
+  }
+  .b--popover_popup:where([data-side='inline-end'][data-align='start']) {
+    position-area: inline-end span-block-end;
+    align-self: start;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+  .b--popover_popup:where([data-side='inline-end'][data-align='end']) {
+    position-area: inline-end span-block-start;
+    align-self: end;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+
+  /* ② anchor 非対応（部分対応を含む）かつ ポリフィル未使用 のときだけ UA 既定の中央配置に戻す */
+  @supports not (
+    (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block)
+  ) {
+    :root:not([data-anchor-polyfill]) .b--popover_popup {
+      /* 部分対応ブラウザで①が残らないよう、anchor 系を初期値へ戻してから配置する */
+      position-anchor: auto; /* Chrome 128〜130 が解釈する値 */
+      position-anchor: normal; /* 現行仕様の初期値。未対応なら上の auto が残る */
+      position-area: none;
+      position-try-fallbacks: none;
+      justify-self: auto;
+      align-self: auto;
+      /* UA 既定の中央配置に戻してカードとして整える。①の side 別オフセット margin もこの margin: auto で打ち消す */
+      inset: 0;
+      margin: auto;
+      max-width: calc(100vw - var(--s20) * 2);
+      max-height: calc(100vh - var(--s20) * 2);
+    }
+    :root:not([data-anchor-polyfill]) .b--popover_popup::backdrop {
+      background-color: rgb(0 0 0 / 0.2);
+    }
+  }
+
+  /* 減速設定時はフェードを無効化 */
+  @media (prefers-reduced-motion: reduce) {
+    .b--popover_popup {
+      --popover-duration: 0s;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+
+type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    id?: string;
+    /** left/right は物理方向、inline-* は書字方向に追従する論理方向 */
+    side?: 'top' | 'bottom' | 'left' | 'right' | 'inline-start' | 'inline-end';
+    offset?: string;
+  };
+
+// id の既定値はプレースホルダー。Root 配下なら Root 側で実IDに置換される（明示指定があればそれが残る）
+const { class: className, id = '__LISM_TOOLTIP_ID__', side = 'top', offset, style, ...props } = Astro.props;
+
+const mergedStyle = offset ? { ...(style as object), '--tooltip-offset': offset } : style;
+---
+
+<Lism as="span" role="tooltip" id={id} data-side={side} class={atts(className, 'b--tooltip_popup')} style={mergedStyle} {...props}>
+  <slot />
+</Lism>

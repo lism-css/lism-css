@@ -1,0 +1,46 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import type { IconOwnProps } from 'lism-css/react/atomic/Icon/getProps';
+import { Lism, Icon } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    popoverId?: string;
+    icon?: IconOwnProps['icon'];
+    srText?: string;
+  };
+
+// 既定値はプレースホルダー。Root.astro 側で実IDに置換される
+const { class: className, popoverId = '__LISM_POPOVER_ID__', icon, srText = 'Close', ...props } = Astro.props;
+---
+
+{
+  Astro.slots.has('default') ? (
+    <Lism
+      as="button"
+      type="button"
+      class={atts(className, 'b--popover_close')}
+      set="plain"
+      popovertarget={popoverId}
+      popovertargetaction="hide"
+      {...props}
+    >
+      <slot />
+    </Lism>
+  ) : (
+    <Lism
+      as="button"
+      type="button"
+      class={atts(className, 'b--popover_close')}
+      set="plain"
+      popovertarget={popoverId}
+      popovertargetaction="hide"
+      {...props}
+    >
+      <Icon icon={icon || 'x'} />
+      <span class="u--srOnly">{srText || 'Close'}</span>
+    </Lism>
+  )
+}

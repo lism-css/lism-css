@@ -1,0 +1,16 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    popoverId?: string;
+  };
+
+// 既定値はプレースホルダー。Root.astro 側で実IDに置換される
+const { class: className, popoverId = '__LISM_POPOVER_ID__', ...props } = Astro.props;
+---
+
+<Lism as="button" type="button" class={atts(className, 'b--popover_trigger')} set="plain" popovertarget={popoverId} {...props}><slot /></Lism>

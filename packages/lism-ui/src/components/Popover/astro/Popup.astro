@@ -1,0 +1,23 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    id?: string;
+    side?: 'top' | 'bottom' | 'left' | 'right' | 'inline-start' | 'inline-end';
+    align?: 'start' | 'center' | 'end';
+    offset?: string;
+    type?: 'auto' | 'manual';
+  };
+
+// id の既定値はプレースホルダー。Root.astro 側で実IDに置換される
+const { class: className, id = '__LISM_POPOVER_ID__', side = 'bottom', align = 'center', offset, type = 'auto', style, ...props } = Astro.props;
+const mergedStyle = offset ? { ...(style as object), '--popover-offset': offset } : style;
+---
+
+<Lism class={atts(className, 'b--popover_popup')} id={id} popover={type} data-side={side} data-align={align} style={mergedStyle} {...props}
+  ><slot /></Lism
+>

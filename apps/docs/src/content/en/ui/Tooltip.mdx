@@ -1,0 +1,414 @@
+---
+title: 'Tooltip'
+description: 'Documentation for the Tooltip component provided by @lism-css/ui.'
+---
+
+import { Box, Cluster } from 'lism-css/astro';
+import { Tooltip } from '@lism-css/ui/astro/Tooltip';
+
+
+A component for displaying supplementary text for an element on hover or focus.
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="30">
+    <Tooltip.Root tooltipId="tt-01">
+      <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+        <Fragment>Save</Fragment>
+      </Tooltip.Trigger>
+      <Tooltip.Popup>
+        <Fragment>Shortcut: Ctrl + S</Fragment>
+      </Tooltip.Popup>
+    </Tooltip.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx '"tt-01"'
+    <Tooltip.Root tooltipId="tt-01">
+      <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">Save</Tooltip.Trigger>
+      <Tooltip.Popup>Shortcut: Ctrl + S</Tooltip.Popup>
+    </Tooltip.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html '"tt-01"'
+    <span class="b--tooltip">
+      <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-01">Save</button>
+      <span class="b--tooltip_popup" role="tooltip" id="tt-01" data-side="top">Shortcut: Ctrl + S</span>
+    </span>
+    ```
+  </PreviewCode>
+</Preview>
+
+Showing and hiding the tooltip is handled entirely with CSS. JavaScript only handles closing it with <kbd>Esc</kbd>.
+
+- It appears on hover over `<Tooltip.Root>`, or on keyboard focus (`:focus-visible`) of `<Tooltip.Trigger>`.
+- Moving the pointer onto the popup does not hide it.
+- Pressing <kbd>Esc</kbd> hides it. Moving the pointer or focus away and back shows it again. (This state is tracked via the `data-dismissed` attribute on `<Tooltip.Root>`.)
+
+:::note
+Placing `<Tooltip.Trigger>` and `<Tooltip.Popup>` as siblings inside `<Tooltip.Root>` automatically links them via `aria-describedby` and `id`.
+
+- Place `<Tooltip.Popup>` as a sibling *after* `<Tooltip.Trigger>`. The focus-visible display is controlled with a sibling selector, so reversing the order prevents the tooltip from appearing.
+- Don't place interactive elements like links or buttons inside a tooltip. If you need interactive content, use [Popover](/en/ui/Popover) instead.
+- Touch devices don't trigger hover, so the tooltip can't be reliably shown. **Don't put critical information only inside a tooltip.**
+- `<Tooltip.Trigger>` must be a focusable element. If you use something other than the default `button` (e.g. `as="span"`), add `tabindex="0"`.
+:::
+
+
+## Styles
+
+The Tooltip base styles are defined in the following CSS.
+
+<SrcCode dir="lism-ui" path="src/components/Tooltip/_style.css" title="_style.css" />
+
+:::note
+The full source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tooltip).
+:::
+
+
+## Usage
+
+Provided as `Tooltip` from the `@lism-css/ui` package.
+
+
+### Import
+
+<ImportPackage component="Tooltip" script="tooltip.js" packageName="@lism-css/ui" css="style.css" />
+
+`<Tooltip.Root>`, `<Tooltip.Trigger>`, and `<Tooltip.Popup>` are available.
+
+
+### Props
+
+| Prop | Description |
+|---|---|
+|<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`tooltipId`|Specifies the ID used for `<Tooltip.Trigger>`'s `aria-describedby` and `<Tooltip.Popup>`'s `id`. If omitted, an automatically generated ID is used.|
+|<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`delay`|Specifies the delay before the popup appears. Output as the `--tooltip-delay` variable.|
+|<PropBadge>`<Tooltip.Trigger>`</PropBadge><br/>`tooltipId`|Output as the value of `aria-describedby`. Only specify this when using the component standalone, outside `<Tooltip.Root>`.|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`id`|Output as the `id` attribute. Only specify this when using the component standalone, outside `<Tooltip.Root>`.|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|Specifies the side the popup appears on. Output as the `data-side` attribute. Accepts `top` / `bottom` / `left` / `right` / `inline-start` / `inline-end`. Default: `top`.|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`offset`|Specifies the gap between the trigger and the popup. Output as the `--tooltip-offset` variable.|
+
+:::warning
+Don't set individual IDs on `<Tooltip.Trigger>` or `<Tooltip.Popup>` when they're inside `<Tooltip.Root>`. If you need to set an explicit ID, use only the `tooltipId` prop on `<Tooltip.Root>`.
+
+The child-level `tooltipId` / `id` props exist for placing the parts apart from each other without `<Tooltip.Root>` (passing the same ID to each part yourself). Setting them on only some children inside `<Tooltip.Root>` breaks the linkage.
+:::
+
+
+### CSS variables
+
+Use the following CSS variables to adjust the appearance.
+
+| Variable | Default | Description |
+|---|---|---|
+|`--tooltip-offset`|`var(--s5)`|The gap between the trigger and the popup.|
+|`--tooltip-delay`|`0.4s`|The delay before the popup appears.|
+|`--tooltip-delay-out`|`0.15s`|The grace period before the popup hides. Keeps the popup visible while the pointer moves from the trigger to the popup.|
+|`--tooltip-duration`|`0.15s`|The duration of the fade transition. Set to `0s` when `prefers-reduced-motion: reduce` is set.|
+
+Override the color, spacing, border radius, and shadow using Lism properties (`bgc`, `c`, `p`, `bdrs`, `bxsh`, etc.). By default, the tooltip uses an inverted color scheme with `--text` as the background and `--base` as the text color.
+
+
+## Examples
+
+### Changing the popup side
+
+Use the `side` prop on `<Tooltip.Popup>` to specify which side the popup appears on.
+
+<Preview>
+  <PreviewTitle>Setting `side`</PreviewTitle>
+  <PreviewArea p="30">
+    <Cluster g="15">
+      <Tooltip.Root tooltipId="tt-02">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>top</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="top">
+          <Fragment>side="top"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-03">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>bottom</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="bottom">
+          <Fragment>side="bottom"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-04">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>left</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="left">
+          <Fragment>side="left"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-05">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>right</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="right">
+          <Fragment>side="right"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-06">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>inline-start</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="inline-start">
+          <Fragment>side="inline-start"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-07">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>inline-end</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="inline-end">
+          <Fragment>side="inline-end"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "side"
+    <Cluster g="15">
+      <Tooltip.Root tooltipId="tt-02">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">top</Tooltip.Trigger>
+        <Tooltip.Popup side="top">side="top"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-03">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">bottom</Tooltip.Trigger>
+        <Tooltip.Popup side="bottom">side="bottom"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-04">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">left</Tooltip.Trigger>
+        <Tooltip.Popup side="left">side="left"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-05">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">right</Tooltip.Trigger>
+        <Tooltip.Popup side="right">side="right"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-06">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">inline-start</Tooltip.Trigger>
+        <Tooltip.Popup side="inline-start">side="inline-start"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-07">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">inline-end</Tooltip.Trigger>
+        <Tooltip.Popup side="inline-end">side="inline-end"</Tooltip.Popup>
+      </Tooltip.Root>
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "data-side"
+    <div class="l--cluster -g:15">
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-02">top</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-02" data-side="top">side="top"</span>
+      </span>
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-03">bottom</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-03" data-side="bottom">side="bottom"</span>
+      </span>
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-04">left</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-04" data-side="left">side="left"</span>
+      </span>
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-05">right</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-05" data-side="right">side="right"</span>
+      </span>
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-06">inline-start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-06" data-side="inline-start">side="inline-start"</span>
+      </span>
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-07">inline-end</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-07" data-side="inline-end">side="inline-end"</span>
+      </span>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::note
+`left` / `right` refer to physical screen directions. `inline-start` / `inline-end` are logical directions that follow the writing direction, so they swap sides when `dir="rtl"` is set.
+
+Regardless of which side you choose, the popup automatically flips to the opposite side if it doesn't fit within the viewport.
+:::
+
+
+### Changing the delay and offset
+
+Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Root>`, and the gap from the trigger with the `offset` prop on `<Tooltip.Popup>`.
+
+<Preview>
+  <PreviewTitle>Setting `delay` and `offset`</PreviewTitle>
+  <PreviewArea p="30">
+    <Cluster g="15">
+      <Tooltip.Root tooltipId="tt-08" delay="0s">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>Show instantly</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup>
+          <Fragment>delay="0s"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-09" delay="1s">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>Show after 1s</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup offset="1rem">
+          <Fragment>delay="1s" / offset="1rem"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'delay="0s"' 'delay="1s"' 'offset="1rem"'
+    <Cluster g="15">
+      <Tooltip.Root tooltipId="tt-08" delay="0s">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">Show instantly</Tooltip.Trigger>
+        <Tooltip.Popup>delay="0s"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-09" delay="1s">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">Show after 1s</Tooltip.Trigger>
+        <Tooltip.Popup offset="1rem">delay="1s" / offset="1rem"</Tooltip.Popup>
+      </Tooltip.Root>
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html '--tooltip-delay:0s' '--tooltip-delay:1s' '--tooltip-offset:1rem'
+    <div class="l--cluster -g:15">
+      <span class="b--tooltip" style="--tooltip-delay:0s">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-08">Show instantly</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-08" data-side="top">delay="0s"</span>
+      </span>
+      <span class="b--tooltip" style="--tooltip-delay:1s">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-09">Show after 1s</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-09" data-side="top" style="--tooltip-offset:1rem">delay="1s" / offset="1rem"</span>
+      </span>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Changing the color scheme
+
+Add Lism properties to `<Tooltip.Popup>` to change its color and spacing.
+
+<Preview>
+  <PreviewTitle>Custom colors</PreviewTitle>
+  <PreviewArea p="30">
+    <Tooltip.Root tooltipId="tt-10">
+      <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+        <Fragment>Tooltip with custom colors</Fragment>
+      </Tooltip.Trigger>
+      <Tooltip.Popup bgc="base-2" c="text" bd p="15" bdrs="10" bxsh="20">
+        <Fragment>Overriding the background, text color, and spacing.</Fragment>
+      </Tooltip.Popup>
+    </Tooltip.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'bgc="base-2" c="text" bd p="15" bdrs="10" bxsh="20"'
+    <Tooltip.Root tooltipId="tt-10">
+      <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">Tooltip with custom colors</Tooltip.Trigger>
+      <Tooltip.Popup bgc="base-2" c="text" bd p="15" bdrs="10" bxsh="20">Overriding the background, text color, and spacing.</Tooltip.Popup>
+    </Tooltip.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html '-bgc:base-2 -c:text -bd -p:15 -bdrs:10 -bxsh:20'
+    <span class="b--tooltip">
+      <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-10">Tooltip with custom colors</button>
+      <span class="b--tooltip_popup -bgc:base-2 -c:text -bd -p:15 -bdrs:10 -bxsh:20" role="tooltip" id="tt-10" data-side="top">Overriding the background, text color, and spacing.</span>
+    </span>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Following the writing direction
+
+`inline-start` / `inline-end` swap sides inside an element with `dir="rtl"`.
+
+<Preview>
+  <PreviewTitle>Using `inline-start` inside `dir="rtl"`</PreviewTitle>
+  <PreviewArea p="30">
+    <Box dir="rtl" p="20" bd bdrs="10">
+      <Tooltip.Root tooltipId="tt-11">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>inline-start</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="inline-start">
+          <Fragment>Appears on the right in RTL</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'dir="rtl"' 'side="inline-start"'
+    <Box dir="rtl" p="20" bd bdrs="10">
+      <Tooltip.Root tooltipId="tt-11">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">inline-start</Tooltip.Trigger>
+        <Tooltip.Popup side="inline-start">Appears on the right in RTL</Tooltip.Popup>
+      </Tooltip.Root>
+    </Box>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html 'dir="rtl"' 'data-side="inline-start"'
+    <div class="l--box -p:20 -bd -bdrs:10" dir="rtl">
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-11">inline-start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-11" data-side="inline-start">Appears on the right in RTL</span>
+      </span>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Browser support
+
+Tooltip positioning uses [CSS Anchor Positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning).
+
+In browsers without support (e.g. Firefox ESR 140), it falls back to absolute positioning relative to `<Tooltip.Root>` (the element that wraps the trigger). In this case, the automatic flip when the popup doesn't fit within the viewport doesn't happen, so the tooltip may get clipped. The `offset` (`--tooltip-offset`) gap also isn't applied.
+
+### Using the polyfill
+
+Loading [OddBird's CSS Anchor Positioning polyfill](https://github.com/oddbird/css-anchor-positioning) and adding the `data-anchor-polyfill` attribute to `<html>` disables the absolute-positioning fallback, letting the polyfill handle the anchor positioning rules.
+
+```html
+<html data-anchor-polyfill>
+  <head>
+    <script type="module">
+      if (!('anchorName' in document.documentElement.style)) {
+        import('https://unpkg.com/@oddbird/css-anchor-positioning');
+      }
+    </script>
+  </head>
+</html>
+```
+
+You can also install it from npm and run it at any time.
+
+```bash
+npm install @oddbird/css-anchor-positioning
+```
+
+```js
+import polyfill from '@oddbird/css-anchor-positioning/fn';
+
+polyfill(); // Returns a Promise that resolves once the polyfill has been applied
+```
+
+:::warning
+This polyfill doesn't apply to elements added dynamically after it runs. Note that it won't work for tooltips mounted later, e.g. with React.
+:::
