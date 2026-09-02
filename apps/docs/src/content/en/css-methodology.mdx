@@ -89,7 +89,7 @@ This section explains the design rationale behind the core class groups in Lism 
 
 ### Set Class
 
-**Set Classes** are utility classes defined within the `lism-base` layer. They are used for HTML element base styling or for setting variables.
+**Set Classes** are classes defined within the `lism-base` layer. They are used for HTML element base styling or for setting variables.
 
 | Category | Format | Example |
 |---|---|---|
@@ -209,16 +209,16 @@ Utility classes with a clear decorative or functional purpose are defined as fol
 
 ### Property Class
 
-In Lism CSS, utility classes that correspond to a single CSS property are defined as **Property Classes**.
+In Lism CSS, classes that correspond to a single CSS property are defined as **Property Classes**.
 
-Utility classes are provided for key properties, covering commonly used values and dedicated token values, with responsive support built in.
+Classes are provided for key properties, covering commonly used values and dedicated token values, with responsive support built in.
 
 
 Property Classes come in three formats:
 
 | Format | Description | Example |
 |---|---|---|
-|<WhsNw>`-{prop}:{value}`</WhsNw>| Utility classes for applying the primary values or token values for each property |<WhsNw>`-fz:l`</WhsNw>,<br/><WhsNw>`-d:none`</WhsNw>|
+|<WhsNw>`-{prop}:{value}`</WhsNw>| Classes for applying the primary values or token values for each property |<WhsNw>`-fz:l`</WhsNw>,<br/><WhsNw>`-d:none`</WhsNw>|
 |`-{prop}`| A class that receives the `--{prop}` variable |`-p`,<br/>`-fz`|
 |`-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |<WhsNw>`-p_sm`</WhsNw>,<br/>`-p_md`|
 

@@ -3,7 +3,7 @@ title: 'lism.config.js でのカスタマイズ'
 description: 'lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。'
 ---
 
-プロジェクトのルートディレクトリ直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を用意することで、スタイルではなくコンポーネントの挙動をカスタマイズすることができます。
+プロジェクトのルートディレクトリ直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を用意することで、コンポーネントの挙動をカスタマイズすることができます。
 
 
 ## Vite / Astro プラグインの登録（必須）
@@ -108,7 +108,7 @@ export default {
 ```
 
 :::note[`lism-env.d.ts` とは別物です]
-ここで使う `LismConfig` は「**設定ファイルを書くとき**」の型です。統合プラグインが生成する `lism-env.d.ts`（追加した prop / trait を**コンポーネント側の props**で解禁する型）とは役割が異なります。両方を併用することで、設定ファイルの執筆時とコンポーネント利用時の両方で型の恩恵を受けられます。
+ここで使う `LismConfig` は「**設定ファイルを書くとき**」の型です。統合プラグインが生成する `lism-env.d.ts`（追加した prop / trait を**コンポーネント側の props**として使えるようにする型）とは役割が異なります。両方を併用することで、設定ファイルの執筆時とコンポーネント利用時の両方で型の恩恵を受けられます。
 :::
 
 <Preview>
@@ -175,14 +175,14 @@ export default {
   </PreviewCode>
 </Preview>
 
-:::note[追加した prop / trait は型も自動解禁されます]
-統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した prop / trait は `lism-env.d.ts` 経由で型側にも自動で解禁されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
+:::note[追加した prop / trait は型でも自動で使えるようになります]
+統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した prop / trait は `lism-env.d.ts` 経由で型でも自動で使えるようになります（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
 
 なお、既存 prop への値追加（`ta="justify"` など）はもともと任意の文字列を受け付けるため、型エラーにはなりません（補完候補には出ません）。
 :::
 
 :::warning
-ただし、`lism.config.js` に props を追加しただけでは、コンポーネントのHTML出力が変わるだけで、対応するユーティリティクラスのスタイルは生成されません。スタイルを反映する方法（プラグインによる自動反映 / CLI / SCSS）は[追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法)を参照してください。
+ただし、統合プラグインを使っていない構成では、`lism.config.js` に props を追加しただけではコンポーネントのHTML出力が変わるだけで、対応するユーティリティクラスのスタイルは生成されません。スタイルを反映する方法（プラグインによる自動反映 / CLI / SCSS）は[追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法)を参照してください。
 :::
 
 
@@ -225,7 +225,7 @@ SCSS を直接利用する構成では、`$breakpoints` の上書きによる有
 
 ## 追加スタイルを読み込ませる方法
 
-`lism.config.js` で props を増やしただけでは、対応するユーティリティクラスのスタイルは存在しません。次のいずれかでスタイルを追加してください。
+統合プラグインを使っていない構成では、`lism.config.js` で props を増やしただけでは対応するユーティリティクラスのスタイルは存在しません。次のいずれかでスタイルを追加してください。
 
 
 ### Vite / Astro プラグイン使用時は自動反映される

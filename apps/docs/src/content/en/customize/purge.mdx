@@ -45,7 +45,7 @@ lismCss({
 });
 ```
 
-When `known` (the set of known Lism classes that purge targets) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that value is respected.
+When `known` (the set of known Lism classes that purge targets) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that set is used as-is.
 
 :::info
 You can also use the standalone plugins directly: `lismPurge` from `@lism-css/plugin/purge/vite` and `lismPurgeAstro` from `@lism-css/plugin/purge/astro`.
@@ -54,7 +54,7 @@ You can also use the standalone plugins directly: `lismPurge` from `@lism-css/pl
 
 ## How it works
 
-At build time, the plugin scans the generated HTML / JS for class names that follow Lism CSS conventions (the `c--` / `a--` / `l--` / `is--` / `has--` / `set--` / `u--` prefixes, plus `-prop:value` style property classes). It then parses the CSS files and keeps only the rules whose selectors reference the collected classes.
+At build time, the plugin scans the generated HTML / JS for class names that follow Lism CSS conventions (the `c--` / `a--` / `l--` / `is--` / `has--` / `set--` / `u--` prefixes, plus `-prop:value` style Property Classes). It then parses the CSS files and keeps only the rules whose selectors reference the collected classes.
 
 - Only targets CSS produced by Lism CSS (detected via a file-header signature)
 - Does not touch your own classes or styles from other libraries
@@ -103,7 +103,7 @@ In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender 
 import 'lism-css/full.css';
 ```
 
-The default set of known classes (`known`) used by purge is derived from `full.css`. Since `full.css` is a superset of the selectors in `main.css`, unused classes are removed correctly whether you load `main.css` or `full.css`.
+The default set of known classes (`known`) used by purge is derived from `full.css`. Since `full.css` contains all of the selectors in `main.css`, unused classes are removed correctly whether you load `main.css` or `full.css`.
 
 Once purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used across the whole site**.
 
@@ -140,7 +140,7 @@ lismPurge({
 });
 ```
 
-`string` entries are also used when matching attribute selectors (`[class*="..."]` etc.). `RegExp` and function entries cannot enumerate concrete class names, so attribute selectors are kept conservatively.
+`string` entries are also used when matching attribute selectors (`[class*="..."]` etc.). `RegExp` and function entries cannot enumerate concrete class names, so attribute selectors are kept rather than removed, erring on the safe side.
 
 
 ### report
@@ -155,7 +155,7 @@ CSS: 28100 → 13200 bytes (-14900 / -53.0%)
 ## Caveats
 
 - When you build class names dynamically, either keep them as a complete literal (`` `-p:${size}` `` and similar partial strings are not enough) or add them to `safelist`.
-- Purge keeps the **union of classes used across the entire build output** (not per page). A class is retained as long as it is used on any page, even if it is unused on a given page. This is intentional so that a single CSS shared across multiple pages is never broken.
+- Purge keeps **every class used anywhere in the entire build output** (not per page). A class is retained as long as it is used on any page, even if it is unused on a given page. This is intentional so that a single CSS shared across multiple pages is never broken.
 - Only CSS emitted by Lism CSS is purged. Your own CSS and styles from other libraries are left untouched.
 - The plugin runs independently of other framework purgers such as Tailwind CSS.
 - CSS sourcemaps are not supported. Purge removes rules, so an existing sourcemap no longer lines up. To avoid stale mappings, purge strips `sourceMappingURL` comments from processed CSS and removes old `.css.map` files. Disable purge if you need CSS sourcemaps.

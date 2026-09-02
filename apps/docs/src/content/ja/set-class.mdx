@@ -1,12 +1,12 @@
 ---
 title: 'Set Class'
-description: 'ベーススタイルの上書きやトークン再定義に使用する set-- 形式のユーティリティクラスについて解説します。'
+description: 'ベーススタイルの上書きやトークン再定義に使用する set-- 形式のクラスについて解説します。'
 ---
 import { Lism, Container, Wrapper, Box, Columns, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 
 
-`lism-base` 層の中で定義される、HTML 要素の基礎スタイリングや変数セットを行うためのユーティリティクラスを `set--{className}` の形式で定義しています。
+`lism-base` 層の中で定義される、HTML 要素の基礎スタイリングや変数セットを行うためのクラスを `set--{className}` の形式で定義しています。
 
 set-- クラスは目的別に 2 カテゴリに分かれます。
 
@@ -193,13 +193,13 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 
 ホバー状態の判定変数（`--_notHov`, `--_isHov`）を次のようにセットします。主に**子要素のホバースタイルを制御する**時に活用します。
 
-- `--_isHov`は非hover時（かつ非focus-within時）にのみ空白定義されます。
-- `--_notHov`は逆に、hover時またはfocus-within時に空白定義されます。
+- `--_isHov`は非hover時（かつ非focus-within時）にのみ、`--_isHov: ;` のように値が空の状態で定義されます。
+- `--_notHov`は逆に、hover時またはfocus-within時に同じく空の値で定義されます。
 
 <SrcCode path="src/scss/base/set/_hov.scss" />
 
 
-この空変数トリックにより、次のような書き方ができます。
+この空の値を使った仕組みにより、次のような書き方ができます。
 
 - `var(--_isHov, {ホバー時に適用させたい値})`
 - `var(--_notHov, {非ホバー時に適用させたい値})`
@@ -207,7 +207,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 例えば `color: var(--_isHov, red)` とした要素の場合、hover時に`--_isHov`が未定義となるため、`color:red`が適用されるようになります。
 
 :::info
-`var(--_isHov, ...) var(--_notHov, ...)`とすると**ホバー前後のスタイルを1行で書くこともできます**が、`box-shadow`などの半角スペースで区切って値を調整するプロパティではこの書き方無効となります。
+`var(--_isHov, ...) var(--_notHov, ...)`とすると**ホバー前後のスタイルを1行で書くこともできます**が、`box-shadow`などの半角スペースで区切って値を調整するプロパティではこの書き方は無効になります。
 :::
 
 <PreviewTitle>例: `-hov:test`</PreviewTitle>
@@ -345,7 +345,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 ## `set--bdrsInner`
 
 親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。
-親要素に`set--bdrsInner`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
+親要素に`set--bdrsInner`クラスを付け、子要素に`-bdrs:inner`を指定すると、計算された`--bdrs--inner`が子要素の角丸に適用されます。
 
 （親要素では`bdrs`と`p`の指定が必須となります。）
 

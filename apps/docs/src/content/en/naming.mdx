@@ -195,11 +195,14 @@ For `padding` and `margin`, notations like `pt`, `px`, `my` are widely adopted a
 | block-start / end | `pbs`, `pbe`, `mbs`, `mbe` |
 </div>
 
-#### No collisions between group abbreviations
+#### Consistent group abbreviations, no collisions
 
-An abbreviation used by one group must not be reused by another group.
+Properties in the same group must always start with the same group abbreviation.
+Also, an abbreviation used by one group must not be reused by another group.
 
-Incorrect example: abbreviating `flex` to `fx`, then `flex-shrink` to `fsh`. (This breaks the consistency of the `fx` group.)
+Incorrect examples:
+- Abbreviating `flex` to `fx` but `flex-shrink` to `fsh` (this breaks the consistency of the `fx` group; the correct form is `fxsh`)
+- Using `f` as the group abbreviation for `flex-*` (`f` is already the `font` group abbreviation, so `flex-wrap` would collide with `font-weight` as `fw`, and `flex-shrink` with `font-style` as `fs`. To avoid this, the `flex` group uses `fx`, giving `fxw` and `fxsh`)
 
 ### max- / min- Properties
 
@@ -242,7 +245,7 @@ For the remaining properties, abbreviation follows the criteria below.
 
 ### Reusing one-character abbreviations
 
-For **one-character properties that do not form a group**, the character can be reused as the first part of another hyphenated abbreviation.
+For **single-letter properties that have no group**, the letter can be reused as the abbreviation for the first half of a different hyphenated property (for example, `t` for `top` is reused as the `t` of `text-*`).
 It can also be reused when the property has **only directional sub-properties**, as long as it does not collide with directional suffixes.
 
 Here are some examples.
@@ -257,7 +260,7 @@ Here are some examples.
 </div>
 
 :::note
-`g` in `grid-*` is an exception, allowed under the special rule that `grid` is not treated as a standalone group in Lism.
+The `g` in `grid-*` is an exception. Lism provides no Property Class for the `grid` property itself, so it does not collide with `g` for `gap` and is allowed.
 :::
 
 
@@ -280,7 +283,7 @@ The `{value}` portion is **not abbreviated** in principle. Since `{prop}` is alr
 
 ### When using a token value
 
-If a matching token exists, use the token value (the `{value}` portion of `--{token}--{value}`).
+If a matching token exists, use the token value (the `{token}` portion of `--{prop}--{token}`).
 
 ```
 .-c:text-2        → color: var(--text-2);

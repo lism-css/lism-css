@@ -41,7 +41,7 @@ export const PropTable = ({data={}, ...props}) => {
 }
 
 
-Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなユーティリティクラスを用意しています。  
+Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなクラスを用意しています。  
 さらに、その中でも特に重要なCSSプロパティについてはブレイクポイント指定用クラスも用意しています。
 
 それらを **Property Class** と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
@@ -86,9 +86,9 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 |カラム名|説明|
 |---|---|
-|**Shorthand**|CSSプロパティの省略形。Propertyクラスの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
+|**Shorthand**|CSSプロパティの省略形。Property Classの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
 |**Property**|対応するCSSプロパティ|
-|**To Class**|Property Utility クラスとして出力される値|
+|**To Class**|Property Class として出力される値|
 |**BP**|ブレイクポイント対応クラス（`-{prop}_{bp}`）のサポート状況。`✔` は `sm`・`md`・`lg` に対応、`-` は非対応。|
 
 省略形の文字列(Shorthand)は、クラスとして出力されます。また、`Lism`コンポーネントに指定するプロパティも、この文字列です。
@@ -292,7 +292,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 
 ## Displays
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`,<br />`inline`,<br />`inline-block`|✔|
 |`v`|`visibility`|`hidden`|-|
@@ -333,7 +333,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 
 ## Positions
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`pos`|`position`|`relative`,<br />`absolute`,<br />`static`,<br />`fixed`,<br />`sticky`|✔|
 |`t`|`top`|`0`,`50%`,`100%`|-|
@@ -435,7 +435,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 
 ### Flex
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`fxw`|`flex-wrap`|`wrap`|✔|
 |`fxd`|`flex-direction`|`column`,<br /> `column-reverse`,<br /> `row-reverse`|✔|
@@ -483,7 +483,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 
 ### Grid
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`gt`|`grid-template`|-|✔|
 |`gta`|`grid-template-areas`|-|✔|
@@ -539,7 +539,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 
 ### Places
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`ai`|`align-items`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|✔|
 |`ac`|`align-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
@@ -591,7 +591,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 
 ### Shadow & Radius
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bxsh`|`box-shadow`|[`SHADOW`](/docs/tokens/#shadow)|✔|
 |`bdrs`|`border-radius`|[`RADIUS`](/docs/tokens/#radius)|✔|
@@ -619,7 +619,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 
 ### Border
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bd`|`border`|`none`|-|
 |`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
@@ -666,7 +666,7 @@ borderに関する仕様は少し特殊になっていますので、詳しく�
 
 ## Background
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bg`|`background`|-|-|
 |`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
@@ -688,7 +688,7 @@ borderに関する仕様は少し特殊になっていますので、詳しく�
 
 ## Other Properties
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|
@@ -742,9 +742,9 @@ borderに関する仕様は少し特殊になっていますので、詳しく�
 
 ## hover
 
-Lismでは、`:hover`時のスタイルは-hov:で始まるPropertyクラスで定義します。
+Lismでは、`:hover`時のスタイルは-hov:で始まるProperty Classで定義します。
 
-ただし、`-hov`系クラスは通常のPropertyクラスと比べて少し特殊な仕組みで動作します。
+ただし、`-hov`系クラスは通常のProperty Classと比べて少し特殊な仕組みで動作します。
 
 詳しくは[hoverページ](/docs/property-class/hov/)をご覧ください。
 

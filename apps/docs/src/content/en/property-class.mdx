@@ -41,7 +41,7 @@ export const PropTable = ({data={}, ...props}) => {
 }
 
 
-Lism provides utility classes for the most common CSS properties, letting you apply frequently used values and tokens with a single class.
+Lism provides classes for the most common CSS properties, letting you apply frequently used values and tokens with a single class.
 For the most critical properties, responsive breakpoint variants are available too.
 
 These are called **Property Classes** and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
@@ -88,7 +88,7 @@ Each table covers one group of properties.
 |---|---|
 |**Shorthand**| The abbreviated form of the CSS property. This is the `{prop}` string in the `-{prop}:{val}` class format, and also the prop name used with Lism components.|
 |**Property**| The corresponding CSS property |
-|**To Class**| Values that are output as Property Utility classes |
+|**To Class**| Values that are output as Property Classes |
 |**BP**| Breakpoint support classes (`-{prop}_{bp}`). `✔` covers `sm`, `md`, and `lg`, and `-` means unsupported. |
 
 
@@ -290,7 +290,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 ## Display
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`|✔|
 |`v`|`visibility`|`hidden`|-|
@@ -331,7 +331,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 ## Position
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`pos`|`position`|`relative`,<br />`absolute`,<br />`static`,<br />`fixed`,<br />`sticky`|✔|
 |`t`|`top`|`0`,`50%`,`100%`|-|
@@ -433,7 +433,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Flex
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`fxw`|`flex-wrap`|`wrap`|✔|
 |`fxd`|`flex-direction`|`column`,<br /> `column-reverse`,<br /> `row-reverse`|✔|
@@ -481,7 +481,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Grid
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`gt`|`grid-template`|-|✔|
 |`gta`|`grid-template-areas`|-|✔|
@@ -537,7 +537,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Places
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`ai`|`align-items`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|✔|
 |`ac`|`align-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
@@ -589,7 +589,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Shadow & Radius
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bxsh`|`box-shadow`|[`SHADOW`](/en/docs/tokens/#shadow)|✔|
 |`bdrs`|`border-radius`|[`RADIUS`](/en/docs/tokens/#radius)|✔|
@@ -617,7 +617,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Border
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bd`|`border`|`none`|-|
 |`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
@@ -665,7 +665,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 ## Background
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bg`|`background`|-|-|
 |`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
@@ -687,7 +687,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 ## Other Properties
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|

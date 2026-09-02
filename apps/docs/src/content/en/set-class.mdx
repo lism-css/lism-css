@@ -1,12 +1,12 @@
 ---
 title: 'Set Class'
-description: 'Learn about the set-- utility classes for overriding base styles and redefining tokens.'
+description: 'Learn about the set-- style classes for overriding base styles and redefining tokens.'
 ---
 import { Lism, Container, Wrapper, Box, Columns, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 
 
-Utility classes defined in the `lism-base` layer follow the `set--{className}` format. They handle base styling for HTML elements and CSS variable setup.
+Classes defined in the `lism-base` layer follow the `set--{className}` format. They handle base styling for HTML elements and CSS variable setup.
 
 The set-- classes fall into two categories:
 
@@ -193,13 +193,13 @@ For the spacing scale rules, see [Design Tokens (SPACE)](/en/docs/tokens/#space)
 
 Sets the hover state variables (`--_notHov`, `--_isHov`). Primarily used to **control hover styles on child elements**.
 
-- `--_isHov` is defined as an empty value only when not hovered (and not focus-within).
-- Conversely, `--_notHov` is defined as an empty value when hovered or focus-within.
+- `--_isHov` is defined only when not hovered (and not focus-within), with an empty value like `--_isHov: ;`.
+- Conversely, `--_notHov` is defined with the same empty value when hovered or focus-within.
 
 <SrcCode path="src/scss/base/set/_hov.scss" />
 
 
-This empty variable trick enables the following patterns:
+Thanks to this empty-value mechanism, you can write the following patterns:
 
 - `var(--_isHov, {value to apply on hover})`
 - `var(--_notHov, {value to apply when not hovered})`
@@ -345,7 +345,7 @@ The amount of space outside the content width (`--contentSize`) is set as its va
 ## `set--bdrsInner`
 
 A class that automatically calculates the inner border radius (`--bdrs--inner`) from the parent element's border radius (`--bdrs`) and padding (`--p`).
-Apply `set--bdrsInner` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
+Add the `set--bdrsInner` class to the parent element and specify `-bdrs:inner` on the child element, and the calculated `--bdrs--inner` is applied as the child element's border radius.
 
 (Both `bdrs` and `p` must be specified on the parent element.)
 
