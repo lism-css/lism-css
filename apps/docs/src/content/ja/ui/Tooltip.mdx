@@ -14,7 +14,7 @@ import { Tooltip } from '@lism-css/ui/astro/Tooltip';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="30" py="50">
+  <PreviewArea p="30">
     <Tooltip.Root tooltipId="tt-01">
       <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
         <Fragment>保存</Fragment>
@@ -122,7 +122,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 <Preview>
   <PreviewTitle>`side`の指定例</PreviewTitle>
-  <PreviewArea p="30" py="50">
+  <PreviewArea p="30">
     <Cluster g="15">
       <Tooltip.Root tooltipId="tt-02">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
@@ -248,8 +248,6 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 `left` / `right`は画面上の物理的な向きを指します。`start` / `end`は書字方向に追従する論理的な向きで、`dir="rtl"`の環境では左右が入れ替わります。
 
 また、いずれの向きを指定した場合でも、画面の端に収まらないときは自動的に反対側へ反転します。
-
-反転の判定は、ポップアップの包含ブロックを基準に行われます。祖先に`container-type`（Lismの`is--container`）・`transform`・`contain`などを持つ要素があると、画面ではなくその要素の端が基準になります。その要素が小さいと、指定と逆側に表示されることがあります。
 :::
 
 
@@ -259,7 +257,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 <Preview>
   <PreviewTitle>`align`の指定例</PreviewTitle>
-  <PreviewArea p="30" py="50">
+  <PreviewArea p="30">
     <Cluster g="15">
       <Tooltip.Root tooltipId="tt-11">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
@@ -336,7 +334,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 <Preview>
   <PreviewTitle>`delay`と`offset`の指定例</PreviewTitle>
-  <PreviewArea p="30" py="50">
+  <PreviewArea p="30">
     <Cluster g="15">
       <Tooltip.Root tooltipId="tt-08" delay="0s">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
@@ -393,7 +391,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 <Preview>
   <PreviewTitle>配色の変更例</PreviewTitle>
-  <PreviewArea p="30" py="50">
+  <PreviewArea p="30">
     <Tooltip.Root tooltipId="tt-10">
       <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
         <Fragment>配色を変更したツールチップ</Fragment>
@@ -427,3 +425,5 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 ツールチップの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
 
 未対応のブラウザ（Firefox ESR 140 など）では、`<Tooltip.Root>`（＝トリガーを内包する要素）を基準にした絶対配置にフォールバックします。この場合、画面の端に収まらないときの自動反転は行われず、ツールチップが見切れることがあります。また、`offset`（`--tooltip-offset`）による間隔も適用されません。
+
+Firefox は`display`プロパティのトランジションに対応していないため、Anchor Positioning が有効な Firefox 147 以降では、非表示になるときのフェードと`--tooltip-delay-out`の猶予が効かず、ポインタが外れると即座に消えます。表示されるときのフェードとディレイは効きます。

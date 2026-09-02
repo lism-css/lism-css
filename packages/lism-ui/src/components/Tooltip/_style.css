@@ -1,7 +1,6 @@
 /*
- * 表示制御は CSS（:hover / :focus-visible）で行い、CSS Anchor Positioning で配置する。
- * anchor 配置は @supports で囲い、非対応ブラウザ（部分対応の Chrome 128〜130 を含む）には
- * ルート基準の absolute 配置にフォールバックする（viewport 端での反転とオフセットは無い）。
+ * 表示は CSS（:hover / :focus-visible）、配置は CSS Anchor Positioning。
+ * anchor 配置は @supports で囲い、非対応（部分対応の Chrome 128〜130 含む）はルート基準の absolute 配置に落とす。
  */
 @layer lism-block {
   .b--tooltip {
@@ -24,9 +23,8 @@
     font-size: var(--fz--s);
     visibility: hidden; /* pointer-events は使わない。transition しないため退場猶予中の当たり判定が消え、橋渡しが効かなくなる */
     opacity: 0;
-    transition:
-      opacity var(--duration),
-      visibility var(--duration);
+    transition-property: opacity, visibility;
+    transition-duration: var(--duration);
     transition-delay: var(--tooltip-delay-out, 0.15s); /* 退場猶予: トリガー→ポップアップへポインタを渡す橋渡し */
   }
 
@@ -46,13 +44,10 @@
   }
 
   /*
-   * anchor 配置。position-area は side と align の span を var() で合成し、
-   * start / end は span-* で片側に伸ばして place-self でアンカー端に揃える。
-   * span キーワードと揃える軸は side の系統（物理 x / 物理 y / 論理 block）ごとに異なるので、
-   * 系統側で --_spanStart / --_spanEnd / --_placeStart / --_placeEnd の候補を定義し、align 側はそれを選ぶだけにする。
-   * top / bottom の align に span-x-* を使うのは、書字方向に従って RTL でも端に揃うため。
-   * 物理（top/bottom）と論理（span-inline-*）の混在は文法上無効で宣言ごと落ちるので使わない。
-   * side の start / end は inline 軸の論理方向（position-area の inline-start / inline-end）。block 軸は top / bottom の物理値のみ。
+   * anchor 配置。position-area は側（--_side）と span（--_span）を var() で合成する。
+   * align の start / end は span-* で片側に伸ばし place-self で端に揃える。span と揃える軸は side の系統ごとに違うので、
+   * 系統側で --_span* / --_place* の候補を定義し、align 側はそれを選ぶだけにする。
+   * top / bottom の align に span-x-* を使うのは RTL でも書字方向の端に揃えるため。物理と論理キーワードの混在は無効になるので混ぜない。
    */
   @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
     .b--tooltip_popup {
@@ -61,6 +56,29 @@
       position: fixed;
       position-anchor: --tooltip;
       position-area: var(--_side) var(--_span);
+      /*
+       * 非表示は display: none。visibility だけだと非表示中も配置され、スクロールで画面外に出た時点の flip が
+       * 仕様（last successful position option）で記憶され、戻っても反転したまま残る。
+       * 退場中は display を transition で残す（Firefox は display の transition 未対応で退場フェードが無くなるだけ）。
+       */
+      display: none;
+      transition-property: opacity, visibility, display;
+      transition-behavior: normal, normal, allow-discrete;
+    }
+    .b--tooltip:hover > .b--tooltip_popup,
+    .b--tooltip_trigger:focus-visible ~ .b--tooltip_popup {
+      display: block;
+    }
+    /* 入場の開始値。visibility を hidden から始め、入場ディレイ中は当たり判定を持たせない */
+    @starting-style {
+      .b--tooltip:hover > .b--tooltip_popup,
+      .b--tooltip_trigger:focus-visible ~ .b--tooltip_popup {
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
+    .b--tooltip[data-dismissed] > .b--tooltip_popup {
+      display: none;
     }
     /* トリガーとの隙間（offset）を透明な当たり判定で埋め、移動中に Root の :hover が外れないようにする。flip でどちら側に出ても効くよう全方向へ広げる */
     .b--tooltip_popup::before {

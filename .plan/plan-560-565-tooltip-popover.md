@@ -164,7 +164,7 @@ anchor配置のルールを`@supports (...)`で囲い、フォールバックの
   - align軸（横方向のside）: `center`→`top: 50%; translate: 0 -50%`、`start`→`top: 0`、`end`→`bottom: 0`
   - `data-align`が無い生HTMLではalign軸のルールが当たらずstatic positionに落ちる。コンポーネントは常に`data-align`を出すので、docsのHTML例にも常に書く。
 - 表示制御（CSSのみ。Popupは同じRoot直下に置く前提）:
-  - 非表示既定: `visibility: hidden; opacity: 0; transition: opacity var(--tooltip-duration, .15s), visibility var(--tooltip-duration, .15s); transition-delay: var(--tooltip-delay-out, .15s)`（退場猶予＝トリガー→ポップアップへポインタを渡す橋渡し）。`pointer-events`は使わない。transitionしないため退場猶予中に当たり判定が消え、橋渡しが効かなくなる。当たり判定の除外は`visibility: hidden`で足りる。
+  - 非表示既定: `visibility: hidden; opacity: 0; transition: opacity var(--tooltip-duration, .15s), visibility var(--tooltip-duration, .15s); transition-delay: var(--tooltip-delay-out, .15s)`（退場猶予＝トリガー→ポップアップへポインタを渡す橋渡し）。`pointer-events`は使わない。transitionしないため退場猶予中に当たり判定が消え、橋渡しが効かなくなる。当たり判定の除外は`visibility: hidden`で足りる。anchor配置側（`@supports`内）ではさらに`display: none`で隠し、表示時に`display: block`。退場中は`transition-behavior: allow-discrete`で`display`を残し、入場は`@starting-style`で`visibility: hidden; opacity: 0`から始める（理由は採用欄の`display: none`の項）。
   - 隙間の橋: anchor配置側で`.b--tooltip_popup::before`（`position: absolute; inset: calc(-1 * var(--offset)); z-index: -1`）を置き、offsetぶんの隙間を透明な当たり判定で埋める。トリガー→ポップアップの移動中にRootの`:hover`が外れないので、退場猶予は横断中の保険ではなく別経路からの復帰用になる。flipでどちら側に出ても効くよう全方向へ広げる。フォールバック側は隙間が無いので置かない。
   - 表示: `.b--tooltip:hover > .b--tooltip_popup`と`.b--tooltip_trigger:focus-visible ~ .b--tooltip_popup`で`visibility: visible; opacity: 1; transition-delay: var(--tooltip-delay, .4s)`（入場ディレイ）。`:has()`は使わない（隣接/一般兄弟結合子で足りる）。
   - Esc後: `.b--tooltip[data-dismissed] > .b--tooltip_popup`で強制非表示（`transition: none`）。表示ルールより後に置く。詳細度が並ばない場合は表示ルール側の疑似クラスを`:where`で包んで揃える。
@@ -305,6 +305,7 @@ components/Popover/
 - **`side`の論理値は`start`/`end`にし、`align`の`start`/`end`を`span-x-*`で書字方向に追従させる**: RTLでも位置決めCSSを書き分けずに済み、フォールバックも論理inset（`inset-inline-*`）で書けるので追加コストが小さい。値名をBase UIの`inline-start`/`inline-end`から短縮するのは、`side`のblock軸が`top`/`bottom`の物理値しか無く`start`/`end`がinline軸にしか解釈できないため`inline-`が冗長で、Lism本体の`-ps`/`-bd-s`等も`s`/`e`だけで`inline-start`/`inline-end`を表しているため。`align`の`start`/`end`と字面が重なるが、別属性なので衝突しない（2026-09-02に変更）。
 - **Popoverのポップアップに`set="plain"`を使わない**: `width: auto`がUAの`inset: 0`と組み合わさると全幅になり、フォールバックの中央カードが壊れる。
 - **`Trigger`/`Popup`/`Close`と`side`/`align`の語彙**: Base UIと同じで、2コンポーネント間でも揃う。`Popup`にするのは、`Content`だと「常に見えている側」か「出てくる側」か分からないため。`Close`にするのは、`Modal`の`OpenBtn`/`CloseBtn`は対の命名であり、`Trigger`と組む`Popover`で片方だけ`Btn`を付ける理由がないため。
+- **Tooltipの非表示は、anchor配置側では`display: none`にする**: `visibility`だけだと非表示中もレイアウトされ、スクロールでアンカーが画面外に出た時点でflipが確定する。仕様（css-anchor-position-1 §6.5）は今の配置が収まる限り前回成功した配置（last successful position option）を維持して元の`side`を再評価しないため、戻ってきても反転したまま残る（docsで「セクションを通り過ぎてから戻り`top`をホバー」で再現）。boxを消せば表示のたびに現在位置で判定し直される。退場中は`transition-behavior: allow-discrete`で`display`を残し、入場は`@starting-style`で`visibility: hidden; opacity: 0`から始めて入場ディレイ中の当たり判定を従来どおり無くす。`allow-discrete`と`@starting-style`はanchor配置より古く（Chrome 117 / Safari 17.5 / Firefox 129）、`@supports`内に閉じるのでフォールバックは不要。代案の「非表示中だけ`position-try-fallbacks: none`にする」は、ポインタを外した瞬間に元の側へ飛んでからフェードアウトするため不採用（2026-09-02）。
 
 ### 却下
 
@@ -355,7 +356,7 @@ components/Popover/
 - Chrome 125〜130はフォールバック表示（anchor配置なし）。自動更新でほぼ残存しないため受容。anchor配置側を`@supports`で囲う（共通方針1）ので、部分対応でも配置は崩れない。
 - 同一documentに`.b--tooltip`が1つもなくなってもTooltipのdocumentリスナーは残る（永続シングルトン）。対象がなければ各ハンドラは何もしないので害はない。
 - Tooltipの`:focus-visible`表示は隣接/一般兄弟結合子で実現するため、Popupは同じRoot直下に置く前提。
-- Tooltipのポップアップ（`position: fixed`）は、祖先に`container-type`（`is--container`）・`transform`・`contain`等があるとその要素が包含ブロックになり、反転判定がその要素の端を基準になる。小さな要素の中では指定と逆側に出ることがある。通常のWebコンテンツでそこまで小さなcontainerは稀なので受容し、docsの`side`の注記に書く。docsのプレビュー枠（`.c--preview_inner`は`container-type`あり）はTooltipのプレビューだけ`py="50"`で余白を確保する（2026-09-02）。
+- Firefoxは`display`のtransition未対応（bugzil.la/1882408）のため、anchor配置が有効なFirefox 147以降ではTooltipの退場フェードと退場猶予が効かず即座に消える。`::before`の橋渡しは表示中に効くので動作は壊れない。docsのブラウザ対応に書く。当初は「祖先の`container-type`が包含ブロックになり反転判定の基準になる」と判断してdocsの`side`の注記とプレビューの`py="50"`で対処したが、現行仕様（css-conditional-5）の`container-type`はlayout containmentを適用せず、実際の原因は採用欄の反転記憶の項だったので、注記と`py="50"`は撤回した（2026-09-02）。
 - React 18でのdev時の`popoverTarget`未知prop警告。
 
 ## 完了条件 / テスト方針
@@ -363,7 +364,7 @@ components/Popover/
 - `nr lint` / `nr typecheck`（`astro check`含む）/ `nr test` / `nr build`が通る。
 - 実機（Chrome・Safari 26・Firefox 147以上）:
   - 各`side`×`align`で意図した位置に出る。`dir="rtl"`のページで`side`の`start`/`end`と`align`の`start`/`end`が左右反転する。viewport端で反転する。スクロールに追従する。同一ページに複数設置しても互いのアンカーを取り違えない。
-  - Tooltip: ホバー→ディレイ後表示、ポップアップへポインタ移動しても消えない、Escで消えて離れて戻ると再表示、Tabフォーカスで表示。
+  - Tooltip: ホバー→ディレイ後表示、ポップアップへポインタ移動しても消えない、Escで消えて離れて戻ると再表示、Tabフォーカスで表示。セクションを通り過ぎるまでスクロールしてから戻ってホバーしても指定した`side`に出る。
   - Popover: 外側クリック/Escで閉じる、閉じた時にトリガーへフォーカスが戻る、`aria-expanded`が切り替わる。
 - 実機（Firefox ESR 140）: Tooltipは絶対配置で表示され機能する（`inline-*`も論理insetで正しい側に出る）。Popoverは中央カードで開閉・dismissが動く。
 - 部分対応の再現確認（anchor対応ブラウザでフォールバックを強制する）: 現行ChromeのDevToolsで`@supports`の条件を書き換え（肯定側を恒偽、`not`側を恒真にする）、Tooltip Popup / Popover Popupのcomputed styleを確認する。
