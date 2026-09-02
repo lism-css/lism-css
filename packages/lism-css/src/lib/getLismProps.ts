@@ -141,6 +141,7 @@ export class LismPropsData {
   // prop解析
   analyzeProps(): void {
     this.normalizeIsWrapper();
+    this.normalizeHasTransition();
 
     // set / util は attrs ループの前に取り出して各バケットへ振り分ける
     const rawSet = this.extractProp('set');
@@ -183,6 +184,16 @@ export class LismPropsData {
       }
       this.attrs.isWrapper = true;
     }
+  }
+
+  // hasTransition="color, opacity" 形式の文字列は --transitionProps 変数として出力し、クラス付与は boolean に寄せる。
+  normalizeHasTransition(): void {
+    const hasTransition = this.attrs.hasTransition;
+    if (typeof hasTransition !== 'string') return;
+    const transitionProps = hasTransition.trim();
+    if (transitionProps === '') return;
+    this.addStyle('--transitionProps', transitionProps);
+    this.attrs.hasTransition = true;
   }
 
   // Lism Prop 解析

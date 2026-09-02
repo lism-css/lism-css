@@ -410,6 +410,8 @@ The Lism core package provides the following classes by default:
 
 Adding the [`has--transition`](/en/docs/trait-class/#has--transition) class makes hover changes transition smoothly. Use the `--duration` variable to adjust the transition time.
 
+By default, only colors, shadows, opacity, transform-related, and filter-related properties are transitioned. We recommend explicitly listing the properties that actually change via the `--transitionProps` variable (or a string such as `hasTransition="color, opacity"` in Lism components).
+
 
 <Preview>
   <PreviewTitle>Example: combining `has--transition` to animate the bxsh intensity</PreviewTitle>

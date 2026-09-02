@@ -61,7 +61,7 @@ export default function TokenOutline({ items, activeId }: TokenOutlineProps) {
       bdrs="20"
       bxsh={isOpen ? '20' : undefined}
       hasTransition
-      // `all` (has--transition default) would also tween border-width when `bd`
+      // The has--transition default list would also tween border-color when `bd`
       // appears, which makes the whole outline flash. Only the properties that
       // actually ease in and out are listed here.
       style={{ translate: '0 -50%', '--transitionProps': 'background-color, box-shadow' }}
@@ -96,7 +96,16 @@ export default function TokenOutline({ items, activeId }: TokenOutlineProps) {
             <Inline className={isOpen ? undefined : 'u--srOnly'} fz="2xs" ff="mono" fw={isCurrent ? 'bold' : undefined} whs="nowrap">
               {item.label}
             </Inline>
-            <Box fxsh="0" w={isCurrent ? '1.25rem' : '0.75rem'} h="2px" bdrs="99" bgc={isCurrent ? 'text' : 'divider'} hasTransition />
+            <Box
+              fxsh="0"
+              w={isCurrent ? '1.25rem' : '0.75rem'}
+              h="2px"
+              bdrs="99"
+              bgc={isCurrent ? 'text' : 'divider'}
+              hasTransition
+              // `width` is outside the has--transition default list, so it is listed explicitly.
+              style={{ '--transitionProps': 'width, background-color' }}
+            />
           </Flex>
         );
       })}

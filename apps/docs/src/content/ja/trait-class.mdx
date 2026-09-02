@@ -34,10 +34,14 @@ import getSvgUrl from '@/utils/getSvgUrl';
 
 <SrcCode path="src/scss/trait/has/_transition.scss" />
 
+トランジションの対象プロパティ（`--transitionProps`）の初期値は、色・影・透明度・transform系・filter系に限定しています。`all`にすると、ページ読み込み時やレイアウト変化時に意図しないアニメーション（表示のちらつき）が入りやすいためです。
+
+実際に変化させるプロパティだけを`--transitionProps`で明示指定することを推奨します。Lismコンポーネントでは、`hasTransition`に文字列を渡すと`--transitionProps`として出力されます。
+
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="30">
-    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+    <Lism hasTransition="color" hov={{c: 'red'}}>Example</Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
     ```html
@@ -46,7 +50,7 @@ import getSvgUrl from '@/utils/getSvgUrl';
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
     ```jsx
-    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+    <Lism hasTransition="color" hov={{c: 'red'}}>Example</Lism>
     ```
   </PreviewCode>
 </Preview>

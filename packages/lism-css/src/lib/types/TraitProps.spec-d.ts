@@ -51,6 +51,23 @@ describe('TraitProps', () => {
     });
   });
 
+  describe('hasTransition は --transitionProps 用の文字列・boolean を受け入れる', () => {
+    it('hasTransition - string を受け入れる', () => {
+      assertType<TraitProps>({ hasTransition: 'color' });
+      assertType<TraitProps>({ hasTransition: 'scale, opacity' });
+    });
+
+    it('hasTransition - boolean を受け入れる', () => {
+      assertType<TraitProps>({ hasTransition: true });
+      assertType<TraitProps>({ hasTransition: false });
+    });
+
+    it('hasTransition - number は受け入れない', () => {
+      // @ts-expect-error - number は受け入れない
+      assertType<TraitProps>({ hasTransition: 100 });
+    });
+  });
+
   describe('isWrapper は contentSize 互換の文字列値・boolean を受け入れる', () => {
     it('isWrapper - プリセット値を受け入れる', () => {
       assertType<TraitProps>({ isWrapper: 's' });

@@ -412,6 +412,8 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
 
 [`has--transition`](/docs/trait-class/#has--transition)クラスを付与すると、hover時の変化になめらかなトランジションがかかります。`--duration`変数で所要時間を調整できます。
 
+初期状態でトランジションの対象になるのは、色・影・透明度・transform系・filter系のプロパティだけです。`--transitionProps`変数（Lismコンポーネントでは`hasTransition="color, opacity"`のような文字列指定）で、実際に変化させるプロパティを明示することを推奨します。
+
 
 <Preview>
   <PreviewTitle>`has--transition`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
