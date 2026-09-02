@@ -12,7 +12,6 @@
 
 // Memo: base レイヤーで初期値セット済み
 // bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
-// .-bd .set--bd
 // @layer ありビルドでは lism-base へ退避する（unlayered 位置だと :where() で詳細度 0 でも
 // 「unlayered > 全レイヤー」のルールで b-- 等の border 指定に勝ってしまうため）。
 // no_layer ビルドでは :where() で詳細度 0 にする。
@@ -27,12 +26,9 @@
 }
 
 .-bd {
-  // --bd: var(--bdw) var(--bds) var(--bdc);
-  // border: var(--bd) #{mixin.$maybe_important};
   border-style: var(--bds) #{mixin.$maybe_important};
 }
 
-// 方向指定
 .-bd-x {
   border-inline-style: var(--bds) #{mixin.$maybe_important};
 }

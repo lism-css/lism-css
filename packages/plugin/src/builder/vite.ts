@@ -1,9 +1,6 @@
 /**
  * Vite 用の統合エントリ。
  *
- * `@lism-css/plugin/vite` から公開する統合エントリ:
- * - `lismCss(options)` … config alias + 動的 CSS ビルド（P2）+ 任意で purge をまとめた `Plugin[]`。
- *
  * purge の `known`（purge が削除対象にしてよい lism セレクタのカタログ）は、未指定なら **config 反映済みの
  * full.css**（プラグインが生成する素の CSS のスーパーセット）から構築して遅延解決（`resolveKnownSelectors`）へ渡す。
  * known に含まれないクラスは「unknown（=user 由来かもしれない）」として温存されるため、user が lism.config.js で
@@ -25,7 +22,7 @@ export type { LismCssOptions } from './shared';
 export { lismConfigAlias, type LismConfigAliasOptions } from './vite-config-alias';
 
 /**
- * Vite 用の統合プラグイン配列を返す。
+ * config alias・型生成・動的CSSと任意のpurgeをまとめたプラグイン配列を返す。
  */
 export function lismCss(options: LismCssOptions = {}): Plugin[] {
   const { purge, typegen, ...viteOpts } = options;

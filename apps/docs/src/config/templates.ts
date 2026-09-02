@@ -1,17 +1,6 @@
 /**
- * Templates 一覧データ
- *
  * テンプレート定義の SSOT は `templates/manifest.ts`。
- * このファイルでは manifest から CLI / docs 共通フィールド（slug / category / stack /
- * variant / title / description / previewUrl / draft）を受け取り、docs 専用の
- * `thumb`（ImageMetadata）を規約ベースで解決して `TemplateItem[]` を組み立てる。
- *
- * thumb 解決ルール:
- * - kind === 'single-project-variant': `templates/{sourcePath}/screenshots/{variant}.png`
- * - それ以外:                          `templates/{sourcePath}/screenshots/top.png`
- *
- * 言語別 thumb（en）は同じ規約で `screenshots/en/` 配下を参照する。撮影済みなら
- * `getThumb(tpl, 'en')` が en スクショを返し、未撮影なら ja にフォールバックする。
+ * docs 専用の thumb は `templates/{sourcePath}/screenshots/` から解決する。
  */
 
 import type { LangCode } from '@/config/site';
@@ -69,7 +58,6 @@ export interface CategoryDef {
   aggregateRepresentativeSlug?: string;
 }
 
-/** カテゴリ定義（表示順） */
 export const categories: CategoryDef[] = [
   {
     id: 'minimal',
@@ -115,15 +103,12 @@ export const stackLabels: Record<Stack, string> = {
   html: 'Static HTML',
 };
 
-/** Stack のフィルタ表示順 */
 export const stackOrder: Stack[] = ['astro', 'html', 'vite', 'next'];
 
-/** sourcePath を持つ TemplateDef かどうか（thumb 解決に必要） */
 function hasSourcePath(tpl: TemplateDef): tpl is Extract<TemplateDef, { sourcePath: string }> {
   return 'sourcePath' in tpl;
 }
 
-/** 規約ベースの thumb ファイル名（screenshots 直下からの相対） */
 function thumbFileName(tpl: Extract<TemplateDef, { sourcePath: string }>): string {
   return tpl.kind === 'single-project-variant' ? `${tpl.variant}.png` : 'top.png';
 }
@@ -148,7 +133,7 @@ function resolveThumbEn(tpl: TemplateDef): ImageMetadata | undefined {
   return screenshotModules[key]?.default;
 }
 
-/** manifest を docs 用 TemplateItem に変換 */
+// manifestにdocs用サムネイルを加えて一覧を組み立てる
 export const templates: TemplateItem[] = manifestTemplates.map((tpl: TemplateDef): TemplateItem => {
   const thumbEn = resolveThumbEn(tpl);
   return {
@@ -183,7 +168,6 @@ export function getPreviewUrl(tpl: TemplateItem, lang: LangCode): string | undef
  */
 export const visibleTemplates: TemplateItem[] = import.meta.env.PROD ? templates.filter((tpl) => !tpl.draft) : templates;
 
-/** category ごとに templates を分類した結果を返す */
 export function groupByCategory(items: TemplateItem[] = visibleTemplates): Array<{ category: CategoryDef; items: TemplateItem[] }> {
   return categories
     .map((category) => ({

@@ -1,19 +1,7 @@
 /**
- * `lucide-react` を仮想モジュールとして供給する vite プラグイン。
- *
- * ビューアも同梱テンプレートもユーザーのページも `import { Bell } from 'lucide-react'` と書くが、
- * `lucide-react` 本体は 45MB あり、npx 実行のたびにダウンロードされてしまう。
- * そこで実データだけを持つ `@iconify-json/lucide`（約 570KB）から、同じ import 構文で使える
- * モジュールを生成して差し替える。ユーザーが書く import 構文は一切変えない。
- *
- * 生成物は「全アイコンを含む1モジュール」にする。
- * - dev … アイコンごとにモジュールを分けると、ブラウザが 1,800 件を個別に取得してしまう。
- *   1モジュールなら1リクエストで済む。
- * - build（`check`） … 各アイコンの生成呼び出しに rollup の PURE アノテーションを付けてあるので、
- *   未使用アイコンは tree-shaking で落ちる。
- *
- * SVG は React 要素へ展開せず、Iconify の body 文字列を `dangerouslySetInnerHTML` でそのまま埋める
- * （1,800 アイコン分の要素ツリーを生成すると、出力サイズも生成コストも跳ね上がるため）。
+ * 45MBの`lucide-react`を毎回取得せず、`@iconify-json/lucide`から互換モジュールを生成する。
+ * devの1,800リクエストを避けるため1モジュールとし、buildではPURE注釈で未使用アイコンを落とす。
+ * 生成コストを抑えるためSVGはReact要素へ展開せずbody文字列を埋め込む。
  *
  * 提供する root export は「全アイコン名」＋ `Icon` / `createLucideIcon` まで（`SUPPORTED_LUCIDE_API` 参照）。
  * 本物にある `icons`（全アイコンのレコード）は提供しない — 参照した時点で全アイコンがバンドルへ入り、
@@ -27,7 +15,6 @@ import type { Plugin } from 'vite';
 
 import { MockupContractError } from '../core/types.js';
 
-/** ページ・ビューアが書く bare specifier。 */
 export const LUCIDE_PACKAGE_NAME = 'lucide-react';
 
 export const VIRTUAL_LUCIDE_ID = 'virtual:lism-mockup/lucide-react';
@@ -45,8 +32,6 @@ export const RESOLVED_VIRTUAL_LUCIDE_ID = `\0${VIRTUAL_LUCIDE_ID}`;
 export const SUPPORTED_LUCIDE_API = ['Icon', 'createLucideIcon'] as const;
 
 /**
- * 本物の `lucide-react` にはあるが、この仮想モジュールでは提供しない root export と、その理由。
- *
  * `check` で「そんな export は無い」という rollup のエラーが出た時に、これを説明へ差し替える。
  */
 const UNSUPPORTED_LUCIDE_EXPORTS: ReadonlyMap<string, string> = new Map([
@@ -57,26 +42,19 @@ const UNSUPPORTED_LUCIDE_EXPORTS: ReadonlyMap<string, string> = new Map([
   ],
 ]);
 
-/** 未提供の名前を import したときに、どこまで使えるのかを添える1行。 */
 const LUCIDE_SCOPE_NOTE =
   `@lism-css/mockup supplies ${LUCIDE_PACKAGE_NAME} as a generated module holding the icon components plus ` +
   `${SUPPORTED_LUCIDE_API.map((name) => `"${name}"`).join(' and ')}. Package subpaths (${LUCIDE_PACKAGE_NAME}/icons/...) are not available either.`;
 
-/** Iconify のアイコン1件（`icons.json` の `icons` の値）。 */
 interface IconifyIcon {
-  /** `<svg>` の中身（子要素の文字列）。 */
   body: string;
-  /** アイコン固有の viewBox 幅（未指定ならアイコンセットの既定値）。 */
   width?: number;
   height?: number;
 }
 
-/** `@iconify-json/lucide` の `icons.json`。使うフィールドだけを型にしている。 */
 export interface LucideIconSet {
   icons: Record<string, IconifyIcon>;
-  /** `{ 別名: { parent: 本体名 } }`。lucide の非推奨名・旧名がここに入る。 */
   aliases?: Record<string, { parent: string }>;
-  /** アイコンセット既定の viewBox サイズ（lucide は 24x24）。 */
   width?: number;
   height?: number;
 }
@@ -96,7 +74,6 @@ const LUCIDE_DEFAULTS = {
   strokeLinejoin: 'round',
 } as const;
 
-/** lucide-react の `toCamelCase`（`shared/src/utils/toCamelCase`）と同じ変換。 */
 function toCamelCase(value: string): string {
   return value.replace(/^([A-Z])|[\s\-_]+(\w)/g, (_match, first: string | undefined, rest: string | undefined) =>
     rest ? rest.toUpperCase() : (first as string).toLowerCase()
@@ -114,17 +91,12 @@ export function toPascalCase(value: string): string {
   return camel.charAt(0).toUpperCase() + camel.slice(1);
 }
 
-/** lucide-react の `toKebabCase` と同じ変換（PascalCase → kebab、数字は分割しない）。 */
 function toKebabCase(value: string): string {
   return value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
 /**
- * lucide-react が `<svg>` に付ける class 文字列を組み立てる。
- *
- * `createLucideIcon` は `lucide-<kebab(pascal(name))>` と `lucide-<name>` の2つを候補にし
- * （`trash-2` なら `lucide-trash2` と `lucide-trash-2`）、`Icon` 側で先頭に `lucide` を足す。
- * 重複は取り除かれるので、同じ結果になるようここでも重複を落とす。
+ * lucide-reactの`createLucideIcon`と同じ候補を作り、重複を除く。
  */
 export function lucideClassName(iconKey: string): string {
   const candidates = ['lucide', `lucide-${toKebabCase(toPascalCase(iconKey))}`, `lucide-${iconKey}`];
@@ -163,31 +135,20 @@ export function stripInheritedAttributes(body: string): string {
   return result;
 }
 
-/** 生成対象のアイコン1件。 */
 export interface LucideIconEntry {
-  /** `icons.json` のキー（kebab-case）。 */
   key: string;
-  /** lucide-react と同じ PascalCase の export 名。 */
   exportName: string;
-  /** `<svg>` に付ける class 文字列。 */
   className: string;
-  /** `<svg>` の viewBox。 */
   viewBox: string;
-  /** `dangerouslySetInnerHTML` に流す body。 */
   body: string;
 }
 
-/** export 名 → アイコンの索引。 */
 export interface LucideIconIndex {
-  /** 実体を持つアイコン（`icons.json` の `icons`）。宣言順。 */
   readonly entries: readonly LucideIconEntry[];
-  /** export 名 → `icons.json` のキー。エイリアスも本体のキーへ解決済み。 */
   readonly keyByExportName: ReadonlyMap<string, string>;
-  /** export 名から `icons.json` のキーを引く。未知の名前は候補付きの契約エラー。 */
   iconKeyFor(exportName: string): string;
 }
 
-/** 似た名前の候補（大文字小文字を無視した完全一致 → 前方一致）を1つ返す。 */
 function findSuggestion(exportName: string, names: Iterable<string>): string | null {
   const lower = exportName.toLowerCase();
   let prefixMatch: string | null = null;
@@ -200,7 +161,7 @@ function findSuggestion(exportName: string, names: Iterable<string>): string | n
 }
 
 /**
- * `icons.json` から「lucide-react の export 名 → アイコン」の索引を作る。
+ * `icons.json`からlucide-react互換のexport索引を作る。
  *
  * 名前の対応は文字列変換を推測で書かず、`icons.json` のキー一覧から機械的に生成する。
  * `Icon` サフィックス付きの別名（`BellIcon`）と `aliases`（`Sidebar` → `panel-left`）も含める。
@@ -341,7 +302,6 @@ function icon(displayName, iconClassName, body, viewBox = DEFAULT_VIEW_BOX) {
   return Component;
 }
 
-/** Same as lucide-react's mergeClasses: drop empty and duplicate class names. */
 function mergeClasses(...classes) {
   return classes
     .filter((className, index, array) => Boolean(className) && className.trim() !== '' && array.indexOf(className) === index)
@@ -349,7 +309,6 @@ function mergeClasses(...classes) {
     .trim();
 }
 
-/** Same name conversions lucide-react uses to build an icon's class names. */
 function toCamelCase(value) {
   return value.replace(/^([A-Z])|[\\s\\-_]+(\\w)/g, (_match, first, rest) => (rest ? rest.toUpperCase() : first.toLowerCase()));
 }
@@ -403,7 +362,6 @@ const lucideIcon = /*#__PURE__*/ forwardRef(
     )
 );
 
-/** Same as lucide-react's createLucideIcon: turns icon data into a component. */
 function createLucideIcon(iconName, iconNode) {
   const Component = forwardRef(({ className, ...props }, ref) =>
     createElement(lucideIcon, {
@@ -420,14 +378,12 @@ function createLucideIcon(iconName, iconNode) {
 
   const declarations = index.entries.map((entry) => {
     const args = [entry.exportName, entry.className, entry.body].map((value) => JSON.stringify(value));
-    // 既定と違う viewBox を持つアイコンだけ第4引数を足す（ほぼ全アイコンが 24x24 のため）。
     if (entry.viewBox !== `0 0 ${size} ${size}`) args.push(JSON.stringify(entry.viewBox));
     return `const ${entry.exportName} = /*#__PURE__*/ icon(${args.join(', ')});`;
   });
 
   // export 文は 1文にまとめず適度に分割する（1文が数千指定子になるのを避けるため）。
   const specifiers = [...index.keyByExportName.keys()].map((exportName) => {
-    // 索引経由で引き直すことで、生成コードが必ず実在するアイコンだけを指すようにする。
     const local = toPascalCase(index.iconKeyFor(exportName));
     return exportName === local ? exportName : `${local} as ${exportName}`;
   });
@@ -456,7 +412,6 @@ export function describeMissingLucideExport(error: unknown): string | null {
   const known = UNSUPPORTED_LUCIDE_EXPORTS.get(binding);
   if (known !== undefined) return `Cannot import "${binding}" from ${LUCIDE_PACKAGE_NAME}: ${known}\n${LUCIDE_SCOPE_NOTE}`;
 
-  // 残りはアイコン名の間違いとして扱い、索引が持っている候補をそのまま案内する。
   try {
     buildLucideIconIndex(loadLucideIconSet()).iconKeyFor(binding);
   } catch (lookupError) {

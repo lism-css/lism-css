@@ -1,8 +1,4 @@
 ---
-/**
- * パターン一覧ページ（非root言語用）
- * カテゴリ別にパターンを一覧表示
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, AutoColumns, Frame, BoxLink, Box, Lism, Text, Inline, Heading, Cluster, Link } from 'lism-css/astro';
 import { patterns, categoryIds, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
@@ -40,7 +36,6 @@ if (!isValidLang(lang)) {
     <Stack g="40">
       {
         categoryIds.map((categoryId: PatternCategoryId) => {
-          // satisfies による推論では related を持たないカテゴリで型が絞られるため、共通の型で受ける
           const category: PatternCategory = patterns[categoryId];
           const items = filterDraftItems(category.items);
           return (
@@ -100,14 +95,12 @@ if (!isValidLang(lang)) {
 </BaseLayout>
 
 <style>
-  /* サムネイルカードのスタイル */
   .c--patternList_link > .l--frame {
     --bdw: 2px;
     transition: box-shadow 0.2s;
     box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--10));
   }
 
-  /* サムネイル画像のスタイル */
   .c--patternList_thumb {
     width: 100%;
     height: 100%;
@@ -116,7 +109,6 @@ if (!isValidLang(lang)) {
     transition: transform 0.3s ease;
   }
 
-  /* ホバー時のズーム効果 */
   .c--patternList_link:hover .c--patternList_thumb {
     transform: scale(1.02);
   }

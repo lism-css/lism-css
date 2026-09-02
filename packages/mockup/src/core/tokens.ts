@@ -1,12 +1,6 @@
 /**
- * `tokens.json`（lism.config 互換の tokens オブジェクト）の検証と、その反映経路。
- *
- * 反映は2経路必要なので、検証済み tokens から生成した lism.config モジュール1本を両方の入口にする。
- * 1. React ランタイム（props → `var()` 変換）… `lismConfigAlias({ configPath })` で `lism-css/config.js` を差し替え
- * 2. CSS 変数定義 … `loadBuildConfigs(dataDir, { configPath }).mainConfig` を `serializeTokens()` へ
- *
- * ダーク時の値は `tokens.dark.json` が持ち、`serializeTokens()` の後ろに `.set--dark` ブロックとして足す。
- * lism.config にはダークの概念が無いため、こちらは経路1（React ランタイム）には流さない。
+ * 検証済みtokensから生成したlism.configをReactランタイムとCSS生成で共有する。
+ * lism.configにダークの概念は無いため、ダーク値は`.set--dark`へだけ反映する。
  *
  * 契約違反は警告にせず必ずエラーにする（警告だと `check` 成功の意味が崩れるため）。
  */
@@ -24,15 +18,11 @@ export const DARK_TOKENS_FILENAME = 'tokens.dark.json';
 /**
  * ダーク時のトークンを載せるスコープクラス。
  *
- * `:root.set--dark` ではなく素のクラスにして、ページ全体・ページの一部・トークン一覧の
- * プレビュー箱のどれにも同じ仕組みで付けられるようにする。命名は lism-css の
- * スコープクラス（`set--s` / `set--bxsh`）に合わせている。
+ * ページ全体・一部・プレビュー箱のどれにも付けられるよう、`:root`には限定しない。
  */
 export const DARK_SCOPE_CLASS = 'set--dark';
 
 /**
- * 生成する lism.config モジュールのファイル名。
- *
  * `.mjs` にしない。`loadBuildConfigs()` の jiti は ESM ファイルをネイティブ import で読むため、
  * 同じパスを書き換えても Node の ESM キャッシュが効いて `tokens.json` の変更を拾えなくなる。
  * `.js`（jiti の transform 経路 + `moduleCache: false`）なら毎回読み直される。
@@ -51,12 +41,9 @@ const NEW_KEY_ALLOWED_TOKENS = new Set(['color']);
  */
 const RESERVED_TOKEN_KEY = '__proto__';
 
-/** 値の中の `var(--x)` 参照を拾う（`var( --x , fallback )` のような書き方も含む）。 */
 const VAR_REFERENCE_PATTERN = /var\(\s*(--[\w-]+)/g;
 
 /**
- * `serializeTokens()` が CSS 変数として出力しない値か。
- *
  * 一覧に出すのは「生成 CSS が実際に定義しているトークン」だけなので、除外規則は
  * `serializeTokens()` と揃える必要がある。片方だけ変わるズレを見つけやすいよう、
  * 複製したルールはこの関数1つに閉じ込める。
@@ -65,18 +52,14 @@ function isOmittedTokenValue(value: string | number | null | undefined): boolean
   return value === '-' || value === '' || value == null;
 }
 
-/** default-config の1トークン種別が持つ既存キー一覧（配列カタログにも対応）。 */
 function defaultTokenKeys(catalog: unknown): string[] {
   if (Array.isArray(catalog)) return catalog.map((key) => String(key));
   if (isPlainObject(catalog)) return Object.keys(catalog);
   return [];
 }
 
-/** 1トークンファイルの検証ルール（ライトとダークで違うのはこの3点だけ）。 */
 interface TokenFileRules {
-  /** エラーメッセージに出すファイル名。 */
   filename: string;
-  /** 新しいキーの追加を許可するトークン種別。 */
   newKeyAllowed: ReadonlySet<string>;
   /**
    * 既存キーであっても、比較対象が CSS 変数を持たない（`'-'` センチネル等）なら弾くか。
@@ -100,7 +83,6 @@ const DARK_RULES: TokenFileRules = {
   requireExistingValue: true,
 };
 
-/** 未知キーのエラー文（ライトとダークで案内すべき直し方が違う）。 */
 function unknownKeyMessage(rules: TokenFileRules, group: string, key: string, knownKeys: string[]): string {
   if (!rules.requireExistingValue) {
     return `${rules.filename}: "${group}.${key}" is not an existing token. Only "color" accepts new keys; other groups can override existing values only (${group}: ${knownKeys.join(', ')}).`;
@@ -114,14 +96,7 @@ function unknownKeyMessage(rules: TokenFileRules, group: string, key: string, kn
   return `${head} ${rules.filename} can only override tokens that ${TOKENS_FILENAME} or Lism CSS already defines (${group}: ${knownKeys.join(', ')}).`;
 }
 
-/**
- * 1つのトークンファイルの中身を検証する。
- *
- * @param raw         パース済みの JSON
- * @param knownTokens 既存キー判定の正（ライトは `defaultConfig.tokens`、ダークはマージ後のライト側トークン）
- * @param file        エラー表示用の絶対パス
- * @param rules       ライト / ダークで異なる部分
- */
+/** ライト・ダーク共通の規則でトークンファイルを検証する。 */
 function validateTokenFile(raw: unknown, knownTokens: Record<string, unknown>, file: string, rules: TokenFileRules): MockupTokens {
   if (!isPlainObject(raw)) {
     throw new MockupContractError(`${rules.filename} must contain a JSON object of token groups (e.g. { "color": { "brand": "#333" } }).`, {
@@ -171,37 +146,20 @@ function validateTokenFile(raw: unknown, knownTokens: Record<string, unknown>, f
   return tokens;
 }
 
-/**
- * `tokens.json` の中身を検証する。
- *
- * @param raw          パース済みの `tokens.json`
- * @param defaultTokens `loadDefaultConfig()` の `tokens`（既存キー判定の正）
- * @param file         エラー表示用の絶対パス
- */
 export function validateTokens(raw: unknown, defaultTokens: Record<string, unknown>, file: string): MockupTokens {
   return validateTokenFile(raw, defaultTokens, file, LIGHT_RULES);
 }
 
 /**
- * `tokens.dark.json` の中身を検証する。
- *
  * 上書きできるのは「ライト側に実値があるトークン」だけ。判定の正は default-config 単体ではなく
  * マージ後のライト側トークンで、`tokens.json` が `color` に足した独自キーもダークで上書きできる。
- *
- * @param raw        パース済みの `tokens.dark.json`
- * @param lightTokens `mergeLightTokens()` の結果（＝`mainConfig.tokens` 相当）
- * @param file       エラー表示用の絶対パス
  */
 export function validateDarkTokens(raw: unknown, lightTokens: Record<string, unknown>, file: string): MockupTokens {
   return validateTokenFile(raw, lightTokens, file, DARK_RULES);
 }
 
 /**
- * マージ後のライト側トークン（`mainConfig.tokens` 相当）を組み立てる。
- *
- * `mainConfig` は `objDeepMerge(defaultConfig, 生成 config)` なので、default-config の各種別へ
- * `tokens.json` を重ねたものと一致する。ダークの検証と `.set--dark` の依存解決はどちらも
- * 「ライトが最終的に何を宣言しているか」が基準なので、この1か所で作って両方へ渡す。
+ * ダークの検証と`.set--dark`の依存解決が同じライト側トークンを参照するための正本。
  */
 export function mergeLightTokens(defaultTokens: Record<string, unknown>, overrides: MockupTokens): Record<string, Record<string, string | number>> {
   const merged = Object.create(null) as Record<string, Record<string, string | number>>;
@@ -265,20 +223,17 @@ export async function loadTokens(dataDir: string): Promise<{ tokens: MockupToken
   return { tokens, darkTokens: validateDarkTokens(dark.raw, mergeLightTokens(defaultConfig.tokens, tokens), dark.file) };
 }
 
-/** 検証済み tokens から lism.config モジュールを生成し、そのパスを返す。 */
+/** 検証済みトークンからlism.configモジュールを生成する。 */
 export function writeConfigModule(dir: string, tokens: MockupTokens): string {
   const file = path.join(dir, GENERATED_CONFIG_FILENAME);
   const body = `// Generated by @lism-css/mockup from ${TOKENS_FILENAME}. Do not edit.\nexport default ${JSON.stringify({ tokens }, null, 2)};\n`;
-  // このファイルは同じ入力で並走する別プロセスと共有される（runtime.ts の resolveGeneratedConfigDir 参照）。
-  // 直接 writeFileSync すると truncate と write の間の途中状態を相手プロセスの vite が読み得るため、
-  // 一時ファイルへ書いてから rename で原子的に置き換える。
+  // 並走プロセスが書き込み途中を読まないよう、一時ファイルからrenameで原子的に置き換える。
   const temp = path.join(dir, `.${GENERATED_CONFIG_FILENAME}.${process.pid}.tmp`);
   fs.writeFileSync(temp, body, 'utf-8');
   fs.renameSync(temp, file);
   return file;
 }
 
-/** `.set--dark` ブロックに入る1トークン。 */
 export interface DarkTokenEntry {
   group: string;
   key: string;
@@ -288,13 +243,12 @@ export interface DarkTokenEntry {
   isDeclared: boolean;
 }
 
-/** 値の中で参照している CSS 変数名。 */
 function referencedVarNames(value: string): string[] {
   return [...value.matchAll(VAR_REFERENCE_PATTERN)].map((match) => match[1]);
 }
 
 /**
- * `.set--dark` ブロックへ入れるトークンを、ライトのグループ順・キー順で並べて返す。
+ * ダーク指定とその依存トークンを、ライト側の順序で列挙する。
  *
  * `tokens.dark.json` の指定に加え、その値を参照して組み立てられているライト側トークンも
  * 同じブロックへ再宣言する。CSS カスタムプロパティの `var()` は「宣言した要素の計算値」を作る
@@ -305,16 +259,12 @@ function referencedVarNames(value: string): string[] {
  * 参照は連鎖しうる（`--L` → `--red`、`--fz--base` → `--hl-unit` → `--hl--base`）ため、
  * 追加が起きなくなるまで繰り返す。
  *
- * @param lightTokens `mergeLightTokens()` の結果
- * @param darkTokens  検証済み `tokens.dark.json`
  */
 export function collectDarkTokens(lightTokens: Record<string, unknown>, darkTokens: MockupTokens): DarkTokenEntry[] {
   // 配列カタログ等は CSS 変数を持たないので、`serializeTokens()` と同じ規則で最初に外す。
   const groupEntries = Object.entries(lightTokens).filter((pair): pair is [string, Record<string, string | number>] => isPlainObject(pair[1]));
 
-  /** 再宣言済みトークンの CSS 変数名。ここに載る変数を参照する値が、次の再宣言対象になる。 */
   const declaredVarNames = new Set<string>();
-  /** `${group}\0${key}` → ブロックへ出す値。 */
   const declared = new Map<string, string>();
   const entryId = (group: string, key: string) => `${group}\0${key}`;
 
@@ -368,12 +318,9 @@ export function serializeDarkTokens(entries: DarkTokenEntry[]): string {
   return `.${DARK_SCOPE_CLASS} {\n${decls.join('\n')}\n}\n`;
 }
 
-/** 構造変数のグループ名。キー自体が CSS 変数名（`--L` 等）で、他グループの計算式から参照される。 */
 const STRUCTURAL_VARS_GROUP = 'vars';
 
 /**
- * 構造変数キー → その変数を参照している最初のグループ名。
- *
  * 固定の対応表を持たず、トークン値の `var()` 参照から導く。lism-css 側で構造変数が
  * 増減しても追従し、どのグループからも参照されない変数は振り分け先なし（`vars` セクション残り）
  * として扱える。複数グループから参照される場合はマージ順で最初のグループに置く。
@@ -396,20 +343,11 @@ function mapStructuralVarTargets(mergedTokens: Record<string, unknown>): Map<str
 }
 
 /**
- * マージ済みトークンを、ビューアのトークン一覧が読める形へ整理する。
- *
- * 出すのは生成 CSS が実際に定義しているトークンだけ（`isOmittedTokenValue()` を参照）。
- * ダークのトークンを持つ種別には、元のセクションの直後に `色 (dark)` のセクションを足す。
- * 並べて比較できるようにするためで、中身は `.set--dark` ブロックが定義しているものと一致する。
+ * マージ済みトークンをビューアの一覧データへ変換する。
  *
  * 構造変数（`vars`）は独立したセクションにせず、それを参照しているグループの
  * `structuralVars` へ振り分ける（`--L` はパレットの基準明度、のように使う場所で読めるため）。
  * どこからも参照されない変数だけが `vars` セクションに残る。
- *
- * @param mergedTokens  `mainConfig.tokens`（`tokens.json` 反映後のマージ結果）
- * @param defaultTokens `defaultConfig.tokens`（既存キー判定の正）
- * @param overrides     検証済み `tokens.json`（`source` 判定に使う）
- * @param darkEntries   `collectDarkTokens()` の結果
  */
 export function collectTokenGroups(
   mergedTokens: Record<string, unknown>,
@@ -420,11 +358,9 @@ export function collectTokenGroups(
   const groups: TokenGroupEntry[] = [];
   const varTargets = mapStructuralVarTargets(mergedTokens);
 
-  /** serializeTokens と同じ見なし方で、1グループ分の値マップを TokenEntry へ起こす。 */
   const entriesOf = (group: string, valueMap: Record<string, string | number>): TokenEntry[] => {
     // 上書き元は null プロトタイプのユーザー入力なので、`in` ではなく hasOwn で own key だけを見る。
     const overrideGroup = Object.hasOwn(overrides, group) && isPlainObject(overrides[group]) ? overrides[group] : null;
-    // 既存キー一覧は上書きがある種別でだけ必要（default しか無いなら判定に使わない）。
     const knownKeys = overrideGroup ? defaultTokenKeys(defaultTokens[group]) : [];
 
     const tokens: TokenEntry[] = [];
@@ -514,12 +450,10 @@ export function collectTokenGroups(
 }
 
 /**
- * 生成 config を反映した CSS 変数定義と、その内訳（ビューアのトークン一覧用）を作る。
+ * 生成configからトークンCSSとビューア用一覧をまとめて作る。
  *
  * ビューアは Lism 標準の `lism-css/main.css` を読むため、main 側の BuildConfig を直列化する。
- * React ランタイム（`lism.config.js` は `isFullMode` を持たない）も main 側の prop 設定で動くので、
- * CSS・コンポーネント・トークン一覧の3つがすべて同じモードで揃う。
- * CSS と一覧は必ず同じ config から作る（この関数の中で `loadBuildConfigs()` を1回だけ呼び、両者のずれを防ぐ）。
+ * CSSと一覧は同じconfigから作り、ずれを防ぐ。
  */
 export async function buildTokensArtifacts(
   dataDir: string,

@@ -18,14 +18,12 @@ import { VIRTUAL_CHECK_ENTRY_ID, virtualModulesPlugin } from './virtual-modules.
 
 export type MockupViteMode = 'dev' | 'build';
 
-/** 文字列をそのまま照合する正規表現へ変換する。 */
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 export interface MockupViteConfigOptions {
   runtime: MockupRuntime;
-  /** 固定ビューアのディレクトリ（vite root）。 */
   viewerDir: string;
   mode: MockupViteMode;
   /**
@@ -35,23 +33,14 @@ export interface MockupViteConfigOptions {
   allowlist?: ImportAllowlist;
 }
 
-/** runtime の内容から許可リストを作る（`dev` / `check` が起動時の警告に使えるよう切り出している）。 */
 export function createImportAllowlist(runtime: MockupRuntime): ImportAllowlist {
   return buildImportAllowlist({ dataDir: runtime.data.dataDir, extraPackages: runtime.data.config.imports });
 }
 
 /**
- * `server.fs.allow` に渡すルート一覧（多層防御。境界の本体は `importBoundaryPlugin`）。
- *
- * ビューア・データディレクトリ・生成物の一時ディレクトリ・依存キャッシュ（`cacheDir`）・
- * 生成 config のディレクトリ（`configDir`）と、`@lism-css/mockup` が所有する依存ツリーだけを許可する。
- * workspace リンクされたパッケージは node_modules 配下に無いため、許可パッケージの realpath も
- * 個別に足す。`imports` の追加パッケージをデータディレクトリ側から解決した場合は、
- * その依存も辿れるよう `dependencyRoots` も加わる。
- *
- * `cacheDir` と `configDir` は起動間で使い回すため一時ディレクトリの外（`os.tmpdir()` 直下）にある。
- * dev は事前バンドル済みの依存と生成 config をここから配信するので、
- * 明示的に許可しないと `fs.strict` に弾かれる。
+ * `server.fs.allow`は多層防御であり、境界の本体は`importBoundaryPlugin`。
+ * workspaceリンクのrealpath、追加パッケージの依存、共有`cacheDir`と`configDir`は
+ * データディレクトリ外にあるため個別に許可する。
  */
 export function collectFsAllowRoots(options: {
   viewerDir: string;
@@ -75,7 +64,7 @@ export function collectFsAllowRoots(options: {
   return [...roots];
 }
 
-/** `dev` / `check` 共通の vite 設定を作る。 */
+/** devとcheckで共有するVite設定を組み立てる。 */
 export function createMockViteConfig({
   runtime,
   viewerDir,
@@ -100,20 +89,13 @@ export function createMockViteConfig({
       importBoundaryPlugin({
         dataDir,
         allowlist,
-        // dev の依存最適化が書き出す bundle（`cacheDir` 配下）へ解決した場合も許可する。
-        // ページの bare import はここへ解決されるため、許可しないと「許可済みなのに封じ込め判定で拒否」になる。
+        // 許可済みbare importが事前バンドル先へ解決されても拒否しないため。
         generatedDir: runtime.cacheDir,
         getPageSpecifiers: () => runtime.getPageSpecifiers(),
       }),
-      // 境界チェックの後ろに置く。ページからの `lucide-react` は境界チェックが
-      // 「許可済み bare import」と判定してから `this.resolve()` で解決し直す流れになるため、
-      // 許可リスト側（VIRTUAL_PACKAGES）とこのプラグインの両方が揃って初めて通る。
-      // ビューア自身の import は境界チェックを素通りしてここへ直接届く。
+      // 許可判定後の再解決で仮想モジュールを返すため、境界チェックの後ろに置く。
       lucideIconsPlugin(),
-      // 事前バンドル済みの依存（cacheDir 配下）は Babel に通さない。
-      // plugin-react は node_modules 配下を自動で除外するが、cacheDir は読み取り専用の
-      // 配布物でも動くよう `os.tmpdir()` 配下に置いているため、その除外が効かない。
-      // 除外しないと 1MB 級の react-dom を毎回 Babel が解析する（Fast Refresh の対象外なのに）。
+      // cacheDir配下の事前バンドル済み依存を不要なBabel解析から除外する。
       react({ exclude: [new RegExp(escapeRegExp(runtime.cacheDir))] }),
     ],
     resolve: {

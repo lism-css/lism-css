@@ -14,7 +14,6 @@ import { MockupContractError, type MockupConfigFile, type MockupConfigPageMeta, 
 export const PAGES_DIRNAME = 'pages';
 export const PAGE_EXTENSIONS = ['.jsx', '.tsx'] as const;
 
-/** 走査から除外するディレクトリ（ドット始まりは別途除外）。 */
 const SKIP_DIRS = new Set(['node_modules']);
 
 function walkPageFiles(dir: string, prefix: string, out: { id: string; file: string }[]): void {
@@ -38,7 +37,7 @@ function walkPageFiles(dir: string, prefix: string, out: { id: string; file: str
 }
 
 /**
- * `pages/` を再帰的に走査してページを列挙し、`mockup.config.json` のメタデータをマージする。
+ * `pages/`を再帰走査し、設定のメタデータをマージする。
  *
  * 並び順は `order` 昇順 → id 辞書順。`order` 未指定のページは指定済みページの後ろへ回す。
  */
@@ -107,7 +106,6 @@ export function discoverPages(dataDir: string, config: MockupConfigFile): PageEn
   return sortPages(pages);
 }
 
-/** `order` 昇順（未指定は末尾）→ id 辞書順。 */
 export function sortPages(pages: PageEntry[]): PageEntry[] {
   return [...pages].sort((a, b) => {
     const orderA = a.order ?? Number.POSITIVE_INFINITY;

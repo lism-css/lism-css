@@ -16,11 +16,9 @@
   *,
   ::before,
   ::after {
-    /* box-sizing は 全要素に対して border-box で統一 */
     box-sizing: border-box;
   }
 
-  /* margin は（dialog以外）全て 0 にリセットする (padding はリセットしない) */
   *:not(dialog) {
     margin: 0;
   }
@@ -33,15 +31,14 @@
     -webkit-text-size-adjust: none;
     text-size-adjust: none;
 
-    /* 文章の折り返し指定 🔗:https://ics.media/entry/240411/ */
-    word-break: normal; /* 単語の分割はデフォルトに依存 */
-    line-break: strict; /* 禁則処理を厳格に適用 */
-    overflow-wrap: anywhere; /* 収まらない場合に折り返す */
+    /* 日本語の禁則と長い単語の折り返しを揃える */
+    word-break: normal;
+    line-break: strict;
+    overflow-wrap: anywhere;
 
     /* 要素はみ出しによる横スクロールの発生を防止. (overflow は 継承プロパティではないので両方記述） */
     overflow-x: clip;
 
-    /* モーダルが開いている時はコンテンツをスクロールさせない */
     &:has(:modal[open]) {
       overflow: clip; /* sticky 要素がくずれないように clip */
     }
@@ -51,10 +48,9 @@
     /* BFCを作り、先頭子要素のmargin-topがbody外へ相殺されてmin-heightと合算スクロールが発生するのを防ぐ (#458) */
     display: flow-root;
 
-    /* htmlから継承する */
     overflow: inherit;
 
-    /* bodyの高さを最低限確保する (子要素でheight:100%が効くわけではない) */
+    /* 子要素でheight:100%が効くわけではない */
     min-height: 100dvh;
   }
 
@@ -68,7 +64,6 @@
   }
 
   pre {
-    /* 水平スクロールできるようにする */
     overflow-x: auto;
   }
 
@@ -92,7 +87,6 @@
     /* 隙間ができるのを防ぐ。( display はいじらない。) */
     vertical-align: middle;
 
-    /* 親要素をはみ出さないようにする */
     max-inline-size: 100%;
   }
 
@@ -114,7 +108,6 @@
   textarea,
   select,
   ::file-selector-button {
-    /* 基本要素のフォントとカラーを本文から継承 */
     font: inherit;
     color: inherit;
     letter-spacing: inherit;
@@ -129,7 +122,6 @@
   }
 
   textarea {
-    /* リサイズ方向を制限する. */
     resize: block;
     max-inline-size: 100%;
   }

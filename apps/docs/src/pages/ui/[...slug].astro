@@ -1,9 +1,4 @@
 ---
-/**
- * 記事詳細ページ（/ui/ セクション・root言語用）
- * - root言語（ja）の /ui/ コンテンツを表示
- * - URL例: /ui/Accordion, /ui/block-examples/Chat, /ui/components/Card
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
 import { Icon, Lism, Flow } from 'lism-css/astro';
@@ -13,16 +8,13 @@ import { getRootLang, type LangCode } from '@/lib/i18n';
 import { getUiPostsByLang, type PostEntry } from '@/lib/content';
 import { render } from 'astro:content';
 
-// MDXでグローバルに使用するコンポーネント
 import * as mdxComponents from '@/components/mdx';
 
-// /ui/ セクション用のgetStaticPaths
 export async function getStaticPaths() {
   const rootLang = getRootLang();
   const uiPosts = await getUiPostsByLang(rootLang);
 
   return uiPosts.map((entry) => ({
-    // slug から ui/ プレフィックスを除去
     params: { slug: entry.id.replace(/^ui\//, '') },
     props: { lang: rootLang, entry },
   }));
@@ -33,7 +25,6 @@ const { Content, headings } = await render(entry);
 
 const toc = generateToc(headings);
 
-// OG画像のパス（常に自動生成画像を使用）
 const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
 ---
 
@@ -47,7 +38,6 @@ const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
   date={entry.data.date}
 >
   <Lism as="article" class="c--article set--cqUnit set--s" data-pagefind-body>
-    {/* 記事タイトル */}
     <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
 
     <Lism class="u--cbox" keycolor="yellow" p="20" my="40" bdrs="10" bd>
@@ -58,12 +48,10 @@ const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
       <Lism fz="s" mbs="5"> Lism UI (@lism-css/ui) はまだ準備中です。</Lism>
     </Lism>
 
-    {/* 記事本文 */}
     <Flow class="c--content" mbs="40">
       <Content components={mdxComponents} />
     </Flow>
 
-    {/* 前後記事ナビゲーション */}
     <PostNavigation currentSlug={entry.id} lang={lang} />
   </Lism>
 </BaseLayout>

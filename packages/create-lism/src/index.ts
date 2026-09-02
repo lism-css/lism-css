@@ -2,7 +2,6 @@ import { runCreate, setLang, t } from 'lism-cli';
 
 /**
  * `pnpm create lism` / `npm create lism@latest` から呼ばれる薄いラッパー。
- * 最小限の引数パースのみ行い、本体は `lism-cli` の `runCreate` に委譲する。
  */
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
@@ -14,7 +13,6 @@ async function main(): Promise<void> {
 
   // --help の description や printHelp 表示に言語選択を反映させるため、
   // まず `--lang` を先に走査してから残りの引数を処理する。
-  // 明示値は runCreate にも渡す（未指定なら runCreate 側で言語選択プロンプト or en フォールバック）。
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
     if (a === '--lang' && args[i + 1]) {
@@ -35,9 +33,9 @@ async function main(): Promise<void> {
     } else if (a === '-f' || a === '--force') {
       force = true;
     } else if (a === '--lang') {
-      i++; // 値を 1 つ飛ばす（上で既に setLang 済み）
+      i++;
     } else if (a.startsWith('--lang=')) {
-      // 何もしない（上で既に setLang 済み）
+      // 先行走査で処理済み
     } else if (a === '-h' || a === '--help') {
       showHelp = true;
     } else if (!a.startsWith('-')) {

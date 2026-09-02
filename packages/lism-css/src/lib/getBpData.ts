@@ -4,27 +4,15 @@ import { BREAK_POINTS_ALL, BREAK_POINTS_OBJ } from '../../config/defaults/breakp
 
 type BpValue = string | number | boolean | object | null | undefined;
 
-// ブレイクポイントのキー型（オブジェクト記法で認識する全キー。xs を含む）
 type BpKey = (typeof BREAK_POINTS_OBJ)[number];
 
-// getBpData の戻り値型
 export type BpData = {
   base?: BpValue;
 } & Partial<Record<BpKey, BpValue>>;
 
-// getBpData の入力型
-export type BpDataInput =
-  | boolean // boolean (true は { base: true } に、false は {} に変換)
-  | string // 文字列
-  | number // 数値
-  | BpValue[] // 配列形式 [base, sm, md, lg, xl]
-  | Partial<Record<BpKey, BpValue>> // ブレイクポイントオブジェクト { base: ..., sm: ..., ... }
-  | Record<string, unknown> // その他のオブジェクト（sides props など）
-  | null // null (空オブジェクトに変換)
-  | undefined; // undefined (空オブジェクトに変換)
+export type BpDataInput = boolean | string | number | BpValue[] | Partial<Record<BpKey, BpValue>> | Record<string, unknown> | null | undefined;
 
-// BP指定に必要な規格化した形式のオブジェクトを返す.
-//     ( string, array, obj → {_, sm, md, ...} の型のobjectに変換する. )
+/** Prop値をbaseと各ブレイクポイントのオブジェクトへ揃える。 */
 export default function getBpData(propVal: BpDataInput): BpData {
   if (true === propVal) return { base: true };
 
@@ -44,12 +32,10 @@ export default function getBpData(propVal: BpDataInput): BpData {
     return filterEmptyObj(values);
   }
 
-  // オブジェクトの場合: BP指定オブジェクトか方向オブジェクトかを判定（xs を含む BREAK_POINTS_OBJ で判定）
+  // BPキーを含まないオブジェクトはsides等のbase値として扱う。
   if (hasSomeKeys(propVal, BREAK_POINTS_OBJ)) {
-    // 'sm', 'md' などがある場合はbp指定のオブジェクトとみなす
     return filterEmptyObj(propVal);
   }
 
-  // 方向オブジェクト(sides props)の場合
   return filterEmptyObj({ base: propVal });
 }

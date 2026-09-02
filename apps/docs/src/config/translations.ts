@@ -1,13 +1,5 @@
-/**
- * UI翻訳テキストの定義
- * 各言語のUIテキストを一元管理
- */
 import type { LangCode } from './site';
 
-/**
- * 翻訳テキストの型定義
- * キー構造のみを定義し、値は string 型
- */
 type TranslationKeys = {
   toc: 'title' | 'open' | 'ariaLabel';
   search: 'title' | 'devMessage';
@@ -25,16 +17,10 @@ type TranslationKeys = {
   kvEditor: 'tablistAriaLabel' | 'editorAriaLabel' | 'keyboardHint';
 };
 
-/**
- * UITranslations 型を TranslationKeys から生成
- */
 export type UITranslations = {
   [K in keyof TranslationKeys]: Record<TranslationKeys[K], string>;
 };
 
-/**
- * 言語別の翻訳テキスト
- */
 export const translations: Record<LangCode, UITranslations> = {
   ja: {
     toc: {

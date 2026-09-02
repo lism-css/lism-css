@@ -1,4 +1,4 @@
-// KvEditor の UI 文言。パネル・スナックバーの文言は両言語とも英語で共通（README の i18n 節参照）
+// パネル・スナックバーの文言は両言語とも英語で共通
 export const STRINGS = {
   invalidHtml: 'Invalid HTML syntax',
   invalidJsx: 'Invalid JSX syntax',
@@ -8,7 +8,6 @@ export const STRINGS = {
   resume: 'Resume',
   done: 'Done',
   stopDemo: 'Stop the AI demo',
-  // ライブループ再生（mode: 'live'）の ▶/⏸ トグル
   liveDemo: 'Live Demo',
   playDemo: 'Play the live demo',
   pauseDemo: 'Pause the live demo',

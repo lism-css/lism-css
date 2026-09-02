@@ -100,9 +100,7 @@ export const astroRedirects: AstroRedirects = {
   // Chat をパッケージから削除し、Block Examples の作例ページへ転換（#557）
   '/ui/chat/': '/ui/block-examples/chat/',
   '/en/ui/chat/': '/en/ui/block-examples/chat/',
-  // ui/examples/* -> ui/components/* へ移動（#557）
-  // draft のまま未公開だったページは公開実績のある URL のみ登録する方針に従い対象外
-  // Banner / Breadcrumb / Card / DividerLabel / Reel / Steps は ui/components/ に残るのでそのまま
+  // 公開実績のある旧ui/examples/*だけをui/components/*へリダイレクトする（#557）
   '/ui/examples/banner/': '/ui/components/banner/',
   '/ui/examples/breadcrumb/': '/ui/components/breadcrumb/',
   '/ui/examples/card/': '/ui/components/card/',
@@ -115,9 +113,7 @@ export const astroRedirects: AstroRedirects = {
   '/en/ui/examples/dividerlabel/': '/en/ui/components/dividerlabel/',
   '/en/ui/examples/reel/': '/en/ui/components/reel/',
   '/en/ui/examples/steps/': '/en/ui/components/steps/',
-  // FAQ を patterns/ へ移管（#566）
-  // patterns にはカテゴリ単位のページがないため、一覧ページのカテゴリ見出し（アンカー）へ飛ばす。
-  // #564 で張った ui/examples/* -> ui/components/* のリダイレクトは、連鎖を避けるため最終 URL へ張り直している。
+  // patternsにカテゴリページがないためFAQは見出しへ直接リダイレクトし、ui/examples/*からの連鎖を避ける（#566）
   '/ui/components/faq/': '/patterns/#faq',
   // Hero は MDX を draft 化して本番非公開にしたため、作例のある patterns へ誘導する
   '/ui/components/hero/': '/patterns/#hero',

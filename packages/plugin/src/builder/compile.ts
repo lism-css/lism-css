@@ -5,7 +5,7 @@
  * これにより素の sass / docs の `@use 'lism-css/scss/setting' with (...)` 等のスタンドアロン利用が維持される。
  *
  * ユーザー設定を反映した CSS を作る時は、**node_modules を書き換えず**に、src/scss を一時ディレクトリへ
- * 複製してそこの `_prop-config*.gen.scss` / `_tokens.gen.scss` だけ差し替えてコンパイルする（インプレース書き換えの廃止）。
+ * 複製してそこの `_prop-config*.gen.scss` / `_tokens.gen.scss` だけ差し替えてコンパイルする。
  * パッケージ自身のビルドは、同梱デフォルトの生成 SCSS を更新しつつ src/scss を直接コンパイルする。
  */
 import path from 'node:path';
@@ -30,7 +30,7 @@ const TOKENS_GEN_HEADER =
   '// 生成元: コア → config/defaults/tokens.ts / 利用側 → defaults + lism.config.js の tokens\n';
 
 function resolvePostcssPlugins(minify: boolean): AcceptedPlugin[] {
-  // minify=true: 従来どおり autoprefixer + cssnano（dist/css 出力相当）。
+  // minify=true: autoprefixer + cssnano（dist/css 出力相当）。
   // minify=false: autoprefixer のみ（Vite が最終 minify する用途）。
   return minify ? [autoprefixer, cssnano] : [autoprefixer];
 }

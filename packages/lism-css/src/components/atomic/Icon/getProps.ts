@@ -26,22 +26,19 @@ interface ParsedSvg {
   svgContent: string;
 }
 
-// SVG文字列をパースしてexPropsとコンテンツを生成する関数
+/** SVG文字列を描画属性と内部コンテンツへ分ける。 */
 function parseSvgString(svgString: string): Partial<ParsedSvg> {
   const svgProps: Record<string, unknown> = {};
 
-  // SVGの属性とコンテンツを一回のmatchで取得
   const match = svgString.match(/<svg([^>]*?)>([\s\S]*?)<\/svg>/i);
   if (match) {
     const [, attributesString, svgContent] = match;
 
-    // 属性値をスペースで分解してオブジェクト化
     const attributePattern = /([\w-]+)=["']([^"']*)["']/g;
     let attrMatch;
     while ((attrMatch = attributePattern.exec(attributesString)) !== null) {
       const [, attrName, attrValue] = attrMatch;
 
-      // style属性の場合はオブジェクトに分割
       if (attrName === 'style') {
         const styleObj: Record<string, string> = {};
         attrValue.split(';').forEach((rule) => {
@@ -66,7 +63,6 @@ function parseSvgString(svgString: string): Partial<ParsedSvg> {
 /*
 Icon の出力パターン
   - icon = 文字列の場合→preset で登録されたsvgアイコンを呼び出す
-( 廃止 ) - icon = 1に該当しない、かつ文字列の場合→ data-lism-icon 属性にアイコン名が出力される。（CSSでアイコンを描画できるようになっている）
   - icon = それ以外の場合、extends として振る舞う
   - as=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
   - as が指定された場合 → asで渡されるコンポーネントまたは要素を呼び出す
@@ -76,7 +72,7 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
   let Component: ElementType | '_SVG_' = as || 'span';
   let content = '';
 
-  // rest の型が複雑な union になり TS2590 が発生するため、object にキャストしてから分割代入
+  // restの型が複雑なunionになりTS2590が発生するため、objectへcastしてから分割する。
   const {
     style: _style = {},
     className: _className = '',
@@ -85,7 +81,7 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
   let style = _style;
   let className = _className;
 
-  // viewBoxがあれば、svg描画として扱う
+  // 入力形式に合わせて描画要素とSVG属性を決める。
   if (_rest.viewBox) {
     Component = 'svg';
     const _size = _rest.size as string | undefined;
@@ -99,10 +95,8 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
   } else if (_rest.src) {
     Component = 'img';
   } else if (icon) {
-    // icon が 文字列の場合
     if (typeof icon === 'string') {
       if (icon.startsWith('<svg')) {
-        // svg直接指定の場合
         Component = '_SVG_';
         const { svgProps = {}, svgContent = '' } = parseSvgString(icon);
 
@@ -113,11 +107,9 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
         }
         style = { ...style, ...(svgStyle as CSSProperties) };
 
-        // 属性とコンテンツ
         exProps = { ...exProps, ...svgAttrs, fill: 'currentColor' };
         content = svgContent;
       } else {
-        // プリセットアイコンを呼び出す
         const presetIconData = presets[icon as keyof typeof presets] || null;
         if (null != presetIconData) {
           Component = '_SVG_';
@@ -133,7 +125,7 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
     }
   }
 
-  // label の有無でaria属性を変える
+  // labelの有無に合わせてアクセシビリティ属性を付ける。
   if (label) {
     exProps['aria-label'] = label;
     exProps['role'] = 'img';
@@ -149,6 +141,3 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
 
   return { Component, lismProps: _rest, exProps, content };
 }
-
-// 子要素に Icon を持つコンポーネントが icon, iconProps で Icon 用の props を生成する処理
-// export function getChildIconProps({ icon, iconProps }) {}

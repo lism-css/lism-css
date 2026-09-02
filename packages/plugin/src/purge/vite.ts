@@ -58,9 +58,7 @@ function replaceRenamedReferences(content: string, renames: RenameInfo[]): strin
   return out;
 }
 
-// chunk.viteMetadata.importedCss の旧ファイル名を新名へ差し替える。
-// manifest (`.vite/manifest.json`) や HTML の `<link>` 参照は Vite がこの Set を元に生成するため、
-// 本プラグインより後に vite:manifest / vite:build-html が走る順序でも、リネーム後の名前が反映される。
+// manifestやHTMLへ新しいCSS名を反映するため、Vite metadataのimportedCssを更新する。
 function updateImportedCss(importedCss: Set<string> | undefined, renames: RenameInfo[]): void {
   if (!importedCss) return;
   for (const { oldName, newName } of renames) {
@@ -107,8 +105,7 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
         const source = decodeAssetSource(asset.source);
         if (!LISM_CSS_SIGNATURE.test(source)) continue;
         const purged = purgeLismCss(source, { used, safelist: options.safelist, known });
-        // purge による削除も sourcemap 参照も無ければ素通しする。
-        // stripCssSourceMappingUrl の trimEnd による末尾空白差分だけで不要なリネーム / hash 再計算が走るのを防ぐ。
+        // purge差分もsourcemap参照も無ければ、末尾空白だけでrenameやhash再計算が走らないよう素通しする。
         if (purged === source && !hasCssSourceMappingUrl(source)) continue;
         const output = stripCssSourceMappingUrl(purged);
         asset.source = output;

@@ -1,7 +1,6 @@
 type PresetValue = Set<string> | string[] | readonly string[];
 
 export default function isPresetValue(presets: PresetValue, value: unknown): boolean {
-  // 数値の時は文字列化してから判定
   let stringValue: string;
   if (typeof value === 'number') {
     stringValue = `${value}`;

@@ -1,35 +1,27 @@
-/**
- * パターンデータ設定
- *
- * カテゴリごとにパターンのリストを定義
- * MDXファイルを使わず、このデータから動的にページを生成
- */
-
+// MDXを使わず、この定義データからパターンページを生成する
 import type { LangCode } from '@/config/site';
 
 // 関連ページへのリンク（言語プレフィックスなしのパスで保持し、表示時に言語を付与する）
 export interface PatternRelatedLink {
-  label: string; // 表示ラベル
-  path: string; // 例: '/page-layouts/sections/hero-fullscreen/'
+  label: string;
+  path: string;
 }
 
-// パターンアイテムの型
 export interface PatternItem {
-  id: string; // パターンID（例: cta001）
-  title: string; // タイトル（例: CTA001）
-  description: Record<LangCode, string>; // 言語別の説明文
-  draft?: boolean; // 下書きフラグ（本番環境では非公開）
+  id: string;
+  title: string;
+  description: Record<LangCode, string>;
+  draft?: boolean;
 }
 
-// カテゴリ情報の型
+// ページ側では related の有無に関係なく、この共通型で受ける
 export interface PatternCategory {
-  label: string; // カテゴリ表示名
-  description: Record<LangCode, string>; // カテゴリの概要・利用時の注意書き
-  related?: PatternRelatedLink[]; // 関連ページへのリンク
+  label: string;
+  description: Record<LangCode, string>;
+  related?: PatternRelatedLink[];
   items: PatternItem[];
 }
 
-// パターンデータ（satisfiesでカテゴリ追加時に型定義の更新が不要になる）
 const patterns = {
   cta: {
     label: 'CTA',
@@ -813,11 +805,8 @@ const patterns = {
   },
 } satisfies Record<string, PatternCategory>;
 
-// カテゴリIDの型（patternsオブジェクトのキーから自動推論）
 export type PatternCategoryId = keyof typeof patterns;
 
-// patternsをエクスポート（型推論のため、定義とエクスポートを分離）
 export { patterns };
 
-// カテゴリIDの配列
 export const categoryIds = Object.keys(patterns) as PatternCategoryId[];

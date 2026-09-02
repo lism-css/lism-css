@@ -1,10 +1,4 @@
-/**
- * props 設定を SCSS の `$props` マップ文字列へ直列化する純粋関数群。
- *
- * 旧 `bin/build-config.js` のロジックを移植し、ファイル書き出し（副作用）を分離した。
- * 返り値は生成 SCSS（`_prop-config.gen.scss` 等）として書き出され、`@use './prop-config.gen'` で読まれる SCSS 文字列。
- * パッケージ自身のビルドと Vite プラグイン（一時ディレクトリ複製）の双方がこの直列化結果を共有する。
- */
+/** パッケージ自身のビルドと各プラグインが共有する SCSS 直列化関数群。 */
 import getMaybeTokenValue from 'lism-css/lib/getMaybeTokenValue';
 import getTokenVarName from 'lism-css/lib/getTokenVarName';
 import { TOKEN_SCOPE } from 'lism-css/config/defaults/token-scope';
@@ -24,10 +18,7 @@ export interface BuildConfig {
    * lism.config.js で差分上書きでき、xs/xl はサイズを与えるだけで有効化できる。
    */
   breakpoints?: Record<string, string | number>;
-  /**
-   * trait（is--* / has--*）定義。prop 名 → クラス名。CSS 出力（SCSS 直列化）には使わず、
-   * 型生成で「追加 trait の広告」に参照する。
-   */
+  /** CSS 出力には使わず、追加 trait の型生成に使う。 */
   traits?: Record<string, string>;
   /**
    * Property Class へデフォルトで `!important` を付与するか（Sass `$default_important`）。
@@ -48,9 +39,7 @@ function tokenCatalogKeys(catalog: unknown): string[] {
   return [];
 }
 
-/**
- * ユーティリティ値を生成する。
- */
+/** presets・utils・tokenからユーティリティ値を生成する。 */
 function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<string, string> {
   const { utils = {}, presets: basePresets = [], token = '', tokenClass = 0 } = propConfig;
 
@@ -59,12 +48,9 @@ function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<strin
   const presets = [...basePresets];
   const utilities: Record<string, string> = {};
 
-  // token をクラス化するのであれば presets へ追加
   if (token && tokenClass === 1) {
     presets.push(...tokenCatalogKeys(TOKENS[token]));
-    // token:'color' は color（セマンティック）∪ palette（パレット）の合成カタログとして解決されるため、
-    // ビルド側のクラス生成もその和集合に揃える（config/index.ts の tokensWithColor /
-    // getMaybeTokenValue.ts の palette フォールバック / gen-types.ts と同じ規則）。
+    // color は palette を含む合成カタログとして解決されるため。
     if (token === 'color') presets.push(...tokenCatalogKeys(TOKENS.palette));
   }
 
@@ -83,9 +69,7 @@ function generateUtilities(propConfig: PropConfig, TOKENS: Tokens): Record<strin
   return utilities;
 }
 
-/**
- * 1つのプロパティ設定を SCSS のマップエントリ文字列へ変換する。
- */
+/** 1つのprop設定をSCSSのmap entryへ変換する。 */
 function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Tokens): string {
   const { prop = '', bp, isVar, alwaysVar, important } = propConfig;
 
@@ -100,7 +84,6 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
   if (isVar) {
     scss += `    prop: '${prop || `--${propKey}`}',\n`;
   } else {
-    // propName を prop-name に変換（キャメルケースをケバブケースに変換）
     scss += `    prop: '${prop.replace(/([A-Z])/g, '-$1').toLowerCase()}',\n`;
   }
 
@@ -109,10 +92,9 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
 
     scss += `    utilities: (\n`;
     Object.entries(utilities).forEach(([utilKey, value]) => {
-      // キーに特殊文字が含まれる場合はエスケープ(/,%, : の前に \\ をつける(最終的にscss側の処理で \ ひとつになるようにここでは \\ ))
+      // SCSS 側でバックスラッシュが1つ残るよう二重にエスケープする。
       const escapedKey = utilKey.replace(/\//g, '\\\\/').replace(/%/g, '\\\\%').replace(/:/g, '\\\\:');
 
-      // exUtility としても定義されている場合はスキップ
       if (undefined === exs?.[utilKey]) {
         scss += `      '${escapedKey}': '${value}',\n`;
       }
@@ -139,8 +121,7 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
 
   if (bp !== undefined) {
     if (Array.isArray(bp)) {
-      // リスト形式（出力する BP の明示指定）を SCSS リストへ直列化: ['sm','md'] → ('sm', 'md')
-      // 1要素でも SCSS にリストとして解釈させるため末尾カンマを付与する: ['sm'] → ('sm',)
+      // 1要素でも SCSS リストとして解釈させるため末尾カンマを付ける。
       const items = bp.map((b) => `'${b}'`).join(', ');
       scss += `    bp: (${items}${bp.length === 1 ? ',' : ''}),\n`;
     } else if (typeof bp === 'number') {
@@ -164,13 +145,9 @@ function generatePropScss(propKey: string, propConfig: PropConfig, TOKENS: Token
   return scss;
 }
 
-/**
- * CONFIG（マージ済み・Set 化前）から `$props: ( ... );` の SCSS 文字列を生成する。
- * 旧 `buildConfig()` の純粋部分（ファイル書き出しを除いたもの）。
- */
+/** マージ済み・Set化前のCONFIGを直列化する。 */
 export function serializePropConfig(CONFIG: BuildConfig): string {
   const { props: PROPS } = CONFIG;
-  // tokens は値付きフラットマップ。tokenClass:1 のユーティリティ生成はこのキー集合から導出する。
   const TOKENS = CONFIG.tokens;
 
   let scssContent = '$props: (\n';
@@ -194,7 +171,6 @@ export function serializePropConfig(CONFIG: BuildConfig): string {
 /**
  * CONFIG の breakpoints を SCSS の `$breakpoints: ( ... );` 文字列へ直列化する。
  *
- * サイズ文字列（`'480px'` 等）はクォートし、0（無効）は数値のまま出力する。
  * breakpoints 未定義時も `$breakpoints: ();` を出力し、`_setting.scss` の `props.$breakpoints`
  * 参照が常に解決できるようにする（未定義メンバ参照による sass エラーの防止）。
  */
@@ -212,10 +188,9 @@ export function serializeBreakpoints(CONFIG: BuildConfig): string {
 }
 
 /**
- * CONFIG.defaultImportant を SCSS の `$default_important: 0;` / `$default_important: 1;` 文字列へ直列化する。
+ * CONFIG.defaultImportantを`$default_important`へ直列化する。
  *
- * lism.config.js の `defaultImportant: true` を Sass の `$default_important`（Property Class への
- * デフォルト `!important` 付与）へ反映する。未指定時も `$default_important: 0;` を出力し、
+ * 未指定時も `$default_important: 0;` を出力し、
  * `_setting.scss` の `props.$default_important` 参照が常に解決できるようにする
  * （未定義メンバ参照による sass エラーの防止。`serializeBreakpoints` と同じ方針）。
  */
@@ -223,19 +198,14 @@ export function serializeDefaultImportant(CONFIG: BuildConfig): string {
   return `$default_important: ${CONFIG.defaultImportant ? 1 : 0};\n`;
 }
 
-/**
- * `_prop-config.gen.scss` に書き出す完全な SCSS（`$props` + `$breakpoints` + `$default_important`）を生成する。
- * `_setting.scss` がこれらを `@use './prop-config.gen'` 経由で読み、config を CSS 出力の情報源にする。
- */
+/** prop・breakpoint・defaultImportantを1つのSCSS設定へまとめる。 */
 export function serializeConfigScss(CONFIG: BuildConfig): string {
   return `${serializePropConfig(CONFIG)}\n${serializeBreakpoints(CONFIG)}\n${serializeDefaultImportant(CONFIG)}`;
 }
 
 /**
- * CONFIG.tokens（値付きフラットマップ）を `:root { ... }` の CSS 宣言文字列へ直列化し、
- * `base/tokens/_tokens.gen.scss` として書き出す。
+ * CONFIG.tokensをCSS変数の宣言へ直列化する。
  *
- * - 変数名は getTokenVarName で導出する（規則は [[token-var-prefix]]）。
  * - 値が `'-'`（センチネル）または空のキーは出力しない（カタログ登録のみ・実値は手書き SCSS）。
  * - TOKEN_SCOPE 登録トークンは `:root` ではなく `:root, .{scope} { ... }` で出力する（詳細は [[token-scope]]）。
  *
@@ -245,7 +215,6 @@ export function serializeTokens(CONFIG: BuildConfig): string {
   const { tokens = {} } = CONFIG;
 
   const rootDecls: string[] = [];
-  // スコープ別（`:root, .set--*`）の宣言。挿入順 = tokens のキー順を保つ。
   const scopedDecls = new Map<string, string[]>();
 
   for (const [tokenKey, valueMap] of Object.entries(tokens)) {
@@ -265,7 +234,6 @@ export function serializeTokens(CONFIG: BuildConfig): string {
   }
 
   let scss = rootDecls.length ? `:root {\n${rootDecls.join('\n')}\n}\n` : ':root {\n}\n';
-  // セレクタは prettier に合わせ1行1セレクタで出力する。
   for (const [scope, decls] of scopedDecls) {
     scss += `:root,\n.${scope} {\n${decls.join('\n')}\n}\n`;
   }

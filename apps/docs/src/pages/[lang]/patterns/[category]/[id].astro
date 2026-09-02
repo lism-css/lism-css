@@ -1,10 +1,4 @@
 ---
-/**
- * パターン詳細ページ（非root言語用）
- *
- * URL: /{lang}/patterns/{category}/{id}
- * 例: /en/patterns/cta/cta001
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
@@ -14,7 +8,6 @@ import { getAllPatternPaths, getPattern } from '@/lib/patterns';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 
-// 静的パス生成
 export function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
@@ -45,15 +38,12 @@ if (!isValidLang(lang)) {
 
 const pattern = getPattern(category!, id!);
 
-// パターンが見つからない場合は404
 if (!pattern) {
   return Astro.redirect('/404');
 }
 
-// カテゴリ情報（satisfies による推論では related を持たないカテゴリで型が絞られるため、共通の型で受ける）
 const categoryData: PatternCategory = patterns[category as PatternCategoryId];
 
-// プレビューURLとコード埋め込み用のパス（言語に応じて切り替え）
 const previewUrl = `/preview/patterns/${category}/${id}/${lang}/`;
 const patternPath = `src/pages/preview/patterns/${category}/${id}`;
 ---
@@ -75,7 +65,6 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
       )
     }
 
-    {/* カテゴリの概要・利用時の注意書き */}
     <Stack g="10" bgc="base-2" bdrs="10" p="20" fz="s">
       <Text c="text-2">{categoryData.description[lang]}</Text>
       {
@@ -89,13 +78,11 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
       }
     </Stack>
 
-    {/* プレビュー */}
     <Group layout="flow" mbs="50">
       <!-- <PreviewTitle>Preview</PreviewTitle> -->
       <PreviewFrame url={previewUrl} hasSizeSwitch />
     </Group>
 
-    {/* ソースコード */}
     <Stack g="15">
       <PreviewTitle>Code</PreviewTitle>
       <SrcCode dir="docs" path={patternPath + `/${lang}.astro`} title={`${lang}.astro`} />
@@ -106,6 +93,5 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
 
 <style>
   .c--patternPage {
-    /* 詳細ページ固有のスタイル */
   }
 </style>

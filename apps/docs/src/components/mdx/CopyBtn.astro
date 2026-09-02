@@ -5,8 +5,6 @@ import { getLangFromUrl, t } from '@/lib/i18n';
 const { fileContent, ...props } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const copyText = t(lang, 'copyCode');
-
-// icons: ionicons
 ---
 
 <Lism
@@ -66,7 +64,6 @@ const copyText = t(lang, 'copyCode');
     }
   }
 
-  /* コピー成功時のスタイル */
   .c--copyBtn._copied {
     color: white;
     background: #0a9d6c;
@@ -86,30 +83,25 @@ const copyText = t(lang, 'copyCode');
 </style>
 
 <script>
-  // コピーボタンの動作を設定
+  // コピー後のフィードバックを含むボタン動作を初期化する
   function initCopyBtns() {
     const copyBtns = document.querySelectorAll('.c--copyBtn');
 
     copyBtns.forEach((button) => {
-      // 既にイベントリスナーが登録されている場合はスキップ
+      // 初期表示と画面遷移で重複してリスナーを登録しない
       if (button.hasAttribute('data-initialized')) return;
       button.setAttribute('data-initialized', 'true');
 
       button.addEventListener('click', async () => {
         const codeContent = button.getAttribute('data-code');
-        // const buttonText = button.querySelector('.c--copyBtn_text');
-
         if (!codeContent) return;
 
         try {
-          // クリップボードにコピー
           await navigator.clipboard.writeText(codeContent);
 
-          // ボタンの表示を変更（成功フィードバック）
           button.classList.add('_copied');
           button.setAttribute('aria-labelledby', 'label--copy-code-done');
 
-          // 2秒後に元に戻す
           setTimeout(() => {
             button.classList.remove('_copied');
             button.setAttribute('aria-labelledby', 'label--copy-code');
@@ -126,13 +118,12 @@ const copyText = t(lang, 'copyCode');
     });
   }
 
-  // 初回ページ読み込み時
+  // 初回表示とAstroのビュー遷移後に初期化する
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCopyBtns);
   } else {
     initCopyBtns();
   }
 
-  // Astroのビュー遷移時（ビュー遷移が有効な場合）
   document.addEventListener('astro:page-load', initCopyBtns);
 </script>

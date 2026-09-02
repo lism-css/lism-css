@@ -8,12 +8,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-/** `@lism-css/mockup` パッケージのルート絶対パス。 */
 export function getMockPackageRoot(): string {
   return path.resolve(fileURLToPath(new URL('../../', import.meta.url)));
 }
 
-/** 同梱ビューア（vite root）のディレクトリ。 */
 export function getViewerDir(): string {
   return path.join(getMockPackageRoot(), 'viewer');
 }
@@ -45,7 +43,6 @@ export function* walkAncestorDirs(from: string): Generator<string> {
   }
 }
 
-/** realpath 解決。解決できないパス（仮想 id・未作成ファイル）はそのまま返す。 */
 export function safeRealpath(target: string): string {
   try {
     return fs.realpathSync(target);
@@ -54,7 +51,6 @@ export function safeRealpath(target: string): string {
   }
 }
 
-/** `target` が `dir` 配下（または `dir` 自身）かどうか。 */
 export function isInsideDir(dir: string, target: string): boolean {
   const rel = path.relative(dir, target);
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
@@ -85,7 +81,6 @@ export function ancestorNodeModules(from: string): string[] {
   return found;
 }
 
-/** id をパス部分とクエリ部分（`?...`）に分割する。 */
 export function splitQuery(id: string): { pathname: string; query: string } {
   const index = id.search(/[?#]/);
   return index === -1 ? { pathname: id, query: '' } : { pathname: id.slice(0, index), query: id.slice(index) };

@@ -1,8 +1,4 @@
-/**
- * データディレクトリと `mockup.config.json` の検証。
- *
- * `dev` / `check` は必ずこのモジュールを通るため、両コマンドの判定が食い違うことはない。
- */
+/** devとcheckが共有するデータ契約の検証。 */
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -40,7 +36,6 @@ export function getDataResolveAnchor(dataDir: string): string {
   return path.join(dataDir, MOCKUP_CONFIG_FILENAME);
 }
 
-/** `[dir]` 引数を絶対パス（realpath）へ解決する。 */
 export function resolveDataDir(dir: string): string {
   const abs = path.resolve(process.cwd(), dir);
   if (!fs.existsSync(abs)) {
@@ -52,12 +47,11 @@ export function resolveDataDir(dir: string): string {
   return safeRealpath(abs);
 }
 
-/** `mockup.config.json` を読み、スキーマを検証して返す。 */
+/** `mockup.config.json`を読み、データ契約を検証する。 */
 export function readMockConfig(dataDir: string): MockupConfigFile {
   const file = path.join(dataDir, MOCKUP_CONFIG_FILENAME);
 
-  // 存在確認と読み込みを分けると同じパスへ2回 syscall が走るので、読み込みの失敗（ENOENT）で
-  // 「無い」を判定する。ENOENT 以外（権限エラー等）はここで握りつぶさず、そのまま投げ直す。
+  // `readTokensFile`と同じ理由で、ENOENT以外は投げ直す。
   let content: string;
   try {
     content = fs.readFileSync(file, 'utf-8');
@@ -155,9 +149,7 @@ function readPagesMeta(value: unknown, file: string): Record<string, MockupConfi
     throw new MockupContractError(`${MOCKUP_CONFIG_FILENAME}: "pages" must be an object keyed by page id.`, { file });
   }
 
-  // ページ id はユーザー入力なので null プロトタイプの器へ入れる。
-  // 素の `{}` だと `pages["__proto__"] = entry` が own key にならず、
-  // 実在しないページ id の検証（discoverPages）をすり抜けてしまう。
+  // `__proto__`による存在検証のすり抜けを防ぐため、ページ情報はnullプロトタイプへ格納する。
   const pages = Object.create(null) as Record<string, MockupConfigPageMeta>;
   for (const [pageId, meta] of Object.entries(value)) {
     if (!isPlainObject(meta)) {

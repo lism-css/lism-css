@@ -1,11 +1,10 @@
-/* Details コンポーネント用スタイル */
 /* ::details-content と grid-template-rows: 0fr → 1fr のトランジションでアニメーション */
 @layer lism-block {
   .b--details {
-    --duration: var(--acc-duration, 0.25s); /* transition時間 */
+    --duration: var(--acc-duration, 0.25s);
     --_icon-scale: 1.1;
-    --_icon-transform: rotate(0deg); /* icon操作用 */
-    --_content-gtr: 0fr; /* 開閉操作用 */
+    --_icon-transform: rotate(0deg);
+    --_content-gtr: 0fr;
   }
   .b--details[open] {
     --_icon-transform: scaleY(-1);
@@ -26,10 +25,6 @@
     display: none;
   }
 
-  /* タイトル（見出しタグ指定時は set--plain でフォントを揃える） */
-  /* .b--details_title {} */
-
-  /* アイコン */
   .b--details_icon {
     --svg: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>');
     display: inline-grid;
@@ -41,7 +36,6 @@
     transform: var(--_icon-transform);
   }
 
-  /* ::details-content 擬似要素を使ったアニメーション */
   .b--details::details-content {
     display: grid;
     grid-template-rows: var(--_content-gtr);

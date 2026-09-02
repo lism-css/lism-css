@@ -1,9 +1,6 @@
 /**
- * 型 `.d.ts` 自動生成 Vite プラグイン（#427 / P4-P5）。
- *
- * 生成 / 更新 / 削除の実処理は bundler 非依存の `./typegen`（`syncLismEnvDts` / `writeLismEnvDts`）へ分離した。
- * 本ファイルは dev / build 起動時の同期と、dev 中の lism.config.js 変更追従だけを担う薄い Vite ラッパー。
- *
+ * 起動時とconfig変更時に`.d.ts`を同期するViteラッパー。
+ * 実処理はbundler非依存の`./typegen`が担う。
  * Astro の `astro check`（型チェック）は本プラグインを動かさないため、コミット済み生成ファイルが型チェックの拠り所になる。
  */
 import type { Plugin } from 'vite';
@@ -16,18 +13,13 @@ import { normalizePath } from './normalize-path';
 export { TYPES_FILENAME, writeLismEnvDts, syncLismEnvDts, type SyncTypesOptions } from './typegen';
 
 export interface LismTypegenOptions {
-  /** 型 `.d.ts` 自動生成を無効化する。 */
   disabled?: boolean;
-  /** lism.config の明示パス。未指定時は Vite root から探索する。 */
   configPath?: string;
 }
 
-/**
- * 型 `.d.ts` を dev / build 起動時に同期し、dev 中の lism.config.js 変更にも追従する Vite プラグイン。
- */
+/** dev・build起動時に型を同期し、dev中のconfig変更にも追従する。 */
 export function lismTypegen(options: LismTypegenOptions = {}): Plugin {
   let root = '';
-  // handleHotUpdate で「変更ファイルが lism.config か」を判定するために控える。
   let userConfigPath: string | null = null;
   return {
     name: 'lism-css:typegen',
@@ -40,9 +32,8 @@ export function lismTypegen(options: LismTypegenOptions = {}): Plugin {
       userConfigPath = findUserConfigPath(root || process.cwd(), options.configPath);
       await syncLismEnvDts(root || process.cwd(), { configPath: options.configPath });
     },
-    // dev 中に lism.config.js の breakpoints / props / traits を変更したら .d.ts を再生成する。
-    // dynamic-css / config-alias は full-reload を送るが、型生成は副作用として別途追従させる必要がある。
-    // （writeLismEnvDts は内容不変なら書き込まないため、生成物自身の変更で HMR ループにはならない）
+    // dynamic-css / config-aliasのfull-reloadとは別に型生成を追従させる必要がある。
+    // writeLismEnvDtsは内容不変なら書かないためHMRループにはならない。
     async handleHotUpdate(ctx) {
       if (options.disabled || !userConfigPath) return;
       if (normalizePath(ctx.file) !== normalizePath(userConfigPath)) return;

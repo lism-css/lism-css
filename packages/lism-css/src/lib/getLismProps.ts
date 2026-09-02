@@ -1,4 +1,3 @@
-// import { PROPS } from '../config';
 import { PROPS, TRAITS } from '../../config/index';
 import getLayoutProps from './getLayoutProps';
 import getAtomicProps from './getAtomicProps';
@@ -62,8 +61,6 @@ export interface LismPropsBase extends TraitProps, PropValueTypes, CustomPropReg
   [key: `data-${string}`]: unknown;
 }
 
-// getLismProps の入力となる Props 型
-
 const getTokenKey = (propName: string): string => {
   const propData = (PROPS as Record<string, PropConfig>)[propName];
   if (!propData) return '';
@@ -72,13 +69,7 @@ const getTokenKey = (propName: string): string => {
 };
 
 // 出力順のためのクラスバケット（結合順の唯一の定義点）
-// - primitiveClass : a--* / l--* （getAtomicProps → getLayoutProps の順で push）
-// - setClasses     : set--*
-// - traitClasses   : is--* / has--*
-// - uClasses       : u--*
-// - propClasses    : -hov / -property
 export class LismPropsData {
-  // 最終出力 className
   className: string = '';
   primitiveClass: string[] = [];
   setClasses: string[] = [];
@@ -90,7 +81,6 @@ export class LismPropsData {
   _propConfig?: Record<string, PropConfig>;
 
   constructor(allProps: LismPropsBase & Record<string, unknown>) {
-    // 受け取るpropsとそうでないpropsを分ける
     const { forwardedRef, class: astroClassName, className: userClassName, primitiveClass, style = {}, _propConfig = {}, ...others } = allProps;
 
     this.styles = { ...style };
@@ -99,46 +89,25 @@ export class LismPropsData {
       this.primitiveClass = [...primitiveClass];
     }
 
-    // propsの処理
     if (!isEmptyObj(others)) {
       this.attrs = { ...others };
       this.analyzeProps();
     }
 
-    // ref
     if (forwardedRef) {
       this.attrs.ref = forwardedRef;
     }
 
-    // pass-get
-    // if (null != passVars && typeof passVars === 'object') {
-    // 	this.setPassProps(passVars);
-    // }
-    // if (null != pass) {
-    // 	// , 区切りでユーティリティクラスを複数出力可能
-    // 	splitWithComma(pass).forEach((_propName) => {
-    // 		this.addUtil(`-pass:${_propName}`);
-    // 	});
-    // }
-    // if (null != get) {
-    // 	// , 区切りでユーティリティクラスを複数出力可能
-    // 	splitWithComma(get).forEach((_propName) => {
-    // 		this.addUtil(`-get:${_propName}`);
-    // 	});
-    // }
-
-    // クラスの結合
     this.className = this.buildClassName(userClassName, astroClassName);
   }
 
-  // 最終クラス文字列の組み立て（出力順の唯一の確定地点）
-  // 出力順: [className&class] [primitiveClass] [setClasses] [traitClasses] [uClasses] [propClasses]
-  // className と class が両方来た場合は両方マージする（atts 内で重複は除去される）。
+  // 最終クラス順: [className&class] [primitiveClass] [setClasses] [traitClasses] [uClasses] [propClasses]。
+  // classNameとclassは重複を除いて併合する。
   buildClassName(userClassName?: string, astroClassName?: string | null): string {
     return atts(userClassName, astroClassName, this.primitiveClass, this.setClasses, this.traitClasses, this.uClasses, this.propClasses);
   }
 
-  // prop解析
+  /** trait、set、util、Lism Prop、cssを出力先ごとに振り分ける。 */
   analyzeProps(): void {
     this.normalizeIsWrapper();
     this.normalizeHasTransition();
@@ -150,31 +119,25 @@ export class LismPropsData {
     mergeSet(undefined, rawUtil).forEach((v) => this.addUtil(`u--${v}`));
 
     Object.keys(this.attrs).forEach((propName) => {
-      // trait チェック
       if (Object.hasOwn(TRAITS, propName)) {
         const propVal = this.extractProp(propName);
         const traitClass = (TRAITS as Record<string, string>)[propName];
         if (propVal) this.traitClasses.push(traitClass);
       } else if (Object.hasOwn(PROPS, propName)) {
-        // Lism系のプロパティかどうか
-        // value取得して attrsリストから削除しておく
         const propVal = this.attrs[propName];
         delete this.attrs[propName];
-
-        // 解析処理
         this.analyzeLismProp(propName, propVal);
       } else if (propName === 'hov') {
         const propVal = this.extractProp(propName);
         this.setHovProps(propVal as boolean | string | Record<string, unknown> | null);
       } else if (propName === 'css') {
-        // cssオブジェクトに入ってきたものはstyleへ流す
         const cssVales = this.extractProp('css');
         this.addStyles(cssVales as Record<string, string | number | undefined>);
       }
     });
   }
 
-  // isWrapper="s" 形式のサイズ指定は contentSize Prop に寄せる。
+  // 文字列のisWrapperはcontentSizeへ移し、trait値をtrueに揃える。
   normalizeIsWrapper(): void {
     const isWrapper = this.attrs.isWrapper;
     if (isWrapper == null || isWrapper === false || isWrapper === '') return;
@@ -186,7 +149,7 @@ export class LismPropsData {
     }
   }
 
-  // hasTransition="color, opacity" 形式の文字列は --transitionProps 変数として出力し、クラス付与は boolean に寄せる。
+  // 文字列のhasTransitionはCSS変数へ移し、trait値をtrueに揃える。
   normalizeHasTransition(): void {
     const hasTransition = this.attrs.hasTransition;
     if (typeof hasTransition !== 'string') return;
@@ -196,20 +159,17 @@ export class LismPropsData {
     this.attrs.hasTransition = true;
   }
 
-  // Lism Prop 解析
+  /** Prop値をbaseとBPごとに分け、classとstyleへ変換する。 */
   analyzeLismProp(propName: string, propVal: unknown): void {
     if (null == propVal) return;
 
-    // propデータ取得
     let propConfig: PropConfig | null = (PROPS as Record<string, PropConfig>)[propName] || null;
-    if (null === propConfig) return; // 一応 nullチェックここでも
+    if (null === propConfig) return;
 
-    // config上書き設定があるかどうか
     if (this._propConfig?.[propName]) {
       propConfig = Object.assign({}, propConfig, this._propConfig[propName]);
     }
 
-    // ブレイクポイント指定用のオブジェクト{base,xs,sm,md,lg,xl}かどうかをチェック
     const { base: baseValue, ...bpValues } = getBpData(propVal);
 
     // bp 非対応プロパティに BP 指定された場合、開発環境でのみ警告する。
@@ -218,10 +178,8 @@ export class LismPropsData {
       warnUnsupportedBp(propName);
     }
 
-    // base値の処理
     this.setAttrs(propName, baseValue, propConfig);
 
-    // 各BP成分の処理
     Object.keys(bpValues).forEach((bp) => {
       if (propConfig) {
         this.setAttrs(propName, bpValues[bp as keyof typeof bpValues], propConfig, bp);
@@ -242,7 +200,6 @@ export class LismPropsData {
     this.propClasses.push(prop);
   }
   addStyle(name: string, val: string | number): void {
-    // CSS custom properties can accept string or number
     (this.styles as Record<string, string | number>)[name] = val;
   }
   addStyles(styles: Record<string, string | number | undefined>): void {
@@ -272,9 +229,9 @@ export class LismPropsData {
     return data;
   }
 
-  // propertyクラスを追加するか、styleにセットするかの分岐処理 @base
-  // 値が null, undefined, '', false の時はスキップ
+  /** 1つのProp値をproperty classまたはstyleへ出力する。 */
   setAttrs(propKey: string, val: unknown, propConfig: PropConfig = {}, bpKey: string = ''): void {
+    // 値が null, undefined, '', false の時はスキップ
     if (null == val || '' === val || false === val) return;
 
     const baseStyleName =
@@ -287,16 +244,14 @@ export class LismPropsData {
       utilName += `_${bpKey}`;
     }
 
-    // ":"ではじまっている場合、それに続く文字列を取得して property class 化
-    // ":" 単体（suffix なし）は「値なし = フラグ」と解釈し、val===true と同じ bare クラスを出力する。
-    // テキストフォーム等 boolean を渡せない経路から true 相当を指定できるようにするため。
+    // テキスト経由のtrue相当として、「:」はbareクラス、suffix付きはproperty classへ変換する。
     if (typeof val === 'string' && val.startsWith(':')) {
       const suffix = val.slice(1);
       this.addProp(suffix ? `${utilName}:${suffix}` : utilName);
       return;
     }
 
-    // property class 化できるかどうかをチェック
+    // base値はpreset、token、shorthandの順にclass化を試す。
     if (!bpKey) {
       const { presets, tokenClass, utils, shorthands } = propConfig;
       if (presets && isPresetValue(presets, val)) {
@@ -304,7 +259,6 @@ export class LismPropsData {
         if (valStr) this.addProp(`${utilName}:${valStr}`);
         return;
       }
-      // tokenもそのままクラス化する場合
       if (tokenClass && propConfig.token && isTokenValue(propConfig.token, val)) {
         const valStr = typeof val === 'string' || typeof val === 'number' ? String(val) : '';
         if (valStr) this.addProp(`${utilName}:${valStr}`);
@@ -324,69 +278,40 @@ export class LismPropsData {
       }
     }
 
-    // .-prop: だけ出力するケース
     if (true === val) {
       this.addProp(utilName);
       return;
     }
 
-    // 以下、ユーティリティクラス化できない場合の処理
+    // class化できない値はCSS変数またはinline styleへ出力する。
     const { prop, isVar, alwaysVar, token, bp } = propConfig;
 
-    //token を持つ場合の処理
     let finalVal: string | number;
     if (token && (typeof val === 'string' || typeof val === 'number')) {
       finalVal = getMaybeCssVar(val, token);
     } else if (typeof val === 'string' || typeof val === 'number') {
       finalVal = val;
     } else {
-      // オブジェクトや他の型の場合は文字列化 (通常は到達しないはず)
       finalVal = JSON.stringify(val);
     }
 
-    // baseスタイルの追加処理
     if (!bpKey) {
       if (isVar) {
         this.addStyle(baseStyleName, finalVal);
         return;
       } else if (!bp && !alwaysVar) {
-        // インラインでスタイル出力するだけ
         this.addStyle(prop as string, finalVal);
         return;
       }
     }
 
-    // .-prop & --prop / .-prop_bp & --prop_bpで 出力
     this.addProp(utilName);
     this.addStyle(styleName, finalVal);
   }
 
-  // setPassProps(passVars) {
-  // 	let dataList = [];
-  // 	Object.keys(passVars).forEach((propName) => {
-  // 		// プロバイダーリストに追加
-  // 		dataList.push(propName);
-
-  // 		// 渡す値
-  // 		let value = passVars[propName];
-  // 		if (null === value) return;
-
-  // 		// トークン値であれば変換
-  // 		value = getMaybeCssVar(value, getTokenKey(propName));
-  // 		this.addStyle(`--pass_${propName}`, value);
-  // 	});
-  // }
-
+  /** hov指定をhover classとCSS変数へ変換する。 */
   setHovProps(hoverData: boolean | string | Record<string, unknown> | null): void {
     if (!hoverData) return;
-
-    // 配列のときは中身を再帰処理
-    // if (Array.isArray(hoverData)) {
-    // 	hoverData.forEach((_hov) => {
-    // 		this.setHovProps(_hov);
-    // 	});
-    // 	return;
-    // }
 
     if (hoverData === true) {
       this.addProp(`-hov`);
@@ -406,7 +331,6 @@ export class LismPropsData {
         if (hovVal === true) {
           this.addProp(`-hov:${propName}`);
         } else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
-          // トークン値の処理
           const finalHovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
 
           this.addProp(`-hov:-${propName}`);
@@ -427,13 +351,8 @@ export interface LismOutputProps {
   [key: string]: unknown;
 }
 
-/**
- * props から styleに変換する要素 と その他 に分離する
- *
- * @param {Object} props
- */
+/** LismProps を className、style、その他の属性へ振り分ける。 */
 export default function getLismProps(props: LismProps): LismOutputProps {
-  // Fix: オブジェクトに .length は存在しないため、適切な空チェックに修正
   if (Object.keys(props).length === 0) {
     return {};
   }
@@ -449,6 +368,6 @@ export default function getLismProps(props: LismProps): LismOutputProps {
       className: propObj.className,
       style: filterEmptyObj(propObj.styles as Record<string, unknown>),
     }),
-    ...propObj.attrs, // data-* などHTMLの標準属性はそのまま渡す
+    ...propObj.attrs,
   };
 }

@@ -1,16 +1,9 @@
 ---
-/**
- * トップページ
- * Lism CSSの紹介とドキュメントへの導線
- */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import { Stack, Lism, Inline, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import KvEditor from '@/components/KvEditor/KvEditor.astro';
 import { siteConfig } from '@/config/site';
-// import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
-
-// Features
 const features = [
   {
     title: 'レイアウトプリミティブ',
@@ -74,7 +67,6 @@ const features = [
   },
 ];
 
-// AIツール連携
 const tools = [
   {
     title: 'MCPサーバー',
@@ -92,7 +84,6 @@ const tools = [
   },
 ];
 
-// プリセット
 const presets = [
   {
     src: '/img/preset-img-01.png',
@@ -143,7 +134,6 @@ const presets = [
 ---
 
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="HomePage" excludeFromSearch>
-  {/* 背景動画：スクロールしても固定表示 */}
   {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
   <Box class="c--kvVideoBg" pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true">
     <Frame h="100%" ar="16/9">
@@ -164,6 +154,7 @@ const presets = [
     </Box>
   </Lism>
 
+  {/* 機能紹介 */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g={['20', '25']}>
@@ -202,8 +193,8 @@ const presets = [
     </Stack>
   </Lism>
 
+  {/* AIツール連携 */}
   <Lism as="section" isWrapper="l" hasGutter pos="relative" z="1">
-    {/* AIツール連携セクション背景画像 */}
     <Group
       class="c--ai-bg"
       pos="absolute"
@@ -257,6 +248,7 @@ const presets = [
     </Stack>
   </Lism>
 
+  {/* テンプレート */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g={['20', '25']}>

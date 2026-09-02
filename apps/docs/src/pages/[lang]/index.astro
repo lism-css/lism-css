@@ -1,8 +1,4 @@
 ---
-/**
- * トップページ（非root言語用）
- * 日本語トップページの翻訳版
- */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import KvEditor from '@/components/KvEditor/KvEditor.astro';
 import { Stack, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
@@ -12,7 +8,6 @@ import { getLocalizedUrl, isRootLang, isValidLang, type LangCode } from '@/lib/i
 
 export async function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
-  // 非root言語のみ対象
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
   return nonRootLangs.map((lang) => ({
@@ -27,12 +22,10 @@ interface Props {
 
 const { lang } = Astro.props as Props;
 
-// 言語が無効な場合は404
 if (!isValidLang(lang)) {
   return Astro.redirect('/404');
 }
 
-// Features
 const features = [
   {
     title: 'Layout Primitives',
@@ -96,7 +89,6 @@ const features = [
   },
 ];
 
-// AIツール連携
 const tools = [
   {
     title: 'MCP Server',
@@ -114,7 +106,6 @@ const tools = [
   },
 ];
 
-// プリセット
 const presets = [
   {
     src: '/img/preset-img-01.png',
@@ -165,7 +156,6 @@ const presets = [
 ---
 
 <SimpleLayout title={siteConfig.name} description="The official documentation site for Lism CSS." lang={lang} schemaType="HomePage" excludeFromSearch>
-  {/* 背景動画：スクロールしても固定表示 */}
   {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
   <Box class="c--kvVideoBg" pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true">
     <Frame h="100%" ar="16/9">
@@ -186,6 +176,7 @@ const presets = [
     </Box>
   </Lism>
 
+  {/* 機能紹介 */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g={['20', '25']}>
@@ -224,8 +215,8 @@ const presets = [
     </Stack>
   </Lism>
 
+  {/* AIツール連携 */}
   <Lism as="section" isWrapper="l" hasGutter pos="relative" z="1">
-    {/* AIツール連携セクション背景画像 */}
     <Group
       class="c--ai-bg"
       pos="absolute"
@@ -279,6 +270,7 @@ const presets = [
     </Stack>
   </Lism>
 
+  {/* テンプレート */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g={['20', '25']}>
@@ -325,7 +317,7 @@ const presets = [
 </SimpleLayout>
 
 <style>
-  /* トップページは日本語版とフォントスケールを統一（_base.scss の html[lang='en'] { --fz-mol: 7 } を上書き） */
+  /* トップページは日本語版とフォントスケールを統一（_theme.scss の html[lang='en'] { --fz-mol: 7 } を上書き） */
   :global(html) {
     --fz-mol: 8;
   }

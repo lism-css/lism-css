@@ -19,7 +19,6 @@ base_type:
 	    デメリット: *= は処理負荷が高い。
 */
 
-// マップから値を取得し、nullの場合はデフォルト値を返す
 @function map_get_with_default($map, $key, $default) {
   $value: map.get($map, $key);
   @if $value {
@@ -36,28 +35,11 @@ base_type:
   @return '';
 }
 
-// 各プロパティのユーティリティクラス
 @mixin echoUtilities($key, $prop, $utilities, $base_type, $important) {
   @each $ukey, $value in $utilities {
     $selector: '';
 
-    // ,で複数指定
-    // $has_comma: string.index($ukey, ',');
-    // @if $has_comma {
-    // 	$ukeys: string.split($ukey, ',');
-
-    // 	@for $i from 1 through list.length($ukeys) {
-    // 		$val_key: list.nth($ukeys, $i);
-    // 		$_selector: '.-#{$key}\\:#{$val_key}';
-    // 		@if $i == 1 {
-    // 			$selector: $_selector;
-    // 		} @else {
-    // 			$selector: $selector + ',' + $_selector;
-    // 		}
-    // 	}
-    // } @else {
     $selector: '.-#{$key}\\:#{$ukey}';
-    // }
 
     // valueが(prop:val)で詳細に明示されている場合
     @if (meta.type-of($value) == map) {
@@ -75,16 +57,10 @@ base_type:
   }
 }
 
-/*
-  Step: 1
-  props リストをループ
-
-    - ベーススタイルの出力
-	- BPサポートがあれば $bp_support_list にそのプロパティを記録
- */
-$bp_support_list: (); // list
+// 1. 各propのbase・utilityクラスを出力し、BP対応propを集める。
+$bp_support_list: ();
 @each $key, $data in setting.$props {
-  $prop: map_get_with_default($data, prop, ''); // 対応するCSSプロパティ名
+  $prop: map_get_with_default($data, prop, '');
   $bp_support: map_get_with_default($data, bp, 0);
   $isVar: map_get_with_default($data, isVar, 0);
   $alwaysVar: map_get_with_default($data, alwaysVar, 0);
@@ -94,7 +70,6 @@ $bp_support_list: (); // list
     @continue;
   }
 
-  // 基本的なbaseセレクタタイプ: 基本は0, BPサポートオンなら 1.
   $base_type: 0;
   $has_bp_support: $bp_support == 1 or meta.type-of($bp_support) == list;
 
@@ -106,7 +81,6 @@ $bp_support_list: (); // list
     $base_type: 2;
   }
 
-  //  isVar が 1 なら base_type は 0
   @if $isVar == 1 {
     $base_type: 0;
   }
@@ -122,19 +96,15 @@ $bp_support_list: (); // list
     }
   }
 
-  // utilityクラスのリストを $data から取得
   $utilities: map.get($data, utilities);
   $exUtilities: map.get($data, exUtility);
 
-  // ユーティリティクラスのリストが取得できていれば出力
   @if $utilities {
     @include echoUtilities($key, $prop, $utilities, $base_type, $important);
   }
 
-  // exUtilityが存在する場合の処理
   @if $exUtilities {
     @each $exKey, $exValue in $exUtilities {
-      // 文字列の場合はそのまま展開
       @if (meta.type-of($exValue) == map) {
         .-#{$key}\:#{$exKey} {
           @each $_p, $_v in $exValue {
@@ -145,26 +115,16 @@ $bp_support_list: (); // list
     }
   }
 
-  // BPクラスを出力するプロパティのリストを作成
-
-  // $bp_support が 1（有効BPすべて）/ リスト（出力BPの明示指定）かどうか
   @if $has_bp_support {
     $bp_support_list: list.append($bp_support_list, $key);
   } @else if $bp_support != 0 {
     @warn "[lism-css] prop '#{$key}': bp must be 0, 1, or a breakpoint list; skipped.";
   }
 }
-// @debug $bp_support_list;
-
-/*
-  Step: 2
-  bp_support_list リストをループ
-    BP対応プロパティのリストを再びループし、それぞれどのブレイクポイントまでスタイルを出力するかをチェックし、$bp_outputsの各成分に保存
- */
-// setting.$breakpoints のキーだけを抽出したリストを取得
+// 2. BP対応propを出力先BPごとに振り分ける。
 $bp_names: map.keys(setting.$breakpoints);
 // min-width カスケード順は $breakpoints の正準順序（xs, sm, md, lg, xl）に従う。
-// 無効BP（サイズ0）は Step3 の query.bp-up でスキップされる。
+// 無効BP（サイズ0）は後段の query.bp-up でスキップされる。
 $bp_outputs: ();
 @each $bp in $bp_names {
   $bp_outputs: map.merge(
@@ -175,7 +135,6 @@ $bp_outputs: ();
   );
 }
 /* __stylelint-disable */
-// BPサポートしてるプロパティのリストをループ
 @each $key in $bp_support_list {
   $prop_data: map.get(setting.$props, $key);
   $prop_bp_data: map.get($prop_data, bp);
@@ -204,11 +163,8 @@ $bp_outputs: ();
       }
     }
   } @else {
-    // ── 範囲形式（1）──
-    // セマンティクス: $breakpoints にサイズが定義された有効BPすべてへ出力する。
-    // 無効BP（サイズ0）は Step3 の query.bp-up でスキップされる。
+    // 有効な全BPへ出力し、サイズ0のBPはquery.bp-upで除外する。
     @each $bp in $bp_names {
-      // mapから現在のリストを取得→リスト追加→更新されたリストを再びマージ
       $_bp_list: map.get($bp_outputs, $bp);
       $_bp_list: list.join($_bp_list, $key);
       $bp_outputs: map.merge(
@@ -220,13 +176,7 @@ $bp_outputs: ();
     }
   }
 }
-// @debug $bp_outputs;
-
-/*
-  Step: 3
-  bp_outputs をループし、各ブレイクポイントごとにサポートされているpropのスタイルを出力
-  （ @containerの出力数を少なくするために出力は最後にまとめている。)
- */
+// 3. @containerの出力数を抑えるため、BP別のクラスを最後にまとめて出力する。
 @each $bp, $data in $bp_outputs {
   @include query.bp-up($bp) {
     @each $key in $data {

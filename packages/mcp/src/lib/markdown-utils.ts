@@ -1,15 +1,9 @@
-/** 見出しの `#` レベルを返す（見出しでなければ 0） */
 function headingLevel(line: string): number {
   const m = line.match(/^(#{1,6})\s/);
   return m ? m[1].length : 0;
 }
 
-/**
- * Markdown から指定した見出しのセクションを抽出する。
- * 同レベル以上の次の見出しが来るまでの内容を返す。
- * @param md - Markdown 全文
- * @param heading - 見出しテキスト（`#` プレフィックスあり・なし両可）
- */
+/** 指定見出しから同レベル以上の次の見出しまでを抽出する。headingは#の有無を問わない。 */
 export function extractSection(md: string, heading: string): string {
   const headingText = heading.replace(/^#+\s*/, '').trim();
   const lines = md.split('\n');
@@ -40,9 +34,6 @@ export function extractSection(md: string, heading: string): string {
   return lines.slice(startIdx, endIdx).join('\n').trimEnd();
 }
 
-/**
- * Markdown から全ての見出しとその開始行を抽出する。
- */
 export function listHeadings(md: string): { level: number; text: string; line: number }[] {
   return md.split('\n').flatMap((line, i) => {
     const lv = headingLevel(line);
@@ -56,20 +47,13 @@ export function listHeadings(md: string): { level: number; text: string; line: n
 // ----------------------------------------------------------------
 
 export interface PropRow {
-  /** Lism Prop 名（例: "fz"） */
   prop: string;
-  /** CSS プロパティ名（例: "font-size"）。変数形式（"--hl"）も含む */
   cssProperty: string;
-  /** 所属する ### セクション名 */
   sectionName: string;
-  /** プリセット値クラス列の生テキスト（例: "-fz:base, -fz:5xl, ..."） */
   presetColumn: string;
 }
 
-/**
- * property-class.md のテーブルを全て解析して PropRow[] を返す。
- * `| Prop | CSS プロパティ | ...` 形式のテーブルのみ対象とする。
- */
+/** Property Classの対象テーブルを解析してPropRowへ変換する。 */
 export function parsePropRows(md: string): PropRow[] {
   const lines = md.split('\n');
   const rows: PropRow[] = [];
@@ -77,34 +61,31 @@ export function parsePropRows(md: string): PropRow[] {
   let currentSection = '';
   let inPropTable = false;
 
+  // 見出しと対象テーブルの範囲を追跡する。
   for (const line of lines) {
     const lv = headingLevel(line);
 
-    // セクション見出しを追跡（### レベル）
     if (lv >= 2) {
       currentSection = line.replace(/^#+\s*/, '').trim();
       inPropTable = false;
       continue;
     }
 
-    // Property Class テーブルのヘッダー行を検出
     if (line.includes('Prop') && line.includes('CSS プロパティ')) {
       inPropTable = true;
       continue;
     }
 
-    // 区切り行はスキップ
     if (inPropTable && /^\|[-\s|:]+\|/.test(line)) {
       continue;
     }
 
-    // テーブルの終了を検出
     if (inPropTable && !line.startsWith('|')) {
       inPropTable = false;
       continue;
     }
 
-    // データ行を解析
+    // 対象テーブルの各行をPropRowへ変換する。
     if (inPropTable && line.startsWith('|')) {
       const cells = line
         .split('|')
@@ -112,9 +93,7 @@ export function parsePropRows(md: string): PropRow[] {
         .filter(Boolean);
       if (cells.length >= 2) {
         const prop = cells[0].replace(/`/g, '').trim();
-        // CSS プロパティ: バッククォート除去、括弧内の注釈は保持しない
         const cssPropertyRaw = cells[1].replace(/`/g, '').trim();
-        // `line-height`（`--hl` 経由） のような括弧注釈を除去
         const cssProperty = cssPropertyRaw
           .replace(/（[^）]*）$/, '')
           .replace(/\([^)]*\)$/, '')
@@ -134,11 +113,7 @@ export function parsePropRows(md: string): PropRow[] {
 // コンポーネント検索
 // ----------------------------------------------------------------
 
-/**
- * Markdown からコンポーネント名に一致するセクションを探して返す。
- *
- * components-ui.md のように各コンポーネントが `## ComponentName` で始まる場合に有効。
- */
+/** 各コンポーネントが`## ComponentName`で始まる文書向け。 */
 export function findComponentByHeading(md: string, name: string): string {
   return extractSection(md, name);
 }
@@ -152,11 +127,10 @@ export function findComponentInTables(md: string, name: string): string {
   const nameLower = name.toLowerCase();
   const lines = md.split('\n');
 
-  // コンポーネント名のパターン: `<Flex>`, `<flex>`, または単純に "flex" がテーブル行に含まれるか
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const pattern = new RegExp(`\`?<${escaped}>?\`?`, 'i');
 
-  // まず対象行を探す
+  // コンポーネントを含むテーブル行を探す。
   let targetLineIdx = -1;
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].startsWith('|') && (pattern.test(lines[i]) || lines[i].toLowerCase().includes(`\`${nameLower}\``))) {
@@ -167,7 +141,7 @@ export function findComponentInTables(md: string, name: string): string {
 
   if (targetLineIdx === -1) return '';
 
-  // 対象行を含む ## セクションの開始を遡って探す
+  // 対象行を含む##節の範囲を決める。
   let sectionStart = -1;
   let sectionLevel = 0;
   for (let i = targetLineIdx; i >= 0; i--) {
@@ -181,7 +155,6 @@ export function findComponentInTables(md: string, name: string): string {
 
   if (sectionStart === -1) return lines.slice(0, targetLineIdx + 20).join('\n');
 
-  // セクションの終端を探す
   let sectionEnd = lines.length;
   for (let i = sectionStart + 1; i < lines.length; i++) {
     const lv = headingLevel(lines[i]);

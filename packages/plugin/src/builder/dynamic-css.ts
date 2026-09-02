@@ -1,5 +1,5 @@
 /**
- * 動的 CSS ビルド Vite プラグイン（#427 / #424 進行順序 4 の P2）。
+ * 動的CSSビルド Vite プラグイン（#427）。
  *
  * `import 'lism-css/main.css'` 等の CSS import を `resolveId` / `load` で捕捉し、
  * `lism.config.js` を反映した CSS をその場でコンパイルして返す（`@tailwindcss/vite` と同型）。

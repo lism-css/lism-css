@@ -1,12 +1,4 @@
 ---
-/**
- * Page Layout 詳細ページ（動的ルーティング / root言語: ja）
- *
- * URL: /page-layouts/{category}/{id}
- * 例: /page-layouts/article/one-column
- *
- * プレビューiframeは /preview/page-layouts/{category}/{id}/ を参照
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
@@ -14,7 +6,6 @@ import SrcCode from '@/components/mdx/SrcCode.astro';
 import { pageLayouts, type PageLayoutCategoryId } from '@/config/page-layouts';
 import { getAllPageLayoutPaths, getPageLayout } from '@/lib/page-layouts';
 
-// 静的パス生成
 export function getStaticPaths() {
   const paths = getAllPageLayoutPaths();
   return paths.map(({ category, id }) => ({
@@ -22,19 +13,15 @@ export function getStaticPaths() {
   }));
 }
 
-// Params取得
 const { category, id } = Astro.params;
 const layout = getPageLayout(category!, id!);
 
-// レイアウトが見つからない場合は404
 if (!layout) {
   return Astro.redirect('/404');
 }
 
-// カテゴリ情報
 const categoryData = pageLayouts[category as PageLayoutCategoryId];
 
-// プレビューURLとコード埋め込み用のパス
 const previewUrl = `/preview/page-layouts/${category}/${id}/`;
 const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
 ---
@@ -64,12 +51,10 @@ const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
         </Group>
       )
     }
-    {/* プレビュー */}
     <Group layout="flow" mbs="50">
       <PreviewFrame url={previewUrl} hasSizeSwitch />
     </Group>
 
-    {/* ソースコード */}
     <Stack g="15">
       <PreviewTitle>コード</PreviewTitle>
       <SrcCode dir="docs" path={layoutPath + '/index.astro'} title="index.astro" />
@@ -79,6 +64,5 @@ const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
 
 <style>
   .c--pageLayoutPage {
-    /* 詳細ページ固有のスタイル */
   }
 </style>

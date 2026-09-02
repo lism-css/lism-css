@@ -1,24 +1,13 @@
 ---
-/**
- * シンプルなワンカラムレイアウト
- * - トップページや特殊ページで使用
- * - サイドバー・目次なしのシンプルな構成
- */
-
-// Lism CSS のスタイルシート読み込み
 import 'lism-css/main.css';
 
-// プロジェクト固有のスタイル
 import '../styles/main.scss';
 
-// サイト設定
 import { siteConfig } from '@/config/site';
 
-// 多言語対応
 import { getRootLang, type LangCode } from '@/lib/i18n';
 import type { SchemaType } from '@/lib/jsonLd';
 
-// コンポーネント
 import Head from '../components/Head.astro';
 import JsonLd from '../components/JsonLd.astro';
 import Header from '../components/Header.astro';
@@ -29,10 +18,10 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
-  lang?: LangCode; // 言語コード（省略時はroot言語）
-  schemaType?: SchemaType; // 指定時のみ JSON-LD を出力
-  excludeFromSearch?: boolean; // 検索対象から除外するかどうか
-  noindex?: boolean; // 検索エンジンにインデックスさせない（noindex,follow を出力）
+  lang?: LangCode;
+  schemaType?: SchemaType;
+  excludeFromSearch?: boolean;
+  noindex?: boolean;
 }
 
 const { title = siteConfig.name, description, ogImage, lang = getRootLang(), schemaType, noindex = false } = Astro.props;

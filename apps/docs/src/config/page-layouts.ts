@@ -1,35 +1,26 @@
-/**
- * Page Layouts データ設定
- *
- * ページ骨格レベル（フロントページ、記事レイアウト、404 等）のレイアウト集。
- * カテゴリごとにアイテムを定義し、preview 実体は src/pages/preview/page-layouts/{category}/{id}/index.astro に配置する。
- */
-
+// ページ全体のレイアウト集。プレビュー実体はsrc/pages/preview/page-layouts配下に置く
 import type { LangCode } from '@/config/site';
 
 // 関連ページへのリンク（言語プレフィックスなしのパスで保持し、表示時に言語を付与する）
 export interface PageLayoutRelatedLink {
-  label: string; // 表示ラベル
-  path: string; // 例: '/patterns/#hero'
+  label: string;
+  path: string;
 }
 
-// Page Layout アイテムの型
 export interface PageLayoutItem {
-  id: string; // レイアウトID（例: one-column）
-  title: string; // 表示タイトル（例: One Column）
-  description: Record<LangCode, string>; // 言語別の説明文
-  related?: PageLayoutRelatedLink[]; // 関連ページへのリンク
-  draft?: boolean; // 下書きフラグ（本番環境では非公開）
+  id: string;
+  title: string;
+  description: Record<LangCode, string>;
+  related?: PageLayoutRelatedLink[];
+  draft?: boolean;
 }
 
-// カテゴリ情報の型
 export interface PageLayoutCategory {
-  label: string; // カテゴリ表示名
-  description: Record<LangCode, string>; // カテゴリの概要
+  label: string;
+  description: Record<LangCode, string>;
   items: PageLayoutItem[];
 }
 
-// Page Layouts データ（satisfies でカテゴリ追加時に型定義の更新が不要）
 const pageLayouts = {
   page: {
     label: 'Page',
@@ -133,11 +124,8 @@ const pageLayouts = {
   },
 } satisfies Record<string, PageLayoutCategory>;
 
-// カテゴリIDの型（pageLayouts のキーから自動推論）
 export type PageLayoutCategoryId = keyof typeof pageLayouts;
 
-// pageLayouts をエクスポート（型推論のため、定義とエクスポートを分離）
 export { pageLayouts };
 
-// カテゴリIDの配列（表示順）
 export const categoryIds = Object.keys(pageLayouts) as PageLayoutCategoryId[];

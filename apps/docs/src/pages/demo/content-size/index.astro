@@ -1,13 +1,6 @@
 ---
 import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
-import {
-  AttsLabels,
-  // TipCode,
-  GutterGuide,
-  FullSizeContent,
-  BleedSizeContent,
-  LoremContent,
-} from '../container/_components.js';
+import { AttsLabels, GutterGuide, FullSizeContent, BleedSizeContent, LoremContent } from '../container/_components.js';
 import { Lism, Box, Flow, Spacer } from 'lism-css/astro';
 import '../container/_style.scss';
 ---
@@ -25,8 +18,6 @@ import '../container/_style.scss';
 
     <h2><code>-max-sz:full</code></h2>
     <p><code>-max-sz:full</code> は、基本的には 100% ですが、親が <code>has--gutter</code> を持っていても全幅に広がります。</p>
-    <!-- <p>また、<code>l--flow</code> の直下で <code>-max-sz:full</code> が連続すると、その間の余白は0となります。</p> -->
-
     <Spacer h="5" />
     <Flow isWrapper flow="s" hasGutter>
       <AttsLabels atts="is--wrapper,has--gutter" />

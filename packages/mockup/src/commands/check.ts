@@ -20,7 +20,6 @@ import { describeMissingLucideExport } from '../vite/lucide-icons.js';
 import { warnMissingStandardPackages } from './diagnostics.js';
 
 export interface CheckCommandOptions {
-  /** ビューアディレクトリの上書き（テスト用。既定は同梱ビューア）。 */
   viewerDir?: string;
 }
 
@@ -31,7 +30,6 @@ function toCheckError(error: unknown): MockupContractError {
   const err = error as { message?: string; id?: string; frame?: string; loc?: { file?: string; line?: number; column?: number } };
   const file = err.loc?.file ?? err.id;
   const position = err.loc?.line !== undefined ? `:${err.loc.line}${err.loc.column !== undefined ? `:${err.loc.column}` : ''}` : '';
-  // 仮想 lucide-react モジュールの「その export は無い」だけは、対応範囲の説明へ差し替える。
   const parts = [describeMissingLucideExport(error) ?? err.message ?? String(error)];
   if (err.frame) parts.push(err.frame);
 
@@ -49,14 +47,13 @@ function printSummary(data: MockupData): void {
   console.log(pc.dim(`  data directory: ${data.dataDir}`));
   console.log(pc.dim(`  pages: ${data.pages.length} (${data.pages.map((page) => page.id).join(', ')})`));
   console.log(pc.dim(`  tokens: ${countTokens(data.tokens)} override(s)`));
-  // ダークは任意機能なので、宣言があるときだけ1行増やす。
   if (darkCount > 0) console.log(pc.dim(`  dark tokens: ${darkCount} override(s)`));
 }
 
 export async function checkCommand(dir: string, options: CheckCommandOptions = {}): Promise<void> {
   const runtime = await prepareMockRuntime(dir);
   try {
-    // 許可リストは vite 設定でも使うため1回だけ作る（構築は node_modules の走査を伴う）。
+    // node_modules走査を重ねないため、許可リストはVite設定と共有する。
     const allowlist = createImportAllowlist(runtime);
     warnMissingStandardPackages(allowlist.missingPackages);
 

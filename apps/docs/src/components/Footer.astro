@@ -7,9 +7,6 @@ import ThemeSwitch from '@/components/ThemeSwitch.astro';
 
 <Lism as="footer" class="c--siteFooter" mbs="auto" pt="5.125rem" pb="35" {...Astro.props}>
   <Stack g="15">
-    <!-- <Text ta="center">
-			Powered by <a href="https://lism-css.com">Lism CSS</a>
-		</Text> -->
     <ThemeSwitch />
     <SNSLinks icons={['x', 'github', 'discord']} mt="5" style={{ '--snsLinks-space': 'var(--s15)' }} />
     <Text ta="center" translate="no" lh="1.5" fz={{ base: 's', md: 'base' }}> &copy; 2026 {siteConfig.name}. </Text>

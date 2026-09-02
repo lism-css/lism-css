@@ -1,8 +1,4 @@
 ---
-/**
- * UIコンポーネント一覧ページ
- * content/ja/ui/ 配下のMDXを一覧表示
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, AutoColumns, BoxLink, Frame, Lism, Media } from 'lism-css/astro';
 import { getUiPostsByLang } from '@/lib/content';
@@ -10,33 +6,24 @@ import { getRootLang } from '@/lib/i18n';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// 現在の言語の UI 記事を取得
 const currentLang = getRootLang();
 const allUiPosts = await getUiPostsByLang(currentLang);
 
-// order順にソート（未指定は999）
 const byOrder = (a: (typeof allUiPosts)[number], b: (typeof allUiPosts)[number]) => (a.data.order ?? 999) - (b.data.order ?? 999);
 
-// ui/block-examples/ 配下の記事（CSSをコピーして導入するb--部品の作例）
 const blockExamplePosts = allUiPosts.filter((post) => post.id.startsWith('ui/block-examples/')).sort(byOrder);
 
-// ui/components/ 配下の記事（Lism CSSだけで組み立てる実装例）
 const componentPosts = allUiPosts.filter((post) => post.id.startsWith('ui/components/')).sort(byOrder);
 
-// ui/ 直下の記事（パッケージ提供のUI）
 const blockPosts = allUiPosts.filter((post) => !post.id.startsWith('ui/block-examples/') && !post.id.startsWith('ui/components/')).sort(byOrder);
 
-// サムネイル画像が存在するかチェックするヘルパー
 function getThumbPath(title: string): string {
-  // タイトルからサムネイルパスを生成（例: Accordion → /thumb/components/Accordion.png）
   const thumbPath = `/thumb/components/${title}.png`;
   const fullPath = path.join(process.cwd(), 'public', thumbPath);
 
-  // ファイルが存在するかチェック
   if (fs.existsSync(fullPath)) {
     return thumbPath;
   }
-  // 存在しない場合はEmptyを返す
   return '/thumb/components/Empty.png';
 }
 ---

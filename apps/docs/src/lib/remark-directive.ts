@@ -36,13 +36,10 @@
  */
 import { visit } from 'unist-util-visit';
 import type { Root, Parent, RootContent } from 'mdast';
-// mdast の型拡張（directive 型を有効化）
 import type { ContainerDirective, TextDirective, LeafDirective } from 'mdast-util-directive';
 
-// Calloutで使用可能なtype一覧
 const CALLOUT_TYPES = ['alert', 'point', 'tip', 'warning', 'check', 'help', 'note', 'info'];
 
-// MDX JSX 要素の型（remark-mdx で拡張される型を簡易的に定義）
 interface MdxJsxAttribute {
   type: 'mdxJsxAttribute';
   name: string;
@@ -56,7 +53,6 @@ interface MdxJsxFlowElement {
   children: RootContent[];
 }
 
-// ノードの型ガード
 function isTextDirective(node: RootContent): node is TextDirective {
   return node.type === 'textDirective';
 }
@@ -74,22 +70,17 @@ export function remarkDirectiveHandler() {
     visit(tree, (node: Root | RootContent, index: number | undefined, parent: Parent | undefined) => {
       if (node.type === 'root') return;
 
-      // textDirective（:で始まる記法）を元のテキストに復元
-      // このプロジェクトでは textDirective は使用しないため、元の形式に戻す
+      // 誤変換を防ぐため、未使用のtextDirectiveは元のMarkdown表記へ戻す
       if (isTextDirective(node)) {
         if (index === undefined || !parent) return;
 
-        // textDirective を元のテキスト形式に復元
-        // 例: :name → ":name", :name[label] → ":name[label]"
         let restoredText = `:${node.name}`;
 
-        // label（[...]の中身）がある場合は復元
         if (node.children.length > 0) {
           const labelText = extractText(node.children);
           restoredText += `[${labelText}]`;
         }
 
-        // attributes（{...}の中身）がある場合は復元
         if (node.attributes && Object.keys(node.attributes).length > 0) {
           const attrsStr = Object.entries(node.attributes)
             .map(([key, value]) => (value === '' ? key : `${key}="${String(value)}"`))
@@ -97,22 +88,17 @@ export function remarkDirectiveHandler() {
           restoredText += `{${attrsStr}}`;
         }
 
-        // textDirective ノードを text ノードに置き換え
         parent.children.splice(index, 1, { type: 'text', value: restoredText } as RootContent);
         return;
       }
 
-      // containerDirective（:::で囲まれたブロック）を Callout に変換
+      // containerDirectiveをCalloutへ変換し、::titleを見出し要素にする
       if (isContainerDirective(node)) {
         const directiveName = node.name;
 
-        // Calloutの対応するtypeかチェック
         if (CALLOUT_TYPES.includes(directiveName)) {
-          // 子要素内の ::title ディレクティブを変換
           const mappedChildren = node.children.map((child) => {
-            // leafDirective（::で始まる記法）でnameが'title'の場合
             if (isLeafDirective(child) && child.name === 'title') {
-              // div要素に変換
               return {
                 type: 'mdxJsxFlowElement',
                 name: 'div',
@@ -129,7 +115,6 @@ export function remarkDirectiveHandler() {
             return child;
           });
 
-          // MDXJsxFlowElementに変換（AST ノードを直接書き換え）
           const mdxNode = node as unknown as MdxJsxFlowElement;
           mdxNode.type = 'mdxJsxFlowElement';
           mdxNode.name = 'Callout';
@@ -147,9 +132,6 @@ export function remarkDirectiveHandler() {
   };
 }
 
-/**
- * AST ノードからテキストを抽出するヘルパー関数
- */
 function extractText(nodes: RootContent[]): string {
   return nodes
     .map((node) => {

@@ -1,10 +1,4 @@
-/**
- * `dev` / `check` が共有する実行時状態。
- *
- * データディレクトリの検証結果に加え、生成 config・トークン CSS・vite 用の一時ディレクトリを
- * 1つのオブジェクトにまとめる。dev の watch で内容が差し替わっても、vite プラグイン側は
- * この runtime を参照し続けるだけで最新状態を読める。
- */
+/** devのwatchで差し替わる状態をdev/checkとviteプラグインで共有する。 */
 import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -18,31 +12,22 @@ import { buildTokensArtifacts, loadTokens, writeConfigModule } from './tokens.js
 import type { MockupData, TokenGroupEntry } from './types.js';
 
 export interface MockupRuntime {
-  /** 最新の検証済みデータ（watch で差し替わる）。 */
   data: MockupData;
-  /** 生成した lism.config モジュールの絶対パス。 */
   readonly configPath: string;
-  /** 上の lism.config モジュールを置くディレクトリ（同じ入力なら起動をまたいで同じ場所）。 */
   readonly configDir: string;
   /** vite の `cacheDir`（依存の事前バンドル先。同じ入力なら起動をまたいで使い回す。dev では占有した `.inuse.<pid>` パス）。 */
   readonly cacheDir: string;
-  /** 生成物を置く一時ディレクトリのルート（プロセス固有。`cleanup()` で消える）。 */
   readonly tempDir: string;
-  /** `serializeTokens()` の結果（`virtual:lism-mockup/tokens.css` の中身）。 */
   tokensCss: string;
-  /** 上の CSS が定義するトークンの内訳（`virtual:lism-mockup/tokens` の中身）。 */
   tokensData: TokenGroupEntry[];
-  /** 仮想モジュールが生成する動的 import 指定子の集合（境界チェックの照合用）。 */
   getPageSpecifiers(): ReadonlySet<string>;
-  /** `mockup.config.json` と `pages/` を読み直す。 */
   refreshPages(): void;
-  /** トークンファイルを読み直し、config モジュール・トークン CSS・トークン一覧を作り直す。 */
   refreshTokens(): Promise<void>;
   /** 一時ディレクトリを削除し、占有した cacheDir を共有パスへ返す（キャッシュの中身と `configDir` は次回起動のために残す）。 */
   cleanup(): void;
 }
 
-/** `@lism-css/mockup` 自身のバージョン。読めない場合はキャッシュキー用の既定値を返す。 */
+/** 読めない場合も安定したキャッシュキーを作るため既定値を返す。 */
 function readMockPackageVersion(packageRoot: string): string {
   try {
     const manifest = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf-8')) as { version?: unknown };
@@ -52,12 +37,7 @@ function readMockPackageVersion(packageRoot: string): string {
   }
 }
 
-/**
- * 起動間で共有する生成 config を置く場所のキー。
- *
- * CLI のバージョンと実体位置（別インストールなら同梱依存も別物）、
- * データディレクトリ、`imports` の追加パッケージをハッシュする。
- */
+/** 別インストールや異なる入力の生成configを共有しないためのキー。 */
 function generatedDirKey(dataDir: string, imports: readonly string[]): string {
   const packageRoot = safeRealpath(getMockPackageRoot());
   return (
@@ -71,7 +51,6 @@ function generatedDirKey(dataDir: string, imports: readonly string[]): string {
 
 const LOCKFILE_NAMES = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lock'] as const;
 
-/** データディレクトリから最も近い lockfile の実体パスと内容。 */
 function findNearestLockfile(dataDir: string): [string, string] | null {
   for (const dir of walkAncestorDirs(dataDir)) {
     for (const name of LOCKFILE_NAMES) {
@@ -86,7 +65,6 @@ function findNearestLockfile(dataDir: string): [string, string] | null {
   return null;
 }
 
-/** vite の依存キャッシュ用のキー。追加依存がある場合だけ lockfile も含める。 */
 function viteCacheDirKey(dataDir: string, imports: readonly string[]): string {
   const key = generatedDirKey(dataDir, imports);
   if (imports.length === 0) return key;
@@ -103,8 +81,6 @@ function sharedDirRoot(): string {
 }
 
 /**
- * vite の `cacheDir`（依存の事前バンドル先）の場所を決める。
- *
  * プロセス固有の一時ディレクトリに置くと毎回ゼロから事前バンドルし直しになるため、
  * `os.tmpdir()` 配下の安定した場所へ置いて起動間で使い回す（データディレクトリ側には書かないので、
  * 読み取り専用の配布物（npx キャッシュ等）から実行しても動く、という設計は維持できる）。
@@ -120,8 +96,6 @@ export function resolveViteCacheDir(dataDir: string, imports: readonly string[] 
 }
 
 /**
- * 生成した lism.config モジュールを置くディレクトリを決める。
- *
  * ここは lockfile に影響されない安定パスにする。`lismConfigAlias()` はこのファイルのパスを
  * `resolve.alias` に入れ、vite は `resolve` をまるごと依存キャッシュのキーに含めるため、
  * パスが起動ごとに変わると毎回「vite config has changed」で事前バンドルをやり直してしまい、
@@ -143,13 +117,10 @@ export function resolveGeneratedConfigDir(dataDir: string, imports: readonly str
 
 interface PreparedViteCacheDir {
   cacheDir: string;
-  /** 共有 cacheDir の占有（取っていない場合は null）。 */
   claim: ViteCacheClaim | null;
 }
 
 /**
- * vite の `cacheDir` を用意する。
- *
  * ディレクトリ自体は作らない（占有した場合を除く）。事前バンドルを行う `dev` では vite が
  * 必要になった時点で作るため、キャッシュを使わない `check`（build）が空ディレクトリを残さずに済む。
  *
@@ -175,9 +146,7 @@ function prepareViteCacheDir(dataDir: string, imports: readonly string[] | undef
 }
 
 /**
- * 生成 config の置き場所を用意する。
- *
- * `cacheDir` と違い、ここは起動直後に書き込むのでディレクトリを作る。
+ * `cacheDir`と違い、生成configは起動直後に書くためディレクトリを作る。
  * 書き込めない場合はプロセス固有の一時ディレクトリへ退避する（キャッシュ再利用を諦めるだけ）。
  */
 function prepareGeneratedConfigDir(dataDir: string, imports: readonly string[] | undefined, tempDir: string): string {
@@ -191,7 +160,7 @@ function prepareGeneratedConfigDir(dataDir: string, imports: readonly string[] |
   }
 }
 
-/** データディレクトリを検証して `MockupData` を作る。 */
+/** データディレクトリ全体を検証し、実行時データへまとめる。 */
 export async function loadMockData(dir: string): Promise<MockupData> {
   const dataDir = resolveDataDir(dir);
   const config = readMockConfig(dataDir);
@@ -209,7 +178,7 @@ export interface PrepareMockRuntimeOptions {
   exclusiveViteCache?: boolean;
 }
 
-/** データディレクトリを検証し、vite を動かすための一時生成物まで用意する。 */
+/** 検証済みデータとVite用の生成物・キャッシュを準備する。 */
 export async function prepareMockRuntime(dir: string, options: PrepareMockRuntimeOptions = {}): Promise<MockupRuntime> {
   const data = await loadMockData(dir);
 
@@ -282,9 +251,7 @@ export async function prepareMockRuntime(dir: string, options: PrepareMockRuntim
       // 占有した cacheDir を共有パスへ返し、次の起動が温まったキャッシュを使えるようにする。
       claim?.release();
       try {
-        // 消すのは生成物の一時ディレクトリだけ。cacheDir / configDir は次回起動で事前バンドルを
-        // 省くために残す（configDir を消すと同じ入力でも起動ごとに作り直しになり、
-        // 同時起動しているもう1つのプロセスの config まで消してしまう）。
+        // 次回起動の事前バンドルと同時起動中のconfigを保つため、生成物の一時ディレクトリだけ削除する。
         fs.rmSync(tempDir, { recursive: true, force: true });
       } catch {
         // 削除できなくても致命的ではない（OS の一時ディレクトリ掃除に任せる）。

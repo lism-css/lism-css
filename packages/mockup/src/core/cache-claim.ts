@@ -1,18 +1,10 @@
 /**
- * 共有 vite `cacheDir` の占有（claim）。
- *
  * vite の依存最適化は、キャッシュの commit を「既存 deps を退避 → 新しい deps を rename」という
  * 連続の `fs.renameSync` で行い、そこにプロセス間の排他は無い（リトライ付き rename は Windows 専用）。
  * 同じ cacheDir へ複数プロセスが同時に書くと ENOTEMPTY / ENOENT で commit に失敗し、vite は
  * エラーログ1行で続行するため、負けた側は依存最適化を失ったままブラウザ表示が壊れる。
  *
- * そこで、共有パスそのものを自分の pid 名のディレクトリ（`<共有パス>.inuse.<pid>`）へ rename して
- * 占有する。rename は原子的なので、共有パスを取れるプロセスは常に高々1つになる。
- *
- * - 各プロセスが書き込むのは「自分の pid 名のディレクトリ」だけ
- * - rename の元になるのは「共有パス」か「死んだ pid の残骸」だけで、生きたプロセスの占有
- *   ディレクトリを他プロセスが動かす操作は存在しない
- * - SIGKILL やクラッシュで残った `.inuse.<pid>` は、次に起動したプロセスが pid の生存確認をして回収する
+ * 共有パスを`<共有パス>.inuse.<pid>`へrenameして原子的に占有し、死んだpidの残骸は次の起動で回収する。
  *
  * 占有できなかった場合は `null` を返し、呼び出し側がプロセス固有のディレクトリへ退避する
  * （キャッシュの再利用を諦めて毎回事前バンドルするだけで、動作は変わらない）。
@@ -21,20 +13,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-/** 占有ディレクトリの名前 `<共有パス>.inuse.<pid>` を作る接尾辞。 */
 const INUSE_SUFFIX = '.inuse.';
 
 export interface ViteCacheClaim {
-  /** 占有した cacheDir の絶対パス（`<共有パス>.inuse.<自 pid>`）。 */
   readonly dir: string;
   /** 占有を返却する。2回以上呼んでも無害。 */
   release(): void;
 }
 
 interface InuseEntry {
-  /** 占有ディレクトリの絶対パス。 */
   path: string;
-  /** 名前から読み取った保持プロセスの pid。 */
   pid: number;
 }
 
@@ -49,8 +37,6 @@ function isProcessAlive(pid: number): boolean {
 }
 
 /**
- * `<basename>.inuse.<pid>` 形式の名前から pid を読む（対象外の名前なら null）。
- *
  * `String(pid)` と完全に一致する形（先頭ゼロなし・正の整数）だけを受け付ける。
  * 0 以下を `process.kill()` に渡すとプロセスグループへのシグナルになるため。
  */
@@ -62,7 +48,6 @@ function parseInusePid(name: string, prefix: string): number | null {
   return Number.isSafeInteger(pid) ? pid : null;
 }
 
-/** 共有パスの隣にある占有ディレクトリを列挙する（親ディレクトリを読めなければ null）。 */
 function readInuseEntries(sharedPath: string): InuseEntry[] | null {
   const parent = path.dirname(sharedPath);
   const prefix = `${path.basename(sharedPath)}${INUSE_SUFFIX}`;
@@ -80,7 +65,6 @@ function readInuseEntries(sharedPath: string): InuseEntry[] | null {
   return entries;
 }
 
-/** rename の結果。成功なら null、失敗ならエラー（呼び出し側が code で分岐する）。 */
 function tryRename(from: string, to: string): NodeJS.ErrnoException | null {
   try {
     fs.renameSync(from, to);
@@ -91,16 +75,12 @@ function tryRename(from: string, to: string): NodeJS.ErrnoException | null {
 }
 
 /**
- * 占有ディレクトリ `inuse` を用意する（成功したら true）。
+ * 共有cacheDirを自プロセス用の占有ディレクトリへ移す。
  *
  * 失敗の扱いは「次の手を試す」か「諦めて false（＝呼び出し側が退避）」のどちらかに必ず収束させる。
  */
 function acquire(sharedPath: string, inuse: string): boolean {
-  // 自分の pid 名のディレクトリが既にある場合は取得しない。
-  // 生きている pid は OS 内で一意なので、これを作れたのは「自プロセス（＝既に占有中）」か
-  // 「同じ pid を再利用した死んだ前任者の残骸」のどちらかしかない。
-  // POSIX の rename は移動先が空ディレクトリなら置換に成功するため、このガードが無いと
-  // 実行中の占有を新しい取得が上書きし得る（同じディレクトリを2つの claim が所有してしまう）。
+  // 同じPID名のclaimをPOSIX renameで上書きしないため、既存なら取得しない。
   if (fs.existsSync(inuse)) return false;
 
   // 共有パスを丸ごと自分のものにする（rename は原子的なので同時に来ても1者しか成功しない）。

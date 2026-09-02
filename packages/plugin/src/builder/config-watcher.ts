@@ -1,12 +1,6 @@
 /**
- * lism.config の変更を監視する bundler 非依存の watcher（ロードマップ P8）。
- *
- * Vite/Astro は `handleHotUpdate`、webpack は compiler の `watchRun` フックで dev 中の
- * config 変更に追従できるが、Next.js（Turbopack 主導）にはそれらに相当する汎用注入口が無い。
- * そこで Next.js では config 反映済み CSS を `.lism-css/css/*` へ事前生成 → alias で差し替える方式を取り、
- * dev 中の config 変更追従は「lism.config を `fs.watch` で監視し、変更時に CSS / 型を再生成する」本 watcher が担う。
- * 生成 CSS ファイルの変更は Turbopack（および `--webpack` dev の webpack）が module graph 経由で拾うため、
- * 再生成さえ走れば追従が成立する（P2 で実機確認済み）。
+ * Next.js（Turbopack 主導）には dev 中の config 変更への汎用注入口が無いため、
+ * `fs.watch` による本 watcher が再生成のトリガーを担う。
  *
  * NOTE: chokidar 等は足さず Node 標準の `fs.watch` のみで実装する（plugin の依存を増やさないため）。
  */
@@ -16,22 +10,18 @@ import path from 'node:path';
 import { normalizePath } from './normalize-path';
 
 export interface WatchLismConfigOptions {
-  /** 監視対象の lism.config 絶対パス。 */
   configPath: string;
-  /** 変更検知時に呼ぶ非同期コールバック（CSS 再生成 / 型再生成など）。 */
   onChange: () => Promise<void>;
-  /** 連続イベントをまとめる debounce 時間（ms）。既定 80ms。 */
   debounceMs?: number;
   log?: (message: string) => void;
 }
 
 export interface ConfigWatcher {
-  /** 監視を停止する。 */
   close(): void;
 }
 
 /**
- * `configPath` の変更を監視し、変更時に `onChange` を呼ぶ。
+ * configの親ディレクトリを監視し、変更をdebounceして`onChange`を呼ぶ。
  *
  * 監視対象はファイル自身ではなく**親ディレクトリ**を `fs.watch` し、basename でフィルタする。
  * エディタの atomic save（temp へ書き込み → rename で置換）はファイル自身の watch を壊すが、

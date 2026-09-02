@@ -5,13 +5,11 @@ import { parsePropRows, type PropRow } from '../lib/markdown-utils.js';
 import { MetaInfoSchema } from '../lib/schemas.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
-/** CSS宣言 */
 interface CssDeclaration {
   property: string;
   value: string;
 }
 
-/** 変換結果の1行 */
 const ConversionEntrySchema = z.object({
   css: z.string(),
   lismProp: z.string().nullable(),
@@ -22,7 +20,6 @@ const ConversionEntrySchema = z.object({
 });
 type ConversionEntry = z.infer<typeof ConversionEntrySchema>;
 
-/** コンポーネント提案 */
 const ComponentSuggestionSchema = z.object({
   name: z.string(),
   reason: z.string(),
@@ -34,7 +31,6 @@ type ComponentSuggestion = z.infer<typeof ComponentSuggestionSchema>;
 // CSS パース
 // ----------------------------------------------------------------
 
-/** @ルール（@media 等）が含まれていないか検査する */
 function detectAtRules(cssText: string): string | null {
   const atRuleMatch = cssText.match(/^@(\w[\w-]*)/m);
   if (atRuleMatch) {
@@ -43,18 +39,14 @@ function detectAtRules(cssText: string): string | null {
   return null;
 }
 
-/**
- * CSS テキストから宣言を抽出する。
- * `;` で分割する際に `url()` 等の括弧内の `;` を無視する。
- */
+/** CSSテキストから宣言を抽出する。url()などの括弧内にある`;`は区切りとみなさない。 */
 function parseCssDeclarations(cssText: string): CssDeclaration[] {
-  // コメント除去
+  // コメントとセレクタの外枠を取り除く。
   let cleaned = cssText.replace(/\/\*[\s\S]*?\*\//g, '');
 
-  // セレクタ + ブレースを除去（裸の宣言リストも受け付ける）
   cleaned = cleaned.replace(/[^{}]*\{/g, '').replace(/\}/g, '');
 
-  // 括弧のネストを考慮して `;` で分割
+  // 括弧の深さを追いながら宣言単位に分ける。
   const segments: string[] = [];
   let current = '';
   let parenDepth = 0;
@@ -100,12 +92,10 @@ interface PropMapping {
   sectionName: string;
 }
 
-/** プリセット値列から値を抽出する（例: "-fz:base, -fz:5xl" → ["base", "5xl"]） */
 function extractPresetValues(presetColumn: string, propName: string): string[] {
   if (!presetColumn || presetColumn === '—' || presetColumn === '-') return [];
 
   const values: string[] = [];
-  // -{prop}:{value} パターンを全て抽出
   const escaped = propName.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
   const regex = new RegExp(`-${escaped}:([^,\\s\`〜]+)`, 'g');
   let match: RegExpExecArray | null;
@@ -128,7 +118,6 @@ function buildCssPropertyMap(mappings: PropMapping[]): Map<string, PropMapping> 
   const map = new Map<string, PropMapping>();
   for (const mapping of mappings) {
     const normalized = mapping.cssProperty.toLowerCase();
-    // CSS カスタムプロパティ形式はスキップ（"--hl" 等）
     if (!normalized.startsWith('(class:')) {
       map.set(normalized, mapping);
     }
@@ -140,7 +129,6 @@ function buildCssPropertyMap(mappings: PropMapping[]): Map<string, PropMapping> 
 // 値のマッピング
 // ----------------------------------------------------------------
 
-/** よくある CSS 値 → Lism トークン値の変換テーブル */
 const VALUE_ALIASES: Record<string, string> = {
   'space-between': 'between',
   currentcolor: 'current',
@@ -152,10 +140,8 @@ function suggestValue(mapping: PropMapping, cssValue: string): string | null {
   const tokens = mapping.presetValues;
   if (tokens.length === 0) return null;
 
-  // 直接一致
   if (tokens.includes(cssValue)) return cssValue;
 
-  // エイリアス変換後に一致
   const aliased = VALUE_ALIASES[cssValue.toLowerCase()];
   if (aliased && tokens.includes(aliased)) return aliased;
 
@@ -166,6 +152,7 @@ function suggestValue(mapping: PropMapping, cssValue: string): string | null {
 // コンポーネント検出
 // ----------------------------------------------------------------
 
+/** display関連の宣言から利用できるLismレイアウトコンポーネントを提案する。 */
 function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | null {
   const propMap = new Map(declarations.map((d) => [d.property, d.value.toLowerCase()]));
 
@@ -173,7 +160,6 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
   const flexDirection = propMap.get('flex-direction');
   const placeItems = propMap.get('place-items');
 
-  // Stack: flex + column
   if (display === 'flex' && (flexDirection === 'column' || flexDirection === 'column-reverse')) {
     return {
       name: 'Stack',
@@ -182,7 +168,6 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
     };
   }
 
-  // Center: grid + place-items: center
   if (display === 'grid' && placeItems === 'center') {
     return {
       name: 'Center',
@@ -191,7 +176,6 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
     };
   }
 
-  // Flex
   if (display === 'flex') {
     return {
       name: 'Flex',
@@ -200,7 +184,6 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
     };
   }
 
-  // Grid
   if (display === 'grid') {
     return {
       name: 'Grid',
@@ -221,6 +204,7 @@ function findCategory(mappings: PropMapping[], propName: string): string {
   return found?.sectionName ?? 'unknown';
 }
 
+/** 変換結果からJSX使用例を組み立てる。 */
 function buildExample(conversions: ConversionEntry[], component: ComponentSuggestion | null): string {
   const tagName = component?.name ?? 'Lism';
   const implicitCssSet = new Set(component?.implicitCss.map((c) => c.split(':')[0].trim()) ?? []);
@@ -236,7 +220,7 @@ function buildExample(conversions: ConversionEntry[], component: ComponentSugges
       continue;
     }
 
-    // コンポーネントが暗黙的に付与する CSS はスキップ
+    // コンポーネントが暗黙に持つCSSは重複出力しない。
     if (implicitCssSet.has(cssProp)) continue;
 
     if (conv.suggestedValue != null) {
@@ -288,7 +272,6 @@ export function registerConvertCss(server: McpServer): void {
     },
     ({ css }) => {
       try {
-        // @ ルール検出
         const atRuleError = detectAtRules(css);
         if (atRuleError) {
           return error(atRuleError);
@@ -304,7 +287,7 @@ export function registerConvertCss(server: McpServer): void {
           return error('No CSS declarations found. Provide CSS in "property: value;" format.');
         }
 
-        // 各宣言を変換
+        // 各宣言をLism Propと候補値へ変換する。
         const conversions: ConversionEntry[] = declarations.map((decl) => {
           const mapping = cssPropertyMap.get(decl.property);
 
@@ -336,10 +319,9 @@ export function registerConvertCss(server: McpServer): void {
           };
         });
 
-        // コンポーネント検出
+        // 変換結果からコンポーネント候補と使用例を組み立てる。
         const suggestedComponent = detectComponent(declarations);
 
-        // 使用例
         const example = buildExample(conversions, suggestedComponent);
 
         return success({

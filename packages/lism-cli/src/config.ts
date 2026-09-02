@@ -24,16 +24,13 @@ interface LismConfigFile {
   ui?: RawUiConfig;
   /** @deprecated `ui` へリネーム済み。後方互換のための読み取り専用。 */
   cli?: RawUiConfig;
-  // 他のキー（tokens 等）はここでは関心外
   [key: string]: unknown;
 }
 
-/** プロジェクトルートから見た設定ファイルの絶対パス */
 function resolvePath(filename: string): string {
   return path.resolve(process.cwd(), filename);
 }
 
-/** 使用する設定ファイルを検出（存在する最初のもの）。見つからなければ null。 */
 export function findConfigFile(): { path: string; filename: string } | null {
   for (const name of CONFIG_SEARCH) {
     const abs = resolvePath(name);
@@ -46,10 +43,8 @@ export function configExists(): boolean {
   return findConfigFile() !== null;
 }
 
-/** `lism.config.js` 新規作成時のデフォルトファイル名 */
 export const DEFAULT_CONFIG_FILENAME = 'lism.config.js';
 
-/** 新規 lism.config.js のパス */
 export function getDefaultConfigPath(): string {
   return resolvePath(DEFAULT_CONFIG_FILENAME);
 }
@@ -88,9 +83,7 @@ export async function readConfig(): Promise<LismCliConfig | null> {
     return normalizeUiConfig(hasUiKey ? modObj.ui : modObj.cli);
   }
 
-  // 明示キーが無い場合、モジュール全体が直接 UI 設定という旧形式への後方互換を試す。
-  // 検証に失敗したら「UI セクションが無い」とみなし null を返す（throw しない）。
-  // CSS カスタマイズ専用の lism.config.js（tokens/props 等）を誤って UI 設定と解釈しないため。
+  // 明示キーがない場合は旧形式を検証し、CSS専用設定などUI設定でなければnullを返す。
   try {
     return normalizeUiConfig(modObj);
   } catch {
@@ -99,9 +92,7 @@ export async function readConfig(): Promise<LismCliConfig | null> {
 }
 
 /**
- * ui セクションの生の値を検証し、クリーンな LismCliConfig を構築して返す。
- * `dir` を最優先で読み、無ければ旧キー `componentsDir` を後方互換として読む。
- * 必要フィールドだけを抜き出すのは、jiti の interopDefault が __esModule 等の
+ * ui設定を検証・正規化する。必要フィールドだけを抜き出すのは、jitiのinteropDefaultが__esModule等の
  * 内部プロパティを合成した Proxy を返すケースがあるため。
  */
 function normalizeUiConfig(raw: unknown): LismCliConfig {
@@ -148,16 +139,10 @@ function renderConfigTemplate(ui: LismCliConfig | null): string {
   return lines.join('\n');
 }
 
-/** `ui add` で「貼り付け用スニペット」として表示する文字列を返す（`ui:` キーを含む） */
 export function renderUiSnippet(cli: LismCliConfig): string {
   return `ui: ${renderCliObject(cli, '')},`;
 }
 
 function renderCliObject(cli: LismCliConfig, indent: string): string {
-  return [
-    '{', //
-    `${indent}  framework: ${JSON.stringify(cli.framework)},`,
-    `${indent}  dir: ${JSON.stringify(cli.dir)},`,
-    `${indent}}`,
-  ].join('\n');
+  return ['{', `${indent}  framework: ${JSON.stringify(cli.framework)},`, `${indent}  dir: ${JSON.stringify(cli.dir)},`, `${indent}}`].join('\n');
 }

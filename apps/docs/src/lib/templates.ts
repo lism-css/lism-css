@@ -1,20 +1,12 @@
-/**
- * Templates 関連のヘルパー関数
- */
-
 import { visibleTemplates, categories, type CategoryDef, type CategoryId, type TemplateItem } from '@/config/templates';
 
 /**
- * カテゴリIDとslugからテンプレート情報を取得
  * draft:true のテンプレートは本番ビルドでは取得不可（詳細ページが 404 になる）
  */
 export function getTemplate(categoryId: string, slug: string): TemplateItem | undefined {
   return visibleTemplates.find((tpl) => tpl.category === categoryId && tpl.slug === slug);
 }
 
-/**
- * カテゴリ定義を取得
- */
 export function getCategory(categoryId: string): CategoryDef | undefined {
   return categories.find((c) => c.id === categoryId);
 }

@@ -16,10 +16,7 @@ interface Props {
   lang?: LangCode;
 }
 
-// デモの提示モード。クライアント側へは data-kv-mode で受け渡す。
-// - 'live': チャット演出なしの自動ループ再生（AIパネル非表示・エディター全幅・バーに ▶/⏸ トグル）
-// - 'ai':   AIアシスタント風のチャットデモ（パネルのマークアップ・player.ts・シナリオ文言は温存
-//           しているため、ここを戻すだけで復活する）
+// data-kv-modeへ渡す表示モード。liveは自動ループ、aiは温存中のチャット演出を使う。
 const DEMO_MODE: 'live' | 'ai' = 'live';
 // const はリテラル型へ絞り込まれ、リテラル同士の比較が ts(2367) になるため union へ広げてから判定する
 const isLiveMode = (DEMO_MODE as 'live' | 'ai') === 'live';
@@ -34,10 +31,6 @@ const highlighted = await highlight(initialHtml, 'html');
 
 <div class="c--kvEditorHero" data-kv-hero set:html={initialHtml} />
 
-{
-  /* 手書き風の "Edit Here!!" 誘導装飾（広い画面幅のみ表示）。エディターは overflow: hidden のため
-     内側に置けず、この高さ 0 の行を基準にエディター右上へ絶対配置する（_kv-editor.scss） */
-}
 <span class="c--kvEditorEditHere" aria-hidden="true"></span>
 
 <div class="c--kvEditor" data-kv-editor data-kv-lang={lang} data-kv-mode={DEMO_MODE}>
