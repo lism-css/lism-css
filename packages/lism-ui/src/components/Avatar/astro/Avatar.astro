@@ -12,7 +12,7 @@ const { size, src, name, alt, class: className, ...props } = Astro.props;
 const { label, initial, initialAtts } = getAvatarProps({ name, alt });
 ---
 
-<Frame class={atts(className, 'b--avatar')} w={size} {...props}>
+<Frame class={atts(className, 'b--avatar', !src && 'b--avatar--initial')} w={size} {...props}>
   {
     src ? (
       <img src={src} alt={label} width="100%" height="100%" decoding="async" />

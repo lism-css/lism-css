@@ -92,9 +92,9 @@ Avatar のベーススタイルは、以下のCSSで定義されています。
 
 ### イニシャル表示
 
-`src`を省略すると、`name`の先頭1文字（`b--avatar_initial`）を表示します。大文字化はCSSの`text-transform: uppercase`で行い、文字サイズはアバターのサイズ（`--w`）に比例します。
+`src`を省略すると、ルートに`b--avatar--initial`が付き、`name`の先頭1文字（`b--avatar_initial`）を表示します。大文字化はCSSの`text-transform: uppercase`で行い、文字サイズはアバターのサイズ（`--w`）に比例します。
 
-イニシャル表示時の背景色はルート要素側に当てているため、`bgc`などのPropで上書きできます。
+背景色は`b--avatar--initial`（ルート要素）側に当てているため、`bgc`などのPropで上書きできます。
 
 <Preview>
   <PreviewTitle>`src`を省略してイニシャルを表示する</PreviewTitle>
@@ -114,13 +114,13 @@ Avatar のベーススタイルは、以下のCSSで定義されています。
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="b--avatar l--frame -w" style="--w: 4rem">
+    <div class="b--avatar b--avatar--initial l--frame -w" style="--w: 4rem">
       <span class="b--avatar_initial" role="img" aria-label="Yamada Taro">Y</span>
     </div>
-    <div class="b--avatar l--frame -w -bgc:brand -c:base" style="--w: 4rem">
+    <div class="b--avatar b--avatar--initial l--frame -w -bgc:brand -c:base" style="--w: 4rem">
       <span class="b--avatar_initial" role="img" aria-label="鈴木">鈴</span>
     </div>
-    <div class="b--avatar l--frame -w" style="--w: 4rem">
+    <div class="b--avatar b--avatar--initial l--frame -w" style="--w: 4rem">
       <span class="b--avatar_initial" aria-hidden="true">Y</span>
     </div>
     ```

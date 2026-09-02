@@ -5,14 +5,14 @@
     width: var(--w);
     aspect-ratio: 1/1;
     border-radius: var(--bdrs--99);
-
-    /* イニシャル表示時の背景。ルート側に置くことで bgc 等の Property Class で上書きできる */
-    &:has(> .b--avatar_initial) {
-      background-color: var(--base-2);
-    }
   }
 
-  /* src 未指定時のイニシャル表示 */
+  /* src 未指定時（イニシャル表示）の背景。ルート側に置くことで bgc 等の Property Class で上書きできる */
+  .b--avatar--initial {
+    background-color: var(--base-2);
+  }
+
+  /* src 未指定時のイニシャル文字 */
   .b--avatar_initial {
     display: grid;
     place-items: center;
