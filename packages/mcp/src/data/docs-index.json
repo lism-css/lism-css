@@ -1710,9 +1710,9 @@
       "CSS変数",
       "Examples",
       "表示する向きを変える",
+      "揃え位置を変える",
       "待ち時間と間隔を変える",
       "配色を変える",
-      "書字方向に追従させる",
       "ブラウザ対応"
     ],
     "keywords": [
@@ -1724,6 +1724,7 @@
       "aria-describedby",
       "role=tooltip",
       "side",
+      "align",
       "delay",
       "offset",
       "CSS Anchor Positioning",
@@ -1731,7 +1732,7 @@
       "b--tooltip",
       "Esc"
     ],
-    "snippet": "ホバーやキーボードフォーカスで補足テキストを表示するツールチップ。表示切り替えはCSSのみで行い、JavaScriptはEscで閉じる処理だけを担当する。Tooltip.Root / Tooltip.Trigger / Tooltip.Popupで構成し、side（top/bottom/left/right/start/end、初期値top）・delay（表示までの待ち時間）・offset（トリガーとの間隔）で調整できる。CSS変数は--tooltip-offset・--tooltip-delay・--tooltip-delay-out・--tooltip-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザではTooltip.Root基準の絶対配置にフォールバックする（自動反転とoffsetは無効）。@lism-css/uiパッケージで提供。"
+    "snippet": "ホバーやキーボードフォーカスで補足テキストを表示するツールチップ。表示切り替えはCSSのみで行い、JavaScriptはEscで閉じる処理だけを担当する。Tooltip.Root / Tooltip.Trigger / Tooltip.Popupで構成し、side（top/bottom/left/right/start/end、初期値top）・align（start/center/end、初期値center）・delay（表示までの待ち時間）・offset（トリガーとの間隔）で調整できる。CSS変数は--tooltip-offset・--tooltip-delay・--tooltip-delay-out・--tooltip-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザではTooltip.Root基準の絶対配置にフォールバックする（自動反転とoffsetは無効）。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Popover.mdx",

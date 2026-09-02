@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within, waitFor } from 'storybook/test';
 import { Cluster } from 'lism-css/react';
 import { Tooltip } from './react';
-import type { TooltipSide } from './react';
+import type { TooltipAlign, TooltipSide } from './react';
 
 const meta: Meta = {
   title: 'UI/Tooltip',
@@ -11,8 +11,6 @@ const meta: Meta = {
 
 export default meta;
 type Story = StoryObj;
-
-const SIDES: TooltipSide[] = ['top', 'bottom', 'left', 'right', 'start', 'end'];
 
 export const Default: Story = {
   render: () => (
@@ -37,14 +35,27 @@ export const Default: Story = {
   },
 };
 
-export const Sides: Story = {
-  name: '方向（side）',
+const positions: { side: TooltipSide; align: TooltipAlign }[] = [
+  { side: 'top', align: 'start' },
+  { side: 'top', align: 'center' },
+  { side: 'top', align: 'end' },
+  { side: 'bottom', align: 'center' },
+  { side: 'left', align: 'end' },
+  { side: 'right', align: 'start' },
+  { side: 'start', align: 'center' },
+  { side: 'end', align: 'center' },
+];
+
+export const Positions: Story = {
+  name: '表示位置（side / align）',
   render: () => (
     <Cluster g="40" py="60">
-      {SIDES.map((side) => (
-        <Tooltip.Root key={side}>
-          <Tooltip.Trigger>{side}</Tooltip.Trigger>
-          <Tooltip.Popup side={side}>side=&quot;{side}&quot;</Tooltip.Popup>
+      {positions.map(({ side, align }) => (
+        <Tooltip.Root key={`${side}-${align}`}>
+          <Tooltip.Trigger>{`${side} / ${align}`}</Tooltip.Trigger>
+          <Tooltip.Popup side={side} align={align}>
+            {`side="${side}" align="${align}"`}
+          </Tooltip.Popup>
         </Tooltip.Root>
       ))}
     </Cluster>

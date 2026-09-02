@@ -40,7 +40,9 @@
 
   /*
    * anchor 配置。position-area は side と align の span を var() で合成し、
-   * start / end は span-* で片側に伸ばして justify-self / align-self でアンカー端に揃える。
+   * start / end は span-* で片側に伸ばして place-self でアンカー端に揃える。
+   * span キーワードと揃える軸は side の系統（物理 x / 物理 y / 論理 block）ごとに異なるので、
+   * 系統側で --_spanStart / --_spanEnd / --_placeStart / --_placeEnd の候補を定義し、align 側はそれを選ぶだけにする。
    * top / bottom の align に span-x-* を使うのは、書字方向に従って RTL でも端に揃うため。
    * 物理（top/bottom）と論理（span-inline-*）の混在は文法上無効で宣言ごと落ちるので使わない。
    * side の start / end は inline 軸の論理方向（position-area の inline-start / inline-end）。block 軸は top / bottom の物理値のみ。
@@ -48,12 +50,17 @@
   @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
     .b--popover_popup {
       --offset: var(--popover-offset, var(--s5));
-      --span: span-all;
+      --_span: span-all;
       position-anchor: --popover;
-      position-area: var(--side) var(--span);
+      position-area: var(--_side) var(--_span);
       inset: auto;
     }
+    /* --_place*: place-self の値（align-self justify-self）。揃える軸だけ start / end にする */
     .b--popover_popup:where([data-side='top'], [data-side='bottom']) {
+      --_spanStart: span-x-end;
+      --_spanEnd: span-x-start;
+      --_placeStart: auto start;
+      --_placeEnd: auto end;
       margin-block: var(--offset);
       position-try-fallbacks:
         flip-block,
@@ -61,55 +68,49 @@
         flip-block flip-inline;
     }
     .b--popover_popup:where([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end']) {
+      --_placeStart: start auto;
+      --_placeEnd: end auto;
       margin-inline: var(--offset);
       position-try-fallbacks:
         flip-inline,
         flip-block,
         flip-inline flip-block;
     }
-    .b--popover_popup:where([data-side='top']) {
-      --side: top;
+    .b--popover_popup:is([data-side='left'], [data-side='right']) {
+      --_spanStart: span-bottom;
+      --_spanEnd: span-top;
     }
-    .b--popover_popup:where([data-side='bottom']) {
-      --side: bottom;
+    .b--popover_popup:is([data-side='start'], [data-side='end']) {
+      --_spanStart: span-block-end;
+      --_spanEnd: span-block-start;
     }
-    .b--popover_popup:where([data-side='left']) {
-      --side: left;
+    .b--popover_popup[data-side='top'] {
+      --_side: top;
     }
-    .b--popover_popup:where([data-side='right']) {
-      --side: right;
+    .b--popover_popup[data-side='bottom'] {
+      --_side: bottom;
     }
-    .b--popover_popup:where([data-side='start']) {
-      --side: inline-start;
+    .b--popover_popup[data-side='left'] {
+      --_side: left;
     }
-    .b--popover_popup:where([data-side='end']) {
-      --side: inline-end;
+    .b--popover_popup[data-side='right'] {
+      --_side: right;
+    }
+    .b--popover_popup[data-side='start'] {
+      --_side: inline-start;
+    }
+    .b--popover_popup[data-side='end'] {
+      --_side: inline-end;
     }
 
-    /* align: start / end。span キーワードは side の系統（物理 x / 物理 y / 論理 block）ごとに異なる */
-    .b--popover_popup:where([data-side='top'], [data-side='bottom']):where([data-align='start']) {
-      --span: span-x-end;
-      justify-self: start;
+    /* align: side 系統が用意した候補から選ぶ */
+    .b--popover_popup:where([data-align='start']) {
+      --_span: var(--_spanStart);
+      place-self: var(--_placeStart);
     }
-    .b--popover_popup:where([data-side='top'], [data-side='bottom']):where([data-align='end']) {
-      --span: span-x-start;
-      justify-self: end;
-    }
-    .b--popover_popup:where([data-side='left'], [data-side='right']):where([data-align='start']) {
-      --span: span-bottom;
-      align-self: start;
-    }
-    .b--popover_popup:where([data-side='left'], [data-side='right']):where([data-align='end']) {
-      --span: span-top;
-      align-self: end;
-    }
-    .b--popover_popup:where([data-side='start'], [data-side='end']):where([data-align='start']) {
-      --span: span-block-end;
-      align-self: start;
-    }
-    .b--popover_popup:where([data-side='start'], [data-side='end']):where([data-align='end']) {
-      --span: span-block-start;
-      align-self: end;
+    .b--popover_popup:where([data-align='end']) {
+      --_span: var(--_spanEnd);
+      place-self: var(--_placeEnd);
     }
   }
 

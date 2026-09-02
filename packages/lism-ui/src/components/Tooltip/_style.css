@@ -1,12 +1,10 @@
 /*
- * CSS Anchor Positioning で配置し、非対応ブラウザには @supports not ブロック内の absolute 配置でフォールバックする。
- *   制約: anchor 配置側（ゲートなし）に書いたプロパティは、フォールバック側で必ず全部上書きする。
- *         @supports not が真になるブラウザには部分対応（Chrome 128〜130: anchor-scope 未対応だが position-area 等は解釈する）が
- *         含まれ、そこではゲートなし側の宣言が生きたまま残るため。anchor 系は初期値へ戻し、既知プロパティはフォールバック値で上書きする。
+ * 表示制御は CSS（:hover / :focus-visible）で行い、CSS Anchor Positioning で配置する。
+ * anchor 配置は @supports で囲い、非対応ブラウザ（部分対応の Chrome 128〜130 を含む）には
+ * ルート基準の absolute 配置にフォールバックする（viewport 端での反転とオフセットは無い）。
  */
 @layer lism-block {
   .b--tooltip {
-    position: relative; /* フォールバック（absolute 配置）の基準 */
     display: inline-block;
     anchor-scope: --tooltip;
   }
@@ -14,14 +12,9 @@
     anchor-name: --tooltip;
   }
 
-  /* ① anchor 配置。全ブラウザに読ませる（ゲートなし） */
   .b--tooltip_popup {
-    --offset: var(--tooltip-offset, var(--s5));
     --duration: var(--tooltip-duration, 0.15s);
-    position: fixed;
-    position-anchor: --tooltip;
     z-index: 10;
-    margin: 0;
     width: max-content;
     max-width: min(20rem, 90vw);
     padding: var(--s5) var(--s10);
@@ -29,45 +22,12 @@
     background-color: var(--text);
     color: var(--base);
     font-size: var(--fz--s);
-    visibility: hidden;
+    visibility: hidden; /* pointer-events は使わない。transition しないため退場猶予中の当たり判定が消え、橋渡しが効かなくなる */
     opacity: 0;
-    pointer-events: none;
     transition:
       opacity var(--duration),
       visibility var(--duration);
     transition-delay: var(--tooltip-delay-out, 0.15s); /* 退場猶予: トリガー→ポップアップへポインタを渡す橋渡し */
-  }
-
-  /* side 別の配置。フォールバック側が常に勝つよう :where で詳細度を上げない */
-  .b--tooltip_popup:where([data-side='top']) {
-    position-area: top;
-    position-try-fallbacks: flip-block;
-    margin-bottom: var(--offset);
-  }
-  .b--tooltip_popup:where([data-side='bottom']) {
-    position-area: bottom;
-    position-try-fallbacks: flip-block;
-    margin-top: var(--offset);
-  }
-  .b--tooltip_popup:where([data-side='left']) {
-    position-area: left;
-    position-try-fallbacks: flip-inline;
-    margin-right: var(--offset);
-  }
-  .b--tooltip_popup:where([data-side='right']) {
-    position-area: right;
-    position-try-fallbacks: flip-inline;
-    margin-left: var(--offset);
-  }
-  .b--tooltip_popup:where([data-side='start']) {
-    position-area: inline-start;
-    position-try-fallbacks: flip-inline;
-    margin-inline-end: var(--offset);
-  }
-  .b--tooltip_popup:where([data-side='end']) {
-    position-area: inline-end;
-    position-try-fallbacks: flip-inline;
-    margin-inline-start: var(--offset);
   }
 
   /* 表示: ルートのホバー、またはトリガーのキーボードフォーカス（Popup は同じ Root 直下に置く前提） */
@@ -75,7 +35,6 @@
   .b--tooltip_trigger:focus-visible ~ .b--tooltip_popup {
     visibility: visible;
     opacity: 1;
-    pointer-events: auto;
     transition-delay: var(--tooltip-delay, 0.4s); /* 入場ディレイ */
   }
 
@@ -83,54 +42,141 @@
   .b--tooltip[data-dismissed] > .b--tooltip_popup {
     visibility: hidden;
     opacity: 0;
-    pointer-events: none;
     transition: none;
   }
 
-  /* ② anchor 非対応（部分対応を含む）のときだけ absolute 配置にする */
+  /*
+   * anchor 配置。position-area は side と align の span を var() で合成し、
+   * start / end は span-* で片側に伸ばして place-self でアンカー端に揃える。
+   * span キーワードと揃える軸は side の系統（物理 x / 物理 y / 論理 block）ごとに異なるので、
+   * 系統側で --_spanStart / --_spanEnd / --_placeStart / --_placeEnd の候補を定義し、align 側はそれを選ぶだけにする。
+   * top / bottom の align に span-x-* を使うのは、書字方向に従って RTL でも端に揃うため。
+   * 物理（top/bottom）と論理（span-inline-*）の混在は文法上無効で宣言ごと落ちるので使わない。
+   * side の start / end は inline 軸の論理方向（position-area の inline-start / inline-end）。block 軸は top / bottom の物理値のみ。
+   */
+  @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
+    .b--tooltip_popup {
+      --offset: var(--tooltip-offset, var(--s5));
+      --_span: span-all;
+      position: fixed;
+      position-anchor: --tooltip;
+      position-area: var(--_side) var(--_span);
+    }
+    /* トリガーとの隙間（offset）を透明な当たり判定で埋め、移動中に Root の :hover が外れないようにする。flip でどちら側に出ても効くよう全方向へ広げる */
+    .b--tooltip_popup::before {
+      content: '';
+      position: absolute;
+      inset: calc(-1 * var(--offset));
+      z-index: -1; /* 中身の上には被せない */
+    }
+    /* --_place*: place-self の値（align-self justify-self）。揃える軸だけ start / end にする */
+    .b--tooltip_popup:where([data-side='top'], [data-side='bottom']) {
+      --_spanStart: span-x-end;
+      --_spanEnd: span-x-start;
+      --_placeStart: auto start;
+      --_placeEnd: auto end;
+      margin-block: var(--offset);
+      position-try-fallbacks:
+        flip-block,
+        flip-inline,
+        flip-block flip-inline;
+    }
+    .b--tooltip_popup:where([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end']) {
+      --_placeStart: start auto;
+      --_placeEnd: end auto;
+      margin-inline: var(--offset);
+      position-try-fallbacks:
+        flip-inline,
+        flip-block,
+        flip-inline flip-block;
+    }
+    .b--tooltip_popup:is([data-side='left'], [data-side='right']) {
+      --_spanStart: span-bottom;
+      --_spanEnd: span-top;
+    }
+    .b--tooltip_popup:is([data-side='start'], [data-side='end']) {
+      --_spanStart: span-block-end;
+      --_spanEnd: span-block-start;
+    }
+    .b--tooltip_popup[data-side='top'] {
+      --_side: top;
+    }
+    .b--tooltip_popup[data-side='bottom'] {
+      --_side: bottom;
+    }
+    .b--tooltip_popup[data-side='left'] {
+      --_side: left;
+    }
+    .b--tooltip_popup[data-side='right'] {
+      --_side: right;
+    }
+    .b--tooltip_popup[data-side='start'] {
+      --_side: inline-start;
+    }
+    .b--tooltip_popup[data-side='end'] {
+      --_side: inline-end;
+    }
+
+    /* align: side 系統が用意した候補から選ぶ */
+    .b--tooltip_popup:where([data-align='start']) {
+      --_span: var(--_spanStart);
+      place-self: var(--_placeStart);
+    }
+    .b--tooltip_popup:where([data-align='end']) {
+      --_span: var(--_spanEnd);
+      place-self: var(--_placeEnd);
+    }
+  }
+
+  /* anchor 非対応: ルート基準の absolute 配置。side 軸と align 軸を別ルールにして打ち消しを不要にする */
   @supports not (
     (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block)
   ) {
+    .b--tooltip {
+      position: relative;
+    }
     .b--tooltip_popup {
-      /* 部分対応ブラウザで①が残らないよう、anchor 系を初期値へ戻してから配置する */
-      position-anchor: auto; /* Chrome 128〜130 が解釈する値 */
-      position-anchor: normal; /* 現行仕様の初期値。未対応なら上の auto が残る */
-      position-area: none;
-      position-try-fallbacks: none;
-      justify-self: auto;
-      align-self: auto;
       position: absolute;
-      margin: 0; /* ①の side 別オフセット margin も打ち消す。フォールバックはオフセットを持たない */
     }
     .b--tooltip_popup[data-side='top'] {
       bottom: 100%;
-      left: 50%;
-      translate: -50% 0;
     }
     .b--tooltip_popup[data-side='bottom'] {
       top: 100%;
-      left: 50%;
-      translate: -50% 0;
     }
     .b--tooltip_popup[data-side='left'] {
       right: 100%;
-      top: 50%;
-      translate: 0 -50%;
     }
     .b--tooltip_popup[data-side='right'] {
       left: 100%;
-      top: 50%;
-      translate: 0 -50%;
     }
     .b--tooltip_popup[data-side='start'] {
       inset-inline-end: 100%;
-      top: 50%;
-      translate: 0 -50%;
     }
     .b--tooltip_popup[data-side='end'] {
       inset-inline-start: 100%;
+    }
+
+    /* align: 上下の side は横方向、左右の side は縦方向の揃え。start / end は inset-inline-* で書字方向に追従させる */
+    .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='center'] {
+      left: 50%;
+      translate: -50% 0;
+    }
+    .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='start'] {
+      inset-inline-start: 0;
+    }
+    .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='end'] {
+      inset-inline-end: 0;
+    }
+    .b--tooltip_popup:is([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end'])[data-align='center'] {
       top: 50%;
       translate: 0 -50%;
+    }
+    .b--tooltip_popup:is([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end'])[data-align='start'] {
+      top: 0;
+    }
+    .b--tooltip_popup:is([data-side='left'], [data-side='right'], [data-side='start'], [data-side='end'])[data-align='end'] {
+      bottom: 0;
     }
   }
 

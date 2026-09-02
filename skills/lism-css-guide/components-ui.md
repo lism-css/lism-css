@@ -315,6 +315,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `tooltipId` | Trigger | `string` | — | Root 外で単体利用するときだけ指定（Popup の `id` と揃える） |
 | `delay` | Root | `string` | `0.4s` | 表示までのディレイ。`--tooltip-delay` 変数として出力（退場猶予は `--tooltip-delay-out`、既定 `0.15s`） |
 | `side` | Popup | `'top' \| 'bottom' \| 'left' \| 'right' \| 'start' \| 'end'` | `'top'` | 表示位置。`data-side` として出力。`left`/`right` は物理方向、`start`/`end` は書字方向に追従する inline 軸の論理方向。viewport 端で自動反転 |
+| `align` | Popup | `'start' \| 'center' \| 'end'` | `'center'` | `side` と直交する方向の揃え。`data-align` として出力。`side` が `top`/`bottom` のとき `start`/`end` は書字方向に追従 |
 | `offset` | Popup | `string` | `var(--s5)` | トリガーとの距離。`--tooltip-offset` 変数として出力 |
 
 - Trigger の既定は `button`。`as='span'` 等にするなら `tabindex='0'` でフォーカス可能にする。

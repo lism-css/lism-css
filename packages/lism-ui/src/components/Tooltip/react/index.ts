@@ -5,4 +5,4 @@ import Popup from './Popup';
 const Tooltip = { Root, Trigger, Popup };
 
 export { Tooltip };
-export type { TooltipSide } from './Popup';
+export type { TooltipSide, TooltipAlign } from './Popup';

@@ -9,15 +9,16 @@ type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> &
     id?: string;
     /** left/right は物理方向、start/end は書字方向に追従する inline 軸の論理方向 */
     side?: 'top' | 'bottom' | 'left' | 'right' | 'start' | 'end';
+    align?: 'start' | 'center' | 'end';
     offset?: string;
   };
 
 // id の既定値はプレースホルダー。Root 配下なら Root 側で実IDに置換される（明示指定があればそれが残る）
-const { class: className, id = '__LISM_TOOLTIP_ID__', side = 'top', offset, style, ...props } = Astro.props;
+const { class: className, id = '__LISM_TOOLTIP_ID__', side = 'top', align = 'center', offset, style, ...props } = Astro.props;
 
 const mergedStyle = offset ? { ...(style as object), '--tooltip-offset': offset } : style;
 ---
 
-<Lism as="span" role="tooltip" id={id} data-side={side} class={atts(className, 'b--tooltip_popup')} style={mergedStyle} {...props}>
+<Lism as="span" role="tooltip" id={id} data-side={side} data-align={align} class={atts(className, 'b--tooltip_popup')} style={mergedStyle} {...props}>
   <slot />
 </Lism>

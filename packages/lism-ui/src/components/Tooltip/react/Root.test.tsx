@@ -97,8 +97,8 @@ describe('Tooltip (React) ID配線', () => {
   });
 });
 
-describe('Tooltip (React) side', () => {
-  it('side 省略時は data-side="top"', () => {
+describe('Tooltip (React) side / align', () => {
+  it('省略時は data-side="top" / data-align="center"', () => {
     act(() => {
       reactRoot.render(
         <Root>
@@ -109,19 +109,23 @@ describe('Tooltip (React) side', () => {
     });
 
     expect(getPopup()).toHaveAttribute('data-side', 'top');
+    expect(getPopup()).toHaveAttribute('data-align', 'center');
   });
 
-  it('side="bottom" が data-side に出る', () => {
+  it('side="bottom" align="end" が data 属性に出る', () => {
     act(() => {
       reactRoot.render(
         <Root>
           <Trigger>保存</Trigger>
-          <Popup side="bottom">ショートカット</Popup>
+          <Popup side="bottom" align="end">
+            ショートカット
+          </Popup>
         </Root>
       );
     });
 
     expect(getPopup()).toHaveAttribute('data-side', 'bottom');
+    expect(getPopup()).toHaveAttribute('data-align', 'end');
   });
 });
 

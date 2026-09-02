@@ -7,10 +7,12 @@ import { TooltipContext } from './context';
 
 /** ポップアップを出す方向。left/right は物理方向、start/end は書字方向に追従する inline 軸の論理方向 */
 export type TooltipSide = 'top' | 'bottom' | 'left' | 'right' | 'start' | 'end';
+export type TooltipAlign = 'start' | 'center' | 'end';
 
 type PopupProps<T extends ElementType = 'span'> = LismComponentProps<T> & {
   id?: string;
   side?: TooltipSide;
+  align?: TooltipAlign;
   offset?: string;
 };
 
@@ -18,7 +20,16 @@ type PopupProps<T extends ElementType = 'span'> = LismComponentProps<T> & {
  * ツールチップの中身
  * id: 自身の prop → Context（Root）→ プレースホルダー の順で決まる（子の明示IDが Root より優先）
  */
-export default function Popup<T extends ElementType = 'span'>({ children, className, id, side = 'top', offset, style, ...props }: PopupProps<T>) {
+export default function Popup<T extends ElementType = 'span'>({
+  children,
+  className,
+  id,
+  side = 'top',
+  align = 'center',
+  offset,
+  style,
+  ...props
+}: PopupProps<T>) {
   const ctx = useContext(TooltipContext);
   const theId = id || ctx?.tooltipId || '__LISM_TOOLTIP_ID__';
 
@@ -30,6 +41,7 @@ export default function Popup<T extends ElementType = 'span'>({ children, classN
       role="tooltip"
       id={theId}
       data-side={side}
+      data-align={align}
       className={atts(className, 'b--tooltip_popup')}
       style={mergedStyle}
       {...(props as object)}

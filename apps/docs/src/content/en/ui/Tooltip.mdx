@@ -3,7 +3,7 @@ title: 'Tooltip'
 description: 'Documentation for the Tooltip component provided by @lism-css/ui.'
 ---
 
-import { Box, Cluster } from 'lism-css/astro';
+import { Cluster } from 'lism-css/astro';
 import { Tooltip } from '@lism-css/ui/astro/Tooltip';
 
 
@@ -14,7 +14,7 @@ A component for displaying supplementary text for an element on hover or focus.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="30">
+  <PreviewArea p="30" py="50">
     <Tooltip.Root tooltipId="tt-01">
       <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
         <Fragment>Save</Fragment>
@@ -36,7 +36,7 @@ A component for displaying supplementary text for an element on hover or focus.
     ```html '"tt-01"'
     <span class="b--tooltip">
       <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-01">Save</button>
-      <span class="b--tooltip_popup" role="tooltip" id="tt-01" data-side="top">Shortcut: Ctrl + S</span>
+      <span class="b--tooltip_popup" role="tooltip" id="tt-01" data-side="top" data-align="center">Shortcut: Ctrl + S</span>
     </span>
     ```
   </PreviewCode>
@@ -90,6 +90,7 @@ Provided as `Tooltip` from the `@lism-css/ui` package.
 |<PropBadge>`<Tooltip.Trigger>`</PropBadge><br/>`tooltipId`|Output as the value of `aria-describedby`. Only specify this when using the component standalone, outside `<Tooltip.Root>`.|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`id`|Output as the `id` attribute. Only specify this when using the component standalone, outside `<Tooltip.Root>`.|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|Specifies the side the popup appears on. Output as the `data-side` attribute. Accepts `top` / `bottom` / `left` / `right` / `start` / `end`, where `start` / `end` are the logical counterparts of `left` / `right` that follow the writing direction. Default: `top`.|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`align`|Specifies the alignment along the axis perpendicular to `side`. Output as the `data-align` attribute. Accepts `start` / `center` / `end`. Default: `center`.|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`offset`|Specifies the gap between the trigger and the popup. Output as the `--tooltip-offset` variable.|
 
 :::warning
@@ -121,7 +122,7 @@ Use the `side` prop on `<Tooltip.Popup>` to specify which side the popup appears
 
 <Preview>
   <PreviewTitle>Setting `side`</PreviewTitle>
-  <PreviewArea p="30">
+  <PreviewArea p="30" py="50">
     <Cluster g="15">
       <Tooltip.Root tooltipId="tt-02">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
@@ -208,27 +209,27 @@ Use the `side` prop on `<Tooltip.Popup>` to specify which side the popup appears
     <div class="l--cluster -g:15">
       <span class="b--tooltip">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-02">top</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-02" data-side="top">side="top"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-02" data-side="top" data-align="center">side="top"</span>
       </span>
       <span class="b--tooltip">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-03">bottom</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-03" data-side="bottom">side="bottom"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-03" data-side="bottom" data-align="center">side="bottom"</span>
       </span>
       <span class="b--tooltip">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-04">left</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-04" data-side="left">side="left"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-04" data-side="left" data-align="center">side="left"</span>
       </span>
       <span class="b--tooltip">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-05">right</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-05" data-side="right">side="right"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-05" data-side="right" data-align="center">side="right"</span>
       </span>
       <span class="b--tooltip">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-06">start</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-06" data-side="start">side="start"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-06" data-side="start" data-align="center">side="start"</span>
       </span>
       <span class="b--tooltip">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-07">end</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-07" data-side="end">side="end"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-07" data-side="end" data-align="center">side="end"</span>
       </span>
     </div>
     ```
@@ -239,6 +240,85 @@ Use the `side` prop on `<Tooltip.Popup>` to specify which side the popup appears
 `left` / `right` refer to physical screen directions. `start` / `end` are logical directions that follow the writing direction, so they swap sides when `dir="rtl"` is set.
 
 Regardless of which side you choose, the popup automatically flips to the opposite side if it doesn't fit within the viewport.
+
+The flip is evaluated against the popup's containing block. If an ancestor has `container-type` (Lism's `is--container`), `transform`, `contain`, or similar, that element's edges are used instead of the viewport. When that element is small, the popup may appear on the opposite side from the one you specified.
+:::
+
+
+### Changing the alignment
+
+Use the `align` prop on `<Tooltip.Popup>` to set the alignment along the axis perpendicular to `side`. It aligns horizontally when `side` is `top` / `bottom`, and vertically when `side` is `left` / `right` / `start` / `end`.
+
+<Preview>
+  <PreviewTitle>Setting `align`</PreviewTitle>
+  <PreviewArea p="30" py="50">
+    <Cluster g="15">
+      <Tooltip.Root tooltipId="tt-11">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>bottom / start</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="bottom" align="start">
+          <Fragment>side="bottom" align="start"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-12">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>bottom / end</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="bottom" align="end">
+          <Fragment>side="bottom" align="end"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-13">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
+          <Fragment>right / start</Fragment>
+        </Tooltip.Trigger>
+        <Tooltip.Popup side="right" align="start">
+          <Fragment>side="right" align="start"</Fragment>
+        </Tooltip.Popup>
+      </Tooltip.Root>
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "align"
+    <Cluster g="15">
+      <Tooltip.Root tooltipId="tt-11">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">bottom / start</Tooltip.Trigger>
+        <Tooltip.Popup side="bottom" align="start">side="bottom" align="start"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-12">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">bottom / end</Tooltip.Trigger>
+        <Tooltip.Popup side="bottom" align="end">side="bottom" align="end"</Tooltip.Popup>
+      </Tooltip.Root>
+      <Tooltip.Root tooltipId="tt-13">
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">right / start</Tooltip.Trigger>
+        <Tooltip.Popup side="right" align="start">side="right" align="start"</Tooltip.Popup>
+      </Tooltip.Root>
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "data-align"
+    <div class="l--cluster -g:15">
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-11">bottom / start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-11" data-side="bottom" data-align="start">side="bottom" align="start"</span>
+      </span>
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-12">bottom / end</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-12" data-side="bottom" data-align="end">side="bottom" align="end"</span>
+      </span>
+      <span class="b--tooltip">
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-13">right / start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-13" data-side="right" data-align="start">side="right" align="start"</span>
+      </span>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::note
+When `side` is `top` / `bottom`, the `start` / `end` values of `align` follow the writing direction and swap sides when `dir="rtl"` is set. When `side` is horizontal, `start` aligns to the top and `end` to the bottom.
 :::
 
 
@@ -248,7 +328,7 @@ Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Roo
 
 <Preview>
   <PreviewTitle>Setting `delay` and `offset`</PreviewTitle>
-  <PreviewArea p="30">
+  <PreviewArea p="30" py="50">
     <Cluster g="15">
       <Tooltip.Root tooltipId="tt-08" delay="0s">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
@@ -287,11 +367,11 @@ Adjust the delay before the popup appears with the `delay` prop on `<Tooltip.Roo
     <div class="l--cluster -g:15">
       <span class="b--tooltip" style="--tooltip-delay:0s">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-08">Show instantly</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-08" data-side="top">delay="0s"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-08" data-side="top" data-align="center">delay="0s"</span>
       </span>
       <span class="b--tooltip" style="--tooltip-delay:1s">
         <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-09">Show after 1s</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-09" data-side="top" style="--tooltip-offset:1rem">delay="1s" / offset="1rem"</span>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-09" data-side="top" data-align="center" style="--tooltip-offset:1rem">delay="1s" / offset="1rem"</span>
       </span>
     </div>
     ```
@@ -305,7 +385,7 @@ Add Lism properties to `<Tooltip.Popup>` to change its color and spacing.
 
 <Preview>
   <PreviewTitle>Custom colors</PreviewTitle>
-  <PreviewArea p="30">
+  <PreviewArea p="30" py="50">
     <Tooltip.Root tooltipId="tt-10">
       <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
         <Fragment>Tooltip with custom colors</Fragment>
@@ -327,49 +407,8 @@ Add Lism properties to `<Tooltip.Popup>` to change its color and spacing.
     ```html '-bgc:base-2 -c:text -bd -p:15 -bdrs:10 -bxsh:20'
     <span class="b--tooltip">
       <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-10">Tooltip with custom colors</button>
-      <span class="b--tooltip_popup -bgc:base-2 -c:text -bd -p:15 -bdrs:10 -bxsh:20" role="tooltip" id="tt-10" data-side="top">Overriding the background, text color, and spacing.</span>
+      <span class="b--tooltip_popup -bgc:base-2 -c:text -bd -p:15 -bdrs:10 -bxsh:20" role="tooltip" id="tt-10" data-side="top" data-align="center">Overriding the background, text color, and spacing.</span>
     </span>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-### Following the writing direction
-
-The `start` / `end` values of `side` swap sides inside an element with `dir="rtl"`.
-
-<Preview>
-  <PreviewTitle>Using `side="start"` inside `dir="rtl"`</PreviewTitle>
-  <PreviewArea p="30">
-    <Box dir="rtl" p="20" bd bdrs="10">
-      <Tooltip.Root tooltipId="tt-11">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>start</Fragment>
-        </Tooltip.Trigger>
-        <Tooltip.Popup side="start">
-          <Fragment>Appears on the right in RTL</Fragment>
-        </Tooltip.Popup>
-      </Tooltip.Root>
-    </Box>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'dir="rtl"' 'side="start"'
-    <Box dir="rtl" p="20" bd bdrs="10">
-      <Tooltip.Root tooltipId="tt-11">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">start</Tooltip.Trigger>
-        <Tooltip.Popup side="start">Appears on the right in RTL</Tooltip.Popup>
-      </Tooltip.Root>
-    </Box>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html 'dir="rtl"' 'data-side="start"'
-    <div class="l--box -p:20 -bd -bdrs:10" dir="rtl">
-      <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-11">start</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-11" data-side="start">Appears on the right in RTL</span>
-      </span>
-    </div>
     ```
   </PreviewCode>
 </Preview>
