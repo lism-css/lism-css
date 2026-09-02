@@ -1,10 +1,8 @@
 /*
  * CSS Anchor Positioning で配置し、非対応ブラウザには @supports not ブロック内の absolute 配置でフォールバックする。
- *   Memo: anchor 配置側を @supports で囲うと OddBird ポリフィルが処理できないため、ゲートはフォールバック側に置く。
  *   制約: anchor 配置側（ゲートなし）に書いたプロパティは、フォールバック側で必ず全部上書きする。
  *         @supports not が真になるブラウザには部分対応（Chrome 128〜130: anchor-scope 未対応だが position-area 等は解釈する）が
  *         含まれ、そこではゲートなし側の宣言が生きたまま残るため。anchor 系は初期値へ戻し、既知プロパティはフォールバック値で上書きする。
- *   ポリフィル利用者は <html data-anchor-polyfill> を付けてフォールバックを外す。
  */
 @layer lism-block {
   .b--tooltip {
@@ -18,8 +16,8 @@
 
   /* ① anchor 配置。全ブラウザに読ませる（ゲートなし） */
   .b--tooltip_popup {
-    --_offset: var(--tooltip-offset, var(--s5));
-    --_duration: var(--tooltip-duration, 0.15s);
+    --offset: var(--tooltip-offset, var(--s5));
+    --duration: var(--tooltip-duration, 0.15s);
     position: fixed;
     position-anchor: --tooltip;
     z-index: 10;
@@ -35,8 +33,8 @@
     opacity: 0;
     pointer-events: none;
     transition:
-      opacity var(--_duration),
-      visibility var(--_duration);
+      opacity var(--duration),
+      visibility var(--duration);
     transition-delay: var(--tooltip-delay-out, 0.15s); /* 退場猶予: トリガー→ポップアップへポインタを渡す橋渡し */
   }
 
@@ -44,32 +42,32 @@
   .b--tooltip_popup:where([data-side='top']) {
     position-area: top;
     position-try-fallbacks: flip-block;
-    margin-bottom: var(--_offset);
+    margin-bottom: var(--offset);
   }
   .b--tooltip_popup:where([data-side='bottom']) {
     position-area: bottom;
     position-try-fallbacks: flip-block;
-    margin-top: var(--_offset);
+    margin-top: var(--offset);
   }
   .b--tooltip_popup:where([data-side='left']) {
     position-area: left;
     position-try-fallbacks: flip-inline;
-    margin-right: var(--_offset);
+    margin-right: var(--offset);
   }
   .b--tooltip_popup:where([data-side='right']) {
     position-area: right;
     position-try-fallbacks: flip-inline;
-    margin-left: var(--_offset);
+    margin-left: var(--offset);
   }
-  .b--tooltip_popup:where([data-side='inline-start']) {
+  .b--tooltip_popup:where([data-side='start']) {
     position-area: inline-start;
     position-try-fallbacks: flip-inline;
-    margin-inline-end: var(--_offset);
+    margin-inline-end: var(--offset);
   }
-  .b--tooltip_popup:where([data-side='inline-end']) {
+  .b--tooltip_popup:where([data-side='end']) {
     position-area: inline-end;
     position-try-fallbacks: flip-inline;
-    margin-inline-start: var(--_offset);
+    margin-inline-start: var(--offset);
   }
 
   /* 表示: ルートのホバー、またはトリガーのキーボードフォーカス（Popup は同じ Root 直下に置く前提） */
@@ -89,11 +87,11 @@
     transition: none;
   }
 
-  /* ② anchor 非対応（部分対応を含む）かつ ポリフィル未使用 のときだけ absolute 配置にする */
+  /* ② anchor 非対応（部分対応を含む）のときだけ absolute 配置にする */
   @supports not (
     (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block)
   ) {
-    :root:not([data-anchor-polyfill]) .b--tooltip_popup {
+    .b--tooltip_popup {
       /* 部分対応ブラウザで①が残らないよう、anchor 系を初期値へ戻してから配置する */
       position-anchor: auto; /* Chrome 128〜130 が解釈する値 */
       position-anchor: normal; /* 現行仕様の初期値。未対応なら上の auto が残る */
@@ -104,32 +102,32 @@
       position: absolute;
       margin: 0; /* ①の side 別オフセット margin も打ち消す。フォールバックはオフセットを持たない */
     }
-    :root:not([data-anchor-polyfill]) .b--tooltip_popup[data-side='top'] {
+    .b--tooltip_popup[data-side='top'] {
       bottom: 100%;
       left: 50%;
       translate: -50% 0;
     }
-    :root:not([data-anchor-polyfill]) .b--tooltip_popup[data-side='bottom'] {
+    .b--tooltip_popup[data-side='bottom'] {
       top: 100%;
       left: 50%;
       translate: -50% 0;
     }
-    :root:not([data-anchor-polyfill]) .b--tooltip_popup[data-side='left'] {
+    .b--tooltip_popup[data-side='left'] {
       right: 100%;
       top: 50%;
       translate: 0 -50%;
     }
-    :root:not([data-anchor-polyfill]) .b--tooltip_popup[data-side='right'] {
+    .b--tooltip_popup[data-side='right'] {
       left: 100%;
       top: 50%;
       translate: 0 -50%;
     }
-    :root:not([data-anchor-polyfill]) .b--tooltip_popup[data-side='inline-start'] {
+    .b--tooltip_popup[data-side='start'] {
       inset-inline-end: 100%;
       top: 50%;
       translate: 0 -50%;
     }
-    :root:not([data-anchor-polyfill]) .b--tooltip_popup[data-side='inline-end'] {
+    .b--tooltip_popup[data-side='end'] {
       inset-inline-start: 100%;
       top: 50%;
       translate: 0 -50%;

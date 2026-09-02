@@ -12,7 +12,7 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-const SIDES: TooltipSide[] = ['top', 'bottom', 'left', 'right', 'inline-start', 'inline-end'];
+const SIDES: TooltipSide[] = ['top', 'bottom', 'left', 'right', 'start', 'end'];
 
 export const Default: Story = {
   render: () => (

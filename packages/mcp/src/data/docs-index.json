@@ -1713,8 +1713,7 @@
       "待ち時間と間隔を変える",
       "配色を変える",
       "書字方向に追従させる",
-      "ブラウザ対応",
-      "ポリフィルを使う"
+      "ブラウザ対応"
     ],
     "keywords": [
       "Tooltip",
@@ -1730,11 +1729,9 @@
       "CSS Anchor Positioning",
       "anchor positioning",
       "b--tooltip",
-      "Esc",
-      "polyfill",
-      "ポリフィル"
+      "Esc"
     ],
-    "snippet": "ホバーやキーボードフォーカスで補足テキストを表示するツールチップ。表示切り替えはCSSのみで行い、JavaScriptはEscで閉じる処理だけを担当する。Tooltip.Root / Tooltip.Trigger / Tooltip.Popupで構成し、side（top/bottom/left/right/inline-start/inline-end、初期値top）・delay（表示までの待ち時間）・offset（トリガーとの間隔）で調整できる。CSS変数は--tooltip-offset・--tooltip-delay・--tooltip-delay-out・--tooltip-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザではTooltip.Root基準の絶対配置にフォールバックする（自動反転とoffsetは無効）。OddBirdのポリフィルで解消できるが、動的に追加された要素には適用されない。@lism-css/uiパッケージで提供。"
+    "snippet": "ホバーやキーボードフォーカスで補足テキストを表示するツールチップ。表示切り替えはCSSのみで行い、JavaScriptはEscで閉じる処理だけを担当する。Tooltip.Root / Tooltip.Trigger / Tooltip.Popupで構成し、side（top/bottom/left/right/start/end、初期値top）・delay（表示までの待ち時間）・offset（トリガーとの間隔）で調整できる。CSS変数は--tooltip-offset・--tooltip-delay・--tooltip-delay-out・--tooltip-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザではTooltip.Root基準の絶対配置にフォールバックする（自動反転とoffsetは無効）。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/Popover.mdx",
@@ -1751,9 +1748,7 @@
       "Examples",
       "表示位置を変える",
       "閉じるボタンを置く（`type=\"manual\"`）",
-      "フォームを含める",
-      "ブラウザ対応",
-      "ポリフィルを使う"
+      "ブラウザ対応"
     ],
     "keywords": [
       "Popover",
@@ -1770,11 +1765,9 @@
       "anchor positioning",
       "b--popover",
       "role=dialog",
-      "Esc",
-      "polyfill",
-      "ポリフィル"
+      "Esc"
     ],
-    "snippet": "クリックで開閉するポップオーバー。ブラウザ標準のPopover API（popover属性・popovertarget属性）のみで動作し、クライアントJavaScriptは不要。Popover.Root / Popover.Trigger / Popover.Popup / Popover.Closeで構成し、side（top/bottom/left/right/inline-start/inline-end、初期値bottom）・align（start/center/end、初期値center）・offset・type（auto/manual、初期値auto）で調整する。type=\"manual\"にするとlight dismissが無効になりPopover.Closeでのみ閉じられる。CSS変数は--popover-offset・--popover-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザでは画面中央配置にフォールバックする（side/align/offsetは無効、開閉・light dismiss・フォーカス制御はPopover APIのためそのまま動作）。OddBirdのポリフィルで解消できるが、動的に追加された要素には適用されない。@lism-css/uiパッケージで提供。"
+    "snippet": "クリックで開閉するポップオーバー。ブラウザ標準のPopover API（popover属性・popovertarget属性）のみで動作し、クライアントJavaScriptは不要。Popover.Root / Popover.Trigger / Popover.Popup / Popover.Closeで構成し、side（top/bottom/left/right/start/end、初期値bottom）・align（start/center/end、初期値center）・offset・type（auto/manual、初期値auto）で調整する。type=\"manual\"にするとlight dismissが無効になりPopover.Closeでのみ閉じられる。CSS変数は--popover-offset・--popover-duration。配置にCSS Anchor Positioningを使用し、未対応ブラウザでは画面中央配置にフォールバックする（side/align/offsetは無効、開閉・light dismiss・フォーカス制御はPopover APIのためそのまま動作）。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "utility-class.mdx",

@@ -102,9 +102,9 @@
 - ルート: `anchor-scope: --tooltip` / `--popover`。トリガー: `anchor-name`。ポップアップ: `position-anchor`。全部`_style.css`に書き、inline styleでは出さない。
 - Popoverのポップアップはトップレイヤーに乗るが、`anchor-scope`はDOMツリー基準なので問題ない（MDN記載。実機で要確認）。
 
-### 4. 方向のprop名と値はBase UIに揃える
+### 4. 方向のprop名と値はBase UIに揃える（`side`の論理値だけ短縮）
 
-- **`side`**: `top | bottom | left | right | inline-start | inline-end`。Tooltipの既定`top`、Popoverの既定`bottom`。`left`/`right`は物理方向、`inline-start`/`inline-end`は書字方向（`dir="rtl"`）に追従する論理方向。
+- **`side`**: `top | bottom | left | right | start | end`。Tooltipの既定`top`、Popoverの既定`bottom`。`left`/`right`は物理方向、`start`/`end`は書字方向（`dir="rtl"`）に追従するinline軸の論理方向（CSSの`position-area`では`inline-start`/`inline-end`）。Base UIの`inline-start`/`inline-end`は採用しない（理由は設計判断の根拠）。
 - **`align`**（Popoverのみ）: `start | center | end`、既定`center`。`side`が`top`/`bottom`のとき`start`/`end`は書字方向に追従する（`span-x-*`と`justify-self: start/end`で実現）。`side`が横方向のときは縦方向の揃えになり、`start`=上・`end`=下（`align-self`で実現）。
 - DOMには`data-side` / `data-align`として出す。コンポーネント接頭辞は付けない（`.b--popover_popup[data-side]`のようにクラスでスコープされるため衝突しない）。
 
@@ -116,13 +116,13 @@
 | `bottom` | `bottom` | `bottom span-x-end`＋`justify-self: start` | `bottom span-x-start`＋`justify-self: end` |
 | `left` | `left` | `left span-bottom`＋`align-self: start` | `left span-top`＋`align-self: end` |
 | `right` | `right` | `right span-bottom`＋`align-self: start` | `right span-top`＋`align-self: end` |
-| `inline-start` | `inline-start` | `inline-start span-block-end`＋`align-self: start` | `inline-start span-block-start`＋`align-self: end` |
-| `inline-end` | `inline-end` | `inline-end span-block-end`＋`align-self: start` | `inline-end span-block-start`＋`align-self: end` |
+| `start` | `inline-start` | `inline-start span-block-end`＋`align-self: start` | `inline-start span-block-start`＋`align-self: end` |
+| `end` | `inline-end` | `inline-end span-block-end`＋`align-self: start` | `inline-end span-block-start`＋`align-self: end` |
 
 - `center`列は単一キーワード（＝`span-all`）。直交軸は`anchor-center`の既定挙動でviewport内に自動シフトする。`anchor-center`はポリフィル非対応なので明示しない。
 - `start`/`end`は`normal`の既定揃えに頼らず`justify-self`/`align-self`を明示する。
-- `position-try-fallbacks`: `top`/`bottom`は`flip-block`、`left`/`right`/`inline-*`は`flip-inline`。Popoverの`start`/`end`は両軸のflipまで並べ、主軸を先に書く（`top`/`bottom`: `flip-block, flip-inline, flip-block flip-inline`。横方向のside: `flip-inline, flip-block, flip-inline flip-block`）。
-- オフセットはアンカー側のmarginで作る: `top`→`margin-bottom`、`bottom`→`margin-top`、`left`→`margin-right`、`right`→`margin-left`、`inline-start`→`margin-inline-end`、`inline-end`→`margin-inline-start`。値は`--tooltip-offset` / `--popover-offset`（共通方針7）。flipはmarginと`justify-self`/`align-self`も反転するので片側だけ書けばよい。
+- `position-try-fallbacks`: `top`/`bottom`は`flip-block`、`left`/`right`/`start`/`end`は`flip-inline`。Popoverの`start`/`end`は両軸のflipまで並べ、主軸を先に書く（`top`/`bottom`: `flip-block, flip-inline, flip-block flip-inline`。横方向のside: `flip-inline, flip-block, flip-inline flip-block`）。
+- オフセットはアンカー側のmarginで作る: `top`→`margin-bottom`、`bottom`→`margin-top`、`left`→`margin-right`、`right`→`margin-left`、`start`→`margin-inline-end`、`end`→`margin-inline-start`。値は`--tooltip-offset` / `--popover-offset`（共通方針7）。flipはmarginと`justify-self`/`align-self`も反転するので片側だけ書けばよい。
 
 ### 5. パーツ名とクラス名
 
@@ -171,8 +171,8 @@
   - `bottom`: `top: 100%; left: 50%; translate: -50% 0`
   - `left`: `right: 100%; top: 50%; translate: 0 -50%`
   - `right`: `left: 100%; top: 50%; translate: 0 -50%`
-  - `inline-start`: `inset-inline-end: 100%; top: 50%; translate: 0 -50%`
-  - `inline-end`: `inset-inline-start: 100%; top: 50%; translate: 0 -50%`
+  - `start`: `inset-inline-end: 100%; top: 50%; translate: 0 -50%`
+  - `end`: `inset-inline-start: 100%; top: 50%; translate: 0 -50%`
 - 表示制御（CSSのみ。Popupは同じRoot直下に置く前提）:
   - 非表示既定: `visibility: hidden; opacity: 0; pointer-events: none; transition: opacity var(--tooltip-duration, .15s), visibility var(--tooltip-duration, .15s); transition-delay: var(--tooltip-delay-out, .15s)`（退場猶予＝トリガー→ポップアップへポインタを渡す橋渡し）
   - 表示: `.b--tooltip:hover > .b--tooltip_popup`と`.b--tooltip_trigger:focus-visible ~ .b--tooltip_popup`で`visibility: visible; opacity: 1; pointer-events: auto; transition-delay: var(--tooltip-delay, .4s)`（入場ディレイ）。`:has()`は使わない（隣接/一般兄弟結合子で足りる）。
@@ -291,7 +291,7 @@ components/Popover/
 
 - Tooltip: 中にリンク・ボタンを置かない（それはPopover）。重要な情報をツールチップだけに入れない（タッチでは確実に見えない）。トリガーはフォーカス可能要素にする（`tabindex="0"`）。
 - Popover: 重要な操作・情報をポップオーバーだけに置かない。フォームを含む用途では`role="dialog"`＋`aria-label`を付ける例を載せる。本文の説明は`type="auto"`の挙動として書き、Props節で`type="manual"`との差（light dismiss・Escによる自動クローズが無効。`Close`を必ず置く）を明記する。`Trigger`/`Close`は`button`でなければ動かない。
-- 共通: Root配下では子にIDを指定しない（共通方針6）。`side`の`left`/`right`は物理方向、`inline-start`/`inline-end`と`align`は書字方向に追従する。非対応ブラウザでの見え方（Tooltipは反転しない・クリップされ得る、Popoverは画面中央カード）。ポリフィル導入手順（`data-anchor-polyfill`）と動的ノード非対応の注記（共通方針2）。
+- 共通: Root配下では子にIDを指定しない（共通方針6）。`side`の`left`/`right`は物理方向、`start`/`end`と`align`は書字方向に追従する。非対応ブラウザでの見え方（Tooltipは反転しない・クリップされ得る、Popoverは画面中央カード）。ポリフィル導入手順（`data-anchor-polyfill`）と動的ノード非対応の注記（共通方針2）。
 
 ## 作業手順
 
@@ -314,7 +314,7 @@ components/Popover/
 - **Tooltipの表示判定をCSSに寄せ、JSは「Escで全ルートに印を付ける」だけにする**: JSで`:hover`を問い合わせる方式はjsdomでテストできず、ルート個別のリスナー管理（React unmount時のcleanup）も要る。document 1回登録なら状態を持たない。
 - **documentリスナーは永続シングルトン（Rootのunmountで解除しない）**: 各Rootのcleanupで解除すると、複数Rootの片方をunmountしただけで残りのTooltipのEscが死ぬ。参照カウント方式は状態管理が増えるわりに、常駐リスナー3つのコストは無視できる。`setTooltip()`を`void`にして誤ってcleanupに渡せないようにし、解除はテスト専用の`unsetTooltip()`に分ける。
 - **単一キーワードの`position-area`（span-all）**: 単一列（`bottom center`）だとポップアップがアンカー幅の列からはみ出しても横にシフトしない。span-allなら`anchor-center`既定でviewport内に収まる。
-- **`side`に`inline-start`/`inline-end`を含め、`align`の`start`/`end`を`span-x-*`で書字方向に追従させる**: Base UIと同じ値域になり、RTLでも位置決めCSSを書き分けずに済む。フォールバックも論理inset（`inset-inline-*`）で書けるので追加コストが小さい。
+- **`side`の論理値は`start`/`end`にし、`align`の`start`/`end`を`span-x-*`で書字方向に追従させる**: RTLでも位置決めCSSを書き分けずに済み、フォールバックも論理inset（`inset-inline-*`）で書けるので追加コストが小さい。値名をBase UIの`inline-start`/`inline-end`から短縮するのは、`side`のblock軸が`top`/`bottom`の物理値しか無く`start`/`end`がinline軸にしか解釈できないため`inline-`が冗長で、Lism本体の`-ps`/`-bd-s`等も`s`/`e`だけで`inline-start`/`inline-end`を表しているため。`align`の`start`/`end`と字面が重なるが、別属性なので衝突しない（2026-09-02に変更）。
 - **Popoverのポップアップに`set="plain"`を使わない**: `width: auto`がUAの`inset: 0`と組み合わさると全幅になり、フォールバックの中央カードが壊れる。
 - **`Trigger`/`Popup`/`Close`と`side`/`align`の語彙**: Base UIと同じで、2コンポーネント間でも揃う。`Popup`にするのは、`Content`だと「常に見えている側」か「出てくる側」か分からないため。`Close`にするのは、`Modal`の`OpenBtn`/`CloseBtn`は対の命名であり、`Trigger`と組む`Popover`で片方だけ`Btn`を付ける理由がないため。
 
@@ -324,6 +324,7 @@ components/Popover/
 - **`popover`属性でTooltipを作る**（Issue #560）: hoverで開く手段がなく常時JS必須。非対応ブラウザではUA既定（画面中央）で壊れる。
 - **ルートごとに`keydown`を登録する**（Issue #560）: ホバー中はフォーカスがbodyにあり、ルート要素では拾えない。
 - **`data-pos`（Tooltip）と`data-side`（Popover）の使い分け**（Issue #560）: 同じ概念に別名を付けない。
+- **`side`の論理値をBase UIどおり`inline-start`/`inline-end`にする**: 理由は採用欄の`side`の論理値の項。
 - **JSによる位置計算フォールバック**: Floating UIの再発明。非対応時はCSSフォールバックで表示自体は正常。
 - **矢印（しっぽ）**: flip適用をCSSで検知できず向きを切り替えられない。両方とも見送り。
 - **Tooltipの`label` propショートカット**（`<Tooltip.Root label="...">`でPopupを自動出力）: RootでPopupを自動生成するとAstro側のプレースホルダー置換と二重管理になる。既存コンポーネントにも同種のショートカットはない。後から非破壊で足せる。
@@ -335,7 +336,7 @@ components/Popover/
 
 ### 確定済み（2026-09-02にユーザー確認）
 
-- 共通方針4〜6の命名（`side`/`align`と値域、`side`に`inline-start`/`inline-end`を含めること、`Root`/`Trigger`/`Popup`/`Close`、`tooltipId`/`popoverId`）。
+- 共通方針4〜6の命名（`side`/`align`と値域、`side`の論理値を`start`/`end`にすること（同日に`inline-start`/`inline-end`から変更）、`Root`/`Trigger`/`Popup`/`Close`、`tooltipId`/`popoverId`）。
 - Tooltipの`label`ショートカットは入れない。Modalの`OpenBtn`/`CloseBtn`改名はこのPRでやらない。
 - ポリフィルopt-in属性名`data-anchor-polyfill`。
 - Tooltipのディレイ既定値（入場`0.4s`・退場猶予`0.15s`）は実機で目視調整する前提の初期値。
@@ -370,7 +371,7 @@ components/Popover/
 
 - `nr lint` / `nr typecheck`（`astro check`含む）/ `nr test` / `nr build`が通る。
 - 実機（Chrome・Safari 26・Firefox 147以上）:
-  - 各`side`（Popoverは`align`も）で意図した位置に出る。`dir="rtl"`のページで`inline-start`/`inline-end`と`align`の`start`/`end`が左右反転する。viewport端で反転する。スクロールに追従する。同一ページに複数設置しても互いのアンカーを取り違えない。
+  - 各`side`（Popoverは`align`も）で意図した位置に出る。`dir="rtl"`のページで`side`の`start`/`end`と`align`の`start`/`end`が左右反転する。viewport端で反転する。スクロールに追従する。同一ページに複数設置しても互いのアンカーを取り違えない。
   - Tooltip: ホバー→ディレイ後表示、ポップアップへポインタ移動しても消えない、Escで消えて離れて戻ると再表示、Tabフォーカスで表示。
   - Popover: 外側クリック/Escで閉じる、閉じた時にトリガーへフォーカスが戻る、`aria-expanded`が切り替わる。
 - 実機（Firefox ESR 140）: Tooltipは絶対配置で表示され機能する（`inline-*`も論理insetで正しい側に出る）。Popoverは中央カードで開閉・dismissが動く。

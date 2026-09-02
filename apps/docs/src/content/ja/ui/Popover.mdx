@@ -55,6 +55,8 @@ import { Popover } from '@lism-css/ui/astro/Popover';
 - 閉じたあと、トリガーへフォーカスを戻す
 - トリガーの`aria-expanded`の切り替え
 
+<kbd>Tab</kbd>キーでフォーカスがポップオーバーの外へ移動しても閉じません（Popover APIの仕様です）。フォーカスが外れたときに閉じたい場合は、`focusout`イベントで`hidePopover()`を呼ぶなど、利用側で実装してください。
+
 :::note
 `<Popover.Root>`の中に`<Popover.Trigger>`と`<Popover.Popup>`を置くと、`popovertarget`と`id`が自動で紐付きます。`<Popover.Close>`も同様です。
 
@@ -94,7 +96,7 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 |<PropBadge>`<Popover.Root>`</PropBadge><br/>`popoverId`|`<Popover.Trigger>` / `<Popover.Close>`の`popovertarget`と、`<Popover.Popup>`の`id`に使われるIDを指定します。未指定の場合は自動生成されたIDが使われます。|
 |<PropBadge>`<Popover.Trigger>`</PropBadge><br/>`popoverId`|`popovertarget`の値として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
-|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `inline-start` / `inline-end`で、初期値は`bottom`です。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `start` / `end`で、初期値は`bottom`です。`start` / `end`は`left` / `right`の論理方向版で、書字方向に追従します。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`align`|`side`と直交する方向の揃え位置を指定します。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--popover-offset`として出力されます。|
 |<PropBadge>`<Popover.Popup>`</PropBadge><br/>`type`|`popover`属性の値として出力されます。指定できる値は`auto` / `manual`で、初期値は`auto`です。`manual`にすると、外側のクリックや<kbd>Esc</kbd>キーによる自動クローズ（light dismiss）が無効になり、`<Popover.Close>`などの`popovertarget`を持つボタンでしか閉じられなくなります。|
@@ -157,10 +159,10 @@ Popover のベーススタイルは、以下のCSSで定義されています。
       </Popover.Root>
       <Popover.Root popoverId="pop-05">
         <Popover.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>inline-end / start</Fragment>
+          <Fragment>end / start</Fragment>
         </Popover.Trigger>
-        <Popover.Popup side="inline-end" align="start" max-w="16rem">
-          <p>side="inline-end" align="start"</p>
+        <Popover.Popup side="end" align="start" max-w="16rem">
+          <p>side="end" align="start"</p>
         </Popover.Popup>
       </Popover.Root>
     </Cluster>
@@ -187,9 +189,9 @@ Popover のベーススタイルは、以下のCSSで定義されています。
         </Popover.Popup>
       </Popover.Root>
       <Popover.Root popoverId="pop-05">
-        <Popover.Trigger className="-bd -px:15 -py:5 -bdrs:10">inline-end / start</Popover.Trigger>
-        <Popover.Popup side="inline-end" align="start" max-w="16rem">
-          <p>side="inline-end" align="start"</p>
+        <Popover.Trigger className="-bd -px:15 -py:5 -bdrs:10">end / start</Popover.Trigger>
+        <Popover.Popup side="end" align="start" max-w="16rem">
+          <p>side="end" align="start"</p>
         </Popover.Popup>
       </Popover.Root>
     </Cluster>
@@ -217,9 +219,9 @@ Popover のベーススタイルは、以下のCSSで定義されています。
         </div>
       </div>
       <div class="b--popover">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--popover_trigger set--plain" type="button" popovertarget="pop-05">inline-end / start</button>
-        <div class="b--popover_popup -max-w" id="pop-05" popover="auto" data-side="inline-end" data-align="start" style="--max-w:16rem">
-          <p>side="inline-end" align="start"</p>
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--popover_trigger set--plain" type="button" popovertarget="pop-05">end / start</button>
+        <div class="b--popover_popup -max-w" id="pop-05" popover="auto" data-side="end" data-align="start" style="--max-w:16rem">
+          <p>side="end" align="start"</p>
         </div>
       </div>
     </div>
@@ -228,7 +230,7 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 </Preview>
 
 :::note
-`left` / `right`は画面上の物理的な向きを指します。`inline-start` / `inline-end`と`align`の`start` / `end`は書字方向に追従する論理的な指定で、`dir="rtl"`の環境では左右が入れ替わります。
+`left` / `right`は画面上の物理的な向きを指します。`side`の`start` / `end`は書字方向に追従する論理的な向きで、`dir="rtl"`の環境では左右が入れ替わります。`align`の`start` / `end`も、`side`が`top` / `bottom`のときは同じように書字方向へ追従します。
 
 また、画面の端に収まらないときは自動的に反対側へ反転します。
 :::
@@ -294,75 +296,6 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 </Preview>
 
 
-### フォームを含める
-
-フォームのように、まとまった操作をポップオーバーの中で行う場合は、`role="dialog"`と`aria-label`を指定してください。ポップオーバー全体がひとつのダイアログとして支援技術に伝わります。
-
-<Preview>
-  <PreviewTitle>`role='dialog'`を指定したフォームの例</PreviewTitle>
-  <PreviewArea p="30">
-    <Popover.Root popoverId="pop-07">
-      <Popover.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-        <Fragment>絞り込み</Fragment>
-      </Popover.Trigger>
-      <Popover.Popup role="dialog" aria-label="絞り込み条件" side="bottom" align="start" p="20" max-w="20rem">
-        {/* プレビューでは送信によるページ遷移を抑止する */}
-        <Stack as="form" g="15" onsubmit="return false">
-          <label className="l--stack -g:5">
-            <span className="-fz:s -fw:bold">キーワード</span>
-            <input className="-bd -bdrs:10 -px:10 -py:5 -w:100%" type="text" name="keyword" />
-          </label>
-          <Flex jc="end" g="10">
-            <Popover.Close className="-bd -px:15 -py:5 -bdrs:10">
-              <Fragment>キャンセル</Fragment>
-            </Popover.Close>
-            <button className="-bgc:text -c:base -px:15 -py:5 -bdrs:10" type="submit">適用</button>
-          </Flex>
-        </Stack>
-      </Popover.Popup>
-    </Popover.Root>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'role="dialog" aria-label="絞り込み条件"'
-    <Popover.Root popoverId="pop-07">
-      <Popover.Trigger className="-bd -px:15 -py:5 -bdrs:10">絞り込み</Popover.Trigger>
-      <Popover.Popup role="dialog" aria-label="絞り込み条件" side="bottom" align="start" p="20" max-w="20rem">
-        <Stack as="form" g="15">
-          <label className="l--stack -g:5">
-            <span className="-fz:s -fw:bold">キーワード</span>
-            <input className="-bd -bdrs:10 -px:10 -py:5 -w:100%" type="text" name="keyword" />
-          </label>
-          <Flex jc="end" g="10">
-            <Popover.Close className="-bd -px:15 -py:5 -bdrs:10">キャンセル</Popover.Close>
-            <button className="-bgc:text -c:base -px:15 -py:5 -bdrs:10" type="submit">適用</button>
-          </Flex>
-        </Stack>
-      </Popover.Popup>
-    </Popover.Root>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html 'role="dialog" aria-label="絞り込み条件"'
-    <div class="b--popover">
-      <button class="-bd -px:15 -py:5 -bdrs:10 b--popover_trigger set--plain" type="button" popovertarget="pop-07">絞り込み</button>
-      <div class="b--popover_popup -p:20 -max-w" id="pop-07" popover="auto" data-side="bottom" data-align="start" role="dialog" aria-label="絞り込み条件" style="--max-w:20rem">
-        <form class="l--stack -g:15">
-          <label class="l--stack -g:5">
-            <span class="-fz:s -fw:bold">キーワード</span>
-            <input class="-bd -bdrs:10 -px:10 -py:5 -w:100%" type="text" name="keyword" />
-          </label>
-          <div class="l--flex -jc:end -g:10">
-            <button class="-bd -px:15 -py:5 -bdrs:10 b--popover_close set--plain" type="button" popovertarget="pop-07" popovertargetaction="hide">キャンセル</button>
-            <button class="-bgc:text -c:base -px:15 -py:5 -bdrs:10" type="submit">適用</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    ```
-  </PreviewCode>
-</Preview>
-
-
 ## ブラウザ対応
 
 ポップオーバーの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
@@ -370,35 +303,3 @@ Popover のベーススタイルは、以下のCSSで定義されています。
 未対応のブラウザ（Firefox ESR 140 など）では、画面中央に表示されるカード（ブラウザ既定の配置）にフォールバックします。この場合、`side` / `align` / `offset` による位置調整は適用されません。
 
 開閉・light dismiss・フォーカス制御は Popover API の機能なので、フォールバック時もそのまま動作します。
-
-### ポリフィルを使う
-
-[OddBird の CSS Anchor Positioning ポリフィル](https://github.com/oddbird/css-anchor-positioning)を読み込み、`<html>`に`data-anchor-polyfill`属性を付けると、中央配置のフォールバックが無効になり、アンカー配置のルールをポリフィルが処理するようになります。
-
-```html
-<html data-anchor-polyfill>
-  <head>
-    <script type="module">
-      if (!('anchorName' in document.documentElement.style)) {
-        import('https://unpkg.com/@oddbird/css-anchor-positioning');
-      }
-    </script>
-  </head>
-</html>
-```
-
-npmからインストールして、任意のタイミングで実行することもできます。
-
-```bash
-npm install @oddbird/css-anchor-positioning
-```
-
-```js
-import polyfill from '@oddbird/css-anchor-positioning/fn';
-
-polyfill(); // ポリフィルの適用完了時に解決される Promise を返します
-```
-
-:::warning
-このポリフィルは、実行後に動的に追加された要素には適用されません。React などで後からマウントされるポップオーバーには効かない点にご注意ください。
-:::

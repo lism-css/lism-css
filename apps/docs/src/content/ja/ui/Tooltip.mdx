@@ -89,7 +89,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 |<PropBadge>`<Tooltip.Root>`</PropBadge><br/>`delay`|ポップアップが表示されるまでの待ち時間を指定します。インラインスタイルの`--tooltip-delay`として出力されます。|
 |<PropBadge>`<Tooltip.Trigger>`</PropBadge><br/>`tooltipId`|`aria-describedby`の値として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Tooltip.Root>`の外で単体利用するときにだけ指定します。|
-|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `inline-start` / `inline-end`で、初期値は`top`です。|
+|<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `left` / `right` / `start` / `end`で、初期値は`top`です。`start` / `end`は`left` / `right`の論理方向版で、書字方向に追従します。|
 |<PropBadge>`<Tooltip.Popup>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--tooltip-offset`として出力されます。|
 
 :::warning
@@ -157,18 +157,18 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-06">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>inline-start</Fragment>
+          <Fragment>start</Fragment>
         </Tooltip.Trigger>
-        <Tooltip.Popup side="inline-start">
-          <Fragment>side="inline-start"</Fragment>
+        <Tooltip.Popup side="start">
+          <Fragment>side="start"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-07">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>inline-end</Fragment>
+          <Fragment>end</Fragment>
         </Tooltip.Trigger>
-        <Tooltip.Popup side="inline-end">
-          <Fragment>side="inline-end"</Fragment>
+        <Tooltip.Popup side="end">
+          <Fragment>side="end"</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
     </Cluster>
@@ -193,12 +193,12 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <Tooltip.Popup side="right">side="right"</Tooltip.Popup>
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-06">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">inline-start</Tooltip.Trigger>
-        <Tooltip.Popup side="inline-start">side="inline-start"</Tooltip.Popup>
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">start</Tooltip.Trigger>
+        <Tooltip.Popup side="start">side="start"</Tooltip.Popup>
       </Tooltip.Root>
       <Tooltip.Root tooltipId="tt-07">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">inline-end</Tooltip.Trigger>
-        <Tooltip.Popup side="inline-end">side="inline-end"</Tooltip.Popup>
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">end</Tooltip.Trigger>
+        <Tooltip.Popup side="end">side="end"</Tooltip.Popup>
       </Tooltip.Root>
     </Cluster>
     ```
@@ -223,12 +223,12 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
         <span class="b--tooltip_popup" role="tooltip" id="tt-05" data-side="right">side="right"</span>
       </span>
       <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-06">inline-start</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-06" data-side="inline-start">side="inline-start"</span>
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-06">start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-06" data-side="start">side="start"</span>
       </span>
       <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-07">inline-end</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-07" data-side="inline-end">side="inline-end"</span>
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-07">end</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-07" data-side="end">side="end"</span>
       </span>
     </div>
     ```
@@ -236,7 +236,7 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 </Preview>
 
 :::note
-`left` / `right`は画面上の物理的な向きを指します。`inline-start` / `inline-end`は書字方向に追従する論理的な向きで、`dir="rtl"`の環境では左右が入れ替わります。
+`left` / `right`は画面上の物理的な向きを指します。`start` / `end`は書字方向に追従する論理的な向きで、`dir="rtl"`の環境では左右が入れ替わります。
 
 また、いずれの向きを指定した場合でも、画面の端に収まらないときは自動的に反対側へ反転します。
 :::
@@ -336,38 +336,38 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 
 ### 書字方向に追従させる
 
-`inline-start` / `inline-end`は、`dir="rtl"`の要素の中では左右が入れ替わります。
+`side`の`start` / `end`は、`dir="rtl"`の要素の中では左右が入れ替わります。
 
 <Preview>
-  <PreviewTitle>`dir="rtl"`の中で`inline-start`を使う例</PreviewTitle>
+  <PreviewTitle>`dir="rtl"`の中で`side="start"`を使う例</PreviewTitle>
   <PreviewArea p="30">
     <Box dir="rtl" p="20" bd bdrs="10">
       <Tooltip.Root tooltipId="tt-11">
         <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">
-          <Fragment>inline-start</Fragment>
+          <Fragment>start</Fragment>
         </Tooltip.Trigger>
-        <Tooltip.Popup side="inline-start">
+        <Tooltip.Popup side="start">
           <Fragment>rtlでは右側に表示されます</Fragment>
         </Tooltip.Popup>
       </Tooltip.Root>
     </Box>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'dir="rtl"' 'side="inline-start"'
+    ```jsx 'dir="rtl"' 'side="start"'
     <Box dir="rtl" p="20" bd bdrs="10">
       <Tooltip.Root tooltipId="tt-11">
-        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">inline-start</Tooltip.Trigger>
-        <Tooltip.Popup side="inline-start">rtlでは右側に表示されます</Tooltip.Popup>
+        <Tooltip.Trigger className="-bd -px:15 -py:5 -bdrs:10">start</Tooltip.Trigger>
+        <Tooltip.Popup side="start">rtlでは右側に表示されます</Tooltip.Popup>
       </Tooltip.Root>
     </Box>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html 'dir="rtl"' 'data-side="inline-start"'
+    ```html 'dir="rtl"' 'data-side="start"'
     <div class="l--box -p:20 -bd -bdrs:10" dir="rtl">
       <span class="b--tooltip">
-        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-11">inline-start</button>
-        <span class="b--tooltip_popup" role="tooltip" id="tt-11" data-side="inline-start">rtlでは右側に表示されます</span>
+        <button class="-bd -px:15 -py:5 -bdrs:10 b--tooltip_trigger set--plain" type="button" aria-describedby="tt-11">start</button>
+        <span class="b--tooltip_popup" role="tooltip" id="tt-11" data-side="start">rtlでは右側に表示されます</span>
       </span>
     </div>
     ```
@@ -380,35 +380,3 @@ Tooltip のベーススタイルは、以下のCSSで定義されています。
 ツールチップの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
 
 未対応のブラウザ（Firefox ESR 140 など）では、`<Tooltip.Root>`（＝トリガーを内包する要素）を基準にした絶対配置にフォールバックします。この場合、画面の端に収まらないときの自動反転は行われず、ツールチップが見切れることがあります。また、`offset`（`--tooltip-offset`）による間隔も適用されません。
-
-### ポリフィルを使う
-
-[OddBird の CSS Anchor Positioning ポリフィル](https://github.com/oddbird/css-anchor-positioning)を読み込み、`<html>`に`data-anchor-polyfill`属性を付けると、フォールバックの絶対配置が無効になり、アンカー配置のルールをポリフィルが処理するようになります。
-
-```html
-<html data-anchor-polyfill>
-  <head>
-    <script type="module">
-      if (!('anchorName' in document.documentElement.style)) {
-        import('https://unpkg.com/@oddbird/css-anchor-positioning');
-      }
-    </script>
-  </head>
-</html>
-```
-
-npmからインストールして、任意のタイミングで実行することもできます。
-
-```bash
-npm install @oddbird/css-anchor-positioning
-```
-
-```js
-import polyfill from '@oddbird/css-anchor-positioning/fn';
-
-polyfill(); // ポリフィルの適用完了時に解決される Promise を返します
-```
-
-:::warning
-このポリフィルは、実行後に動的に追加された要素には適用されません。React などで後からマウントされるツールチップには効かない点にご注意ください。
-:::
