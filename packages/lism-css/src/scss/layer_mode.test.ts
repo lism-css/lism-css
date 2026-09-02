@@ -56,6 +56,19 @@ describe('mixin: maybe_double / maybe_where / in_base_layer', () => {
   });
 });
 
+const testPropWithImportant = (important: 0 | 1) => `
+  $props: (
+    'zztest': (
+      prop: 'padding',
+      bp: 1,
+      important: ${important},
+      utilities: (
+        '10': '10px',
+      ),
+    ),
+  )
+`;
+
 describe('$default_important の解決', () => {
   const autoOutput = (settingWith: string, mixinWith: string) =>
     compileString(`
@@ -76,6 +89,29 @@ describe('$default_important の解決', () => {
   test('$layer_mode: 0 でも mixin.$default_important: 0 を明示すれば外せる', () => {
     expect(autoOutput(`${testProp}, $default_important: 0`, '$layer_mode: 0, $default_important: 0')).toMatch(/padding: 10px;/);
   });
+
+  test('$layer_mode: 0 は $props の important: 0 より !important を優先する（BPクラスも含む）', () => {
+    const css = autoOutput(`${testPropWithImportant(0)}, $default_important: 0`, '$layer_mode: 0');
+
+    expect(css).toMatch(/\.-zztest \{\s*padding: var\(--zztest\)\s+!important;/);
+    expect(css).toMatch(/padding: 10px\s+!important;/);
+    expect(css).toMatch(/\.-zztest_sm \{\s*padding: var\(--zztest_sm\)\s+!important;/);
+  });
+
+  test('$layer_mode: 1 は $props の important: 0 が既定より優先される', () => {
+    const css = autoOutput(`${testPropWithImportant(0)}, $default_important: 1`, '$layer_mode: 1');
+
+    expect(css).toMatch(/\.-zztest \{\s*padding: var\(--zztest\);/);
+    expect(css).toMatch(/padding: 10px;/);
+    expect(css).toMatch(/\.-zztest_sm \{\s*padding: var\(--zztest_sm\);/);
+  });
+
+  test('$layer_mode: 0 かつ mixin.$default_important: 0 なら $props の important: 1 が効く', () => {
+    const css = autoOutput(`${testPropWithImportant(1)}, $default_important: 0`, '$layer_mode: 0, $default_important: 0');
+
+    expect(css).toMatch(/\.-zztest \{\s*padding: var\(--zztest\)\s+!important;/);
+    expect(css).toMatch(/padding: 10px\s+!important;/);
+  });
 });
 
 describe('no_layer エントリ', () => {
@@ -91,6 +127,20 @@ describe('no_layer エントリ', () => {
     // 二重化対象外
     expect(css).toContain('.u--srOnly:not(#_) {');
     expect(css).toContain('.u--clipText {');
+  });
+
+  test('main_no_layer は -hov 系の preset クラスにも !important を付ける', () => {
+    const css = compileEntry('main_no_layer.scss');
+
+    expect(css).toMatch(/\.-hov\\:underline:hover \{\s*text-decoration: underline\s+!important;/);
+    expect(css).toMatch(/\.-hov\\:in\\:zoom \{[^}]*scale: var\(--_isHov, 1\.1\)\s+!important;/);
+  });
+
+  test('main は -hov 系の preset クラスに !important を付けない', () => {
+    const css = compileEntry('main.scss');
+
+    expect(css).toMatch(/\.-hov\\:underline:hover \{\s*text-decoration: underline;/);
+    expect(css).toMatch(/\.-hov\\:in\\:zoom \{[^}]*scale: var\(--_isHov, 1\.1\);/);
   });
 
   test('main（@layer あり）は setting の既定どおり !important なし・二重化なし', () => {

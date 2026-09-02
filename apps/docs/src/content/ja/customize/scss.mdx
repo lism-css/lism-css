@@ -45,7 +45,7 @@ SCSSの変数を上書きすることで、出力されるクラスやブレイ�
 
 :::info
 - `@layer` のオン・オフは変数管理ではありません。読み込む`main.scss`を切り替えてください（[CSSビルドの選択](/docs/customize/build/)）。
-- `main_no_layer.scss` / `full_no_layer.scss` では、`$default_important` の値にかかわらず Property Class に常に `!important` が付きます。どうしても外す場合は、`main_no_layer.scss` の内容を自分のエントリに写し、先頭の `@use` を `@use '../path-to/node_modules/lism-css/scss/mixin' with ($layer_mode: 0, $default_important: 0)` に置き換えてください。
+- `main_no_layer.scss` / `full_no_layer.scss` では、`$default_important` や `$props` の個別 `important` の値にかかわらず Property Class に常に `!important` が付きます。どうしても外す場合は、`main_no_layer.scss` の内容を自分のエントリに写し、先頭の `@use` を `@use '../path-to/node_modules/lism-css/scss/mixin' with ($layer_mode: 0, $default_important: 0)` に置き換えてください。
 - Astro の場合は`../path-to/node_modules/`部分は不要です。
 :::
 

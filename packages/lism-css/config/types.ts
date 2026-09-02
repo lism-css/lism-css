@@ -25,6 +25,10 @@ export interface PropConfig {
   isVar?: 0 | 1;
   bp?: 0 | 1 | readonly BreakpointKey[];
   alwaysVar?: 0 | 1;
+  /**
+   * `!important` を付けて出力するか。未指定なら `defaultImportant` に従う。
+   * no_layer 系ビルドは常に付与するため、`0` を指定しても外れない。
+   */
   important?: 0 | 1;
   // 値が空文字（センチネル: キーだけ登録）か、プロパティ名→値の Record のいずれか。
   exUtility?: Record<string, string | Record<string, string>>;

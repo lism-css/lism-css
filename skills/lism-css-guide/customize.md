@@ -22,7 +22,7 @@
 ## `@layer` をオフにする
 
 `lism-css/main.css` の代わりに `lism-css/main_no_layer.css` を読み込むだけで、`@layer` を使わない CSS に切り替えられます。
-no-layer版は既存サイトや WordPress テーマなど、カスケードを制御できない環境向けです。レイヤーの代わりに、Property Class は常に `!important` 付き、`u--trim` / `u--trimAll` / `u--cbox` / `u--divide` / `u--enclose` はセレクタ二重化（`.u--trim.u--trim` = 0-2-0）で出力され、「Property Class > Utility Class > 単一クラス」の序列を再現します。`lism.config.js` の `defaultImportant: false` や `$default_important: 0` を指定しても `!important` は外れません。`b--` など上記以外のクラス同士の優先度は読み込み順・詳細度に依存します。
+no-layer版は既存サイトや WordPress テーマなど、カスケードを制御できない環境向けです。レイヤーの代わりに、Property Class は常に `!important` 付き、`u--trim` / `u--trimAll` / `u--cbox` / `u--divide` / `u--enclose` はセレクタ二重化（`.u--trim.u--trim` = 0-2-0）で出力され、「Property Class > Utility Class > 単一クラス」の序列を再現します。`lism.config.js` の `defaultImportant: false`・`$default_important: 0`・`props` の個別 `important: 0` を指定しても `!important` は外れません。`b--` など上記以外のクラス同士の優先度は読み込み順・詳細度に依存します。
 
 ```js
 // 通常

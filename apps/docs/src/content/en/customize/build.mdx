@@ -31,7 +31,7 @@ Keep the following in mind when using the `@layer`-free builds:
 
 - A Property Class wins even if you set the same property via the `style` attribute or JavaScript. To change the value, swap the class itself (for classes that read their value from a CSS variable, such as `-p` with `--p`, rewriting the variable also works).
 - Overriding a `u--` class in your own CSS requires a specificity of at least `.u--trim.u--trim`.
-- `defaultImportant: false` in `lism.config.js` and `$default_important: 0` in SCSS do not remove `!important` from the `@layer`-free builds.
+- `defaultImportant: false` in `lism.config.js` and `$default_important: 0` in SCSS do not remove `!important` from the `@layer`-free builds. A per-prop `important: 0` in `props` is ignored as well.
 
 
 ## Full Build (full.css)

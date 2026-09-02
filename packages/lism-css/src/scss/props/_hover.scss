@@ -27,7 +27,7 @@
    * ---------------------------------------- */
   // underlineをつけるシンプルなエフェクト
   .-hov\:underline:hover {
-    text-decoration: underline;
+    text-decoration: underline #{mixin.$maybe_important};
   }
 }
 
@@ -48,5 +48,5 @@
 
 .-hov\:in\:zoom {
   --transitionProps: scale;
-  scale: var(--_isHov, 1.1);
+  scale: var(--_isHov, 1.1) #{mixin.$maybe_important};
 }
