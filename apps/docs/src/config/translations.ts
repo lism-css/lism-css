@@ -9,9 +9,10 @@ import type { LangCode } from './site';
  * キー構造のみを定義し、値は string 型
  */
 type TranslationKeys = {
-  toc: 'title' | 'open';
+  toc: 'title' | 'open' | 'ariaLabel';
   search: 'title' | 'devMessage';
   header: 'openMenu';
+  siteNav: 'ariaLabel';
   main: 'ariaLabel';
   themeSwitch: 'ariaLabel' | 'system' | 'light' | 'dark';
   langSelect: 'ariaLabel' | 'menuAriaLabel';
@@ -39,6 +40,7 @@ export const translations: Record<LangCode, UITranslations> = {
     toc: {
       title: '目次',
       open: '目次を開く',
+      ariaLabel: '目次',
     },
     search: {
       title: '検索',
@@ -46,6 +48,9 @@ export const translations: Record<LangCode, UITranslations> = {
     },
     header: {
       openMenu: 'メニューを開く',
+    },
+    siteNav: {
+      ariaLabel: 'サイトナビゲーション',
     },
     main: {
       ariaLabel: 'メインコンテンツ',
@@ -95,6 +100,7 @@ export const translations: Record<LangCode, UITranslations> = {
     toc: {
       title: 'TOC',
       open: 'Open contents',
+      ariaLabel: 'Table of contents',
     },
     search: {
       title: 'Search',
@@ -102,6 +108,9 @@ export const translations: Record<LangCode, UITranslations> = {
     },
     header: {
       openMenu: 'Open menu',
+    },
+    siteNav: {
+      ariaLabel: 'Site navigation',
     },
     main: {
       ariaLabel: 'Main content',

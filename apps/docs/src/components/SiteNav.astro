@@ -10,10 +10,12 @@ import NavLink from '@parts/NavLink.astro';
 import sidebarConfig, { getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
 import { groupPostsBySidebarDirs, hasDirProperty, getPostUrl } from '@/lib/sidebarPosts';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
-import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang } from '@/lib/i18n';
+import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, t } from '@/lib/i18n';
 
 // 現在の言語を取得
 const currentLang = getLangFromUrl(Astro.url);
+// nav ランドマークのラベル（目次・記事ナビと区別するため）
+const navText = t(currentLang, 'siteNav');
 
 // 現在のページパス（言語プレフィックスなし）を取得してアクティブ判定に使用
 const currentPathWithoutLang = getPathWithoutLang(Astro.url);
@@ -74,7 +76,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
 }
 ---
 
-<Stack as="nav" class="c--siteNav set--cqUnit set--s" g="10" fx="1" min-h="0">
+<Stack as="nav" class="c--siteNav set--cqUnit set--s" g="10" fx="1" min-h="0" aria-label={navText.ariaLabel}>
   {/* トップレベルリンク */}
   {
     topLevelLinks.length > 0 && (
