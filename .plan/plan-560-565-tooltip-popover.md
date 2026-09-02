@@ -40,7 +40,7 @@ Issue #565の懸念どおり、`@supports`でanchor配置側を囲うとポリ�
 
 - anchor配置のルールは**ゲートなし**で書く（非対応ブラウザでは未知プロパティだけが個別に無視される。ポリフィルはこのルールを読める）。
 - フォールバックのルールを`@supports not (...)`で囲み、さらに`:root:not([data-anchor-polyfill])`で「ポリフィル未使用」に限定する。
-- `@supports`の条件は使用プロパティを全部andで束ねる: `not ((anchor-name: --a) and (anchor-scope: all) and (position-area: top) and (position-try-fallbacks: flip-block))`。これにより`anchor-scope`未対応のChrome 125〜130は自動的にフォールバック側に落ちる（Issueが「受容」としていた複数設置時のアンカー解決ずれは発生しない）。
+- `@supports`の条件は使用プロパティを全部andで束ねる: `not ((anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block))`。`position-area`の判定値には論理キーワードを含め、`inline-*`側だけ壊れる状態を作らない。これにより`anchor-scope`未対応のChrome 125〜130は自動的にフォールバック側に落ちる（Issueが「受容」としていた複数設置時のアンカー解決ずれは発生しない）。
 - **制約（コードコメントで残す）**: anchor配置側に既知プロパティ（`position`・`inset`・`margin`・`translate`等）を書くときは、フォールバック側で必ず同じプロパティを上書きする。フォールバックはanchor配置より後に置き、`:root:not(...)`で上がる詳細度をそのまま使う（`:where`で揃えて後置でもよい。実装時にどちらかへ統一）。
 
 ```css
@@ -53,7 +53,7 @@ Issue #565の懸念どおり、`@supports`でanchor配置側を囲うとポリ�
     position-try-fallbacks: flip-block;
   }
   /* ② anchor非対応 かつ ポリフィル未使用 のときだけ */
-  @supports not ((anchor-name: --a) and (anchor-scope: all) and (position-area: top) and (position-try-fallbacks: flip-block)) {
+  @supports not ((anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block)) {
     :root:not([data-anchor-polyfill]) .b--tooltip_popup {
       position: absolute;
       /* 方向別の inset */
@@ -76,7 +76,7 @@ Issue #565の懸念どおり、`@supports`でanchor配置側を囲うとポリ�
 ### 4. 方向のprop名と値はBase UIに揃える
 
 - **`side`**: `top | bottom | left | right | inline-start | inline-end`。Tooltipの既定`top`、Popoverの既定`bottom`。`left`/`right`は物理方向、`inline-start`/`inline-end`は書字方向（`dir="rtl"`）に追従する論理方向。
-- **`align`**（Popoverのみ）: `start | center | end`、既定`center`。`start`/`end`は書字方向に追従する（`span-x-*`と`justify-self: start/end`で実現。下記の対応表）。
+- **`align`**（Popoverのみ）: `start | center | end`、既定`center`。`side`が`top`/`bottom`のとき`start`/`end`は書字方向に追従する（`span-x-*`と`justify-self: start/end`で実現）。`side`が横方向のときは縦方向の揃えになり、`start`=上・`end`=下（`align-self`で実現）。下記の対応表。
 - DOMには`data-side` / `data-align`として出す（コンポーネント接頭辞は付けない。`.b--popover_popup[data-side]`のようにクラスでスコープされるため衝突しない）。
 - Issue #560の`data-pos`は採用しない。
 
@@ -93,7 +93,7 @@ Issue #565の懸念どおり、`@supports`でanchor配置側を囲うとポリ�
 
 - `center`列は単一キーワード（＝`span-all`）。直交軸は`anchor-center`の既定挙動でviewport内に自動シフトする。`anchor-center`はポリフィル非対応なので明示しない。
 - `start`/`end`は`normal`の既定揃えに頼らず`justify-self`/`align-self`を明示する。
-- `position-try-fallbacks`: `top`/`bottom`は`flip-block`、`left`/`right`/`inline-*`は`flip-inline`。Popoverの`start`/`end`はさらに`flip-block flip-inline`まで並べる（`flip-block, flip-inline, flip-block flip-inline`の順で主軸を先に）。
+- `position-try-fallbacks`: `top`/`bottom`は`flip-block`、`left`/`right`/`inline-*`は`flip-inline`。Popoverの`start`/`end`は両軸のflipまで並べ、主軸を先に書く（`top`/`bottom`: `flip-block, flip-inline, flip-block flip-inline`。横方向のside: `flip-inline, flip-block, flip-inline flip-block`）。
 - オフセットはアンカー側のmargin: `top`→`margin-bottom`、`bottom`→`margin-top`、`left`→`margin-right`、`right`→`margin-left`、`inline-start`→`margin-inline-end`、`inline-end`→`margin-inline-start`。flipはmarginと`justify-self`/`align-self`も反転するので片側だけ書けばよい。
 
 ### 5. パーツ命名
@@ -210,7 +210,7 @@ components/Tooltip/
 - ポップアップ（anchor配置・ゲートなし）:
   - `position-anchor: --popover; inset: auto; margin: 0;`（UA既定の`inset: 0; margin: auto`を解除。MDNの案内どおり）
   - `data-side`×`data-align`ごとに共通方針4の対応表どおり`position-area`・`justify-self`/`align-self`・`position-try-fallbacks`・オフセットmarginを切り替える。
-  - 見た目: `border: none; padding: var(--s20); background-color: var(--base); color: inherit; border-radius; box-shadow; overflow: auto`。**`set="plain"`は使わない**（`width: auto`がフォールバック時に`inset: 0`と組み合わさって全幅化するため）。
+  - 見た目: `border: none; padding: var(--s15); background-color: var(--base); color: inherit; border-radius; box-shadow; overflow: auto`。**`set="plain"`は使わない**（`width: auto`がフォールバック時に`inset: 0`と組み合わさって全幅化するため）。
 - ポップアップ（フォールバック・ゲートあり）: `inset: 0; margin: auto; max-width: calc(100vw - 2rem)`でUA既定の中央配置に戻し、カードとして整える。`::backdrop`に薄い半透明を当てて意図したデザインに見せる（任意。実装時に判断）。
 - 開閉アニメーション: `opacity`の`transition`＋`display` / `overlay`を`allow-discrete`、`:popover-open`で`opacity: 1`、`@starting-style { opacity: 0 }`。`prefers-reduced-motion`で`--popover-duration: 0s`。
 
@@ -294,13 +294,14 @@ docsに書く利用ガイダンス（Issueより）:
 - **このPRで`Modal.OpenBtn`/`CloseBtn`も`Open`/`Close`系に改名する**: 公開済みパッケージの破壊的変更で、docs・skill・MCP・registryの追随も別途要る。別Issueで扱う。
 - **`interestfor`属性**: Chrome/Edge 142のみ。マークアップは互換に保つ（`button`トリガー＋`role="tooltip"`）。
 - **`data-pos`（Tooltip）と`data-side`（Popover）の使い分け**: 同じ概念に別名を付けない。
-- **2文字イニシャルやRTL対応など**: 対象外（下記）。
+- **縦書き対応・`position-visibility`など**: 対象外（下記）。RTLは`inline-*`と`align`で対応する（`left`/`right`は物理方向のまま）。
 
 ## 未決事項・要確認・事前準備
 
 ユーザー確認済み（2026-09-02）:
 
-- 共通方針4〜6の命名（`side`/`align`と値域、`Root`/`Trigger`/`Popup`/`Close`、`tooltipId`/`popoverId`）。
+- 共通方針4〜6の命名（`side`/`align`と値域、`side`に`inline-start`/`inline-end`を含めること、`Root`/`Trigger`/`Popup`/`Close`、`tooltipId`/`popoverId`）。
+- Tooltipの`label`ショートカットは入れない。Modalの`OpenBtn`/`CloseBtn`改名はこのPRでやらない。
 - ポリフィルopt-in属性名`data-anchor-polyfill`。
 - Tooltipのディレイ既定値（入場`0.4s`・退場猶予`0.15s`）は実機で目視調整する前提の初期値。
 
