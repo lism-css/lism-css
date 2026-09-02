@@ -29,7 +29,9 @@ import { Button } from '@lism-css/ui/astro/Button';
 - [Details](#details)
 - [Modal](#modal)
 - [NavMenu](#navmenu)
+- [Popover](#popover)
 - [Tabs](#tabs)
+- [Tooltip](#tooltip)
 - [ShapeDivider](#shapedivider)
 - [DummyText](#dummytext)
 - [CLI でプロジェクトにコピーして使う](#cli-でプロジェクトにコピーして使う)
@@ -237,6 +239,40 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 ```
 
 
+## Popover
+
+ソース: [Popover/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Popover)
+
+クリックで開くインタラクティブなパネル。ネイティブ Popover API（`popover` 属性）で開閉し、CSS Anchor Positioning でトリガーの隣に配置する。クライアント JS なし。開閉・外側クリック/Esc での light dismiss・フォーカス復帰・`aria-expanded` はブラウザに任せる。Anchor Positioning 非対応ブラウザでは画面中央のカードとして開く。ホバーで出す補足テキストは `Tooltip` を使う。
+
+**構造:** `Popover.Root > Popover.Trigger + Popover.Popup > (Content + Popover.Close)`
+
+| Prop | 対象 | 型 | デフォルト | 説明 |
+| --- | --- | --- | --- | --- |
+| `popoverId` | Root | `string` | 自動生成 | Trigger の `popovertarget`・Popup の `id`・Close の `popovertarget` に配布する ID。Root 配下では子に ID を指定しない |
+| `popoverId` | Trigger / Close | `string` | — | Root 外で単体利用するときだけ指定（Popup の `id` と揃える） |
+| `offset` | Root | `string` | `var(--s5)` | トリガーとの距離。`--popover-offset` 変数として出力 |
+| `side` | Popup | `'top' \| 'bottom' \| 'start' \| 'end'` | `'bottom'` | 表示位置。`data-side` として出力。`start`/`end` は横方向で、書字方向に追従する inline 軸の論理方向（LTR では `start`=左）。viewport 端で自動反転 |
+| `align` | Popup | `'start' \| 'center' \| 'end'` | `'center'` | トリガーに対する揃え。`data-align` として出力。`side` が `top`/`bottom` のとき書字方向、横方向のとき `start`=上・`end`=下 |
+| `type` | Popup | `'auto' \| 'manual'` | `'auto'` | `popover` 属性の値。`manual` は light dismiss と Esc が無効になるので `Close` を必ず置く |
+| `icon` / `srText` | Close | `string` | `'x'` / `'Close'` | 子要素が無いときのアイコンとスクリーンリーダー向けテキスト |
+
+- CSS 変数（`--popover-offset`・`--popover-duration`）は Root（`.b--popover`）で受け取る。Root かその祖先に指定する。Popup に書いても効かない。
+- Trigger / Close は `button` 要素でなければ `popovertarget` が効かない。
+- 色・余白・角丸・影は Lism props（`bgc`・`p`・`bdrs`・`bxsh` 等）で上書きする。開閉フェードの時間は `--popover-duration`。
+- フォームを含む場合は Popup に `role='dialog'` と `aria-label` を付ける。
+
+```jsx
+<Popover.Root>
+  <Popover.Trigger>Open</Popover.Trigger>
+  <Popover.Popup side='bottom' align='start'>
+    Content
+    <Popover.Close srText='閉じる' />
+  </Popover.Popup>
+</Popover.Root>
+```
+
+
 ## Tabs
 
 ソース: [Tabs/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs)
@@ -263,6 +299,35 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
     <Tabs.Panel>Content 2</Tabs.Panel>
   </Tabs.Item>
 </Tabs.Root>
+```
+
+
+## Tooltip
+
+ソース: [Tooltip/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tooltip)
+
+ホバー / キーボードフォーカスで出る補足テキスト。表示制御は CSS のみで、JS は「Esc で閉じる」だけ（`scripts/tooltip.js`）。CSS Anchor Positioning でトリガーの隣に配置し、非対応ブラウザではトリガー基準の絶対配置にフォールバックする。中にリンク・ボタンを置かない（それは `Popover`）。重要な情報をツールチップだけに入れない（タッチでは見えない）。
+
+**構造:** `Tooltip.Root > Tooltip.Trigger + Tooltip.Popup`（Popup は Root 直下に置く）
+
+| Prop | 対象 | 型 | デフォルト | 説明 |
+| --- | --- | --- | --- | --- |
+| `tooltipId` | Root | `string` | 自動生成 | Trigger の `aria-describedby` と Popup の `id` に配布する ID。Root 配下では子に ID を指定しない |
+| `tooltipId` | Trigger | `string` | — | Root 外で単体利用するときだけ指定（Popup の `id` と揃える） |
+| `delay` | Root | `string` | `0.4s` | 表示までのディレイ。`--tooltip-delay` 変数として出力（退場猶予は `--tooltip-delay--close`、既定 `0.15s`） |
+| `offset` | Root | `string` | `var(--s5)` | トリガーとの距離。`--tooltip-offset` 変数として出力 |
+| `side` | Popup | `'top' \| 'bottom' \| 'start' \| 'end'` | `'top'` | 表示位置。`data-side` として出力。`start`/`end` は横方向で、書字方向に追従する inline 軸の論理方向（LTR では `start`=左）。viewport 端で自動反転 |
+| `align` | Popup | `'start' \| 'center' \| 'end'` | `'center'` | `side` と直交する方向の揃え。`data-align` として出力。`side` が `top`/`bottom` のとき `start`/`end` は書字方向に追従 |
+
+- CSS 変数（`--tooltip-offset`・`--tooltip-delay`・`--tooltip-delay--close`・`--tooltip-duration`）は Root（`.b--tooltip`）で受け取る。Root かその祖先に指定する。Popup に書いても効かない。
+- Trigger の既定は `button`。`as='span'` 等にするなら `tabindex='0'` でフォーカス可能にする。
+- 既定は反転配色（`--text` 背景・`--base` 文字）。色・余白・角丸は Lism props（`bgc`・`c`・`p`・`bdrs` 等）で上書きする。フェード時間は `--tooltip-duration`。
+
+```jsx
+<Tooltip.Root>
+  <Tooltip.Trigger>Save</Tooltip.Trigger>
+  <Tooltip.Popup side='top'>Shortcut: ⌘S</Tooltip.Popup>
+</Tooltip.Root>
 ```
 
 

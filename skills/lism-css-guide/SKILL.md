@@ -118,6 +118,7 @@ C0–C8の詳細と実装プランの書式は[`references/authoring.md`](./refe
 | 幅制御 | `Container`（コンテナクエリ基準）/`Wrapper`（直下領域の幅制限）/`max-sz`（単体の幅） | `trait-class/is--container.md`、`trait-class/is--wrapper.md`、`property-class/max-sz.md` |
 | 画像・動画・iframeを置く | `Frame`（アスペクト比枠・直下メディアのfit・overflowを任せる） | `primitives/l--frame.md` |
 | ボタン | `@lism-css/ui`の`Button`。素の`<button>`を整えるならreset済みの`set--plain` | `components-ui.md`、`set-class.md` |
+| ツールチップ・ポップオーバー | `@lism-css/ui`の`Tooltip`（ホバー/フォーカスの補足テキスト）/`Popover`（クリックで開くパネル。リンクやフォームを含むならこちら） | `components-ui.md` |
 | hover効果 | `-hov:*`/`hov={{}}`/`set--hov`/`has--transition`（component CSSの`:hover`より先に検討） | `property-class/hov.md`、`trait-class/has--transition.md` |
 | ボックス・カードの全体リンク | `BoxLink`/`is--boxLink`（クリック領域と重なり順を任せる） | `trait-class/is--boxLink.md` |
 | 小さいUI部品 | `c--*`＋Property Class（`c--*`は何のパーツかを示す名前に留め、単一要素の見た目はProperty Class/Lism Propsへ）。ベーススタイルをCSS側で管理する共通部品なら`b--*` | `property-class.md`、`css-rules.md#custom-classc--`、`css-rules.md#block-classb--` |

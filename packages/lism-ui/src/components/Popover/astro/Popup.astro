@@ -1,0 +1,20 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    id?: string;
+    /** start/end は書字方向に追従する inline 軸の論理方向 */
+    side?: 'top' | 'bottom' | 'start' | 'end';
+    align?: 'start' | 'center' | 'end';
+    type?: 'auto' | 'manual';
+  };
+
+// id の既定値はプレースホルダー。Root.astro 側で実IDに置換される
+const { class: className, id = '__LISM_POPOVER_ID__', side = 'bottom', align = 'center', type = 'auto', ...props } = Astro.props;
+---
+
+<Lism class={atts(className, 'b--popover_popup')} id={id} popover={type} data-side={side} data-align={align} {...props}><slot /></Lism>

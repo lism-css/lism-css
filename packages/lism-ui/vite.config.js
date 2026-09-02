@@ -38,6 +38,7 @@ const entries = {
   'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.ts'),
   'scripts/accordion': resolve(__dirname, 'src/components/Accordion/script.ts'),
   'scripts/modal': resolve(__dirname, 'src/components/Modal/script.ts'),
+  'scripts/tooltip': resolve(__dirname, 'src/components/Tooltip/script.ts'),
 };
 
 // build.lib を設定すると でライブラリモードになる。

@@ -1,0 +1,126 @@
+/*
+ * ネイティブ Popover API（popover 属性）で開閉し、CSS Anchor Positioning で配置する。
+ * anchor 配置は @supports で囲い、非対応ブラウザ（部分対応の Chrome 128〜130 を含む）には
+ * UA 既定の中央配置（inset: 0; margin: auto）に戻してカードとして整えるだけにする。
+ */
+@layer lism-block {
+  /* 調整用の変数は Root で受ける（Root の props がインラインに書く --popover-* をここで拾う） */
+  .b--popover {
+    --duration: var(--popover-duration, 0.15s);
+    --offset: var(--popover-offset, var(--s5));
+    display: inline-block;
+    anchor-scope: --popover;
+  }
+  .b--popover_trigger {
+    anchor-name: --popover;
+  }
+
+  .b--popover_popup {
+    border: none;
+
+    font-size: var(--fz--s);
+
+    color: var(--text);
+    background-color: var(--base);
+    box-shadow: var(--bxsh--30);
+    overflow: auto;
+    padding: 1em;
+    opacity: 0;
+    transition:
+      opacity var(--duration),
+      display var(--duration) allow-discrete,
+      overlay var(--duration) allow-discrete;
+  }
+  .b--popover_popup:popover-open {
+    opacity: 1;
+  }
+  @starting-style {
+    .b--popover_popup:popover-open {
+      opacity: 0;
+    }
+  }
+
+  /*
+   * anchor 配置。position-area は side と align の span を var() で合成し、
+   * start / end は span-* で片側に伸ばして place-self でアンカー端に揃える。
+   * span キーワードと揃える軸は side の系統（top / bottom と start / end）ごとに異なるので、
+   * 系統側で --_spanStart / --_spanEnd / --_placeStart / --_placeEnd の候補を定義し、align 側はそれを選ぶだけにする。
+   * top / bottom の align に span-x-* を使うのは、書字方向に従って RTL でも端に揃うため。
+   * 物理（top/bottom）と論理（span-inline-*）の混在は文法上無効で宣言ごと落ちるので使わない。
+   * side の start / end は inline 軸の論理方向（position-area の inline-start / inline-end）。block 軸は top / bottom の物理値のみ。
+   */
+  @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
+    .b--popover_popup {
+      --_span: span-all;
+      position-anchor: --popover;
+      position-area: var(--_side) var(--_span);
+      inset: auto;
+    }
+    /* --_place*: place-self の値（align-self justify-self）。揃える軸だけ start / end にする */
+    .b--popover_popup:where([data-side='top'], [data-side='bottom']) {
+      --_spanStart: span-x-end;
+      --_spanEnd: span-x-start;
+      --_placeStart: auto start;
+      --_placeEnd: auto end;
+      margin-block: var(--offset);
+      position-try-fallbacks:
+        flip-block,
+        flip-inline,
+        flip-block flip-inline;
+    }
+    .b--popover_popup:where([data-side='start'], [data-side='end']) {
+      --_spanStart: span-block-end;
+      --_spanEnd: span-block-start;
+      --_placeStart: start auto;
+      --_placeEnd: end auto;
+      margin-inline: var(--offset);
+      position-try-fallbacks:
+        flip-inline,
+        flip-block,
+        flip-inline flip-block;
+    }
+    .b--popover_popup[data-side='top'] {
+      --_side: top;
+    }
+    .b--popover_popup[data-side='bottom'] {
+      --_side: bottom;
+    }
+    .b--popover_popup[data-side='start'] {
+      --_side: inline-start;
+    }
+    .b--popover_popup[data-side='end'] {
+      --_side: inline-end;
+    }
+
+    /* align: side 系統が用意した候補から選ぶ */
+    .b--popover_popup:where([data-align='start']) {
+      --_span: var(--_spanStart);
+      place-self: var(--_placeStart);
+    }
+    .b--popover_popup:where([data-align='end']) {
+      --_span: var(--_spanEnd);
+      place-self: var(--_placeEnd);
+    }
+  }
+
+  /* anchor 非対応: UA 既定の中央配置をカードとして整える */
+  @supports not (
+    (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block)
+  ) {
+    .b--popover_popup {
+      margin: auto; /* lism-css の reset（*:not(dialog) { margin: 0 }）で消える UA 既定値を戻して中央配置にする */
+      max-width: calc(100vw - var(--s20) * 2);
+      max-height: calc(100vh - var(--s20) * 2);
+    }
+    .b--popover_popup::backdrop {
+      background-color: rgb(0 0 0 / 0.2);
+    }
+  }
+
+  /* 減速設定時はフェードを無効化。インラインの --duration 指定よりも優先させるため !important */
+  @media (prefers-reduced-motion: reduce) {
+    .b--popover {
+      --duration: 0s !important;
+    }
+  }
+}

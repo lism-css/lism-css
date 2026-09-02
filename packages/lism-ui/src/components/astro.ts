@@ -7,6 +7,8 @@ export { Callout } from './Callout/astro';
 export { Details } from './Details/astro';
 export { Modal } from './Modal/astro';
 export { NavMenu } from './NavMenu/astro';
+export { Popover } from './Popover/astro';
 export { ShapeDivider } from './ShapeDivider/astro';
 export { Tabs } from './Tabs/astro';
+export { Tooltip } from './Tooltip/astro';
 export { DummyText } from './DummyText/astro';

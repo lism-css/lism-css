@@ -25,8 +25,10 @@
 | **Details** | スタイル付きネイティブ `<details>` / `<summary>` 要素 |
 | **Modal** | バックドロップ付きダイアログオーバーレイ |
 | **NavMenu** | ネストアイテム対応のナビゲーションメニュー |
+| **Popover** | ネイティブ Popover API と CSS Anchor Positioning によるクリックで開くパネル |
 | **ShapeDivider** | SVGシェイプによる装飾的なセクションディバイダー |
 | **Tabs** | タブ付きコンテンツパネル |
+| **Tooltip** | CSS Anchor Positioning で配置するホバー / フォーカス時の補足テキスト |
 | **DummyText** | プロトタイピング用のプレースホルダーテキスト |
 
 ## インストール

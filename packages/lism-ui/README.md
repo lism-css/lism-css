@@ -25,8 +25,10 @@ All components are based on the layout system and design tokens of Lism CSS.
 | **Details** | Styled native `<details>` / `<summary>` element |
 | **Modal** | Dialog overlay with backdrop |
 | **NavMenu** | Navigation menu with nested item support |
+| **Popover** | Click-to-open panel using the native Popover API and CSS Anchor Positioning |
 | **ShapeDivider** | Decorative section dividers with SVG shapes |
 | **Tabs** | Tabbed content panels |
+| **Tooltip** | Hover / focus hint text positioned with CSS Anchor Positioning |
 | **DummyText** | Placeholder text for prototyping |
 
 ## Installation
