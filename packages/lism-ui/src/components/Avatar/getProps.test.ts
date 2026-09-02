@@ -34,4 +34,12 @@ describe('getAvatarProps', () => {
       initialAtts: { 'aria-hidden': 'true' },
     });
   });
+
+  it('name なし・alt のみなら空のイニシャル要素は装飾扱い（aria-hidden）になる', () => {
+    expect(getAvatarProps({ alt: '説明' })).toEqual({
+      label: '説明',
+      initial: '',
+      initialAtts: { 'aria-hidden': 'true' },
+    });
+  });
 });
