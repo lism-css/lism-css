@@ -106,7 +106,7 @@ rg -n '[一-龥ぁ-んァ-ヶー々]' apps/docs/src/pages/preview/patterns --glo
 ### 基本方針
 
 - コンポーネント構造・import・props・CSS クラス名は `index.astro` と同じにする
-- `import './_style.css'` はそのまま維持する（両言語で共有）
+- `import './_style.css'` は `index.astro` にあるときだけ同じく書く（両言語で共有。無いパターンでは書かない）
 - `DemoLayout` の `title`、URL、`alt=""` のような空の alt はそのまま維持する
 - 英訳するのはテキスト（見出し・本文・ボタンラベル等）とコメント（`{/* ... */}`）。コメントはソースとして表示され、コピペして使う読者向けの説明になるため英訳する
 

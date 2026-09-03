@@ -1,4 +1,6 @@
 ---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Flow, Text, Group } from 'lism-css/astro';
 import { PreviewFrame } from '@/components/Preview';
@@ -46,6 +48,8 @@ const categoryData: PatternCategory = patterns[category as PatternCategoryId];
 
 const previewUrl = `/preview/patterns/${category}/${id}/${lang}/`;
 const patternPath = `src/pages/preview/patterns/${category}/${id}`;
+const stylePath = `${patternPath}/_style.css`;
+const hasStyle = existsSync(resolve(process.cwd(), stylePath));
 ---
 
 <BaseLayout title={`${pattern.title} - Patterns`} description={pattern.description[lang]} lang={lang} excludeFromSearch noindex>
@@ -66,10 +70,7 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
       <PreviewFrame
         url={previewUrl}
         hasSizeSwitch
-        files={[
-          { path: `${patternPath}/${lang}.astro`, title: `${lang}.astro` },
-          { path: `${patternPath}/_style.css`, title: 'style.css' },
-        ]}
+        files={[{ path: `${patternPath}/${lang}.astro`, title: `${lang}.astro` }, ...(hasStyle ? [{ path: stylePath, title: 'style.css' }] : [])]}
       />
     </Group>
   </Flow>
