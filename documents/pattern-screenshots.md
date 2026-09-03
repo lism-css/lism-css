@@ -6,7 +6,7 @@
 ## コマンド一覧
 
 | コマンド | 説明 |
-|---------|------|
+| --- | --- |
 | `pnpm screenshot:patterns:new` | 新規パターンのスクリーンショットを撮影（既存はスキップ） |
 | `pnpm screenshot:patterns:force` | 全パターンのスクリーンショットを再撮影 |
 | `pnpm screenshot:patterns:compare` | ベースラインと比較（初回はベースライン生成） |
@@ -41,7 +41,7 @@ npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=en    # パターン指
 保存先は`ja`がプレフィックスなし、`en`は`en/`サブディレクトリに分かれる。公開用サムネ（`public/screenshots/patterns/`）・比較用ベースライン（`_screenshots/baseline/`）のどちらも同じ規則。
 
 | 言語 | 公開用サムネの例 | ベースラインの例 | 撮影URL |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `ja`（デフォルト） | `public/screenshots/patterns/cta/cta001.png` | `_screenshots/baseline/cta/cta001.png` | `/preview/patterns/cta/cta001/` |
 | `en` | `public/screenshots/patterns/en/cta/cta001.png` | `_screenshots/baseline/en/cta/cta001.png` | `/preview/patterns/cta/cta001/en/` |
 

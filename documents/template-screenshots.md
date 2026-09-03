@@ -4,13 +4,13 @@
 
 撮影対象URLは各テンプレ配下の `screenshots.config.json` に宣言する。テンプレ追加時にスクリプト本体を変更する必要はない。
 
-> パターン（`apps/docs` 内のセクション集）側は [`pattern-screenshots.md`](./pattern-screenshots.md) を参照。
+パターン（`apps/docs` 内のセクション集）側は [`pattern-screenshots.md`](./pattern-screenshots.md) を参照。
 
 
 ## コマンド一覧
 
 | コマンド | 説明 |
-|---------|------|
+| --- | --- |
 | `pnpm screenshot:templates` | 各テンプレを build → preview し、新規ぶんのみ撮影（公開用のみ） |
 | `pnpm screenshot:templates:force` | 全テンプレを再撮影。公開用＋ baseline の両方を上書き |
 | `pnpm screenshot:templates:compare` | ベースラインと比較（初回はベースライン生成） |
@@ -54,7 +54,7 @@ pnpm --filter lism-docs screenshot:templates -- --no-build
 ```
 
 | プロパティ | 型 | 既定値 | 説明 |
-|----------|---|------|------|
+| --- | --- | --- | --- |
 | `command` | `'preview' \| 'dev'` | `'preview'` | 起動コマンド。`preview` の場合は事前にビルドが実行される |
 | `port` | number | — | プレビューサーバーのポート（テンプレごとに重複しないよう調整） |
 | `portViaEnv` | boolean | `false` | `true` なら`port`を CLI 引数ではなく`PORT`環境変数で渡す。`next start` / `next dev` は`--`後の`--port`をディレクトリ引数と誤解してエラーになるための回避策。`false`（既定）は従来どおり`-- --port <port>`を渡す |
@@ -106,7 +106,7 @@ blog の en は overlay 方式（`.lang/en` を src へマージ）のため、*
 
 `langShots.en` がある場合、スクリプトは通常撮影に続けて **`build:template:en <pkg>`（`.lang/en` を一時的に src へマージして再ビルド → src 復元）** を行い、同じ path を撮影して `screenshots/en/{name}.png` に保存する。`name` は en サブディレクトリからの相対なので `/` 接頭辞は不要。
 
-> overlay 再ビルドは `--no-build` でもスキップされない（dist を en で上書きする必要があるため）。`new` モードでは `screenshots/en/` が既に揃っていれば再ビルドごとスキップする。
+**注意:** overlay 再ビルドは `--no-build` でもスキップされない（dist を en で上書きする必要があるため）。`new` モードでは `screenshots/en/` が既に揃っていれば再ビルドごとスキップする。
 
 ### docs / 一覧側の参照
 

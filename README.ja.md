@@ -156,7 +156,7 @@ npx lism-cli skill add
 
 同梱スキル（`lism-css-guide`・`lism-css-refactor`・`lism-mockup-guide`）を、使用しているAIツールのスキルディレクトリ（例: Claude Codeなら `.claude/skills/`）へ配置します。`npx lism-cli skill add lism-css-guide` のようにスキル名を指定すると個別に配置できます。ツールフラグなしで実行すると対話モードになり、`--claude`、`--cursor` などのフラグでツールを個別指定することもできます。
 
-[skills.sh](https://skills.sh) 経由で `lism-css-guide` スキルを取得することもできます。
+[skills.sh](https://skills.sh) 経由でも、同じ3つのスキルから必要なものを選んで導入できます。
 
 ```bash
 npx skills add lism-css/lism-css

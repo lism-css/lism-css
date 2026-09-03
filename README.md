@@ -156,7 +156,7 @@ npx lism-cli skill add
 
 This installs the bundled skills (`lism-css-guide`, `lism-css-refactor` and `lism-mockup-guide`) into your AI tool's skill directory (e.g. `.claude/skills/` for Claude Code). Pass a skill name like `npx lism-cli skill add lism-css-guide` to install a single skill. Run without tool flags for an interactive prompt, or pass `--claude`, `--cursor`, etc. to target specific tools.
 
-You can also fetch the `lism-css-guide` skill via [skills.sh](https://skills.sh):
+You can also install the same three skills via [skills.sh](https://skills.sh), picking the ones you need:
 
 ```bash
 npx skills add lism-css/lism-css

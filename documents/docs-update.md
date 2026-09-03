@@ -1,4 +1,3 @@
-
 # package更新を反映
 
 `packages/lism-css`や`packages/lism-ui`側の実装（Props・CSS・コンポーネント）が変わった際、`apps/docs`のMDXドキュメントが古い記述のままになっていないか照合・修正するには`/docs-update`コマンドを使う。
@@ -7,7 +6,7 @@
 
 ## cdn読み込みの紹介部分のバージョン番号を更新する処理
 
-`packages/lism-css`のバージョンを上げても、`installation.mdx`等に書かれたCDN URL（`cdn.jsdelivr.net/npm/lism-css@x.y.z/...`）のバージョン番号は自動では更新されない。`nr sync:cdn-versions`を実行すると、`packages/lism-css/package.json`の`version`を読み取り、対象ファイル（`apps/docs`のinstallation.mdx/base-styles.mdx/overview.mdx、ルートとlism-cssパッケージのREADME.md/README.ja.md）内のCDN URLを一括で書き換える。
+`packages/lism-css`のバージョンを上げても、`installation.mdx`等に書かれたCDN URL（`cdn.jsdelivr.net/npm/lism-css@x.y.z/...`）のバージョン番号は自動では更新されない。`nr sync:cdn-versions`を実行すると、`packages/lism-css/package.json`の`version`（バージョンの正本）を読み取り、対象ファイル（`apps/docs`の`content/ja`と`content/en`それぞれのinstallation.mdx/base-styles.mdx/overview.mdx、ルートと`packages/lism-css`のREADME.md/README.ja.md）内のCDN URLを一括で書き換える。対象一覧は`scripts/sync-cdn-versions.mjs`の`targets`。
 
 # 翻訳
 
@@ -47,3 +46,8 @@
 # llms.txtの更新
 
 `llms.txt`を個別に更新するコマンドは無い。`nr build:docs`（Astroビルド）実行時に、ビルド後のHTMLを処理する`docs-md` integration（`apps/docs/src/integrations/docs-md/`）が`content/en/`配下のMDXフロントマターを集計して`dist/llms.txt`を自動生成する。処理の詳細は`documents/docs-md.md`を参照。
+
+
+# sitemapのlastmod
+
+sitemapの`lastmod`は`apps/docs/lastmod-map.json`（コミット対象）から読む（`src/lib/sitemap-lastmod.ts`）。Vercel等のCI環境はgit履歴が浅く正確な日時を取れないため、全履歴があるローカルで`pnpm --filter lism-docs generate:lastmod`を実行して生成し、コミットしておく。ルートの`nr deploy`はmainへマージする前にこの再生成とコミットを行うので、通常はそれに任せる。手でmainへマージする場合は再生成を忘れないこと。

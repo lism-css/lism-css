@@ -2,6 +2,7 @@
 
 `lism.config.js`は、Lism CSSのユーザー設定をまとめるプロジェクトルートの設定ファイル。
 CSS出力、React/Astroコンポーネントの実行時設定、`lism-cli ui`系CLI設定を同じファイルに同居できる。
+この文書で言う`full.css`は、既定では一部のpropにしか無いブレークポイント対応をほぼ全propへ広げた全部入りビルド（`config/presets/props-full.ts`のfull preset）。`main.css`は既定のprops設定で出力したもの。
 
 
 ## できること
@@ -9,7 +10,7 @@ CSS出力、React/Astroコンポーネントの実行時設定、`lism-cli ui`�
 主なトップレベルキー:
 
 | キー | 役割 |
-|------|------|
+| --- | --- |
 | `props` | `p`/`ta`/`filter`など、Lism propsが出力するクラス・CSSプロパティ・utility値を追加/上書きする |
 | `tokens` | `space`/`lts`/`color`など、トークンを`{ key: value }`の値マップで定義/上書きする。CSS変数の値出力・ユーティリティ生成・props受理を1か所でまかなう |
 | `traits` | `isHoge`→`is--hoge`のような真偽値class propを追加する |
@@ -128,6 +129,8 @@ lismCss(); // config反映、型生成、動的CSSビルド
 lismCss({ purge: true }); // 上記 + purge
 ```
 
+`purge`にはオブジェクトも渡せる（`purge: { safelist, known, report }`。`packages/plugin/src/purge/options.ts`の`LismPurgeOptions`）。purgeが使用中と判定できないクラス（実行時に組み立てる動的クラス等）は削除されるので、`safelist`（文字列・正規表現・判定関数の配列）に載せて残す。`known`は「削除してよいLismセレクタのカタログ」で、未指定ならconfig反映済みの`full.css`から生成したものを使う。purgeだけを単体で使う入口として`@lism-css/plugin/purge/vite`の`lismPurge()`と`@lism-css/plugin/purge/astro`の`lismPurgeAstro()`もある。
+
 
 ## `lism-css build`
 
@@ -142,6 +145,12 @@ pnpm exec lism-css build
 このコマンドはプロジェクトルートの設定ファイルを探索順（`.ts`→`.mjs`→`.js`）で直接読み、config反映済みCSSを生成する。
 そのため、CSSを事前生成するだけならVite/Astroプラグインは不要。
 `--full`を付けると`full.css`/`full_no_layer.css`も生成対象になる。
+
+出力先はインストール済み`lism-css`パッケージの`dist/css`（`node_modules/lism-css/dist/css`。`builder/paths.ts`の`cssDistDir`）で、同梱のCSSを直接上書きする。出力先を変えるオプションは無い。
+
+- 上書きするので、プラグイン無しの`import 'lism-css/main.css'`でも生成後のCSSが読まれる。これが狙い。
+- `node_modules`を入れ直すと生成物は消える。インストール後に毎回`lism-css build`を実行する運用にする。
+- 処理フロー5の「`node_modules`内は書き換えない」はSCSSソースの話で、CSSの出力先には当てはまらない。
 
 
 ## 他バンドラ / SCSS-source 構成
@@ -164,8 +173,8 @@ Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供�
 4. `isFullMode:true`の場合、`main.css`系で使う設定もfull preset適用済みに寄せる。
 5. `import 'lism-css/main.css'`などのCSS importをViteプラグインが捕捉し、設定反映済みCSSをその場でコンパイルして返す。
    `node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して生成SCSS（`_prop-config.gen.scss`/`_tokens.gen.scss`）だけ差し替える。
-6. `breakpoints`の追加BP、`props`/`traits`の追加キー、`isFullMode`のいずれかがあれば、`lism-env.d.ts`を自動生成して型側にも反映する（`generateLismEnvDts`）。
-   反映対象はbreakpoints・追加props・追加traits・isFullModeの4種類で、`tokens`は型拡張の対象外（値マップの実行時登録のみ）。
+6. `breakpoints`の追加BP、`props`/`traits`の追加キー、`isFullMode`、既定propが参照するtokensへの追加キーのいずれかがあれば、`lism-env.d.ts`を自動生成して型側にも反映する（`generateLismEnvDts`）。
+   反映対象はbreakpoints・追加props・追加traits・isFullMode・既定propの値リテラルの5種類。最後の1つは、`tokens.space`にキーを足すと`p`など`space`を参照するpropの値の型にそのキーが加わる、という形で効く。`tokens`だけ変えても`.d.ts`が生成・更新されるのはこのため。
 7. `purge:true`時は、設定反映済みの`full.css`からknown selectorを作る。
    configで追加したクラスもpurge対象として扱える。
 
@@ -176,7 +185,9 @@ Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供�
   既定キーを丸ごと別オブジェクトへ差し替えたい場合のみ`lism-css/default-config`をimportしてspreadする（例: `tokens: { lts: { ...tokens.lts, '2xl': '.5em' } }`）。
 - `tokens`は単一の情報源。`tokens: { lts: { '2xl': '.5em' } }`と書くだけで、
   `:root { --lts--2xl: .5em }`の出力・ユーティリティ生成（`-lts:2xl`）・ランタイムTOKENS登録（props受理）がまとめて反映される（既定値の上書きも可能）。
-  変数名はトークン形式に従う（既定→`--{token}--{key}` / `space`→`--s{key}` / `color`・`palette`→`--{key}`）。
+  変数名はトークン形式に従う（既定→`--{token}--{key}` / `space`→`--s{key}` / `color`・`palette`→`--{key}` / `vars`→キーそのまま）。
+- `tokens.vars`は`--L`/`--C`/`--fz-mol`/`--hl-unit`/`--s-unit`の構造変数。他トークンの計算式から参照される出力専用グループで、propsからは参照されない（ユーティリティ生成・prop受理・型導出の対象外）。既存キーの値を上書きする用途に限り、新規キーの追加は想定していない（`:root`には出るが、どこからも参照されない）。
+- `space`と`bxsh`の変数は`:root`単独ではなく`:root, .set--s`／`:root, .set--bxsh`のセレクタで宣言される（`config/defaults/token-scope.ts`の`TOKEN_SCOPE`）。`.set--s`で余白単位をem化する、`.set--bxsh`で影色を差し替える等、クラスで構造変数を上書きしたときに派生値を再計算させるため。出力CSSに`:root`以外のセレクタが並ぶのは正常。
 - 値に`'-'`を指定したキーはカタログ登録のみで`:root`宣言を出力しない（`palette.keycolor`のようにCSS変数を持たないもの、`bdrs.inner`や`flow.s`のように実値を手書きSCSS側へ置くもの）。`'-'`以外の値を与えれば、その値が`:root`へ出力される。
 - `traits`はclass出力の追加であり、対応するスタイルは別途必要。
 - `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。

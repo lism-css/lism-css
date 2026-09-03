@@ -1,9 +1,7 @@
-# docs-md integration（PR #331）処理フロー
+# docs-md integration 処理フロー
 
 `apps/docs/src/integrations/docs-md/`に置かれているAstro integration。
 ビルド時にMDXレンダリング後のHTMLからAI向けの`.md`ファイルと`llms.txt`を生成する。
-
-Refs: #283 / PR #331
 
 
 ## 全体像
@@ -14,11 +12,13 @@ Astroのビルドフックを利用して、以下3系統のジョブを実行�
 2. **UI一覧`.md`生成**: `data-pagefind-body`を持たない`/ui/` `/en/ui/`の一覧ページの代替として、content collectionから`dist/ui.md` `dist/en/ui.md`を生成
 3. **`llms.txt`生成**: `src/content/en/**/*.mdx`のfrontmatterを集計して`dist/llms.txt`を出力
 
+`data-pagefind-body`はPagefind検索の索引対象を示す属性で、レイアウトの`excludeFromSearch`で外れる。この integration はこれを「本文のある記事ページ」の目印として使い、持たないページ（一覧・リダイレクト先等）は変換対象から外す。
+
 
 ## 1. integration本体（`index.ts`）
 
 | フック | 処理 |
-|--------|------|
+| --- | --- |
 | `astro:config:done` | `config.site` を `siteUrl` として保持（絶対 URL 化用）。`content/en` の絶対パスも保持 |
 | `astro:build:done` | `pages` を走査し、対象パスのページについて HTML → MD 変換を実行。続けて UI 一覧 `.md`、最後に `llms.txt` を生成 |
 
@@ -43,14 +43,14 @@ Astroのビルドフックを利用して、以下3系統のジョブを実行�
 unifiedパイプラインを以下の順で適用する。
 
 | # | プラグイン | 役割 |
-|---|----------|------|
+| --- | --- | --- |
 | 1 | `rehype-parse` | HTML をパースして hast に変換 |
 | 2 | `rehype-extract-meta` | `<head>` から `<title>` / `<meta name="description">` / `<link rel="canonical">` を抽出し `file.data` に保管 |
 | 3 | `rehypeKeepArticle`（ローカル） | `article[data-pagefind-body]` だけを残す。無ければ throw |
 | 4 | `rehype-strip-noise` | `nav.c--postNav` / `<script>` / `<style>` / `data-astro-cid-*` / `c--copyBtn` / `c--urlCopyBtn` 等のノイズを除去 |
 | 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `b--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
-| 6 | `rehype-code-language` | `<pre data-language="X">` の言語名を `<code class="language-X">` に転記 |
-| 7 | `rehype-docs-link` | `<a class="c--docsLink">` の中身をタイトル文字列のみに畳み込む（タイトル + 説明文の二重出力を抑止） |
+| 6 | `rehype-docs-link` | `<a class="c--docsLink">` の中身をタイトル文字列のみに畳み込む（タイトル + 説明文の二重出力を抑止） |
+| 7 | `rehype-code-language` | `<pre data-language="X">` の言語名を `<code class="language-X">` に転記 |
 | 8 | `rehype-callouts` | `c--docsNote` を GFM Alert（`> [!NOTE]` 等）に変換 |
 | 9 | `rehype-absolute-urls` | `/foo` 形式のルート相対 URL を `{siteUrl}/foo` に展開 |
 | 10 | `rehype-remark` | hast → mdast に変換 |
@@ -62,7 +62,7 @@ unifiedパイプラインを以下の順で適用する。
 `c--callout`の`keycolor`からGFM Alert種別への変換：
 
 | keycolor | GFM Alert |
-|----------|-----------|
+| --- | --- |
 | blue / gray / purple | `[!NOTE]` |
 | green | `[!TIP]` |
 | orange | `[!IMPORTANT]` |
@@ -93,12 +93,14 @@ unifiedパイプラインを以下の順で適用する。
 
 ### セクション分類（`classify()`）
 
-| セクション | 対象 |
-|----------|------|
-| **Getting Started** | トップレベルの `overview` / `installation` / `changelog` / `features` / `mcp` / `skills`（順固定） |
-| **Documentation** | `docs/` 配下の他すべて（上記以外） |
-| **UI Components** | `ui/`直下（`ui/block-examples/`・`ui/components/`を除く。`ui/DummyText` も含む） |
-| **Optional** | `ui/block-examples/*` / `ui/components/*` / `property-class/*` |
+判定は消去法で、次の表の順に評価する。`content/en/`に`docs/`ディレクトリは無く、URLの`/docs/`はルーティング側が付ける。
+
+| 順 | セクション | 対象 |
+| --- | --- | --- |
+| 1 | **Optional** | `ui/block-examples/*` / `ui/components/*` / `property-class/*` |
+| 2 | **UI Components** | 上記以外の`ui/`配下（`ui/DummyText` も含む） |
+| 3 | **Getting Started** | トップレベルの `overview` / `installation` / `changelog` / `features` / `mcp` / `skills`（順固定） |
+| 4 | **Documentation** | 上記のいずれにも該当しない残り全部 |
 
 ### ソート順
 
@@ -143,12 +145,15 @@ llms.txtの慣習に従い、HTMLページではなく`.md`バージョンを指
 - **見出し分け**: `ui/`直下は`## Blocks`、`block-examples/`配下は`## Block Examples`、`components/`配下は`## Components`の見出しにまとめ、それぞれタイトルの昇順でソートする
 - **リンク先**: 各エントリは個別ページの`.md`（`convert-html-to-md.ts`が生成済みのもの）を指す
 
-呼び出し元は`index.ts`の`astro:build:done`フック内（`index.ts:81-94`）で、ja版・en版それぞれに対して1回ずつ実行される。
+呼び出し元は`index.ts`の`astro:build:done`フック内で、ja版・en版それぞれに対して1回ずつ実行される。
 
 
-## 5. `vercel.json`
+## 5. `vercel.ts`
 
-`*.md`パスに`X-Robots-Tag: noindex`ヘッダーを付与し、検索エンジンへのインデックスを抑止する（AI向けクロールは許容、検索結果には載せない方針）。
+`apps/docs/vercel.ts`で`*.md`パスに次の2つのヘッダーを付与する。
+
+- `X-Robots-Tag: noindex`: 検索エンジンへのインデックスを抑止する（AI向けクロールは許容、検索結果には載せない方針）
+- `Content-Type: text/markdown; charset=utf-8`: `.md`をMarkdownとして配信する
 
 
 ## 出力の確認方法

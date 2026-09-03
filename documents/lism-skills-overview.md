@@ -2,7 +2,7 @@
 
 Lism CSSが配布するAIエージェント向けskillについて、何ができるのか、どう導入するのか、内部でどういう処理の流れになっているのかを整理する運営者向けメモ。
 
-PR459で、それまで「読むだけの資料」だった`lism-css-guide`を「AIに手順を踏ませる実行ガイド」へ作り変え、リファクタ専用の`lism-css-refactor`を新設し、CLIを複数skill配布へ一般化した。その後、#514で`@lism-css/mockup`（画面モックアップ用プレビューCLI）向けの`lism-mockup-guide`を追加した。以下は現行仕様に基づく整理。
+以下は現行仕様に基づく整理。
 
 
 ## 配布しているskill
@@ -71,7 +71,7 @@ pnpm dlx lism-cli skill update --claude
 
 ### 開発版・PR版を試す
 
-`--ref <ref>`で、skillファイルの取得元ブランチ・タグ・コミットを変えられる。未指定時の既定値は`constants.ts`の`DEFAULT_SKILL_REF`（`DEFAULT_UI_REF`/`DEFAULT_TEMPLATES_REF`と同様、dev/mainマージ運用で手動切替される値。詳細は[cli-guide.md](./cli-guide.md)を参照）。
+`--ref <ref>`で、skillファイルの取得元ブランチ・タグ・コミットを変えられる。未指定時の既定値は`constants.ts`の`DEFAULT_SKILL_REF`（`DEFAULT_UI_REF`/`DEFAULT_TEMPLATES_REF`と同様、ブランチに関係なく常に`'main'`固定。詳細は[cli-guide.md](./cli-guide.md)を参照）。
 
 ```bash
 lism-cli skill add --ref dev
@@ -112,7 +112,7 @@ npx skills add lism-css/lism-css
 
 ### 判定記号
 
-`lism-css-guide`の実装プランで使う記号は次の3つのみ（`⬜`や`🆕`は使わない）。
+`lism-css-guide`の実装プランで使う記号は次の3つと、✅への注記（`✅新規`・`✅例外`・`✅前提`）だけ。注記の組み合わせや新しい記号・注記は作らない（`lism-css-refactor`は同じ記号を別の意味で使う）。
 
 | 記号 | 意味 |
 |---|---|
@@ -254,12 +254,3 @@ SKILL_NAMES × ALL_SKILL_TOOLS の全組から、配置先に SKILL.md がある
 ### `lism-cli skill update`
 
 `packages/lism-cli/src/commands/skill/update.ts`は、内部的に`skillAddCommand(undefined, { ...options, overwrite: true })`を呼ぶだけの薄いラッパー。つまり「skill引数なし・`--overwrite`強制」の`add`と同義で、登録済みの全skillを対象ツールへ強制上書きする。
-
----
-
-## まとめ
-
-- 配布skillは`lism-css-guide`（新規実装）・`lism-css-refactor`（既存コード整理）・`lism-mockup-guide`（`@lism-css/mockup`での画面モックアップ作成）の3つ。知識の正典はguideに集約し、refactorはPass手順での棚卸しに、mockup-guideはデータ契約とinit→check→devのワークフローに専念する。
-- 導入経路は`lism-cli skill add/check/update`（bin: `lism-cli`）と、skills.sh経由の`npx skills add lism-css/lism-css`の2系統。どちらも実体は`skills/{name}`が配信元。
-- `lism-css-guide`と`lism-css-refactor`は、実装/リファクタの各ステップに`✅`/`🔁`/`⏸`/`🔧`/`⬜`のいずれかの判定記号を付けて進行を管理し、ユーザー確認が必要な項目（⏸）を明示する。値照合や洗い出し表など重い成果物は`.lism/plan.md`・`.lism/review.md`として保存し、サブエージェントへの検証委任も定義されている。
-- CLI側は`--ref`で取得元ブランチを切り替えられるが、CLIが認識するskill一覧自体は実行しているCLI本体のバージョンに依存する点に注意する。
