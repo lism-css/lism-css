@@ -273,14 +273,14 @@ const footerSnsLinks = [
             {
               aboutPhotos.map((photo, i) => (
                 <Box class="c--about_visual u--pullBack" pos="absolute" w={i === 0 ? '20rem' : '16rem'}>
-                  <Frame class="u--bgParallax" pos="relative" ar="4/3" bdrs="20">
+                  <Frame class="u--bgParallax" pos="relative" ar="4/3" bdrs="30">
                     <Media src={photo} alt="" width="800" height="600" loading="lazy" o="ppp" />
                   </Frame>
                 </Box>
               ))
             }
           </Box>
-          <Flow class="c--about_body u--fadeIn" flow="s" pos="relative" z="1">
+          <Flow class="u--fadeIn" pos="relative" z="1">
             <Text>
               Lism CSS is a lightweight CSS design framework for building beautiful, well-structured websites with rhythm and precision. A single
               stylesheet grounded in design theory is at its core — no special build process is required to get started.
@@ -311,15 +311,15 @@ const footerSnsLinks = [
               {
                 featureCards.map((card) => {
                   return (
-                    <WithSide sideW="40%" mainW="24rem" class="c--feature_item u--fadeInL" g={['30', null, '40']} ai="center">
-                      <Frame isSide ar="16/9" pos="relative" bdrs="20" class="u--bgParallax">
+                    <WithSide sideW="40%" mainW="28rem" class="c--feature_item u--fadeInL" g={['30', null, null, '40']} ai="center">
+                      <Frame isSide ar="16/9" pos="relative" bdrs="30" class="u--bgParallax">
                         <Media src={card.src} alt="" width="960" height="540" loading="lazy" />
                       </Frame>
-                      <Stack g="30">
+                      <Stack g={['30', null, null, '35']}>
                         <Heading level="3" fz="l" util="trim">
                           {card.title}
                         </Heading>
-                        <Text util="trim" c="text-2">
+                        <Text util="trim" c="text-2" fz={['s']}>
                           {card.body}
                         </Text>
                       </Stack>
@@ -342,8 +342,8 @@ const footerSnsLinks = [
           <AutoColumns cols="20rem" g="40">
             {
               worksItems.map((item) => (
-                <BoxLink class="c--works_item u--fadeIn" href="#" layout="stack" set="hov" g="20">
-                  <Frame class="c--works_frame" ar="16/9" pos="relative" bdrs="20">
+                <BoxLink class="u--fadeIn" href="#" layout="stack" set="hov" g="20">
+                  <Frame ar="16/9" pos="relative" bdrs="30">
                     <Media class="u--pullBack" src={item.src} alt="" width="960" height="540" loading="lazy" hasTransition hov="in:zoom" />
                     <Layer layout="center" hasTransition hov="in:show" h="100%" c="white" bgc="black:30%" style={{ backdropFilter: 'blur(4px)' }}>
                       <Inline fz="xl" fs="italic" fw="light" lts="l">
@@ -351,7 +351,7 @@ const footerSnsLinks = [
                       </Inline>
                     </Layer>
                   </Frame>
-                  <Stack g="20" py="5">
+                  <Stack g="25" py="5">
                     <Heading level="3" fz="m" util="trim">
                       {item.title}
                     </Heading>
@@ -376,7 +376,7 @@ const footerSnsLinks = [
           <Stack g="30">
             {
               newsItems.map((row) => (
-                <BoxLink class="c--news_item u--fadeInL" href="#" layout="grid" gtc={['auto', 'auto 1fr']} g={['10', '30', '40']} py="10" set="hov">
+                <BoxLink class="u--fadeInL" href="#" layout="grid" gtc={['auto', 'auto 1fr']} g={['10', '30', '40']} py="10" set="hov">
                   <Inline>{row.date}</Inline>
                   <Stack g="10">
                     <Text hov="in:underline" td="none">
@@ -419,7 +419,7 @@ const footerSnsLinks = [
         <AutoColumns cols="20rem" g="40">
           {
             testimonials.map((item) => (
-              <Grid class="c--testimonials_item u--fadeIn" gtr="subgrid" gr="span 3" g="30">
+              <Grid class="u--fadeIn" gtr="subgrid" gr="span 3" g="30" p="10">
                 <Flex ai="center" g="20">
                   <Frame as="figure" ar="1/1" w="3.5rem" fxsh="0" bdrs="99">
                     <Media src={item.src} alt="" width="256" height="256" loading="lazy" />
@@ -481,9 +481,7 @@ const footerSnsLinks = [
           <Cluster class="u--fadeIn" jc="center">
             <Link
               href="###"
-              layout="grid"
-              gtc="1em 1fr 1em"
-              ji="center"
+              layout="flex"
               ai="center"
               px="20"
               py="15"
@@ -495,7 +493,7 @@ const footerSnsLinks = [
               bdrs="99"
               hov={{ bgc: 'rgb(25 25 25)' }}
             >
-              <Inline gc="2"> Try Lism CSS </Inline>
+              <Inline gc="2" ps="10" tt="upper" lts="l">Contact us</Inline>
               <Icon icon="arrow-right" />
             </Link>
           </Cluster>
@@ -503,7 +501,7 @@ const footerSnsLinks = [
       </Box>
     </Container>
     <!-- Footer -->
-    <Container as="footer" isWrapper py="40" hasGutter>
+    <Container as="footer" class="c--footer" isWrapper py="40" hasGutter>
       <Center g="30">
         <Text fz="xl" fw="400" lts="l">
           <Inline fw="200">Lism</Inline>Corp
