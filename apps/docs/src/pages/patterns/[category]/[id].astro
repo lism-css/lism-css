@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
+import { Stack, Flow, Text, Group } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import SrcCode from '@/components/mdx/SrcCode.astro';
 import PageHeader from '@parts/PageHeader.astro';
@@ -40,19 +40,6 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
         {categoryData.label}
       </Text>
     </PageHeader>
-
-    <Stack g="10" bgc="base-2" bdrs="10" p="20" fz="s">
-      <Text c="text-2">{categoryData.description.ja}</Text>
-      {
-        categoryData.related && (
-          <Cluster g="15" fz="xs">
-            {categoryData.related.map((related) => (
-              <Link href={related.path}>{related.label}</Link>
-            ))}
-          </Cluster>
-        )
-      }
-    </Stack>
 
     <Group layout="flow" mbs="50">
       <!-- <PreviewTitle>プレビュー</PreviewTitle> -->
