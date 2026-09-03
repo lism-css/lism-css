@@ -87,14 +87,16 @@
   /* -------------------------- */
   /* 見出しデザイン */
   /* -------------------------- */
-  :is(.h2, .c--content > h2) {
+  /* 記事本文・ページヘッダー・一覧セクションの見出し色を揃える。プレビュー内は除外 */
+  .c--siteMain :is(h1, h2, h3):not(.c--preview_area *) {
     color: var(--gray-hi-c);
+  }
+  :is(.h2, .c--content > h2) {
     font-size: var(--fz--2xl);
     font-weight: 700;
     letter-spacing: 0.01em;
   }
   :is(.h3, .c--content > h3) {
-    color: var(--gray-hi-c);
     font-weight: 700;
   }
 
