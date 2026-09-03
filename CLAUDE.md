@@ -26,7 +26,8 @@ Lism CSS は軽量なCSS設計フレームワーク。レイアウトプリミ�
 
 - `skills/lism-css-guide/`: `lism-cli skill add` と skills.sh の配信元
 - `templates/`: `lism-cli create` のテンプレート
-- `documents/`: 運営者向け現行文書、実装プラン（`plan-*`）、調査記録（`test-audit-*`）。プランは実装完了時、引き継ぎ・検討メモは役目を終えた時点で削除する
+- `documents/*.md`: 運営者向け現行文書。
+- `.plan/*.md`: 実装プラン文書。
 
 各ワークスペースの詳細は、それぞれのCLAUDE.mdやREADME.mdを参照。
 
@@ -76,3 +77,4 @@ nr test
   - スキルからMCPを案内しない。
   - ファイルは役割ごとに分け、タスクに必要なファイルだけ参照できる構成にする。
 - docsの小さな文言調整やページ構成の変更で毎回ビルドしなくてよい。
+- プランは実装完了時に削除すること。
