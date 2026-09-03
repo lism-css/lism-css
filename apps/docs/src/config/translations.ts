@@ -13,7 +13,7 @@ type TranslationKeys = {
   postNav: 'prev' | 'next' | 'ariaLabel';
   translationNotice: 'title' | 'description';
   demo: 'openNewTab' | 'lismNote';
-  preview: 'resize' | 'sizeAriaLabel' | 'mobile' | 'tablet' | 'desktop';
+  preview: 'resize' | 'sizeAriaLabel' | 'mobile' | 'tablet' | 'desktop' | 'previewTab' | 'codeTab' | 'tabsAriaLabel';
   kvEditor: 'tablistAriaLabel' | 'editorAriaLabel' | 'keyboardHint';
 };
 
@@ -79,6 +79,9 @@ export const translations: Record<LangCode, UITranslations> = {
       mobile: 'モバイル',
       tablet: 'タブレット',
       desktop: 'デスクトップ',
+      previewTab: 'プレビュー',
+      codeTab: 'コード',
+      tabsAriaLabel: 'プレビューとコードの切り替え',
     },
     kvEditor: {
       tablistAriaLabel: 'コード表記の切り替え',
@@ -143,6 +146,9 @@ export const translations: Record<LangCode, UITranslations> = {
       mobile: 'Mobile',
       tablet: 'Tablet',
       desktop: 'Desktop',
+      previewTab: 'Preview',
+      codeTab: 'Code',
+      tabsAriaLabel: 'Switch between preview and code',
     },
     kvEditor: {
       tablistAriaLabel: 'Switch code format',

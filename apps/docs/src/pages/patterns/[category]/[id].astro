@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Flow, Text, Group } from 'lism-css/astro';
-import { PreviewFrame, PreviewTitle } from '@/components/Preview';
-import SrcCode from '@/components/mdx/SrcCode.astro';
+import { Flow, Text, Group } from 'lism-css/astro';
+import { PreviewFrame } from '@/components/Preview';
 import PageHeader from '@parts/PageHeader.astro';
 import { patterns, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
 import { getAllPatternPaths, getPattern } from '@/lib/patterns';
@@ -42,15 +41,15 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
     </PageHeader>
 
     <Group layout="flow" mbs="50">
-      <!-- <PreviewTitle>プレビュー</PreviewTitle> -->
-      <PreviewFrame url={previewUrl} hasSizeSwitch />
+      <PreviewFrame
+        url={previewUrl}
+        hasSizeSwitch
+        files={[
+          { path: `${patternPath}/index.astro`, title: 'index.astro' },
+          { path: `${patternPath}/_style.css`, title: 'style.css' },
+        ]}
+      />
     </Group>
-
-    <Stack g="15">
-      <PreviewTitle>コード</PreviewTitle>
-      <SrcCode dir="docs" path={patternPath + '/index.astro'} title="index.astro" />
-      <SrcCode dir="docs" path={patternPath + '/_style.css'} title="style.css" />
-    </Stack>
   </Flow>
 </BaseLayout>
 

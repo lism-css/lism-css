@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
-import { PreviewFrame, PreviewTitle } from '@/components/Preview';
-import SrcCode from '@/components/mdx/SrcCode.astro';
+import { Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
+import { PreviewFrame } from '@/components/Preview';
 import PageHeader from '@parts/PageHeader.astro';
 import { pageLayouts, type PageLayoutCategoryId } from '@/config/page-layouts';
 import { getAllPageLayoutPaths, getPageLayout } from '@/lib/page-layouts';
@@ -73,13 +72,8 @@ const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
       }
     </PageHeader>
     <Group layout="flow" mbs="50">
-      <PreviewFrame url={previewUrl} hasSizeSwitch />
+      <PreviewFrame url={previewUrl} hasSizeSwitch files={[{ path: `${layoutPath}/index.astro`, title: 'index.astro' }]} />
     </Group>
-
-    <Stack g="15">
-      <PreviewTitle>Code</PreviewTitle>
-      <SrcCode dir="docs" path={layoutPath + '/index.astro'} title="index.astro" />
-    </Stack>
   </Flow>
 </BaseLayout>
 

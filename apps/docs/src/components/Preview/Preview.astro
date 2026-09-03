@@ -23,18 +23,3 @@ const scopedCss = `.${scopeId}{ ${css} }`;
   }
 </Lism>
 {scopedCss && <style set:html={scopedCss} />}
-
-<style is:global>
-  .b--tabs--prev .b--tabs_list {
-    /* Memo: ov-x='auto' の時に margin がネガティブだと崩れるので、box-shadowで表現する。 */
-    box-shadow: inset 0 -2px 0 var(--divider);
-  }
-  .b--tabs--prev .b--tabs_tab {
-    --hl: var(--hl--s);
-    font-size: var(--fz--s);
-    padding-block: 0.5em;
-    padding-inline: 0.875em;
-    background-color: transparent;
-    box-shadow: var(--_isSelected, inset 0 -2px 0 0 currentColor);
-  }
-</style>

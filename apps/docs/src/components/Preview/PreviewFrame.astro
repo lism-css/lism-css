@@ -1,18 +1,33 @@
 ---
 import { Stack, Frame, Flex, Lism, Icon } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
-import { DesktopIcon, DeviceMobileCameraIcon, DeviceTabletCameraIcon } from '@phosphor-icons/react';
+import { Tabs } from '@lism-css/ui/astro/Tabs';
+import { ArrowSquareOutIcon, DesktopIcon, DeviceMobileCameraIcon, DeviceTabletCameraIcon } from '@phosphor-icons/react';
 import { getLangFromUrl, t } from '@/lib/i18n';
+import SrcCode from '@/components/mdx/SrcCode.astro';
 
 /**
  * iframe プレビュー。中身は等倍で埋め込む（zoom / transform で縮小しない。docs/decisions.md 参照）。
  * 高さは iframe 内の PreviewSizeReporter から通知される中身の高さにフィットさせ、
  * 上限は --ar（アスペクト比）から求めた高さ。上限を超える分は iframe 内でスクロールする。
+ *
+ * files を渡すと「プレビュー / コード」のタブ切り替え付きになり、
+ * サイズ切替と別タブリンクはツールバー右側にまとまる。コード側はファイルが複数ならさらにタブで切り替える。
  */
+interface PreviewFile {
+  path: string; // docs ルートからの相対パス
+  title: string;
+  lang?: string;
+}
 interface Props {
+  url: string;
+  files?: PreviewFile[];
+  hasSizeSwitch?: boolean;
+  hasExternalLink?: boolean;
+  externalLinkLabel?: string;
   [key: string]: any;
 }
-const { hasSizeSwitch = false, hasExternalLink = true, externalLinkLabel, url, ...props } = Astro.props;
+const { hasSizeSwitch = false, hasExternalLink = true, externalLinkLabel, url, files = [], ...props } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
@@ -24,68 +39,148 @@ const sizes = [
   { id: 'desktop', label: previewText.desktop, icon: DesktopIcon, size: '100%', ar: '3/2' },
 ];
 const defaultSize = 'desktop';
+
+const hasTabs = files.length > 0;
+// タブとパネルを結ぶ id。同じ url のプレビューを同一ページに複数置く想定はない
+const tabsId = 'previewTabs-' + url.replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '');
+const tabs = [
+  { id: 'preview', label: previewText.previewTab },
+  { id: 'code', label: previewText.codeTab },
+];
+const tabAttrs = (id: string, isActive: boolean) => ({
+  role: 'tab',
+  id: `${tabsId}-${id}-tab`,
+  'aria-controls': `${tabsId}-${id}`,
+  'aria-selected': isActive ? 'true' : 'false',
+  tabindex: isActive ? '0' : '-1',
+});
+const panelAttrs = (id: string, isActive: boolean) => ({
+  role: 'tabpanel',
+  id: `${tabsId}-${id}`,
+  'aria-labelledby': `${tabsId}-${id}-tab`,
+  tabindex: '0',
+  hidden: !isActive,
+});
 ---
 
-<Stack g="20">
+<Stack g="20" class="c--previewStage">
   {
-    hasSizeSwitch && (
-      <Flex
-        jc="center"
-        ai="center"
-        p="5"
-        g="5"
-        bgc="base-2"
-        bdrs="20"
-        set="bdrsInner"
-        w="fit-content"
-        mx="auto"
-        class="c--previewSizeSwitcher"
-        role="group"
-        aria-label={previewText.sizeAriaLabel}
-        data-preview-url={url}
-      >
-        {sizes.map((size) => (
-          <Lism
-            as="button"
-            type="button"
-            aria-pressed={size.id === defaultSize ? 'true' : 'false'}
-            aria-label={size.label}
-            title={size.label}
-            fz="l"
-            p="0.375rem"
-            bd="none"
-            bdrs="inner"
-            class="c--previewSizeSwitcher_btn"
-            data-size={size.size}
-            data-ar={size.ar}
-          >
-            <Icon as={size.icon} fz="l" d="block" />
-          </Lism>
-        ))}
+    (hasTabs || hasSizeSwitch) && (
+      <Flex jc={hasTabs ? 'between' : 'center'} ai="center" g="10 20" fxw="wrap" class="c--previewToolbar">
+        {hasTabs && (
+          <Flex role="tablist" aria-label={previewText.tabsAriaLabel} p="5" g="5" bgc="base-2" bdrs="20" set="bdrsInner" class="c--previewTabs">
+            {tabs.map((tab, i) => (
+              <Lism
+                as="button"
+                type="button"
+                fz="s"
+                px="15"
+                py="5"
+                bd="none"
+                bdrs="inner"
+                class="c--previewTabs_tab"
+                data-tab={tab.id}
+                {...tabAttrs(tab.id, i === 0)}
+              >
+                {tab.label}
+              </Lism>
+            ))}
+          </Flex>
+        )}
+        <Flex ai="center" g="10" ms="auto">
+          {hasSizeSwitch && (
+            <Flex
+              p="5"
+              g="5"
+              bgc="base-2"
+              bdrs="20"
+              set="bdrsInner"
+              class="c--previewSizeSwitcher"
+              role="group"
+              aria-label={previewText.sizeAriaLabel}
+            >
+              {sizes.map((size) => (
+                <Lism
+                  as="button"
+                  type="button"
+                  aria-pressed={size.id === defaultSize ? 'true' : 'false'}
+                  aria-label={size.label}
+                  title={size.label}
+                  fz="l"
+                  p="0.375rem"
+                  bd="none"
+                  bdrs="inner"
+                  class="c--previewSizeSwitcher_btn"
+                  data-size={size.size}
+                  data-ar={size.ar}
+                >
+                  <Icon as={size.icon} fz="l" d="block" />
+                </Lism>
+              ))}
+            </Flex>
+          )}
+          {hasTabs && hasExternalLink && (
+            <Lism
+              as="a"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={externalLabel}
+              title={externalLabel}
+              p="0.375rem"
+              bdrs="10"
+              fz="xl"
+              class="c--previewExtLink"
+            >
+              <Icon as={ArrowSquareOutIcon} d="block" />
+            </Lism>
+          )}
+        </Flex>
       </Flex>
     )
   }
 
-  {/* ar は高さ通知が届くまで（または JS 無効時）のフォールバック。通知後は iframe に height を直接指定する */}
-  <Frame
-    id="preview-iframe"
-    class="c--previewFrame"
-    data-preview-url={url}
-    bxsh="10"
-    bdrs="20"
-    bd
-    bdw="2px"
-    mx="auto"
-    w="100%"
-    max-w="100%"
-    ar
-    style={{ '--ar': '3/2' }}
-    {...props}
-  >
-    <iframe src={url} width="800" height="600" style="border:0"></iframe>
-  </Frame>
+  <div {...hasTabs ? panelAttrs('preview', true) : {}}>
+    {/* ar は高さ通知が届くまで（または JS 無効時）のフォールバック。通知後は iframe に height を直接指定する */}
+    <Frame
+      id="preview-iframe"
+      class="c--previewFrame"
+      bxsh="10"
+      bdrs="20"
+      bd
+      bdw="2px"
+      mx="auto"
+      w="100%"
+      max-w="100%"
+      ar
+      style={{ '--ar': '3/2' }}
+      {...props}
+    >
+      <iframe src={url} width="800" height="600" style="border:0"></iframe>
+    </Frame>
+  </div>
   {
-    hasExternalLink && (
+    hasTabs && (
+      <div class="c--previewCode" {...panelAttrs('code', false)}>
+        {files.length > 1 ? (
+          <Tabs.Root variant="prev" g="15">
+            {files.map((file) => (
+              <Tabs.Item>
+                <Tabs.Tab>{file.title}</Tabs.Tab>
+                <Tabs.Panel>
+                  <SrcCode dir="docs" path={file.path} lang={file.lang} />
+                </Tabs.Panel>
+              </Tabs.Item>
+            ))}
+          </Tabs.Root>
+        ) : (
+          <SrcCode dir="docs" path={files[0].path} lang={files[0].lang} title={files[0].title} />
+        )}
+      </div>
+    )
+  }
+  {
+    !hasTabs && hasExternalLink && (
       <Button href={url} variant="fill" target="_blank" rel="noopener noreferrer" bdrs="10" w="fit" mx="auto">
         {externalLabel}
       </Button>
@@ -100,15 +195,35 @@ const defaultSize = 'desktop';
       filter: opacity(1);
     }
 
+    .c--previewTabs_tab,
     .c--previewSizeSwitcher_btn {
       cursor: pointer;
       color: var(--text-2);
       background-color: transparent;
     }
+    .c--previewTabs_tab[aria-selected='true'],
     .c--previewSizeSwitcher_btn[aria-pressed='true'] {
       background-color: var(--base);
       color: var(--text);
       box-shadow: var(--bxsh--10);
+    }
+
+    .c--previewExtLink {
+      color: var(--text-2);
+    }
+    .c--previewExtLink:hover {
+      color: var(--text);
+      background-color: var(--base-2);
+    }
+
+    /* コードタブ表示中はサイズ切替を消す */
+    .c--previewStage[data-code-active] .c--previewSizeSwitcher {
+      display: none;
+    }
+
+    /* コードビューは通常のコードブロックより高くまで見せる */
+    .c--previewCode {
+      --codeBlock-maxH: 80vh;
     }
   }
 </style>
@@ -123,15 +238,20 @@ const defaultSize = 'desktop';
     return w > 0 && h > 0 ? w / h : 3 / 2;
   };
 
-  document.querySelectorAll<HTMLElement>('.c--previewFrame').forEach((frame) => {
-    const iframe = frame.querySelector('iframe');
-    if (!iframe) return;
+  document.querySelectorAll<HTMLElement>('.c--previewStage').forEach((stage) => {
+    const frame = stage.querySelector<HTMLElement>('.c--previewFrame');
+    const iframe = frame?.querySelector('iframe');
+    if (!frame || !iframe) return;
 
     // 等倍埋め込みなので、iframe 内の CSS px をそのまま height に使える
     let contentHeight: number | null = null;
 
+    // レイアウト後の値を iframe 側に問い合わせて高さを更新する
+    const requestSize = () => iframe.contentWindow?.postMessage({ type: REQUEST_TYPE }, window.location.origin);
+
     const applyHeight = () => {
-      if (contentHeight === null) return;
+      // コードタブ表示中は幅が 0 なので計算しない。プレビューへ戻った時に測り直す
+      if (contentHeight === null || iframe.offsetWidth === 0) return;
       const ratio = parseRatio(getComputedStyle(frame).getPropertyValue('--ar'));
       const maxHeight = iframe.offsetWidth / ratio;
       // 高さは iframe 自体に指定し、Frame 側は比率を解除して中身に合わせる
@@ -147,19 +267,45 @@ const defaultSize = 'desktop';
     });
 
     // サイズ切替
-    const url = frame.dataset.previewUrl ?? '';
-    const switcher = document.querySelector(`.c--previewSizeSwitcher[data-preview-url="${url}"]`);
-    if (!switcher) return;
-
-    const buttons = switcher.querySelectorAll<HTMLElement>('.c--previewSizeSwitcher_btn');
-    buttons.forEach((button) => {
+    const sizeButtons = stage.querySelectorAll<HTMLElement>('.c--previewSizeSwitcher_btn');
+    sizeButtons.forEach((button) => {
       button.addEventListener('click', () => {
         frame.style.width = button.dataset.size ?? '';
         frame.style.setProperty('--ar', button.dataset.ar ?? '');
-        buttons.forEach((b) => b.setAttribute('aria-pressed', b === button ? 'true' : 'false'));
+        sizeButtons.forEach((b) => b.setAttribute('aria-pressed', b === button ? 'true' : 'false'));
+        requestSize();
+      });
+    });
 
-        // 幅・比率が変わったので、レイアウト後の値を iframe 側に問い合わせて高さを更新する
-        iframe.contentWindow?.postMessage({ type: REQUEST_TYPE }, window.location.origin);
+    // プレビュー / コードのタブ切替
+    const tabs = Array.from(stage.querySelectorAll<HTMLElement>('.c--previewTabs_tab'));
+    if (tabs.length === 0) return;
+
+    const selectTab = (tab: HTMLElement) => {
+      tabs.forEach((t) => {
+        const selected = t === tab;
+        t.setAttribute('aria-selected', selected ? 'true' : 'false');
+        t.tabIndex = selected ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls') ?? '')?.toggleAttribute('hidden', !selected);
+      });
+      const isPreview = tab.dataset.tab === 'preview';
+      stage.toggleAttribute('data-code-active', !isPreview);
+      if (isPreview) requestSize();
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      // 矢印 / Home / End でのタブ移動（フォーカス移動と選択を連動させる）
+      tab.addEventListener('keydown', (e) => {
+        const step: Record<string, number> = { ArrowLeft: -1, ArrowRight: 1 };
+        let next: HTMLElement | undefined;
+        if (e.key === 'Home') next = tabs[0];
+        else if (e.key === 'End') next = tabs[tabs.length - 1];
+        else if (e.key in step) next = tabs[(tabs.indexOf(tab) + step[e.key] + tabs.length) % tabs.length];
+        if (!next) return;
+        e.preventDefault();
+        next.focus();
+        selectTab(next);
       });
     });
   });
