@@ -81,20 +81,21 @@ Classless `ul` / `ol` elements (lists with no `class` attribute at all) automati
 
 ## `set--bxsh`
 
-Elements with the `set--bxsh` class have the `--bxsh--` variables that compose the shadow redefined.
+Elements with the `set--bxsh` class have the `--bxsh--` variables that compose the shadow, along with the near-layer shadow color `--shc--near`, redefined.
 
 ```css
 :root,
 .set--bxsh {
-  --bxsh--10: var(--shsz--10) var(--shc);
-  --bxsh--20: var(--shsz--20) var(--shc);
-  --bxsh--30: var(--shsz--30) var(--shc);
-  --bxsh--40: var(--shsz--40) var(--shc);
-  --bxsh--50: var(--shsz--50) var(--shc);
+  --shc--near: color-mix(in srgb, var(--shc), transparent 50%);
+  --bxsh--10: var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc);
+  --bxsh--20: var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc);
+  --bxsh--30: var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc);
+  --bxsh--40: var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc);
+  --bxsh--50: var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc);
 }
 ```
 
-By overriding the `--shc` variable here, you can adjust the color tint of the shadow.
+By overriding the `--shc` variable here, you can adjust the color tint of the shadow. Since `--shc--near` is also recalculated from `--shc`, both shadow layers change color together.
 
 <Preview>
   <PreviewTitle>Example of overriding shadow color</PreviewTitle>
