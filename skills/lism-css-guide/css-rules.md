@@ -129,7 +129,7 @@ BEM 構造（本体クラス / Modifier / Element）を持つのは `b--` と `c
 | Element | `b--{name}_{element}` / `c--{name}_{element}` | `b--card_header`, `c--pricing_body` |
 
 - Modifier は本体クラスと併記して使用: `.b--btn.b--btn--outline` / `.c--pricing.c--pricing--featured`
-- Element は `_`（アンダースコア）一つ区切り
+- Element は `_`（アンダースコア）一つ区切り。CSS で参照する子要素にだけ付ける（[Custom Class（`c--`）](#custom-classc--)）
 - 同じプレフィックスの本体クラス同士の併用（`.b--xxx.b--yyy` / `.c--xxx.c--yyy`）は基本 NG。ただし次は許容される:
   - 本体クラスと自身の Modifier: `.c--xxx.c--xxx--modifier`
   - 本体クラスと他の本体クラスの Element: `.c--xxx.c--yyy_elem`
@@ -170,7 +170,7 @@ BEM 構造（本体クラス / Modifier / Element）を持つのは `b--` と `c
 
 他のLismクラス（Trait, Primitive, Property Class等）との組み合わせを前提に設計し、CSSへ残すのは、擬似要素・子孫セレクタ・状態セレクタなど、Props/Property Classで表現できないものだけです。（明確な意図があればCSSに一般的なスタイルを書くことも可）
 
-スタイルが全くなく、何のパーツかを示す名前付けのためだけに使っても構いません。
+スタイルが全くなく、何のパーツかを示す名前付けのためだけに使っても構いません。ただし名前付けだけで残すのは本体クラス（`c--{name}`）だけです。Element（`c--{name}_{element}`）は、子孫セレクタ・擬似要素・状態切替など CSS でその子要素を参照する時だけ付けます（NG→OK 例は [antipatterns-layout.md](./antipatterns-layout.md#css-の無い-element-クラスを付ける)）。
 
 ```html
 <!-- HTMLで書く場合も、何のパーツかを示す名前 + Primitive + Property Class を優先 -->

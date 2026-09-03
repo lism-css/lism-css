@@ -218,6 +218,8 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 | `<Link>` | `<a>`（固定） | — |
 | `<Media>` | `<img>` | `img`, `video`, `iframe`, `picture` |
 
+デフォルト要素と同じ`as`（`<Text as="p">`、`<Inline as="span">`など）は書かず、要素を変える時だけ`as`を付ける。
+
 ```jsx
 <Heading level="3" fz="xl">見出し</Heading>
 // → <h3 class="-fz:xl">見出し</h3>

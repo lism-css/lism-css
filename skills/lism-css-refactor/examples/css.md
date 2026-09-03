@@ -1,6 +1,6 @@
 # 例: CSS束 → Property Class化
 
-[`checklist.md`](../references/checklist.md) Pass4の実例です。`.c--*`のCSSブロックを、「Property Class/Propsへ移す宣言」と「CSSにしか書けない宣言」に分けます。**空になっても`c--*`クラス名はマークアップに残します**。
+[`checklist.md`](../references/checklist.md) Pass4の実例です。`.c--*`のCSSブロックを、「Property Class/Propsへ移す宣言」と「CSSにしか書けない宣言」に分けます。**空になっても`c--*`の本体クラス名はマークアップに残します**。Element（`c--name_elem`）はCSSで参照しなくなったら外します（[`checklist.md`](../references/checklist.md) Pass7）。
 
 ---
 

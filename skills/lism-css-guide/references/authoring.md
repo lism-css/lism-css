@@ -51,10 +51,10 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 ### C3: 命名設計
 
 - **列挙**: 新設する`b--`/`c--`のクラス名とBlock/Element/Modifier構造、独自CSSを置くLayer。
-- **照合・判定**: プレフィックス後の名前が規約に合う→✅。ハイフンや`__`がある→🔁。ベーススタイルを CSS 側で管理する共通基礎部品→`✅新規`（`b--`）。それ以外のカスタムクラス→`✅新規`（`c--`）。公開API・CMS・外部JS・E2E依存→⏸。独自CSSがLayer外になる→🔁。
+- **照合・判定**: プレフィックス後の名前が規約に合う→✅。ハイフンや`__`がある→🔁。CSSで参照しないElement（`c--name_elem`）を付けている→🔁（外す）。ベーススタイルを CSS 側で管理する共通基礎部品→`✅新規`（`b--`）。それ以外のカスタムクラス→`✅新規`（`c--`）。公開API・CMS・外部JS・E2E依存→⏸。独自CSSがLayer外になる→🔁。
 - **決め方**: 記法とBlock名の付け方は`naming.md`、`b--`/`c--`の分類（`b--`は3条件をすべて満たす時だけ）と置くLayerは`css-rules.md`に従う。
-- **参照先**: `naming.md`、`css-rules.md#block-classb--`、`css-rules.md#custom-classc--`、`css-rules.md#独自クラスの選び方2分類`、`antipatterns-layout.md#クラス名の命名ミス`。
-- **よい例・避けたい例**: OK=`c--featureCard`、`c--featureCard_body`、既存命名がアンダースコア寄せなら`c--feature_card`。罠=`c--feature-card`、`c--hero__inner`（正しくは`c--hero_inner`）、`c--feature-card__body`（正しくは`c--featureCard_body`）。
+- **参照先**: `naming.md`、`css-rules.md#block-classb--`、`css-rules.md#custom-classc--`、`css-rules.md#独自クラスの選び方2分類`、`antipatterns-layout.md#クラス名の命名ミス`、`antipatterns-layout.md#css-の無い-element-クラスを付ける`。
+- **よい例・避けたい例**: OK=`c--featureCard`、`c--featureCard_body`、既存命名がアンダースコア寄せなら`c--feature_card`。罠=`c--feature-card`、`c--hero__inner`（正しくは`c--hero_inner`）、`c--feature-card__body`（正しくは`c--featureCard_body`）、CSSで参照しない`c--featureCard_title`（外す）。
 
 ### C4: 状態・バリエーション設計
 
@@ -84,7 +84,7 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 
 - **列挙**: CSSへ書く予定の各宣言を「Property Class/Propsへ移す宣言」と「CSSにしか書けない宣言」に分ける。`c--*`のCSSに残る宣言を実装プランに明記する。
 - **照合・判定**: `c--*`のクラスで1つの要素にだけ効く見た目の指定→✅マークアップへ。擬似クラス・擬似要素・状態切替・子孫セレクタ→✅CSSへ残す。C3で`b--`と決めた部品のベーススタイル→✅`@layer lism-block`へ残す（トークン使用。BP切替・hover・例外調整はProperty Class）。下表の宣言が`.c--*` CSSに残る→🔁未通過。
-- **決め方**: `-{prop}:{value}`またはLism Propsへ移す。`.c--*`はCSSが空でも何のパーツかを示す名前として残す。
+- **決め方**: `-{prop}:{value}`またはLism Propsへ移す。本体クラス`c--name`はCSSが空でも何のパーツかを示す名前として残す。ElementはCSSで参照しなくなったら外す。
 - **参照先**: `property-class.md`、`css-rules.md#custom-classc--`、`antipatterns.md#property-class-で書けるのに-css-で書く`。
 - **移行表**:
 
@@ -105,11 +105,11 @@ Lism CSSで新規UI・セクション・コンポーネントを書く前に作�
 
 ### C8: 既定値の確認
 
-- **列挙**: 使うPrimitiveが既に持つ既定CSSを確認し、同値をProps/Property Classで重ねていないか。
+- **列挙**: 使うPrimitiveが既に持つ既定CSSを確認し、同値をProps/Property Classで重ねていないか。セマンティックコンポーネント（`Text`/`Inline`/`Group`等）にデフォルト要素と同じ`as`を付けていないか。
 - **照合・判定**: 既定と同値→足さない。既定と違う意図的上書き→✅。ガイドに未整備のPrimitive既定→今後の整備対象にする。
 - **決め方**: `primitives/l--*.md`の「既定の挙動」を見る。念のための`ai="center"`/`ov="hidden"`/直下img`w/h/object-fit`を足さない。
-- **参照先**: `primitives/l--cluster.md`、`primitives/l--frame.md`、`primitive-class.md`、`components-core.md`。
-- **よい例・避けたい例**: OK=`<Cluster g="15">`、`<Frame ar="16/9"><img /></Frame>`。罠=`<Cluster fxw="wrap" ai="center">`、Frame直下imgに`-w:100%`や`object-fit`。
+- **参照先**: `primitives/l--cluster.md`、`primitives/l--frame.md`、`primitive-class.md`、`components-core.md#セマンティックコンポーネント`。
+- **よい例・避けたい例**: OK=`<Cluster g="15">`、`<Frame ar="16/9"><img /></Frame>`。罠=`<Cluster fxw="wrap" ai="center">`、Frame直下imgに`-w:100%`や`object-fit`、`<Text as="p">`。
 
 ## 出力フォーマット
 

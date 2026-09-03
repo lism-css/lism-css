@@ -1,6 +1,6 @@
 # 例: div手組み → Primitive化
 
-[`checklist.md`](../references/checklist.md) Pass2の実例です。`<div>`＋素のCSSで組まれた構造を、同じ挙動のままLism Primitiveへ置換します。`c--*`は何のパーツかを示す名前として残します。
+[`checklist.md`](../references/checklist.md) Pass2の実例です。`<div>`＋素のCSSで組まれた構造を、同じ挙動のままLism Primitiveへ置換します。`c--*`の本体クラスは何のパーツかを示す名前として残します。CSSで参照していないElement（`c--name_elem`）は外します（外部JS・テスト等が参照していれば⏸）。
 
 import例（Reactの場合）:
 
@@ -41,12 +41,12 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 ```jsx
 <Columns className="c--features" cols={3} g="20">
   {items.map((item) => (
-    <Stack key={item.id} className="c--features_card" g="15">
-      <Frame className="c--features_media" ar="16/9">
+    <Stack key={item.id} g="15">
+      <Frame ar="16/9">
         <img src={item.img} alt="" />
       </Frame>
-      <Heading level="3" className="c--features_title">{item.title}</Heading>
-      <Text className="c--features_text">{item.text}</Text>
+      <Heading level="3">{item.title}</Heading>
+      <Text>{item.text}</Text>
     </Stack>
   ))}
 </Columns>
@@ -62,6 +62,7 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 | img の`width:100%; height:100%; object-fit:cover` | 削除（`Frame`直下メディアの既定） | Pass9 |
 | `<h3>` / `<p>` | `<Heading level="3">` / `<Text>` | Pass2 |
 | `gap:20px` | `g="20"` | Pass5 |
+| `c--features_card`等のElement（参照するCSSなし） | 削除（本体`c--features`だけ残す） | Pass7 |
 
 ### 壊さないための注意
 
@@ -97,8 +98,8 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 ```jsx
 <Frame className="c--hero" ar="16/9" pos="relative" c="#fff">
   <img src={hero} alt="" />
-  <Layer className="c--hero_overlay" bgc="rgb(0 0 0 / 40%)" />
-  <Layer className="c--hero_body">
+  <Layer bgc="rgb(0 0 0 / 40%)" />
+  <Layer>
     <Center min-h="100%" g="15">
       <Heading level="2">{title}</Heading>
       <Text>{lead}</Text>
@@ -146,8 +147,8 @@ import { Columns, Stack, Frame, Layer, Center, Heading, Text, WithSide } from 'l
 
 ```jsx
 <WithSide className="c--layout" sideW="16rem" g="40">
-  <div className="c--layout_main">{main}</div>
-  <aside className="c--layout_side is--side">{side}</aside>
+  <div>{main}</div>
+  <aside className="is--side">{side}</aside>
 </WithSide>
 ```
 

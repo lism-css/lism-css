@@ -1,6 +1,6 @@
 # 例: 重複3箇所以上 → コンポーネント抽出
 
-[`checklist.md`](../references/checklist.md) Pass3の実例です。同じProperty Class束・`c--*`構造が3箇所以上で安定して現れる時、CSSへ逃がさず**React/Astroコンポーネントとして抽出**します。`className="c--*"`は何のパーツかを示す名前として残します。
+[`checklist.md`](../references/checklist.md) Pass3の実例です。同じProperty Class束・`c--*`構造が3箇所以上で安定して現れる時、CSSへ逃がさず**React/Astroコンポーネントとして抽出**します。`className="c--*"`の本体クラスは何のパーツかを示す名前として残します。CSSで参照していないElement（`c--name_elem`）は付けません。
 
 ### 抽出するかの判断
 
@@ -69,15 +69,15 @@ export function Tag({ children, className, ...props }) {
 ### Before（同じ構造のカードが3件以上）
 
 ```jsx
-<Stack className="c--features_card" g="15">
-  <Frame className="c--features_media" ar="16/9"><img src="/a.jpg" alt="" /></Frame>
-  <Heading level="3" className="c--features_title">高速</Heading>
-  <Text className="c--features_text">軽量なCSS設計。</Text>
+<Stack g="15">
+  <Frame ar="16/9"><img src="/a.jpg" alt="" /></Frame>
+  <Heading level="3">高速</Heading>
+  <Text>軽量なCSS設計。</Text>
 </Stack>
-<Stack className="c--features_card" g="15">
-  <Frame className="c--features_media" ar="16/9"><img src="/b.jpg" alt="" /></Frame>
-  <Heading level="3" className="c--features_title">型安全</Heading>
-  <Text className="c--features_text">Props経由で型補完。</Text>
+<Stack g="15">
+  <Frame ar="16/9"><img src="/b.jpg" alt="" /></Frame>
+  <Heading level="3">型安全</Heading>
+  <Text>Props経由で型補完。</Text>
 </Stack>
 {/* …同じ構造がもう1件以上… */}
 ```
@@ -89,12 +89,12 @@ import { Columns, Stack, Frame, Heading, Text } from 'lism-css/react';
 
 function FeatureCard({ item }) {
   return (
-    <Stack className="c--features_card" g="15">
-      <Frame className="c--features_media" ar="16/9">
+    <Stack g="15">
+      <Frame ar="16/9">
         <img src={item.img} alt={item.alt ?? ''} />
       </Frame>
-      <Heading level="3" className="c--features_title">{item.title}</Heading>
-      <Text className="c--features_text">{item.text}</Text>
+      <Heading level="3">{item.title}</Heading>
+      <Text>{item.text}</Text>
     </Stack>
   );
 }
@@ -113,6 +113,6 @@ export function Features({ items }) {
 ### 壊さないための注意
 
 - **レスポンシブPropsを単一値に潰さない**。元のカードが`p={['20','30']}`のような配列Propsを持っていたら、抽出後のコンポーネントもその配列を受けて出力する（[`common-mistakes.md`](../references/common-mistakes.md)）。
-- 値差分はProps（`item`）へ。`c--features_card`等の、何のパーツかを示す名前は残す。
+- 値差分はProps（`item`）へ。本体クラス`c--features`は残し、CSSで参照しないElement（`c--features_card`等）は付けない。
 - 抽出でHTML要素が変わらないようにする（`<Stack>`=`<div>`基盤。元が`<article>`なら`as="article"`を付ける）。
 - リファクタの結果、重複が3箇所未満になり抽出が過剰になるなら、✅で据え置く判断もある（不要な差分を出さない）。

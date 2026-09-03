@@ -34,6 +34,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 - [レスポンシブ配列の冗長指定](./antipatterns-layout.md#レスポンシブ配列の冗長指定)
 - [`is--` の誤用（状態・バリエーション）](./antipatterns-layout.md#is---の誤用状態バリエーション)
 - [クラス名の命名ミス](./antipatterns-layout.md#クラス名の命名ミス)
+- [CSS の無い Element クラスを付ける](./antipatterns-layout.md#css-の無い-element-クラスを付ける)
 
 ---
 
@@ -90,7 +91,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 
 CSS に残すのは、基本的には　`::before` / `> li` などの「Primitive / Trait / Property Class で書けないセレクタ」を伴う宣言。単一要素への装飾束は呼び出し側マークアップに移す。
 
-なお、CSS が空になっても `c--*` クラス名は何のパーツかを示す名前としてマークアップに残して構わない（→ [css-rules.md の Custom Class](./css-rules.md#custom-classc--)）。
+なお、CSS が空になっても本体クラス `c--{name}` は何のパーツかを示す名前としてマークアップに残して構わない（→ [css-rules.md の Custom Class](./css-rules.md#custom-classc--)）。Element（`c--{name}_{element}`）は CSS で参照しなくなったら外す（→ [CSS の無い Element クラスを付ける](./antipatterns-layout.md#css-の無い-element-クラスを付ける)）。
 
 ベーススタイルを CSS 側で管理することを前提にする部品（サイト共通で繰り返し使うボタン・バッジ・カード級）は、`c--*` ではなく `b--*` を使い、CSS を `@layer lism-block` に書く（→ [css-rules.md の Block Class](./css-rules.md#block-classb--)）。`b--` の3条件を満たさない `c--*` でこの節の規律を外してはいけない。
 

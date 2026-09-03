@@ -19,6 +19,7 @@
 - [レスポンシブ配列の冗長指定](#レスポンシブ配列の冗長指定)
 - [`is--` の誤用（状態・バリエーション）](#is---の誤用状態バリエーション)
 - [クラス名の命名ミス](#クラス名の命名ミス)
+- [CSS の無い Element クラスを付ける](#css-の無い-element-クラスを付ける)
 
 ---
 
@@ -97,13 +98,14 @@ Astro/Reactで実装しているのに、`lism-css/astro`や`lism-css/react`のP
 
 ## primitive 既定値の重複指定
 
-Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ねない。既定の挙動は各`primitives/l--*.md`の「既定の挙動」を確認する。
+Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ねない。既定の挙動は各`primitives/l--*.md`の「既定の挙動」を確認する。セマンティックコンポーネントのデフォルト要素と同じ`as`も足さない。
 
 | NG | OK | 理由 |
 | --- | --- | --- |
 | `<Cluster fxw="wrap" ai="center" g="15">` | `<Cluster g="15">` | `Cluster`は`flex-wrap:wrap`/`align-items:center`を既定で持つ。gapは既定ではないので残す |
 | `<Frame ov="hidden" ar="16/9">` | `<Frame ar="16/9">` | `Frame`は`overflow:hidden`を既定で持つ |
 | `<Frame><img className="-w:100% -h:100%" style={{ objectFit: 'cover' }} /></Frame>` | `<Frame><img /></Frame>` | 直下メディアの`width/height/object-fit:cover`は既定 |
+| `<Text as="p">` / `<Inline as="span">` / `<Group as="div">` | `<Text>` / `<Inline>` / `<Group>` | `Text`/`Inline`/`Group`の既定要素は`p`/`span`/`div`（一覧は[components-core.md](./components-core.md#セマンティックコンポーネント)） |
 
 プロジェクトCSSでPrimitive既定を上書きしている場合や、既定と違う意図的上書きの場合は例外として残す。
 
@@ -249,4 +251,17 @@ Lism CSS では、プレフィックス（`c--` / `is--` / `has--` / `u--` / `se
 ```
 
 Modifierだけは`--`ふたつを使う: `c--featureCard--featured`。
+
+## CSS の無い Element クラスを付ける
+
+Element（`c--{name}_{element}`）を付けるのは、子孫セレクタ・擬似要素・状態切替など CSS でその子要素を参照する時だけ。何のパーツかを示す名前付けのためだけに残すのは本体クラス `c--{name}` で、子要素ごとに CSS の無い Element クラスを配らない。
+
+→ 詳細: [css-rules.md](./css-rules.md#custom-classc--)
+
+| NG | OK |
+| --- | --- |
+| `<Stack className="c--card"><Heading className="c--card_title" fz="l">…</Heading><Text className="c--card_text">…</Text></Stack>`（Element を参照する CSS なし） | `<Stack className="c--card"><Heading fz="l">…</Heading><Text>…</Text></Stack>` |
+| `.c--card_title { font-size: var(--fz--l) }` + `<Heading className="c--card_title">` | `<Heading fz="l">`（宣言を Props へ移し、空になった Element も外す） |
+
+`.c--card_text::before { … }` のように CSS で参照している Element は残す。
 

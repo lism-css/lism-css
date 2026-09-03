@@ -38,7 +38,7 @@
 
 - **見るもの**: 同じProperty Class束・Lism Props束・`c--*`構造・CSS宣言束が3箇所以上ある箇所。
 - **判定**: 同じ意味のUI部品として抽出できる→🔧。2箇所以下・一時的な局所重複→✅。値差分やslot構造をProps化する必要がある→⏸。説明用にあえて展開しているコード→⬜。
-- **直し方**: CSSへ逃がさず、React/Astroコンポーネントとして抽出する。`<Lism>`/`<Inline>`/`<Box>`/`<Stack>`等をベースにし、`className="c--*"`は何のパーツかを示す名前として残す。
+- **直し方**: CSSへ逃がさず、React/Astroコンポーネントとして抽出する。`<Lism>`/`<Inline>`/`<Box>`/`<Stack>`等をベースにし、`className="c--*"`の本体クラスは何のパーツかを示す名前として残す（参照の無いElementは付けない）。
 - **参照先**: [`components-core.md`](../../lism-css-guide/components-core.md)、[`components-ui.md`](../../lism-css-guide/components-ui.md)、[`css-rules.md#custom-classc--`](../../lism-css-guide/css-rules.md#custom-classc--)、[`property-class.md`](../../lism-css-guide/property-class.md)。実例は[`../examples/component-extraction.md`](../examples/component-extraction.md)。
 - **NG→OK**: NG=`<span className="c--tag -fz:xs -px:10 -py:5 -bgc:base-2 -bdrs:10">`が3回以上 → OK=`function Tag({ children }) { return <Inline className="c--tag" fz="xs" px="10" py="5" bgc="base-2" bdrs="10">{children}</Inline> }`。
 - **注意**: `className`/`style`/`data-*`/ARIA/event handlerを渡し忘れない。レスポンシブPropsを単一値に潰さない。抽出でHTML要素が変わる場合は確認する。
@@ -50,10 +50,10 @@
 
 - **見るもの**: `.c--*`のCSSブロックにある、単一要素向けの宣言束。例: font-size・padding・color・background・border-radiusなど。擬似クラスや子孫セレクタを伴わないものを中心に見る。
 - **判定**: Property Class/Propsで書ける→🔧。擬似クラス・擬似要素・状態切替・子孫セレクタ付き→✅（CSSに残す）。同じ束が3箇所以上→🔧（Pass3とも連携）。
-- **直し方**: `-{prop}:{value}`または`<Lism prop="value">`へ移す。`.c--*`のCSSが空になっても、**class名はマークアップに残す**。
+- **直し方**: `-{prop}:{value}`または`<Lism prop="value">`へ移す。`.c--*`のCSSが空になっても、**本体クラス名はマークアップに残す**。Element（`c--block_element`）はCSSで参照しなくなったら外す（Pass7）。
 - **参照先**: [`property-class.md`](../../lism-css-guide/property-class.md)、[`tokens.md`](../../lism-css-guide/tokens.md)、[`antipatterns.md#property-class-で書けるのに-css-で書く`](../../lism-css-guide/antipatterns.md#property-class-で書けるのに-css-で書く)。実例は[`../examples/css.md`](../examples/css.md)。
 - **NG→OK**: NG=`.c--tag{ font-size:var(--fz--xs); padding:var(--s10); background:var(--base-2); border-radius:var(--bdrs--10) }`＋`<span class="c--tag">` → OK=`.c--tag{}`（空・名前は残す）＋`<span class="c--tag -fz:xs -p:10 -bgc:base-2 -bdrs:10">`。
-- **注意**: @container/@media内の同プロパティを移し忘れない。レスポンシブ値を単一値に潰さない。CSSを空にした勢いでclass名を消さない。`!important`や詳細度依存で見た目が変わらないか見る。
+- **注意**: @container/@media内の同プロパティを移し忘れない。レスポンシブ値を単一値に潰さない。CSSを空にした勢いで本体クラス名を消さない。`!important`や詳細度依存で見た目が変わらないか見る。
 - **guideで確認すること**: `property-class.md`の省略名一覧、`tokens.md`の値リスト。
 
 ---
@@ -84,11 +84,11 @@
 
 ## Pass7: 命名の確認
 
-- **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`などの記法違反、ベーススタイルをCSSで管理しているのに`c--`のままの共通部品。
-- **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`（`b--`も同記法）に合う→✅。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
+- **見るもの**: `c--feature-card`・`c--my-card--primary`・`c--card__body`・`has--gutter-x`などの記法違反、ベーススタイルをCSSで管理しているのに`c--`のままの共通部品、CSS（子孫セレクタ・擬似要素・状態切替）で参照していないElement（`c--block_element`）。
+- **判定**: prefix後がcamelCaseで、`c--block`/`c--block--modifier`/`c--block_element`（`b--`も同記法）に合う→✅。CSSで参照していないElement→🔧（外す。本体クラスは残す）。参照先をすべて更新できる内部class→🔧。公開API・CMS・外部JS・E2Eセレクタ依存→⏸。既存運用上あえて残す非Lism命名→⬜。
 - **直し方**: class名・CSSセレクタ・JS参照・テスト参照を同時にrenameする。ベーススタイルを CSS 側で管理する共通基礎部品は`b--*`、それ以外のカスタムクラス全般は`c--*`へ寄せる。
-- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自クラスの選び方2分類`](../../lism-css-guide/css-rules.md#独自クラスの選び方2分類)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#ベーススタイルを-css-側で持つ部品を-c---のままにする`](../../lism-css-guide/antipatterns-layout.md#ベーススタイルを-css-側で持つ部品を-c---のままにする)。
-- **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.c--siteHeader{}`（kebab-caseをcamelCaseに）。
+- **参照先**: [`naming.md`](../../lism-css-guide/naming.md)、[`css-rules.md#独自クラスの選び方2分類`](../../lism-css-guide/css-rules.md#独自クラスの選び方2分類)、[`antipatterns-layout.md#クラス名の命名ミス`](../../lism-css-guide/antipatterns-layout.md#クラス名の命名ミス)、[`antipatterns-layout.md#ベーススタイルを-css-側で持つ部品を-c---のままにする`](../../lism-css-guide/antipatterns-layout.md#ベーススタイルを-css-側で持つ部品を-c---のままにする)、[`antipatterns-layout.md#css-の無い-element-クラスを付ける`](../../lism-css-guide/antipatterns-layout.md#css-の無い-element-クラスを付ける)。
+- **NG→OK**: NG=`.c--feature-card .c--feature-card__body{}` → OK=`.c--featureCard .c--featureCard_body{}`。NG=`.c--site-header{}` → OK=`.c--siteHeader{}`（kebab-caseをcamelCaseに）。NG=`<Text className="c--card_text">`（参照するCSSなし） → OK=`<Text>`（本体`c--card`だけ残す）。
 - **注意**: CSSだけrenameしてJS/テスト/HTML生成側を漏らさない。`c--block.c--otherBlock`のようなBlock併用を見逃さない。
 - **guideで確認すること**: `b--`と`c--`の使い分け例と、公開classを⏸にする判断基準。
 
