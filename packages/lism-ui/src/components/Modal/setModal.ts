@@ -124,12 +124,18 @@ export function setEvent(target: HTMLElement): void {
   });
 
   // ページ内リンクはページ遷移が起きず dialog が残るため、クリックで閉じる（遷移自体は妨げない）。
-  // 修飾キー付き・別タブ向け・他のハンドラで抑止済みのクリックは遷移しないので対象外。
+  // 修飾キー付き・別タブ向け・他のハンドラで preventDefault されたクリックは遷移しないので対象外。
+  //   Point: preventDefault の判定は伝播完了後の macrotask で行う。React の onClick は root へ委譲され
+  //          この listener より後に走るため同期では検知できず、microtask は実クリックだと listener 間で
+  //          実行されるため不十分。
   modal.addEventListener('click', (e) => {
-    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const link = (e.target as Element | null)?.closest('a[href]');
     if (!(link instanceof HTMLAnchorElement) || (link.target && link.target !== '_self')) return;
-    if (isInPageLink(link)) void closeDialog();
+    if (!isInPageLink(link)) return;
+    setTimeout(() => {
+      if (!e.defaultPrevented) void closeDialog();
+    }, 0);
   });
 
   // closeDialog()以外の経路でも後処理するため、冪等な復元をcloseイベントへ集約する。

@@ -208,6 +208,9 @@ describe('setEvent (モーダル内のリンククリック)', () => {
     return event;
   };
 
+  // 閉じる判定は click 後の macrotask で行われるため、「閉じない」ことの確認はそれが流れてから行う
+  const flushDeferredClose = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0));
+
   it.each([['#section'], [`${location.pathname}#section`], [`${location.origin}${location.pathname}#section`]])(
     'ページ内リンク（href="%s"）の click で閉じ、遷移は妨げない',
     async (href) => {
@@ -244,7 +247,7 @@ describe('setEvent (モーダル内のリンククリック)', () => {
     window.addEventListener('click', stopNavigation);
 
     clickLink(link);
-    await Promise.resolve();
+    await flushDeferredClose();
 
     window.removeEventListener('click', stopNavigation);
     expect(modal.dataset.isOpen).toBe('1');
@@ -260,7 +263,7 @@ describe('setEvent (モーダル内のリンククリック)', () => {
     Object.entries(attrs).forEach(([k, v]) => link.setAttribute(k, v));
 
     clickLink(link, init);
-    await Promise.resolve();
+    await flushDeferredClose();
 
     expect(modal.dataset.isOpen).toBe('1');
     expect(modal).toHaveAttribute('open');
@@ -272,7 +275,19 @@ describe('setEvent (モーダル内のリンククリック)', () => {
     link.addEventListener('click', (e) => e.preventDefault());
 
     clickLink(link);
-    await Promise.resolve();
+    await flushDeferredClose();
+
+    expect(modal.dataset.isOpen).toBe('1');
+    expect(modal).toHaveAttribute('open');
+  });
+
+  it('dialog より外側の bubble listener（React の root 委譲相当）で preventDefault された click では閉じない', async () => {
+    const modal = await openModal();
+    const link = document.querySelector<HTMLAnchorElement>('#link')!;
+    document.body.addEventListener('click', (e) => e.preventDefault(), { once: true });
+
+    clickLink(link);
+    await flushDeferredClose();
 
     expect(modal.dataset.isOpen).toBe('1');
     expect(modal).toHaveAttribute('open');
