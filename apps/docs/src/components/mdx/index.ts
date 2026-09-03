@@ -4,7 +4,7 @@ export { default as DocsLink } from './DocsLink.astro';
 
 export { Spacer } from 'lism-css/astro';
 
-export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '../Preview';
+export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame, InlineIframe } from '../Preview';
 
 export { default as PropBadge } from './PropBadge.astro';
 
