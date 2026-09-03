@@ -207,10 +207,10 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | 初期値 |
 | --- | --- |
-| `--shadow` | `hsl(220 4% 8% / 8%)` |
+| `--shadow` | `hsl(220 2% 4% / 8%)` |
 | `--shc` | `var(--shadow)` |
 | `--shc--near` | `color-mix(in srgb, var(--shc), transparent 50%)` |
-| `--shsz--5` | `0px 0px 1.5px` |
+| `--shsz--5` | `0px 0px 1px` |
 | `--shsz--10` | `0px 1px 3px` |
 | `--shsz--20` | `0px 2px 6px` |
 | `--shsz--30` | `0px 4px 12px` |
