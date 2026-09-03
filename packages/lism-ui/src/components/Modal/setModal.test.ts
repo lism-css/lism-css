@@ -182,6 +182,103 @@ describe('setEvent (dialog 要素)', () => {
   });
 });
 
+describe('setEvent (モーダル内のリンククリック)', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <dialog id="m1" class="b--modal">
+        <a id="link" href="#section"><span id="link-inner">link</span></a>
+      </dialog>
+      <button data-modal-open="m1"></button>
+    `;
+  });
+
+  const openModal = async (): Promise<HTMLDialogElement> => {
+    const modal = document.querySelector<HTMLDialogElement>('#m1')!;
+    setEvent(modal);
+    document.querySelector<HTMLElement>('[data-modal-open="m1"]')!.click();
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
+    return modal;
+  };
+
+  const clickLink = (target: Element, init: MouseEventInit = {}): MouseEvent => {
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true, ...init });
+    target.dispatchEvent(event);
+    return event;
+  };
+
+  it.each([['#section'], [`${location.pathname}#section`], [`${location.origin}${location.pathname}#section`]])(
+    'ページ内リンク（href="%s"）の click で閉じ、遷移は妨げない',
+    async (href) => {
+      const modal = await openModal();
+      const link = document.querySelector<HTMLAnchorElement>('#link')!;
+      link.setAttribute('href', href);
+
+      const event = clickLink(link);
+
+      expect(event.defaultPrevented).toBe(false);
+      await vi.waitFor(() => {
+        expect(modal).not.toHaveAttribute('data-is-open');
+        expect(modal).not.toHaveAttribute('open');
+      });
+    }
+  );
+
+  it('リンク内側の要素を click しても閉じる', async () => {
+    const modal = await openModal();
+
+    clickLink(document.querySelector<HTMLElement>('#link-inner')!);
+
+    await vi.waitFor(() => {
+      expect(modal).not.toHaveAttribute('open');
+    });
+  });
+
+  it('別ページへのリンクでは閉じない', async () => {
+    const modal = await openModal();
+    const link = document.querySelector<HTMLAnchorElement>('#link')!;
+    link.setAttribute('href', '/other-page');
+    // jsdom はハッシュ以外の遷移を未実装としてエラー出力するため、modal 側の判定後（window バブル）に抑止する
+    const stopNavigation = (e: Event) => e.preventDefault();
+    window.addEventListener('click', stopNavigation);
+
+    clickLink(link);
+    await Promise.resolve();
+
+    window.removeEventListener('click', stopNavigation);
+    expect(modal.dataset.isOpen).toBe('1');
+    expect(modal).toHaveAttribute('open');
+  });
+
+  it.each([
+    ['target="_blank" のリンク', { target: '_blank' }, {}],
+    ['修飾キー付き click', {}, { metaKey: true }],
+  ])('%s では閉じない', async (_label, attrs, init) => {
+    const modal = await openModal();
+    const link = document.querySelector<HTMLAnchorElement>('#link')!;
+    Object.entries(attrs).forEach(([k, v]) => link.setAttribute(k, v));
+
+    clickLink(link, init);
+    await Promise.resolve();
+
+    expect(modal.dataset.isOpen).toBe('1');
+    expect(modal).toHaveAttribute('open');
+  });
+
+  it('リンク自身のハンドラで preventDefault 済みの click では閉じない', async () => {
+    const modal = await openModal();
+    const link = document.querySelector<HTMLAnchorElement>('#link')!;
+    link.addEventListener('click', (e) => e.preventDefault());
+
+    clickLink(link);
+    await Promise.resolve();
+
+    expect(modal.dataset.isOpen).toBe('1');
+    expect(modal).toHaveAttribute('open');
+  });
+});
+
 describe('setEvent (早期 return ケース)', () => {
   it('id が無い modal は何もしない', () => {
     document.body.innerHTML = `<dialog class="b--modal"></dialog>`;
