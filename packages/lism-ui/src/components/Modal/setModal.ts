@@ -34,7 +34,14 @@ const unlockScrollbarGutter = (): void => {
   savedScrollbarGutter = null;
 };
 
-/** dialogの開閉、トリガー状態の復元、背景クリック、Esc操作を設定する。 */
+/**
+ * 同一ドキュメント内のハッシュ移動（`#id`、または現在ページのURL + `#id`）へのリンクか。
+ * 解析できない href は origin 等が空文字になるため不一致として扱われる。
+ */
+const isInPageLink = (link: HTMLAnchorElement): boolean =>
+  link.href.includes('#') && link.origin === location.origin && link.pathname === location.pathname && link.search === location.search;
+
+/** dialogの開閉、トリガー状態の復元、背景クリック、ページ内リンク、Esc操作を設定する。 */
 export function setEvent(target: HTMLElement): void {
   // 対象がない、またはidがない場合は処理を終了
   if (!target || !target.id) return;
@@ -114,6 +121,21 @@ export function setEvent(target: HTMLElement): void {
       void closeDialog();
     }
     isPointerDownOnBackdrop = false;
+  });
+
+  // ページ内リンクはページ遷移が起きず dialog が残るため、クリックで閉じる（遷移自体は妨げない）。
+  // 修飾キー付き・別タブ向け・他のハンドラで preventDefault されたクリックは遷移しないので対象外。
+  //   Point: preventDefault の判定は伝播完了後の macrotask で行う。React の onClick は root へ委譲され
+  //          この listener より後に走るため同期では検知できず、microtask は実クリックだと listener 間で
+  //          実行されるため不十分。
+  modal.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const link = (e.target as Element | null)?.closest('a[href]');
+    if (!(link instanceof HTMLAnchorElement) || (link.target && link.target !== '_self')) return;
+    if (!isInPageLink(link)) return;
+    setTimeout(() => {
+      if (!e.defaultPrevented) void closeDialog();
+    }, 0);
   });
 
   // closeDialog()以外の経路でも後処理するため、冪等な復元をcloseイベントへ集約する。
