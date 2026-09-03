@@ -49,5 +49,5 @@ import 'lism-css/full.css'; // @layer なし版は 'lism-css/full_no_layer.css'
 そのぶんCSSサイズは `main.css` より大きくなるため、**未使用のクラスをビルド時に削除する [CSS Purge](/docs/customize/purge/) との併用を前提とした配布物**です。
 
 :::info
-`full.css` を読み込むだけでは、コンポーネント側はデフォルト設定のまま動作します（例: `t="20"` はインラインスタイルとして出力されます）。コンポーネントの出力も `full.css` に合わせるには、`lism.config.js` の [`isFullMode`](/docs/customize/config/#isfullmode) を有効にしてください。
+`full.css` を読み込むだけでは、コンポーネント側の出力は変わりません（例: `t="20"` はインラインスタイルとして出力されます）。コンポーネントの出力も `full.css` に合わせるには、`lism.config.js` の [`isFullMode`](/docs/customize/config/#isfullmode) を有効にしてください。
 :::

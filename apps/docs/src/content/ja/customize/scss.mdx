@@ -3,7 +3,7 @@ title: 'SCSS でのカスタマイズ'
 description: 'lism-css の SCSS 変数（setting モジュールの $breakpoints / $props など）を上書きして、出力されるクラスやブレイクポイントを調整する方法を解説します。'
 ---
 
-SCSS の変数を上書きすることで、出力されるクラスやブレイクポイントを調整できます。`lism.config.js` と `@lism-css/plugin` を使わない構成向けの方法です。SCSS 側で追加した値はコンポーネントの設定には反映されないため、コンポーネントからは HTML に直接クラスを書くか、`:value` 記法（`p=":box"` など）で強制的にクラス化して使います（[後述](#追加した値をコンポーネントから使う)）。
+SCSS の変数を上書きすることで、出力されるクラスやブレイクポイントを調整できます。`lism.config.js` と `@lism-css/plugin` を使わない構成向けの方法です。SCSS で追加した値はコンポーネント側には届かないため、コンポーネントからは HTML に直接クラスを書くか、`:value` 記法（`p=":box"` など）で強制的にクラス化して使います（[後述](#追加した値をコンポーネントから使う)）。
 
 
 ## 上書き可能な変数
@@ -15,7 +15,7 @@ SCSS の変数を上書きすることで、出力されるクラスやブレイ
 
 | 変数 | 用途 |
 |------|------|
-| `$breakpoints` | ブレイクポイント数値の定義 |
+| `$breakpoints` | ブレイクポイントのサイズ定義 |
 | `$is_container_query` | コンテナクエリで出力するか（`1` = container query / `0` = media query） |
 | `$default_important` | Property Class にデフォルトで `!important` を付与するか（`0` / `1`）。`@layer` なし版では無視され、常に付与されます |
 | `$props` | Property Class ごとの個別出力設定 |
@@ -23,7 +23,7 @@ SCSS の変数を上書きすることで、出力されるクラスやブレイ
 
 ## 基本フォーマット
 
-上書き定義をしてから `lism-css/scss/main.scss` を読み込むことで、スタイルをカスタマイズできます。
+`setting` の変数を上書きしてから `lism-css/scss/main.scss` を読み込むと、スタイルをカスタマイズできます。
 
 <PreviewTitle>SCSS変数の上書きフォーマット</PreviewTitle>
 ```scss
@@ -46,7 +46,7 @@ SCSS の変数を上書きすることで、出力されるクラスやブレイ
 :::info
 - `@layer` を切り替える変数はありません。読み込むファイルを `main.scss` / `main_no_layer.scss` で切り替えてください（[CSSファイルの種類](/docs/css-files/#layer-をオフにする)）。
 - `main_no_layer.scss` / `full_no_layer.scss` では、`$default_important` や `$props` の個別 `important` の値にかかわらず Property Class に常に `!important` が付きます。どうしても外す場合は、`main_no_layer.scss` の内容を自分の SCSS ファイルにコピーし、先頭の `@use` を `@use '../path-to/node_modules/lism-css/scss/mixin' with ($layer_mode: 0, $default_important: 0)` に置き換えてください。
-- Astro の場合は`../path-to/node_modules/`部分は不要です。
+- Astro では、パスを付けず `@use 'lism-css/scss/setting'` のようにパッケージ名から書けます。
 :::
 
 
@@ -88,12 +88,12 @@ SCSS の変数を上書きすることで、出力されるクラスやブレイ
 | `0` | ブレイクポイント対応クラスを出力しない |
 | `('sm', 'md')` などのリスト | 列挙したブレイクポイントだけを出力する（範囲ではなく明示指定） |
 
-リスト形式は「この prop だけ特定のブレイクポイントに絞りたい」といった用途に使えます。`lism.config.js` 側で指定する場合は配列 `bp: ['sm', 'md']` で記述します。リストに無効なブレイクポイント（`$breakpoints` でサイズが未定義のもの。デフォルトの `xs` / `xl` など）を含めた場合、そのブレイクポイントは出力されず、ビルド時に警告が出ます。
+リスト形式は「この prop だけ特定のブレイクポイントに絞りたい」ときに使います。リストに無効なブレイクポイント（`$breakpoints` でサイズが未定義のもの。デフォルトの `xs` / `xl` など）を含めた場合、そのブレイクポイントは出力されず、ビルド時に警告が出ます。
 
 
 ## 追加した値をコンポーネントから使う
 
-SCSS で追加した値は、`lism.config.js` のようにコンポーネントへは伝わりません。コンポーネントからは、Lism Props の [`:value` 記法](/docs/core-components/lism-props/#output-utility)で強制的にクラス化するか、HTML に直接クラスを書いて使います。
+`lism.config.js` とは違い、SCSS で追加した値はコンポーネント側には届きません。コンポーネントからは、Lism Props の [`:value` 記法](/docs/core-components/lism-props/#output-utility)で強制的にクラス化するか、HTML に直接クラスを書いて使います。
 
 <PreviewTitle>SCSS で値を追加し、:value 記法で使う</PreviewTitle>
 ```scss
@@ -163,6 +163,6 @@ SCSS で追加した値は、`lism.config.js` のようにコンポーネント�
 ```
 
 
-## SCSSのコンパイル処理について
+## CSS の出力順について
 
 SCSS を直接コンパイルする構成では、最終的な CSS に出力される自分のスタイルと lism-css のスタイルの**順序が想定とずれる**ことがあります。順序が崩れると詳細度・カスケードの解決結果が変わり、意図しないスタイルが適用される場合があるため、`@use` の記述順（lism-css を読み込む前後どちらに自分のスタイルを置くか）に注意してください。

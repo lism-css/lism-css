@@ -521,7 +521,7 @@
       "$props の個別カスタマイズ",
       "追加した値をコンポーネントから使う",
       "ブレイクポイント（xs / xl）の有効化",
-      "SCSSのコンパイル処理について"
+      "CSS の出力順について"
     ],
     "keywords": [
       "customize",
@@ -535,7 +535,7 @@
       "ブレイクポイント",
       "CSS出力"
     ],
-    "snippet": "lism-css の setting モジュールの SCSS 変数を @use ... with (...) で上書きして、出力されるクラスやブレイクポイントを調整する方法。$breakpoints / $is_container_query / $default_important（@layer なし版では無視され常に !important 付与）/ $props の個別カスタマイズ（bp・important・utilities）、SCSS で追加した値をコンポーネントから使う方法（設定には反映されないため :value 記法で強制クラス化するか HTML に直接クラスを書く。少数なら global.css に手書きでも可）、ブレイクポイント（xs / xl）の有効化などを解説。lism.config.js と @lism-css/plugin を使わない構成向け。"
+    "snippet": "lism-css の setting モジュールの SCSS 変数を @use ... with (...) で上書きして、出力されるクラスやブレイクポイントを調整する方法。$breakpoints / $is_container_query / $default_important（@layer なし版では無視され常に !important 付与）/ $props の個別カスタマイズ（bp・important・utilities）、SCSS で追加した値をコンポーネントから使う方法（コンポーネント側には届かないため :value 記法で強制クラス化するか HTML に直接クラスを書く。少数なら global.css に手書きでも可）、ブレイクポイント（xs / xl）の有効化などを解説。lism.config.js と @lism-css/plugin を使わない構成向け。"
   },
   {
     "sourcePath": "customize/purge.mdx",
@@ -543,7 +543,7 @@
     "description": "ビルド時に未使用の Lism CSS クラスを削除し、本番 CSS を軽量化するパージプラグインのセットアップと使い方。",
     "category": "guide",
     "headings": [
-      "推奨セットアップ（統合プラグイン経由）",
+      "推奨セットアップ（統合プラグインを使う）",
       "仕組み",
       "単体プラグインを直接使う場合",
       "full.css と組み合わせる",
@@ -554,7 +554,7 @@
       "注意事項"
     ],
     "keywords": ["purge", "CSS purge", "パージ", "軽量化", "未使用", "full.css", "@lism-css/plugin", "lismPurge", "safelist", "build"],
-    "snippet": "ビルド成果物をスキャンして使用中の Lism CSS クラスだけを残すパージ機能。@lism-css/plugin の統合プラグインで purge: true を渡すだけで有効化可能。仕組み・単体プラグイン直接利用・full.css との併用・safelist / report / known オプション（known 未指定時は lism.config.js 反映済み full.css から自動構築。safelist に RegExp / 関数があると未一致の属性セレクタは全て保持）・注意事項を解説。"
+    "snippet": "ビルド出力をスキャンして使われている Lism CSS クラスだけを残すパージ機能。@lism-css/plugin の統合プラグインで purge: true を渡すだけで有効化可能。仕組み・単体プラグイン直接利用・full.css との併用・safelist / report / known オプション（known 未指定時は lism.config.js 反映済み full.css から自動構築。safelist に RegExp / 関数があると未一致の属性セレクタは全て残す）・注意事項を解説。"
   },
   {
     "sourcePath": "utility-class.mdx",

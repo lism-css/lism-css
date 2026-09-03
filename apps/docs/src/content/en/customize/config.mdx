@@ -3,17 +3,17 @@ title: 'lism.config.js'
 description: 'How to extend component props, tokens, traits, and breakpoints using lism.config.js and @lism-css/plugin.'
 ---
 
-Placing a `lism.config.js` (or `lism.config.ts` / `lism.config.mjs`) file in your project root lets you extend the props / tokens / traits and breakpoints your components accept.
+Place a `lism.config.js` (or `lism.config.ts` / `lism.config.mjs`) in your project root and complete the following setup to extend the props / tokens / traits and breakpoints your components accept.
 
-Using `lism.config.js` requires `@lism-css/plugin`. With Vite, Astro, or Next.js, the bundler integration (the integrated plugin) reflects it automatically in both the components and the CSS. For any other setup, only the CSS is built, using the bundled CLI (see [Applying config without the integrated plugin](#applying-config-without-the-integrated-plugin)).
+Using `lism.config.js` requires `@lism-css/plugin`. With Vite or Astro, the integrated plugin reflects it automatically in both the components and the CSS. For Next.js, use `withLism()` instead. For any other setup, only the CSS is built, using the bundled CLI (see [Applying config without the integrated plugin](#applying-config-without-the-integrated-plugin)).
 
 
 ## Setup
 
-Register the `lismCss()` integrated plugin from `@lism-css/plugin`. A single registration enables config loading (`lism.config.js`), automatic CSS reflection, and automatic generation of the `lism-env.d.ts` type definitions — all at once.
+Add the `lismCss()` integrated plugin from `@lism-css/plugin` to your Vite / Astro config. A single addition enables config loading (`lism.config.js`), automatic CSS reflection, and automatic generation of the `lism-env.d.ts` type definitions — all at once.
 
 :::warning
-This plugin is what loads `lism.config.js`. If it isn't registered, the file is ignored and Lism falls back to its default settings.
+This plugin is what loads `lism.config.js`. Without it added to your config, placing `lism.config.js` in your project has no effect — its contents are not used.
 :::
 
 ```bash frame="none"
@@ -183,7 +183,7 @@ For projects using SCSS directly, you can also enable `xs` / `xl` via the `$brea
 
 ## isFullMode
 
-Importing the [full build (`full.css`)](/en/docs/css-files/#using-the-full-build-fullcss) alone does not change how components behave — they still use the default configuration (for example, `t="20"` is output as an inline style). To align the component output with `full.css`, enable `isFullMode`.
+Importing the [full build (`full.css`)](/en/docs/css-files/#using-the-full-build-fullcss) alone does not change the component output (for example, `t="20"` is still output as an inline style). To align the component output with `full.css`, enable `isFullMode`.
 
 ```js
 // lism.config.js
@@ -270,7 +270,7 @@ declare module 'lism-css' {
 
 Without the integrated plugin, `lism.config.js` isn't reflected automatically. Build the CSS using the CLI bundled with `@lism-css/plugin`.
 
-Since components also don't read `lism.config.js` in this setup, additional values such as `p="box"` are still processed with the default configuration. To use them from a component, force the class output with the Lism Props [`:value` notation](/en/docs/core-components/lism-props/#output-utility) (`p=":box"`). For components rendered client-side, you can also merge the same settings at runtime by defining them in the browser via `window._LISM_CSS_CONFIG_` (except for `isFullMode`).
+Since components don't read `lism.config.js` in this setup, additional values such as `p="box"` are not recognized as classes. To use them from a component, force the class output with the Lism Props [`:value` notation](/en/docs/core-components/lism-props/#output-utility) (`p=":box"`). For components rendered client-side, you can also merge the same settings at runtime by defining them in the browser via `window._LISM_CSS_CONFIG_` (except for `isFullMode`).
 
 
 ### CLI build
@@ -298,7 +298,7 @@ With the [customization example](#customization-example) config, this command ge
 }
 ```
 
-When you give a value in `tokens`, the build generates both the Property Class that references the token (such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`) and the referenced CSS variable itself (such as `:root { --lts--2xl: .5em }`). A key whose value is `'-'` only registers the name and doesn't output a value — use it for tokens with no CSS variable (such as `palette.keycolor`) or tokens whose real value is defined in hand-written SCSS (such as `bdrs.inner`).
+When you give a value in `tokens`, the build generates both the Property Class that references the token (such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`) and the referenced CSS variable itself (such as `:root { --lts--2xl: .5em }`). A key whose value is `'-'` only defines the name and doesn't output a value — use it for tokens with no CSS variable (such as `palette.keycolor`) or tokens whose real value is defined in hand-written SCSS (such as `bdrs.inner`).
 
 `is--` class styles, on the other hand, are not generated automatically, so you'll need to define and load them yourself.
 

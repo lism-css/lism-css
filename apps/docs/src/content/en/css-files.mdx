@@ -49,5 +49,5 @@ In addition to everything in `main.css`, `full.css` includes:
 This makes the CSS larger than `main.css`, so **this build is intended to be used together with [CSS Purge](/en/docs/customize/purge/), which removes unused classes at build time**.
 
 :::info
-Importing `full.css` alone does not change how components behave — they still use the default configuration (for example, `t="20"` is output as an inline style). To align the component output with `full.css`, enable [`isFullMode`](/en/docs/customize/config/#isfullmode) in your `lism.config.js`.
+Importing `full.css` alone does not change the component output (for example, `t="20"` is still output as an inline style). To align the component output with `full.css`, enable [`isFullMode`](/en/docs/customize/config/#isfullmode) in your `lism.config.js`.
 :::

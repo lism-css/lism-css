@@ -3,17 +3,17 @@ title: 'lism.config.js でのカスタマイズ'
 description: 'lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。'
 ---
 
-プロジェクトのルート直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を置くと、コンポーネントが受け付ける props / tokens / traits やブレイクポイントを拡張できます。
+プロジェクトのルート直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を置き、次のセットアップを行うと、コンポーネントが受け付ける props / tokens / traits やブレイクポイントを拡張できます。
 
-`lism.config.js` を使うには `@lism-css/plugin` が必要です。Vite / Astro / Next.js ではバンドラ連携（統合プラグイン）でコンポーネントと CSS の両方に自動反映されます。それ以外の構成では CSS だけを同梱の CLI でビルドします（[統合プラグインを使わない構成で反映する](#統合プラグインを使わない構成で反映する)）。
+`lism.config.js` を使うには `@lism-css/plugin` が必要です。Vite / Astro では統合プラグインでコンポーネントと CSS の両方に自動反映されます。Next.js では `withLism()` を使います。それ以外の構成では CSS だけを同梱の CLI でビルドします（[統合プラグインを使わない構成で反映する](#統合プラグインを使わない構成で反映する)）。
 
 
 ## セットアップ
 
-`@lism-css/plugin` の統合プラグイン `lismCss()` を登録します。これ1つで、`lism.config.js` の読み込み・CSS への自動反映・型定義 `lism-env.d.ts` の自動生成がまとめて有効になります。
+`@lism-css/plugin` の統合プラグイン `lismCss()` を、Vite / Astro の設定ファイルに追加します。これ1つで、`lism.config.js` の読み込み・CSS への自動反映・型定義 `lism-env.d.ts` の自動生成がまとめて有効になります。
 
 :::warning
-`lism.config.js` を読み込むのはこのプラグインです。登録していないと、ファイルを置いてもデフォルト設定のままです。
+`lism.config.js` を読み込むのはこのプラグインです。設定ファイルに追加していないと、`lism.config.js` を置いても内容は使われません。
 :::
 
 ```bash frame="none"
@@ -183,7 +183,7 @@ SCSS を直接利用する構成では、`$breakpoints` の上書きでも有効
 
 ## isFullMode
 
-[全部入りビルド（`full.css`）](/docs/css-files/#全部入りビルドfullcssを使う)を読み込むだけでは、コンポーネント側はデフォルト設定のまま動作します（例: `t="20"` はインラインスタイルとして出力されます）。コンポーネントの出力も `full.css` に合わせるには、`isFullMode` を有効にします。
+[全部入りビルド（`full.css`）](/docs/css-files/#全部入りビルドfullcssを使う)を読み込むだけでは、コンポーネント側の出力は変わりません（例: `t="20"` はインラインスタイルとして出力されます）。コンポーネントの出力も `full.css` に合わせるには、`isFullMode` を有効にします。
 
 ```js
 // lism.config.js
@@ -270,7 +270,7 @@ declare module 'lism-css' {
 
 統合プラグインを使わない構成では、`lism.config.js` は自動では反映されません。CSS は `@lism-css/plugin` 同梱の CLI でビルドします。
 
-コンポーネント側は `lism.config.js` を読まないため、`p="box"` のような追加値はデフォルト設定のまま処理されます。コンポーネントから使うには、Lism Props の [`:value` 記法](/docs/core-components/lism-props/#output-utility)（`p=":box"`）で強制的にクラス化してください。クライアント側でレンダリングされるコンポーネントなら、ブラウザで `window._LISM_CSS_CONFIG_` に同じ内容を定義して実行時にマージすることもできます（`isFullMode` は除く）。
+コンポーネント側は `lism.config.js` を読まないため、`p="box"` のような追加値はクラスとして認識されません。コンポーネントから使うには、Lism Props の [`:value` 記法](/docs/core-components/lism-props/#output-utility)（`p=":box"`）で強制的にクラス化してください。クライアント側でレンダリングされるコンポーネントなら、ブラウザで `window._LISM_CSS_CONFIG_` に同じ内容を定義して実行時にマージすることもできます（`isFullMode` は除く）。
 
 
 ### CLI ビルド
@@ -298,7 +298,7 @@ npx lism-css build
 }
 ```
 
-`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のようにトークンを参照する Property Class に加えて、参照先の CSS 変数（`:root { --lts--2xl: .5em }`）も生成されます。値に `'-'` を指定したキーは「名前だけを登録し、実値は出力しない」指定です。`palette.keycolor` のように CSS 変数を持たないトークンや、`bdrs.inner` のように実値を手書き SCSS 側で定義するトークンで使います。
+`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のようにトークンを参照する Property Class に加えて、参照先の CSS 変数（`:root { --lts--2xl: .5em }`）も生成されます。値に `'-'` を指定したキーは「名前だけを定義し、実値は出力しない」指定です。`palette.keycolor` のように CSS 変数を持たないトークンや、`bdrs.inner` のように実値を手書き SCSS 側で定義するトークンで使います。
 
 一方で `is--` クラスのスタイルは自動生成されないため、別途手動で定義して読み込ませる必要があります。
 
