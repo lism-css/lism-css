@@ -131,16 +131,23 @@ const defaultSize = 'desktop';
     const iframe = frame.querySelector('iframe');
     if (!scaled || !iframe) return;
 
-    // iframe 内の CSS px で受け取る。zoom は .u--scalePreview 内で効くので、そのまま height に使える。
+    // iframe 内の CSS px で受け取る（width は iframe 内の innerWidth）
     let contentSize: { width: number; height: number } | null = null;
 
     const applyHeight = () => {
-      if (!contentSize) return;
+      if (!contentSize?.width) return;
       const ratio = parseRatio(getComputedStyle(frame).getPropertyValue('--ar'));
-      const maxHeight = contentSize.width / ratio;
+      // zoom を iframe 内へ伝えない Safari 26.3 以前では、iframe 内の innerWidth（表示幅）が
+      // 親の zoom 空間でのレイアウト幅（offsetWidth）より小さくなるので、zoom の逆数（--w-pct / 100）で補正する。
+      // 比を実測値から出すと offsetWidth の整数丸めで 1px 未満のはみ出しが起きるため、既知の倍率を使う。
+      const zoomInherited = Math.abs(iframe.offsetWidth - contentSize.width) <= 1;
+      const wPct = parseFloat(getComputedStyle(scaled).getPropertyValue('--w-pct')) || 100;
+      const scale = zoomInherited ? 1 : wPct / 100;
+      const layoutWidth = contentSize.width * scale;
+      const maxHeight = layoutWidth / ratio;
       // 高さは iframe 自体に指定し、Frame 側は比率を解除して中身に合わせる
       scaled.style.aspectRatio = 'auto';
-      iframe.style.height = `${Math.min(contentSize.height, maxHeight)}px`;
+      iframe.style.height = `${Math.min(contentSize.height * scale, maxHeight)}px`;
     };
 
     window.addEventListener('message', (event) => {
