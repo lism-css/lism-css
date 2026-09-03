@@ -175,7 +175,7 @@ export default {
 :::
 
 :::warning
-`xs` / `xl` などを有効化すると `bp: 1` の全 Property Class に該当ブレイクポイントのブロックが追加されるぶん、CSS サイズが増えます。**[CSS Purge](/docs/customize/purge/) との併用が前提**の設計です。パージを使わない場合は、`bp` のリスト形式（`bp: ['sm', 'md']` など）で prop ごとに出力ブレイクポイントを絞ることを検討してください。
+`xs` / `xl` などを有効化すると `bp: 1` の全 Property Class に該当ブレイクポイントのブロックが追加されるぶん、CSS サイズが増えます。**[CSS Purge](/docs/customize/purge/) との併用が前提**の設計です。CSS Purge を使わない場合は、`bp` のリスト形式（`bp: ['sm', 'md']` など）で prop ごとに出力ブレイクポイントを絞ることを検討してください。
 :::
 
 SCSS を直接利用する構成では、`$breakpoints` の上書きでも有効化できます（[SCSS でのカスタマイズ](/docs/customize/scss/#ブレイクポイントxs--xlの有効化)を参照）。
@@ -298,7 +298,7 @@ npx lism-css build
 }
 ```
 
-`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のようにトークンを参照する Property Class に加えて、参照先の CSS 変数（`:root { --lts--2xl: .5em }`）も生成されます。値に `'-'` を指定したキーは「名前だけを定義し、実値は出力しない」指定です。`palette.keycolor` のように CSS 変数を持たないトークンや、`bdrs.inner` のように実値を手書き SCSS 側で定義するトークンで使います。
+`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のようにトークンを参照する Property Class に加えて、参照先のCSS変数（`:root { --lts--2xl: .5em }`）も生成されます。値に `'-'` を指定したキーは「名前だけを定義し、実値は出力しない」指定です。`palette.keycolor` のようにCSS変数を持たないトークンや、`bdrs.inner` のように実値を手書き SCSS 側で定義するトークンで使います。
 
 一方で `is--` クラスのスタイルは自動生成されないため、別途手動で定義して読み込ませる必要があります。
 

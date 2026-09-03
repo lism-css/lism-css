@@ -18,7 +18,7 @@ Reset CSS を`lism-base.reset` レイヤーとして定義しています。
 <SrcCode path="src/scss/reset.scss" />
 
 
-reset.css ではできるだけブラウザの標準スタイルに従うようにしています。
+reset.css ではできるだけブラウザ標準スタイルに従うようにしています。
 
 非常にシンプルで、必要最低限な内容になっています。
 
@@ -187,7 +187,7 @@ hr {
 }
 ```
 
-`hr` は方向を`block-start`に固定し、 `--divider` カラーにセットしています。
+`hr`の線は`block-start`側に固定し、色には`--divider`を設定しています。
 
 
 ### リスト（ul, ol）
@@ -199,7 +199,7 @@ hr {
 }
 ```
 
-クラスを一切持たないリストはブラウザデフォルトスタイルを自動で復活させています。
+クラスを一切持たないリストはブラウザ標準スタイルを自動で復活させています。
 
 Property Class 付きの `ul` / `ol`（例: `<ul class="-fz:l">`）はリスト表示が消えた状態のままとなります。箇条書き表示を維持したい場合は [`set--revert`](/docs/set-class#set--revert) を付与してください。
 
@@ -262,7 +262,7 @@ input:where(:not([type='range'])), button, textarea, select, ::file-selector-but
 | `--controls-bdc` | `var(--divider)` | ボーダー色 |
 | `--controls-p` | `0.25em 0.5em` | パディング |
 
-角丸はブラウザのデフォルトに委ねています。テーマで揃えたい場合は各セレクタに `border-radius` を直接指定してください。
+角丸はブラウザ標準スタイルに委ねています。テーマで揃えたい場合は各セレクタに `border-radius` を直接指定してください。
 
 
 ### その他

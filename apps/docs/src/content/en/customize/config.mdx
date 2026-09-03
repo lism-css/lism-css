@@ -175,7 +175,7 @@ Even when you load `full.css`, `xs` / `xl` are disabled by default (only `sm` / 
 :::
 
 :::warning
-Enabling `xs` / `xl` adds a block for each active breakpoint to every Property Class that uses `bp: 1`, which increases the CSS size. **This is designed to be paired with [CSS Purge](/en/docs/customize/purge/).** If you are not using purge, consider using the list form of `bp` (e.g., `bp: ['sm', 'md']`) to restrict which breakpoints are output on a per-prop basis.
+Enabling `xs` / `xl` adds a block for each active breakpoint to every Property Class that uses `bp: 1`, which increases the CSS size. **This is designed to be paired with [CSS Purge](/en/docs/customize/purge/).** If you are not using CSS Purge, consider using the list form of `bp` (e.g., `bp: ['sm', 'md']`) to restrict which breakpoints are output on a per-prop basis.
 :::
 
 For projects using SCSS directly, you can also enable `xs` / `xl` via the `$breakpoints` SCSS variable override (see [SCSS Customization](/en/docs/customize/scss/#enabling-xs--xl-breakpoints)).

@@ -5,7 +5,7 @@ description: 'Lism CSS の各バージョンにおける変更履歴をまとめ
 import { Lism, Divider, Text, Inline, Link } from 'lism-css/astro';
 
 
-v.1.0リリースまでしばらく激しい変更が続く可能性があるため、変更点をここに記載して行く予定です。
+v1.0のリリースまでは大きな変更が続く可能性があるため、変更点をこのページに記載します。
 
 <Divider bds="dashed" my="40" />
 
@@ -134,8 +134,8 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 - `lism.config.ts`（TypeScript 形式の設定ファイル）の読み込みに対応 (#461)
 - config の値（utils / presets / token）から型を導出し、コンポーネント側の補完に反映 (#505)
-- purge: Astro の SSR / hybrid 構成で server 出力もスキャン・参照書き換えの対象に (#495)
-- purge: ハッシュ判定を厳格化し、レポートを実バイト数ベースに改善 (#503)
+- CSS Purge: Astro の SSR / hybrid 構成で server 出力もスキャン・参照書き換えの対象に (#495)
+- CSS Purge: ハッシュ判定を厳格化し、レポートを実バイト数ベースに改善 (#503)
 
 ### `@lism-css/ui` v0.24.0 (2026.07.06)
 
@@ -150,7 +150,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 ### ビルド/プラグイン層を `@lism-css/plugin` へ分離 (#439)
 
-- Vite / Astro 統合・purge・`npx lism-css build` CLI を本体から切り離し、新パッケージ `@lism-css/plugin` へ移行
+- Vite / Astro 統合・CSS Purge・`npx lism-css build` CLI を本体から切り離し、新パッケージ `@lism-css/plugin` へ移行
 - `lism-css/vite`・`lism-css/purge/*`・`lism-css/vite-plugin` 等のエクスポートを廃止
 
 ### トークンを値付きの単一情報源に刷新 (#434)
@@ -175,7 +175,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 新パッケージ。`lism-css` のビルド／フレームワーク統合レイヤーを提供します。
 
 - `lism.config.js` を CSS 出力の単一情報源とする動的ビルドプラグイン（`lismCss()` / `lismCssAstro()`）
-- 軽量 CSS purge（`@lism-css/plugin/purge/vite` / `/astro`、統合プラグインの `purge: true`）
+- CSS Purge（`@lism-css/plugin/purge/vite` / `/astro`、統合プラグインの `purge: true`）
 - Next.js 16（`@lism-css/plugin/next`）/ WordPress（`@lism-css/plugin/wordpress`）アダプタ
 - `breakpoints` から `lism-env.d.ts` を自動生成
 
@@ -255,7 +255,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 ### contentSize Prop と set--bleed の追加 (#405)
 
-- `contentSize` を Lism Prop として追加（プリセット値 `s` / `m` / `l` / `xl` はクラス、任意値は CSS 変数として出力）
+- `contentSize` を Lism Prop として追加（プリセット値 `s` / `m` / `l` / `xl` はクラス、任意値はCSS変数として出力）
 - `set--bleed` をコア CSS に追加し、片側ブリードレイアウト用の `--bleed` 変数生成を提供
 - `Wrapper` コンポーネントを `isWrapper` + `contentSize` の組み合わせに整理
 

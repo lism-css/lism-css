@@ -59,7 +59,7 @@ In array notation, each position is **permanently fixed** to `[base, sm, md, lg,
 
 :::warning
 `xs` cannot be specified with array notation.  
-(Because positions are fixed, inserting `xs` at the front would shift the meaning of every existing array entry without any error, before you notice.)  
+(Because array positions are fixed by design, inserting `xs` at the front changes how the existing array is interpreted — but without triggering an error, so the mapping between values and breakpoints silently drifts out of sync before you notice.)<br />
 Use **object notation** if you need `xs`.
 
 ```jsx

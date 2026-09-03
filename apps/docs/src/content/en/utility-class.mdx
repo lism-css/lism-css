@@ -239,7 +239,7 @@ Classes for adjusting the half-leading spacing of text.
 </Preview>
 
 
-`u--trimAll` uses an exclusion approach: it applies margin adjustment to all direct children except those that shouldn't be trimmed (`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`). The `:empty` pseudo-class automatically covers void elements like `img`, `hr`, `br`, as well as empty decorative divs (e.g. `a--divider`, `a--spacer`). If you need to exclude additional elements, add a rule like `.u--trimAll > xxx { margin-block: 0 }` on the consumer side.
+`u--trimAll` applies margin adjustment to all direct children except the excluded elements (`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`). The `:empty` selector also excludes empty elements such as `img`, `hr`, `br`, and empty decorative `div`s (e.g. `a--divider`, `a--spacer`). To exclude other elements, add a rule like `.u--trimAll > xxx { margin-block: 0 }` on the consumer side.
 
 <Preview>
   <PreviewTitle>`u--trimAll`</PreviewTitle>
@@ -530,8 +530,8 @@ These utility classes are not included in the Lism CSS core stylesheet, but they
 
 ### `u--inlineCenter`
 
-A class for aligning emoji or inline icons to the vertical center of surrounding text.
-Since `vertical-align: middle;` alone can cause misalignment, an additional `translate` adjustment is applied.
+A class for aligning emoji or inline icons to the vertical center of the text.
+Since `vertical-align: middle` alone can cause misalignment, `translate` compensates for it.
 
 
 <Preview css={`

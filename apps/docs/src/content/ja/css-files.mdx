@@ -9,7 +9,7 @@ description: 'lism-css に同梱される main.css / main_no_layer.css / full.cs
 |---|---|
 | `lism-css/main.css` | 標準ビルド（`@layer` あり） |
 | `lism-css/main_no_layer.css` | `@layer` なし版 |
-| `lism-css/full.css` | 全部入りビルド（`@layer` あり / purge 併用前提） |
+| `lism-css/full.css` | 全部入りビルド（`@layer` あり / CSS Purge 併用前提） |
 | `lism-css/full_no_layer.css` | 全部入りビルドの `@layer` なし版 |
 
 
@@ -27,7 +27,7 @@ description: 'lism-css に同梱される main.css / main_no_layer.css / full.cs
 
 そのため、`@layer` なし版では次の点に注意してください。
 
-- Property Class と同じプロパティを `style` 属性や JavaScript で指定しても、Property Class が勝ちます。値を変えるにはクラス自体を付け替えてください（`-p` のように CSS 変数で値を受け取るクラスは、`--p` の書き換えでも変えられます）。
+- Property Class と同じプロパティを `style` 属性や JavaScript で指定しても、Property Class が勝ちます。値を変えるにはクラス自体を付け替えてください（`-p` のようにCSS変数で値を受け取るクラスは、`--p` の書き換えでも変えられます）。
 - `u--` クラスを自分の CSS で上書きするには、`.u--trim.u--trim` 以上の詳細度が必要です。
 - `lism.config.js` の `defaultImportant: false` や SCSS の `$default_important: 0` を指定しても、`@layer` なし版では `!important` は外れません。`props` の個別設定 `important: 0` も同様に無視されます。
 

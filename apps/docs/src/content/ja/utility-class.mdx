@@ -241,7 +241,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
 </Preview>
 
 
-`u--trimAll`は除外方式で、直下の子要素のうちトリムすべきでない要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`）を除いたすべての要素にマージン調整を適用します。`:empty` により `img`・`hr`・`br` などの void element や、中身のない装飾 div（`a--divider` / `a--spacer` 等）も自動で除外されます。追加で除外したい要素がある場合は、利用側で `.u--trimAll > xxx { margin-block: 0 }` のように個別打ち消しで対応してください。
+`u--trimAll`は、対象外の要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`）を除いたすべての直下要素にマージン調整を適用します。`:empty`により、`img`・`hr`・`br`などの空要素や、中身のない装飾用の`div`（`a--divider` / `a--spacer`など）も対象外になります。追加で除外したい要素がある場合は、利用側で `.u--trimAll > xxx { margin-block: 0 }` のように個別打ち消しで対応してください。
 
 <Preview>
   <PreviewTitle>`u--trimAll`</PreviewTitle>
@@ -534,8 +534,8 @@ Gridでも `u--enclose`で table タグのような表現ができます。
 
 ### `u--inlineCenter`
 
-絵文字やインラインアイコンをテキストのセンター位置に合わせて配置するためのクラスです。
-`vertical-align: middle;`だけではずれが発生するため、追加で`translate`で調整を加えています。
+絵文字やインラインアイコンをテキストの中央に合わせるクラスです。
+`vertical-align: middle`だけでは位置がずれるため、`translate`で補正します。
 
 
 <Preview css={`

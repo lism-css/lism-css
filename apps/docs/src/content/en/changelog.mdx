@@ -5,7 +5,7 @@ description: 'A log of all notable changes and updates across Lism CSS releases.
 import { Lism, Divider, Text, Inline, Link } from 'lism-css/astro';
 
 
-Breaking changes may continue until v1.0, so all notable changes are documented here.
+Significant changes may continue until v1.0 is released, so all notable changes are documented on this page.
 
 <Divider bds="dashed" my="40" />
 
@@ -134,8 +134,8 @@ This release contains **breaking changes**. It requires `lism-css` v0.26.0 or la
 
 - Support loading `lism.config.ts` (TypeScript config files) (#461)
 - Derive types from config values (utils / presets / token) for component-side autocompletion (#505)
-- purge: scan and rewrite references in server output for Astro SSR / hybrid setups (#495)
-- purge: stricter hash detection and byte-accurate size reports (#503)
+- CSS Purge: scan and rewrite references in server output for Astro SSR / hybrid setups (#495)
+- CSS Purge: stricter hash detection and byte-accurate size reports (#503)
 
 ### `@lism-css/ui` v0.24.0 (2026.07.06)
 
@@ -150,7 +150,7 @@ This release contains **breaking changes**.
 
 ### Split the build/plugin layer into `@lism-css/plugin` (#439)
 
-- Separated the Vite / Astro integration, purge, and the `npx lism-css build` CLI from the core, moving them into the new `@lism-css/plugin` package
+- Separated the Vite / Astro integration, CSS Purge, and the `npx lism-css build` CLI from the core, moving them into the new `@lism-css/plugin` package
 - Removed exports such as `lism-css/vite`, `lism-css/purge/*`, and `lism-css/vite-plugin`
 
 ### Unified tokens into a single value-bearing source (#434)
@@ -175,7 +175,7 @@ This release contains **breaking changes**.
 New package. Provides the build / framework-integration layer for `lism-css`.
 
 - Dynamic build plugin that makes `lism.config.js` the single source of truth for CSS output (`lismCss()` / `lismCssAstro()`)
-- Lightweight CSS purge (`@lism-css/plugin/purge/vite` / `/astro`, or `purge: true` on the integrated plugin)
+- CSS Purge (`@lism-css/plugin/purge/vite` / `/astro`, or `purge: true` on the integrated plugin)
 - Next.js 16 (`@lism-css/plugin/next`) / WordPress (`@lism-css/plugin/wordpress`) adapters
 - Auto-generates `lism-env.d.ts` from `breakpoints`
 

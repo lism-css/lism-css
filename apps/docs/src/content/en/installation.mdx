@@ -118,7 +118,7 @@ import 'lism-css/main.css';
 In Next.js (16 or later), import it in your root layout (`app/layout.tsx` for App Router). If you also want to apply `lism.config.js` settings and generate types, set up `@lism-css/plugin` as described in [Setting up with Next.js](#setting-up-with-nextjs) below.
 
 :::info
-Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS purge tools. See [CSS File Types](/en/docs/css-files/) for details.
+Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS Purge. See [CSS File Types](/en/docs/css-files/) for details.
 :::
 
 
@@ -240,7 +240,7 @@ On the other hand, `.lism-css/` (the generated CSS) is build output and should b
 ```
 
 :::info
-**CSS purging (removing unused classes) is not yet supported for Next.js** (Vite and Astro only). In Next.js, the CSS reflecting your `lism.config.js` is loaded as-is.
+**CSS Purge (removing unused classes) is not yet supported for Next.js** (Vite and Astro only). In Next.js, the CSS reflecting your `lism.config.js` is loaded as-is.
 :::
 
 
@@ -304,9 +304,9 @@ npx lism-cli ui add --all
 Name resolution is case-insensitive and ignores hyphens and underscores, so `NavMenu` / `navmenu` / `nav-menu` / `nav_menu` all resolve to the same component.
 
 
-## Strip unused CSS (purge)
+## Strip unused CSS (CSS Purge)
 
-The purge feature — which removes unused Lism CSS classes from your production build to keep the CSS lightweight — is provided by `@lism-css/plugin`. Just pass `purge: true` to the Vite / Astro integrated plugin (`lismCss()`) to enable it. See [CSS Purge](/en/docs/customize/purge/) for the full setup steps, options, and how to configure `safelist`.
+CSS Purge — which removes unused Lism CSS classes from your production build to keep the CSS lightweight — is provided by `@lism-css/plugin`. Just pass `purge: true` to the Vite / Astro integrated plugin (`lismCss()`) to enable it. See [CSS Purge](/en/docs/customize/purge/) for the full setup steps, options, and how to configure `safelist`.
 
 
 ## AI tool integration

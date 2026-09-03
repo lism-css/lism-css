@@ -1,9 +1,9 @@
 ---
 title: 'CSS Purge'
-description: 'Set up the purge plugin to strip unused Lism CSS classes at build time and ship a leaner production CSS.'
+description: 'Set up CSS Purge to strip unused Lism CSS classes at build time and ship a leaner production CSS.'
 ---
 
-The Lism CSS purge feature scans your build output and **keeps only the Lism CSS classes you actually use**. Plugins for Vite and Astro are available from the `@lism-css/plugin` package.
+CSS Purge scans your build output and **keeps only the Lism CSS classes you actually use**. Plugins for Vite and Astro are available from the `@lism-css/plugin` package.
 
 ```bash frame="none"
 pnpm add -D @lism-css/plugin
@@ -34,12 +34,12 @@ export default defineConfig({
 });
 ```
 
-You can also pass an object to configure individual purge plugin options:
+You can also pass an object to configure individual CSS Purge options:
 
 ```js
 lismCss({
   purge: {
-    report: true, // Log the file size before/after purging to the build log
+    report: true, // Log the file size before/after CSS Purge to the build log
     safelist: ['-p:30'], // Keep classes not detected by static analysis
   },
 });
@@ -94,17 +94,17 @@ In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender 
 
 ## Pairing with full.css
 
-`lism-css/full.css` is a **full build** that adds breakpoint-aware classes and color-token classes not included in `main.css` (see [CSS File Types](/en/docs/css-files/#using-the-full-build-fullcss) for what's included). It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
+`lism-css/full.css` is a **full build** that adds breakpoint-aware classes and color-token classes not included in `main.css` (see [CSS File Types](/en/docs/css-files/#using-the-full-build-fullcss) for what's included). It is large when loaded as-is, so it ships as a build **meant to be paired with CSS Purge**.
 
 ```js
 // Load full.css instead of main.css
 import 'lism-css/full.css';
 ```
 
-Once purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used across the whole site**.
+Once CSS Purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used across the whole site**.
 
 :::warning
-Loading `full.css` without purge ships a large CSS that still contains every unused class. Always pair `full.css` with purge.
+Loading `full.css` without CSS Purge ships a large CSS that still contains every unused class. Always pair `full.css` with CSS Purge.
 :::
 
 
@@ -115,8 +115,8 @@ Both the `purge` option of the integrated plugin and the standalone plugin accep
 | Option | Description |
 |---|---|
 | <span class="-whs:nowrap">`safelist`</span> | Keep classes that static analysis cannot detect |
-| `report` | Log the file size before and after purging |
-| `known` | Override the set of classes purge treats as "Lism classes" (rarely needed) |
+| `report` | Log the file size before and after CSS Purge |
+| `known` | Override the set of classes CSS Purge treats as "Lism classes" (rarely needed) |
 
 
 ### safelist
@@ -141,7 +141,7 @@ lismPurge({
 
 ### report
 
-When `true`, the total byte count before / after purging and the reduction ratio are printed to the build log.
+When `true`, the total byte count before / after CSS Purge and the reduction ratio are printed to the build log.
 
 ```
 CSS: 28100 → 13200 bytes (-14900 / -53.0%)
@@ -150,15 +150,15 @@ CSS: 28100 → 13200 bytes (-14900 / -53.0%)
 
 ### known
 
-The set of classes purge treats as "Lism classes." When not specified, it's automatically built from the config-reflected `full.css` at the start of the build, so unused classes derived from props / tokens you added in `lism.config.js` are correctly purged too. Since `full.css` includes every selector in `main.css`, nothing is missed regardless of which one you load. Passing a function calls it at build time and uses the return value as the list.
+The set of classes CSS Purge treats as "Lism classes." When not specified, it's automatically built from the config-reflected `full.css` at the start of the build, so unused classes derived from props / tokens you added in `lism.config.js` are correctly removed too. Since `full.css` includes every selector in `main.css`, nothing is missed regardless of which one you load. Passing a function calls it at build time and uses the return value as the list.
 
 
 ## Caveats
 
 - When you build class names dynamically, make sure the complete class name remains in your source (write it as `` `-p:${size}` ``; do not concatenate `'p-'` and `size` separately). If that is not practical, add the class to `safelist`.
-- Purge keeps **every class used anywhere in the entire build output** (not per page). A class is retained as long as it is used on any page, even if it is unused on a given page. This is intentional so that a single CSS shared across multiple pages is never broken.
-- Only CSS emitted by Lism CSS is purged. Your own CSS and styles from other libraries are not changed.
-- The plugin runs independently of other framework purgers such as Tailwind CSS.
-- CSS sourcemaps are not supported. Purge removes rules, so an existing sourcemap no longer lines up. To avoid stale mappings, purge strips `sourceMappingURL` comments from processed CSS and removes old `.css.map` files. Disable purge if you need CSS sourcemaps.
-- With the Vite plugin, when purging changes a CSS file name (its content hash), the file names of JS chunks that reference the CSS are not recalculated — chunk names are finalized before the purge step runs. The chunk contents are rewritten to point to the new CSS name, but since the chunk file name stays the same, a stale chunk cached by a CDN with file-name-based immutable caching may keep referencing an old CSS file name that no longer exists, resulting in a 404. Invalidate the CDN cache on deploy if this applies to your setup.
-- A purged CSS file is treated as hash-named and renamed to a content-based hash when the last segment of its file name is exactly 8 alphanumeric characters (`<name>.xxxxxxxx.css`, and also `<name>-xxxxxxxx.css` with the Vite plugin). Non-hash names such as `app-critical.css` also match this pattern, so avoid file names whose last segment is exactly 8 alphanumeric characters if you reference an output CSS file directly by a fixed name from outside the build output.
+- CSS Purge keeps **every class used anywhere in the entire build output** (not per page). A class is retained as long as it is used on any page, even if it is unused on a given page. This is intentional so that a single CSS shared across multiple pages is never broken.
+- CSS Purge only targets CSS emitted by Lism CSS. Your own CSS and styles from other libraries are not changed.
+- CSS Purge runs independently of the unused-class removal features of other frameworks such as Tailwind CSS.
+- CSS sourcemaps are not supported. CSS Purge removes rules, so an existing sourcemap no longer lines up. To avoid stale mappings, CSS Purge strips `sourceMappingURL` comments from the processed CSS and removes old `.css.map` files. Disable CSS Purge if you need CSS sourcemaps.
+- With the Vite plugin, when CSS Purge changes a CSS file name (its content hash), the file names of JS chunks that reference the CSS are not recalculated — chunk names are finalized before the CSS Purge step runs. The chunk contents are rewritten to point to the new CSS name, but since the chunk file name stays the same, a stale chunk cached by a CDN with file-name-based immutable caching may keep referencing an old CSS file name that no longer exists, resulting in a 404. Invalidate the CDN cache on deploy if this applies to your setup.
+- A CSS file targeted by CSS Purge is treated as hash-named and renamed to a content-based hash when the last segment of its file name is exactly 8 alphanumeric characters (`<name>.xxxxxxxx.css`, and also `<name>-xxxxxxxx.css` with the Vite plugin). Non-hash names such as `app-critical.css` also match this pattern, so avoid file names whose last segment is exactly 8 alphanumeric characters if you reference an output CSS file directly by a fixed name from outside the build output.
