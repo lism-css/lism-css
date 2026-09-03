@@ -48,16 +48,3 @@ import { siteConfig } from '@/config/site';
     </Modal.Body>
   </Modal.Inner>
 </Modal.Root>
-
-<script>
-  // 目次リンクをタップしたらモーダルを閉じる（リンク先へのスクロールはそのまま実行される）
-  const tocModal = document.getElementById('toc-modal');
-  if (tocModal) {
-    tocModal.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('[data-toc-link]')) {
-        document.querySelector<HTMLElement>('[data-modal-close="toc-modal"]')?.click();
-      }
-    });
-  }
-</script>
