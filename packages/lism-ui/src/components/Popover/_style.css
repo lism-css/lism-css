@@ -6,10 +6,18 @@
 @layer lism-block {
   /* 調整用の変数は Root で受ける（Root の props がインラインに書く --popover-* をここで拾う） */
   .b--popover {
+    /*
+     * 矢印の縁は popup の -bd（--bdc / --bdw）を拾う。外側から継承した値で縁取りしないよう Root で未定義に戻す
+     * （空値 `--bdc: ;` は未定義扱いにならず var() のフォールバックが効かないので initial を使う）。
+     */
+    --bdc: initial;
+    --bdw: initial;
     --duration: var(--popover-duration, 0.15s);
     --offset: var(--popover-offset, var(--s5));
+    --_arrow-sz: var(--popover-arrow, 6px); /* 矢印の高さ（突出量）。0 で矢印なし */
+    --_gap: calc(var(--offset) + var(--_arrow-sz)); /* popup 本体とトリガーの間隔。offset は矢印の先とトリガーの間隔 */
     display: inline-block;
-    anchor-scope: --popover;
+    anchor-scope: --popover, --popover-popup;
   }
   .b--popover_trigger {
     anchor-name: --popover;
@@ -24,7 +32,7 @@
     background-color: var(--base);
     box-shadow: var(--bxsh--30);
     overflow: auto;
-    padding: 1em;
+    padding: 0.75em 1em;
     opacity: 0;
     transition:
       opacity var(--duration),
@@ -52,9 +60,44 @@
   @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
     .b--popover_popup {
       --_span: span-all;
+      anchor-name: --popover-popup; /* 矢印（::after）が popup の矩形を参照するため */
       position-anchor: --popover;
       position-area: var(--_side) var(--_span);
       inset: auto;
+    }
+    /*
+     * ふきだしの矢印。ひし形の中心を「トリガー中心を popup の矩形にクランプした点」に置く。
+     * flip 後の位置は CSS から知れない（@position-try でカスタムプロパティは設定できない）ので、
+     * side / align / flip を見ずにトリガー側の辺へ寄るこの形にしている。
+     * absolute だと popup が包含ブロックになりトリガーを anchor に取れないため fixed（overflow: auto にもクリップされない）。
+     * スクロール追従は既定アンカー（position-anchor）にしか効かないので、トリガーを既定アンカーにして省略形の anchor() で参照する。
+     *
+     * 縁取りは 2 枚重ね。負の z-index は popup の背景・border より上に描かれるので、1 枚では内側半分が消せない。
+     * ::before（縁色）を border box に、::after（背景色）を border 幅ぶん内側の padding box にクランプすると、
+     * 外側の 2 辺だけ ::before がはみ出して縁になり、popup の border 線は ::after が上から消して口を開ける。
+     * 影は付けない（同じ理由で内側半分の影が popup の上に見える）。
+     */
+    .b--popover_popup::before,
+    .b--popover_popup::after {
+      content: '';
+      position: fixed;
+      position-anchor: --popover;
+      z-index: -1; /* 中身の下、popup の背景・影の上 */
+      inline-size: calc(var(--_arrow-sz) * 2);
+      block-size: calc(var(--_arrow-sz) * 2);
+      clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+      translate: -50% -50%;
+    }
+    .b--popover_popup::before {
+      background-color: var(--bdc, inherit);
+      top: clamp(anchor(--popover-popup top), anchor(center), anchor(--popover-popup bottom));
+      left: clamp(anchor(--popover-popup left), anchor(center), anchor(--popover-popup right));
+    }
+    .b--popover_popup::after {
+      --_bdw: calc(var(--bdw, 0px) * 1.4142); /* 斜辺でも縁の太さが --bdw になるよう √2 倍ずらす */
+      background-color: inherit;
+      top: clamp(anchor(--popover-popup top) + var(--_bdw), anchor(center), anchor(--popover-popup bottom) - var(--_bdw));
+      left: clamp(anchor(--popover-popup left) + var(--_bdw), anchor(center), anchor(--popover-popup right) - var(--_bdw));
     }
     /* --_place*: place-self の値（align-self justify-self）。揃える軸だけ start / end にする */
     .b--popover_popup:where([data-side='top'], [data-side='bottom']) {
@@ -62,7 +105,7 @@
       --_spanEnd: span-x-start;
       --_placeStart: auto start;
       --_placeEnd: auto end;
-      margin-block: var(--offset);
+      margin-block: var(--_gap);
       position-try-fallbacks:
         flip-block,
         flip-inline,
@@ -73,7 +116,7 @@
       --_spanEnd: span-block-start;
       --_placeStart: start auto;
       --_placeEnd: end auto;
-      margin-inline: var(--offset);
+      margin-inline: var(--_gap);
       position-try-fallbacks:
         flip-inline,
         flip-block,
