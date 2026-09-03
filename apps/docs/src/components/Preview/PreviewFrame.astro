@@ -1,5 +1,5 @@
 ---
-import { Stack, Frame, Icon } from 'lism-css/astro';
+import { Stack, Frame, Flex, Lism, Icon } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { DesktopIcon, DeviceMobileCameraIcon, DeviceTabletCameraIcon } from '@phosphor-icons/react';
 import { getLangFromUrl, t } from '@/lib/i18n';
@@ -16,28 +16,74 @@ const { hasSizeSwitch = false, hasExternalLink = true, externalLinkLabel, url, .
 
 const lang = getLangFromUrl(Astro.url);
 const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
+const previewText = t(lang, 'preview');
+
+// wPct: iframe を表示幅より広いビューポートで描画して zoom で縮める割合（未指定なら _preview.scss の既定値）
+const sizes = [
+  { id: 'mobile', label: previewText.mobile, icon: DeviceMobileCameraIcon, size: '360px', ar: '2/3', wPct: '120' },
+  { id: 'tablet', label: previewText.tablet, icon: DeviceTabletCameraIcon, size: '600px', ar: '3/4' },
+  { id: 'desktop', label: previewText.desktop, icon: DesktopIcon, size: '100%', ar: '3/2' },
+];
+const defaultSize = 'desktop';
 ---
 
 <Stack g="20">
   {
     hasSizeSwitch && (
-      <div class="c--previewSizeSwitcher l--flex -g:15 -jc:center" data-preview-url={url}>
-        <button class="c--previewSizeSwitcher_btn l--center -bdrs:10" data-size="360px" data-w-pct="120" data-ar="2/3">
-          <Icon as={DeviceMobileCameraIcon} fz="xl" />
-        </button>
-        <button class="c--previewSizeSwitcher_btn l--center -bdrs:10" data-size="600px" data-ar="3/4">
-          <Icon as={DeviceTabletCameraIcon} fz="xl" />
-        </button>
-        <button class="c--previewSizeSwitcher_btn l--center -bdrs:10 _active" data-size="100%" data-ar="3/2">
-          <Icon as={DesktopIcon} fz="xl" />
-        </button>
-      </div>
+      <Flex
+        jc="center"
+        ai="center"
+        p="5"
+        g="5"
+        bgc="base-2"
+        bdrs="20"
+        set="bdrsInner"
+        w="fit-content"
+        mx="auto"
+        class="c--previewSizeSwitcher"
+        role="group"
+        aria-label={previewText.sizeAriaLabel}
+        data-preview-url={url}
+      >
+        {sizes.map((size) => (
+          <Lism
+            as="button"
+            type="button"
+            aria-pressed={size.id === defaultSize ? 'true' : 'false'}
+            aria-label={size.label}
+            title={size.label}
+            fz="l"
+            p="0.375rem"
+            bd="none"
+            bdrs="inner"
+            class="c--previewSizeSwitcher_btn"
+            data-size={size.size}
+            data-ar={size.ar}
+            data-w-pct={size.wPct}
+          >
+            <Icon as={size.icon} fz="l" d="block" />
+          </Lism>
+        ))}
+      </Flex>
     )
   }
 
-  <Frame id="preview-iframe" class="c--previewFrame" data-preview-url={url} bxsh="10" mx="auto" w="100%" max-w="100%" style={{ '--ar': '3/2' }}>
+  {/* 角丸・枠線・影は zoom のかかる内側ではなく、外側でまとめて指定する（影の角が角丸からはみ出さないように） */}
+  <Frame
+    id="preview-iframe"
+    class="c--previewFrame"
+    data-preview-url={url}
+    bxsh="10"
+    bdrs="20"
+    bd
+    bdw="2px"
+    mx="auto"
+    w="100%"
+    max-w="100%"
+    style={{ '--ar': '3/2' }}
+  >
     {/* ar は高さ通知が届くまで（または JS 無効時）のフォールバック。通知後は iframe に height を直接指定する */}
-    <Frame className="u--scalePreview" ar bdrs="20" bd bdw="3px" {...props}>
+    <Frame className="u--scalePreview" ar {...props}>
       <iframe src={url} width="800" height="600" style="border:0"></iframe>
     </Frame>
   </Frame>
@@ -51,16 +97,17 @@ const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
 </Stack>
 
 <style>
-  .c--previewSizeSwitcher_btn {
-    padding: 8px;
-    border: 1px solid #ccc;
-    background: var(--base-2);
-    cursor: pointer;
-  }
-  .c--previewSizeSwitcher_btn._active {
-    background: var(--link) !important;
-    color: white !important;
-    border-color: var(--link) !important;
+  @layer lism-custom {
+    .c--previewSizeSwitcher_btn {
+      cursor: pointer;
+      color: var(--text-2);
+      background-color: transparent;
+    }
+    .c--previewSizeSwitcher_btn[aria-pressed='true'] {
+      background-color: var(--base);
+      color: var(--text);
+      box-shadow: var(--bxsh--10);
+    }
   }
 </style>
 
@@ -86,7 +133,7 @@ const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
       if (!contentSize) return;
       const ratio = parseRatio(getComputedStyle(frame).getPropertyValue('--ar'));
       const maxHeight = contentSize.width / ratio;
-      // 枠線ぶんで iframe が縮まないよう、高さは iframe 自体に指定し、Frame 側は比率を解除して中身に合わせる
+      // 高さは iframe 自体に指定し、Frame 側は比率を解除して中身に合わせる
       scaled.style.aspectRatio = 'auto';
       iframe.style.height = `${Math.min(contentSize.height, maxHeight)}px`;
     };
@@ -113,8 +160,7 @@ const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
         } else {
           scaled.style.removeProperty('--w-pct');
         }
-        buttons.forEach((b) => b.classList.remove('_active'));
-        button.classList.add('_active');
+        buttons.forEach((b) => b.setAttribute('aria-pressed', b === button ? 'true' : 'false'));
 
         // 幅・比率が変わったので、レイアウト後の値を iframe 側に問い合わせて高さを更新する
         iframe.contentWindow?.postMessage({ type: REQUEST_TYPE }, window.location.origin);
