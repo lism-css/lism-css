@@ -54,18 +54,6 @@ import 'lism-css/main.css';
 import '@lism-css/ui/style.css';
 ```
 
-**Astro** の場合は、`astro.config.js` に以下も追加します:
-
-```js
-export default defineConfig({
-  vite: {
-    ssr: {
-      noExternal: ['lism-css', '@lism-css/ui'],
-    },
-  },
-});
-```
-
 ## 使い方
 
 各コンポーネントは個別のパス（deep path、例: `@lism-css/ui/{react,astro}/<Component>`）から import するのを推奨しています。実際に使うコンポーネントだけが成果物（バンドル）に含まれるよう、確実に絞り込めるためです。

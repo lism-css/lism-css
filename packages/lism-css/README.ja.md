@@ -55,18 +55,6 @@ import 'lism-css/main.css';
 
 **Next.js**の場合は、`layout.js`（App Router）または `_app.js`（Pages Router）で読み込みます。
 
-**Astro**の場合は、`node_modules` から `.astro` コンポーネントをインポートできるよう、`astro.config.js` に以下を追加します:
-
-```js
-export default defineConfig({
-  vite: {
-    ssr: {
-      noExternal: ['lism-css'],
-    },
-  },
-});
-```
-
 ## 使い方
 
 ### React

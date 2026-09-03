@@ -54,18 +54,6 @@ import 'lism-css/main.css';
 
 For **Next.js**, load it in `layout.js` (App Router) or `_app.js` (Pages Router).
 
-For **Astro**, add the following to `astro.config.js` to allow importing `.astro` components from `node_modules`:
-
-```js
-export default defineConfig({
-  vite: {
-    ssr: {
-      noExternal: ['lism-css'],
-    },
-  },
-});
-```
-
 ## Usage
 
 ### React

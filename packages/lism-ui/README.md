@@ -54,18 +54,6 @@ import 'lism-css/main.css';
 import '@lism-css/ui/style.css';
 ```
 
-For **Astro**, also add the following to `astro.config.js`:
-
-```js
-export default defineConfig({
-  vite: {
-    ssr: {
-      noExternal: ['lism-css', '@lism-css/ui'],
-    },
-  },
-});
-```
-
 ## Usage
 
 Each component is exposed as its own deep import path (`@lism-css/ui/{react,astro}/<Component>`). This is the recommended form — it ensures only the components you actually use are bundled.
