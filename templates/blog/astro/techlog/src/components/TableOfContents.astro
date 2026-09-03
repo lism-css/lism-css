@@ -23,11 +23,13 @@ const { toc, labelId = 'toc-label' } = Astro.props;
 </Lism>
 
 <style is:global>
-  /* スクロール連動jsのアクティブ表示 */
-  .c--toc_list [data-is-active] {
-    color: var(--brand);
-    font-weight: var(--fw--bold);
-    border-inline-start-color: var(--brand);
+  @layer lism-custom {
+    /* スクロール連動jsのアクティブ表示 */
+    .c--toc_list [data-is-active] {
+      color: var(--brand);
+      font-weight: var(--fw--bold);
+      border-inline-start-color: var(--brand);
+    }
   }
 </style>
 

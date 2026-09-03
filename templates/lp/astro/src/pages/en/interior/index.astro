@@ -527,7 +527,7 @@ const contactFields = [
         <Stack g="40">
           <SectionHeading en="FAQ" ja="Common questions" />
 
-          <Accordion.Root class="c--faq_acc" g="20">
+          <Accordion.Root class="c--faq_acc" layout="stack" g="20">
             {
               faqItems.map((item) => (
                 <Accordion.Item bgc="base" bdrs="20" bxsh="10" isOpen={item.defaultOpen === true}>
