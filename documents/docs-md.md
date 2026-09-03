@@ -1,186 +1,80 @@
+基準日: 2026-09-03・コミット105422df
+
 # docs-md integration 処理フロー
 
-`apps/docs/src/integrations/docs-md/`に置かれているAstro integration。
-ビルド時にMDXレンダリング後のHTMLからAI向けの`.md`ファイルと`llms.txt`を生成する。
+`apps/docs/src/integrations/docs-md/`のAstro integration。ビルド時にMDXレンダリング後のHTMLから、AI向けの`.md`と`llms.txt`を生成する。共通処理は`util.ts`。
+
+`data-pagefind-body`はPagefind検索の索引対象を示す属性で、レイアウトの`excludeFromSearch`で外れる。このintegrationはこれを「本文のある記事ページ」の目印に使い、持たないページ（一覧・リダイレクト先等）は変換しない。
 
 
-## 全体像
-
-Astroのビルドフックを利用して、以下3系統のジョブを実行する。
-
-1. **HTML → Markdown変換**: `dist/{path}/index.html`を読み込み、unifiedパイプラインで整形して`dist/{path}.md`を出力
-2. **UI一覧`.md`生成**: `data-pagefind-body`を持たない`/ui/` `/en/ui/`の一覧ページの代替として、content collectionから`dist/ui.md` `dist/en/ui.md`を生成
-3. **`llms.txt`生成**: `src/content/en/**/*.mdx`のfrontmatterを集計して`dist/llms.txt`を出力
-
-`data-pagefind-body`はPagefind検索の索引対象を示す属性で、レイアウトの`excludeFromSearch`で外れる。この integration はこれを「本文のある記事ページ」の目印として使い、持たないページ（一覧・リダイレクト先等）は変換対象から外す。
-
-
-## 1. integration本体（`index.ts`）
+## 全体像（`index.ts`）
 
 | フック | 処理 |
 | --- | --- |
-| `astro:config:done` | `config.site` を `siteUrl` として保持（絶対 URL 化用）。`content/en` の絶対パスも保持 |
-| `astro:build:done` | `pages` を走査し、対象パスのページについて HTML → MD 変換を実行。続けて UI 一覧 `.md`、最後に `llms.txt` を生成 |
+| `astro:config:done` | `config.site`を`siteUrl`として保持（絶対URL化用）。`content/en`の絶対パスも保持 |
+| `astro:build:done` | `pages`を走査してHTML→MD変換。続けてUI一覧`.md`、最後に`llms.txt`を生成 |
 
-### 対象ページの判定
-
-`INCLUDE_PREFIXES`に該当するパスのみ処理する：
-
-- `docs/`
-- `ui/`
-- `en/docs/`
-- `en/ui/`
-
-`patterns/` `page-layouts/` `templates/` `_demo/` `preview/` `og/`等は対象外。
-
-### スキップ条件
-
-`article[data-pagefind-body]`が存在しないページ（リダイレクト先・インデックスページ等）は例外を投げて警告ログを出しスキップする。
+- 対象は`INCLUDE_PREFIXES`（`docs/` `ui/` `en/docs/` `en/ui/`）に当たるパスだけ。`patterns/` `page-layouts/` `templates/` `_demo/` `preview/` `og/`等は対象外。
+- `article[data-pagefind-body]`が無いページは`ArticleNotFoundError`として警告ログを出しスキップする。それ以外の例外（rehypeのTypeError、I/O失敗、HTMLパス不整合等）はrethrowしてbuildを失敗させる。`llms.txt`が指す`.md`だけが静かに欠ける事故を防ぐため。
 
 
-## 2. HTML → Markdown変換（`convert-html-to-md.ts`）
+## HTML→Markdown変換（`convert-html-to-md.ts`）
 
-unifiedパイプラインを以下の順で適用する。
+`dist/{path}/index.html`を読み、unifiedパイプラインを次の順で適用して`dist/{path}.md`へ出力する。
 
-| # | プラグイン | 役割 |
-| --- | --- | --- |
-| 1 | `rehype-parse` | HTML をパースして hast に変換 |
-| 2 | `rehype-extract-meta` | `<head>` から `<title>` / `<meta name="description">` / `<link rel="canonical">` を抽出し `file.data` に保管 |
-| 3 | `rehypeKeepArticle`（ローカル） | `article[data-pagefind-body]` だけを残す。無ければ throw |
-| 4 | `rehype-strip-noise` | `nav.c--postNav` / `<script>` / `<style>` / `data-astro-cid-*` / `c--copyBtn` / `c--urlCopyBtn` 等のノイズを除去 |
-| 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `b--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
-| 6 | `rehype-docs-link` | `<a class="c--docsLink">` の中身をタイトル文字列のみに畳み込む（タイトル + 説明文の二重出力を抑止） |
-| 7 | `rehype-code-language` | `<pre data-language="X">` の言語名を `<code class="language-X">` に転記 |
-| 8 | `rehype-callouts` | `c--docsNote` を GFM Alert（`> [!NOTE]` 等）に変換 |
-| 9 | `rehype-absolute-urls` | `/foo` 形式のルート相対 URL を `{siteUrl}/foo` に展開 |
-| 10 | `rehype-remark` | hast → mdast に変換 |
-| 11 | `remark-gfm` | GFM 拡張を有効化 |
-| 12 | `remark-stringify` | mdast → Markdown 文字列化（`bullet: '-'`, `rule: '-'`, `fences: true`, `incrementListMarker: false`） |
+1. `rehype-parse`: HTMLをhastに変換
+2. `rehype-extract-meta`: `<head>`から`<title>` / `<meta name="description">` / `<link rel="canonical">`を`file.data`へ保管
+3. `rehypeKeepArticle`（ローカル）: `article[data-pagefind-body]`だけを残す。無ければthrow
+4. `rehype-strip-noise`: `nav.c--postNav` / `<script>` / `<style>` / `data-astro-cid-*` / コピーボタン等のノイズを除去
+5. `rehype-preview`: `c--preview_area` / `b--tabs_list` / `__decorator`等のプレビューUIを除去
+6. `rehype-docs-link`: `<a class="c--docsLink">`の中身をタイトル文字列だけにする（タイトル＋説明文の二重出力を防ぐ）
+7. `rehype-code-language`: `<pre data-language="X">`の言語名を`<code class="language-X">`へ転記
+8. `rehype-callouts`: `c--docsNote`をGFM Alert（`> [!NOTE]`等）に変換。`keycolor`と種別の対応表はこのファイルにある
+9. `rehype-absolute-urls`: `a` / `img` / `source` / `iframe`のルート相対URL（`/foo`）を`{siteUrl}/foo`に展開。`#anchor` / `mailto:` / 絶対URL / プロトコル相対（`//host`）は触らない
+10. `rehype-remark`→`remark-gfm`→`remark-stringify`（`bullet: '-'`、`rule: '-'`、`fences: true`、`incrementListMarker: false`）
 
-### Callout種別マッピング
+後処理:
 
-`c--callout`の`keycolor`からGFM Alert種別への変換：
-
-| keycolor | GFM Alert |
-| --- | --- |
-| blue / gray / purple | `[!NOTE]` |
-| green | `[!TIP]` |
-| orange | `[!IMPORTANT]` |
-| yellow | `[!WARNING]` |
-| red | `[!CAUTION]` |
-
-### 後処理
-
-- **GFM Alertアンエスケープ**: `remark-stringify`が`[`を`\[`にエスケープしてしまうため、既知種別のホワイトリスト（NOTE / TIP / IMPORTANT / WARNING / CAUTION）に限定して`\[!XXX]`を`[!XXX]`に戻す
-- **Frontmatter付与**: `rehype-extract-meta`で抽出したtitle / description / urlをYAML frontmatterとしてMDの先頭に付与する。titleからは` - Lism CSS`サフィックスを除去
-
-### 絶対URL化のルール
-
-- 変換する: `a` / `img` / `source` / `iframe`の`/foo`形式
-- 変換しない: `#anchor` / `mailto:` / 既存の絶対URL / プロトコル相対 (`//host`)
+- `remark-stringify`が`[`を`\[`にエスケープするので、既知種別（NOTE / TIP / IMPORTANT / WARNING / CAUTION）に限って`\[!XXX]`を`[!XXX]`へ戻す。
+- 抽出したtitle / description / urlをYAML frontmatterとして先頭に付ける。titleの` - Lism CSS`サフィックスは除去する。
 
 
-## 3. `llms.txt`生成（`build-llms-txt.ts`）
+## `llms.txt`生成（`build-llms-txt.ts`）
 
-英語ドキュメント（`apps/docs/src/content/en/**/*.mdx`）のfrontmatterを集計してセクションごとにエントリを並べる。
+`content/en/**/*.mdx`のfrontmatterを集計し、固定ヘッダー（サイト名・説明・GitHub / npm / License）の後にセクションごとのエントリ（`- [Title](URL): description`）を並べ、`dist/llms.txt`へ出力する。
 
-### 除外条件
-
-- `_demo/`配下
-- `test.mdx`
-- `draft: true`のファイル
-- `title`または`description`が無いファイル（警告ログ出力後にスキップ）
-
-### セクション分類（`classify()`）
-
-判定は消去法で、次の表の順に評価する。`content/en/`に`docs/`ディレクトリは無く、URLの`/docs/`はルーティング側が付ける。
+- 除外: `_demo/`配下、`test.mdx`、`draft: true`、`title`か`description`が無いもの（警告ログ後にスキップ）。
+- セクション分類（`classify()`）は消去法で次の順に評価する。`content/en/`に`docs/`ディレクトリは無く、URLの`/docs/`はルーティング側が付ける。
 
 | 順 | セクション | 対象 |
 | --- | --- | --- |
-| 1 | **Optional** | `ui/block-examples/*` / `ui/components/*` / `property-class/*` |
-| 2 | **UI Components** | 上記以外の`ui/`配下（`ui/DummyText` も含む） |
-| 3 | **Getting Started** | トップレベルの `overview` / `installation` / `changelog` / `features` / `mcp` / `skills`（順固定） |
-| 4 | **Documentation** | 上記のいずれにも該当しない残り全部 |
+| 1 | Optional | `ui/block-examples/*` / `ui/components/*` / `property-class/*` |
+| 2 | UI Components | 上記以外の`ui/`配下（`ui/DummyText`も含む） |
+| 3 | Getting Started | トップレベルの`overview` / `installation` / `changelog` / `features` / `mcp` / `skills` |
+| 4 | Documentation | 残り全部 |
 
-### ソート順
-
-- **Getting Started**: `GS_ORDER`の固定順（学習導線）
-- それ以外: `title`の昇順
-
-### URL生成（`toUrl()`）
-
-llms.txtの慣習に従い、HTMLページではなく`.md`バージョンを指す。
-
-- `ui/Xxx.mdx` → `{siteUrl}/en/ui/{slug}.md`
-- それ以外 → `{siteUrl}/en/docs/{slug}.md`
-
-### 出力形式
-
-```
-# Lism CSS
-
-> Lism CSS is a lightweight, layout-first CSS framework ...
-
-- GitHub: ...
-- npm: ...
-- License: MIT
-
-## Getting Started
-
-- [Title](URL): description
-...
-
-## Documentation
-
-...
-```
+- ソート: Getting Startedは`GS_ORDER`の固定順（学習導線）、それ以外は`title`の昇順。
+- URL（`toUrl()`）は`.md`版を指す。`ui/Xxx.mdx`→`{siteUrl}/en/ui/{slug}.md`、それ以外→`{siteUrl}/en/docs/{slug}.md`。
 
 
-## 4. UI一覧`.md`生成（`build-ui-index-md.ts`）
+## UI一覧`.md`生成（`build-ui-index-md.ts`）
 
-`/ui/`と`/en/ui/`の一覧ページは`excludeFromSearch`により`data-pagefind-body`を持たないため、通常のHTML → MD変換パイプライン（`convert-html-to-md.ts`）ではskipされる。その代替として、一覧のリンク集`.md`（`dist/ui.md`と`dist/en/ui.md`）を独立して生成する。
+`/ui/`と`/en/ui/`の一覧ページは`excludeFromSearch`で`data-pagefind-body`を持たず、通常の変換ではスキップされる。その代替として、リンク集の`dist/ui.md`と`dist/en/ui.md`を`astro:build:done`内でja / en各1回生成する。
 
-- **frontmatter（title / description / url）**: ビルド済みの`dist/{lang}/ui/index.html`から`rehype-extract-meta`と同等の抽出処理で取得し、一覧ページ本体の内容と同期させる
-- **本文**: `content/{ja,en}/ui/`配下を`walkMdx`で走査して組み立てる。`_`で始まるファイル・ディレクトリと`draft: true`のファイルは除外する
-- **見出し分け**: `ui/`直下は`## Blocks`、`block-examples/`配下は`## Block Examples`、`components/`配下は`## Components`の見出しにまとめ、それぞれタイトルの昇順でソートする
-- **リンク先**: 各エントリは個別ページの`.md`（`convert-html-to-md.ts`が生成済みのもの）を指す
-
-呼び出し元は`index.ts`の`astro:build:done`フック内で、ja版・en版それぞれに対して1回ずつ実行される。
+- frontmatter（title / description / url）: ビルド済み`dist/{lang}/ui/index.html`から`rehype-extract-meta`と同等の処理で取得し、一覧ページ本体と同期させる。
+- 本文: `content/{ja,en}/ui/`を`walkMdx`で走査する。`_`始まりのファイル・ディレクトリと`draft: true`は除外。
+- 見出し: `ui/`直下は`## Blocks`、`block-examples/`は`## Block Examples`、`components/`は`## Components`。各タイトル昇順。
+- リンク先: 各ページの`.md`（`convert-html-to-md.ts`の生成物）。
 
 
-## 5. `vercel.ts`
+## `vercel.ts`
 
-`apps/docs/vercel.ts`で`*.md`パスに次の2つのヘッダーを付与する。
+`apps/docs/vercel.ts`で`*.md`に2つのヘッダーを付ける。
 
-- `X-Robots-Tag: noindex`: 検索エンジンへのインデックスを抑止する（AI向けクロールは許容、検索結果には載せない方針）
-- `Content-Type: text/markdown; charset=utf-8`: `.md`をMarkdownとして配信する
-
-
-## 出力の確認方法
-
-`.md`ファイル数や`llms.txt`のエントリ数はコンテンツの増減によって変わるため、固定値としては記録しない。ビルド完了時に`astro:build:done`フックのログ（`generated N markdown files (M skipped)` / `generated llms.txt (N entries)`）で件数を確認できる。
-
-スキップは想定内のケース（`/ui/` `/en/ui/`のインデックスページ — `data-pagefind-body`不在によるもの）のみが発生する想定。それ以外のページがスキップされた場合は原因を調査すること。
-
-### 失敗時の挙動
-
-`article[data-pagefind-body]`が無いページは`ArticleNotFoundError`としてskipされるが、それ以外の例外（rehypeプラグインのTypeError、I/O失敗、HTMLパス不整合など）はそのままrethrowされてbuildを失敗させる。これにより`llms.txt`が指す`.md`だけが密かに欠落する事故を防ぐ。
+- `X-Robots-Tag: noindex`: 検索結果には載せない（AI向けクロールは許容）。
+- `Content-Type: text/markdown; charset=utf-8`
 
 
-## 関連ファイル
+## 出力の確認
 
-```
-apps/docs/src/integrations/docs-md/
-├── index.ts                  # integration 本体（フック登録 / ページ走査）
-├── convert-html-to-md.ts     # HTML → MD 変換パイプライン
-├── build-llms-txt.ts         # llms.txt 生成
-├── build-ui-index-md.ts      # UI 一覧 .md（ui.md / en/ui.md）生成
-├── rehype-strip-noise.ts     # ノイズ DOM 除去
-├── rehype-preview.ts         # プレビュー UI 除去
-├── rehype-code-language.ts   # コード言語名の転写
-├── rehype-callouts.ts        # callout → GFM Alert
-├── rehype-docs-link.ts       # c--docsLink の中身をタイトルのみに畳み込み
-├── rehype-extract-meta.ts    # <head> メタ抽出
-├── rehype-absolute-urls.ts   # ルート相対 URL → 絶対 URL
-└── util.ts                   # 共通ユーティリティ
-```
+`.md`の件数と`llms.txt`のエントリ数はコンテンツで変わるので固定値は記録しない。ビルドログ（`generated N markdown files (M skipped)` / `generated llms.txt (N entries)`）で確認する。想定内のスキップは`/ui/` `/en/ui/`の一覧ページだけ。他がスキップされたら原因を調べる。
