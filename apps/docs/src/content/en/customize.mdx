@@ -1,21 +1,22 @@
 ---
 title: 'Customize'
-description: 'An overview of customization options for Lism CSS — choose the right approach based on your goal: switching CSS builds, lism.config.js, SCSS, or CSS Purge.'
+description: 'An overview of how to customize Lism CSS — a guide to choosing between lism.config.js, SCSS, and CSS Purge based on your setup.'
 ---
 
-The `lism-css` package lets you customize the CSS you load, the props components accept, and the classes they output. There are four main entry points. Follow the link that matches your goal.
+The `lism-css` package lets you customize the props / tokens / traits your components accept, the classes and breakpoints they output, and the size of your production CSS. There are two entry points for configuration — `lism.config.js` (requires `@lism-css/plugin`) and SCSS variables (no config file needed) — and which one you use depends on your build setup. You can also pair either one with CSS Purge to slim down your production CSS.
 
 
 ## Entry points
 
-| What you want to do | Approach | Page |
+| Approach | Best for | Page |
 |---|---|---|
-| Switch `@layer` on/off, use `full.css`, or otherwise **change which pre-built CSS file you load** | Swap the CSS file / `isFullMode` | [CSS Builds](/en/docs/customize/build/) |
-| **Extend component props / tokens / traits** (recommended path for Vite / Astro) | `lism.config.js` + `@lism-css/plugin` | [lism.config.js](/en/docs/customize/config/) |
-| **Adjust generated classes and breakpoints using SCSS only** (for setups without the Vite / Astro plugin) | Override SCSS variables such as `$breakpoints` / `$props` | [SCSS Customization](/en/docs/customize/scss/) |
-| **Remove unused classes from production CSS** | purge plugin | [CSS Purge](/en/docs/customize/purge/) |
+| `lism.config.js` | Setups using `@lism-css/plugin` (recommended). With Vite, Astro, or Next.js it's reflected automatically via the bundler integration; otherwise, build the CSS with the bundled CLI | [lism.config.js](/en/docs/customize/config/) |
+| Overriding SCSS variables | Setups that load `lism-css/scss` directly, without `lism.config.js`. Use these values from components via `:value` notation | [SCSS Customization](/en/docs/customize/scss/) |
+| CSS Purge | When you want to strip unused classes from your production CSS to keep it lightweight. Can be combined with either of the above | [CSS Purge](/en/docs/customize/purge/) |
 
 
 :::info
 If you are using Vite or Astro, the single integrated plugin from `@lism-css/plugin` enables `lism.config.js` loading, automatic CSS reflection, and type generation all at once. Start with [lism.config.js](/en/docs/customize/config/) as your entry point.
 :::
+
+Switching to the `@layer`-free builds or the full `full.css` build isn't a configuration option — it's a choice of which file you load. See [CSS File Types](/en/docs/css-files/).

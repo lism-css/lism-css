@@ -438,24 +438,22 @@
   {
     "sourcePath": "customize.mdx",
     "title": "Customize",
-    "description": "Lism CSS のカスタマイズ方法の全体像。ビルドCSSの選択・lism.config.js・SCSS・CSS Purge のどれを使うべきかを目的別に案内します。",
+    "description": "Lism CSS のカスタマイズ方法の全体像。lism.config.js・SCSS・CSS Purge のどれを使うべきかを構成別に案内します。",
     "category": "guide",
     "headings": ["カスタマイズの入口"],
     "keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme", "SCSS", "full.css", "isFullMode", "purge"],
-    "snippet": "Lism CSS のカスタマイズ方法の全体像。目的に応じて「CSSビルドの選択」「lism.config.js でのカスタマイズ」「SCSS でのカスタマイズ」「CSS Purge」の4つの入口を案内する概要ハブページ。"
+    "snippet": "Lism CSS のカスタマイズ方法の全体像。ビルド構成に応じて「lism.config.js でのカスタマイズ」（@lism-css/plugin を使う構成向け。プラグインなしでも CLI ビルドで反映可）「SCSS でのカスタマイズ」（lism-css/scss を直接読み込む構成向け）「CSS Purge」（両者と併用可）の3つの入口を案内する概要ハブページ。@layer なし版や full.css への切り替えは設定ではなくファイル選択のため「CSSファイルの種類」ページへ誘導。"
   },
   {
-    "sourcePath": "customize/build.mdx",
-    "title": "CSSビルドの選択",
-    "description": "@layer のオン / オフや full.css への切り替えなど、読み込むビルド済みCSSを選ぶ方法を解説します。",
+    "sourcePath": "css-files.mdx",
+    "title": "CSSファイルの種類",
+    "description": "lism-css に同梱される main.css / main_no_layer.css / full.css / full_no_layer.css の違いと、@layer なし版・全部入りビルドを使うときの注意点を解説します。",
     "category": "guide",
-    "headings": ["@layer をオフにする", "全部入りビルド（full.css）を使う", "isFullMode"],
+    "headings": ["@layer をオフにする", "全部入りビルド（full.css）を使う"],
     "keywords": [
-      "customize",
-      "カスタマイズ",
-      "build",
-      "ビルド",
       "CSS",
+      "CSSファイル",
+      "配布ファイル",
       "@layer",
       "full.css",
       "isFullMode",
@@ -464,7 +462,7 @@
       "full_no_layer.css",
       "!important"
     ],
-    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。@layer なし版は既存サイト・WordPress テーマなどカスケードを制御できない環境向けで、Property Class は常に !important 付き、u--trim / u--trimAll / u--cbox / u--divide / u--enclose はセレクタ二重化（.u--trim.u--trim = 0-2-0）で出力され「Property Class > Utility Class > 単一クラス」の序列を再現する（lism.config.js の defaultImportant: false・$default_important: 0・props の個別 important: 0 でも !important は外れない）。full.css には main.css 非収録の Property Class ブレイクポイント対応クラス（isVar 系・border ショートハンド系を除く。border は bds / bdc のサブプロパティで BP 対応）と、カラー系 Property Class（bgc / c / bdc）の全カラートークン分のクラス（-bgc:red など。main.css は厳選したセマンティックカラーと keycolor のみ）を含む。スペーシング系（padding / margin / gap）のトークンユーティリティは main.css に収録済み。isFullMode（lism.config.js で設定）でコンポーネント出力も full.css に合わせられる。@lism-css/plugin の統合プラグイン使用時は型も isFullMode に自動追従（lism-env.d.ts 生成）。"
+    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。@layer なし版は既存サイト・WordPress テーマなどカスケードを制御できない環境向けで、Property Class は常に !important 付き、u--trim / u--trimAll / u--cbox / u--divide / u--enclose はセレクタ二重化（.u--trim.u--trim = 0-2-0）で出力され「Property Class > Utility Class > 単一クラス」の序列を再現する（lism.config.js の defaultImportant: false・$default_important: 0・props の個別 important: 0 でも !important は外れない）。full.css には main.css 非収録の Property Class ブレイクポイント対応クラス（isVar 系・border ショートハンド系を除く。border は bds / bdc のサブプロパティで BP 対応）と、カラー系 Property Class（bgc / c / bdc）の全カラートークン分のクラス（-bgc:red など。main.css は厳選したセマンティックカラーと keycolor のみ）を含む。スペーシング系（padding / margin / gap）のトークンユーティリティは main.css に収録済み。コンポーネント出力も full.css に合わせるには lism.config.js の isFullMode を使う（詳細は customize/config.mdx）。"
   },
   {
     "sourcePath": "customize/config.mdx",
@@ -472,16 +470,17 @@
     "description": "lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。",
     "category": "guide",
     "headings": [
-      "Vite / Astro プラグインの登録（必須）",
+      "セットアップ",
+      "設定ファイルの書き方",
       "フォーマット",
-      "型サポート（LismConfig）",
       "カスタマイズ例",
       "ブレイクポイント（xs / xl）の有効化",
-      "追加スタイルを読み込ませる方法",
-      "Vite / Astro プラグイン使用時は自動反映される",
-      "軽微な追加なら手書きで済ませる",
-      "lism-css のCLIコマンドでCSSビルドする",
-      "SCSSファイルへの追加上書き"
+      "isFullMode",
+      "型サポート",
+      "設定ファイルを書くときの型（LismConfig）",
+      "コンポーネントを使うときの型（lism-env.d.ts）",
+      "統合プラグインを使わない構成で反映する",
+      "CLI ビルド"
     ],
     "keywords": [
       "customize",
@@ -505,9 +504,11 @@
       "型",
       "型チェック",
       "補完",
-      "TypeScript"
+      "TypeScript",
+      "isFullMode",
+      "full.css"
     ],
-    "snippet": "lism.config.js（または lism.config.ts / lism.config.mjs）を使ったコンポーネントの挙動カスタマイズ方法。プラグインはプロジェクトルートから lism.config.ts → lism.config.mjs → lism.config.js の順で自動検出し、configPath オプションで別パスも指定可能。@lism-css/plugin の統合プラグイン登録（必須）から props / tokens / traits の追加・拡張、lism-css/config-types の LismConfig 型による設定ファイルの型チェック・補完（.ts は satisfies LismConfig、.js は JSDoc @type）、ブレイクポイント（xs / xl）の有効化、追加スタイルの読み込み方法（自動反映・CLI・手書き・SCSS）まで解説。"
+    "snippet": "lism.config.js（または lism.config.ts / lism.config.mjs）を使ったコンポーネントの props / tokens / traits・ブレイクポイントの拡張方法。冒頭で構成別の反映範囲を整理: Vite / Astro（@lism-css/plugin の統合プラグイン）と Next.js（withLism）はコンポーネント・CSS とも自動反映、lism.config.js を使うには @lism-css/plugin が必須。それ以外の構成ではコンポーネントに lism.config.js は読み込まれず、CSS のみ同梱 CLI（lism-css build / --full）で手動反映し、コンポーネントからは :value 記法で強制クラス化（クライアント側は window._LISM_CSS_CONFIG_ で実行時マージ可、isFullMode は除く）。プラグインは lism.config.ts → .mjs → .js の順で自動検出、configPath で別パス指定可。設定ファイルの書き方（フォーマット・デフォルト値・カスタマイズ例）、ブレイクポイント（xs / xl）の有効化（bp の配列指定で絞り込み可、purge 併用前提）、isFullMode の効果と例外、型サポート（設定ファイルを書くときの LismConfig と、コンポーネントを使うときの自動生成 lism-env.d.ts。未使用時は FullModeRegistry を手書き拡張）まで解説。"
   },
   {
     "sourcePath": "customize/scss.mdx",
@@ -518,6 +519,7 @@
       "上書き可能な変数",
       "基本フォーマット",
       "$props の個別カスタマイズ",
+      "追加した値をコンポーネントから使う",
       "ブレイクポイント（xs / xl）の有効化",
       "SCSSのコンパイル処理について"
     ],
@@ -533,7 +535,7 @@
       "ブレイクポイント",
       "CSS出力"
     ],
-    "snippet": "lism-css の setting モジュールの SCSS 変数を @use ... with (...) で上書きして、出力されるクラスやブレイクポイントを調整する方法。$breakpoints / $is_container_query / $default_important（@layer なし版では無視され常に !important 付与）/ $props の個別カスタマイズ（bp・important・utilities）、ブレイクポイント（xs / xl）の有効化などを解説。純 SCSS 構成向け。"
+    "snippet": "lism-css の setting モジュールの SCSS 変数を @use ... with (...) で上書きして、出力されるクラスやブレイクポイントを調整する方法。$breakpoints / $is_container_query / $default_important（@layer なし版では無視され常に !important 付与）/ $props の個別カスタマイズ（bp・important・utilities）、SCSS で追加した値をコンポーネントから使う方法（設定には反映されないため :value 記法で強制クラス化するか HTML に直接クラスを書く。少数なら global.css に手書きでも可）、ブレイクポイント（xs / xl）の有効化などを解説。lism.config.js と @lism-css/plugin を使わない構成向け。"
   },
   {
     "sourcePath": "customize/purge.mdx",
@@ -548,10 +550,11 @@
       "オプション",
       "safelist",
       "report",
+      "known",
       "注意事項"
     ],
     "keywords": ["purge", "CSS purge", "パージ", "軽量化", "未使用", "full.css", "@lism-css/plugin", "lismPurge", "safelist", "build"],
-    "snippet": "ビルド成果物をスキャンして使用中の Lism CSS クラスだけを残すパージ機能。@lism-css/plugin の統合プラグインで purge: true を渡すだけで有効化可能。仕組み・単体プラグイン直接利用・full.css との併用・safelist / report オプション・注意事項を解説。"
+    "snippet": "ビルド成果物をスキャンして使用中の Lism CSS クラスだけを残すパージ機能。@lism-css/plugin の統合プラグインで purge: true を渡すだけで有効化可能。仕組み・単体プラグイン直接利用・full.css との併用・safelist / report / known オプション（known 未指定時は lism.config.js 反映済み full.css から自動構築。safelist に RegExp / 関数があると未一致の属性セレクタは全て保持）・注意事項を解説。"
   },
   {
     "sourcePath": "utility-class.mdx",

@@ -104,6 +104,7 @@ const docsSidebar: SidebarSection[] = [
     items: [
       { label: 'Lism CSSとは', translate: { en: 'What is Lism CSS?' }, link: '/docs/overview/' },
       '/docs/installation/',
+      '/docs/css-files/',
       '/docs/skills/',
       '/docs/mcp/',
       '/docs/features/',
@@ -181,7 +182,6 @@ const docsSidebar: SidebarSection[] = [
     translate: { en: 'Customize' },
     items: [
       { label: 'カスタマイズの基本', translate: { en: 'Customization Basics' }, link: '/docs/customize/' },
-      { label: 'CSSビルド', translate: { en: 'CSS Builds' }, link: '/docs/customize/build/' },
       { label: 'lism.config.js', link: '/docs/customize/config/' },
       { label: 'SCSS', link: '/docs/customize/scss/' },
       { label: 'CSS Purge', link: '/docs/customize/purge/' },

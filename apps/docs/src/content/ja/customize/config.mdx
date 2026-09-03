@@ -3,16 +3,18 @@ title: 'lism.config.js でのカスタマイズ'
 description: 'lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。'
 ---
 
-プロジェクトのルートディレクトリ直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を用意することで、コンポーネントの挙動をカスタマイズすることができます。
+プロジェクトのルート直下に `lism.config.js`（または `lism.config.ts` / `lism.config.mjs`）を置くと、コンポーネントが受け付ける props / tokens / traits やブレイクポイントを拡張できます。
+
+`lism.config.js` を使うには `@lism-css/plugin` が必要です。Vite / Astro / Next.js ではバンドラ連携（統合プラグイン）でコンポーネントと CSS の両方に自動反映されます。それ以外の構成では CSS だけを同梱の CLI でビルドします（[統合プラグインを使わない構成で反映する](#統合プラグインを使わない構成で反映する)）。
 
 
-## Vite / Astro プラグインの登録（必須）
+## セットアップ
+
+`@lism-css/plugin` の統合プラグイン `lismCss()` を登録します。これ1つで、`lism.config.js` の読み込み・CSS への自動反映・型定義 `lism-env.d.ts` の自動生成がまとめて有効になります。
 
 :::warning
-`lism.config.js` を読み込ませるには、Vite（または Astro）の設定ファイルでプラグインを登録する必要があります。登録していない場合、ファイルを置いてもデフォルト設定のままになります。
+`lism.config.js` を読み込むのはこのプラグインです。登録していないと、ファイルを置いてもデフォルト設定のままです。
 :::
-
-`@lism-css/plugin` が提供する統合プラグインを使います。これ1つで、**設定の読み込み（JS ランタイムが `lism.config.js` を読む）・動的CSSビルド（dev/build で CSS に自動反映）・型自動生成（`lism-env.d.ts`）** がまとめて有効になります。
 
 ```bash frame="none"
 pnpm add -D @lism-css/plugin
@@ -42,7 +44,7 @@ export default defineConfig({
 </Preview>
 
 :::info
-Next.js では Vite / Astro プラグインの代わりに、`@lism-css/plugin/next` の `withLism()` を使います。セットアップ手順は[インストールの「Next.js での導入」](/docs/installation/#nextjs-での導入)を参照してください。
+Next.js では統合プラグインの代わりに、`@lism-css/plugin/next` の `withLism()` を使います。セットアップ手順は[インストールの「Next.js での導入」](/docs/installation/#nextjs-での導入)を参照してください。
 :::
 
 プラグインはプロジェクトルートから `lism.config.ts` → `lism.config.mjs` → `lism.config.js` の順で自動検出します。別の場所のファイルを使う場合は `configPath` オプションでパスを指定できます。
@@ -52,7 +54,9 @@ integrations: [lismCss({ configPath: './config/lism.config.js' })],
 ```
 
 
-## フォーマット
+## 設定ファイルの書き方
+
+### フォーマット
 
 ```js
 export default {
@@ -71,45 +75,9 @@ export default {
     setFoo: 'set--foo',
     ...
   },
+  // breakpoints と isFullMode も同じファイルで指定します（後述）
 };
 ```
-
-
-## 型サポート（LismConfig）
-
-`lism-css/config-types` から `LismConfig` 型を読み込むと、設定ファイルのキー名や値の形をエディタが補完・チェックしてくれます。`props` を `porps` とタイプミスした、といった間違いをその場で見つけられます。
-
-`lism.config.ts` では `satisfies LismConfig` を付けるのがおすすめです。型チェックが効きつつ、書いた内容（追加した prop / token のキーなど）の具体的な型はそのまま保たれます。
-
-```ts
-// lism.config.ts
-import type { LismConfig } from 'lism-css/config-types';
-
-export default {
-  props: {
-    filter: { utils: { blur: 'blur(3px)' } },
-  },
-  breakpoints: {
-    xs: '360px',
-  },
-} satisfies LismConfig;
-```
-
-`lism.config.js`（JavaScript）でも、JSDoc の `@type` を付ければ同じように補完・チェックが効きます。
-
-```js
-// lism.config.js
-/** @type {import('lism-css/config-types').LismConfig} */
-export default {
-  props: {
-    filter: { utils: { blur: 'blur(3px)' } },
-  },
-};
-```
-
-:::note[`lism-env.d.ts` とは別物です]
-ここで使う `LismConfig` は「**設定ファイルを書くとき**」の型です。統合プラグインが生成する `lism-env.d.ts`（追加した prop / trait を**コンポーネント側の props**として使えるようにする型）とは役割が異なります。両方を併用することで、設定ファイルの執筆時とコンポーネント利用時の両方で型の恩恵を受けられます。
-:::
 
 <Preview>
   <PreviewTitle>デフォルト値</PreviewTitle>
@@ -125,7 +93,7 @@ export default {
 </Preview>
 
 
-## カスタマイズ例
+### カスタマイズ例
 
 例えば次のような設定ファイルを用意するとします。
 
@@ -175,22 +143,14 @@ export default {
   </PreviewCode>
 </Preview>
 
-:::note[追加した prop / trait は型でも自動で使えるようになります]
-統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した prop / trait は `lism-env.d.ts` 経由で型でも自動で使えるようになります（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
-
-なお、既存 prop への値追加（`ta="justify"` など）はもともと任意の文字列を受け付けるため、型エラーにはなりません（補完候補には出ません）。
-:::
-
-:::warning
-ただし、統合プラグインを使っていない構成では、`lism.config.js` に props を追加しただけではコンポーネントのHTML出力が変わるだけで、対応するユーティリティクラスのスタイルは生成されません。スタイルを反映する方法（プラグインによる自動反映 / CLI / SCSS）は[追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法)を参照してください。
-:::
+統合プラグインを使っていれば、これらのクラスに対応する CSS と型定義も自動で生成されます。統合プラグインを使わない構成では [CLI ビルド](#cli-ビルド)で CSS を生成してください。
 
 
 ## ブレイクポイント（xs / xl）の有効化
 
-デフォルトのブレイクポイントは `xs: 0`（無効）/ `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0`（無効）です。値 `0` は「無効＝CSSクエリを出力しない」を表します。
+デフォルトのブレイクポイントは `xs: 0`（無効）/ `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0`（無効）です。値 `0` は「無効（CSS クエリを出力しない）」を表します。
 
-`xs` や `xl` を有効化するには、**`lism.config.js` の `breakpoints` に、有効化したいブレイクポイントのサイズだけを指定する**のが最も簡単です。
+`xs` や `xl` を有効化するには、`lism.config.js` の `breakpoints` に、有効化したいブレイクポイントのサイズだけを指定します。
 
 ```js
 // lism.config.js
@@ -202,73 +162,126 @@ export default {
 };
 ```
 
-これだけで、ブレイクポイント対応（`bp: 1`）の全 Property Class が `xs` / `xl` のレスポンシブクラス（`-p_xs` / `-p_xl` など）も出力するようになります。prop ごとに個別指定する必要はありません。また、`@lism-css/plugin` の統合プラグインを使っている場合は dev/build の CSS に自動反映されます。
+これだけで、ブレイクポイント対応（`bp: 1`）の全 Property Class が `xs` / `xl` のブレイクポイント対応クラス（`-p_xs` / `-p_xl` など）も出力するようになります。prop ごとに個別指定する必要はありません。
 
-これにより、コンポーネント側でもオブジェクト記法で `xs` / `xl` を指定できるようになります。
+コンポーネント側でもオブジェクト記法で `xs` / `xl` を指定できるようになります。
 
 ```jsx
 <Box p={{ base: 20, xs: 10, sm: 30 }} />
 ```
-
-型・補完でも `xs` / `xl` を提示させるには、[Responsive ページ](/docs/responsive/#型補完で提示されるブレイクポイント)を参照してください。統合プラグイン（`@lism-css/plugin`）を使っている場合は、`lism-env.d.ts` が自動生成されるため手書き拡張は不要です。
 
 :::info
 `full.css` を読み込んでいる場合も、`xs` / `xl` はデフォルトでは無効です（出力されるのは `sm` / `md` / `lg`）。利用するには上記と同様に、`breakpoints` でサイズを指定して有効化してください。
 :::
 
 :::warning
-`xs` / `xl` などを有効化すると `bp: 1` の全 Property Class に該当ブレイクポイントのブロックが追加されるぶん、CSS サイズが増えます。**CSS purge との併用が前提**の設計です。purge を使わない場合は、`bp` のリスト形式（`bp: ('sm', 'md')` など）で prop ごとに出力ブレイクポイントを絞ることを検討してください。
+`xs` / `xl` などを有効化すると `bp: 1` の全 Property Class に該当ブレイクポイントのブロックが追加されるぶん、CSS サイズが増えます。**[CSS Purge](/docs/customize/purge/) との併用が前提**の設計です。パージを使わない場合は、`bp` のリスト形式（`bp: ['sm', 'md']` など）で prop ごとに出力ブレイクポイントを絞ることを検討してください。
 :::
 
-SCSS を直接利用する構成では、`$breakpoints` の上書きによる有効化も利用できます（[SCSS でのカスタマイズ](/docs/customize/scss/)を参照）。
+SCSS を直接利用する構成では、`$breakpoints` の上書きでも有効化できます（[SCSS でのカスタマイズ](/docs/customize/scss/#ブレイクポイントxs--xlの有効化)を参照）。
 
 
-## 追加スタイルを読み込ませる方法
+## isFullMode
 
-統合プラグインを使っていない構成では、`lism.config.js` で props を増やしただけでは対応するユーティリティクラスのスタイルは存在しません。次のいずれかでスタイルを追加してください。
+[全部入りビルド（`full.css`）](/docs/css-files/#全部入りビルドfullcssを使う)を読み込むだけでは、コンポーネント側はデフォルト設定のまま動作します（例: `t="20"` はインラインスタイルとして出力されます）。コンポーネントの出力も `full.css` に合わせるには、`isFullMode` を有効にします。
+
+```js
+// lism.config.js
+export default {
+  isFullMode: true,
+};
+```
+
+`isFullMode: true` にすると、コンポーネントの props 設定に full 用の設定が適用されます。
+
+- `t="20"` のような値が、インラインスタイルではなく `-t` クラス＋`--t` 変数で出力されます。
+- `ta={['start', 'center']}` のようなブレイクポイント指定が、`full.css` にブレイクポイント対応クラスがある Property Class で警告なく使えます。
+- 例外として、変数出力専用（`isVar` 系）には `bds` / `bdc` を除いてブレイクポイント対応が追加されません。`contentSize` などの `isVar` 系、単位なし比率を保つため対象外の `lh`、border ショートハンド系は、`isFullMode` を有効にしてもブレイクポイント指定で警告が出ます。
+- 設定は「デフォルト設定 → full 用設定 → `lism.config.js` の `props`」の順でマージされ、後のものほど優先されます。
+
+:::warning
+- `isFullMode` は、`full.css`（または `isFullMode` を有効にして [CLI ビルド](#cli-ビルド)した `main.css`）を読み込んでいることが前提です。デフォルトの `main.css` のまま有効にすると、出力されたクラスに対応するスタイルが存在しない状態になります。
+- `isFullMode` はビルド時の設定です。ランタイムの `window._LISM_CSS_CONFIG_` では切り替えられません。
+:::
 
 
-### Vite / Astro プラグイン使用時は自動反映される
+## 型サポート
 
-`@lism-css/plugin/vite` / `@lism-css/plugin/astro` の統合プラグイン（各エントリの `lismCss()`）を登録している場合、`lism.config.js` の `props` / `tokens` の追加・変更は **dev サーバー・ビルドの両方で CSS に自動反映**されます。手動での CLI ビルドは不要です。
+型は2種類あります。設定ファイルを書くときの `LismConfig` と、コンポーネントを使うときの `lism-env.d.ts` です。
 
-dev サーバー起動中に `lism.config.js` を変更すると HMR で CSS が再生成されます。
+### 設定ファイルを書くときの型（LismConfig）
+
+`lism-css/config-types` から `LismConfig` 型を読み込むと、設定ファイルのキー名や値の形をエディタが補完・チェックしてくれます。`props` を `porps` とタイプミスした、といった間違いをその場で見つけられます。
+
+`lism.config.ts` では `satisfies LismConfig` を付けるのがおすすめです。型チェックが効きつつ、書いた内容（追加した prop / token のキーなど）の具体的な型はそのまま保たれます。
+
+```ts
+// lism.config.ts
+import type { LismConfig } from 'lism-css/config-types';
+
+export default {
+  props: {
+    filter: { utils: { blur: 'blur(3px)' } },
+  },
+  breakpoints: {
+    xs: '360px',
+  },
+} satisfies LismConfig;
+```
+
+`lism.config.js`（JavaScript）でも、JSDoc の `@type` を付ければ同じように補完・チェックが効きます。
+
+```js
+// lism.config.js
+/** @type {import('lism-css/config-types').LismConfig} */
+export default {
+  props: {
+    filter: { utils: { blur: 'blur(3px)' } },
+  },
+};
+```
 
 
-### 軽微な追加なら手書きで済ませる
+### コンポーネントを使うときの型（lism-env.d.ts）
 
-カスタムトークンが少数で済むなら、Lism Props の [`:value` 記法](/docs/core-components/lism-props/#output-utility)と `global.css` への手書きで十分です。
+統合プラグインを使っている場合、`lism.config.js` の内容は `lism-env.d.ts` として自動生成され、コンポーネント側の型に反映されます。手書きの型拡張は不要です。`lism-env.d.ts` は git にコミットしてください。
 
-```css
-/* global.css */
-@layer lism-base {
-  :root {
-    --lts--2xl: 0.15em;
+- 追加した prop / trait は `CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力されます。`<Box filter="blur" isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。
+- `breakpoints` で有効化した `xs` / `xl` も、オブジェクト記法や配列記法の型・補完に反映されます。手書きで対応する方法は [Responsive ページ](/docs/responsive/#型補完で提示されるブレイクポイント)を参照してください。
+- `isFullMode: true` のときは、`ta` などへのブレイクポイント指定（配列・オブジェクト記法）も型エラーになりません。
+
+なお、既存 prop への値追加（`ta="justify"` など）はもともと任意の文字列を受け付けるため、型エラーにはなりません（補完候補には出ません）。
+
+統合プラグインを使わない構成で `isFullMode` の型だけ切り替えるには、プロジェクト直下の型定義ファイル（例: `src/lism-env.d.ts`）で次のように拡張してください。
+
+```ts
+// src/lism-env.d.ts
+import 'lism-css';
+
+declare module 'lism-css' {
+  interface FullModeRegistry {
+    enabled: true; // キー名は任意。1つでもキーがあれば full 版の型に切り替わる
   }
 }
-
-/* Property Class は @layer を付けない */
-.-lts\:2xl {
-  letter-spacing: var(--lts--2xl);
-}
 ```
 
-```jsx
-<Text lts=":2xl">...</Text>
-```
 
-トークンを体系的に拡張したい場合のみ、後述の CLI / SCSS 経由に切り替えるとよいでしょう。
+## 統合プラグインを使わない構成で反映する
+
+統合プラグインを使わない構成では、`lism.config.js` は自動では反映されません。CSS は `@lism-css/plugin` 同梱の CLI でビルドします。
+
+コンポーネント側は `lism.config.js` を読まないため、`p="box"` のような追加値はデフォルト設定のまま処理されます。コンポーネントから使うには、Lism Props の [`:value` 記法](/docs/core-components/lism-props/#output-utility)（`p=":box"`）で強制的にクラス化してください。クライアント側でレンダリングされるコンポーネントなら、ブラウザで `window._LISM_CSS_CONFIG_` に同じ内容を定義して実行時にマージすることもできます（`isFullMode` は除く）。
 
 
-### lism-css のCLIコマンドでCSSビルドする
+### CLI ビルド
 
-Vite / Astro を使わない構成（純 SCSS 構成・他バンドラ等）で `lism.config.js` を CSS に反映させるには、`@lism-css/plugin` が提供する `lism-css build` を実行します。これは後方互換専用ではなく、そのような構成向けの**現在も推奨される正式な方法**です。
+`@lism-css/plugin` が提供する `lism-css build` を実行すると、`lism.config.js` を読み込んで設定を反映した CSS を生成します。
 
 ```bash frame="none"
 npx lism-css build
 ```
 
-今回の例だと、以下のスタイルがこのコマンドによって `lism-css/main.css` 内に自動で生成されます。
+[カスタマイズ例](#カスタマイズ例)の設定なら、次のスタイルが `lism-css/main.css` に生成されます。
 
 ```css
 .-ta\:justify {
@@ -285,7 +298,7 @@ npx lism-css build
 }
 ```
 
-`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のような **トークン参照を含むユーティリティクラス** に加えて、参照先の CSS 変数（`:root { --lts--2xl: .5em }` のような **値そのもの**）も同時に生成されます。なお、値に `'-'` を指定したキーは「名前だけを登録し、実値は出力しない」指定です（`:root` 宣言を生成せず、`palette.keycolor` のように CSS 変数を持たないトークンや、`bdrs.inner` のように実値を手書きSCSS側で定義するトークンで使います）。
+`tokens` に値を書いておけば、`.-lts\:2xl { letter-spacing: var(--lts--2xl) }` のようにトークンを参照する Property Class に加えて、参照先の CSS 変数（`:root { --lts--2xl: .5em }`）も生成されます。値に `'-'` を指定したキーは「名前だけを登録し、実値は出力しない」指定です。`palette.keycolor` のように CSS 変数を持たないトークンや、`bdrs.inner` のように実値を手書き SCSS 側で定義するトークンで使います。
 
 一方で `is--` クラスのスタイルは自動生成されないため、別途手動で定義して読み込ませる必要があります。
 
@@ -299,55 +312,10 @@ npx lism-css build
 ```
 
 :::warning
-パッケージのスタイルを再ビルドするコマンドのため、パッケージ更新ごとにビルドが必要です。
+- パッケージのスタイルを再ビルドするコマンドのため、パッケージ更新ごとにビルドが必要です。
+- `full.css` / `full_no_layer.css` はデフォルトでは再ビルドされません。`full.css` を使用している場合は `--full` オプションを付けてください。`isFullMode` が有効なら、`main.css` にも full 用の設定が適用されます。
 :::
-
-なお、`full.css` / `full_no_layer.css` はデフォルトでは再ビルドされません。`full.css` を使用している場合は、`--full` オプションを付けて実行してください。
 
 ```bash frame="none"
 npx lism-css build --full
-```
-
-
-### SCSSファイルへの追加上書き
-
-lism.config.js にあわせて、SCSS変数を上書きしてから読み込ませてもよいでしょう。SCSS 変数の詳細は [SCSS でのカスタマイズ](/docs/customize/scss/) を参照してください。
-
-<PreviewTitle>lism.config.jsにあわせてSCSSもカスタマイズ</PreviewTitle>
-```scss
-// 設定カスタマイズ
-@use '../path-to/node_modules/lism-css/scss/setting' with (
-  $props: (
-    'ta': (
-      utilities: (
-        'justify': 'justify',
-      ),
-    ),
-    'p': (
-      utilities: (
-        'box': '2em',
-      ),
-    ),
-    'filter': (
-      utilities: (
-        'blur': 'blur(3px)',
-      ),
-    ),
-    'lts': (
-      utilities: (
-        '2xl': 'var(--lts--2xl)',
-      ),
-    ),
-  )
-);
-
-// lism の scssファイルを読み込む
-@use '../path-to/node_modules/lism-css/scss/main';
-
-// トークン追記
-@layer lism-base {
-  :root {
-    --lts--2xl: 0.15em;
-  }
-}
 ```

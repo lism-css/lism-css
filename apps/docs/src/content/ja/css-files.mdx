@@ -1,9 +1,9 @@
 ---
-title: 'CSSビルドの選択'
-description: '@layer のオン / オフや full.css への切り替えなど、読み込むビルド済みCSSを選ぶ方法を解説します。'
+title: 'CSSファイルの種類'
+description: 'lism-css に同梱される main.css / main_no_layer.css / full.css / full_no_layer.css の違いと、@layer なし版・全部入りビルドを使うときの注意点を解説します。'
 ---
 
-`lism-css` パッケージは、用途に応じて複数のビルド済みCSSを同梱しています。読み込むファイルを差し替えるだけで、`@layer` のオン / オフや「全部入り」ビルドへ切り替えられます。
+`lism-css` パッケージは、用途に応じて複数のビルド済みCSSを同梱しています。読み込むファイルを差し替えるだけで、`@layer` のオン / オフや「全部入り」ビルドへ切り替えられます。通常は `main.css` を使い、必要なときだけほかのファイルに切り替えてください。
 
 | ファイル | 内容 |
 |---|---|
@@ -48,40 +48,6 @@ import 'lism-css/full.css'; // @layer なし版は 'lism-css/full_no_layer.css'
 
 そのぶんCSSサイズは `main.css` より大きくなるため、**未使用のクラスをビルド時に削除する [CSS Purge](/docs/customize/purge/) との併用を前提とした配布物**です。
 
-
-### isFullMode
-
-`full.css` を読み込むだけでは、コンポーネント側はデフォルト設定のまま動作します（例: `t="20"` はインラインスタイルとして出力されます）。
-
-コンポーネントの出力も `full.css` に合わせたい場合は、`lism.config.js` で `isFullMode` を有効にしてください。
-
-```js
-// lism.config.js
-export default {
-  isFullMode: true,
-};
-```
-
-`isFullMode: true` にすると、コンポーネントの props 設定にも full 用の設定が適用され、`t="20"` がインラインスタイルではなく `-t` クラス＋`--t` 変数として出力されるようになります。ブレイクポイント指定（`ta={['start', 'center']}` など）も、上で挙げたブレイクポイント対応クラスが出力される Property であれば警告なく使えるようになります。ただし full 用設定は、変数出力専用（`isVar` 系）には `bds` / `bdc` を除いてブレイクポイント対応を追加しません。そのため、デフォルトでブレイクポイント対応を持たない `isVar` 系（`contentSize` など）や、単位なし比率を維持するため full でも対象外とされる `lh`、border ショートハンド系は、`isFullMode` を有効にしてもブレイクポイント指定で警告が出ます。設定は「デフォルト設定 → full 用設定 → `lism.config.js` の `props`」の順でマージされ、後のものほど優先されます。
-
-:::warning
-- `isFullMode` は、`full.css`（または `isFullMode` を有効にして CLI で再ビルドした `main.css`）を読み込んでいることが前提です。デフォルトの `main.css` のまま有効にすると、出力されたクラスに対応するスタイルが存在しない状態になります。
-- `isFullMode` はビルド時の設定です。ランタイムの `window._LISM_CSS_CONFIG_` では切り替えられません。
+:::info
+`full.css` を読み込むだけでは、コンポーネント側はデフォルト設定のまま動作します（例: `t="20"` はインラインスタイルとして出力されます）。コンポーネントの出力も `full.css` に合わせるには、`lism.config.js` の [`isFullMode`](/docs/customize/config/#isfullmode) を有効にしてください。
 :::
-
-型・補完も `isFullMode` に追従させられます。`@lism-css/plugin` の統合プラグインを使っている場合は、`isFullMode: true` のとき `lism-env.d.ts` が自動生成され、`ta` などへのブレイクポイント指定（配列・オブジェクト記法）も型エラーになりません。手書き拡張は不要です（`lism-env.d.ts` は git にコミットしてください）。
-
-統合プラグインを使わない場合は、プロジェクト直下の型定義ファイル（例: `src/lism-env.d.ts`）で次のように拡張してください。
-
-```ts
-// src/lism-env.d.ts
-import 'lism-css';
-
-declare module 'lism-css' {
-  interface FullModeRegistry {
-    enabled: true; // キー名は任意。1つでもキーがあれば full 版の型に切り替わる
-  }
-}
-```
-
-なお、[CLI ビルド](/docs/customize/config/#lism-css-のcliコマンドでcssビルドする)を `isFullMode` が有効の状態で実行すると、`main.css` にも full 用の設定が適用された状態でビルドされます。

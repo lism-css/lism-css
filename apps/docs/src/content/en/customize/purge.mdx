@@ -45,8 +45,6 @@ lismCss({
 });
 ```
 
-When `known` (the set of known Lism classes that purge targets) is **not specified**, it is automatically built from the **config-reflected `full.css`** at the start of the build. This ensures that unused classes derived from props / tokens you added in `lism.config.js` are correctly purged. If you explicitly provide `known`, that set is used as-is.
-
 :::info
 You can also use the standalone plugins directly: `lismPurge` from `@lism-css/plugin/purge/vite` and `lismPurgeAstro` from `@lism-css/plugin/purge/astro`.
 :::
@@ -96,14 +94,12 @@ In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender 
 
 ## Pairing with full.css
 
-`lism-css/full.css` is an **everything-included build** that adds breakpoint-aware classes (`sm` / `md` / `lg`) for every Property Class except variable-only (`isVar`) ones and border shorthands (the `bd` family). As an exception, responsive borders are provided through the variable-only sub-properties (`bds` / `bdc`; `bdw` supports breakpoints in `main.css` already). It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
+`lism-css/full.css` is a **full build** that adds breakpoint-aware classes and color-token classes not included in `main.css` (see [CSS File Types](/en/docs/css-files/#using-the-full-build-fullcss) for what's included). It is large when loaded as-is, so it ships as a build **meant to be paired with purge**.
 
 ```js
 // Load full.css instead of main.css
 import 'lism-css/full.css';
 ```
-
-The default set of known classes (`known`) used by purge is derived from `full.css`. Since `full.css` contains all of the selectors in `main.css`, unused classes are removed correctly whether you load `main.css` or `full.css`.
 
 Once purge is enabled and you switch to `full.css`, you gain access to token classes and extended breakpoints that `main.css` does not include, while the final CSS is narrowed down to **only the classes actually used across the whole site**.
 
@@ -120,7 +116,7 @@ Both plugins accept the same `LismPurgeOptions`.
 |---|---|
 | <span class="-whs:nowrap">`safelist`</span> | Keep classes that static analysis cannot detect |
 | `report` | Log the file size before and after purging |
-| `known` | Customize the set of known Lism classes. Pass a function to resolve it lazily at build time. Defaults to the set derived from `full.css` (rarely needed) |
+| `known` | Override the set of classes purge treats as "Lism classes" (rarely needed) |
 
 
 ### safelist
@@ -140,7 +136,7 @@ lismPurge({
 });
 ```
 
-`string` entries are also used when matching attribute selectors (`[class*="..."]` etc.). `RegExp` and function entries cannot enumerate concrete class names, so attribute selectors are kept rather than removed, erring on the safe side.
+`string` entries are also used when matching attribute selectors (such as `[class*="..."]`). `RegExp` and function entries can't enumerate concrete class names, so they can't be matched against attribute selectors — if even one such entry is present, every attribute selector that doesn't match a used class or a `string` entry is kept rather than removed.
 
 
 ### report
@@ -150,6 +146,11 @@ When `true`, the total byte count before / after purging and the reduction ratio
 ```
 CSS: 28100 → 13200 bytes (-14900 / -53.0%)
 ```
+
+
+### known
+
+The set of classes purge treats as "Lism classes." When not specified, it's automatically built from the config-reflected `full.css` at the start of the build, so unused classes derived from props / tokens you added in `lism.config.js` are correctly purged too. Since `full.css` includes every selector in `main.css`, nothing is missed regardless of which one you load. Passing a function resolves it lazily at build time.
 
 
 ## Caveats

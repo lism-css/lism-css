@@ -118,7 +118,7 @@ import 'lism-css/main.css';
 In Next.js (16 or later), import it in your root layout (`app/layout.tsx` for App Router). If you also want to apply `lism.config.js` settings and generate types, set up `@lism-css/plugin` as described in [Setting up with Next.js](#setting-up-with-nextjs) below.
 
 :::info
-Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS purge tools. See the [Customize page](/en/docs/customize/build/) for details.
+Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS purge tools. See [CSS File Types](/en/docs/css-files/) for details.
 :::
 
 
@@ -306,39 +306,7 @@ Name resolution is case-insensitive and ignores hyphens and underscores, so `Nav
 
 ## Strip unused CSS (purge)
 
-The purge feature that removes unused Lism CSS classes from your production build is provided by `@lism-css/plugin`. For Vite / Astro projects, install `@lism-css/plugin` and pass `purge: true` to `lismCss()` from the matching entry (`@lism-css/plugin/vite` or `@lism-css/plugin/astro`).
-
-```bash frame="none"
-pnpm add -D @lism-css/plugin
-```
-
-```js
-// astro.config.mjs example
-import { defineConfig } from 'astro/config';
-import { lismCss } from '@lism-css/plugin/astro';
-
-export default defineConfig({
-  integrations: [lismCss({ purge: true })],
-});
-```
-
-```js
-// vite.config.js example
-import { defineConfig } from 'vite';
-import { lismCss } from '@lism-css/plugin/vite';
-
-export default defineConfig({
-  plugins: [lismCss({ purge: true })],
-});
-```
-
-You can also pass an object like `purge: { report: true }` to configure additional purge plugin options.
-
-:::info
-The standalone plugins (`lismPurgeAstro` from `@lism-css/plugin/purge/astro` / `lismPurge` from `@lism-css/plugin/purge/vite`) are also available when you want to register purge directly.
-:::
-
-See [CSS Purge](/en/docs/customize/purge/) for the full setup, options, and safelist usage.
+The purge feature — which removes unused Lism CSS classes from your production build to keep the CSS lightweight — is provided by `@lism-css/plugin`. Just pass `purge: true` to the Vite / Astro integrated plugin (`lismCss()`) to enable it. See [CSS Purge](/en/docs/customize/purge/) for the full setup steps, options, and how to configure `safelist`.
 
 
 ## AI tool integration

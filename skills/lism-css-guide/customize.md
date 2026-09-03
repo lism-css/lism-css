@@ -12,8 +12,8 @@
 詳細（公式ドキュメント）:
 
 - 概要: [https://lism-css.com/docs/customize/](https://lism-css.com/docs/customize/)
-- CSSビルドの選択（`@layer` / `full.css` / `isFullMode`）: [https://lism-css.com/docs/customize/build/](https://lism-css.com/docs/customize/build/)
-- `lism.config.js`（props / tokens / traits・breakpoints・追加スタイル）: [https://lism-css.com/docs/customize/config/](https://lism-css.com/docs/customize/config/)
+- CSSファイルの種類（`@layer` なし版 / `full.css`）: [https://lism-css.com/docs/css-files/](https://lism-css.com/docs/css-files/)
+- `lism.config.js`（props / tokens / traits・breakpoints・`isFullMode`・追加スタイル）: [https://lism-css.com/docs/customize/config/](https://lism-css.com/docs/customize/config/)
 - SCSS（`$setting` / `$props`・BP上書き）: [https://lism-css.com/docs/customize/scss/](https://lism-css.com/docs/customize/scss/)
 - CSS Purge: [https://lism-css.com/docs/customize/purge/](https://lism-css.com/docs/customize/purge/)
 
@@ -323,16 +323,15 @@ CLI を使わず、追加クラス分の CSS をプロジェクト側で書い�
 }
 ```
 
-### SCSS で `lism.config.js` と整合させる
+### SCSS だけで値を追加する（`lism.config.js` を使わない構成）
 
-SCSS 経由で読み込む構成なら、`lism.config.js` と同じ追加分を `$props` の `utilities` 設定として書いておけば、ビルドコマンドなしで反映できます。
+`@lism-css/plugin` を使わない構成では `lism.config.js` は読み込まれない。SCSS の `$props` の `utilities` で値を追加し、コンポーネントからは `:value` 記法（`p=":box"`）で強制クラス化するか、HTML に直接クラスを書いて使う。
 
 ```scss
 @use '../path-to/node_modules/lism-css/scss/setting' with (
   $props: (
     'ta': ( utilities: ( 'justify': 'justify' ) ),
     'p': ( utilities: ( 'box': '2em' ) ),
-    'filter': ( utilities: ( 'blur': 'blur(3px)' ) ),
     'lts': ( utilities: ( '2xl': 'var(--lts--2xl)' ) ),
   )
 );
