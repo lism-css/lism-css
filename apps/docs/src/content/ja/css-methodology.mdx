@@ -4,10 +4,6 @@ description: 'Lism CSS の階層構造やクラス設計の方針など、CSS設
 ---
 import { Lism, Box } from "lism-css/astro";
 
-export const WhsNw = ({children}) => {
-  return <span className='-whs:nowrap'>{children}</span>
-}
-
 このページでは、LismがどのようなCSS設計になっているかを説明します。
 
 
@@ -217,9 +213,9 @@ Property Class には以下の3種類の形式があります。
 
 |形式|説明|例|
 |---|---|---|
-|<WhsNw>`-{prop}:{value}`</WhsNw>| 各プロパティごとの主要な値やトークンの値を利用するためのクラス |<WhsNw>`-fz:l`</WhsNw>,<br/><WhsNw>`-d:none`</WhsNw>|
+|`-{prop}:{value}`| 各プロパティごとの主要な値やトークンの値を利用するためのクラス |`-fz:l`,<br/>`-d:none`|
 |`-{prop}`| 変数 `--{prop}` を受け取るためのクラス |`-p`,<br/>`-fz`|
-|`-{prop}_{bp}`| 変数 `--{prop}_{bp}` を受け取るためのクラス |<WhsNw>`-p_sm`</WhsNw>,<br/>`-p_md`|
+|`-{prop}_{bp}`| 変数 `--{prop}_{bp}` を受け取るためのクラス |`-p_sm`,<br/>`-p_md`|
 
 
 :::warning
@@ -286,4 +282,3 @@ Lism CSS の各クラス分類（`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, 
 JavaScriptで動的に付け外しされるような状態管理には、data属性を使用します。
 
 例: `[data-opened]`, `[data-active]`
-

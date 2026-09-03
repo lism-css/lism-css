@@ -4,10 +4,6 @@ description: 'An overview of the CSS layer structure and class design methodolog
 ---
 import { Lism, Box } from "lism-css/astro";
 
-export const WhsNw = ({children}) => {
-  return <span className='-whs:nowrap'>{children}</span>
-}
-
 This page covers the CSS design principles behind Lism.
 
 
@@ -216,9 +212,9 @@ Property Classes come in three formats:
 
 | Format | Description | Example |
 |---|---|---|
-|<WhsNw>`-{prop}:{value}`</WhsNw>| Classes for applying the primary values or token values for each property |<WhsNw>`-fz:l`</WhsNw>,<br/><WhsNw>`-d:none`</WhsNw>|
+|`-{prop}:{value}`| Classes for applying the primary values or token values for each property |`-fz:l`,<br/>`-d:none`|
 |`-{prop}`| A class that receives the `--{prop}` variable |`-p`,<br/>`-fz`|
-|`-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |<WhsNw>`-p_sm`</WhsNw>,<br/>`-p_md`|
+|`-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |`-p_sm`,<br/>`-p_md`|
 
 
 :::warning
@@ -287,4 +283,3 @@ If you need to override an existing Lism class, do so within that same layer.
 For state management that is dynamically toggled by JavaScript, use data attributes.
 
 Example: `[data-opened]`, `[data-active]`
-

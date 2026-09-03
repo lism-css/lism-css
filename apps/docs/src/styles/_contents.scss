@@ -66,12 +66,13 @@
 
         /* 日本語はそれでも全部折り返し可能なため、最小維持サイズも指定しておく */
         min-inline-size: 5em;
-
-        code {
-          /* tableラッパーがスクロール可能なので、インラインcodeは一律nowrapにしておける */
-          white-space: nowrap;
-        }
       }
+
+      :is(th, code) {
+        /* tableラッパーがスクロール可能なので、thとインラインcodeは一律nowrapにしておける */
+        white-space: nowrap;
+      }
+
       thead {
         border-block-end: solid 2px;
       }
