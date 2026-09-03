@@ -100,18 +100,30 @@ A second-order arithmetic progression: each increment grows by a constant amount
 |`40`|`--bxsh--40`|`-bxsh:40`|
 |`50`|`--bxsh--50`|`-bxsh:50`|
 
-Each `--bxsh--{token}` value is built from the following component variables.
+Each `--bxsh--{token}` value is made of two layers: a faint shadow close to the element and the main shadow. The near layer uses the shadow size one step smaller and `--shc--near`, which is `--shc` at half opacity.
+
+| Variable | Value |
+|---|---|
+|`--bxsh--10`|`var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc)`|
+|`--bxsh--20`|`var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc)`|
+|`--bxsh--30`|`var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc)`|
+|`--bxsh--40`|`var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc)`|
+|`--bxsh--50`|`var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc)`|
+
+The default values of the component variables are as follows.
 
 | Component variable | Default value |
 |---|---|
-|`--shc`|`hsl(220 4% 8% / 12%)`|
+|`--shc`|`var(--shadow)` (`hsl(220 2% 4% / 8%)`)|
+|`--shc--near`|`color-mix(in srgb, var(--shc), transparent 50%)`|
+|`--shsz--5`|`0px 0px 1px`|
 |`--shsz--10`|`0px 1px 3px`|
 |`--shsz--20`|`0px 2px 6px`|
 |`--shsz--30`|`0px 4px 12px`|
 |`--shsz--40`|`0px 8px 24px`|
 |`--shsz--50`|`0px 16px 48px`|
 
-The shadow sizes form a scale in which both the offset and the blur double at each step, and the blur is always 3x the offset.
+From `10` upward, the shadow sizes form a scale in which both the offset and the blur double at each step, and the blur is always 3x the offset. `5` is a blur-only step with no offset, used for the near layer of `--bxsh--10`.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>

@@ -39,7 +39,7 @@ export default {
     //  Memo: 黒からの変化の方がわかりづらいため、明るめにする。
     neutral: 'hsl(220, 2%, 80%)',
     // shadow: 影の色。--shc（手書き SCSS）はこの変数の別名で、.set--bxsh から上書きされる。
-    shadow: 'hsl(220 4% 8% / 12%)',
+    shadow: 'hsl(220 2% 4% / 8%)',
   },
 
   // パレットカラー: 基準の明度 --L / 彩度 --C（vars グループの構造変数）を色相ごとに微調整して算出する。
@@ -117,11 +117,11 @@ export default {
   // box-shadow: 構造変数 --shsz--*（手書き SCSS）と影色 --shc を合成。.set--bxsh で再宣言され影色 --shc を上書きできる。
   //  Memo: --shc は color.shadow（--shadow）の別名（手書き SCSS で定義）。
   bxsh: {
-    '10': 'var(--shsz--10) var(--shc)',
-    '20': 'var(--shsz--20) var(--shc)',
-    '30': 'var(--shsz--30) var(--shc)',
-    '40': 'var(--shsz--40) var(--shc)',
-    '50': 'var(--shsz--50) var(--shc)',
+    '10': 'var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc)',
+    '20': 'var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc)',
+    '30': 'var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc)',
+    '40': 'var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc)',
+    '50': 'var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc)',
   },
 
   // aspect-ratio

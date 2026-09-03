@@ -195,20 +195,22 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 ## 影 (bxsh)
 
-`--shc`（シャドウカラー）と `--shsz--{N}`（シャドウサイズ）を組み合わせて構成される。要素ごとに `--shc` を上書きして再計算したい場合は、`set--bxsh` クラスを併用する。
+要素に近い薄い影と主となる影の2層で構成される。近い側の影は、1段小さいシャドウサイズ `--shsz--{N}` と、`--shc`（シャドウカラー）を50%薄めた `--shc--near` を使う。要素ごとに `--shc` を上書きして再計算したい場合は、`set--bxsh` クラスを併用する（`--shc--near` も `--shc` から再計算される）。
 
 | CSS変数 | 値 |
 | --- | --- |
-| `--bxsh--10` | `var(--shsz--10) var(--shc)` |
-| `--bxsh--20` | `var(--shsz--20) var(--shc)` |
-| `--bxsh--30` | `var(--shsz--30) var(--shc)` |
-| `--bxsh--40` | `var(--shsz--40) var(--shc)` |
-| `--bxsh--50` | `var(--shsz--50) var(--shc)` |
+| `--bxsh--10` | `var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc)` |
+| `--bxsh--20` | `var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc)` |
+| `--bxsh--30` | `var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc)` |
+| `--bxsh--40` | `var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc)` |
+| `--bxsh--50` | `var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc)` |
 
 | CSS変数 | 初期値 |
 | --- | --- |
-| `--shadow` | `hsl(220 4% 8% / 12%)` |
+| `--shadow` | `hsl(220 2% 4% / 8%)` |
 | `--shc` | `var(--shadow)` |
+| `--shc--near` | `color-mix(in srgb, var(--shc), transparent 50%)` |
+| `--shsz--5` | `0px 0px 1px` |
 | `--shsz--10` | `0px 1px 3px` |
 | `--shsz--20` | `0px 2px 6px` |
 | `--shsz--30` | `0px 4px 12px` |

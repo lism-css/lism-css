@@ -101,18 +101,30 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 |`40`|`--bxsh--40`|`-bxsh:40`|
 |`50`|`--bxsh--50`|`-bxsh:50`|
 
-`--bxsh--{token}`の値の中身は、次の変数で構成されます。
+`--bxsh--{token}`は、要素に近い薄い影と、主となる影の2層で構成されます。近い側の影には、1段小さいシャドウサイズと、`--shc`を半分の濃さにした`--shc--near`を使います。
+
+|変数|値|
+|---|---|
+|`--bxsh--10`|`var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc)`|
+|`--bxsh--20`|`var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc)`|
+|`--bxsh--30`|`var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc)`|
+|`--bxsh--40`|`var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc)`|
+|`--bxsh--50`|`var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc)`|
+
+構成変数の初期値は次の通りです。
 
 |構成変数|初期値|
 |---|---|
-|`--shc`|`hsl(220 4% 8% / 12%)`|
+|`--shc`|`var(--shadow)`（`hsl(220 2% 4% / 8%)`）|
+|`--shc--near`|`color-mix(in srgb, var(--shc), transparent 50%)`|
+|`--shsz--5`|`0px 0px 1px`|
 |`--shsz--10`|`0px 1px 3px`|
 |`--shsz--20`|`0px 2px 6px`|
 |`--shsz--30`|`0px 4px 12px`|
 |`--shsz--40`|`0px 8px 24px`|
 |`--shsz--50`|`0px 16px 48px`|
 
-シャドウサイズは、オフセットとぼかしが毎段2倍になるスケールです。ぼかしは常にオフセットの3倍で統一されています。
+シャドウサイズは`10`以降、オフセットとぼかしが毎段2倍になるスケールです。ぼかしは常にオフセットの3倍で統一されています。`5`はオフセットなしの小さなぼかしだけの段階で、`--bxsh--10`の近い側の影に使われます。
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>

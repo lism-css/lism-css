@@ -81,20 +81,21 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 
 ## `set--bxsh`
 
-`set--bxsh` クラスを指定した要素では、シャドウを構成する `--bxsh--` 変数が再定義されます。
+`set--bxsh` クラスを指定した要素では、シャドウを構成する `--bxsh--` 変数と、近い側の影色 `--shc--near` が再定義されます。
 
 ```css
 :root,
 .set--bxsh {
-  --bxsh--10: var(--shsz--10) var(--shc);
-  --bxsh--20: var(--shsz--20) var(--shc);
-  --bxsh--30: var(--shsz--30) var(--shc);
-  --bxsh--40: var(--shsz--40) var(--shc);
-  --bxsh--50: var(--shsz--50) var(--shc);
+  --shc--near: color-mix(in srgb, var(--shc), transparent 50%);
+  --bxsh--10: var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc);
+  --bxsh--20: var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc);
+  --bxsh--30: var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc);
+  --bxsh--40: var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc);
+  --bxsh--50: var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc);
 }
 ```
 
-ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。
+ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。`--shc--near`も`--shc`から再計算されるため、2層の影の色がまとめて変わります。
 
 <Preview>
   <PreviewTitle>シャドウの上書き例</PreviewTitle>
