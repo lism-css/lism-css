@@ -98,6 +98,11 @@ const defaultSize = 'desktop';
 
 <style>
   @layer lism-custom {
+    /* Chrome で iframe 内の backdrop-filter 層が overflow:hidden の角丸クリップを抜けるため、filter で合成グループ化して丸ごと切る（見た目への影響なし） */
+    .c--previewFrame {
+      filter: opacity(1);
+    }
+
     .c--previewSizeSwitcher_btn {
       cursor: pointer;
       color: var(--text-2);
