@@ -48,6 +48,7 @@ src/
 │   │   ├── NavLink.astro
 │   │   ├── Pagination.astro
 │   │   └── PostNavigation.astro
+│   ├── patterns/             # パターン一覧（リール）・カテゴリ一覧用UI
 │   ├── templates/            # テンプレート一覧・詳細用UI
 │   ├── ex/                   # MDX 内サンプル用コンポーネント
 │   └── Preview/              # コードプレビュー UI

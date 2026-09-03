@@ -1,0 +1,49 @@
+---
+import { Frame, BoxLink, Lism } from 'lism-css/astro';
+import { getLocalizedUrl, isRootLang, type LangCode } from '@/lib/i18n';
+import type { PatternItem } from '@/config/patterns';
+
+interface Props {
+  lang: LangCode;
+  categoryId: string;
+  item: PatternItem;
+  [key: string]: unknown;
+}
+
+const { lang, categoryId, item, ...props } = Astro.props as Props;
+
+const href = getLocalizedUrl(`/patterns/${categoryId}/${item.id}/`, lang);
+// スクリーンショットはroot言語だけ言語ディレクトリなしで置かれている
+const thumbSrc = isRootLang(lang)
+  ? `/screenshots/patterns/${categoryId}/${item.id}.png`
+  : `/screenshots/patterns/${lang}/${categoryId}/${item.id}.png`;
+---
+
+<BoxLink class={item.draft ? 'c--patternCard _draft' : 'c--patternCard'} layout="stack" href={href} g="15" set="hov" {...props}>
+  <Frame ar="3/2" bd bdrs="10" ov="hidden">
+    <img src={thumbSrc} alt={item.title} loading="lazy" decoding="async" class="c--patternCard_thumb" />
+  </Frame>
+  <Lism class="u--trim -ff:mono -fz:2xs -c:text-2 -px:5" pb="10">
+    {item.title}
+  </Lism>
+</BoxLink>
+
+<style>
+  .c--patternCard > .l--frame {
+    /* --bdw: 2px; */
+    transition: box-shadow 0.2s;
+    box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--0));
+  }
+
+  .c--patternCard_thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 0.3s ease;
+  }
+
+  .c--patternCard:hover .c--patternCard_thumb {
+    transform: scale(1.02);
+  }
+</style>

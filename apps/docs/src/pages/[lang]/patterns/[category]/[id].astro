@@ -52,7 +52,9 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
   <Flow g="30" class="c--patternPage">
     <Stack as="header" g="10">
       <Text fz="xs" c="text-2" tt="uppercase" lts="l">
-        {categoryData.label}
+        <Link href={`/${lang}/patterns/${category}/`} set="plain">
+          {categoryData.label}
+        </Link>
       </Text>
       <h1 class="-fz:3xl -fw:bold">{pattern.title}</h1>
       <Text c="text-2">{pattern.description[lang]}</Text>

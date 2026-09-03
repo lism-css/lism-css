@@ -85,7 +85,7 @@ const pageLayouts = {
           ja: 'ビューポート全体を覆うヒーローセクション。背景画像にタイトルやサブテキストを重ねて表示します。ここでは骨格のみを扱います。',
           en: 'A hero section that covers the entire viewport, with a title and subtitle overlaid on a background image. This page covers the structure only.',
         },
-        related: [{ label: 'Patterns: Hero', path: '/patterns/#hero' }],
+        related: [{ label: 'Patterns: Hero', path: '/patterns/hero/' }],
       },
       {
         id: 'one-side-bleed',

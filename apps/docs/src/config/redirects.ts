@@ -113,16 +113,16 @@ export const astroRedirects: AstroRedirects = {
   '/en/ui/examples/dividerlabel/': '/en/ui/components/dividerlabel/',
   '/en/ui/examples/reel/': '/en/ui/components/reel/',
   '/en/ui/examples/steps/': '/en/ui/components/steps/',
-  // patternsにカテゴリページがないためFAQは見出しへ直接リダイレクトし、ui/examples/*からの連鎖を避ける（#566）
-  '/ui/components/faq/': '/patterns/#faq',
+  // FAQ/Hero は patterns のカテゴリページへ直接リダイレクトし、ui/examples/*からの連鎖を避ける（#566）
+  '/ui/components/faq/': '/patterns/faq/',
   // Hero は MDX を draft 化して本番非公開にしたため、作例のある patterns へ誘導する
-  '/ui/components/hero/': '/patterns/#hero',
-  '/ui/examples/faq/': '/patterns/#faq',
-  '/ui/examples/hero/': '/patterns/#hero',
-  '/en/ui/components/faq/': '/en/patterns/#faq',
-  '/en/ui/components/hero/': '/en/patterns/#hero',
-  '/en/ui/examples/faq/': '/en/patterns/#faq',
-  '/en/ui/examples/hero/': '/en/patterns/#hero',
+  '/ui/components/hero/': '/patterns/hero/',
+  '/ui/examples/faq/': '/patterns/faq/',
+  '/ui/examples/hero/': '/patterns/hero/',
+  '/en/ui/components/faq/': '/en/patterns/faq/',
+  '/en/ui/components/hero/': '/en/patterns/hero/',
+  '/en/ui/examples/faq/': '/en/patterns/faq/',
+  '/en/ui/examples/hero/': '/en/patterns/hero/',
   // tokens/spacing ページを廃止し、tokens ページの SPACE セクションへ統合
   '/docs/tokens/spacing/': '/docs/tokens/#space',
   '/en/docs/tokens/spacing/': '/en/docs/tokens/#space',
