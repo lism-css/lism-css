@@ -1,7 +1,7 @@
 # Lism CLI ガイド（運営者向け）
 
-ユーザー向けの使い方は [packages/lism-cli/README.md](../packages/lism-cli/README.md) と [apps/docs](../apps/docs/src/content/ja/installation.mdx) を見る。
-ここは運営観点の差分メモ。
+この文書が持つもの: `lism-cli` / `create-lism` の運営手順（既定 ref・build・publish・publish 前チェック）と、`templates/` の規約・言語判定・プレビューデプロイ。
+持たないもの: ユーザー向けの使い方（[packages/lism-cli/README.md](../packages/lism-cli/README.md) と [apps/docs の installation](../apps/docs/src/content/ja/installation.mdx)）、テンプレのスクショ撮影（[template-screenshots.md](./template-screenshots.md)）。
 
 
 ## 構成
