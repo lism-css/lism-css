@@ -79,7 +79,7 @@ type Props = LismProps & {
 The prop type of `Lism` includes a union type whose accepted properties change depending on the value of `layout`. Because of this, extending it with `interface extends` results in a TypeScript error like the following.
 
 ```ts
-// NG: interface extends results in an error
+// Not allowed: interface extends results in an error
 interface Props extends LismProps {
   class?: string;
 }

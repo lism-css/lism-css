@@ -51,8 +51,8 @@ Showing and hiding the tooltip is handled entirely with CSS. JavaScript only han
 :::note
 Placing `<Tooltip.Trigger>` and `<Tooltip.Popup>` as siblings inside `<Tooltip.Root>` automatically links them via `aria-describedby` and `id`.
 
-- Place `<Tooltip.Popup>` as a sibling *after* `<Tooltip.Trigger>`. The focus-visible display is controlled with a sibling selector, so reversing the order prevents the tooltip from appearing.
-- Don't place interactive elements like links or buttons inside a tooltip. If you need interactive content, use [Popover](/en/ui/Popover) instead.
+- Place `<Tooltip.Popup>` as a sibling *after* `<Tooltip.Trigger>`. The focus-visible display is controlled with a sibling selector, so reversing the order prevents the tooltip from appearing on focus.
+- Don't place interactive elements like links or buttons inside a tooltip. If you need interactive content, use [Popover](/en/ui/Popover/) instead.
 - Touch devices don't trigger hover, so the tooltip can't be reliably shown. **Don't put critical information only inside a tooltip.**
 - `<Tooltip.Trigger>` must be a focusable element. If you use something other than the default `button` (e.g. `as="span"`), add `tabindex="0"`.
 :::

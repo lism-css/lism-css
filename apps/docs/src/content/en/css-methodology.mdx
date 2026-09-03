@@ -16,8 +16,6 @@ This page covers the CSS design principles behind Lism.
 - Predefined CSS layer structure (prevents specificity conflicts)
 - Reusable design tokens (improves maintainability and consistency)
 - Granular, purpose-specific classes (improves readability and reusability) */}
-{/* - Inlining rarely used CSS is acceptable */}
-
 
 
 ## Lism CSS Layer Structure
@@ -242,7 +240,9 @@ The `-{prop}_{bp}` class format combined with the `--{prop}_{bp}` variable forma
 <Preview>
   <PreviewTitle>Practical usage example</PreviewTitle>
   <PreviewArea resize>
-    <Lism p={[20, 40, 50]} bd>BOX</Lism>
+    <Lism p={[20, 40, 50]} bd>
+      <Fragment>BOX</Fragment>
+    </Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
 ```html "-p_sm" "-p_md" "--p_sm" "--p_md"

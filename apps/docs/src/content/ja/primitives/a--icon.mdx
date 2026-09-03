@@ -41,6 +41,8 @@ export const PresetIcons = ({icons}) => {
 
 ### 出力されるHTML構造
 
+実際に出力されるタグは`icon`・`viewBox`・`src`・`as`の指定方法によって`svg`や`img`などに変わりますが、`aria-hidden`/`aria-label`の付与規則はどのタグでも共通です。
+
 ```pug
 svg.a--icon[aria-hidden="true"]
 
@@ -227,14 +229,11 @@ Lismパッケージ（`lism-css`）内にはいくつかsvgアイコンを内包
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```jsx "--size:"
+    ```html
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 256 256"
       width="1em"
       height="1em"
-      fill="currentColor"
-      focusable="false"
       aria-label="SmileyIcon icon"
       role="img"
       class="a--icon -fz:4xl -c"

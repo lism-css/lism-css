@@ -91,6 +91,8 @@ Each table covers one group of properties.
 |**To Class**| Values that are output as Property Classes |
 |**BP**| Breakpoint support classes (`-{prop}_{bp}`). `✔` covers `sm`, `md`, and `lg`, and `-` means unsupported. |
 
+The shorthand string itself is what gets output as the class name.
+
 
 
 ## Typography
@@ -281,7 +283,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
   <PreviewCode slot="tab" label="JSX">
   ```jsx 'w="fit" h="5em"'
   <Lism w="fit" h="5em" bgc="base-2" p="10" bd>
-    Example text..
+    Example text
   </Lism>
   ```
   </PreviewCode>
@@ -292,7 +294,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 |Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`|✔|
+|`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`,<br />`inline`,<br />`inline-block`|✔|
 |`v`|`visibility`|`hidden`|-|
 |`o`|`opacity`|[`OPACITY`](/en/docs/tokens/#opacity), `0`|-|
 |`ov`|`overflow`| `auto`, `clip`, `hidden`|-|
@@ -462,7 +464,7 @@ The examples below demonstrate positioning with `position: absolute`.
   ```html
   <div class="l--flex -g:20">
     <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
-    <div class="-fxg:2 -bd -p:10 -bgc:base-2">Item</div>
+    <div class="-bd -p:10 -bgc:base-2" style="flex-grow: 2">Item</div>
     <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
   </div>
   ```
@@ -543,8 +545,11 @@ The examples below demonstrate positioning with `position: absolute`.
 |`ac`|`align-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
 |`ji`|`justify-items`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|✔|
 |`jc`|`justify-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
+|`pi`|`place-items`|`center`, `start`, `end`|-|
+|`pc`|`place-content`|`center`, `start`, `end`|-|
 |`aslf`|`align-self`|`center`, `start`, `end`, `stretch`|-|
 |`jslf`|`justify-self`|`center`, `start`, `end`, `stretch`|-|
+|`pslf`|`place-self`|`center`, `start`, `end`|-|
 |`order`|`order`|`-1`, `0`, `1`|✔|
 
 
@@ -577,11 +582,6 @@ The examples below demonstrate positioning with `position: absolute`.
   ```
   </PreviewCode>
 </Preview>
-
-{/* |`place-items`|`pi`|-|-|
-|`place-content`|`pc`|-|-|
-|`place-self`|`pslf`|-|-| */}
-
 
 
 

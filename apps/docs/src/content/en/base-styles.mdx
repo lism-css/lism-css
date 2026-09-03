@@ -20,7 +20,7 @@ The Reset CSS is defined as the `lism-base.reset` layer.
 
 The reset is designed to stay as close to browser defaults as possible, keeping only what is strictly necessary.
 
-### Loading only the Lism CSS reset.css
+### Reset CSS only
 
 
 <PreviewTitle>Import via JavaScript</PreviewTitle>
@@ -40,6 +40,11 @@ Or alternatively:
 ## Base styles
 
 In addition to the Reset CSS, the `lism-base` layer defines default base styles for HTML elements, making use of tokens defined on `:root`.
+
+
+<PreviewTitle>Source code</PreviewTitle>
+<SrcCode path="src/scss/base/_html.scss" />
+
 
 The styles are presented below, grouped by element type.
 
@@ -81,7 +86,7 @@ In Lism CSS, the following style is applied to **all elements**.
 ```
 
 Unlike a typical declaration such as `line-height: 1.6`, this approach produces a **fixed line spacing that does not depend on font size**.
-The formula works by defining the half-leading amount first, then adding it above and below the cap height (approximately `1em`). When `--lh` is set, it takes precedence.
+The formula works by defining the half-leading amount first, then adding it above and below the character height (approximately `1em`). When `--lh` is set, it takes precedence.
 
 Because line spacing doesn't grow with font size, it unifies the "**vertical rhythm**" of your typography, letting you compose layouts with harmonious spacing from headings down to body text.
 
@@ -242,7 +247,7 @@ td, th {
 Consistent styles are applied to form controls.
 
 ```scss
-input:not([type='range']), button, textarea, select, ::file-selector-button {
+input:where(:not([type='range'])), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
   padding: var(--controls-p, 0.25em 0.5em);

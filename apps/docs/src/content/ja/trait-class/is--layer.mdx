@@ -16,7 +16,13 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ## Lismコンポーネントでの使い方
 
-`<Lism isLayer>` のエイリアスとして `<Layer>` が用意されています。
+`isLayer` プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+| プロパティ | 出力 |
+|---|---|
+| `isLayer`| `is--layer` |
+
+さらに、`<Lism isLayer>` のエイリアスとして、`<Layer>` も用意しています。
 
 ### Import
 
@@ -164,7 +170,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```html {2-4}
     <div class="l--box -pos:relative -py:50 -px:40">
       <div class="l--frame is--layer">
-        <img src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" decoding="async" />
+        <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" decoding="async" />
       </div>
       <div class="is--layer -bgc" style="--bgc: color-mix(in srgb, var(--black) 50%, transparent)"></div>
       <div class="l--stack -pos:relative -g:30 -c" style="--c: var(--white)">

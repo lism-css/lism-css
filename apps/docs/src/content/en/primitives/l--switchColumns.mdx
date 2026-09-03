@@ -36,9 +36,9 @@ import { SwitchColumns, Box } from 'lism-css/astro';
   <PreviewTitle>Using with the default width</PreviewTitle>
   <PreviewArea resize p="15">
     <SwitchColumns g="20">
-      <Box bgc="base-2" p="20">Box</Box>
-      <Box bgc="base-2" p="20">Box</Box>
-      <Box bgc="base-2" p="20">Box</Box>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
     </SwitchColumns>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -68,9 +68,9 @@ import { SwitchColumns, Box } from 'lism-css/astro';
   <PreviewTitle>Using with a specified `breakSize`</PreviewTitle>
   <PreviewArea resize p="15">
     <SwitchColumns breakSize="s" g="20">
-      <Box bgc="base-2" p="20">Box</Box>
-      <Box bgc="base-2" p="20">Box</Box>
-      <Box bgc="base-2" p="20">Box</Box>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
     </SwitchColumns>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -100,8 +100,8 @@ import { SwitchColumns, Box } from 'lism-css/astro';
   <PreviewTitle>Adjusting proportions by specifying `flex-grow` on child elements</PreviewTitle>
   <PreviewArea resize p="15">
     <SwitchColumns breakSize="s" g="20">
-      <Box bgc="base-2" p="20">Box</Box>
-      <Box bgc="base-2" p="20" style={{ flexGrow: 2 }}>Box</Box>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>Box</div>
     </SwitchColumns>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">

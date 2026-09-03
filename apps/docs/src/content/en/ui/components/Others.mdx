@@ -5,9 +5,8 @@ draft: true
 ---
 
 
-import { Grid, Box, Center, Container, Lism, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Spacer, Group, Inline, Link, Text } from 'lism-css/astro';
+import { Grid, Box, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Group, Inline, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import { ShapeDivider } from '@lism-css/ui/astro/ShapeDivider';
 
 <Preview>
   <PreviewTitle>Step navigation</PreviewTitle>
@@ -149,10 +148,10 @@ These examples use the [force output as utility class](/en/docs/core-components/
   <PreviewTitle>stripe</PreviewTitle>
   <PreviewArea resize nogrid p="20">
     <Box bg=":stripe" p="30">
-      <DummyText />
+      <DummyText length="xs" />
     </Box>
     <Box bg=":stripe" p="30" util="cbox" keycolor="blue">
-      <DummyText />
+      <DummyText length="xs" />
     </Box>
   </PreviewArea>
   <PreviewCode label="CSS" slot="tab">
@@ -177,10 +176,10 @@ These examples use the [force output as utility class](/en/docs/core-components/
     <PreviewCode label="JSX" slot="tab">
     ```jsx 'bg=":stripe"'
     <Box bg=":stripe" p="30">
-      <DummyText />
+      <DummyText length="xs" />
     </Box>
     <Box bg=":stripe" p="30" util="cbox" keycolor="blue">
-      <DummyText />
+      <DummyText length="xs" />
     </Box>
     ```
   </PreviewCode>

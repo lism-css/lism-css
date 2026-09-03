@@ -58,6 +58,7 @@ Provided as `Avatar` (`b--avatar`) from the `@lism-css/ui` package.
 |`src`| Path to the avatar image. When omitted, the initial of `name` is shown instead. |
 |`name`| User name. When `src` is omitted, its first character is shown as the initial. Also used as the alt text when `alt` is not specified. |
 |`alt`| Alt text. Takes precedence over `name` when specified. Use `alt=""` to treat the avatar as decorative, e.g. when the name is displayed right next to it. |
+{/* |`mediaProps`| For any other props you want to pass to the media element, specify them as an object with this prop. | */}
 
 
 ## Examples
@@ -128,7 +129,7 @@ There is no automatic switch to the initial when the image fails to load. Since 
 
 ## Without @lism-css/ui
 
-An example of building an Avatar using only lism-css, without `@lism-css/ui`.
+This example builds an Avatar with lism-css primitives only, without `@lism-css/ui`.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>

@@ -52,7 +52,7 @@ import { Tooltip } from '@lism-css/ui/astro/Tooltip';
 `<Tooltip.Root>`の中に`<Tooltip.Trigger>`と`<Tooltip.Popup>`を並べて置くと、`aria-describedby`と`id`が自動で紐付きます。
 
 - `<Tooltip.Popup>`は、`<Tooltip.Trigger>`より後ろの兄弟要素として配置してください。フォーカス時の表示を兄弟セレクタで制御しているため、順番が逆になると、フォーカス時に表示されなくなります。
-- ポップアップの中にリンクやボタンなどの操作要素を置かないでください。操作要素を含めたい場合は[Popover](/ui/Popover)を使用してください。
+- ポップアップの中にリンクやボタンなどの操作要素を置かないでください。操作要素を含めたい場合は[Popover](/ui/Popover/)を使用してください。
 - タッチデバイスではホバーが発生しないため、ポップアップが表示されないことがあります。**重要な情報をポップアップの中だけに置かないでください。**
 - `<Tooltip.Trigger>`はフォーカス可能な要素である必要があります。初期値の`button`以外（`as="span"`など）にする場合は、`tabindex="0"`を指定してください。
 :::

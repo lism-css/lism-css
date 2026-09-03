@@ -249,7 +249,7 @@ td, th {
 フォームコントロールには、デフォルトで統一されたスタイルが適用されます。
 
 ```scss
-input:not([type='range']), button, textarea, select, ::file-selector-button {
+input:where(:not([type='range'])), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
   padding: var(--controls-p, 0.25em 0.5em);

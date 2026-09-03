@@ -16,7 +16,13 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ## Using with Lism Components
 
-A `<Layer>` component is available as an alias for `<Lism isLayer>`.
+It can be applied via the `isLayer` prop on **any component**.
+
+| Prop | Output |
+|---|---|
+| `isLayer`| `is--layer` |
+
+A dedicated `<Layer>` component is also available as an alias for `<Lism isLayer>`.
 
 ### Import
 
@@ -31,7 +37,9 @@ A `<Layer>` component is available as an alias for `<Lism isLayer>`.
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="15">
     <Box pos="relative" py="40">
-      <Text fz="2xl" fw="bold" ta="center" lts="l" o="ppp">BACKGROUND</Text>
+      <Text fz="2xl" fw="bold" ta="center" lts="l" o="ppp">
+        <Fragment>BACKGROUND</Fragment>
+      </Text>
       <Layer p="15" bgc="purple:10%">
         <p>Layer Contents...</p>
       </Layer>
@@ -70,7 +78,9 @@ You can apply `backdrop-filter` via the `style` prop.
   <PreviewTitle>Applying a blur to the background</PreviewTitle>
   <PreviewArea p="15">
     <Box pos="relative" p="40">
-      <Text fz="2xl" fw="bold" ta="center">BACKGROUND</Text>
+      <Text fz="2xl" fw="bold" ta="center">
+        <Fragment>BACKGROUND</Fragment>
+      </Text>
       <Layer style={{ backdropFilter: 'blur(3px)' }} />
     </Box>
   </PreviewArea>
@@ -101,7 +111,9 @@ You can apply `backdrop-filter` via the `style` prop.
     <Frame ar="2/1" pos="relative">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       <Layer style={{ backdropFilter: 'contrast(1.1) sepia(0.4) grayscale(0.4)' }} />
-      <Text pos="absolute" b="0" r="0" p="20" hl="0" c="white" fz="xs" o="p">Photo by xxxxxx</Text>
+      <Text pos="absolute" b="0" r="0" p="20" hl="0" c="white" fz="xs" o="p">
+        <Fragment>Photo by xxxxxx</Fragment>
+      </Text>
     </Frame>
   </PreviewArea>
   <PreviewCode>
@@ -158,7 +170,7 @@ This example uses `is--layer` to place an image as a background behind content.
     ```html {2-4}
     <div class="l--box -pos:relative -py:50 -px:40">
       <div class="l--frame is--layer">
-        <img src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" decoding="async" />
+        <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" decoding="async" />
       </div>
       <div class="is--layer -bgc" style="--bgc: color-mix(in srgb, var(--black) 50%, transparent)"></div>
       <div class="l--stack -pos:relative -g:30 -c" style="--c: var(--white)">

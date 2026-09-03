@@ -260,14 +260,14 @@ pathを用意せず、`isEmpty`を指定してスペーサーとしても利用�
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "isAnimation"
-    <Container pos="relative">
+    <Container pos="relative" hasGutter>
       <ShapeDivider isEmpty level="7" />
       <Frame isLayer z="-1" max-w="100%">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Layer bgc="black:50%" />
       </Frame>
-      <Wrapper contentSize="s" hasGutter py="40" c="white">
-        <DummyText length="xl" />
+      <Wrapper contentSize="s" py="40" c="white">
+        <DummyText length="l" />
       </Wrapper>
       <ShapeDivider viewBox="0 0 100 10" isAnimation c="base" level="7">
         <path opacity=".3" d="M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z"></path>

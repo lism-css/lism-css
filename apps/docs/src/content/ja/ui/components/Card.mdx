@@ -3,9 +3,8 @@ title: 'Card'
 description: 'Lism CSS で実装するカード型コンテンツレイアウトの実装例です。'
 ---
 
-import { Box, Flex, Stack, Center, Grid, Frame, BoxLink, Layer, Columns, Media, WithSide, Group, Inline, Link, Text } from 'lism-css/astro';
+import { Box, Stack, Center, Grid, Frame, BoxLink, Layer, Media, WithSide, Group, Inline, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import Card from '@/components/ex/Card/index.jsx';
 
 
 カード型コンテンツの作成例を紹介します。
@@ -23,20 +22,6 @@ export const ExampleCard = (props) => {
         <Inline d="inline-flex" ms="auto" mbs="auto" c="inherit" td="none" bd-b hl="s" p="10">View More →</Inline>
       </Stack>
     </WithSide>
-  )
-}
-
-export const ExampleImgCard = (props) => {
-  return(
-    <Frame pos="relative" ar="3/4" bdrs="30" bxsh="30" {...props}>
-      <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-      <Layer bgc="rgb(0 0 0 / 20%)"/>
-      <Layer layout="stack" c="white" p="30" g="30">
-        <h3 util="trim" className="-fz:l -mbs:auto">Card Title</h3>
-        <Text util="trim" fz="s" hl="s" o="p">ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-        <Center as="a" href="#" c="black" bgc="white" td="none" hl="s" p="15" bdrs="99" hov="-bgc">Link Text</Center>
-      </Layer>
-    </Frame>
   )
 }
 
@@ -150,7 +135,15 @@ export const ExampleImgCard = (props) => {
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=":stripe" p="20">
-    <ExampleImgCard max-w="24em" />
+    <Frame pos="relative" ar="3/4" bdrs="30" bxsh="30" max-w="24em">
+      <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer bgc="rgb(0 0 0 / 20%)"/>
+      <Layer layout="stack" c="white" p="30" g="30">
+        <h3 util="trim" className="-fz:l -mbs:auto">Card Title</h3>
+        <Text util="trim" fz="s" hl="s" o="mp">ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
+        <Center as="a" href="#" c="black" bgc="white" td="none" hl="s" p="15" bdrs="99" hov="-bgc">Link Text</Center>
+      </Layer>
+    </Frame>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
@@ -159,7 +152,7 @@ export const ExampleImgCard = (props) => {
       <Layer bgc="rgb(0 0 0 / 20%)" />
       <Layer layout="stack" c="white" p="30" g="30">
         <h3 util="trim" className="-fz:l -mbs:auto">Card Title</h3>
-        <Text util="trim" fz="s" hl="s" o="p">
+        <Text util="trim" fz="s" hl="s" o="mp">
           ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。
         </Text>
         <Center as="a" href="#" c="black" bgc="white" td="none" hl="s" p="15" bdrs="99" hov="-bgc">
@@ -176,7 +169,7 @@ export const ExampleImgCard = (props) => {
       <div class="is--layer -bgc" style="--bgc: rgb(0 0 0 / 20%)"></div>
       <div class="l--stack is--layer -c -p:30 -g:30" style="--c: var(--white)">
         <h3 class="u--trim -fz:l -mbs:auto">Card Title</h3>
-        <p class="u--trim -fz:s -hl:s -o:p">ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+        <p class="u--trim -fz:s -hl:s -o:mp">ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
         <a class="l--center -c -bgc -td:none -hl:s -p:15 -bdrs:99 -hov:-bgc" style="--c: var(--black); --bgc: var(--white)" href="#">Link Text</a>
       </div>
     </div>
@@ -360,6 +353,28 @@ export const ExampleImgCard = (props) => {
 
 以下の例では、`-hov\:in\:slide`クラスを別途用意する必要があります。
 
+
+    <BoxLink href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
+      <Frame ar="1/1">
+        <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Layer bgc="rgba(0 0 0 / 10%)" />
+      <Stack pos="absolute" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
+        <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
+        <Box pos="relative" z="1" c="white" hl="s">
+          <h3 util="trim" className="-fz:l">Card Title</h3>
+          <Grid hasTransition hov="in:slide" my="15">
+            <Box ov="hidden">
+              <DummyText lang="ja" length="xs" py="5" fz="s" hl="xs" />
+            </Box>
+          </Grid>
+          <Group util="trim" fz="xs" o="p">
+            <Fragment>2000.01.01 / Author</Fragment>
+          </Group>
+        </Box>
+      </Stack>
+    </BoxLink>
+    
 {/* Note: PreviewAreaにresize つけると Filterの挙動変わることに注意。 */}
 <Preview css={`
 .-hov\\:in\\:slide {
@@ -380,7 +395,7 @@ export const ExampleImgCard = (props) => {
           <h3 util="trim" className="-fz:l">Card Title</h3>
           <Grid hasTransition hov="in:slide" my="15">
             <Box ov="hidden">
-              <DummyText py="5" fz="s" hl="xs" />
+              <DummyText lang="ja" length="xs" py="5" fz="s" hl="xs" />
             </Box>
           </Grid>
           <Group util="trim" fz="xs" o="p">

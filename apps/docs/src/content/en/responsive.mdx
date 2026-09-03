@@ -42,7 +42,7 @@ For details on which properties support breakpoint switching by default, refer t
 You can also toggle responsive support per property by [customizing via SCSS files](/en/docs/customize/scss/).
 
 
-## Array notation and object notation
+## Array Notation and Object Notation
 
 Responsive values can be specified in two ways: **array notation** and **object notation**.
 
@@ -102,7 +102,7 @@ There are two patterns:
 }
 ```
 
-Properties in the exception pattern always expose their value through a CSS variable. By default, only a very limited set of properties (`c`, `bgc`, `p`, `m`, `bdrs`) is implemented this way.
+Properties in the exception pattern always expose their value through a CSS variable. By default, only a very limited set of properties (`c`, `bgc`, `lh`, `p`, `m`, `bdrs`) is implemented this way.
 
 :::info
 In the source code, any property with `alwaysVar: 1` set in [props.ts](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/config/defaults/props.ts) is output using this pattern.

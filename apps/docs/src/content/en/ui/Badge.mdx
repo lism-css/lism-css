@@ -61,7 +61,7 @@ Provided as `Badge` (`b--badge`) from the `@lism-css/ui` package.
 
 | Prop | Description |
 |---|---|
-|`variant`<small>(optional)</small>| Outputs the `b--badge--{variant}` class. An `outline` style is provided by default. |
+|`variant`| Outputs the `b--badge--{variant}` class. An `outline` style is provided by default. |
 
 
 ## Examples
@@ -77,10 +77,18 @@ Provided as `Badge` (`b--badge`) from the `@lism-css/ui` package.
       <Badge bgc="orange">Badge</Badge>
       <Badge bgc="yellow">Badge</Badge>
       <Badge bgc="green">Badge</Badge>
-      <Badge bgc="blue">Badge</Badge>
-      <Badge bgc="purple">Badge</Badge>
-      <Badge bgc="pink">Badge</Badge>
-      <Badge bgc="gray">Badge</Badge>
+      <Badge bgc="blue">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge bgc="purple">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge bgc="pink">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge bgc="gray">
+        <Fragment>Badge</Fragment>
+      </Badge>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -120,33 +128,38 @@ An `outline` style is available out of the box.
   <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
       <Badge variant="outline">Badge</Badge>
-      <Badge variant="outline" c="red">Badge</Badge>
-      <Badge variant="outline" c="orange">Badge</Badge>
-      <Badge variant="outline" c="yellow">Badge</Badge>
-      <Badge variant="outline" c="green">Badge</Badge>
-      <Badge variant="outline" c="blue">Badge</Badge>
-      <Badge variant="outline" c="purple">Badge</Badge>
-      <Badge variant="outline" c="pink">Badge</Badge>
-      <Badge variant="outline" c="gray">Badge</Badge>
+      <Badge variant="outline" c="red">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge variant="outline" c="orange">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge variant="outline" c="yellow">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge variant="outline" c="green">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge variant="outline" c="blue">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge variant="outline" c="purple">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge variant="outline" c="pink">
+        <Fragment>Badge</Fragment>
+      </Badge>
+      <Badge variant="outline" c="gray">
+        <Fragment>Badge</Fragment>
+      </Badge>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
       <Badge variant="outline">Badge</Badge>
-      <Badge variant="outline" c="red">
-        Badge
-      </Badge>
-      <Badge variant="outline" c="orange">
-        Badge
-      </Badge>
-      ...
-      <Badge variant="outline" c="blue">
-        Badge
-      </Badge>
-      <Badge variant="outline" c="purple">
-        Badge
-      </Badge>
+      <Badge variant="outline" c="red">Badge</Badge>
+      <Badge variant="outline" c="orange">Badge</Badge>
       ...
     </Cluster>
     ```
@@ -169,28 +182,38 @@ An `outline` style is available out of the box.
   <PreviewTitle>Styling example using the [`u--cbox`](/en/docs/utility-class/#u--cbox) class</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
-      <Badge util="cbox" keycolor="red">Red</Badge>
-      <Badge util="cbox" keycolor="orange">Orange</Badge>
-      <Badge util="cbox" keycolor="yellow">Yellow</Badge>
-      <Badge util="cbox" keycolor="green">Green</Badge>
-      <Badge util="cbox" keycolor="blue">Blue</Badge>
-      <Badge util="cbox" keycolor="purple">Purple</Badge>
-      <Badge util="cbox" keycolor="pink">Pink</Badge>
-      <Badge util="cbox" keycolor="gray">Gray</Badge>
+      <Badge util="cbox" keycolor="red">
+        <Fragment>Red</Fragment>
+      </Badge>
+      <Badge util="cbox" keycolor="orange">
+        <Fragment>Orange</Fragment>
+      </Badge>
+      <Badge util="cbox" keycolor="yellow">
+        <Fragment>Yellow</Fragment>
+      </Badge>
+      <Badge util="cbox" keycolor="green">
+        <Fragment>Green</Fragment>
+      </Badge>
+      <Badge util="cbox" keycolor="blue">
+        <Fragment>Blue</Fragment>
+      </Badge>
+      <Badge util="cbox" keycolor="purple">
+        <Fragment>Purple</Fragment>
+      </Badge>
+      <Badge util="cbox" keycolor="pink">
+        <Fragment>Pink</Fragment>
+      </Badge>
+      <Badge util="cbox" keycolor="gray">
+        <Fragment>Gray</Fragment>
+      </Badge>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
-      <Badge util="cbox" keycolor="red">
-        Red
-      </Badge>
-      <Badge util="cbox" keycolor="orange">
-        Orange
-      </Badge>
-      <Badge util="cbox" keycolor="yellow">
-        Yellow
-      </Badge>
+      <Badge util="cbox" keycolor="red">Red</Badge>
+      <Badge util="cbox" keycolor="orange">Orange</Badge>
+      <Badge util="cbox" keycolor="yellow">Yellow</Badge>
       ...
     </Cluster>
     ```
@@ -205,7 +228,6 @@ An `outline` style is available out of the box.
     </div>
     ```
   </PreviewCode>
-
 </Preview>
 
 
@@ -315,25 +337,25 @@ Since the padding is defined in em units, changing the font size with `fz` scale
 
 ## Without @lism-css/ui
 
-An example of building a Badge using only lism-css, without `@lism-css/ui`.
+This example builds a Badge with lism-css primitives only, without `@lism-css/ui`.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
-      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bgc="text" c="base" bdrs="99">Badge</Lism>
-      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bd bdc="current" bdrs="99">Badge</Lism>
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bgc="text" c="base" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bd bdc="current" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
-      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bgc="text" c="base" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bd bdc="current" bdrs="99">
-        Badge
-      </Lism>
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bgc="text" c="base" bdrs="99">Badge</Lism>
+      <Lism as="span" fz="xs" hl="xs" py="5" px="10" bd bdc="current" bdrs="99">Badge</Lism>
     </Cluster>
     ```
   </PreviewCode>
