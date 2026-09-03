@@ -5,7 +5,7 @@ import { DesktopIcon, DeviceMobileCameraIcon, DeviceTabletCameraIcon } from '@ph
 import { getLangFromUrl, t } from '@/lib/i18n';
 
 /**
- * iframe プレビュー。
+ * iframe プレビュー。中身は等倍で埋め込む（zoom / transform で縮小しない。docs/decisions.md 参照）。
  * 高さは iframe 内の PreviewSizeReporter から通知される中身の高さにフィットさせ、
  * 上限は --ar（アスペクト比）から求めた高さ。上限を超える分は iframe 内でスクロールする。
  */
@@ -18,10 +18,9 @@ const lang = getLangFromUrl(Astro.url);
 const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
 const previewText = t(lang, 'preview');
 
-// wPct: iframe を表示幅より広いビューポートで描画して zoom で縮める割合（未指定なら _preview.scss の既定値）
 const sizes = [
-  { id: 'mobile', label: previewText.mobile, icon: DeviceMobileCameraIcon, size: '360px', ar: '2/3', wPct: '120' },
-  { id: 'tablet', label: previewText.tablet, icon: DeviceTabletCameraIcon, size: '600px', ar: '3/4' },
+  { id: 'mobile', label: previewText.mobile, icon: DeviceMobileCameraIcon, size: '380px', ar: '2/3' },
+  { id: 'tablet', label: previewText.tablet, icon: DeviceTabletCameraIcon, size: '640px', ar: '3/4' },
   { id: 'desktop', label: previewText.desktop, icon: DesktopIcon, size: '100%', ar: '3/2' },
 ];
 const defaultSize = 'desktop';
@@ -59,7 +58,6 @@ const defaultSize = 'desktop';
             class="c--previewSizeSwitcher_btn"
             data-size={size.size}
             data-ar={size.ar}
-            data-w-pct={size.wPct}
           >
             <Icon as={size.icon} fz="l" d="block" />
           </Lism>
@@ -68,7 +66,7 @@ const defaultSize = 'desktop';
     )
   }
 
-  {/* 角丸・枠線・影は zoom のかかる内側ではなく、外側でまとめて指定する（影の角が角丸からはみ出さないように） */}
+  {/* ar は高さ通知が届くまで（または JS 無効時）のフォールバック。通知後は iframe に height を直接指定する */}
   <Frame
     id="preview-iframe"
     class="c--previewFrame"
@@ -80,12 +78,11 @@ const defaultSize = 'desktop';
     mx="auto"
     w="100%"
     max-w="100%"
+    ar
     style={{ '--ar': '3/2' }}
+    {...props}
   >
-    {/* ar は高さ通知が届くまで（または JS 無効時）のフォールバック。通知後は iframe に height を直接指定する */}
-    <Frame className="u--scalePreview" ar {...props}>
-      <iframe src={url} width="800" height="600" style="border:0"></iframe>
-    </Frame>
+    <iframe src={url} width="800" height="600" style="border:0"></iframe>
   </Frame>
   {
     hasExternalLink && (
@@ -127,33 +124,25 @@ const defaultSize = 'desktop';
   };
 
   document.querySelectorAll<HTMLElement>('.c--previewFrame').forEach((frame) => {
-    const scaled = frame.querySelector<HTMLElement>('.u--scalePreview');
     const iframe = frame.querySelector('iframe');
-    if (!scaled || !iframe) return;
+    if (!iframe) return;
 
-    // iframe 内の CSS px で受け取る（width は iframe 内の innerWidth）
-    let contentSize: { width: number; height: number } | null = null;
+    // 等倍埋め込みなので、iframe 内の CSS px をそのまま height に使える
+    let contentHeight: number | null = null;
 
     const applyHeight = () => {
-      if (!contentSize?.width) return;
+      if (contentHeight === null) return;
       const ratio = parseRatio(getComputedStyle(frame).getPropertyValue('--ar'));
-      // zoom を iframe 内へ伝えない Safari 26.3 以前では、iframe 内の innerWidth（表示幅）が
-      // 親の zoom 空間でのレイアウト幅（offsetWidth）より小さくなるので、zoom の逆数（--w-pct / 100）で補正する。
-      // 比を実測値から出すと offsetWidth の整数丸めで 1px 未満のはみ出しが起きるため、既知の倍率を使う。
-      const zoomInherited = Math.abs(iframe.offsetWidth - contentSize.width) <= 1;
-      const wPct = parseFloat(getComputedStyle(scaled).getPropertyValue('--w-pct')) || 100;
-      const scale = zoomInherited ? 1 : wPct / 100;
-      const layoutWidth = contentSize.width * scale;
-      const maxHeight = layoutWidth / ratio;
+      const maxHeight = iframe.offsetWidth / ratio;
       // 高さは iframe 自体に指定し、Frame 側は比率を解除して中身に合わせる
-      scaled.style.aspectRatio = 'auto';
-      iframe.style.height = `${Math.min(contentSize.height * scale, maxHeight)}px`;
+      frame.style.aspectRatio = 'auto';
+      iframe.style.height = `${Math.min(contentHeight, maxHeight)}px`;
     };
 
     window.addEventListener('message', (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.source !== iframe.contentWindow || event.data?.type !== SIZE_TYPE) return;
-      contentSize = { width: event.data.width, height: event.data.height };
+      contentHeight = event.data.height;
       applyHeight();
     });
 
@@ -167,11 +156,6 @@ const defaultSize = 'desktop';
       button.addEventListener('click', () => {
         frame.style.width = button.dataset.size ?? '';
         frame.style.setProperty('--ar', button.dataset.ar ?? '');
-        if (button.dataset.wPct) {
-          scaled.style.setProperty('--w-pct', button.dataset.wPct);
-        } else {
-          scaled.style.removeProperty('--w-pct');
-        }
         buttons.forEach((b) => b.setAttribute('aria-pressed', b === button ? 'true' : 'false'));
 
         // 幅・比率が変わったので、レイアウト後の値を iframe 側に問い合わせて高さを更新する

@@ -1,6 +1,6 @@
 ---
 /**
- * iframe プレビュー用: 自身のビューポート幅と中身の高さを親ページ（PreviewFrame）へ通知する。
+ * iframe プレビュー用: 中身の高さを親ページ（PreviewFrame）へ通知する。
  * body には min-height: 100dvh があるため、body ではなくこのラッパーの高さを測る。
  */
 ---
@@ -23,7 +23,7 @@
 
   if (target && window.parent !== window) {
     const send = () => {
-      window.parent.postMessage({ type: SIZE_TYPE, width: window.innerWidth, height: target.getBoundingClientRect().height }, window.location.origin);
+      window.parent.postMessage({ type: SIZE_TYPE, height: target.getBoundingClientRect().height }, window.location.origin);
     };
     new ResizeObserver(send).observe(target);
     window.addEventListener('message', (event) => {
