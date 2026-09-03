@@ -1,88 +1,78 @@
 # CLAUDE.md
 
-
 ## 動作ルール
-- 会話・質問は全てこのプロジェクトに関することです。その前提で回答してください
-- 実装・設計・ファイル変更を伴う作業を勝手に行わないこと。ユーザーがタスク実装コマンドやスキルを提示するか、または明示的に実装許可を出すまで待って下さい。
-- 質問への回答や簡単な説明は即座に対応して構いません。
 
+- 会話・質問はすべてこのプロジェクトの話として答える。
+- 実装・設計・ファイル変更は、ユーザーがタスク用コマンドやスキルを提示するか明示的に許可するまで始めない。質問への回答や簡単な説明は即座に行ってよい。
 
 ## プロジェクト概要
 
-Lism CSS は軽量な CSS設計フレームワーク。レイアウトプリミティブ、ユーティリティクラス、デザイントークン等を CSSレイヤー構造で提供し、React / Astro コンポーネントも同梱している。
+Lism CSS は軽量なCSS設計フレームワーク。レイアウトプリミティブ・ユーティリティクラス・デザイントークン等をCSSレイヤー構造で提供し、React / Astro コンポーネントも同梱する。pnpm workspaces と Turbo のモノレポ。lint系設定はルート直下。
 
-pnpm workspaces と Turbo を使用したモノレポ構造。lint 系設定ファイルはルート直下に配置。
+### packages（npm公開）
 
-
-### packages（npm 公開）
-- `packages/lism-css/`: コア CSS + React / Astro レイアウトコンポーネント — [CLAUDE.md](packages/lism-css/CLAUDE.md)
-- `packages/lism-ui/`: インタラクティブ UI コンポーネント（Accordion, Modal, Tabs 等）— [CLAUDE.md](packages/lism-ui/CLAUDE.md)
-- `packages/lism-cli/`: `lism-cli` コマンド本体（`create` / `ui` / `skill` サブコマンド）
-- `packages/create-lism/`: `pnpm create lism` 規約のラッパー（`lism-cli` を bundle で内包）
-- `packages/mcp/`: AI コーディングツール向け MCP サーバー
+- `packages/lism-css/`: コアCSS + React / Astro レイアウトコンポーネント — [CLAUDE.md](packages/lism-css/CLAUDE.md)
+- `packages/lism-ui/`: インタラクティブUIコンポーネント（Accordion, Modal, Tabs 等）— [CLAUDE.md](packages/lism-ui/CLAUDE.md)
+- `packages/lism-cli/`: `lism-cli` コマンド本体（`create` / `ui` / `skill`）
+- `packages/create-lism/`: `pnpm create lism` 用ラッパー（`lism-cli` をbundleで内包）
+- `packages/mcp/`: AIコーディングツール向けMCPサーバー
 
 ### apps
-- `apps/docs/`: Astro ベースのドキュメントサイト — [CLAUDE.md](apps/docs/CLAUDE.md)
+
+- `apps/docs/`: Astro 製ドキュメントサイト — [CLAUDE.md](apps/docs/CLAUDE.md)
 - `apps/catalog/`: コンポーネントカタログ
 
-### その他のディレクトリ
-- `skills/lism-css-guide/`: `lism-cli skill add` および skills.sh の配信元
-- `templates/`: `lism-cli create` のテンプレート（`package.json` に `"private": true` 必須）
-- `documents/`: 運営者向けの現行文書（CLI ガイド・docs 更新手順 等）と、進行中の実装プラン（`plan-*`）・調査記録（`test-audit-*`）。プランは実装完了時、引き継ぎ・検討メモは役目を終えた時点で削除する
+### その他
 
-各ワークスペースの詳細な実装やアーキテクチャについては、それぞれの CLAUDE.md や README.md を参照。
+- `skills/lism-css-guide/`: `lism-cli skill add` と skills.sh の配信元
+- `templates/`: `lism-cli create` のテンプレート
+- `documents/`: 運営者向け現行文書、実装プラン（`plan-*`）、調査記録（`test-audit-*`）。プランは実装完了時、引き継ぎ・検討メモは役目を終えた時点で削除する
 
+各ワークスペースの詳細は、それぞれのCLAUDE.mdやREADME.mdを参照。
 
-## Git / PR 運用
+## Git / PR運用
 
-- デフォルトの作業ブランチは `dev`（`main` ではない）
-- 新しいブランチを作成する際は、必ず `dev` から切ること（`main` から切らない）
-- プルリクエストのターゲットブランチも `dev`
+- 作業ブランチの既定は `dev`。新しいブランチは必ず `dev` から切る。PRのターゲットも `dev`。
 
 ## 公開情報の取り扱い（OSS）
 
-このリポジトリはOSSとして公開されている。GitHubへ書き込む内容（issue・PR・コミットメッセージ・コードコメント・ドキュメント）に、以下のプライベート情報を含めないこと。
+GitHubへ書く内容（issue・PR・コミットメッセージ・コードコメント・ドキュメント）に次を含めない。
 
-- ローカル環境の絶対パス（`/Users/...`などユーザー名を含むパス）
+- ローカルの絶対パス（`/Users/...` などユーザー名を含むもの）
 - メールアドレス・氏名などの個人情報
 - このリポジトリと無関係な他プロジェクト名・顧客名・業務情報
 - APIキー・トークン・環境変数の値などの秘密情報
 
-エラーログやコマンド出力を引用する際は、上記を相対パス等に置換・マスクしてから貼り付ける。会話の文脈やグローバル設定・メモリから得た情報も、明示的な指示がない限り投稿文に含めない。issue・PR作成後は本文を表示して漏洩がないか確認すること。
+ログやコマンド出力は相対パス等に置換・マスクしてから引用する。会話・グローバル設定・メモリ由来の情報は、明示的な指示がない限り投稿文に含めない。issue・PR作成後は本文を表示して漏洩がないか確認する。
 
 ## 主要コマンド
 
-
 ```bash
-nr dev:docs # ドキュメントサイトlocalhostの立ち上げ
-nr build  # 全ワークスペースを Turbo でビルド
-nr build:core # packages/lism-css のみビルド
-nr build:ui # packages/lism-ui のみビルド
-nr build:cli # packages/lism-cli + packages/create-lism をビルド（^build 依存で順序保証）
-nr build:docs # apps/docs のみビルド
-nr lint # lintの実行
-nr typecheck #typescript チェック
-nr test #テスト
+nr dev:docs # ドキュメントサイトをlocalhostで起動
+nr build # 全ワークスペースをTurboでビルド
+nr build:core # packages/lism-css のみ
+nr build:ui # packages/lism-ui のみ
+nr build:cli # packages/lism-cli + packages/create-lism（^build依存で順序保証）
+nr build:docs # apps/docs のみ
+nr lint
+nr typecheck
+nr test
 ```
 
+## 公式ドキュメントサイト(`apps/docs`)のURL
 
-## 公式ドキュメントサイトの URL
+ルート言語は日本語。READMEやドキュメントでリンクするときは言語に合うパスを使う。
 
-ルート言語は日本語のため、URL は以下の通り：
-
-- 日本語: `https://lism-css.com/`（`/ja/` プレフィックスは付けない）
+- 日本語: `https://lism-css.com/`（`/ja/` は付けない）
 - 英語: `https://lism-css.com/en/`
-
-README やドキュメント等で公式サイトへのリンクを記載する際は、対象言語に応じて正しいパスを使うこと。
-
 
 ## 注意事項
 
-- `lism-css-guide` スキルに関しては、`lism-css`パッケージ本体を編集中の場合は明示的に指示がない限り読み込まないこと。
-- ただし、`templates/*`の編集時は、`lism-css-guide` スキルを読み込んでから作業すること。
-- `templates/*` を新規追加する際は、`package.json` に `"private": true` を必ず付与すること（npm への誤公開防止）。
-- `.claude/skills/` にローカルスキルを新規作成する際は、SKILL.md の frontmatter に `metadata.internal: true` を必ず付与すること（`npx skills add lism-css/lism-css` の配布対象から除外するため。配布用スキルは `skills/` 配下のみ）。
-- `skills/lism-css-guide/` を更新する時の注意事項
-  - 失敗例を単純に `SKILL.md` 冒頭へ積み増さないこと。具体例は `antipatterns.md`、実装プランの判断手順は `references/authoring.md`、命名は `naming.md` など、既存の詳細ファイルへ最小追記すること。
-  - skillからMCPの案内はしない。
-  - 各ファイルは役割ごとに分割し、タスクに必要なファイルだけを参照できる構成にすること。違反頻度の高い重要事項は`SKILL.md`または各詳細ファイルの冒頭に要約し、詳細や具体例は適切な参照ファイルへ置くこと。行数のためだけの分割はしない。
+- `lism-css` パッケージ本体の編集中は、明示的な指示がない限り `lism-css-guide` スキルを読まない。
+- `templates/*` の新規追加時は `package.json` に `"private": true` を付ける（npmへの誤公開防止）。
+- `.claude/skills/` にローカルスキルを新規作成するときは、SKILL.md のfrontmatterに `metadata.internal: true` を付ける（`npx skills`の配布対象から除外するため。配布用スキルは `skills/` 配下のみ）。
+- `skills/lism-css-guide/` の更新時:
+  - 失敗例を `SKILL.md` 冒頭へ単純に積み増すのは禁止。
+  - スキルからMCPを案内しない。
+  - ファイルは役割ごとに分け、タスクに必要なファイルだけ参照できる構成にする。
+- docsの小さな文言調整やページ構成の変更で毎回ビルドしなくてよい。
