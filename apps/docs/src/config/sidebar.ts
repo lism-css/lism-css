@@ -138,17 +138,9 @@ const docsSidebar: SidebarSection[] = [
   },
 
   {
-    label: 'カスタマイズ',
-    translate: { en: 'Customize' },
-    items: [
-      { label: 'カスタマイズの基本', translate: { en: 'Customization Basics' }, link: '/docs/customize/' },
-      { label: 'CSSビルド', translate: { en: 'CSS Builds' }, link: '/docs/customize/build/' },
-      { label: 'lism.config.js', link: '/docs/customize/config/' },
-      { label: 'SCSS', link: '/docs/customize/scss/' },
-      { label: 'CSS Purge', link: '/docs/customize/purge/' },
-    ],
+    label: 'Trait Class',
+    items: ['/docs/trait-class/is--container/', '/docs/trait-class/is--wrapper/', '/docs/trait-class/is--layer/', '/docs/trait-class/is--boxLink/'],
   },
-
   {
     label: 'Layout Primitives',
     items: [
@@ -180,13 +172,20 @@ const docsSidebar: SidebarSection[] = [
     items: ['/docs/primitives/a--decorator/', '/docs/primitives/a--divider/', '/docs/primitives/a--icon/', '/docs/primitives/a--spacer/'],
   },
   {
-    label: 'Trait Class',
-    items: ['/docs/trait-class/is--container/', '/docs/trait-class/is--wrapper/', '/docs/trait-class/is--layer/', '/docs/trait-class/is--boxLink/'],
-  },
-  {
     label: 'コアコンポーネント',
     translate: { en: 'Core Components' },
     dir: 'core-components',
+  },
+  {
+    label: 'カスタマイズ',
+    translate: { en: 'Customize' },
+    items: [
+      { label: 'カスタマイズの基本', translate: { en: 'Customization Basics' }, link: '/docs/customize/' },
+      { label: 'CSSビルド', translate: { en: 'CSS Builds' }, link: '/docs/customize/build/' },
+      { label: 'lism.config.js', link: '/docs/customize/config/' },
+      { label: 'SCSS', link: '/docs/customize/scss/' },
+      { label: 'CSS Purge', link: '/docs/customize/purge/' },
+    ],
   },
 ];
 
