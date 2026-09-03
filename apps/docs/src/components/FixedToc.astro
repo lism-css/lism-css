@@ -47,16 +47,3 @@ const tocText = t(lang, 'toc');
     </Modal.Body>
   </Modal.Inner>
 </Modal.Root>
-
-<script>
-  const fixedToc = document.getElementById('fixed-toc');
-  if (fixedToc) {
-    fixedToc.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('.c--navLink')) {
-        const closeBtn = document.querySelector<HTMLElement>('[data-modal-close="fixed-toc"]');
-        closeBtn?.click();
-      }
-    });
-  }
-</script>
