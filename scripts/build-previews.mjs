@@ -101,7 +101,7 @@ function renderLandingHtml(byCat) {
         return `<li class="l--stack -g:20 -p:20 -bgc:base -bd -bdrs:20">
             <div class="l--cluster -jc:between -g:15">
               <span class="-fw:bold">${card.title}</span>
-              <span class="-fxsh:0 -whs:nowrap -fz:2xs -lh:xs -c:text-2 -bd -bdrs:99 -px:10 -py:5">${stack}</span>
+              <span class="-fxsh:0 -whs:nowrap -fz:2xs -hl:xs -c:text-2 -bd -bdrs:99 -px:10 -py:5">${stack}</span>
             </div>
             <div class="l--cluster -g:15">
               ${jaLink}${enLink}

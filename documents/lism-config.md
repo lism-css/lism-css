@@ -177,7 +177,7 @@ Vite/Astro以外のビルド構成向けの入口も`@lism-css/plugin`が提供�
 - `tokens`は単一の情報源。`tokens: { lts: { '2xl': '.5em' } }`と書くだけで、
   `:root { --lts--2xl: .5em }`の出力・ユーティリティ生成（`-lts:2xl`）・ランタイムTOKENS登録（props受理）がまとめて反映される（既定値の上書きも可能）。
   変数名はトークン形式に従う（既定→`--{token}--{key}` / `space`→`--s{key}` / `color`・`palette`→`--{key}`）。
-- 値に`'-'`を指定したキーはカタログ登録のみで`:root`宣言を出力しない（`lh`や`palette.keycolor`のようにCSS変数を持たないもの、`bdrs.inner`や`flow.s`のように実値を手書きSCSS側へ置くもの）。`'-'`以外の値を与えれば、その値が`:root`へ出力される。
+- 値に`'-'`を指定したキーはカタログ登録のみで`:root`宣言を出力しない（`palette.keycolor`のようにCSS変数を持たないもの、`bdrs.inner`や`flow.s`のように実値を手書きSCSS側へ置くもの）。`'-'`以外の値を与えれば、その値が`:root`へ出力される。
 - `traits`はclass出力の追加であり、対応するスタイルは別途必要。
 - `isFullMode:true`は`full.css`相当のスタイルが読み込まれる前提。デフォルトCSSだけだと、出力classに対応するCSSが不足する可能性がある。
 - `defaultImportant:true`はCSS生成時にSassの`$default_important`へ反映されるビルド時設定。CSSを再生成しないと反映されず、ランタイム注入（`window._LISM_CSS_CONFIG_`）では切り替えられない。素のSass利用で`@use 'lism-css/scss/setting' with ($default_important: ...)`と明示指定した場合は、そちらが`lism.config.js`の値より優先される。`main_no_layer`/`full_no_layer`は`$layer_mode: 0`から常に`!important`を付与する（`_mixin.scss`の`resolve_important`）ため、この設定も`props`の個別`important`も`@layer`ありビルドにだけ効く。
