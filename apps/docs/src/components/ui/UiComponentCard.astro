@@ -1,0 +1,32 @@
+---
+import { BoxLink, Frame, Lism, Media } from 'lism-css/astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  href: string;
+  title: string;
+  draft?: boolean;
+}
+
+const { href, title, draft = false } = Astro.props;
+
+// サムネイルは public/thumb/components/{title}.png。無ければ Empty.png にフォールバック
+function getThumbPath(title: string): string {
+  const thumbPath = `/thumb/components/${title}.png`;
+  const fullPath = path.join(process.cwd(), 'public', thumbPath);
+  if (fs.existsSync(fullPath)) {
+    return thumbPath;
+  }
+  return '/thumb/components/Empty.png';
+}
+
+const thumbSrc = getThumbPath(title);
+---
+
+<BoxLink layout="stack" href={href} p="5" g="5" bdrs="10" hov="-bgc" class={draft ? '_draft' : ''}>
+  <Frame ar="3/2" bd bdrs="10" bgc="base">
+    <Media src={thumbSrc} alt={title} width="360" height="240" loading="lazy" />
+  </Frame>
+  <Lism class="u--trim -ff:mono -fz:xs -p:5" pb=".5em">{title}</Lism>
+</BoxLink>

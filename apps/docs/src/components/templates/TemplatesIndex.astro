@@ -6,6 +6,8 @@ import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
 import { stackLabels, groupByCategory, getAggregateRepresentative, getThumb, getPreviewUrl } from '@/config/templates';
 import { Preview, PreviewCode } from '@/components/Preview';
 import CopyCommand from './CopyCommand.astro';
+import SectionHeader from '@parts/SectionHeader.astro';
+import PageHeader from '@parts/PageHeader.astro';
 
 interface Props {
   lang: LangCode;
@@ -63,10 +65,7 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
 
 <Stack g="50" data-pagefind-body>
   {/* ===== ヘッダー ===== */}
-  <Stack g="20">
-    <Heading level="1">{copy.title}</Heading>
-    <Text c="text-2" hl="s" max-sz="m">{copy.lead}</Text>
-  </Stack>
+  <PageHeader title={copy.title} description={copy.lead} />
 
   {/* ===== クイックスタート ===== */}
   <Stack as="section" g="30">
@@ -119,19 +118,9 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
     {
       grouped.map(({ category, items }) => (
         <Stack g="30">
-          <Stack g="20">
-            <Cluster g="15" ai="baseline">
-              <Heading id={`templates-${category.id}`} level="3">
-                {category.label}
-              </Heading>
-              <Inline c="text-2" fz="xs" hl="s" ff="mono">
-                ({items.length})
-              </Inline>
-            </Cluster>
-            <Text c="text-2" fz="s" hl="s">
-              {category.description[lang]}
-            </Text>
-          </Stack>
+          <SectionHeader id={`templates-${category.id}`} level="3" title={category.label} count={items.length}>
+            <Text>{category.description[lang]}</Text>
+          </SectionHeader>
 
           {() => {
             /* カード描画用データを正規化 */

@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import SrcCode from '@/components/mdx/SrcCode.astro';
+import PageHeader from '@parts/PageHeader.astro';
 import { pageLayouts, type PageLayoutCategoryId } from '@/config/page-layouts';
 import { getAllPageLayoutPaths, getPageLayout } from '@/lib/page-layouts';
 
@@ -28,12 +29,16 @@ const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
 
 <BaseLayout title={`${layout.title} - Page Layouts`} description={layout.description.ja} excludeFromSearch noindex>
   <Flow g="30" class="c--pageLayoutPage">
-    <Stack as="header" g="10">
-      <Text fz="xs" c="text-2" tt="uppercase" lts="l">
+    <PageHeader
+      title={layout.title}
+      description={layout.description.ja}
+      draft={layout.draft}
+      backHref="/page-layouts/"
+      backLabel="Page Layouts 一覧へ"
+    >
+      <Text slot="eyebrow" tt="uppercase" lts="l">
         {categoryData.label}
       </Text>
-      <h1 class="-fz:3xl -fw:bold">{layout.title}</h1>
-      <Text c="text-2">{layout.description.ja}</Text>
       {
         layout.related && (
           <Cluster g="15" fz="xs">
@@ -43,14 +48,7 @@ const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
           </Cluster>
         )
       }
-    </Stack>
-    {
-      layout.draft && (
-        <Group fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
-          DRAFT
-        </Group>
-      )
-    }
+    </PageHeader>
     <Group layout="flow" mbs="50">
       <PreviewFrame url={previewUrl} hasSizeSwitch />
     </Group>

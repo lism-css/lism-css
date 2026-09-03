@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import SrcCode from '@/components/mdx/SrcCode.astro';
+import PageHeader from '@parts/PageHeader.astro';
 import { patterns, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
 import { getAllPatternPaths, getPattern } from '@/lib/patterns';
 import { siteConfig } from '@/config/site';
@@ -50,22 +51,17 @@ const patternPath = `src/pages/preview/patterns/${category}/${id}`;
 
 <BaseLayout title={`${pattern.title} - Patterns`} description={pattern.description[lang]} lang={lang} excludeFromSearch noindex>
   <Flow g="30" class="c--patternPage">
-    <Stack as="header" g="10">
-      <Text fz="xs" c="text-2" tt="uppercase" lts="l">
-        <Link href={`/${lang}/patterns/${category}/`} set="plain">
-          {categoryData.label}
-        </Link>
+    <PageHeader
+      title={pattern.title}
+      description={pattern.description[lang]}
+      draft={pattern.draft}
+      backHref={`/${lang}/patterns/${category}/`}
+      backLabel={`Back to ${categoryData.label}`}
+    >
+      <Text slot="eyebrow" tt="uppercase" lts="l">
+        {categoryData.label}
       </Text>
-      <h1 class="-fz:3xl -fw:bold">{pattern.title}</h1>
-      <Text c="text-2">{pattern.description[lang]}</Text>
-    </Stack>
-    {
-      pattern.draft && (
-        <Group fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
-          DRAFT
-        </Group>
-      )
-    }
+    </PageHeader>
 
     <Stack g="10" bgc="base-2" bdrs="10" p="20" fz="s">
       <Text c="text-2">{categoryData.description[lang]}</Text>

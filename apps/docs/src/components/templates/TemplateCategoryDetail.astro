@@ -6,12 +6,13 @@
  * 「中身共通・stack 違いのみ」のカテゴリ（Minimal 等）で、コマンドだけ stack ごとに並べ、
  * プレビューは representative slug の 1枚だけを表示する。
  */
-import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/astro';
+import { Stack, Text, Group, Cluster, Inline, Frame } from 'lism-css/astro';
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
 import { stackLabels, getAggregateRepresentative, getThumb, getPreviewUrl, type TemplateItem, type CategoryDef } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
+import PageHeader from '@parts/PageHeader.astro';
 
 interface Props {
   category: CategoryDef;
@@ -24,7 +25,7 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      backToList: '← Templates 一覧へ',
+      backToList: 'Templates 一覧へ',
       install: 'インストールコマンド',
       installCategoryLead: '対話形式で stack を選んで生成します。',
       installStackLead: 'stack を直接指定する場合：',
@@ -35,7 +36,7 @@ const copy = isJa
       thumbAlt: (title: string) => `${title} のサムネイル`,
     }
   : {
-      backToList: '← Back to Templates',
+      backToList: 'Back to Templates',
       install: 'Install command',
       installCategoryLead: 'Pick a stack through the interactive flow.',
       installStackLead: 'Or specify a stack directly:',
@@ -53,28 +54,20 @@ const previewUrl = representative ? getPreviewUrl(representative, lang) : undefi
 ---
 
 <Stack g="40">
-  {/* パンくず（一覧へ戻る） */}
-  <Cluster g="10" fz="xs">
-    <a href={templatesUrl} class="-c:text-2">{copy.backToList}</a>
-  </Cluster>
-
-  {/* ヘッダー */}
-  <Stack as="header" g="10">
-    <Cluster g="10">
-      <Text fz="xs" c="text-2" tt="uppercase" lts="l">
+  <PageHeader title={category.label} description={category.description[lang]} backHref={templatesUrl} backLabel={copy.backToList}>
+    <Fragment slot="eyebrow">
+      <Text tt="uppercase" lts="l">
         {category.label}
       </Text>
       {
         templates.map((tpl) => (
-          <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+          <Inline d="inline-flex" px="10" ff="mono" bd bdc="current" bdrs="99">
             {stackLabels[tpl.stack]}
           </Inline>
         ))
       }
-    </Cluster>
-    <Heading level="1" fz="3xl" fw="bold">{category.label}</Heading>
-    <Text c="text-2">{category.description[lang]}</Text>
-  </Stack>
+    </Fragment>
+  </PageHeader>
 
   {/* インストールコマンド */}
   <Group>

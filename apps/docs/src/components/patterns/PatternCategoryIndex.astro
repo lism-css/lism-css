@@ -1,7 +1,8 @@
 ---
-import { Stack, AutoColumns, Text, Inline, Flex, Cluster, Link } from 'lism-css/astro';
+import { Stack, AutoColumns, Cluster, Link } from 'lism-css/astro';
+import PageHeader from '@parts/PageHeader.astro';
 import { patterns, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
-import { filterDraftItems } from '@/lib/patterns';
+import { filterDraftItems, getPatternThumbSrc } from '@/lib/patterns';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
 import PatternCard from './PatternCard.astro';
 
@@ -14,35 +15,38 @@ const { lang, categoryId } = Astro.props as Props;
 const category: PatternCategory = patterns[categoryId];
 const items = filterDraftItems(category.items);
 
-const copy = lang === 'ja' ? { back: '← Patterns 一覧へ' } : { back: '← Back to Patterns' };
+const copy = lang === 'ja' ? { back: 'Patterns 一覧へ' } : { back: 'Back to Patterns' };
 ---
 
 <Stack g="40">
-  <Stack as="header" g="30">
-    <Link href={getLocalizedUrl('/patterns/', lang)} fz="s" w="fit" util="trim">
-      {copy.back}
-    </Link>
-    <Stack g="10">
-      <Flex ai="center">
-        <h1>{category.label}</h1>
-        <Inline fz="s" c="text-2" fw="normal" fxsh="0">
-          ({items.length})
-        </Inline>
-      </Flex>
-      <Text c="text-2" fz="s">{category.description[lang]}</Text>
-      {
-        category.related && (
-          <Cluster g="15" fz="xs">
-            {category.related.map((related) => (
-              <Link href={getLocalizedUrl(related.path, lang)}>{related.label}</Link>
-            ))}
-          </Cluster>
-        )
-      }
-    </Stack>
-  </Stack>
+  <PageHeader
+    title={category.label}
+    count={items.length}
+    description={category.description[lang]}
+    backHref={getLocalizedUrl('/patterns/', lang)}
+    backLabel={copy.back}
+  >
+    {
+      category.related && (
+        <Cluster g="15" fz="xs">
+          {category.related.map((related) => (
+            <Link href={getLocalizedUrl(related.path, lang)}>{related.label}</Link>
+          ))}
+        </Cluster>
+      )
+    }
+  </PageHeader>
 
   <AutoColumns cols="24rem" g="25">
-    {items.map((item) => <PatternCard lang={lang} categoryId={categoryId} item={item} />)}
+    {
+      items.map((item) => (
+        <PatternCard
+          href={getLocalizedUrl(`/patterns/${categoryId}/${item.id}/`, lang)}
+          thumbSrc={getPatternThumbSrc(lang, categoryId, item.id)}
+          title={item.title}
+          draft={item.draft}
+        />
+      ))
+    }
   </AutoColumns>
 </Stack>

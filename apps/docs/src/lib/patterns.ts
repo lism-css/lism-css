@@ -1,3 +1,4 @@
+import { isRootLang, type LangCode } from '@/lib/i18n';
 import { patterns, type PatternCategoryId, type PatternItem } from '@/config/patterns';
 
 const isProd = import.meta.env.PROD;
@@ -24,4 +25,9 @@ export function getAllPatternPaths(): Array<{ category: string; id: string }> {
     }
   }
   return paths;
+}
+
+// スクリーンショットはroot言語だけ言語ディレクトリなしで置かれている
+export function getPatternThumbSrc(lang: LangCode, categoryId: string, patternId: string): string {
+  return isRootLang(lang) ? `/screenshots/patterns/${categoryId}/${patternId}.png` : `/screenshots/patterns/${lang}/${categoryId}/${patternId}.png`;
 }

@@ -5,12 +5,13 @@
  * URL: /templates/{category}/{slug}/  または  /{lang}/templates/{category}/{slug}/
  * 一覧（TemplatesIndex）から遷移して使う、テンプレート1件の紹介ページ。
  */
-import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/astro';
+import { Stack, Text, Group, Inline, Frame } from 'lism-css/astro';
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
 import { stackLabels, getThumb, getPreviewUrl, type TemplateItem, type CategoryDef } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
+import PageHeader from '@parts/PageHeader.astro';
 
 interface Props {
   template: TemplateItem;
@@ -23,7 +24,7 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      backToList: '← Templates 一覧へ',
+      backToList: 'Templates 一覧へ',
       install: 'インストールコマンド',
       installLead: '対話なしで生成する場合：',
       preview: 'プレビュー',
@@ -33,7 +34,7 @@ const copy = isJa
       thumbAlt: (title: string) => `${title} のサムネイル`,
     }
   : {
-      backToList: '← Back to Templates',
+      backToList: 'Back to Templates',
       install: 'Install command',
       installLead: 'Skip the interactive flow:',
       preview: 'Preview',
@@ -49,33 +50,22 @@ const previewUrl = getPreviewUrl(template, lang);
 ---
 
 <Stack g="40">
-  {/* パンくず（一覧へ戻る） */}
-  <Cluster g="10" fz="xs">
-    <a href={templatesUrl} class="-c:text-2">{copy.backToList}</a>
-  </Cluster>
-
-  {/* ヘッダー */}
-  <Stack as="header" g="10">
-    <Cluster g="10">
-      <Text fz="xs" c="text-2" tt="uppercase" lts="l">
+  <PageHeader
+    title={template.title[lang]}
+    description={template.description[lang]}
+    draft={template.draft}
+    backHref={templatesUrl}
+    backLabel={copy.backToList}
+  >
+    <Fragment slot="eyebrow">
+      <Text tt="uppercase" lts="l">
         {category.label}
       </Text>
-      <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+      <Inline d="inline-flex" px="10" ff="mono" bd bdc="current" bdrs="99">
         {stackLabels[template.stack]}
       </Inline>
-    </Cluster>
-    <Cluster g="10">
-      <Heading level="1" fz="3xl" fw="bold">{template.title[lang]}</Heading>
-      {
-        template.draft && (
-          <Inline d="inline-flex" px="10" fz="2xs" ff="mono" bgc="text-2" c="base" bdrs="99">
-            draft
-          </Inline>
-        )
-      }
-    </Cluster>
-    <Text c="text-2">{template.description[lang]}</Text>
-  </Stack>
+    </Fragment>
+  </PageHeader>
 
   {/* インストールコマンド */}
   <Group>
