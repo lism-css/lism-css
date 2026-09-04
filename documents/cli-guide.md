@@ -64,7 +64,7 @@ nr publish:cli  # build → lism-cli publish → create-lism publish
   - `{lang}/{variant}/`にはbaseと違うファイルだけを置く。base側のファイル（`_style.css`や共通コンポーネント）はen側から`@/pages/{variant}/_style.css`のようにalias（`@/`）で参照する。相対パス（`../../{variant}/`）はCLIが書き換えないので使わない。
   - CSSの言語差は1ファイル内で切り替える。ページ全体やrootトークンは`html[lang='ja']`で絞る（en版はコンポーネント内に`lang="ja"`の要素を持つことがあり、素の`[lang='ja']`だとそこにも当たる）。
   - `--lang en`で`src/pages/en/{variant}/index.astro`があれば、CLIは`{variant}/`を持ち上げた上に`en/{variant}/`を上書きする（同名ファイルはen優先）。無ければbaseだけを持ち上げる。`manifest.ts`の追加定義は不要。抽出時に他variantと`en/`は削除され、`@/{dir}/{variant}/`と`@/{dir}/en/{variant}/`の両形式が`@/{dir}/`へ書き換わる。
-  - 公開済みCLIは実行時にmainのテンプレを取得する（`DEFAULT_TEMPLATES_REF`）。CLIの抽出処理を変える改修では、CLIを先に公開してからテンプレ変更をmainへマージする。
+  - CLIの抽出処理を変える改修では、CLIを先に公開してからテンプレ変更をmainへマージする（公開済みCLIは常にmainのテンプレを取得するため。前述の`DEFAULT_TEMPLATES_REF`を参照）。
   - `Layout.astro`は`lang` prop（既定`ja`）で`<html lang>`を切り替える。en版ページは`<Layout title lang="en">`。
   - 現状`en`を持つのは`lp-astro-corporate` / `lp-astro-interior` / `lp-astro-ryokan`。
   - ローカル確認は`nr build:template lp-astro`（jaと`/en/{variant}/`を同時にビルド）→`nr preview:template lp-astro`。
