@@ -53,8 +53,8 @@ const presetData = type && PRESETS[type as keyof typeof PRESETS];
 const _color = keycolor || presetData?.color || 'currentColor';
 ---
 
-<Flow class="c--docsNote u--cbox" flow="s" set="bxsh" keycolor={_color} ai="center" fz="s" my="40" bd {...props}>
-  <Center class="c--docsNote_icon" isSkipFlow hl="0">
+<Flow class="c--docsNote u--cbox" pos="relative" ov="clip" flow="s" set="bxsh" bxsh="10" keycolor={_color} ai="center" my="40" bd {...props}>
+  <Center class="c--docsNote_icon" isSkipFlow hl="0" pos="absolute" i="0">
     <Icon icon={presetData?.icon} viewBox={presetData?.viewBox} style={{ scale: '1' }}>
       {presetData?.path && <path d={presetData?.path} />}
     </Icon>
@@ -64,16 +64,13 @@ const _color = keycolor || presetData?.color || 'currentColor';
 
 <style>
   .c--docsNote {
-    position: relative;
-    overflow: clip;
     border-width: 0px;
     border-radius: 2px;
-    /* border-start-start-radius: 0px; */
     border-inline-start-width: 2px;
     border-color: var(--keycolor);
-    padding: 1.625em;
-    padding-inline-start: 1.875em;
-    /* --shc: color-mix(in srgb, color-mix(in srgb, var(--keycolor) 70%, rgb(0 0 0)), transparent 92%); */
+    padding: 1.5em;
+    padding-inline-start: 1.75em;
+    --shc: color-mix(in srgb, color-mix(in srgb, var(--keycolor) 50%, rgb(0 0 0)), transparent 90%);
 
     li::marker {
       color: var(--keycolor);
@@ -82,17 +79,11 @@ const _color = keycolor || presetData?.color || 'currentColor';
   .c--docsNote_icon {
     color: #fff;
     background: var(--keycolor);
-    position: absolute;
-    inset-inline-start: 0;
-    top: 0;
     border-radius: 0 1px 4px 0;
-    /* bottom: calc(100% - .75em); */
-    /* border-radius: 2px 4px 4px 0; */
     margin-inline-start: -2px;
     padding-inline-start: 1px;
-    /* padding-block-end: 1px; */
-    width: calc(1.5em + 2px);
-    height: 1.5em;
+    width: calc(1.4em + 2px);
+    height: 1.4em;
   }
   :global(.c--docsNote_title) {
     font-weight: var(--fw--bold);
