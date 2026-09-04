@@ -48,14 +48,14 @@ const tabs = [
   { id: 'code', label: previewText.codeTab },
 ];
 const tabAttrs = (id: string, isActive: boolean) => ({
-  role: 'tab',
+  role: 'tab' as const,
   id: `${tabsId}-${id}-tab`,
   'aria-controls': `${tabsId}-${id}`,
-  'aria-selected': isActive ? 'true' : 'false',
+  'aria-selected': (isActive ? 'true' : 'false') as 'true' | 'false',
   tabindex: isActive ? '0' : '-1',
 });
 const panelAttrs = (id: string, isActive: boolean) => ({
-  role: 'tabpanel',
+  role: 'tabpanel' as const,
   id: `${tabsId}-${id}`,
   'aria-labelledby': `${tabsId}-${id}-tab`,
   tabindex: '0',
