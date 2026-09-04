@@ -24,4 +24,10 @@ describe('findUncoveredChars', () => {
   it('サロゲートペアの文字を1文字として扱う', () => {
     expect(findUncoveredChars('𠮷野家', covered)).toEqual(['野', '家']);
   });
+
+  it('異体字セレクタはカバレッジ判定から除外する', () => {
+    // ♥ は収録済み、U+FE0F はセレクタなので未収録扱いにしない
+    const coveredWithHeart = new Set(['♥']);
+    expect(findUncoveredChars('♥️', coveredWithHeart)).toEqual([]);
+  });
 });

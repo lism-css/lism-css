@@ -21,12 +21,20 @@ export function loadOgFontChars(): Set<string> {
   return cachedChars;
 }
 
+/** 異体字セレクタ（絵文字スタイル等）。基底文字の見た目指定であり、フォント収録の対象ではない */
+function isVariationSelector(char: string): boolean {
+  const codePoint = char.codePointAt(0);
+  if (codePoint === undefined) return false;
+  return (codePoint >= 0xfe00 && codePoint <= 0xfe0f) || (codePoint >= 0xe0100 && codePoint <= 0xe01ef);
+}
+
 /** text のうちフォントに収録されていない文字を、重複なし・出現順で返す（空白類は無視） */
 export function findUncoveredChars(text: string, covered: ReadonlySet<string>): string[] {
   const uncovered = new Set<string>();
 
   for (const char of text) {
     if (/\s/.test(char)) continue;
+    if (isVariationSelector(char)) continue;
     if (covered.has(char)) continue;
     uncovered.add(char);
   }
