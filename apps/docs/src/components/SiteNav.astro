@@ -70,7 +70,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
             const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
             return (
               <Link href={itemPath} class="c--siteNav_toplink" data-active={isActive} set="plain hov" hl="s">
-                <Inline layout="flex" g="0.4em" ai="center" py="0.3rem" fz="m">
+                <Inline layout="flex" g="0.5em" ai="center" py="0.375em" fz="0.9em">
                   {item.icon && <Icon icon={item.icon} fz="1.25em" />}
                   {itemLabel}
                 </Inline>
