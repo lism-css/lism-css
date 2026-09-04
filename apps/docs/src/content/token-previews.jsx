@@ -1,4 +1,4 @@
-import { Box, Inline, Stack, Center } from 'lism-css/react';
+import { Box, Flex, Inline, Stack, Center } from 'lism-css/react';
 import { DummyText } from '@lism-css/ui/react/DummyText';
 
 export const FzDemos = ({ lang = 'ja' }) => (
@@ -46,22 +46,17 @@ export const BoxShadowDemos = ({ shadows = [] }) => {
   );
 };
 
-export const SpacingDemos = ({ spaces, isValueLabel }) => {
+export const SpacingDemos = ({ spaces }) => {
   return (
     <Stack g="5" hl="s">
       {spaces.map((s, i) => {
-        const label = isValueLabel ? <code>{s}</code> : <code>{i}</code>;
         return (
           <Stack key={s} g="5">
-            {!isValueLabel && (
-              <Box bd-l bdw="2px" hl="0" pl="10" fz="2xs">
-                {s}
+            <Box g="10" d="grid" gtc="1.5rem min-content">
+              <Box bgc="base" fz="xs" ta="right">
+                <code>{s}</code>
               </Box>
-            )}
-            <Box pl={s} bgc="brand">
-              <Box bgc="base" pl="10" fz="xs">
-                {label}
-              </Box>
+              <Box pl={s} h="1.25em" bgc="brand" bdrs="0 2px 2px 0"></Box>
             </Box>
           </Stack>
         );
