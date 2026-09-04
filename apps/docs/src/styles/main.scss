@@ -6,28 +6,6 @@
 @use './kv-editor';
 @use './home';
 
-/* ----------------------------------------
-    タイポグラフィ
- ---------------------------------------- */
-@layer lism-base {
-  :root {
-    // --REM: clamp(0.95rem, 0.915rem + 0.15vw, 1.05rem); /* 変動幅: 360px ~ 1400px */
-    --REM: clamp(0.95rem, 0.9rem + 0.2vw, 1rem); /* 変動幅: 400px ~ 800px */
-
-    // font-size: 倍音列でのスケーリング。単位は em
-    --fz--base: var(--REM);
-
-    // 余白も --REM 連動で流体化する
-    --s-unit: calc(var(--REM) * 0.5);
-  }
-  /* コンテナクエリ単位でのトークン再セット */
-  .set--cqUnit {
-    --REM: clamp(0.95rem, 0.9rem + 0.2cqw, 1rem); /* cqw でほんのり流体タイポグラフィ */
-    --s-unit: calc(var(--REM) * 0.5);
-    font-size: var(--REM);
-  }
-}
-
 @layer lism-custom {
   .c--propTable > table {
     min-width: 50%;
