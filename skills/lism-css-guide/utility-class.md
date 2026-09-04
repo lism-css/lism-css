@@ -29,8 +29,6 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 | `u--trim` | ハーフレディングのネガティブマージンでテキスト上下の余白を詰める | [`_trim.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trim.scss) |
 | `u--trimAll` | 直下の子要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table` を除く）にハーフレディングトリムを一括適用する除外方式のクラス | [`_trim.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trim.scss) |
 | `u--cbox` | `--keycolor` を使い `color-mix()` で `--c` / `--bgc` / `--bdc` を自動生成する色付きボックス | [`_cbox.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_cbox.scss) |
-| `u--divide` | Grid / Flex の子要素**間**にのみ `box-shadow` で区切り線を表示する | [`_divide.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_divide.scss) |
-| `u--enclose` | Grid / Flex の各子要素を `box-shadow` で枠囲みし、table セル風に表示する | [`_divide.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_divide.scss) |
 | `u--srOnly` | スクリーンリーダー専用（視覚的に非表示）。`clip-path: inset(50%)` で実装 | [`_srOnly.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_srOnly.scss) |
 | `u--clipText` | テキストで背景をクリッピング（`background-clip: text`） | [`_clipText.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_clipText.scss) |
 
@@ -43,19 +41,12 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 
 <!-- u--trim: テキスト余白の詰め -->
 <p class="u--trim">テキスト...</p>
-
-<!-- u--divide: グリッド子要素間の区切り線 -->
-<div class="l--grid u--divide" style="--gtc: 1fr 1fr">
-  <div>A</div>
-  <div>B</div>
-</div>
 ```
 
 ```jsx
 // JSX での使用（className で指定）
 <Lism className="u--cbox" keycolor="red" bd p="20">...</Lism>
 <Text className="u--trim">テキスト...</Text>
-<Grid className="u--divide" gtc="1fr 1fr">...</Grid>
 ```
 
 
@@ -64,6 +55,7 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 コアには含まれないが、ドキュメントで紹介されている追加ユーティリティの例:
 
 - `u--inlineCenter`: 絵文字やインラインアイコンをテキスト中央に揃える
+- `u--divide` / `u--enclose`: Grid / Flex の子要素間の区切り線・セル枠を `gap` と子要素の `box-shadow` で描く。描画が `border` より粗く、並び方向が切り替わるレイアウトでは `bdw` のブレイクポイント切り替えを優先する
 
 これらは必要に応じて自分で CSS を追加して使用します。
 

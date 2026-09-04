@@ -56,7 +56,7 @@ Lism CSSで定義されるクラスは、その役割とレイヤーの所属が
 | Custom Class | Lism 本体に含まれない、ユーザーが自由に定義するカスタムクラス | `c--` | `c--featureList`, `c--header` |
 | `is--` Trait | 要素に役割（〜である）を宣言 | `is--` | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` |
 | `has--` Trait | 要素に機能（〜を持つ）を付与 | `has--` | `has--transition`, `has--gutter`, `has--snap`, `has--mask` |
-| Utility Class | 用途が明確な装飾系ユーティリティ | `u--` | `u--cbox`, `u--trim`, `u--divide`, `u--enclose` |
+| Utility Class | 用途が明確な装飾系ユーティリティ | `u--` | `u--cbox`, `u--trim`, `u--trimAll`, `u--clipText` |
 | Property Class | 単一プロパティの制御 | `-` | `-fz:l`, `-p:20`, `-d:none` |
 
 **併用ルール:**

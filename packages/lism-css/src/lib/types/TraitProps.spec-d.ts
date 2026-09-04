@@ -154,8 +154,6 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ util: 'trimAll' });
       assertType<LismPropsBase>({ util: 'srOnly' });
       assertType<LismPropsBase>({ util: 'clipText' });
-      assertType<LismPropsBase>({ util: 'divide' });
-      assertType<LismPropsBase>({ util: 'enclose' });
     });
 
     it('スペース区切りで複数指定できる', () => {
