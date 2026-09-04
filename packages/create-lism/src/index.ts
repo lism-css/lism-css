@@ -10,6 +10,7 @@ async function main(): Promise<void> {
   let force = false;
   let showHelp = false;
   let lang: string | undefined;
+  let ref: string | undefined;
 
   // --help の description や printHelp 表示に言語選択を反映させるため、
   // まず `--lang` を先に走査してから残りの引数を処理する。
@@ -36,6 +37,10 @@ async function main(): Promise<void> {
       i++;
     } else if (a.startsWith('--lang=')) {
       // 先行走査で処理済み
+    } else if (a === '--ref') {
+      ref = args[++i];
+    } else if (a.startsWith('--ref=')) {
+      ref = a.slice('--ref='.length);
     } else if (a === '-h' || a === '--help') {
       showHelp = true;
     } else if (!a.startsWith('-')) {
@@ -48,7 +53,7 @@ async function main(): Promise<void> {
     return;
   }
 
-  await runCreate({ template, targetDir, force, lang });
+  await runCreate({ template, targetDir, force, lang, ref });
 }
 
 function printHelp(): void {
@@ -60,6 +65,7 @@ function printHelp(): void {
       `  -t, --template <name>   ${t('cli.create.opt.template')}`,
       `  -f, --force             ${t('cli.create.opt.force')}`,
       `      --lang <code>       ${t('cli.opt.lang')}`,
+      `      --ref <ref>         ${t('cli.create.opt.ref')}`,
       `  -h, --help              ${t('common.help')}`,
       '',
     ].join('\n')

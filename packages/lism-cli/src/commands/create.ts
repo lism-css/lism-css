@@ -63,6 +63,7 @@ const CATEGORIES: CategoryDef[] = [
 interface CreateOptions {
   template?: string;
   force?: boolean;
+  ref?: string;
 }
 
 /** commander の action 第3引数（グローバル --lang を読むために最小限の構造だけ受ける） */
@@ -74,6 +75,8 @@ export interface RunCreateArgs {
   template?: string;
   targetDir?: string;
   force?: boolean;
+  /** テンプレ取得元の Git ref。未指定なら `DEFAULT_TEMPLATES_REF`。 */
+  ref?: string;
   /**
    * 明示指定された言語（`--lang`）。`ja` / `en` のときその言語で CLI 表示・テンプレ生成を確定する。
    * 未指定（undefined / 不正値）の場合は、対話端末では最初に言語選択プロンプトを出し、
@@ -82,12 +85,15 @@ export interface RunCreateArgs {
   lang?: string;
 }
 
-export async function runCreate({ template, targetDir, force = false, lang }: RunCreateArgs): Promise<void> {
-  await runCreateWithTemplates({ template, targetDir, force, lang }, TEMPLATES);
+export async function runCreate({ template, targetDir, force = false, lang, ref }: RunCreateArgs): Promise<void> {
+  await runCreateWithTemplates({ template, targetDir, force, lang, ref }, TEMPLATES);
 }
 
 /** 言語とテンプレートを解決し、取得したテンプレートへ生成後の変換を適用する。 */
-export async function runCreateWithTemplates({ template, targetDir, force = false, lang }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
+export async function runCreateWithTemplates(
+  { template, targetDir, force = false, lang, ref = DEFAULT_TEMPLATES_REF }: RunCreateArgs,
+  templates: TemplateDef[]
+): Promise<void> {
   const resolvedLang = await resolveLang(lang);
   setLang(resolvedLang);
 
@@ -107,7 +113,6 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
     }
   }
 
-  const ref = DEFAULT_TEMPLATES_REF;
   logger.info(t('create.fetching', { name: tpl.slug, ref }));
   await downloadTemplateSource(tpl, outDir, ref, force);
 
@@ -125,7 +130,7 @@ export async function createCommand(targetDir: string | undefined, options: Crea
   // ルートプログラムの `--lang` はグローバルオプションなので optsWithGlobals() で取得する。
   const langOpt = command?.optsWithGlobals().lang;
   const lang = typeof langOpt === 'string' ? langOpt : undefined;
-  await runCreate({ template: options.template, targetDir, force: options.force, lang });
+  await runCreate({ template: options.template, targetDir, force: options.force, lang, ref: options.ref });
 }
 
 // 非対話端末はenへフォールバックし、言語選択は現在の言語に依存しない固定表示にする。
