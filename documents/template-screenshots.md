@@ -45,6 +45,7 @@ pnpm --filter lism-docs screenshot:templates -- --no-build
 | `port` | number | — | プレビューサーバーのポート。テンプレ間で重複させない |
 | `portViaEnv` | boolean | `false` | `true`なら`port`をCLI引数でなく`PORT`環境変数で渡す。`next start` / `next dev`が`--`後の`--port`をディレクトリ引数と誤解してエラーになるための回避策 |
 | `waitAfterLoad` | number | `500` | ページ読み込み後の待機ms |
+| `reducedMotion` | boolean | `false` | `true`なら`prefers-reduced-motion: reduce`を適用して撮る。入場アニメーションや背景の常時アニメーションがあるテンプレで、完了後の静止状態を安定して撮るため。テンプレ側にreduced-motion用のスタイル分岐が必要 |
 | `shots[].name` | string | — | 出力ファイル名。`screenshots/{name}.png`。`/`を含めるとサブディレクトリになる（`en/top`→`screenshots/en/top.png`） |
 | `shots[].path` | string | — | サーバールートからのパス |
 | `langShots` | `Record<string, ShotDef[]>` | — | 言語別overlay（`.lang/<lang>/`）をマージして撮る`shots`。`screenshots/<lang>/{name}.png`へ保存 |
