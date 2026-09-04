@@ -1,4 +1,4 @@
-基準日: 2026-09-03・コミット105422df
+基準日: 2026-09-04・コミットc387409c
 
 # Lism CLI ガイド（運営者向け）
 
@@ -60,8 +60,11 @@ nr publish:cli  # build → lism-cli publish → create-lism publish
   - `.lang/`は`screenshots/`と同様に、生成プロジェクトから自動削除される。
   - ローカル確認は`nr build:template:en <pkg>`（`.lang/en`を一時的にsrcへマージしてbuild→src復元）→`nr preview:template <pkg>`。
 - 言語別variant（`single-project-variant`型）
-  - 文章量が多くデザインごと差し替えるLPは、overlayでなく`src/pages/{lang}/{variant}/`（必要なら`src/components/{lang}/{variant}/`も）の完全コピーを同梱する。
-  - `--lang en`で`src/pages/en/{variant}/index.astro`があればそれを抽出元にし、無ければbaseへフォールバックする。`manifest.ts`の追加定義は不要。抽出時に他variantと`en/`は削除される。
+  - 文章量が多くデザインごと差し替えるLPは、`.lang/`のoverlayでなく`src/pages/{lang}/{variant}/`（必要なら`src/components/{lang}/{variant}/`も）に置く。同じ`src/`内に並べるので`nr dev`で両言語を確認できる。
+  - `{lang}/{variant}/`にはbaseと違うファイルだけを置く。base側のファイル（`_style.css`や共通コンポーネント）はen側から`@/pages/{variant}/_style.css`のようにalias（`@/`）で参照する。相対パス（`../../{variant}/`）はCLIが書き換えないので使わない。
+  - CSSの言語差は1ファイル内で切り替える。ページ全体やrootトークンは`html[lang='ja']`で絞る（en版はコンポーネント内に`lang="ja"`の要素を持つことがあり、素の`[lang='ja']`だとそこにも当たる）。
+  - `--lang en`で`src/pages/en/{variant}/index.astro`があれば、CLIは`{variant}/`を持ち上げた上に`en/{variant}/`を上書きする（同名ファイルはen優先）。無ければbaseだけを持ち上げる。`manifest.ts`の追加定義は不要。抽出時に他variantと`en/`は削除され、`@/{dir}/{variant}/`と`@/{dir}/en/{variant}/`の両形式が`@/{dir}/`へ書き換わる。
+  - CLIの抽出処理を変える改修では、CLIを先に公開してからテンプレ変更をmainへマージする（公開済みCLIは常にmainのテンプレを取得するため。前述の`DEFAULT_TEMPLATES_REF`を参照）。
   - `Layout.astro`は`lang` prop（既定`ja`）で`<html lang>`を切り替える。en版ページは`<Layout title lang="en">`。
   - 現状`en`を持つのは`lp-astro-corporate` / `lp-astro-interior` / `lp-astro-ryokan`。
   - ローカル確認は`nr build:template lp-astro`（jaと`/en/{variant}/`を同時にビルド）→`nr preview:template lp-astro`。
