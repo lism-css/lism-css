@@ -11,6 +11,7 @@
 import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
+import { randomUUID } from 'node:crypto';
 import * as sass from 'sass';
 import postcss, { type AcceptedPlugin } from 'postcss';
 import autoprefixer from 'autoprefixer';
@@ -151,7 +152,8 @@ function writeCss(filePath: string, css: string): void {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  const tmpPath = `${filePath}.${process.pid}.tmp`;
+  // worker_threads 間では PID が共通なので、呼び出しごとに一意な値を足して衝突を避ける。
+  const tmpPath = `${filePath}.${process.pid}.${randomUUID()}.tmp`;
   try {
     fs.writeFileSync(tmpPath, css);
     fs.renameSync(tmpPath, filePath);
