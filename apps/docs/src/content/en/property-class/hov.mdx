@@ -1,6 +1,6 @@
 ---
 title: '-hov'
-description: 'How to use the -hov property classes for controlling hover behavior and transitions.'
+description: 'How to use the -hov Property Class for controlling hover behavior and transitions.'
 ---
 
 import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink, Inline, Text, Cluster, Link } from 'lism-css/astro';
@@ -9,7 +9,7 @@ import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink, Inline,
 This page covers how Lism handles hover behavior with CSS.
 
 
-In Lism, hover styles are defined using Property Classes that begin with `-hov:`.
+In Lism, hover styles are defined using Property Classes that begin with `-hov:`.<br />
 There are three forms of `-hov` classes:
 
 | Form | Role |
@@ -41,7 +41,7 @@ The Lism core package provides the following classes by default:
 | `-hov:-bxsh` | `box-shadow` | `var(--bxsh--50)` |
 
 
-### Using Default Values
+### Using default values
 
 Each `-hov:-{prop}` class has a default value, so you can use it without setting a destination CSS variable.
 
@@ -333,7 +333,7 @@ You can freely add your own presets to fit each project.
 
 
 <div class="u--srOnly" id="set--hov"></div>
-## Using `-hov:in:{preset}`
+## `-hov:in:{preset}`
 
 `-hov:in:{preset}` is used to **trigger style changes on child elements from a parent's hover state**.
 
@@ -365,9 +365,9 @@ The Lism core package provides the following classes by default:
 <Preview>
   <PreviewTitle>Example using `-hov:in:show` and `-hov:in:zoom`</PreviewTitle>
   <PreviewArea p="20">
-    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="40">
       <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }} bdrs="40">
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             <Fragment>View More</Fragment>
@@ -378,9 +378,9 @@ The Lism core package provides the following classes by default:
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html "set--hov" "-hov:in:show" "-hov:in:zoom" "has--transition"
-    <a class="l--frame set--hov is--boxLink -ar:16/9 -bdrs:30" href="#banner-link">
+    <a class="l--frame set--hov is--boxLink -ar:16/9 -bdrs:40" href="#banner-link">
       <img class="is--layer has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
-      <div class="is--layer has--transition -hov:in:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
+      <div class="is--layer has--transition -hov:in:show -bgc -bdrs:40" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
           <span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:20 -py:10">View More</span>
         </div>
@@ -390,9 +390,9 @@ The Lism core package provides the following classes by default:
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'set="hov"' 'hov="in:show"' 'hov="in:zoom"' 'hasTransition'
-    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="40">
       <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }} bdrs="40">
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
@@ -406,9 +406,11 @@ The Lism core package provides the following classes by default:
 
 
 <div class="u--srOnly" id="has--transition"></div>
-## How to configure transitions
+## Configuring transitions
 
 Adding the [`has--transition`](/en/docs/trait-class/#has--transition) class makes hover changes transition smoothly. Use the `--duration` variable to adjust the transition time.
+
+By default, only colors, shadows, opacity, transform-related, and filter-related properties are transitioned. We recommend explicitly listing the properties that actually change via the `--transitionProps` variable (or a string such as `hasTransition="color, opacity"` in Lism components).
 
 
 <Preview>

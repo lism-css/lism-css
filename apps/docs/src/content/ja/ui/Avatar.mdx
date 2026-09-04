@@ -5,7 +5,7 @@ description: '@lism-css/ui で提供する Avatar コンポーネントについ
 import { Flex, Center, Frame } from 'lism-css/astro';
 import { Avatar } from '@lism-css/ui/astro/Avatar';
 
-アバター画像用のコンポーネントです。
+アバター画像用のコンポーネントです。画像がない場合は、名前のイニシャル1文字をプレースホルダーとして表示できます。
 
 
 ## Overview
@@ -55,8 +55,9 @@ Avatar のベーススタイルは、以下のCSSで定義されています。
 | プロパティ | 説明 |
 |---|---|
 |`size`| アバターのサイズを指定します。初期値:`"2em"`|
-|`src`| アバター画像のパス |
-|`alt`| altテキスト |
+|`src`| アバター画像のパス。未指定の場合は`name`のイニシャルを表示します。 |
+|`name`| ユーザー名。`src`未指定時に先頭1文字をイニシャルとして表示します。`alt`未指定時は代替テキストとしても使われます。 |
+|`alt`| 代替テキスト。指定時は`name`より優先されます。隣に名前テキストが並ぶなど読み上げが二重になる場合は`alt=""`で装飾扱いにできます。 |
 {/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
 
 
@@ -87,6 +88,43 @@ Avatar のベーススタイルは、以下のCSSで定義されています。
     ```
   </PreviewCode>
 </Preview>
+
+
+### イニシャル表示
+
+`src`を省略すると、ルートが`l--frame`から`l--center`に切り替わり、`b--avatar--initial`が付いて`name`の先頭1文字を中央に表示します。大文字化はCSSの`text-transform: uppercase`で行い、文字サイズはアバターのサイズ（`--w`）に比例します。
+
+スタイルはルートの`b--avatar--initial`に当てているため、背景色は`bgc`などのPropで上書きできます。
+
+<Preview>
+  <PreviewTitle>`src`を省略してイニシャルを表示する</PreviewTitle>
+    <PreviewArea p="20" bg=":stripe">
+    <Flex layout="cluster" g="15">
+      <Avatar size="2rem" name="Yamada Taro" />
+      <Avatar size="3rem" name="鈴木" bgc="brand" c="base" />
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Avatar size="2rem" name="Yamada Taro" />
+    <Avatar size="3rem" name="鈴木" bgc="brand" c="base" />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="b--avatar b--avatar--initial l--center -w" style="--w: 2rem">
+      <span role="img" aria-label="Yamada Taro">Y</span>
+    </div>
+    <div class="b--avatar b--avatar--initial l--center -w -bgc:brand -c:base" style="--w: 3rem">
+      <span role="img" aria-label="鈴木">鈴</span>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::note
+画像の読み込み失敗時にイニシャルへ切り替える機能はありません。Astro版が静的HTMLのため、クライアントJSでのロード状態監視は持ち込まない方針です。
+:::
 
 
 ## Without @lism-css/ui

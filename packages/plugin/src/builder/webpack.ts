@@ -1,11 +1,9 @@
 /**
  * webpack 主導の bundler 向け汎用プリミティブ（`@lism-css/plugin/webpack`）。
  *
- * `@wordpress/scripts` をはじめとする webpack ベースのビルドには、Vite/Astro のような「bare CSS import を
+ * webpackベースのビルドには、Vite/Astroのような「bare CSS importを
  * オンザフライで横取りする口」が無い。そこで（必要なら）config 反映済み CSS を `<root>/.lism-css/css/*` へ
- * **事前生成**して `lism-css/<entry>.css` を `resolve.alias`（絶対パス）で差し替え、`lism-css/config.js` を
- * user lism.config へ alias する。これらはすべて webpack の仕組みであり WP 固有ロジックは無いため、
- * bundler プリミティブとして一般化する。WP/テーマ固有のロジック（externals 等）は消費側の責務とし、ここには入れない。
+ * 事前生成してaliasで差し替える。WP/テーマ固有のロジックは消費側の責務とする。
  *
  * 想定する使い方（`webpack.config.js`(CJS) 拡張スニペット）:
  * ```js
@@ -13,12 +11,6 @@
  * module.exports = withLismWebpack(require('@wordpress/scripts/config/webpack.config'), { css: true });
  * ```
  * webpack は `module.exports` が Promise でも受け付けるため、`withLismWebpack` は async（Promise を返す）でよい。
- *
- * オプションで挙動を切り替える:
- * - `css`（既定 false）: `lism-css/<entry>.css` → 生成 CSS の alias（CSS を事前生成する）。SCSS-source 消費者は false。
- * - `config`（既定 true）: `lism-css/config.js$` → user lism.config の alias（完全一致）。
- * - `typegen`（既定 false）: `lism-env.d.ts` 生成。
- * - `watch`（既定 true）: watchRun での再生成 + `lism.config.js` を `fileDependencies` へ登録。
  *
  * SCSS-source 消費者向けの bridge SCSS 生成（`generateLismScss`）は webpack 評価とタイミングが異なるため、
  * `withLismWebpack` には含めず builder の独立 export とする。
@@ -68,20 +60,17 @@ interface Compiler {
 /** プラグインへ渡す設定（保持して watch / afterCompile で使う）。 */
 interface LismCssWebpackPluginOptions {
   projectRoot: string;
-  /** 生成 CSS の出力先（`css: true` 時のみ。false の場合は null）。 */
   outDir: string | null;
   configPath?: string;
-  /** CSS 事前生成を行うか（watchRun での再生成可否を分岐する）。 */
   css: boolean;
   typegen: boolean;
-  /** full.css / full_no_layer.css も生成するか（初回生成と揃える）。 */
   full: boolean;
   /** watch 依存へ登録する user lism.config の絶対パス（無ければ null）。 */
   userConfigPath: string | null;
 }
 
 /**
- * watch 追従用の webpack plugin。
+ * CSS・型の再生成とconfig依存の登録を担うwatch用プラグイン。
  *
  * webpack 型は import せず、`apply(compiler)` の compiler / compilation を最小の構造的型で扱う。
  * - watchRun: `css` / `typegen` が有効な時だけ CSS / `lism-env.d.ts` を再生成する（`css: false` では CSS を再生成しない）。
@@ -97,8 +86,6 @@ class LismCssWebpackPlugin {
   apply(compiler: Compiler): void {
     const { projectRoot, outDir, configPath, css, typegen, full, userConfigPath } = this.options;
 
-    // watch 再ビルドの直前に CSS / 型を再生成する（dev watch 時のみ発火するフック）。
-    // css / typegen のいずれも無効なら再生成すべきものが無いため tap しない。
     if (css || typegen) {
       compiler.hooks.watchRun.tapPromise('LismCssWebpack', async () => {
         // bundler（webpack）側が最終 minify するため、ここでは minify せず生成する。
@@ -118,7 +105,7 @@ class LismCssWebpackPlugin {
 }
 
 /**
- * webpack config を Lism CSS 対応へラップする汎用プリミティブ。
+ * webpack configをLism CSS対応へラップする。
  *
  * 既存 config を壊さない浅いクローンへ `resolve.alias`（CSS / config 差し替え）と watch 追従プラグインを
  * マージして返す。CSS 事前生成・typegen は非同期なので Promise を返す（webpack は Promise config を受け付ける）。

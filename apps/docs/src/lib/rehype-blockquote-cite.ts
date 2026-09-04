@@ -9,7 +9,7 @@
  *   > -- [出典元の名前](https://example.com)
  *
  * 出力（HTML）:
- *   <figure class="c--blockquote">
+ *   <figure class="b--blockquote">
  *     <blockquote cite="https://example.com">
  *       <p>これは引用文です。</p>
  *     </blockquote>
@@ -25,7 +25,7 @@
  *   > -- 出典元の名前
  *
  * 出力（HTML）:
- *   <figure class="c--blockquote">
+ *   <figure class="b--blockquote">
  *     <blockquote>
  *       <p>これは引用文です。</p>
  *     </blockquote>
@@ -37,42 +37,30 @@
 import { visit } from 'unist-util-visit';
 import type { Root, Element, ElementContent, Parents } from 'hast';
 
-// citeとして認識するパターン（ダブルハイフンまたはemダッシュ）
 const CITE_PATTERN = /^(?:--|—)\s*/;
 
-// 出典情報の型
 interface CiteInfo {
   text: string;
   url?: string;
 }
 
-/**
- * 出典情報を抽出する
- * リンク形式 [text](url) またはプレーンテキストに対応
- */
 function extractCiteInfo(pElement: Element): CiteInfo | null {
   const pChildren = pElement.children;
   if (pChildren.length === 0) return null;
 
   const firstChild = pChildren[0];
 
-  // パターン1: テキストで始まり、その後にリンクがある場合
-  // 例: "-- " + <a href="url">text</a>
   if (firstChild.type === 'text') {
     const textContent = firstChild.value;
 
-    // `-- ` または `— ` で始まるかチェック
     if (!CITE_PATTERN.test(textContent)) return null;
 
-    // パターンを除去
     const remainingText = textContent.replace(CITE_PATTERN, '');
 
-    // 残りのテキストがあればそれが出典名（URLなし）
     if (remainingText.trim()) {
       return { text: remainingText.trim() };
     }
 
-    // テキストが空で、次の要素がリンクの場合
     if (pChildren.length > 1) {
       const secondChild = pChildren[1];
       if (secondChild.type === 'element' && secondChild.tagName === 'a') {
@@ -87,9 +75,6 @@ function extractCiteInfo(pElement: Element): CiteInfo | null {
   return null;
 }
 
-/**
- * 要素内のテキストコンテンツを再帰的に抽出
- */
 function extractTextContent(element: Element): string {
   let text = '';
   for (const child of element.children) {
@@ -105,14 +90,13 @@ function extractTextContent(element: Element): string {
 export function rehypeBlockquoteCite() {
   return (tree: Root) => {
     visit(tree, 'element', (node: Element, index: number | undefined, parent: Parents | undefined) => {
-      // blockquote要素のみ処理
       if (node.tagName !== 'blockquote') return;
       if (index === undefined || !parent) return;
 
       const children = node.children;
       if (children.length === 0) return;
 
-      // 最後の要素を取得（空白テキストノードをスキップ）
+      // 末尾の空白を除いて、最後の段落を出典として解析する
       let lastElementIndex = children.length - 1;
       while (lastElementIndex >= 0) {
         const child = children[lastElementIndex];
@@ -127,16 +111,13 @@ export function rehypeBlockquoteCite() {
 
       const lastElement = children[lastElementIndex];
 
-      // 最後の要素が <p> タグの場合のみ処理
       if (lastElement.type !== 'element' || lastElement.tagName !== 'p') return;
 
-      // 出典情報を抽出
       const citeInfo = extractCiteInfo(lastElement);
       if (!citeInfo) return;
 
-      // 出典の<p>を除去したblockquoteの子要素を作成
+      // 引用本文と出典をfigureへ組み直す
       const blockquoteChildren: ElementContent[] = children.slice(0, lastElementIndex);
-      // 末尾の空白テキストノードも除去
       while (blockquoteChildren.length > 0) {
         const last = blockquoteChildren[blockquoteChildren.length - 1];
         if (last.type === 'text' && /^\s*$/.test(last.value)) {
@@ -146,7 +127,6 @@ export function rehypeBlockquoteCite() {
         }
       }
 
-      // <figcaption>の子要素を作成
       const figcaptionChildren: ElementContent[] = citeInfo.url
         ? [
             {
@@ -158,11 +138,10 @@ export function rehypeBlockquoteCite() {
           ]
         : [{ type: 'text', value: citeInfo.text }];
 
-      // <figure>構造を作成
       const figureElement: Element = {
         type: 'element',
         tagName: 'figure',
-        properties: { className: ['c--blockquote'] },
+        properties: { className: ['b--blockquote'] },
         children: [
           {
             type: 'element',
@@ -180,7 +159,6 @@ export function rehypeBlockquoteCite() {
         ],
       };
 
-      // 親要素内でblockquoteをfigureに置き換え
       parent.children[index] = figureElement;
     });
   };

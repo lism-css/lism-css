@@ -1,0 +1,77 @@
+---
+import { Stack, Flex, Box, Text, Cluster, Link } from 'lism-css/astro';
+import SectionHeader from '@parts/SectionHeader.astro';
+import PageHeader from '@parts/PageHeader.astro';
+import { patterns, categoryIds, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
+import { filterDraftItems, getPatternThumbSrc } from '@/lib/patterns';
+import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
+import PatternCard from './PatternCard.astro';
+
+interface Props {
+  lang: LangCode;
+}
+
+const { lang } = Astro.props as Props;
+const isJa = lang === 'ja';
+
+const copy = isJa
+  ? {
+      title: 'Web Patterns',
+      lead: 'コピペで簡単に利用できる、Lism CSSを使ったWebサイトパターン集です。',
+      viewAll: 'すべて見る',
+    }
+  : {
+      title: 'Web Patterns',
+      lead: 'A collection of copy-and-paste ready web site patterns built with Lism CSS.',
+      viewAll: 'View all',
+    };
+---
+
+<Stack g="40">
+  <PageHeader title={copy.title} description={copy.lead} />
+
+  <Stack g="40">
+    {
+      categoryIds.map((categoryId: PatternCategoryId) => {
+        const category: PatternCategory = patterns[categoryId];
+        const items = filterDraftItems(category.items);
+        const categoryUrl = getLocalizedUrl(`/patterns/${categoryId}/`, lang);
+        return (
+          /* idは外部から /patterns/#{category} で参照されても飛べるように残す */
+          <Box as="section" id={categoryId}>
+            <SectionHeader title={category.label} count={items.length} href={categoryUrl} viewAllLabel={copy.viewAll}>
+              <Text>{category.description[lang]}</Text>
+              {category.related && (
+                <Cluster g="15">
+                  {category.related.map((related) => (
+                    <Link href={getLocalizedUrl(related.path, lang)}>{related.label}</Link>
+                  ))}
+                </Cluster>
+              )}
+            </SectionHeader>
+
+            <Flex hasSnap ov="auto" g="20" mbs="20" px="5" py="15" class="c--patternReel">
+              {items.map((item) => (
+                <PatternCard
+                  href={getLocalizedUrl(`/patterns/${categoryId}/${item.id}/`, lang)}
+                  thumbSrc={getPatternThumbSrc(lang, categoryId, item.id)}
+                  title={item.title}
+                  draft={item.draft}
+                  fxsh="0"
+                  w="20rem"
+                  max-sz="85%"
+                />
+              ))}
+            </Flex>
+          </Box>
+        );
+      })
+    }
+  </Stack>
+</Stack>
+
+<style>
+  .c--patternReel {
+    scroll-padding-inline: var(--s5);
+  }
+</style>

@@ -9,6 +9,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import remarkDirective from 'remark-directive';
 import { remarkDirectiveHandler } from './src/lib/remark-directive';
 import { rehypeBlockquoteCite } from './src/lib/rehype-blockquote-cite';
+import { rehypeWrapTable } from './src/lib/rehype-wrap-table';
 import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 import { loadLastmodMap } from './src/lib/sitemap-lastmod';
 import docsMd from './src/integrations/docs-md';
@@ -145,8 +146,8 @@ export default defineConfig({
         remarkDirective, // :::記法をパース（最初に実行）
         remarkDirectiveHandler, // directive を変換（Callout変換 & 不要な :text 記法を復元）
       ],
-      // 外部リンクを別タブで開く設定 & blockquoteのcite変換
-      rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }], rehypeBlockquoteCite],
+      // 外部リンクを別タブで開く設定 & blockquoteのcite変換 & tableの横スクロール対応
+      rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }], rehypeBlockquoteCite, rehypeWrapTable],
     }),
   },
 });

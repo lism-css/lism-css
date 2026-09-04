@@ -7,6 +7,8 @@ export { Callout } from './Callout/react';
 export { Details } from './Details/react';
 export { Modal } from './Modal/react';
 export { NavMenu } from './NavMenu/react';
+export { Popover } from './Popover/react';
 export { ShapeDivider } from './ShapeDivider/react';
 export { Tabs } from './Tabs/react';
+export { Tooltip } from './Tooltip/react';
 export { DummyText } from './DummyText/react';

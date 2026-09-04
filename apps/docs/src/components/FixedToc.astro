@@ -16,25 +16,24 @@ const tocText = t(lang, 'toc');
       set="plain"
       d={null}
       bgc="base"
-      c="brand"
-      bd
-      bdw="2px"
-      bdrs="30"
-      w="3.75em"
-      h="3.75em"
-      m="30"
-      g="1px"
-      bxsh="30"
+      bdrs="10"
+      w="3.375rem"
+      h="3.375rem"
+      m="20"
+      bxsh="var(--bxsh--base), var(--bxsh--search-border)"
       ar="1/1"
       hov={{ bgc: 'base-2' }}
       aria-labelledby="toc-open-label"
     >
-      <Icon fz="xl" viewBox="0 0 256 256">
-        <path
-          d="M84,64A12,12,0,0,1,96,52H216a12,12,0,0,1,0,24H96A12,12,0,0,1,84,64Zm132,52H96a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Zm0,64H96a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24ZM56,52H40a12,12,0,0,0,0,24H56a12,12,0,0,0,0-24Zm0,64H40a12,12,0,0,0,0,24H56a12,12,0,0,0,0-24Zm0,64H40a12,12,0,0,0,0,24H56a12,12,0,0,0,0-24Z"
-        ></path>
+      <Icon viewBox="0 0 24 24" fill="none" fz="1.5rem">
+        <path d="M4 6H4.0001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M8 6H19.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M4 12H4.0001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M8 12H19.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M4 18H4.0001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M8 18H19.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
       </Icon>
-      <Inline fz="2xs" hl="xs">{tocText.title}</Inline>
+      <Inline util="trim" fz="0.675rem" hl="xs" c="text-2" o="mp" mt="1px">{tocText.title}</Inline>
       <Inline d="none" id="toc-open-label">{tocText.open}</Inline>
     </Modal.OpenBtn>
   </Center>
@@ -43,21 +42,8 @@ const tocText = t(lang, 'toc');
 <Modal.Root id="fixed-toc" isContainer isWrapper="s" py="40" px="30">
   <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="20" bdrs="20" bxsh="40">
     <Modal.CloseBtn modalId="fixed-toc" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" bxsh="10" bdrs="10" bgc="base-2" />
-    <Modal.Body layout="stack" g="40" pbs="30" ov-y="auto" z="0">
+    <Modal.Body class="is--scrollPanel" layout="stack" g="40" pbs="30" z="0">
       <slot />
     </Modal.Body>
   </Modal.Inner>
 </Modal.Root>
-
-<script>
-  const fixedToc = document.getElementById('fixed-toc');
-  if (fixedToc) {
-    fixedToc.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('.c--navLink')) {
-        const closeBtn = document.querySelector<HTMLElement>('[data-modal-close="fixed-toc"]');
-        closeBtn?.click();
-      }
-    });
-  }
-</script>

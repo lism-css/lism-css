@@ -241,7 +241,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
 </Preview>
 
 
-`u--trimAll`は除外方式で、直下の子要素のうちトリムすべきでない要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`）を除いたすべての要素にマージン調整を適用します。`:empty` により `img`・`hr`・`br` などの void element や、中身のない装飾 div（`a--divider` / `a--spacer` 等）も自動で除外されます。追加で除外したい要素がある場合は、利用側で `.u--trimAll > xxx { margin-block: 0 }` のように個別打ち消しで対応してください。
+`u--trimAll`は、対象外の要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`）を除いたすべての直下要素にマージン調整を適用します。`:empty`により、`img`・`hr`・`br`などの空要素や、中身のない装飾用の`div`（`a--divider` / `a--spacer`など）も対象外になります。追加で除外したい要素がある場合は、利用側で `.u--trimAll > xxx { margin-block: 0 }` のように個別打ち消しで対応してください。
 
 <Preview>
   <PreviewTitle>`u--trimAll`</PreviewTitle>
@@ -293,7 +293,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
 <SrcCode path="src/scss/utility/_divide.scss" />
 
 :::info
-- 実装としてはどちらも`box-shadow`で表現しています。`border`ではないので、その点について扱いには注意が必要です。
+- 実装としてはどちらも子要素の`box-shadow`と`gap`で線を表現しています。`border`ではないため、`bds`（border-style）などの border 系プロパティは効きません。線幅は`--bdw`変数で指定します。
 - `u--divide`は内部で`overflow: clip`を指定しているため、子孫にツールチップやドロップダウンなど外側にはみ出す要素を配置する場合は意図せずクリップされる点に注意してください。
 :::
 
@@ -389,7 +389,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
 </Preview>
 
 
-`u--divide`に`bd`を指定すると、要素が埋まっていないところが空白になっているカレンダーのようになる表現が可能です。
+`u--divide`に`bd`を指定すると、カレンダーのように、要素のないマスが空白のまま罫線だけ残る表現ができます。
 
 <Preview>
   <PreviewTitle>`bd`を指定</PreviewTitle>
@@ -530,12 +530,12 @@ Gridでも `u--enclose`で table タグのような表現ができます。
 
 ## Opt-in
 
-ここからは、Lism CSS のコアCSSファイルには含まれていないが便利なユーティリティクラスの作成例をいくつか紹介します。
+ここからは、Lism CSS のコアCSSファイルには含まれていない、便利なユーティリティクラスの作成例をいくつか紹介します。
 
 ### `u--inlineCenter`
 
-絵文字やインラインアイコンをテキストのセンター位置に合わせて配置するためのクラスです。
-`vertical-align: middle;`だけではずれが発生するため、追加で`translate`で調整を加えています。
+絵文字やインラインアイコンをテキストの中央に合わせるクラスです。
+`vertical-align: middle`だけでは位置がずれるため、`translate`で補正します。
 
 
 <Preview css={`

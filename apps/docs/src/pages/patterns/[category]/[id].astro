@@ -1,20 +1,13 @@
 ---
-/**
- * パターン詳細ページ（動的ルーティング）
- *
- * URL: /patterns/{category}/{id}
- * 例: /patterns/cta/cta001
- *
- * プレビューiframeは /preview/patterns/{category}/{id}/ を参照
- */
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Flow, Text, Group } from 'lism-css/astro';
-import { PreviewFrame, PreviewTitle } from '@/components/Preview';
-import SrcCode from '@/components/mdx/SrcCode.astro';
-import { patterns, type PatternCategoryId } from '@/config/patterns';
+import { Flow, Text, Group } from 'lism-css/astro';
+import { PreviewFrame } from '@/components/Preview';
+import PageHeader from '@parts/PageHeader.astro';
+import { patterns, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
 import { getAllPatternPaths, getPattern } from '@/lib/patterns';
 
-// 静的パス生成
 export function getStaticPaths() {
   const paths = getAllPatternPaths();
   return paths.map(({ category, id }) => ({
@@ -22,64 +15,46 @@ export function getStaticPaths() {
   }));
 }
 
-// Params取得
 const { category, id } = Astro.params;
 const pattern = getPattern(category!, id!);
 
-// パターンが見つからない場合は404
 if (!pattern) {
   return Astro.redirect('/404');
 }
 
-// カテゴリ情報
-const categoryData = patterns[category as PatternCategoryId];
+const categoryData: PatternCategory = patterns[category as PatternCategoryId];
 
-// プレビューURLとコード埋め込み用のパス
 const previewUrl = `/preview/patterns/${category}/${id}/`;
 const patternPath = `src/pages/preview/patterns/${category}/${id}`;
+const stylePath = `${patternPath}/_style.css`;
+const hasStyle = existsSync(resolve(process.cwd(), stylePath));
 ---
 
 <BaseLayout title={`${pattern.title} - Patterns`} description={pattern.description.ja} excludeFromSearch noindex>
-  <Flow g="30" class="patternPage">
-    <Stack as="header" g="10">
-      <Text fz="xs" c="text-2" tt="uppercase" lts="l">
+  <Flow g="30" class="c--patternPage">
+    <PageHeader
+      title={pattern.title}
+      description={pattern.description.ja}
+      draft={pattern.draft}
+      backHref={`/patterns/${category}/`}
+      backLabel={`${categoryData.label} 一覧へ`}
+    >
+      <Text slot="eyebrow" tt="uppercase" lts="l">
         {categoryData.label}
       </Text>
-      <h1 class="-fz:3xl -fw:bold">{pattern.title}</h1>
-      <Text c="text-2">{pattern.description.ja}</Text>
-    </Stack>
-    {
-      pattern.draft && (
-        <Group class="draftBadge" fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
-          DRAFT
-        </Group>
-      )
-    }
-    {/* プレビュー */}
-    <Group layout="flow" mbs="50">
-      <!-- <PreviewTitle>プレビュー</PreviewTitle> -->
-      <PreviewFrame url={previewUrl} hasSizeSwitch />
-    </Group>
+    </PageHeader>
 
-    {/* ソースコード */}
-    <Stack g="15">
-      <PreviewTitle>コード</PreviewTitle>
-      <SrcCode dir="docs" path={patternPath + '/index.astro'} title="index.astro" />
-      <SrcCode dir="docs" path={patternPath + '/_style.css'} title="style.css" />
-      <!-- <Frame ov-y="auto" max-h="25rem" class="code-embed">
-				<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(githubBasePath)}&${queryMeta}`} loading="lazy"></script>
-			</Frame> -->
-    </Stack>
+    <Group layout="flow" mbs="50">
+      <PreviewFrame
+        url={previewUrl}
+        hasSizeSwitch
+        files={[{ path: `${patternPath}/index.astro`, title: 'index.astro' }, ...(hasStyle ? [{ path: stylePath, title: 'style.css' }] : [])]}
+      />
+    </Group>
   </Flow>
 </BaseLayout>
 
 <style>
-  .patternPage {
-    /* 詳細ページ固有のスタイル */
-  }
-
-  .code-embed {
-    border-radius: var(--bdrs--10);
-    overflow: hidden;
+  .c--patternPage {
   }
 </style>

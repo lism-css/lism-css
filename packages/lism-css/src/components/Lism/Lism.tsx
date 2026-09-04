@@ -37,9 +37,7 @@ export type LayoutComponentProps<T extends ElementType = 'div', L = object> = Om
   Omit<L, 'layout'> &
   LismElementProps<T>;
 
-/**
- * Lism Propsを処理できるだけのコンポーネント
- */
+/** Lism Propsを任意の要素へ適用する基底コンポーネント。 */
 export default function Lism<T extends ElementType = 'div'>({ children, as, exProps, ...props }: LismComponentProps<T>) {
   const Component = as || 'div';
 

@@ -5,6 +5,7 @@ description: 'Lism CSS で定義されているカラー、余白、シャドウ
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
+import { SpacingDemos } from "@/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
   return <Cluster g="10">
@@ -41,30 +42,14 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 |`FF` (font-family)|`--ff--base`, `--ff--accent`, `--ff--mono`|
 |`FW` (font-weight)|`--fw--light`, `--fw--normal`, `--fw--bold`|
 |`FZ` (font-size)|`--fz--2xs` 〜 `--fz--5xl`|
-|`LH` (line-height)|`--hl--xs`, `--hl--s`, `--hl--base`, `--hl--l`|
-|`LTS` (letter-spacing)|`--lts--s`, `--lts--base`, `--lts--l`, `--lts--xl`|
+|`HL` (half-leading)|`--hl--xs`, `--hl--s`, `--hl--base`, `--hl--l`, `--hl--xl`|
+|`LH` (line-height)|`--lh--xs`, `--lh--s`, `--lh--m`, `--lh--l`, `--lh--xl`|
+|`LTS` (letter-spacing)|`--lts--xs`, `--lts--s`, `--lts--base`, `--lts--l`, `--lts--xl`|
 
 各トークンの詳細やスケーリング規則は [タイポグラフィトークン](/docs/tokens/typography/) を参照してください。
 
+<DocsLink path="/docs/tokens/typography" />
 
-## [SPACE](/docs/tokens/spacing/)
-
-|トークン値|変数|概算値|
-|---|---|---|
-|`5`|`--s5`|`4px`|
-|`10`|`--s10`|`8px`|
-|`15`|`--s15`|`12px`|
-|`20`|`--s20`|`16px`|
-|`25`|`--s25`|`20px`|
-|`30`|`--s30`|`24px`|
-|`35`|`--s35`|`32px`|
-|`40`|`--s40`|`40px`|
-|`50`|`--s50`|`64px`|
-|`60`|`--s60`|`104px`|
-|`70`|`--s70`|`168px`|
-|`80`|`--s80`|`272px`|
-
-フィボナッチ数列ベースの調和スケールに、前半部分の中間値を補完した余白スケール。対応する property class の詳細は [余白トークン](/docs/tokens/spacing/) を参照してください。
 
 
 ## `RADIUS`
@@ -72,21 +57,25 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 |トークン値|変数|クラス|初期値|  
 |---|---|---|---|
 |`10`|`--bdrs--10`|`-bdrs:10`|`0.25rem`|
-|`20`|`--bdrs--20`|`-bdrs:20`|`0.5rem`|
-|`30`|`--bdrs--30`|`-bdrs:30`|`1rem`|
-|`40`|`--bdrs--40`|`-bdrs:40`|`1.5rem`|
+|`20`|`--bdrs--20`|`-bdrs:20`|`0.375rem`|
+|`30`|`--bdrs--30`|`-bdrs:30`|`0.625rem`|
+|`40`|`--bdrs--40`|`-bdrs:40`|`1rem`|
+|`50`|`--bdrs--50`|`-bdrs:50`|`1.5rem`|
 |`99`|`--bdrs--99`|`-bdrs:99`|`99rem`|
+
+増分が`+0.125rem → +0.25rem → +0.375rem → +0.5rem`と一定量ずつ大きくなっていく、二階等差数列のスケールです。小さいサイズほど刻みが細かく、大きいサイズほど大胆に変化します。
 
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30">
     <Columns cols={[3, 6]} g="30">
-      <Center ar="2/1" bdrs="10" bd h="100%" ff="mono" fz="xs" c="text-2">10</Center>
-      <Center ar="2/1" bdrs="20" bd h="100%" ff="mono" fz="xs" c="text-2">20</Center>
-      <Center ar="2/1" bdrs="30" bd h="100%" ff="mono" fz="xs" c="text-2">30</Center>
-      <Center ar="2/1" bdrs="40" bd h="100%" ff="mono" fz="xs" c="text-2">40</Center>
-      <Center ar="2/1" bdrs="99" bd h="100%" ff="mono" fz="xs" c="text-2">99</Center>
+      <Center ar="3/2" bdrs="10" bd bdc="current" ff="mono" fz="xs" c="text-2">10</Center>
+      <Center ar="3/2" bdrs="20" bd bdc="current" ff="mono" fz="xs" c="text-2">20</Center>
+      <Center ar="3/2" bdrs="30" bd bdc="current" ff="mono" fz="xs" c="text-2">30</Center>
+      <Center ar="3/2" bdrs="40" bd bdc="current" ff="mono" fz="xs" c="text-2">40</Center>
+      <Center ar="3/2" bdrs="50" bd bdc="current" ff="mono" fz="xs" c="text-2">50</Center>
+      <Center ar="3/2" bdrs="99" bd bdc="current" ff="mono" fz="xs" c="text-2">99</Center>
     </Columns>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -95,6 +84,7 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
     <div class="-bdrs:20">...</div>
     <div class="-bdrs:30">...</div>
     <div class="-bdrs:40">...</div>
+    <div class="-bdrs:50">...</div>
     <div class="-bdrs:99">...</div>
     ```
   </PreviewCode>
@@ -111,18 +101,30 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 |`40`|`--bxsh--40`|`-bxsh:40`|
 |`50`|`--bxsh--50`|`-bxsh:50`|
 
-`--bxsh--{token}`の値の中身は、次の変数で構成されます。
+`--bxsh--{token}`は、要素に近い薄い影と、主となる影の2層で構成されます。近い側の影には、1段小さいシャドウサイズと、`--shc`を半分の濃さにした`--shc--near`を使います。
+
+|変数|値|
+|---|---|
+|`--bxsh--10`|`var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc)`|
+|`--bxsh--20`|`var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc)`|
+|`--bxsh--30`|`var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc)`|
+|`--bxsh--40`|`var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc)`|
+|`--bxsh--50`|`var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc)`|
+
+構成変数の初期値は次の通りです。
 
 |構成変数|初期値|
 |---|---|
-|`--shc`|`hsl(220 4% 8% / 12%)`|
+|`--shc`|`var(--shadow)`（`hsl(220 2% 4% / 8%)`）|
+|`--shc--near`|`color-mix(in srgb, var(--shc), transparent 50%)`|
+|`--shsz--5`|`0px 0px 1px`|
 |`--shsz--10`|`0px 1px 3px`|
 |`--shsz--20`|`0px 2px 6px`|
 |`--shsz--30`|`0px 4px 12px`|
 |`--shsz--40`|`0px 8px 24px`|
 |`--shsz--50`|`0px 16px 48px`|
 
-{/* `bxsh`は、`1` ~ `4`, `-1` ~ `-4` までの値に対してユーティリティクラスを用意していますが、内部では2段階のshadowを組み合わせることでより立体的で美しいシャドウを表現できるようになっています。 */}
+シャドウサイズは`10`以降、オフセットとぼかしが毎段2倍になるスケールです。ぼかしは常にオフセットの3倍で統一されています。`5`はオフセットなしの小さなぼかしだけの段階で、`--bxsh--10`の近い側の影に使われます。
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -149,6 +151,72 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 </Preview>
 
 
+## `SPACE`
+
+|トークン値|変数|概算値|
+|---|---|---|
+|`5`|`--s5`|`4px`|
+|`10`|`--s10`|`8px`|
+|`15`|`--s15`|`12px`|
+|`20`|`--s20`|`16px`|
+|`25`|`--s25`|`20px`|
+|`30`|`--s30`|`24px`|
+|`35`|`--s35`|`32px`|
+|`40`|`--s40`|`40px`|
+|`50`|`--s50`|`64px`|
+|`60`|`--s60`|`104px`|
+|`70`|`--s70`|`168px`|
+|`80`|`--s80`|`272px`|
+
+主軸（`--s10` 〜 `--s80`）はフィボナッチ数列 ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...) に基づくスケールです。`--s-unit`（デフォルト `0.5rem` ≒ 8px）を基準単位として算出しています。
+
+それだけだと前半部分が粗いため、`--s5` (4px) / `--s15` (12px) / `--s25` (20px) / `--s35` (32px) を、主軸トークン間を補う中間値として追加しています。
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s" resize>
+    <SpacingDemos spaces={[5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80]} isValueLabel />
+  </PreviewArea>
+</Preview>
+
+```css
+:root,
+.set--s {
+  /* 余白単位 ≒ 8px */
+  --s-unit: 0.5rem;
+
+  --s10: var(--s-unit);            /* ≒ 8px */
+  --s20: calc(var(--s-unit) * 2);  /* ≒ 16px */
+  --s30: calc(var(--s-unit) * 3);  /* ≒ 24px */
+  --s40: calc(var(--s-unit) * 5);  /* ≒ 40px */
+  --s50: calc(var(--s-unit) * 8);  /* ≒ 64px */
+  --s60: calc(var(--s-unit) * 13); /* ≒ 104px */
+  --s70: calc(var(--s-unit) * 21); /* ≒ 168px */
+  --s80: calc(var(--s-unit) * 34); /* ≒ 272px */
+
+  /* ~40 までの前半部分は間を埋める */
+  --s5:  calc(var(--s-unit) * 0.5); /* ≒ 4px */
+  --s15: calc(var(--s-unit) * 1.5); /* ≒ 12px */
+  --s25: calc(var(--s-unit) * 2.5); /* ≒ 20px */
+  --s35: calc(var(--s-unit) * 4);   /* ≒ 32px */
+}
+
+.set--s {
+  --s-unit: 0.5em;
+}
+```
+
+余白トークンは、`padding`, `margin`, `gap` 系のすべての Property Class で利用できます。詳細は [Property Class](/docs/property-class/#spacing) の一覧表を参照してください。
+
+また、<a href="/docs/set-class/#set--s"><code>set--s</code></a> クラスを使うと `--s-unit` が `0.5em` に切り替わり、余白を現在のフォントサイズ基準で再計算できます。
+
+`--fz--base` を `clamp()` 等を使って流体値にしているサイトで、余白もフォントサイズ基準にして流体的に変化させたい場合は、`:root` で `--s-unit: calc(var(--fz--base) * 0.5);` のように上書きしてください。
+
+:::info
+参考資料: [タイポグラフィと余白のスケーリング設計について](https://css-notes.com/layout/typography-scaling/)
+:::
+
+
 ## `OPACITY`
 
 |トークン値|変数|クラス|初期値|
@@ -158,7 +226,7 @@ Lism CSS では、主要なCSSプロパティに対してデザイントーク�
 |`pp`|`--o--pp`|`-o:pp`|`0.5`|
 |`ppp`|`--o--ppp`|`-o:ppp`|`0.25`|
 
-音楽の強弱記号（piano 系列）に由来。`p`（piano / 弱く）の反復回数が多いほど透明度が増す命名です。  
+音楽の強弱記号（piano 系列）に由来します。`p`（piano / 弱く）の反復回数が多いほど透明度が増す命名です。  
 （mezzo-piano/piano/pianissimo/pianississimo）
 
 

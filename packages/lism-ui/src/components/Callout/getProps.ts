@@ -20,7 +20,6 @@ export default function getCalloutProps({ type = 'note', keycolor, icon, title, 
     title,
     flow,
     util: 'cbox',
-    // set: 'bxsh',
     keycolor: _keycolor,
     ...props,
   };

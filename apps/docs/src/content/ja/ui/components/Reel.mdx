@@ -2,8 +2,7 @@
 title: 'Reel'
 description: 'Lism CSS で実装する、コンテンツを横スクロールで表示するリールコンポーネントの実装例です。'
 ---
-import { Lism, Grid, Frame, Box, Flex, Spacer, Icon } from 'lism-css/astro';
-import { DummyText } from '@lism-css/ui/astro/DummyText';
+import { Lism, Grid, Frame, Box, Flex, Icon } from 'lism-css/astro';
 import { HandSwipeLeftIcon, MouseScrollIcon } from '@phosphor-icons/react';
 
 export const SwipeHelp = ({icon}) => <span> ( <Icon icon={icon || HandSwipeLeftIcon} /> <small>スクロールして確認してください</small> )</span>;
@@ -171,7 +170,7 @@ export const ReelImages = ({ length=6, hasID, isV, ...props }) => {
 </Preview>
 
 
-gridでリールの子要素のサイズをレスポンシブに調整する場合、あれば `gac`(`grid-auto-columns`) に `--cols`を指定してください。  
+gridでリールの子要素のサイズをレスポンシブに調整する場合、`gac`(`grid-auto-columns`) に `--cols`を指定してください。  
 (`gac`は標準状態ではレスポンシブ対応がありません。)
 
 <Preview>
@@ -258,7 +257,7 @@ gridでリールの子要素のサイズをレスポンシブに調整する場�
 
 ## ナビゲーションをつける
 
-reel要素にidを付けてアンカーリンク用意すると、ナビゲーションになります。
+reel要素にidを付けてアンカーリンクを用意すると、ナビゲーションになります。
 
 <Preview>
   <PreviewTitle>ボタンナビゲーションをつける</PreviewTitle>
@@ -313,7 +312,7 @@ reel要素にidを付けてアンカーリンク用意すると、ナビゲー�
 ## 大きい画面サイズでReelを解除する
 
 小さい画面サイズでのみリールで表示したい場合は、`gaf`(`grid-auto-flow`) を`row`に戻します。  
-`gaf`(`grid-auto-flow`) を`row`に戻したタイミングで、`gtc`(`grid-template-columns`)を`repeat(2, 1fr)`にして２カラム表示に切り替える例を紹介します。
+以下は、`row`に戻すタイミングで`gtc`(`grid-template-columns`)を`repeat(2, 1fr)`にして2カラム表示に切り替える例です。
 
 <Preview>
   <PreviewTitle>`~@md`でのみリール表示するを解除する例<SwipeHelp /></PreviewTitle>

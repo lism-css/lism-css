@@ -1,0 +1,795 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Box, Cluster, Columns, Container, Flex, Frame, Grid, Heading, Icon, Inline, Layer, Link, Lism, Media, Stack, Text } from 'lism-css/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Button } from '@lism-css/ui/astro/Button';
+import { NavMenu } from '@lism-css/ui/astro/NavMenu';
+import Header from '@/components/en/ryokan/Header.astro';
+import SectionHeading from '@/components/en/ryokan/SectionHeading.astro';
+import '@/pages/ryokan/_style.css';
+
+export const title = '静寂の宿';
+
+const logoLabel = title;
+
+const mvImages = ['https://cdn.lism-css.com/img/japan/u-Dczv0Klww4.jpg', 'https://cdn.lism-css.com/img/japan/a_JNaB1eSLPA.jpg'];
+const mvCopyLines = ["Away from the city's noise,", 'in the calm of nature,', 'a moment of pure bliss.'];
+
+const mvDurationPerImage = 7;
+const mvFadeTime = 3;
+const mvLineRevealStartDelay = 0.55;
+const mvLineRevealStagger = 0.72;
+const mvLineRevealDuration = 1.55;
+const mvLineRevealBlurPx = 14;
+const mvBgImageScaleMax = 1.05;
+
+const mvBgCycleDuration = mvDurationPerImage * mvImages.length;
+const mvHoldPercent = ((mvDurationPerImage - mvFadeTime) / mvBgCycleDuration) * 100;
+const mvFadeOutPercent = (mvDurationPerImage / mvBgCycleDuration) * 100;
+const mvHiddenPercent = ((mvBgCycleDuration - mvFadeTime) / mvBgCycleDuration) * 100;
+
+/** フェードイン終端（100%/0% 接続）までに進む scale。フェードイン区間でも拡大が継続する */
+const mvBgScaleGrowthSpan = 100 - mvHiddenPercent + mvHoldPercent;
+const mvBgScaleJoin = mvBgScaleGrowthSpan > 0 ? 1 + ((100 - mvHiddenPercent) / mvBgScaleGrowthSpan) * (mvBgImageScaleMax - 1) : mvBgImageScaleMax;
+const mvBgScaleJoinCss = mvBgScaleJoin.toFixed(6);
+const mvBgScaleMaxCss = Number(mvBgImageScaleMax).toFixed(6);
+
+/** 背景クロスフェード + scale（非表示→フェードイン→ホールド終端まで 1→mvBgImageScaleMax） */
+const mvLayeredKeyframesStyle = `@layer lism-custom {
+  @keyframes ryokan-mv-bgFade {
+    0% {
+      opacity: 1;
+      transform: scale(${mvBgScaleJoinCss});
+    }
+    ${mvHoldPercent}% {
+      opacity: 1;
+      transform: scale(${mvBgScaleMaxCss});
+    }
+    ${mvFadeOutPercent}% {
+      opacity: 0;
+      transform: scale(${mvBgScaleMaxCss});
+    }
+    ${mvHiddenPercent}% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(${mvBgScaleJoinCss});
+    }
+  }
+}`;
+
+const aboutImgLeft = {
+  src: 'https://cdn.lism-css.com/img/japan/u-qQGCFQFlkT.jpg',
+  alt: 'Koi swimming in the garden pond',
+  width: 1920,
+  height: 1280,
+};
+const aboutImgRight = {
+  src: 'https://cdn.lism-css.com/img/japan/u-lCzkkcbJUb.jpg',
+  alt: 'An autumn garden seen from the tatami room',
+  width: 1600,
+  height: 1200,
+};
+
+const aboutBodyCopy =
+  'A stately presence shaped by more than a century of history. We welcome you into a space where the quiet charm of old Japan meets the comforts of today. Gaze out over a meticulously tended Japanese garden, wrapped in silence, as the hot spring waters offer a rare kind of healing. With a spirit of hospitality handed down through generations, we bring color to a journey unlike any other. In the garden, where the seasons turn, each day wears a different face: the scent of new leaves, the shade of deep summer green, the blazing beauty of autumn maples, the hushed elegance of fresh snow. The setting, the tableware, the kaiseki, the bath, and a hospitality that speaks softly. In every one of these, we hope to weave a moment that lingers long in your memory. Leave the city behind, and here at our quiet hidden retreat, let yourself unwind into pure bliss.';
+
+const featureImg = {
+  src: 'https://cdn.lism-css.com/img/japan/u-L4YLmcBryx.jpg',
+  alt: 'A path lined with rows of vermilion torii gates',
+  width: 1920,
+  height: 1280,
+};
+
+const featureLead = 'Cherry blossoms in spring, maple leaves in autumn.';
+const featureBody =
+  'Framing the most beautiful moment of every passing season, our ryokan sits in harmony with nature like a single painted scroll. Enjoy the celebrated waters and the flavors of the moment with the people who matter most. In spring, pale petals drifting past the window; in summer, deep green and the sound of wind chimes; in autumn, blazing maples under a clear sky; in winter, a quiet blanket of snow and rising steam from the bath.';
+
+const seasonBg = {
+  src: 'https://cdn.lism-css.com/img/japan/u-MES3nTNrVq.jpg',
+  width: 1920,
+  height: 1080,
+};
+
+const seasonGalleryPhotos = [
+  { src: 'https://cdn.lism-css.com/img/japan/u-1.jpg', alt: 'Mount Fuji at sunrise' },
+  { src: 'https://cdn.lism-css.com/img/japan/u-Dczv0Klww4.jpg', alt: 'Japanese mountain ridges above a sea of clouds' },
+  { src: 'https://cdn.lism-css.com/img/japan/u-xJdqvxp0ak.jpg', alt: 'Evening light on the lakeshore' },
+  { src: 'https://cdn.lism-css.com/img/japan/u-LGjnEWb619.jpg', alt: 'Snow-covered peaks' },
+] as const;
+
+const seasonIntroBody =
+  'At a hidden retreat wrapped in silence, savor the changing seasons with all five senses. Sink into the open-air bath and let the rustle of trees, birdsong, and shifting colors of the sky ease your mind. In a space where traditional beauty meets modern comfort, enjoy precious time with someone special. In spring, stone paths glisten with rain; in summer, fireflies shimmer across the pond. From the terrace beneath the autumn moon, distant town lights shine like scattered gold in the clear air. When winter snow blankets the garden, a warm cup by the hearth gently soothes the weariness of travel. Enjoy the aroma of carefully selected tea in the tearoom, or choose a book in the reading corner before setting out. We hope seasonal dishes made with local ingredients and the lovingly tended garden remain vivid in your memory. Beyond the hot-spring mist, carry home renewed energy and new connections with people and nature.';
+
+type PlanStat = {
+  label: string;
+  value: string;
+};
+
+type Plan = {
+  title: string;
+  roomType: PlanStat;
+  description: string;
+  stats: readonly [PlanStat, PlanStat];
+  image: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+};
+
+const plans = [
+  {
+    title: 'Unhurried Stay with Dinner, Breakfast and Open-Air Bath',
+    roomType: { label: 'Room type', value: 'Japanese-style room with open-air bath' },
+    description:
+      'A seasonal kaiseki dinner, a morning tray, and an open-air bath that keeps the warmth in: one unbroken stretch of time. Dine at your own pace in your room, and between soaks, linger over the garden. Extra drink orders and allergy accommodations are also possible, so please let us know when you book.',
+    stats: [
+      { label: 'Guests', value: '1–2 guests' },
+      { label: 'Rate', value: 'From ¥29,800' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_YWq6k0dioX.jpg',
+      alt: 'The main building beside a garden in autumn colors',
+      width: 1920,
+      height: 1080,
+    },
+  },
+  {
+    title: 'Seasonal Kaiseki in a Suite with Semi-Open-Air Bath',
+    roomType: { label: 'Room type', value: 'Suite with semi-open-air bath' },
+    description:
+      "A seasonal kaiseki course built around the day's finest ingredients, and the layered gradations of the mountains seen from a semi-open-air bath. A slightly more lavish stretch of time, for anniversaries and family celebrations.",
+    stats: [
+      { label: 'Guests', value: '2–4 guests' },
+      { label: 'Rate', value: 'From ¥39,800' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_AgvZ1VdMXz.jpg',
+      alt: 'A path lined with rows of vermilion torii gates',
+      width: 1920,
+      height: 1280,
+    },
+  },
+  {
+    title: 'One Night with Breakfast: Easy Hot-Spring Hopping',
+    roomType: { label: 'Room type', value: '10-mat Japanese room with veranda' },
+    description:
+      'Dinner out on your own terms, and mornings with freshly cooked rice and soup from our kitchen. A light, unencumbered way to stay for anyone who wants to tour the public baths nearby or wander the town. We also hold luggage after checkout, so use it before or after sightseeing.',
+    stats: [
+      { label: 'Guests', value: '1–3 guests' },
+      { label: 'Rate', value: 'From ¥18,500' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/u-qQGCFQFlkT.jpg',
+      alt: 'Koi swimming in the garden pond',
+      width: 1920,
+      height: 1280,
+    },
+  },
+  {
+    title: 'Multi-Night Value Plan: Nothing but Hot Springs',
+    roomType: { label: 'Room type', value: 'Japanese-Western twin room' },
+    description:
+      'A trip to soak fully in famed waters and deep quiet, at a friendly multi-night rate. Meals are our simple signature trays, with a post-bath sweet delivered right to your room.',
+    stats: [
+      { label: 'Guests', value: '2 guests or more' },
+      { label: 'Rate', value: 'From ¥52,000 / 2 nights' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_BybmIMidVa.jpg',
+      alt: 'An autumn garden seen from the tatami room',
+      width: 1600,
+      height: 1200,
+    },
+  },
+] as const satisfies readonly Plan[];
+
+/** Lism プリセットアイコン名（ https://lism-css.com/docs/primitives/a--icon/ ） */
+type InformationIcon =
+  'home' | 'clock' | 'cart' | 'gear' | 'book' | 'chat' | 'heart' | 'lightbulb' | 'search' | 'note' | 'bookmark' | 'user' | 'lock';
+
+type InformationItem = {
+  icon: InformationIcon;
+  title: string;
+  description: string;
+};
+
+const informationItems = [
+  {
+    icon: 'home',
+    title: 'Lobby and Lounge',
+    description:
+      'From the moment you arrive to the quiet hours after your evening bath. Help yourself to coffee and tea sweets, and settle into the garden-side tatami seating.',
+  },
+  {
+    icon: 'clock',
+    title: 'Front Desk, Open 24 Hours',
+    description: 'Check-in guidance, walking routes nearby, taxis and shuttle arrangements. Whenever something comes up, just say the word.',
+  },
+  {
+    icon: 'cart',
+    title: 'Shop and Souvenir Corner',
+    description: 'Local sake and confections, original towels and bath amenities. Stop by for small travel essentials or for gifts to take home.',
+  },
+  {
+    icon: 'book',
+    title: 'Reading Room and Study Corner',
+    description: 'Guidebooks and photo collections on ryokan and hot-spring towns. Turn a few pages after your bath and plan tomorrow at leisure.',
+  },
+] as const satisfies readonly InformationItem[];
+
+const informationIntro =
+  'From a traditional cure to a longer, slower stay, our facilities let you set the rhythm of your trip. Short paths from the baths to the guest rooms, and guidance designed with late-night use in mind.';
+
+/** 各項目は質問・回答を独立して管理（必要に応じて初期展開を指定） */
+const faqItems: { question: string; answer: string; defaultOpen?: boolean }[] = [
+  {
+    question: 'This is my first stay at a ryokan. Is it complicated?',
+    answer:
+      'Not at all. First-time guests find everything easy to follow. If anything is unclear, the front desk is glad to answer your questions, so please relax and enjoy your stay.',
+    defaultOpen: true,
+  },
+  {
+    question: 'Can I cancel my reservation?',
+    answer:
+      'Cancellation terms are set for each plan. Please complete the process from My Page or by phone before the deadline stated in your confirmation email. For last-minute changes, we will check availability and advise you.',
+  },
+  {
+    question: 'If I want to change my plan after booking, how do I do that?',
+    answer:
+      'Let us know your preferred dates, number of guests and room type, and we will check availability and make the switch. The front desk can explain any price difference for an upgrade and how the cancellation terms apply.',
+  },
+  {
+    question: 'Are check-in and check-out times fixed?',
+    answer:
+      'Check-in is from 3:00 p.m. and check-out is by 11:00 a.m. as a guide. If you would like to arrive earlier or leave later, please contact the front desk in advance. We can often accommodate you depending on availability.',
+  },
+  {
+    question: 'Can you accommodate allergies or ingredients I would rather avoid?',
+    answer:
+      'Please tell us in as much detail as possible when you book. Some ingredients are difficult to work around, but we will substitute or adjust wherever we can. Same-day changes may not be possible because of kitchen preparation.',
+  },
+  {
+    question: 'Do the rooms have an open-air bath?',
+    answer:
+      'It depends on the plan and the room type. We offer rooms with a private open-air bath as well as plans that use the large communal baths only. Please check the amenities column on the booking screen or ask the front desk.',
+  },
+  {
+    question: 'Is Wi-Fi available?',
+    answer:
+      'Free Wi-Fi is available throughout the ryokan. Connect using your room number and the password we provide. Please note that speeds may drop during busy periods.',
+  },
+  {
+    question: 'Can I stay with children?',
+    answer:
+      'Yes. Rates for children sharing a bed and the availability of extra beds vary by plan. Cribs are limited in number, so please reserve one in advance.',
+  },
+  {
+    question: 'Can you help with a surprise for a special occasion?',
+    answer:
+      'Cakes, bouquets, a message plate with your meal and more. If you talk to us in advance, we will help however we can. Tell us your budget and the timing, and we will suggest some options.',
+  },
+  {
+    question: 'Is there transport or a shuttle to sights nearby?',
+    answer:
+      'A scheduled shuttle runs from the nearest station (reservation required, limited seats). We can also arrange taxis to sightseeing spots and lend you maps, so please ask at the front desk.',
+  },
+];
+
+const faqImage = {
+  src: 'https://cdn.lism-css.com/img/japan/u-v9tUs6AiFT.jpg',
+  alt: 'A maiko seen from behind, walking a cobbled lane after rain under a red paper parasol',
+  width: 1920,
+  height: 1280,
+};
+
+/** ヘッダーと同一のナビ（アンカー） */
+const footerNavItems = [
+  { href: '#about', ja: '当宿について', en: 'About' },
+  { href: '#feature', ja: '宿の特徴', en: 'Feature' },
+  { href: '#plans', ja: '宿泊プラン', en: 'Plans' },
+  { href: '#information', ja: '設備紹介', en: 'Facilities' },
+  { href: '#faq', ja: 'よくあるご質問', en: 'FAQ' },
+] as const;
+
+const footerSnsLinks = [
+  { href: '#', icon: 'logo-x' as const, label: 'X' },
+  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
+  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
+  { href: '#', icon: 'logo-tiktok' as const, label: 'TikTok' },
+  { href: '#', icon: 'logo-line' as const, label: 'LINE' },
+];
+
+const reservationBg = {
+  src: 'https://cdn.lism-css.com/img/japan/u-xJdqvxp0ak.jpg',
+  width: 1920,
+  height: 1080,
+};
+
+type SiteCard = {
+  title: string;
+  body: string;
+  href: string;
+  image: { src: string; alt: string; width: number; height: number };
+};
+
+const reservationSites: readonly SiteCard[] = [
+  {
+    title: 'Travel Trip',
+    body: 'Perk: an early-booking discount campaign is running now. Choose your dates from the availability calendar.',
+    href: '#',
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_77prliRsZS.jpg',
+      alt: 'Promotional photo for Travel Trip',
+      width: 1920,
+      height: 1080,
+    },
+  },
+  {
+    title: 'Easy Travel Booking',
+    body: "Perk: plans that come with local, on-the-ground support. Changes and cancellations follow each site's own terms.",
+    href: '#',
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_AgvZ1VdMXz.jpg',
+      alt: 'Promotional photo for Easy Travel Booking',
+      width: 1920,
+      height: 1280,
+    },
+  },
+];
+---
+
+<Layout title={title} lang="en">
+  <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=EB+Garamond:wght@400..800&family=Noto+Serif+JP:wght@400..700&display=swap"
+    rel="stylesheet"
+    slot="head"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&text=%E9%9D%99%E5%AF%82%E3%81%AE%E5%AE%BF&display=swap"
+    rel="stylesheet"
+    slot="head"
+  />
+  <Container class="c--page">
+    <Header />
+    <!-- Main Content。各セクションは section 自身を container にし、内側の wrapper は container にしない（--bleed の 100cqi を gutter 込みの幅で解決するため。BP の基準もセクション幅） -->
+    <Container as="main" class="c--main" pos="relative" z="0">
+      <Container
+        as="section"
+        class="c--hero"
+        pos="relative"
+        ov="clip"
+        bgc="base"
+        style={{
+          '--c--ryokan-mv-bgCycleDuration': `${mvBgCycleDuration}s`,
+          '--c--ryokan-mv-lineBlurMax': `${mvLineRevealBlurPx}px`,
+          '--c--ryokan-mv-lineDuration': `${mvLineRevealDuration}s`,
+          '--c--ryokan-mv-lineStartDelay': `${mvLineRevealStartDelay}s`,
+          '--c--ryokan-mv-lineStagger': `${mvLineRevealStagger}s`,
+        }}
+      >
+        <Layer>
+          {
+            mvImages.map((src, index) => (
+              <Layer
+                class="c--hero_layer"
+                bgi={`url('${src}')`}
+                bgsz="cover"
+                bgp="center"
+                bgr="no-repeat"
+                style={{
+                  '--c--ryokan-mv-layerDelay': `${index * mvDurationPerImage - mvBgCycleDuration}s`,
+                }}
+              />
+            ))
+          }
+        </Layer>
+        <Layer bgc="black:30%" aria-hidden="true" />
+        <Stack pos="relative" z="1" hasGutter pbs="calc(var(--header-h--init) + var(--s30))" pbe="40" min-h="min(100svh, 200vw)">
+          <Stack
+            as="p"
+            class="c--hero_copy"
+            ff="accent"
+            fz="clamp(1.5rem, 1.1786rem + 1.4286vw, 2.25rem)"
+            lts="0.25em"
+            lh="2"
+            sz="l"
+            max-sz="100%"
+            m="auto"
+          >
+            {
+              mvCopyLines.map((line, i) => (
+                <Inline class="c--hero_line" style={{ '--c--ryokan-mv-lineIndex': i }}>
+                  {line}
+                </Inline>
+              ))
+            }
+          </Stack>
+        </Stack>
+      </Container>
+      <!-- MV の動的 @keyframes はマージで抽出されないため、set:html で明示注入 -->
+      <style set:html={mvLayeredKeyframesStyle}></style>
+
+      <Container as="section" id="about" class="c--about" set="bleed" contentSize="l" py="60">
+        <Grid gtc={['1fr', null, '1fr 50%']} g={['30', null, '0']} ai={['start', null, 'stretch']}>
+          <Stack g={['40', null, null, '50']} h={['auto', null, '100%']}>
+            <Stack g={['40', null, null, '50']} ps="var(--bleed)" pe={['var(--gutter--base)', null, '40', '50']}>
+              <SectionHeading en="About us" ja="当宿について" ai="start" />
+              <Text hl="l" c="text-2" ps={[null, null, null, '40']}>
+                {aboutBodyCopy}
+              </Text>
+            </Stack>
+            <Frame as="figure" set="bleed" contentSize="xl" ar="4/3" w="min(20rem, 100%)" ms="var(--bleed)" pbs="15" d={['none', null, 'block']}>
+              <Media src={aboutImgLeft.src} alt={aboutImgLeft.alt} width={aboutImgLeft.width} height={aboutImgLeft.height} loading="lazy" />
+            </Frame>
+          </Stack>
+          <!-- md 以上は行の高さいっぱいに敷くため aspect-ratio を外す -->
+          <Frame as="figure" ar={['4/3', null, 'auto']} h={['auto', null, '100%']} min-h="0" pbe={['0', null, '50']}>
+            <Media src={aboutImgRight.src} alt={aboutImgRight.alt} width={aboutImgRight.width} height={aboutImgRight.height} loading="lazy" />
+          </Frame>
+        </Grid>
+      </Container>
+
+      <Lism as="section" id="feature" class="c--feature" isContainer set="light" pos="relative" bgc="base" c="text" py="60">
+        <Lism isWrapper="l" hasGutter set="bleed" pos="relative">
+          <Grid gtc={['1fr', null, '1.05fr 1fr']} g={['40', null, null, '50']}>
+            <Frame
+              as="figure"
+              class="c--feature_figure"
+              pos="relative"
+              aslf="stretch"
+              order={[1, null, 0]}
+              ar={['3/2', null, 'auto']}
+              ms={[null, null, 'calc(-1 * var(--bleed))']}
+              w={[null, null, 'calc(100% + var(--bleed))']}
+              bdrs={['10', null, '0 var(--bdrs--10) var(--bdrs--10) 0']}
+            >
+              <Media
+                src={featureImg.src}
+                alt={featureImg.alt}
+                width={featureImg.width}
+                height={featureImg.height}
+                loading="lazy"
+                min-h={[null, null, 'min(22rem, 52vw, 540px)']}
+              />
+            </Frame>
+            <Stack class="c--feature_textCol" pos="relative" min-h="0" h="100%">
+              <Lism
+                as="span"
+                class="c--feature_watermark"
+                aria-hidden="true"
+                pos="absolute"
+                z="0"
+                i-bs="max(-0.75em, -50px)"
+                i-s="-0.25em"
+                ff="base"
+                fz="clamp(3.25rem, -0.75rem + 8vw, 6.25rem)"
+                fw="700"
+                lts="0.025em"
+                c="text:6%"
+                whs="nowrap"
+              >
+                Experience
+              </Lism>
+              <!-- lg 以上は2列 grid: 見出しは右列上端、本文は左列下端 -->
+              <Grid
+                class="c--feature_copyRow"
+                gtc={[null, null, null, '1fr auto']}
+                gtr={[null, null, null, '1fr auto']}
+                g={['50', null, '40']}
+                min-h={['0', null, null, 'min(22rem, 52vw)']}
+                pos="relative"
+                fx="1"
+              >
+                <Heading
+                  level="2"
+                  class="c--feature_title"
+                  fz={['2xl', null, '3xl']}
+                  fw="bold"
+                  lts="l"
+                  lh="1.65"
+                  aslf="start"
+                  gc={[null, null, null, 2]}
+                  gr={[null, null, null, '1/-1']}
+                >
+                  <Flex class="c--feature_titleInner" fxd={['column', null, null, 'row-reverse']} ai="start" g={['0', null, null, '20']}>
+                    <Inline class="c--feature_titleLine1" wm={[null, null, null, 'vertical-rl']}>A Special Journey,</Inline>
+                    <Inline class="c--feature_titleLine2" ms="1em" wm={[null, null, null, 'vertical-rl']}>an Experience of Silence</Inline>
+                  </Flex>
+                </Heading>
+                <Stack
+                  g={['20', null, null, '30']}
+                  ai="start"
+                  gc={[null, null, null, 1]}
+                  gr={[null, null, null, 2]}
+                  max-w={[null, null, null, 'min(100%, 26rem)']}
+                >
+                  <Text class="c--feature_lead" fz={['l', null, 'xl']} fw="bold" lts="l">
+                    {featureLead}
+                  </Text>
+                  <Text class="c--feature_body" hl="l">
+                    {featureBody}
+                  </Text>
+                </Stack>
+              </Grid>
+            </Stack>
+          </Grid>
+        </Lism>
+      </Lism>
+
+      <Lism as="section" id="feature2" class="c--season" isContainer pos="relative" ov-x="clip">
+        <Frame isLayer>
+          <Media src={seasonBg.src} alt="" width={seasonBg.width} height={seasonBg.height} loading="lazy" aria-hidden="true" />
+        </Frame>
+        <Layer bgc="black:75%" style={{ backdropFilter: 'blur(6px)' }} aria-hidden="true" />
+        <Lism isWrapper="l" hasGutter pos="relative" z="1" pt="60">
+          <Grid gtc={['1fr', null, 'min-content 1fr']} g={['40', null, '30', '50']} ai="start">
+            <Stack g="25">
+              <Heading level="2" fz={['3xl', null, null, '4xl']} lts="l" hl="l">
+                <Inline whs="nowrap">Feel the changing</Inline> seasons.
+              </Heading>
+              <Inline class="b--enEyebrow" lang="ja" o="pp" lts="l">季節の移ろいを、肌で感じる。</Inline>
+            </Stack>
+            <Text hl="xl" o="mp">
+              {seasonIntroBody}
+            </Text>
+          </Grid>
+        </Lism>
+        <Lism isWrapper="xl" hasGutter pos="relative" z="1" pb="60">
+          <Columns cols={[2, null, 4]} mbs="50" g={['20', null, '40']} ai="start">
+            {
+              seasonGalleryPhotos.map(({ src, alt }, i) => (
+                <Frame as="figure" ar="4/3" pos="relative" mbs={i % 2 === 1 ? [null, null, '40'] : undefined}>
+                  <Media src={src} alt={alt} width={800} height={600} loading="lazy" />
+                </Frame>
+              ))
+            }
+          </Columns>
+        </Lism>
+      </Lism>
+
+      <Lism as="section" id="plans" class="c--plans" isContainer py="60">
+        <Lism isWrapper="l" hasGutter>
+          <Stack g="50">
+            <SectionHeading en="Plans" ja="宿泊プラン" ai="center" ta="center" />
+
+            {
+              plans.map((plan) => (
+                <Flex fxd={['column', null, 'row-reverse']} g={['30', null, '40', '50']}>
+                  <Frame as="figure" ar="16/9" bdrs="10" w="100%" max-w={['100%', null, 'min(32rem, 40cqi)']}>
+                    <Media src={plan.image.src} alt={plan.image.alt} width={plan.image.width} height={plan.image.height} loading="lazy" />
+                  </Frame>
+
+                  <Stack g="30" fx="1" min-h="0" jc="between">
+                    <Stack g="30">
+                      <Heading level="3" fz={['l', null, 'xl']} fw="500" lts="l">
+                        {plan.title}
+                      </Heading>
+                      <Stack g="5">
+                        <Text fz="xs" c="text-2" o="p">
+                          {plan.roomType.label}
+                        </Text>
+                        <Text fw="bold" lts="l">
+                          {plan.roomType.value}
+                        </Text>
+                      </Stack>
+                      <Text fz="s" hl="l" c="text-2">
+                        {plan.description}
+                      </Text>
+                    </Stack>
+
+                    <Stack g="30" fxsh="0">
+                      <Columns cols="2" bd bdrs="20" ov="hidden" bgc="base-2">
+                        {plan.stats.map((stat, index) => (
+                          <Stack g="10" px="20" py="25" ai="center" hl="s" ta="center" bd-s={index > 0 || undefined}>
+                            <Text fz="xs" c="text-2" o="p">
+                              {stat.label}
+                            </Text>
+                            <Text fw="bold" lts="l">
+                              {stat.value}
+                            </Text>
+                          </Stack>
+                        ))}
+                      </Columns>
+
+                      <Button href="#reservation" variant="outline" hov="-bgc" w="100%" bdrs="10" py="15" px="20" ta="center">
+                        <Inline fw="500" lts="l">
+                          Book this plan
+                        </Inline>
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </Flex>
+              ))
+            }
+          </Stack>
+        </Lism>
+      </Lism>
+
+      <Lism as="section" id="information" class="c--information" isContainer pos="relative" bgc="base-2" py="60" ov="hidden">
+        <Lism isWrapper="l" hasGutter pos="relative" z="1">
+          <Stack g="50">
+            <Flex fxd={['column', null, 'row']} g={['30', null, '50']} ai={['start', null, 'end']} fxw="wrap">
+              <SectionHeading en="Facilities" ja="館内設備" ai="start" fxsh="0" />
+              <Text fz="s" hl="l" c="text-2" max-sz="s">
+                {informationIntro}
+              </Text>
+            </Flex>
+
+            <Columns cols={[1, null, 2]} g="30">
+              {
+                informationItems.map((item) => (
+                  <Flex g={['20', null, '30']} ai="center" bd bdrs="20" ov="hidden" p={['20', null, '30']} bgc="base">
+                    <Icon icon={item.icon} size="2.5em" c="text-2" />
+                    <Stack g="10" fx="1">
+                      <Heading level="3" fz={['m', null, 'l']} fw="500" lts="l">
+                        {item.title}
+                      </Heading>
+                      <Text fz="s" c="text-2">
+                        {item.description}
+                      </Text>
+                    </Stack>
+                  </Flex>
+                ))
+              }
+            </Columns>
+          </Stack>
+        </Lism>
+      </Lism>
+
+      <Lism as="section" id="faq" class="c--faq" isContainer set="light" bgc="base" c="text" py="60">
+        <Lism isWrapper="l" hasGutter layout="stack" g={['40', null, null, '50']}>
+          <SectionHeading en="FAQ" ja="よくあるご質問" ai="center" ta="center" />
+
+          <Columns cols={[1, null, 2]} g={['40', null, null, '50']}>
+            <Frame as="figure" order={[1, null, 0]} ar={['16/9', null, '1/1']} bdrs="10">
+              <Media src={faqImage.src} alt={faqImage.alt} width={faqImage.width} height={faqImage.height} loading="lazy" />
+            </Frame>
+
+            <Accordion.Root layout="stack" bd-b>
+              {
+                faqItems.map((item) => (
+                  <Accordion.Item isOpen={item.defaultOpen === true} bd-t>
+                    <Accordion.Heading>
+                      <Accordion.Button g="15" py="20" isOpen={item.defaultOpen === true}>
+                        {item.question}
+                      </Accordion.Button>
+                    </Accordion.Heading>
+                    <Accordion.Panel pt="0" pb="20" isOpen={item.defaultOpen === true}>
+                      <Text fz="s" c="text-2" hl="l">
+                        {item.answer}
+                      </Text>
+                    </Accordion.Panel>
+                  </Accordion.Item>
+                ))
+              }
+            </Accordion.Root>
+          </Columns>
+        </Lism>
+      </Lism>
+
+      <Lism as="section" id="reservation" class="c--reservation" isContainer pos="relative" py="60" ov="hidden">
+        <Frame isLayer>
+          <Media src={reservationBg.src} alt="" width={reservationBg.width} height={reservationBg.height} loading="lazy" />
+        </Frame>
+        <Layer bgc="black:50%" style={{ backdropFilter: 'blur(6px)' }} aria-hidden="true" />
+
+        <Lism isWrapper="l" hasGutter pos="relative" z="1">
+          <Grid gtc={['1fr', null, null, '1.5fr 2fr']} g={['40', null, '50']}>
+            <Stack g="30" ai="start">
+              <SectionHeading en="Reservation" ja="ご予約はこちら" ai="start" />
+              <Text fz="s" c="text-2">
+                Book through whichever reservation site you prefer. Once your booking is complete, a confirmation email will arrive from that site.
+                For cancellations and changes, please follow the instructions given by the site you used.
+              </Text>
+            </Stack>
+
+            <Stack g="40">
+              {
+                reservationSites.map((site) => (
+                  <Flex fxd={['column', 'row']} pos="relative" bgc="text" c="base" bdrs="20" ov="hidden">
+                    <Frame as="figure" ar="16/9" w={['100%', '33.3%']} fxsh="0">
+                      <Media src={site.image.src} alt={site.image.alt} width={site.image.width} height={site.image.height} loading="lazy" />
+                    </Frame>
+                    <Stack aslf="center" g="30" min-h="0" fx="1" px="25" py="30">
+                      <Heading level="3" class="u--trim" fz="l">
+                        {site.title}
+                      </Heading>
+                      <Text class="u--trim" fz="s" o="mp">
+                        {site.body}
+                      </Text>
+                      <Button href={site.href} aslf="end" bgc="base" c="text" bdrs="10" py="15" px="20" fz="s" ta="center">
+                        Go to the site
+                      </Button>
+                    </Stack>
+                  </Flex>
+                ))
+              }
+            </Stack>
+          </Grid>
+        </Lism>
+      </Lism>
+    </Container>
+    <!-- Footer -->
+    <Lism as="footer" id="footer" class="c--footer" isContainer py={['50', null, '60']}>
+      <Lism isWrapper="xl" hasGutter>
+        <Stack g={['40', null, '50']}>
+          <Flex fxd={['column', null, null, 'row']} ai={['center', null, null, 'end']} g={['20', null, null, '40']}>
+            <Heading lang="ja" level="2" fz="2xl" fw="normal" lts="l" hl="l" ff="accent">
+              {logoLabel}
+            </Heading>
+            <Text fz="s" c="text-2">Away from the city's noise, in the calm of nature, a moment of pure bliss.</Text>
+          </Flex>
+
+          <Flex fxd={['column', null, null, 'row']} ai="center" g="30">
+            <NavMenu.Root layout="flex" fxd={['column', null, 'row']} jc={['center', null, null, 'start']} fxw="wrap" w="100%">
+              {
+                footerNavItems.map(({ href, ja, en }, index) => (
+                  <NavMenu.Item bd bdw={[index < footerNavItems.length - 1 ? '0 0 1px 0' : '0', null, index > 0 ? '0 0 0 1px' : '0']}>
+                    <NavMenu.Link
+                      href={href}
+                      layout="grid"
+                      gtc={['1fr auto', null, '1fr']}
+                      ji={['start', null, 'center']}
+                      py={['15', null, '5']}
+                      px={['5', null, '20']}
+                      hov="-o"
+                    >
+                      <Stack class="c--footer_navStack" g="5">
+                        <Inline>{en}</Inline>
+                        <Inline class="b--enEyebrow" lang="ja" fz="xs" o="pp">
+                          {ja}
+                        </Inline>
+                      </Stack>
+                      <Box d={['block', null, 'none']}>
+                        <Icon icon="caret-right" fz="s" o="pp" />
+                      </Box>
+                    </NavMenu.Link>
+                  </NavMenu.Item>
+                ))
+              }
+            </NavMenu.Root>
+
+            <Cluster g="15" jc={['center', null, 'end']} ai="end" fxsh="0">
+              {
+                footerSnsLinks.map(({ href, icon, label }) => (
+                  <Link href={href} set="plain" p="5" o="p" hov={{ o: 1 }} hasTransition aria-label={label}>
+                    <Icon icon={icon} fz="xl" />
+                  </Link>
+                ))
+              }
+            </Cluster>
+          </Flex>
+
+          <Text fz="xs" o="pp" ta="center">© 2026 Lism CSS.</Text>
+        </Stack>
+      </Lism>
+    </Lism>
+
+    <Lism pos="fixed" z="99" r="max(var(--s35), env(safe-area-inset-right))" b="max(var(--s35), env(safe-area-inset-bottom))" w="fit">
+      <Button
+        class="c--reservationFab"
+        href="#reservation"
+        set="s"
+        py="20"
+        px="30"
+        lts="l"
+        bdrs="10"
+        bd
+        bgc="base"
+        c="text"
+        bxsh="20"
+        hov="-bgc"
+        fz={['xs', null, 's']}
+      >
+        <Inline fw="500">Book Your Stay</Inline>
+      </Button>
+    </Lism>
+  </Container>
+</Layout>

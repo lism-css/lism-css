@@ -133,7 +133,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 ### Using gc (grid-column)
 <Preview>
   <PreviewTitle>Alternating 1:2 and 2:1 column spans</PreviewTitle>
-    <PreviewArea resize p="20">
+  <PreviewArea resize p="20">
     <Columns cols="3" g="15">
       <Frame gc="span 1">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" />
@@ -200,31 +200,41 @@ A card layout using subgrid inside a 1 → 2 → 3 column grid.
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
         <Heading level="2" hl="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText hl="s" />
-        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">Date: 2025-01-01</Lism>
+        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">
+          <Fragment>Date: 2025-01-01</Fragment>
+        </Lism>
       </Grid>
       <Grid util="trimAll" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-2.jpg" alt="" inferSize />
         <Heading level="2" hl="s" aslf="center" fz="m">Card Title Lorem ipsum</Heading>
         <DummyText hl="s" length="s" />
-        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">Date: 2025-01-01</Lism>
+        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">
+          <Fragment>Date: 2025-01-01</Fragment>
+        </Lism>
       </Grid>
       <Grid util="trimAll" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-3.jpg" alt="" inferSize />
         <Heading level="2" hl="s" aslf="center" fz="m">Card Title, long, long, long, very long long looong.</Heading>
         <DummyText hl="s" />
-        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">Date: 2025-01-01</Lism>
+        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">
+          <Fragment>Date: 2025-01-01</Fragment>
+        </Lism>
       </Grid>
       <Grid util="trimAll" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-4.jpg" alt="" inferSize />
         <Heading level="2" hl="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText hl="s" length="s" />
-        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">Date: 2025-01-01</Lism>
+        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">
+          <Fragment>Date: 2025-01-01</Fragment>
+        </Lism>
       </Grid>
       <Grid util="trimAll" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-5.jpg" alt="" inferSize />
         <Heading level="2" hl="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText hl="s" />
-        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">Date: 2025-01-01</Lism>
+        <Lism hl="s" bd-t fz="s" px="10" py="20 10" o="p">
+          <Fragment>Date: 2025-01-01</Fragment>
+        </Lism>
       </Grid>
     </Columns>
   </PreviewArea>

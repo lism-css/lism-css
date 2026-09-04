@@ -1,0 +1,370 @@
+---
+title: 'Popover'
+description: '@lism-css/ui で提供する Popover コンポーネントについて解説します。'
+---
+
+import { Cluster, Stack, Flex } from 'lism-css/astro';
+import { Popover } from '@lism-css/ui/astro/Popover';
+
+
+クリックで開閉するポップオーバーを作成できるコンポーネントです。
+
+
+## Overview
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="30">
+    <Popover.Root popoverId="pop-01">
+      <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+        <Fragment>Open Popover</Fragment>
+      </Popover.Trigger>
+      <Popover.Popup max-w="20rem">
+        <p>ポップオーバーの中身です。外側のクリックや<kbd>Esc</kbd>キーで閉じられます。</p>
+      </Popover.Popup>
+    </Popover.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx '"pop-01"'
+    <Popover.Root popoverId="pop-01">
+      <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">Open Popover</Popover.Trigger>
+      <Popover.Popup max-w="20rem">
+        <p>ポップオーバーの中身です。外側のクリックやEscキーで閉じられます。</p>
+      </Popover.Popup>
+    </Popover.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html '"pop-01"'
+    <div class="b--popover">
+      <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-01">Open Popover</button>
+      <div class="b--popover_popup -max-w" id="pop-01" popover="auto" data-side="bottom" data-align="center" style="--max-w:20rem">
+        <p>ポップオーバーの中身です。外側のクリックやEscキーで閉じられます。</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+ブラウザ標準の [Popover API](https://developer.mozilla.org/ja/docs/Web/API/Popover_API)（`popover`属性と`popovertarget`属性）だけで動作するため、クライアント側のJavaScriptは一切必要ありません。
+
+初期値の`type="auto"`では、以下の動作はすべてブラウザが行います。
+
+- トリガーのクリックによる開閉
+- 外側のクリックや<kbd>Esc</kbd>キーで閉じる（light dismiss）
+- 閉じたあと、トリガーへフォーカスを戻す
+- トリガーの`aria-expanded`の切り替え
+
+<kbd>Tab</kbd>キーでフォーカスがポップアップの外へ移動しても閉じません（Popover APIの仕様です）。フォーカスが外れたときに閉じたい場合は、`focusout`イベントで`hidePopover()`を呼ぶなど、利用側で実装してください。
+
+:::note
+`<Popover.Root>`の中に`<Popover.Trigger>`と`<Popover.Popup>`を置くと、`popovertarget`と`id`が自動で紐付きます。`<Popover.Close>`も同様です。
+
+- ポップアップは閉じている間、支援技術からも見えません。**重要な操作や情報をポップアップの中だけに置かないでください。**
+- `<Popover.Trigger>`と`<Popover.Close>`は`button`要素である必要があります。`popovertarget`属性は`button`（および`input type="button"`など）でしか機能しません。
+- `<Popover.Popup>`には`role`を指定していません。フォームなど、まとまった操作を含む場合は`role="dialog"`と`aria-label`を指定してください。
+:::
+
+
+## Styles
+
+Popover のベーススタイルは、以下のCSSで定義されています。
+
+<SrcCode dir="lism-ui" path="src/components/Popover/_style.css" title="_style.css" />
+
+:::note
+ソースコード全体は [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Popover) で公開しています。
+:::
+
+
+## How to use
+
+`@lism-css/ui` パッケージで`Popover`として提供しています。
+
+
+### Import
+
+<ImportPackage component="Popover" packageName="@lism-css/ui" css="style.css" />
+
+`<Popover.Root>`, `<Popover.Trigger>`, `<Popover.Popup>`, `<Popover.Close>`が利用できます。
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|<PropBadge>`<Popover.Root>`</PropBadge><br/>`popoverId`|`<Popover.Trigger>` / `<Popover.Close>`の`popovertarget`と、`<Popover.Popup>`の`id`に使われるIDを指定します。未指定の場合は自動生成されたIDが使われます。|
+|<PropBadge>`<Popover.Root>`</PropBadge><br/>`offset`|トリガーとポップアップの間隔を指定します。インラインスタイルの`--popover-offset`として出力されます。|
+|<PropBadge>`<Popover.Trigger>`</PropBadge><br/>`popoverId`|`popovertarget`の値として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`id`|`id`属性として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`side`|ポップアップを表示する向きを指定します。`data-side`属性として出力されます。指定できる値は`top` / `bottom` / `start` / `end`で、初期値は`bottom`です。`start` / `end`は横方向の向きで、書字方向に追従します（`dir="ltr"`では`start`が左、`end`が右です）。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`align`|ポップアップの揃え位置を指定します。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えです。`data-align`属性として出力されます。指定できる値は`start` / `center` / `end`で、初期値は`center`です。|
+|<PropBadge>`<Popover.Popup>`</PropBadge><br/>`type`|`popover`属性の値として出力されます。指定できる値は`auto` / `manual`で、初期値は`auto`です。`manual`にすると、外側のクリックや<kbd>Esc</kbd>キーで閉じる動作（light dismiss）が無効になり、`<Popover.Close>`などの`popovertarget`を持つボタンでしか閉じられなくなります。|
+|<PropBadge>`<Popover.Close>`</PropBadge><br/>`popoverId`|`popovertarget`の値として出力されます。`<Popover.Root>`の外で単体利用するときにだけ指定します。|
+|<PropBadge>`<Popover.Close>`</PropBadge><br/>`icon`|子要素を渡さない場合に表示されるアイコンを指定します。（初期値: `x`）|
+|<PropBadge>`<Popover.Close>`</PropBadge><br/>`srText`|アイコン表示時にスクリーンリーダー向けに出力されるテキストを指定します。初期値は`Close`のため、日本語サイトでは`srText="閉じる"`の指定を推奨します。|
+
+:::warning
+`<Popover.Root>`の配下では、`<Popover.Trigger>` / `<Popover.Popup>` / `<Popover.Close>`に個別のIDを指定しないでください。IDを明示したい場合は`<Popover.Root>`の`popoverId`だけを使います。
+
+子要素側の`popoverId` / `id`は、`<Popover.Root>`を使わずにパーツを離れた場所へ配置する（各パーツに同じIDを手動で渡す）ための手段です。`<Popover.Root>`の配下で一部の子にだけ指定すると、紐付けが壊れてしまいます。
+:::
+
+
+### CSS変数
+
+見た目の調整には、以下のCSS変数が使えます。いずれも`<Popover.Root>`（`.b--popover`）で受け取るため、`<Popover.Root>`またはその祖先要素に指定してください。`<Popover.Popup>`に指定しても効きません。
+
+| 変数 | 初期値 | 説明 |
+|---|---|---|
+|`--popover-offset`|`var(--s5)`|トリガーとポップアップの間隔。|
+|`--popover-duration`|`0.15s`|開閉時のフェードにかかる時間。`prefers-reduced-motion: reduce`の環境では`0s`になります。|
+
+ポップアップの初期スタイルは、背景色`var(--base)`・余白`1em`に影を付けたカードです。角丸は初期状態では付いていません。配色や余白、角丸は、Lismのプロパティ（`bgc`, `c`, `p`, `bdrs`, `bxsh`など）で上書きしてください。
+
+
+## Examples
+
+### 表示位置を変える
+
+`<Popover.Popup>`の`side`で表示する向きを、`align`で揃え位置を指定できます。`side`が`top` / `bottom`のときは横方向、それ以外のときは縦方向の揃えになります。
+
+<Preview>
+  <PreviewTitle>`side`と`align`の指定例</PreviewTitle>
+  <PreviewArea p="30">
+    <Cluster g="15">
+      <Popover.Root popoverId="pop-02">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+          <Fragment>bottom / start</Fragment>
+        </Popover.Trigger>
+        <Popover.Popup side="bottom" align="start" max-w="16rem">
+          <p>side="bottom" align="start"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-03">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+          <Fragment>bottom / end</Fragment>
+        </Popover.Trigger>
+        <Popover.Popup side="bottom" align="end" max-w="16rem">
+          <p>side="bottom" align="end"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-04">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+          <Fragment>top / center</Fragment>
+        </Popover.Trigger>
+        <Popover.Popup side="top" max-w="16rem">
+          <p>side="top" align="center"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-05">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+          <Fragment>end / start</Fragment>
+        </Popover.Trigger>
+        <Popover.Popup side="end" align="start" max-w="16rem">
+          <p>side="end" align="start"</p>
+        </Popover.Popup>
+      </Popover.Root>
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "side" "align"
+    <Cluster g="15">
+      <Popover.Root popoverId="pop-02">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">bottom / start</Popover.Trigger>
+        <Popover.Popup side="bottom" align="start" max-w="16rem">
+          <p>side="bottom" align="start"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-03">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">bottom / end</Popover.Trigger>
+        <Popover.Popup side="bottom" align="end" max-w="16rem">
+          <p>side="bottom" align="end"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-04">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">top / center</Popover.Trigger>
+        <Popover.Popup side="top" max-w="16rem">
+          <p>side="top" align="center"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-05">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">end / start</Popover.Trigger>
+        <Popover.Popup side="end" align="start" max-w="16rem">
+          <p>side="end" align="start"</p>
+        </Popover.Popup>
+      </Popover.Root>
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "data-side" "data-align"
+    <div class="l--cluster -g:15">
+      <div class="b--popover">
+        <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-02">bottom / start</button>
+        <div class="b--popover_popup -max-w" id="pop-02" popover="auto" data-side="bottom" data-align="start" style="--max-w:16rem">
+          <p>side="bottom" align="start"</p>
+        </div>
+      </div>
+      <div class="b--popover">
+        <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-03">bottom / end</button>
+        <div class="b--popover_popup -max-w" id="pop-03" popover="auto" data-side="bottom" data-align="end" style="--max-w:16rem">
+          <p>side="bottom" align="end"</p>
+        </div>
+      </div>
+      <div class="b--popover">
+        <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-04">top / center</button>
+        <div class="b--popover_popup -max-w" id="pop-04" popover="auto" data-side="top" data-align="center" style="--max-w:16rem">
+          <p>side="top" align="center"</p>
+        </div>
+      </div>
+      <div class="b--popover">
+        <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-05">end / start</button>
+        <div class="b--popover_popup -max-w" id="pop-05" popover="auto" data-side="end" data-align="start" style="--max-w:16rem">
+          <p>side="end" align="start"</p>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::note
+`side`の`start` / `end`は書字方向に追従する論理的な向きです。`dir="ltr"`では`start`が左、`end`が右になり、`dir="rtl"`の環境では左右が入れ替わります。`align`の`start` / `end`も、`side`が`top` / `bottom`のときは同じように書字方向へ追従します。
+
+また、画面の端に収まらないときは自動的に反対側へ反転します。
+:::
+
+
+### スタイルを変える
+
+ポップアップの配色やborderは、Lismのプロパティで上書きできます。ふきだしの矢印は背景色に追従し、`bd`でborderを付けると縁の色と太さ（`--bdc` / `--bdw`）も矢印に反映されます。
+
+<Preview>
+  <PreviewTitle>配色とborderの指定例</PreviewTitle>
+  <PreviewArea p="30">
+    <Cluster g="15">
+      <Popover.Root popoverId="pop-07">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+          <Fragment>配色を変える</Fragment>
+        </Popover.Trigger>
+        <Popover.Popup bgc="text" c="base" max-w="16rem">
+          <p>bgc="text" c="base"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-08">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+          <Fragment>borderを付ける</Fragment>
+        </Popover.Trigger>
+        <Popover.Popup bd bdw="2px" bdc="current" max-w="16rem">
+          <p>bd bdw="2px" bdc="current"</p>
+        </Popover.Popup>
+      </Popover.Root>
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'bgc="text" c="base"' 'bd bdw="2px" bdc="current"'
+    <Cluster g="15">
+      <Popover.Root popoverId="pop-07">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">配色を変える</Popover.Trigger>
+        <Popover.Popup bgc="text" c="base" max-w="16rem">
+          <p>bgc="text" c="base"</p>
+        </Popover.Popup>
+      </Popover.Root>
+      <Popover.Root popoverId="pop-08">
+        <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">borderを付ける</Popover.Trigger>
+        <Popover.Popup bd bdw="2px" bdc="current" max-w="16rem">
+          <p>bd bdw="2px" bdc="current"</p>
+        </Popover.Popup>
+      </Popover.Root>
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html '-bgc:text -c:base' '-bd -bdc:current' '--bdw:2px'
+    <div class="l--cluster -g:15">
+      <div class="b--popover">
+        <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-07">配色を変える</button>
+        <div class="b--popover_popup -bgc:text -c:base -max-w" id="pop-07" popover="auto" data-side="bottom" data-align="center" style="--max-w:16rem">
+          <p>bgc="text" c="base"</p>
+        </div>
+      </div>
+      <div class="b--popover">
+        <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-08">borderを付ける</button>
+        <div class="b--popover_popup -bd -bdc:current -max-w" id="pop-08" popover="auto" data-side="bottom" data-align="center" style="--bdw:2px;--max-w:16rem">
+          <p>bd bdw="2px" bdc="current"</p>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### 閉じるボタンを置く（`type="manual"`）
+
+`type="manual"`を指定すると light dismiss が無効になり、外側のクリックや<kbd>Esc</kbd>キーでは閉じられなくなります。**必ず`<Popover.Close>`を配置してください。**
+
+<Preview>
+  <PreviewTitle>`type='manual'`</PreviewTitle>
+  <PreviewArea p="30">
+    <Popover.Root popoverId="pop-06">
+      <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">
+        <Fragment>お知らせを見る</Fragment>
+      </Popover.Trigger>
+      <Popover.Popup type="manual" max-w="20rem" bd>
+        <Stack g="5">
+          <Flex ai="center" jc="between" g="15">
+            <span className="-fw:bold">お知らせ</span>
+            <Popover.Close srText="閉じる" fz="l" hov="-c" />
+          </Flex>
+          <p>閉じるボタンを押すまで開いたままになります。</p>
+        </Stack>
+      </Popover.Popup>
+    </Popover.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'type="manual"'
+    <Popover.Root popoverId="pop-06">
+      <Popover.Trigger bd px="15" py="5" bdrs="10" hov="-bgc">お知らせを見る</Popover.Trigger>
+      <Popover.Popup type="manual" max-w="20rem" bd>
+        <Stack g="5">
+          <Flex ai="center" jc="between" g="15">
+            <span className="-fw:bold">お知らせ</span>
+            <Popover.Close srText="閉じる" fz="l" hov="-c" />
+          </Flex>
+          <p>閉じるボタンを押すまで開いたままになります。</p>
+        </Stack>
+      </Popover.Popup>
+    </Popover.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html 'popover="manual"'
+    <div class="b--popover">
+      <button class="b--popover_trigger set--plain -bd -px:15 -py:5 -bdrs:10 -hov:-bgc" type="button" popovertarget="pop-06">お知らせを見る</button>
+      <div class="b--popover_popup -max-w -bd" id="pop-06" popover="manual" data-side="bottom" data-align="center" style="--max-w:20rem">
+        <div class="l--stack -g:5">
+          <div class="l--flex -ai:center -jc:between -g:15">
+            <span class="-fw:bold">お知らせ</span>
+            <button class="b--popover_close set--plain -fz:l -hov:-c" type="button" popovertarget="pop-06" popovertargetaction="hide">
+              <svg class="a--icon" aria-hidden="true">...</svg>
+              <span class="u--srOnly">閉じる</span>
+            </button>
+          </div>
+          <p>閉じるボタンを押すまで開いたままになります。</p>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## ブラウザ対応
+
+ポップアップの配置には [CSS Anchor Positioning](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_anchor_positioning) を使用しています。
+
+未対応のブラウザ（Firefox ESR 140 など）では、ブラウザ既定の配置にフォールバックし、ポップアップは画面中央に表示されます。この場合、`side` / `align` / `offset` による位置調整は適用されません。
+
+開閉・light dismiss・フォーカス制御は Popover API の機能なので、フォールバック時もそのまま動作します。

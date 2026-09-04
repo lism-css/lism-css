@@ -1,0 +1,259 @@
+/* -------------------------- */
+/* 下書き記事のスタイル（開発環境のみ） */
+/* -------------------------- */
+/* Property Class より強くしておきたいので非レイヤーのまま */
+._draft {
+  position: relative;
+  > * {
+    opacity: 0.7;
+  }
+  *::before {
+    content: '✍️';
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--base-2);
+    line-height: 1;
+    font-size: 16px;
+    padding: 2px;
+    border-radius: 3px;
+    z-index: 1;
+  }
+}
+
+@layer lism-custom {
+  .c--root[data-layout='BaseLayout'] > .l--box {
+    max-width: 2000px;
+    margin-inline: auto;
+  }
+
+  // ホバーエフェクト（文字色・背景色）のトランジション
+  .c--iconBtn,
+  .c--searchTrigger,
+  .c--button {
+    transition:
+      color 0.15s,
+      background-color 0.15s;
+  }
+
+  /* トップページのヘッダーのみ半透明＋blur（下層 docs は --base のまま） */
+  .p--front .c--siteHeader .b--shadowBox {
+    background-color: color-mix(in srgb, var(--base), transparent 30%);
+    backdrop-filter: blur(32px);
+  }
+
+  :root[data-theme='dark'] {
+    .b--chat {
+      --cbox-bgPct: 16%;
+    }
+  }
+
+  /* -------------------------- */
+  /* サイト全体のレイアウト */
+  /* -------------------------- */
+  .c--siteWrapper {
+    --wrapper-gta: 'header' 'main';
+    --wrapper-gtc: 1fr;
+    --wrapper-gtc_md: var(--sidebar-w) 1fr minmax(0px, auto);
+    --wrapper-gta_md: 'sidebar main toc';
+    column-gap: var(--s10);
+  }
+
+  .c--siteWrapper.no-toc {
+    --wrapper-gtc_md: var(--sidebar-w) 1fr;
+    --wrapper-gta_md: 'sidebar main';
+  }
+
+  .c--siteHeader {
+    /* grid-area: header; */
+    position: sticky;
+    top: var(--s10);
+    z-index: 100;
+    min-height: var(--header-h);
+    width: 100%;
+    padding-inline: var(--s10);
+
+    /* 下層ページ: フル幅・フラットなヘッダー（デフォルト） */
+    .b--shadowBox {
+      max-width: none;
+    }
+    .c--docsLink {
+      display: none;
+    }
+  }
+
+  /* トップページ: フローティングデザインを維持 */
+  .p--front {
+    .c--siteHeader {
+      position: fixed;
+      top: var(--s30);
+      padding-inline: var(--s20);
+
+      .b--shadowBox {
+        max-width: fit-content;
+
+        @container (min-width: 800px) {
+          max-width: 28.5rem;
+        }
+      }
+
+      .c--docsLink {
+        display: block;
+      }
+    }
+  }
+
+  .c--siteMain {
+    grid-area: main;
+    min-width: 0;
+    position: sticky;
+    top: calc(var(--header-h) + var(--s20));
+    height: calc(100svh - var(--header-h) - var(--s30));
+    overflow: hidden;
+  }
+
+  .c--siteMain_inner {
+    scroll-padding-top: var(--s40); // inner の py="40" 分
+
+    // scroll-behavior: smooth;
+    // @media (prefers-reduced-motion: reduce) {
+    //   scroll-behavior: auto;
+    // }
+
+    &:focus {
+      outline: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--link);
+      outline-offset: -2px;
+    }
+  }
+  .c--siteFooter {
+    /* 本文カラム（.c--siteMain）内に配置されるためgrid-areaは不要 */
+
+    .c--themeModeSwitch {
+      margin-inline: auto;
+    }
+  }
+
+  .c--siteSidebar {
+    grid-area: sidebar;
+    position: sticky;
+    top: calc(var(--header-h) + var(--s20));
+    height: calc(100vh - var(--header-h) - var(--s30));
+    /* html の smooth を継承すると、現在地への初期スクロールがアニメーションする */
+    scroll-behavior: auto;
+  }
+
+  .c--siteToc {
+    grid-area: toc;
+    position: sticky;
+    top: calc(var(--header-h) + var(--s20));
+    height: calc(100vh - var(--header-h) - var(--s30));
+    width: var(--toc-w);
+    /* border-inline-start: 1px solid var(--divider);
+  	background-color: var(--base); */
+  }
+  .no-toc .c--siteToc {
+    display: none !important;
+  }
+
+  /* サイドバーナビのセパレータ（区切り線） */
+  .c--nav_separator {
+    height: 1px;
+    background-color: var(--divider);
+    list-style: none;
+  }
+
+  /* アンカー着地用（フロー内の高さ0。absolute の srOnly だとハッシュスクロールがずれる） */
+  .c--scrollTarget {
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+
+  /* .hero {} */
+  .c--hero_content {
+    min-width: 20rem;
+  }
+
+  .c--hero h1 {
+    font-feature-settings: 'palt';
+  }
+
+  /* -------------------------- */
+  /* 前後記事ナビゲーション */
+  /* -------------------------- */
+  .c--postNav {
+    margin-block-start: 5rem;
+    border-block-start: 1px solid var(--divider);
+    border-block-end: 1px solid var(--divider);
+  }
+
+  .c--postNav_icon {
+    transition: translate 0.2s;
+
+    .-prev & {
+      scale: -1 1;
+    }
+
+    .-prev .c--postNav_link:hover & {
+      translate: -0.25em 0;
+    }
+    .-next .c--postNav_link:hover & {
+      translate: 0.25em 0;
+    }
+  }
+
+  .c--postNav_empty {
+    display: none;
+  }
+
+  /* -------------------------- */
+  /* ページネーション */
+  /* -------------------------- */
+  .c--pagination {
+    margin-block-start: var(--s40);
+  }
+
+  .c--pagination_arrow,
+  .c--pagination_page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5em;
+    height: 2.5em;
+    padding: 0.25em 0.5em;
+    border-radius: var(--bdrs--10);
+    text-decoration: none;
+    font-weight: 500;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  a.c--pagination_arrow,
+  a.c--pagination_page {
+    color: var(--link);
+  }
+  a.c--pagination_arrow:hover,
+  a.c--pagination_page:hover {
+    background-color: var(--base-2);
+  }
+
+  .c--pagination_arrow.-disabled {
+    color: var(--text-2);
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .c--pagination_page.-current {
+    background-color: var(--brand);
+    color: white;
+  }
+
+  .c--pagination_ellipsis {
+    padding: 0 0.25em;
+    color: var(--text-2);
+  }
+}

@@ -1,12 +1,12 @@
 ---
 title: '-bd'
-description: 'ボーダーを指定する -bd プロパティクラスと関連するCSS変数の使い方について解説します。'
+description: 'ボーダーを指定する -bd Property Class と関連するCSS変数の使い方について解説します。'
 ---
 import { Box, Flex, Stack, Divider, Spacer } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 
-Lismでは、border系の指定が少し特殊になっています。
+Lism では、border系の指定が少し特殊になっています。
 
 - 全方向表示には `-bd` クラスを使用します。
 - 単一方向にボーダーを表示する時は `-bd-{side}`クラスで指定します。block / inline 方向に加えて、top / right / bottom / left 方向もサポートしています。
@@ -15,10 +15,13 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <PreviewTitle>css</PreviewTitle>
 ```scss
+/* 変数の初期値だけ弱い位置に置く（@layer ビルドでは @layer lism-base、no_layer ビルドでは :where()） */
 :where(.-bd, [class*=' -bd-'], [class^='-bd-']) {
   --bds: solid;
   --bdw: 1px;
   --bdc: var(--divider);
+}
+.-bd, [class*=' -bd-'], [class^='-bd-'] {
   border-width: var(--bdw);
   border-color: var(--bdc);
 }
@@ -336,4 +339,3 @@ bdwをブレイクポイントで切り替えることで、ボーダーの方�
     ```
   </PreviewCode>
 </Preview> */}
-

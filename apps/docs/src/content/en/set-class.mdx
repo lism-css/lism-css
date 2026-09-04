@@ -1,12 +1,12 @@
 ---
 title: 'Set Class'
-description: 'Learn about the set-- utility classes for overriding base styles and redefining tokens.'
+description: 'Learn about the set-- style classes for overriding base styles and redefining tokens.'
 ---
 import { Lism, Container, Wrapper, Box, Columns, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 
 
-Utility classes defined in the `lism-base` layer follow the `set--{className}` format. They handle base styling for HTML elements and CSS variable setup.
+Classes defined in the `lism-base` layer follow the `set--{name}` format. They handle base styling for HTML elements and CSS variable setup.
 
 The set-- classes fall into two categories:
 
@@ -43,8 +43,8 @@ A class for resetting primary styles.
 
 ## `set--revert`
 
-A class for explicitly reverting to the browser's default appearance.
-On its own it has no effect (it does not do a wholesale revert of every property).
+A class for explicitly restoring the browser's default styles.
+On its own, this class does not `revert` every property.
 
 It only takes effect on specific HTML elements, and currently only `ul` / `ol` are supported.
 
@@ -81,20 +81,21 @@ Classless `ul` / `ol` elements (lists with no `class` attribute at all) automati
 
 ## `set--bxsh`
 
-Elements with the `set--bxsh` class have the `--bxsh--` variables that compose the shadow redefined.
+Elements with the `set--bxsh` class have the `--bxsh--` variables that compose the shadow, along with the near-layer shadow color `--shc--near`, redefined.
 
 ```css
 :root,
 .set--bxsh {
-  --bxsh--10: var(--shsz--10) var(--shc);
-  --bxsh--20: var(--shsz--20) var(--shc);
-  --bxsh--30: var(--shsz--30) var(--shc);
-  --bxsh--40: var(--shsz--40) var(--shc);
-  --bxsh--50: var(--shsz--50) var(--shc);
+  --shc--near: color-mix(in srgb, var(--shc), transparent 50%);
+  --bxsh--10: var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc);
+  --bxsh--20: var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc);
+  --bxsh--30: var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc);
+  --bxsh--40: var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc);
+  --bxsh--50: var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc);
 }
 ```
 
-By overriding the `--shc` variable here, you can adjust the color tint of the shadow.
+By overriding the `--shc` variable here, you can adjust the color tint of the shadow. Since `--shc--near` is also recalculated from `--shc`, both shadow layers change color together.
 
 <Preview>
   <PreviewTitle>Example of overriding shadow color</PreviewTitle>
@@ -152,6 +153,9 @@ A class that recalculates spacing tokens (`--s5` through `--s80`) against the cu
 ```css
 :root,
 .set--s {
+  /* Spacing base unit ≈ 8px */
+  --s-unit: 0.5rem;
+
   --s5: calc(var(--s-unit) * 0.5);
   --s10: var(--s-unit);
   --s15: calc(var(--s-unit) * 1.5);
@@ -165,28 +169,38 @@ A class that recalculates spacing tokens (`--s5` through `--s80`) against the cu
   --s70: calc(var(--s-unit) * 21);
   --s80: calc(var(--s-unit) * 34);
 }
+
+.set--s {
+  --s-unit: 0.5em;
+}
 ```
+
+Within a `set--s` scope, `--s-unit` swaps to `0.5em`, and `--s10`–`--s80` are recalculated against the current font size.
 
 ```html
+<!-- Button padding scales with the button's own font-size -->
 <button class="set--s -fz:s -py:10 -px:20">...</button>
+
+<!-- You can also override --s-unit with any value -->
+<button class="set--s -p:10" style="--s-unit: .4375em">...</button>
 ```
 
-For details, see [Spacing Tokens](/en/docs/tokens/spacing/).
+For the spacing scale rules, see [Design Tokens (SPACE)](/en/docs/tokens/#space).
 
-<DocsLink path="/docs/tokens/spacing/" />
+<DocsLink path="/docs/tokens/" />
 
 
 ## `set--hov`
 
 Sets the hover state variables (`--_notHov`, `--_isHov`). Primarily used to **control hover styles on child elements**.
 
-- `--_isHov` is defined as an empty value only when not hovered (and not focus-within).
-- Conversely, `--_notHov` is defined as an empty value when hovered or focus-within.
+- `--_isHov` is defined only when not hovered (and not focus-within), with an empty value like `--_isHov: ;`.
+- Conversely, `--_notHov` is defined with the same empty value when hovered or focus-within.
 
 <SrcCode path="src/scss/base/set/_hov.scss" />
 
 
-This empty variable trick enables the following patterns:
+Thanks to this empty-value mechanism, you can write the following patterns:
 
 - `var(--_isHov, {value to apply on hover})`
 - `var(--_notHov, {value to apply when not hovered})`
@@ -227,7 +241,7 @@ Using `var(--_isHov, ...) var(--_notHov, ...)` allows you to **write both hover 
 
 By applying `set--hov` to a parent element and using the `--_isHov` and `--_notHov` variables on child elements, you can trigger style changes on children based on the parent's hover state.
 
-Use this, for example, to zoom an image inside a card when the parent box is hovered. The `-hov:in:zoom` class is provided out of the box for this purpose.
+Use this, for example, to zoom an image inside a box when the box is hovered. Lism includes the `-hov:in:zoom` class by default for this purpose.
 
 ```css
 .-hov\:in\:zoom {
@@ -269,7 +283,7 @@ See the [`hover` documentation page](/en/docs/property-class/hov#set--hov) for u
 
 ## `set--bleed`
 
-A class that generates the `--bleed` variable, useful for building one-side bleed layouts.
+A class that generates the `--bleed` variable, used for building bleed layouts where only one side extends to the edge of the screen.
 The amount of space outside the content width (`--contentSize`) is set as its value. The gutter width (`--gutter` / `--gutter--base`) acts as the lower bound — if the computed value falls below the gutter width, the gutter width is returned instead.
 
 <SrcCode path="src/scss/base/set/_bleed.scss" />
@@ -332,7 +346,7 @@ The amount of space outside the content width (`--contentSize`) is set as its va
 ## `set--bdrsInner`
 
 A class that automatically calculates the inner border radius (`--bdrs--inner`) from the parent element's border radius (`--bdrs`) and padding (`--p`).
-Apply `set--bdrsInner` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
+Add the `set--bdrsInner` class to the parent element and specify `-bdrs:inner` on the child element, and the calculated `--bdrs--inner` is applied as the child element's border radius.
 
 (Both `bdrs` and `p` must be specified on the parent element.)
 
@@ -369,7 +383,7 @@ Apply `set--bdrsInner` to the parent element, then use `-bdrs:inner` on the chil
 
 <Spacer h="1rem" />
 
-Because `p` and `bdrs` are tracked as CSS variables even at different breakpoints, `set--bdrsInner` supports responsive border radii automatically.
+Because `p` and `bdrs` are managed as CSS variables, `set--bdrsInner`'s border radius automatically follows their values even when you change them at a breakpoint.
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>

@@ -68,8 +68,10 @@ import { siteConfig } from '@/config/site';
 </Container>
 
 <style>
-  header {
-    backdrop-filter: blur(0.5em);
-    background-color: color-mix(in srgb, var(--base) 50%, transparent);
+  @layer lism-custom {
+    header {
+      backdrop-filter: blur(0.5em);
+      background-color: color-mix(in srgb, var(--base) 50%, transparent);
+    }
   }
 </style>

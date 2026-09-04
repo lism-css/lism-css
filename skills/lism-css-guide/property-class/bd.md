@@ -12,10 +12,13 @@ Lism CSS のボーダーは、CSS 変数（`--bds` / `--bdw` / `--bdc`）で管�
 `-bd` または `-bd-{side}` クラスが付くと、以下の初期値がセットされる。
 
 ```scss
+/* 変数の初期値だけ弱い位置に置く（@layer ビルドでは @layer lism-base、no_layer ビルドでは :where()） */
 :where(.-bd, [class*=" -bd-"], [class^="-bd-"]) {
   --bds: solid;
   --bdw: 1px;
   --bdc: var(--divider);
+}
+.-bd, [class*=" -bd-"], [class^="-bd-"] {
   border-width: var(--bdw);
   border-color: var(--bdc);
 }

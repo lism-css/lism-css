@@ -41,6 +41,8 @@ export const PresetIcons = ({icons}) => {
 
 ### HTML Structure
 
+The actual tag rendered varies between `svg`, `img`, and others depending on how `icon`, `viewBox`, `src`, and `as` are specified, but the rules for adding `aria-hidden`/`aria-label` are the same across all of them.
+
 ```pug
 svg.a--icon[aria-hidden="true"]
 
@@ -54,7 +56,7 @@ svg.a--icon[aria-label="..."][role="img"]
 | Prop | Description |
 |---|---|
 | `icon` | Specifies the icon. The rendering behavior varies depending on the value provided. |
-| `size` | Effective when calling a preset icon. Output as `width` and `height`. |
+| `size` | Effective when rendered as an SVG. Output as `width` and `height`. |
 | `label` | Output as `aria-label`. When specified, `role="img"` is also added; when omitted, `aria-hidden="true"` is output instead. |
 
 
@@ -80,11 +82,11 @@ Note that when using a React-based icon package in Astro, you need to enable Rea
     {/* <Icon as={Home} size="2em" /> */}
   </PreviewArea>
   <PreviewCode>
-```jsx "icon={SmileyIcon}"
+```jsx "as={SmileyIcon}"
 import { SmileyIcon } from '@phosphor-icons/react';
 import { Icon } from 'lism-css/react';
 
-<Icon as={SmileyIcon} fz="2rem" />
+<Icon as={SmileyIcon} size="2em" />
 ```
   </PreviewCode>
 </Preview>
@@ -157,7 +159,7 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
 
 
 
-### Using preset icons
+<h3 id="preset-icons">Using preset icons</h3>
 
 The Lism package (`lism-css`) includes several built-in SVG icons.
 
@@ -169,6 +171,23 @@ You can call a preset icon by specifying its name as a string via `icon='icon-na
 
 <PreviewTitle>Logo icon list</PreviewTitle>
 <PresetIcons icons={logoIcons} />
+
+{/* For verification */}
+{/* <Cluster g="10">
+  <Icon icon="logo-discord" size="32px" />
+  <Icon icon="logo-facebook" size="32px" />
+  <Icon icon="logo-pinterest" size="32px" />
+  <Icon icon="logo-line" size="32px" />
+  <Icon icon="logo-github" size="32px" />
+  <Icon icon="logo-linkedin" size="32px" />
+  <Icon icon="logo-reddit" size="32px" />
+  <Icon icon="logo-threads" size="32px" />
+  <Icon icon="logo-amazon" size="32px" />
+  <Icon icon="logo-x" size="32px" />
+  <Icon icon="logo-youtube" size="32px" />
+  <Icon icon="logo-instagram" size="32px" />
+  <Icon icon="logo-tiktok" size="32px" />
+</Cluster> */}
 
 <Preview>
   <PreviewTitle>Example of calling a preset icon</PreviewTitle>
@@ -210,14 +229,11 @@ You can place `path` elements and other SVG content directly as children.
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```jsx "--size:"
+    ```html
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 256 256"
       width="1em"
       height="1em"
-      fill="currentColor"
-      focusable="false"
       aria-label="SmileyIcon icon"
       role="img"
       class="a--icon -fz:4xl -c"

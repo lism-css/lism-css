@@ -4,10 +4,6 @@ description: 'An overview of the CSS layer structure and class design methodolog
 ---
 import { Lism, Box } from "lism-css/astro";
 
-export const WhsNw = ({children}) => {
-  return <span className='-whs:nowrap'>{children}</span>
-}
-
 This page covers the CSS design principles behind Lism.
 
 
@@ -16,8 +12,6 @@ This page covers the CSS design principles behind Lism.
 - Predefined CSS layer structure (prevents specificity conflicts)
 - Reusable design tokens (improves maintainability and consistency)
 - Granular, purpose-specific classes (improves readability and reusability) */}
-{/* - Inlining rarely used CSS is acceptable */}
-
 
 
 ## Lism CSS Layer Structure
@@ -38,7 +32,7 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
     </tr>
     <tr>
       <td>Base<br/>`lism-base`</td>
-      <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`set--{state}` classes are also defined here.</td>
+      <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`set--{name}` classes are also defined here.</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Block<br/>`lism-block`</td>
@@ -89,11 +83,11 @@ This section explains the design rationale behind the core class groups in Lism 
 
 ### Set Class
 
-**Set Classes** are utility classes defined within the `lism-base` layer. They are used for HTML element base styling or for setting variables.
+**Set Classes** are classes defined within the `lism-base` layer. They are used for HTML element base styling or for setting variables.
 
 | Category | Format | Example |
 |---|---|---|
-|Set Class|`set--{style}`|`set--plain`,<br />`set--hov`,<br />`set--bxsh`|
+|Set Class|`set--{name}`|`set--plain`,<br />`set--hov`,<br />`set--bxsh`|
 
 ### Primitive Class
 
@@ -106,15 +100,15 @@ These are further categorized into several types:
 |Layout Primitives<br /><small>Primitives that serve as layout building blocks</small>|`l--{name}`|`l--grid`,<br />`l--columns`|
 |Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`a--{name}`|`a--divider`,<br />`a--icon`|
 
-Primitive classes are standalone — they have no variations or child element classes. Only [Block Class](#block-class) (`b--`) and [Custom Class](#custom-class) (`c--`), described later, follow a BEM structure.
+Primitive Classes are standalone — they have no variations or child element classes. Only [Block Class](#block-class) (`b--`) and [Custom Class](#custom-class) (`c--`), described later, follow a BEM structure.
 
-Combining Primitive classes follows these rules:
+Combining Primitive Classes follows these rules:
 
 | Combination | Allowed | Notes |
 |---|---|---|
 | `l--` × `l--` | Not allowed | Same category cannot be combined |
 | `a--` × `a--` | Not allowed | Same category cannot be combined |
-| `l--` × `a--` | Discouraged | Not intended to coexist |
+| `l--` × `a--` | Discouraged | Not typically combined on the same element |
 
 ### Trait Class
 
@@ -203,24 +197,24 @@ Utility classes with a clear decorative or functional purpose are defined as fol
 
 | Category | Format | Example |
 |---|---|---|
-|Utility Class|`u--{style}`|`u--cbox`,<br/>`u--trim`|
+|Utility Class|`u--{name}`|`u--cbox`,<br/>`u--trim`|
 
 
 
 ### Property Class
 
-In Lism CSS, utility classes that correspond to a single CSS property are defined as **Property Classes**.
+In Lism CSS, classes that correspond to a single CSS property are defined as **Property Classes**.
 
-Utility classes are provided for key properties, covering commonly used values and dedicated token values, with responsive support built in.
+Classes are provided for key properties, covering commonly used values and dedicated token values, with responsive support built in.
 
 
 Property Classes come in three formats:
 
 | Format | Description | Example |
 |---|---|---|
-|<WhsNw>`-{prop}:{value}`</WhsNw>| Utility classes for applying the primary values or token values for each property |<WhsNw>`-fz:l`</WhsNw>,<br/><WhsNw>`-d:none`</WhsNw>|
+|`-{prop}:{value}`| Classes for applying the primary values or token values for each property |`-fz:l`,<br/>`-d:none`|
 |`-{prop}`| A class that receives the `--{prop}` variable |`-p`,<br/>`-fz`|
-|`-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |<WhsNw>`-p_sm`</WhsNw>,<br/>`-p_md`|
+|`-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |`-p_sm`,<br/>`-p_md`|
 
 
 :::warning
@@ -242,7 +236,9 @@ The `-{prop}_{bp}` class format combined with the `--{prop}_{bp}` variable forma
 <Preview>
   <PreviewTitle>Practical usage example</PreviewTitle>
   <PreviewArea resize>
-    <Lism p={[20, 40, 50]} bd>BOX</Lism>
+    <Lism p={[20, 40, 50]} bd>
+      <Fragment>BOX</Fragment>
+    </Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
 ```html "-p_sm" "-p_md" "--p_sm" "--p_md"
@@ -287,4 +283,3 @@ If you need to override an existing Lism class, do so within that same layer.
 For state management that is dynamically toggled by JavaScript, use data attributes.
 
 Example: `[data-opened]`, `[data-active]`
-

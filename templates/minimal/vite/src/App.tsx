@@ -9,7 +9,7 @@ export default function App() {
         <Heading level="1" ff="accent" fw="normal" ta="center" fz="5xl">
           Get started
         </Heading>
-        <Stack ai="center">
+        <Stack ai="center" max-w="100%">
           <Text ta="center" c="text-2" fz="xs">
             Install Lism CSS Skills for AI agents:
           </Text>

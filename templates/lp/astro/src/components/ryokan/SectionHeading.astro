@@ -1,0 +1,23 @@
+---
+/**
+ * セクション見出し。英語ラベル（小）＋ 日本語見出し（大）の 2 段構成。
+ * 残りの props は外側の `Stack` へ渡すため、呼び出し側で `ai` / `ta` / `ga` などを指定できる。
+ */
+import type { ComponentProps } from 'astro/types';
+import { Heading, Stack, Text } from 'lism-css/astro';
+
+type StackProps = ComponentProps<typeof Stack>;
+
+type Props = StackProps & {
+  en: string;
+  ja: string;
+  level?: '1' | '2' | '3' | '4' | '5' | '6';
+};
+
+const { en, ja, level = '2', ...rest } = Astro.props;
+---
+
+<Stack g="10" {...rest}>
+  <Text class="b--enEyebrow" lang="en" lts="l" hl="xs" o="pp">{en}</Text>
+  <Heading level={level} fz={['2xl', null, '3xl']} lts="l">{ja}</Heading>
+</Stack>

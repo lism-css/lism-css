@@ -35,8 +35,13 @@ const unlockScrollbarGutter = (): void => {
 };
 
 /**
- * モーダルの開閉イベントを設定する
+ * 同一ドキュメント内のハッシュ移動（`#id`、または現在ページのURL + `#id`）へのリンクか。
+ * 解析できない href は origin 等が空文字になるため不一致として扱われる。
  */
+const isInPageLink = (link: HTMLAnchorElement): boolean =>
+  link.href.includes('#') && link.origin === location.origin && link.pathname === location.pathname && link.search === location.search;
+
+/** dialogの開閉、トリガー状態の復元、背景クリック、ページ内リンク、Esc操作を設定する。 */
 export function setEvent(target: HTMLElement): void {
   // 対象がない、またはidがない場合は処理を終了
   if (!target || !target.id) return;
@@ -53,33 +58,23 @@ export function setEvent(target: HTMLElement): void {
   const openTriggers = document.querySelectorAll<HTMLElement>(`[data-modal-open="${modal.id}"]`);
   const closeTriggers = modal.querySelectorAll<HTMLElement>(`[data-modal-close="${modal.id}"]`);
 
-  /**
-   * ダイアログを開く処理
-   *   Point: showModal() してから、CSSアニメーション用の data-is-open属性を付与する
-   */
+  // scrollbar幅を固定してdialogを開き、次フレームで開始属性を付ける。
   const openDialog = () => {
-    // すでに open が付いていれば何もしない（連打防止）。
-    // data-is-open は rAF で1フレーム遅れて付与されるため、条件に含めると
-    // その間の連打で showModal() が二重に呼ばれてしまう（dialog では InvalidStateError になる）
+    // rAF前の連打によるshowModal()の二重実行を防ぐため、open属性で判定する。
     if (modal.hasAttribute('open')) return;
 
-    lockScrollbarGutter(); // showModal() でスクロールバーが消える前にスクロールバー幅を予約する
+    lockScrollbarGutter();
     modal.showModal();
 
     // 次フレームで data-is-open を付与（CSS側でフェードインアニメーション開始）
-    //   Point: rAF が実行されるまでの間に閉じられている場合があるため、開いていることを確認してから付与する。
-    //          close イベントは task としてキューされるので、開いた直後の close() では
-    //          後始末（close ハンドラでの data-is-open 削除）が先に走り、この rAF が属性を戻してしまう
+    // closeイベントより遅いrAFが属性を戻さないよう、開いていることを確認する。
     requestAnimationFrame(() => {
       if (!modal.open) return;
       modal.dataset.isOpen = '1';
     });
   };
 
-  /**
-   * ダイアログを閉じる処理
-   *   Point: data-is-open属性を削除してCSSアニメーションが終わってから、close() を実行する
-   */
+  // 開始属性を外し、終了アニメーション後にdialogを閉じる。
   const closeDialog = async (): Promise<void> => {
     // すでに閉じている場合は何もしない
     if (!modal.hasAttribute('data-is-open')) {
@@ -94,7 +89,7 @@ export function setEvent(target: HTMLElement): void {
 
     // アニメーション終了後、dialog を閉じる
     modal.close();
-    unlockScrollbarGutter(); // close() の後に scrollbar-gutter を復元する
+    unlockScrollbarGutter();
   };
 
   // openボタンにイベント登録
@@ -116,9 +111,7 @@ export function setEvent(target: HTMLElement): void {
     });
   });
 
-  // 余白クリックで閉じる
-  //   Point: click だけで判定すると、モーダル内で開始したドラッグ（テキスト選択等）を余白で離した場合にも
-  //          click のターゲットが共通祖先の modal になって閉じてしまうため、pointerdown の発生位置も併せて見る
+  // 内側から余白へドラッグしたclickで閉じないよう、pointerdownも余白だった場合だけ閉じる。
   let isPointerDownOnBackdrop = false;
   modal.addEventListener('pointerdown', (e) => {
     isPointerDownOnBackdrop = e.target === modal;
@@ -130,9 +123,22 @@ export function setEvent(target: HTMLElement): void {
     isPointerDownOnBackdrop = false;
   });
 
-  // close 完了時の後処理。dialog はどの経路で閉じても close イベントが発火するため、
-  // <form method="dialog"> の送信など closeDialog() を経由しないクローズでも
-  // data-is-open の削除と scrollbar-gutter の復元が漏れないようにする（いずれも冪等）
+  // ページ内リンクはページ遷移が起きず dialog が残るため、クリックで閉じる（遷移自体は妨げない）。
+  // 修飾キー付き・別タブ向け・他のハンドラで preventDefault されたクリックは遷移しないので対象外。
+  //   Point: preventDefault の判定は伝播完了後の macrotask で行う。React の onClick は root へ委譲され
+  //          この listener より後に走るため同期では検知できず、microtask は実クリックだと listener 間で
+  //          実行されるため不十分。
+  modal.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const link = (e.target as Element | null)?.closest('a[href]');
+    if (!(link instanceof HTMLAnchorElement) || (link.target && link.target !== '_self')) return;
+    if (!isInPageLink(link)) return;
+    setTimeout(() => {
+      if (!e.defaultPrevented) void closeDialog();
+    }, 0);
+  });
+
+  // closeDialog()以外の経路でも後処理するため、冪等な復元をcloseイベントへ集約する。
   modal.addEventListener('close', () => {
     modal.removeAttribute('data-is-open');
     unlockScrollbarGutter();

@@ -1,0 +1,59 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Flex, Center, Media, Layer, Icon, Text, Inline, Link, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+---
+
+<DemoLayout title="Hero001">
+  {/* A full-height hero with a header, centered content and a scroll cue layered over the background. */}
+  <Stack isContainer pos="relative" min-h="100svh" c="white">
+    {/* 背景画像と暗いオーバーレイ */}
+    <Frame isLayer>
+      <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer bgc="black:50%" />
+    </Frame>
+    {/* Header */}
+    <Container as="header" isWrapper="l" hasGutter py="25" z="1">
+      <Flex ai="center" jc="between" g="30">
+        <Inline fz="l" fw="bold" lts="xl">OCEAN VIEW RESORT</Inline>
+        <Flex as="nav" ai="center" g="30" fz="s" d={['none', null, 'flex']}>
+          <Link href="#" set="plain" hasTransition hov="-o">About</Link>
+          <Link href="#" set="plain" hasTransition hov="-o">Rooms</Link>
+          <Link href="#" set="plain" hasTransition hov="-o">Dining</Link>
+          <Link href="#" set="plain" hasTransition hov="-o">Access</Link>
+        </Flex>
+        <Flex ai="center" d={['flex', null, 'none']}>
+          <Icon icon="menu" fz="2xl" label="Open the menu" />
+        </Flex>
+      </Flex>
+    </Container>
+    {/* 中央に重ねるコンテンツ */}
+    <Container isWrapper="s" hasGutter my="auto" py="50" z="1">
+      <Stack ai="center" g="40">
+        <Stack ai="center" g="25">
+          <Inline class="u--trim" fz="s" ff="mono" lts="xl" ta="center">OCEAN VIEW RESORT</Inline>
+          <Heading level="1" class="u--trim" fz="4xl" fw="bold" hl="s" ta="center">Nothing but<br />the sea and the sky.</Heading>
+          <Text class="u--trim" fz="m" hl="l" ta="center">
+            Wake up to the sound of the waves and watch the sun sink into the horizon.<br />A small eight-room retreat made for doing nothing at all.
+          </Text>
+        </Stack>
+        <Flex g="20 30" fxw="wrap" jc="center">
+          <Button href="#" bgc="white" c="black" bdrs="99" px="40" py="15" fw="bold" hasTransition hov={{ bgc: 'accent', c: 'white' }}>
+            Check availability
+          </Button>
+          <Button href="#" variant="outline" c="white" bdrs="99" px="40" py="15" fw="bold" hasTransition hov={{ bgc: 'white', c: 'black' }}>
+            View rooms
+          </Button>
+        </Flex>
+      </Stack>
+    </Container>
+    {/* Scroll cue */}
+    <Center as="a" href="#" set="plain" py="30" z="1">
+      <Stack ai="center" g="10">
+        <Inline fz="2xs" ff="mono" lts="xl">SCROLL</Inline>
+        <Icon icon="arrow-down" fz="l" />
+      </Stack>
+    </Center>
+  </Stack>
+</DemoLayout>

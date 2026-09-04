@@ -1,15 +1,8 @@
 /**
- * import 境界の強制。
+ * ページのimportを許可済みパッケージとデータディレクトリ内の相対パスへ制限する。
  *
  * `server.fs.allow` は「許可済みファイルから import されたファイル」を allow 外でも扱えるため、
  * 単独では境界を保証できない。そこで `resolveId` で importer（誰が import しているか）を分類して規則を適用する。
- * このプラグインは `dev` と `check` の両方に適用する。
- *
- * 1. 信頼済みコード（`virtual:lism-mockup/pages`）からのページ import … 列挙結果に含まれることを検証して許可
- * 2. ユーザーファイル（realpath がデータディレクトリ配下、かつ `node_modules` 配下でない）からの import …
- *    許可リストの bare import と、データディレクトリ内で完結する相対 import のみ。
- *    絶対パス・`/@fs/`・許可外 bare は契約違反として拒否
- * 3. それ以外（ビューア自身のコード・インストール済みパッケージ・vite 内部モジュール） … 通常解決
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -21,10 +14,8 @@ import { MockupContractError } from '../core/types.js';
 import { type ImportAllowlist, type PackageResolution } from './allowlist.js';
 import { isPageImporterId } from './virtual-modules.js';
 
-/** 相対 import で許可する拡張子。 */
 export const RELATIVE_IMPORT_EXTENSIONS = ['.jsx', '.tsx', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'] as const;
 
-/** 拡張子省略の相対 import を解決するときに試す候補。 */
 const IMPLICIT_EXTENSIONS = ['.jsx', '.tsx'] as const;
 const IMPLICIT_INDEX_FILES = ['/index.jsx', '/index.tsx'] as const;
 
@@ -34,9 +25,7 @@ const FS_PREFIX = '/@fs/';
 const EXTERNAL_URL_RE = /^[a-z][a-z0-9+.-]*:/i;
 
 export interface ImportBoundaryContext {
-  /** データディレクトリ（realpath）。 */
   dataDir: string;
-  /** 仮想モジュールが生成した import 指定子の集合。 */
   getPageSpecifiers: () => ReadonlySet<string>;
   allowlist: ImportAllowlist;
   /**
@@ -54,16 +43,9 @@ export interface ImportBoundaryContext {
 }
 
 export type ImportDecision =
-  /** 通常解決に任せる。 */
-  | { kind: 'passthrough' }
-  /** 検証済みの絶対パスへ解決する。 */
-  | { kind: 'resolved'; id: string }
-  /** 許可された bare import（許可リストが示すアンカーから解決する）。 */
-  | { kind: 'bare'; specifier: string; resolution: PackageResolution };
+  { kind: 'passthrough' } | { kind: 'resolved'; id: string } | { kind: 'bare'; specifier: string; resolution: PackageResolution };
 
 /**
- * vite / プラグインが注入する内部モジュールか。
- *
  * `\0`（rollup の仮想 id）・`virtual:`・`/@react-refresh` や `/@vite/client` などの内部名前空間。
  * `/@fs/` だけは「root 外ファイルへの直アクセス」なので内部扱いにしない。
  */
@@ -77,13 +59,6 @@ function violation(dataDir: string, importerFile: string, source: string, reason
   return new MockupContractError(`Forbidden import ${JSON.stringify(source)} in ${where}: ${reason}`, { file: importerFile });
 }
 
-/**
- * `safeRealpath` の結果をキャッシュ付きで返す。
- *
- * 同じ importer から複数の import 文がある場合、`resolveId` は import 文の数だけ呼ばれるが、
- * importer の realpath はどれも同じ値になるため計算を使い回す。
- * キャッシュは `path.resolve` した絶対パスをキーにして、区切り文字の揺れによる取りこぼしを防ぐ。
- */
 function cachedRealpath(target: string, cache: Map<string, string> | undefined): string {
   if (!cache) return safeRealpath(target);
   const key = path.resolve(target);
@@ -94,7 +69,6 @@ function cachedRealpath(target: string, cache: Map<string, string> | undefined):
   return real;
 }
 
-/** 拡張子省略にも対応して相対 import 先の実ファイルを探す。 */
 function resolveRelativeTarget(target: string): string | null {
   const ext = path.extname(target);
   if (ext !== '') return fs.existsSync(target) ? target : null;
@@ -105,13 +79,12 @@ function resolveRelativeTarget(target: string): string | null {
   return null;
 }
 
-/** import 1件を分類する。契約違反は `MockupContractError` を投げる。 */
+/** importerとsourceを分類し、許可した解決方法だけを返す。 */
 export function classifyImport(source: string, importer: string | undefined, ctx: ImportBoundaryContext): ImportDecision {
   if (!importer) return { kind: 'passthrough' };
 
   const { pathname: importerFile } = splitQuery(importer);
 
-  // 1. 信頼済み: 列挙結果から生成したページ import
   if (isPageImporterId(importerFile)) {
     const target = splitQuery(source).pathname;
     // build 時の `\0vite/preload-helper.js` 等、vite 自身が注入するモジュールは対象外。
@@ -120,7 +93,7 @@ export function classifyImport(source: string, importer: string | undefined, ctx
     throw new MockupContractError(`Unexpected import ${JSON.stringify(source)} from the generated page list.`);
   }
 
-  // 2. ユーザーファイル判定は realpath で行う（シンボリックリンク経由の抜けを作らない）。
+  // シンボリックリンク経由の抜けを作らないため、realpathで判定する。
   const realImporter = cachedRealpath(importerFile, ctx.realpathCache);
   if (!isInsideDir(ctx.dataDir, realImporter)) return { kind: 'passthrough' };
   // データディレクトリ配下でも node_modules の中は「解決済みパッケージ本体とその依存」であり、
@@ -182,9 +155,7 @@ function resolveUserRelativeImport(
   if (!isInsideDir(ctx.dataDir, real)) {
     throw violation(ctx.dataDir, importerFile, source, `it resolves outside the data directory (${real}).`);
   }
-  // データディレクトリをプロジェクト直下に置くと node_modules が配下に入る。相対パスで
-  // そこへ入れると、`imports` に宣言していないパッケージのファイルを読めてしまう。
-  // 許可済み bare import から到達したパッケージ内部の import は importer 側の判定で通す。
+  // 未許可パッケージを相対importできないよう、node_modulesへの相対経路を拒否する。
   if (hasNodeModulesSegment(path.relative(ctx.dataDir, real))) {
     throw violation(
       ctx.dataDir,
@@ -200,8 +171,6 @@ function resolveUserRelativeImport(
 export type ImportBoundaryOptions = ImportBoundaryContext;
 
 /**
- * bare import の解決結果が、許可パッケージのファイルに留まっているか検証する。
- *
  * 許可リストの照合は specifier の文字列に対して行うため、`exports` を持たないパッケージの
  * 任意サブパスでは「拡張子を補ったら実体はパッケージ外のシンボリックリンクだった」という
  * 抜け道が残る（`pkg/escape` → `pkg/escape.js` → 外部ファイル）。
@@ -222,20 +191,15 @@ function assertResolvedInsideAllowedRoots(resolvedId: string, source: string, im
   throw violation(ctx.dataDir, splitQuery(importer).pathname, source, `it resolves outside the allowed packages (${real}).`);
 }
 
-/** 解決できなかった許可 bare import の案内文（由来によって直し方が違う）。 */
 function unresolvedMessage(specifier: string, resolution: PackageResolution): string {
   return resolution.origin === 'data'
     ? `Cannot resolve ${JSON.stringify(specifier)}. "${resolution.name}" is declared in "imports" but this entry does not exist in the installed version.`
     : `Cannot resolve ${JSON.stringify(specifier)} from @lism-css/mockup. Reinstall @lism-css/mockup and try again.`;
 }
 
-/** import 境界を強制する vite プラグイン。 */
+/** import境界を`resolveId`で強制するViteプラグイン。 */
 export function importBoundaryPlugin(ctx: ImportBoundaryOptions): Plugin {
-  // importer の realpath キャッシュはプラグインインスタンス（= dev サーバー・build 実行の1回）単位に
-  // 閉じる。サーバーをまたいで使い回さないので、実行中に差し替わったファイルの古い realpath が
-  // 別セッションへ漏れることはない。さらに dev では watcher のイベントでキャッシュを個別に破棄し、
-  // ページファイルの削除・再作成（シンボリックリンク経由の抜け道が生まれる可能性がある）で
-  // realpath が変わった場合でも古い判定結果を使い続けないようにする。
+  // ファイル差し替え後の古いrealpath判定を使わないため、キャッシュはプラグイン単位に閉じwatcherで破棄する。
   const realpathCache = new Map<string, string>();
   const cachedCtx: ImportBoundaryContext = { ...ctx, realpathCache };
 
@@ -255,9 +219,7 @@ export function importBoundaryPlugin(ctx: ImportBoundaryOptions): Plugin {
       if (decision.kind === 'passthrough') return null;
       if (decision.kind === 'resolved') return decision.id;
 
-      // 標準パッケージは `@lism-css/mockup` 自身の位置から解決する（データディレクトリ側や
-      // その親に同名パッケージがあっても CLI 同梱側を使うため）。`imports` の追加パッケージは
-      // データディレクトリ側のアンカーから解決する。
+      // 同名パッケージの差し替えを防ぐため、標準パッケージはCLI同梱側、追加分はデータ側から解決する。
       const resolved = await this.resolve(decision.specifier, decision.resolution.anchor, { skipSelf: true });
       if (!resolved) {
         throw new MockupContractError(unresolvedMessage(decision.specifier, decision.resolution), { file: importer });

@@ -26,12 +26,6 @@ function detectAppleLanguage(): string | null {
       timeout: 1000,
       stdio: ['ignore', 'pipe', 'ignore'],
     });
-    // 出力例:
-    //   (
-    //       "ja-JP",
-    //       "en-JP"
-    //   )
-    // 先頭の言語コードを取り出す。
     const match = out.match(/"?([A-Za-z]{2,}[-_A-Za-z]*)"?/);
     return match ? match[1].toLowerCase() : null;
   } catch {
@@ -42,19 +36,11 @@ function detectAppleLanguage(): string | null {
 /**
  * 環境変数 / OS 表示言語 / Intl から現在のロケールを検出する。
  * `override` に `ja` / `en` が渡された場合はそれを優先。
- *
- * 判定順:
- * 1. `override`（`--lang ja|en` の明示指定）
- * 2. `LC_ALL` / `LANG` が `ja*`
- * 3. macOS の `AppleLanguages` 先頭が `ja*`
- * 4. `Intl` のロケールが `ja*`
- * 5. それ以外は `en`
  */
 export function detectLang(override?: string): Lang {
   if (override === 'ja' || override === 'en') return override;
   const raw = (process.env.LC_ALL || process.env.LANG || '').toLowerCase();
   if (raw.startsWith('ja')) return 'ja';
-  // macOS: ターミナルのロケールが英語でも OS 表示言語が日本語なら ja に倒す
   if (detectAppleLanguage()?.startsWith('ja')) return 'ja';
   try {
     const locale = Intl.DateTimeFormat().resolvedOptions().locale.toLowerCase();
@@ -67,22 +53,17 @@ export function detectLang(override?: string): Lang {
 
 let currentLang: Lang = detectLang();
 
-/** 現在の言語を取得する */
 export function getLang(): Lang {
   return currentLang;
 }
 
-/** 現在の言語を設定する（未知の値は無視） */
 export function setLang(lang: string | undefined): void {
   if (lang === 'ja' || lang === 'en') {
     currentLang = lang;
   }
 }
 
-/**
- * commander の parse より前に、argv から `--lang` / `--lang=` / `-L` を抽出して言語を設定する。
- * `--help` の description 表示や各コマンド description のキャプチャに間に合わせるのが目的。
- */
+/** `--help`やコマンド説明の確定前に言語を反映するため、commanderのparseより先に呼ぶ。 */
 export function preScanLang(argv: string[]): void {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -101,9 +82,7 @@ export function preScanLang(argv: string[]): void {
   }
 }
 
-/**
- * メッセージキーから現在の言語の文字列を取得し、必要に応じて `{name}` プレースホルダーを置換する。
- */
+/** 現在の言語のメッセージを取得し、プレースホルダーを展開する。 */
 export function t(key: MessageKey, vars?: Record<string, string | number>): string {
   const entry = messages[key];
   if (!entry) return key;

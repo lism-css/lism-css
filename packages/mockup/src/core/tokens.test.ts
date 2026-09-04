@@ -160,7 +160,7 @@ describe('loadTokens', () => {
 
 describe('validateDarkTokens', () => {
   /** マージ後のライト側トークン（`'-'` は CSS 変数を持たないキー）。 */
-  const LIGHT = { color: { base: '#ffffff', canvas: '#f7f7f7' }, lh: { base: '-' }, vars: { '--L': '60%' } };
+  const LIGHT = { color: { base: '#ffffff', canvas: '#f7f7f7' }, flow: { s: '-' }, vars: { '--L': '60%' } };
 
   test('ライトに実値があるキーは上書きできる', () => {
     expect(validateDarkTokens({ color: { base: '#111111' }, vars: { '--L': '72%' } }, LIGHT, 'tokens.dark.json')).toEqual({
@@ -172,8 +172,8 @@ describe('validateDarkTokens', () => {
   test('ライトが CSS 変数を持たないキー（"-" センチネル）は上書きできない', () => {
     // ライトに値が無いものをダークにだけ持たせると、一覧が「ライトに対する差分」として組めなくなる。
     // 種別まるごと上書き不可なので、空の候補リストではなくその旨を伝える。
-    expect(() => validateDarkTokens({ lh: { base: '1.8' } }, LIGHT, 'tokens.dark.json')).toThrow(
-      /"lh\.base" does not exist in the light theme\. No token in "lh" can be overridden/
+    expect(() => validateDarkTokens({ flow: { s: '2rem' } }, LIGHT, 'tokens.dark.json')).toThrow(
+      /"flow\.s" does not exist in the light theme\. No token in "flow" can be overridden/
     );
   });
 

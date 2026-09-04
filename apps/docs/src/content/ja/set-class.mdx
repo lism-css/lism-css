@@ -1,21 +1,21 @@
 ---
 title: 'Set Class'
-description: 'ベーススタイルの上書きやトークン再定義に使用する set-- 形式のユーティリティクラスについて解説します。'
+description: 'ベーススタイルの上書きやトークン再定義に使用する set-- 形式のクラスについて解説します。'
 ---
 import { Lism, Container, Wrapper, Box, Columns, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 
 
-`lism-base` 層の中で定義される、HTML 要素の基礎スタイリングや変数セットを行うためのユーティリティクラスを `set--{className}` の形式で定義しています。
+`lism-base` 層の中で定義される、HTML 要素の基礎スタイリングや変数セットを行うためのクラスを `set--{name}` の形式で定義しています。
 
 set-- クラスは目的別に 2 カテゴリに分かれます。
 
 | カテゴリ | 用途 | クラス |
 |---------|------|--------|
 | 基礎スタイリング | HTML 要素のリセット／リバート | `set--plain` / `set--revert` |
-| 変数のセット | CSS 変数のセットアップのみを行う | `set--bxsh` / `set--hov` / `set--bdrsInner` / `set--bleed` / `set--s` |
+| 変数のセット | CSS変数のセットアップのみを行う | `set--bxsh` / `set--hov` / `set--bdrsInner` / `set--bleed` / `set--s` |
 
-`set--{name}` の `{name}` は、そのクラスがセットアップする CSS 変数の名称に対応します（例: `--bxsh--*` → `bxsh`、`--_isHov` / `--_notHov` → `hov`、`--bdrs--inner` → `bdrsInner`、`--s*` → `s`）。
+`set--{name}` の `{name}` は、そのクラスがセットアップするCSS変数の名称に対応します（例: `--bxsh--*` → `bxsh`、`--_isHov` / `--_notHov` → `hov`、`--bdrs--inner` → `bdrsInner`、`--s*` → `s`）。
 
 
 ## `set--plain`
@@ -43,8 +43,8 @@ set-- クラスは目的別に 2 カテゴリに分かれます。
 
 ## `set--revert`
 
-ブラウザデフォルトの見た目を明示的に復活させるためのクラスです。
-これ単体ではスタイルは持ちません（全プロパティを revert するというようなものではない）。
+ブラウザ標準スタイルを明示的に復活させるためのクラスです。
+このクラス単体で、全プロパティを`revert`するわけではありません。
 
 特定の HTML 要素と組み合わせてスタイルを定義して使うものであり、現状は `ul` / `ol` のみ対象です。
 
@@ -81,20 +81,21 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 
 ## `set--bxsh`
 
-`set--bxsh` クラスを指定した要素では、シャドウを構成する `--bxsh--` 変数が再定義されます。
+`set--bxsh` クラスを指定した要素では、シャドウを構成する `--bxsh--` 変数と、近い側の影色 `--shc--near` が再定義されます。
 
 ```css
 :root,
 .set--bxsh {
-  --bxsh--10: var(--shsz--10) var(--shc);
-  --bxsh--20: var(--shsz--20) var(--shc);
-  --bxsh--30: var(--shsz--30) var(--shc);
-  --bxsh--40: var(--shsz--40) var(--shc);
-  --bxsh--50: var(--shsz--50) var(--shc);
+  --shc--near: color-mix(in srgb, var(--shc), transparent 50%);
+  --bxsh--10: var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc);
+  --bxsh--20: var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc);
+  --bxsh--30: var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc);
+  --bxsh--40: var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc);
+  --bxsh--50: var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc);
 }
 ```
 
-ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。
+ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。`--shc--near`も`--shc`から再計算されるため、2層の影の色がまとめて変わります。
 
 <Preview>
   <PreviewTitle>シャドウの上書き例</PreviewTitle>
@@ -152,6 +153,9 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 ```css
 :root,
 .set--s {
+  /* 余白単位 ≒ 8px */
+  --s-unit: 0.5rem;
+
   --s5: calc(var(--s-unit) * 0.5);
   --s10: var(--s-unit);
   --s15: calc(var(--s-unit) * 1.5);
@@ -165,28 +169,38 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
   --s70: calc(var(--s-unit) * 21);
   --s80: calc(var(--s-unit) * 34);
 }
+
+.set--s {
+  --s-unit: 0.5em;
+}
 ```
+
+`set--s`を指定したスコープでは`--s-unit`が`0.5em`に切り替わり、`--s10`〜`--s80`がフォントサイズ基準で再計算されます。
 
 ```html
+<!-- ボタンの padding が button 自身の font-size に追従する -->
 <button class="set--s -fz:s -py:10 -px:20">...</button>
+
+<!-- --s-unit を任意の値で上書きすることも可能 -->
+<button class="set--s -p:10" style="--s-unit: .4375em">...</button>
 ```
 
-詳しくは[余白トークン](/docs/tokens/spacing/)を参照してください。
+余白トークンのスケーリング規則は[デザイントークン（SPACE）](/docs/tokens/#space)を参照してください。
 
-<DocsLink path="/docs/tokens/spacing/" />
+<DocsLink path="/docs/tokens/" />
 
 
 ## `set--hov`
 
 ホバー状態の判定変数（`--_notHov`, `--_isHov`）を次のようにセットします。主に**子要素のホバースタイルを制御する**時に活用します。
 
-- `--_isHov`は非hover時（かつ非focus-within時）にのみ空白定義されます。
-- `--_notHov`は逆に、hover時またはfocus-within時に空白定義されます。
+- `--_isHov`は非hover時（かつ非focus-within時）にのみ、`--_isHov: ;` のように値が空の状態で定義されます。
+- `--_notHov`は逆に、hover時またはfocus-within時に同じく空の値で定義されます。
 
 <SrcCode path="src/scss/base/set/_hov.scss" />
 
 
-この空変数トリックにより、次のような書き方ができます。
+この空の値を使った仕組みにより、次のような書き方ができます。
 
 - `var(--_isHov, {ホバー時に適用させたい値})`
 - `var(--_notHov, {非ホバー時に適用させたい値})`
@@ -194,7 +208,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 例えば `color: var(--_isHov, red)` とした要素の場合、hover時に`--_isHov`が未定義となるため、`color:red`が適用されるようになります。
 
 :::info
-`var(--_isHov, ...) var(--_notHov, ...)`とすると**ホバー前後のスタイルを1行で書くこともできます**が、`box-shadow`などの半角スペースで区切って値を調整するプロパティではこの書き方無効となります。
+`var(--_isHov, ...) var(--_notHov, ...)`とすると**ホバー前後のスタイルを1行で書くこともできます**が、`box-shadow`などの半角スペースで区切って値を調整するプロパティではこの書き方は無効になります。
 :::
 
 <PreviewTitle>例: `-hov:test`</PreviewTitle>
@@ -269,7 +283,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 
 ## `set--bleed`
 
-片側ブリードレイアウトを組むのに便利な`--bleed` 変数を生成するクラス。
+片側だけ画面端まで広げるブリードレイアウトを組むための`--bleed`変数を生成するクラスです。
 コンテンツ幅（`--contentSize`）の外側の余白量がセットされます。ただし、ガター幅（`--gutter` / `--gutter--base`） を下限とし、これより狭くなる場合はガター幅を返します。
 
 <SrcCode path="src/scss/base/set/_bleed.scss" />
@@ -332,7 +346,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 ## `set--bdrsInner`
 
 親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。
-親要素に`set--bdrsInner`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
+親要素に`set--bdrsInner`クラスを付け、子要素に`-bdrs:inner`を指定すると、計算された`--bdrs--inner`が子要素の角丸に適用されます。
 
 （親要素では`bdrs`と`p`の指定が必須となります。）
 
@@ -369,7 +383,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 
 <Spacer h="1rem" />
 
-`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`set--bdrsInner`の角丸もレスポンシブ対応できます。
+`p`, `bdrs`は変数で管理されているため、ブレイクポイントで値を変えても`set--bdrsInner`の角丸はそれに追従します。
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>

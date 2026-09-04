@@ -18,13 +18,12 @@ import { generateLismEnvDts, GENERATED_MARKER } from './gen-types';
 export const TYPES_FILENAME = 'lism-env.d.ts';
 
 export interface SyncTypesOptions {
-  /** lism.config の明示パス。未指定時は projectRoot から探索する。 */
   configPath?: string;
   log?: (message: string) => void;
 }
 
 /**
- * `.d.ts` の内容（`generateLismEnvDts` の結果）を projectRoot へ反映する IO 部分。
+ * 生成した`.d.ts`の内容をprojectRootへ反映する。
  *
  * - `content` あり: 内容が変わった時だけ書き込む（HMR ループ・無駄な git 差分の回避）。
  * - `content` が null: 追加 breakpoints / props が無いので、既存の生成物があれば削除する。
@@ -51,9 +50,7 @@ export function writeLismEnvDts(projectRoot: string, content: string | null, log
   log?.(`📝 [lism-css] generated ${TYPES_FILENAME}`);
 }
 
-/**
- * projectRoot の lism.config を読み、breakpoints / props / traits / tokens から `.d.ts` を生成 / 更新 / 削除する。
- */
+/** lism.configを読み、必要な`.d.ts`を生成・更新・削除する。 */
 export async function syncLismEnvDts(projectRoot: string, opts: SyncTypesOptions = {}): Promise<void> {
   const { mainConfig, defaultConfig, isFullMode } = await loadBuildConfigs(projectRoot, {
     configPath: opts.configPath,

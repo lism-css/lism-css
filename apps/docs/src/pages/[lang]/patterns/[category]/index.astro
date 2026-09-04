@@ -1,0 +1,38 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PatternCategoryIndex from '@/components/patterns/PatternCategoryIndex.astro';
+import { patterns, categoryIds, type PatternCategoryId } from '@/config/patterns';
+import { siteConfig } from '@/config/site';
+import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
+
+export function getStaticPaths() {
+  const langCodes = Object.keys(siteConfig.langs) as LangCode[];
+  const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
+
+  const paths = [];
+  for (const lang of nonRootLangs) {
+    for (const category of categoryIds) {
+      paths.push({ params: { lang, category }, props: { lang } });
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  lang: LangCode;
+}
+
+const { lang } = Astro.props as Props;
+const { category } = Astro.params;
+
+if (!isValidLang(lang)) {
+  return Astro.redirect('/404');
+}
+
+const categoryId = category as PatternCategoryId;
+const categoryData = patterns[categoryId];
+---
+
+<BaseLayout title={`${categoryData.label} - Patterns`} description={categoryData.description[lang]} lang={lang} excludeFromSearch>
+  <PatternCategoryIndex lang={lang} categoryId={categoryId} />
+</BaseLayout>

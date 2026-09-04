@@ -1,7 +1,3 @@
-/**
- * ページネーション・タグ・OG画像・記事詳細の共通ロジック
- * 各ページコンポーネントから呼び出して使用
- */
 import { siteConfig } from '@/config/site';
 import { getPostsByLang, getDocsPostsByLang, getUiPostsByLang, getPostWithFallback, type PostEntry } from '@/lib/content';
 import { getRootLang, isRootLang, type LangCode } from '@/lib/i18n';
@@ -11,7 +7,7 @@ import { join, dirname } from 'path';
 import sharp from 'sharp';
 import { renderOgSvg } from '@/lib/ogImage';
 
-// 言語コードリスト
+// 記事ページ、一覧、OG画像の静的パスと生成処理をまとめる
 const langCodes = Object.keys(siteConfig.langs) as LangCode[];
 
 // ============================================================
@@ -28,9 +24,6 @@ export interface PostPathNonRoot {
   props: { lang: LangCode; slug: string };
 }
 
-/**
- * 記事詳細ページ用のgetStaticPaths（root言語用）
- */
 export async function getPostPathsForRoot(): Promise<PostPath[]> {
   const rootLang = getRootLang();
   const posts = await getDocsPostsByLang(rootLang);
@@ -41,14 +34,11 @@ export async function getPostPathsForRoot(): Promise<PostPath[]> {
   }));
 }
 
-/**
- * 記事詳細ページ用のgetStaticPaths（非root言語用）
- */
 export async function getPostPathsForNonRoot(): Promise<PostPathNonRoot[]> {
   const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
-  // root言語の全slugを取得（非root言語でも同じslugでアクセス可能にする）
+  // 翻訳がなくても同じURLを生成するため、root言語のslugを基準にする
   const rootPosts = await getDocsPostsByLang(rootLang);
 
   const paths: PostPathNonRoot[] = [];
@@ -74,25 +64,18 @@ export interface PaginationPath {
   props: { lang: LangCode; posts: PostEntry[]; currentPage: number; totalPages: number };
 }
 
-/**
- * ページネーション用のgetStaticPaths（root言語用）
- */
+// 記事を日付順に分割し、2ページ目以降の静的パスを作る
 export async function getPaginationPathsForRoot(): Promise<PaginationPath[]> {
   const rootLang = getRootLang();
   const postsPerPage = siteConfig.pagination.postsPerPage;
 
-  // 全記事を取得
   const allPosts = await getPostsByLang(rootLang);
-
-  // 日付の降順でソート
   const sortedPosts = allPosts.sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
-
-  // 総ページ数を計算
   const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
 
-  // 2ページ目以降のパスを生成（1ページ目は index.astro で処理）
+  // 1ページ目は index.astro で処理する
   return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => {
-    const pageNum = i + 2; // 2ページ目から開始
+    const pageNum = i + 2;
     const start = (pageNum - 1) * postsPerPage;
     const end = start + postsPerPage;
 
@@ -108,9 +91,7 @@ export async function getPaginationPathsForRoot(): Promise<PaginationPath[]> {
   });
 }
 
-/**
- * ページネーション用のgetStaticPaths（非root言語用）
- */
+// 各非root言語の記事を日付順に分割し、2ページ目以降の静的パスを作る
 export async function getPaginationPathsForNonRoot(): Promise<PaginationPath[]> {
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
   const postsPerPage = siteConfig.pagination.postsPerPage;
@@ -118,16 +99,10 @@ export async function getPaginationPathsForNonRoot(): Promise<PaginationPath[]> 
   const paths: PaginationPath[] = [];
 
   for (const lang of nonRootLangs) {
-    // 各言語の全記事を取得
     const allPosts = await getPostsByLang(lang);
-
-    // 日付の降順でソート
     const sortedPosts = allPosts.sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
-
-    // 総ページ数を計算
     const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
 
-    // 2ページ目以降のパスを生成
     for (let i = 0; i < Math.max(0, totalPages - 1); i++) {
       const pageNum = i + 2;
       const start = (pageNum - 1) * postsPerPage;
@@ -157,9 +132,7 @@ export interface TagPath {
   props: { lang: LangCode; posts: PostEntry[] };
 }
 
-/**
- * タグ一覧用のgetStaticPaths（root言語用）
- */
+// 記事のタグを集め、タグごとの一覧パスを作る
 export async function getTagPathsForRoot(): Promise<TagPath[]> {
   const rootLang = getRootLang();
   const posts = await getPostsByLang(rootLang);
@@ -174,9 +147,7 @@ export async function getTagPathsForRoot(): Promise<TagPath[]> {
   });
 }
 
-/**
- * タグ一覧用のgetStaticPaths（非root言語用）
- */
+// 各非root言語のタグ一覧パスを作る
 export async function getTagPathsForNonRoot(): Promise<TagPath[]> {
   const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
@@ -184,12 +155,11 @@ export async function getTagPathsForNonRoot(): Promise<TagPath[]> {
   const paths: TagPath[] = [];
 
   for (const lang of nonRootLangs) {
-    // 各言語の記事からタグを収集
     const posts = await getPostsByLang(lang);
 
-    // 非root言語に記事がない場合はroot言語のタグを使用
     let tagsSource = posts;
     if (posts.length === 0) {
+      // 記事がない言語でもタグURLを生成するため、root言語のタグを使う
       tagsSource = await getPostsByLang(rootLang);
     }
 
@@ -211,22 +181,14 @@ export async function getTagPathsForNonRoot(): Promise<TagPath[]> {
 // OG画像関連
 // ============================================================
 
-// キャッシュディレクトリのパス
 const CACHE_DIR = '.cache/og';
 
-/**
- * タイトルとタグからハッシュを生成
- */
 function generateCacheKey(title: string, tags: string[] | undefined, lang: string): string {
-  // tagsが未定義の場合は空配列として扱う
   const safeTags = Array.isArray(tags) ? tags : [];
   const content = JSON.stringify({ title, tags: [...safeTags].sort(), lang });
   return createHash('md5').update(content).digest('hex');
 }
 
-/**
- * キャッシュファイルのパスを取得
- */
 function getCachePath(lang: string, slug: string, hash: string): string {
   return join(CACHE_DIR, lang, slug, `${hash}.png`);
 }
@@ -236,9 +198,6 @@ export interface OgPath {
   props: { lang: LangCode; slug: string };
 }
 
-/**
- * OG画像用のgetStaticPaths（root言語用）
- */
 export async function getOgPathsForRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const posts = await getDocsPostsByLang(rootLang);
@@ -249,14 +208,10 @@ export async function getOgPathsForRoot(): Promise<OgPath[]> {
   }));
 }
 
-/**
- * OG画像用のgetStaticPaths（非root言語用）
- */
 export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
-  // root言語の全記事を取得してslugリストを作成
   const rootPosts = await getDocsPostsByLang(rootLang);
 
   const paths: OgPath[] = [];
@@ -273,11 +228,7 @@ export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
   return paths;
 }
 
-/**
- * UIコンポーネントOG画像用のgetStaticPaths（root言語用）
- * URLは ui/ プレフィックスを除去した形（例: /ui/og/accordion.png）
- * 内部の generateOgImage には ui/ 付きの id を渡してコンテンツを引く
- */
+// URL用slugからui/を除き、propsにはコンテンツIDを保持する
 export async function getUiOgPathsForRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const posts = await getUiPostsByLang(rootLang);
@@ -288,10 +239,6 @@ export async function getUiOgPathsForRoot(): Promise<OgPath[]> {
   }));
 }
 
-/**
- * UIコンポーネントOG画像用のgetStaticPaths（非root言語用）
- * URLは ui/ プレフィックスを除去した形（例: /en/ui/og/accordion.png）
- */
 export async function getUiOgPathsForNonRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
@@ -312,11 +259,8 @@ export async function getUiOgPathsForNonRoot(): Promise<OgPath[]> {
   return paths;
 }
 
-/**
- * OG画像を生成（キャッシュ対応）
- */
+// 記事を取得し、キャッシュを使いながらOG画像を生成する
 export async function generateOgImage(lang: LangCode, slug: string): Promise<Response> {
-  // 記事を取得（なければフォールバック）
   const { entry: post } = await getPostWithFallback(lang, slug);
 
   if (!post) {
@@ -324,14 +268,12 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
   }
 
   const title = post.data.title;
-  // tagsが未定義の場合は空配列として扱う
   const tags = post.data.tags ?? [];
 
-  // キャッシュキー（ハッシュ）を生成（言語も含める）
   const cacheKey = generateCacheKey(title, tags, lang);
   const cachePath = getCachePath(lang, slug, cacheKey);
 
-  // キャッシュが存在すればそれを返す
+  // 同じタイトル・タグ・言語の生成済み画像は再利用する
   if (existsSync(cachePath)) {
     console.log(`[OG] Cache hit: ${lang}/${slug}`);
     const cachedPng = readFileSync(cachePath);
@@ -340,12 +282,11 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
     });
   }
 
-  // キャッシュがなければ新規生成
   console.log(`[OG] Generating: ${lang}/${slug}`);
   const svg = await renderOgSvg(title, tags);
   const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
-  // キャッシュディレクトリを作成して保存
+  // 新しく生成した画像は次回のビルド用に保存する
   const cacheDir = dirname(cachePath);
   if (!existsSync(cacheDir)) {
     mkdirSync(cacheDir, { recursive: true });

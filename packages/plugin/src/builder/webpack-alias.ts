@@ -3,7 +3,6 @@
  *
  * Next.js（Turbopack 主導 + webpack fallback）と `@lism-css/plugin/webpack`（webpack 主導）が共有する低レベル部品。
  *
- * P0.5 の知見:
  * - webpack の `resolve.alias` は絶対パスで解決できる。`lism-css/config.js` は完全一致（`$`）で差し替え、
  *   他の `lism-css/*` を巻き込まない。
  * - Turbopack の `resolveAlias` は**絶対パスを渡すと解決に失敗**したため、project-relative パスで渡す。

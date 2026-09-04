@@ -25,8 +25,10 @@
 | **Details** | スタイル付きネイティブ `<details>` / `<summary>` 要素 |
 | **Modal** | バックドロップ付きダイアログオーバーレイ |
 | **NavMenu** | ネストアイテム対応のナビゲーションメニュー |
+| **Popover** | ネイティブ Popover API と CSS Anchor Positioning によるクリックで開くパネル |
 | **ShapeDivider** | SVGシェイプによる装飾的なセクションディバイダー |
 | **Tabs** | タブ付きコンテンツパネル |
+| **Tooltip** | CSS Anchor Positioning で配置するホバー / フォーカス時の補足テキスト |
 | **DummyText** | プロトタイピング用のプレースホルダーテキスト |
 
 ## インストール
@@ -50,18 +52,6 @@ pnpm add @lism-css/ui
 ```js
 import 'lism-css/main.css';
 import '@lism-css/ui/style.css';
-```
-
-**Astro** の場合は、`astro.config.js` に以下も追加します:
-
-```js
-export default defineConfig({
-  vite: {
-    ssr: {
-      noExternal: ['lism-css', '@lism-css/ui'],
-    },
-  },
-});
 ```
 
 ## 使い方

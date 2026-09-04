@@ -1,30 +1,24 @@
 ---
-/**
- * サイドバーナビゲーションコンポーネント
- * 言語対応：現在の言語に応じたリンクとラベルを表示
- * セクション対応：/docs/ と /ui/ で異なるナビゲーションを表示
- */
 import { Stack, Inline, Heading, Link, List, ListItem } from 'lism-css/astro';
 import { Icon } from 'lism-css/react';
 import NavLink from '@parts/NavLink.astro';
 import sidebarConfig, { getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
 import { groupPostsBySidebarDirs, hasDirProperty, getPostUrl } from '@/lib/sidebarPosts';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
-import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang } from '@/lib/i18n';
+import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, t } from '@/lib/i18n';
 
-// 現在の言語を取得
+// 現在の言語とセクションに合わせて、固定項目と記事一覧を組み立てる
 const currentLang = getLangFromUrl(Astro.url);
+// nav ランドマークのラベル（目次・記事ナビと区別するため）
+const navText = t(currentLang, 'siteNav');
 
-// 現在のページパス（言語プレフィックスなし）を取得してアクティブ判定に使用
 const currentPathWithoutLang = getPathWithoutLang(Astro.url);
 
-// 現在のセクション（docs または ui）を取得
 const currentSection = getSiteSection(currentPathWithoutLang);
 
-// 現在の言語の記事を取得
 const allPosts = await getPostsByLang(currentLang);
 
-// ルート言語以外の場合、ラベルのフォールバック用にルート言語の記事も取得
+// 翻訳記事がない項目は日本語タイトルへフォールバックする
 const fallbackPostsBySlug = new Map<string, PostEntry>();
 if (currentLang !== 'ja') {
   const fallbackPosts = await getPostsByLang('ja');
@@ -33,13 +27,10 @@ if (currentLang !== 'ja') {
   });
 }
 
-// トップレベルリンクを取得（全セクション共通）
 const topLevelLinks = sidebarConfig.topLevelLinks;
 
-// 現在のセクションに対応するサイドバー設定を取得
 const sectionItems = sidebarConfig.sections[currentSection];
 
-// slugからMDX記事を取得するマップを作成
 const postsBySlug = new Map<string, PostEntry>();
 allPosts.forEach((post) => {
   postsBySlug.set(post.id, post);
@@ -48,25 +39,17 @@ allPosts.forEach((post) => {
 // カテゴリーでグループ化（最長dir一致・items参照記事の除外・order順ソートは PostNavigation と共通ロジック）
 const postsByCategory = groupPostsBySidebarDirs(allPosts, sectionItems);
 
-/**
- * URLパスのネスト深度を計算する
- * rootPathからの相対パスのセグメント数 - 1 を返す（0以下ならネストなし）
- * 例: rootPath='/docs/', url='/docs/tokens/' → 0（直下）, url='/docs/tokens/colors/' → 1
- */
+// rootPathからの相対階層を求める
 function getNestedDepth(url: string, rootPath: string): number {
   const normalizedUrl = url.endsWith('/') ? url.slice(0, -1) : url;
   const normalizedRoot = rootPath.endsWith('/') ? rootPath.slice(0, -1) : rootPath;
   if (!normalizedUrl.startsWith(normalizedRoot + '/')) return 0;
   const relativePath = normalizedUrl.slice(normalizedRoot.length + 1);
   const segments = relativePath.split('/').filter(Boolean);
-  return segments.length - 1; // 直下=0, 1階層ネスト=1, ...
+  return segments.length - 1;
 }
 
-/**
- * dir指定時のネスト深度を計算する
- * post.idのdir以降のパスセグメント数 - 1 を返す
- * 例: dir='props', id='props/layout/gap' → 1
- */
+// dirからの相対階層を求める
 function getDirNestedDepth(postId: string, dir: string): number {
   const relativePath = postId.startsWith(dir + '/') ? postId.slice(dir.length + 1) : postId;
   const segments = relativePath.split('/').filter(Boolean);
@@ -74,24 +57,21 @@ function getDirNestedDepth(postId: string, dir: string): number {
 }
 ---
 
-<Stack as="nav" class="siteNav set--cqUnit set--s" g="30">
-  {/* トップレベルリンク（グラデーション枠で囲んだ集約ボタン） */}
+<Stack as="nav" class="c--siteNav set--cqUnit set--s" g="10" fx="1" min-h="0" aria-label={navText.ariaLabel}>
+  {/* トップレベルリンク */}
   {
     topLevelLinks.length > 0 && (
-      <div class="siteNav_toplinks">
-        <Stack class="siteNav_toplinks_inner" g="0">
+      <div class="c--siteNav_toplinks b--shadowBox">
+        <Stack class="c--siteNav_toplinks_inner" my="-0.3rem">
           {topLevelLinks.map((item) => {
-            // 言語対応のパスを生成
             const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
             const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
-            // 現在のセクションとマッチするかでアクティブ判定
             const isActive = currentPathWithoutLang.startsWith(pathForCompare) || currentPathWithoutLang === item.link.replace(/\/$/, '');
-            // ラベルを現在の言語で取得
             const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
             return (
-              <Link href={itemPath} class="siteNav_toplink" data-active={isActive} set="plain hov" hl="s">
-                <Inline layout="flex" g="5" ai="center" py="10" px="15">
-                  {item.icon && <Icon icon={item.icon} />}
+              <Link href={itemPath} class="c--siteNav_toplink" data-active={isActive} set="plain hov" hl="s">
+                <Inline layout="flex" g="0.4em" ai="center" py="0.3rem" fz="m">
+                  {item.icon && <Icon icon={item.icon} fz="1.25em" />}
                   {itemLabel}
                 </Inline>
               </Link>
@@ -103,133 +83,166 @@ function getDirNestedDepth(postId: string, dir: string): number {
   }
 
   {/* 通常のナビゲーションセクション */}
-  {
-    sectionItems.map((section) => {
-      // セクションラベルを現在の言語で取得
-      const sectionLabel = getTranslatedLabel(section.label, section.translate, currentLang);
+  <Stack class="b--shadowBox is--scrollPanel c--siteNav_sections" fx="1" min-h="0">
+    <Stack class="c--siteNav_sections_scroll">
+      <Stack class="c--siteNav_sections_inner" g="30">
+        {
+          sectionItems.map((section) => {
+            const sectionLabel = getTranslatedLabel(section.label, section.translate, currentLang);
 
-      // dir指定の場合、記事がなければセクション自体を表示しない
-      if (hasDirProperty(section)) {
-        const posts = postsByCategory[section.dir];
-        if (!posts || posts.length === 0) {
-          return null;
+            if (hasDirProperty(section)) {
+              const posts = postsByCategory[section.dir];
+              if (!posts || posts.length === 0) {
+                return null;
+              }
+            }
+
+            // dir指定は記事を自動取得し、items指定は定義順で表示する
+            return (
+              <Stack class="c--siteNav_group" g="5">
+                <Heading level="3" class="c--siteNav_title b--eyebrow" tt="upper">
+                  {sectionLabel}
+                </Heading>
+
+                <List class="c--siteNav_list" mbs="10" bd-s>
+                  {hasDirProperty(section)
+                    ? postsByCategory[section.dir]?.map((post) => {
+                        const postUrl = getPostUrl(post.id);
+                        const postPath = getLocalizedUrl(postUrl, currentLang);
+                        const isActive = currentPathWithoutLang === postUrl || currentPathWithoutLang === postUrl.replace(/\/$/, '');
+                        const isDraft = post.data.draft;
+                        const navLabel = post.data.navtitle ?? post.data.title;
+                        const nestedDepth = getDirNestedDepth(post.id, section.dir);
+                        return (
+                          <ListItem
+                            class={isDraft ? '_draft' : undefined}
+                            data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                            style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                          >
+                            <NavLink href={postPath} isActive={isActive}>
+                              {navLabel}
+                            </NavLink>
+                          </ListItem>
+                        );
+                      })
+                    : section.items.map((item) => {
+                        if (isSeparator(item)) {
+                          return null;
+                        }
+
+                        if (typeof item === 'string') {
+                          const slug = extractSlugFromUrl(item);
+                          const post = postsBySlug.get(slug);
+                          const fallbackPost = fallbackPostsBySlug.get(slug);
+                          const navLabel =
+                            post?.data?.navtitle ?? post?.data?.title ?? fallbackPost?.data?.navtitle ?? fallbackPost?.data?.title ?? slug;
+                          const itemPath = getLocalizedUrl(item.endsWith('/') ? item : `${item}/`, currentLang);
+                          const pathForCompare = item.endsWith('/') ? item : `${item}/`;
+                          const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item;
+                          const isDraft = post?.data?.draft;
+                          const rootPath = 'rootPath' in section ? section.rootPath : undefined;
+                          const nestedDepth = rootPath ? getNestedDepth(item, rootPath) : 0;
+                          return (
+                            <ListItem
+                              class={isDraft ? '_draft' : undefined}
+                              data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                              style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                            >
+                              <NavLink href={itemPath} isActive={isActive}>
+                                {navLabel}
+                              </NavLink>
+                            </ListItem>
+                          );
+                        }
+
+                        const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+                        const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+                        const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
+                        const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+                        const rootPath = 'rootPath' in section ? section.rootPath : undefined;
+                        const nestedDepth = rootPath ? getNestedDepth(item.link, rootPath) : 0;
+                        return (
+                          <ListItem
+                            data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                            style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                          >
+                            <NavLink href={itemPath} isActive={isActive}>
+                              {itemLabel}
+                            </NavLink>
+                          </ListItem>
+                        );
+                      })}
+                </List>
+              </Stack>
+            );
+          })
         }
-      }
-
-      return (
-        <Stack class="siteNav_group" g="5">
-          {/* セクションのラベル（見出し） */}
-          <Heading class="siteNav_title" level="3" fz="xs" fw="normal" py="5" o="p" tt="upper">
-            {sectionLabel}
-          </Heading>
-
-          <List class="siteNav_list" ps="10" bd-s>
-            {hasDirProperty(section)
-              ? // dir指定の場合：ディレクトリ内の記事を自動取得
-                postsByCategory[section.dir]?.map((post) => {
-                  // 言語対応のパスを生成（slugからURLを生成）
-                  const postUrl = getPostUrl(post.id);
-                  const postPath = getLocalizedUrl(postUrl, currentLang);
-                  const isActive = currentPathWithoutLang === postUrl || currentPathWithoutLang === postUrl.replace(/\/$/, '');
-                  // 下書き記事には _draft クラスを付与
-                  const isDraft = post.data.draft;
-                  // navtitleがあればそれを、なければtitleを表示
-                  const navLabel = post.data.navtitle ?? post.data.title;
-                  // ネスト深度を計算（サブディレクトリにある記事）
-                  const nestedDepth = getDirNestedDepth(post.id, section.dir);
-                  return (
-                    <ListItem class={isDraft ? '_draft' : undefined} data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
-                      <NavLink href={postPath} isActive={isActive}>
-                        {navLabel}
-                      </NavLink>
-                    </ListItem>
-                  );
-                })
-              : // items指定の場合：指定された並びでメニューを表示
-                section.items.map((item) => {
-                  // セパレータの場合は区切り線を表示
-                  if (isSeparator(item)) {
-                    return <ListItem class="c--nav_separator" role="separator" mx="5" my="10" aria-hidden="true" />;
-                  }
-
-                  // 文字列の場合はURLとして扱い、MDXのフロントマターからラベルを取得
-                  if (typeof item === 'string') {
-                    const slug = extractSlugFromUrl(item);
-                    const post = postsBySlug.get(slug);
-                    // navtitleがあればそれを、なければtitleを表示（見つからない場合はルート言語にフォールバック）
-                    const fallbackPost = fallbackPostsBySlug.get(slug);
-                    const navLabel = post?.data?.navtitle ?? post?.data?.title ?? fallbackPost?.data?.navtitle ?? fallbackPost?.data?.title ?? slug;
-                    // 言語対応のパスを生成
-                    const itemPath = getLocalizedUrl(item.endsWith('/') ? item : `${item}/`, currentLang);
-                    const pathForCompare = item.endsWith('/') ? item : `${item}/`;
-                    const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item;
-                    // 下書き記事には _draft クラスを付与
-                    const isDraft = post?.data?.draft;
-                    // rootPath指定時はネスト深度を計算
-                    const rootPath = 'rootPath' in section ? section.rootPath : undefined;
-                    const nestedDepth = rootPath ? getNestedDepth(item, rootPath) : 0;
-                    return (
-                      <ListItem class={isDraft ? '_draft' : undefined} data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
-                        <NavLink href={itemPath} isActive={isActive}>
-                          {navLabel}
-                        </NavLink>
-                      </ListItem>
-                    );
-                  }
-
-                  // オブジェクト形式の場合（従来の { label, link } 形式）
-                  // 言語対応のパスを生成
-                  const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
-                  const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
-                  const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
-                  // アイテムラベルを現在の言語で取得
-                  const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
-                  // rootPath指定時はネスト深度を計算
-                  const rootPath = 'rootPath' in section ? section.rootPath : undefined;
-                  const nestedDepth = rootPath ? getNestedDepth(item.link, rootPath) : 0;
-                  return (
-                    <ListItem data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
-                      <NavLink href={itemPath} isActive={isActive}>
-                        {itemLabel}
-                      </NavLink>
-                    </ListItem>
-                  );
-                })}
-          </List>
-        </Stack>
-      );
-    })
-  }
+      </Stack>
+    </Stack>
+  </Stack>
 </Stack>
 
 <style>
   /* サイドバーナビのトップレベルリンク（グラデーション枠でまとめた集約ボタン） */
-  .siteNav_toplinks {
-    background-image: linear-gradient(120deg, var(--grad_01), var(--grad_02));
-    border-radius: var(--bdrs--20);
-    padding: 2px;
+  .c--siteNav_toplinks {
+    padding: var(--s30) var(--s20);
   }
-  .siteNav_toplinks_inner {
-    background-color: color-mix(in srgb, var(--base), transparent 8%);
-    border-radius: calc(var(--bdrs--20) - 2px);
-    overflow: hidden;
-    gap: 3px;
-    padding: 3px;
-  }
-  .siteNav_toplink {
-    border-radius: calc(var(--bdrs--20) - 4px);
-    color: var(--_isHov, var(--text)) var(--_notHov, var(--text-2));
-    background-color: var(--_isHov, var(--base));
-  }
-  .siteNav_toplink[data-active='true'] {
-    /* background-color: var(--text);
-    color: var(--base); */
+  .c--siteNav_toplink {
+    color: var(--text-2);
 
-    color: var(--text);
-    background-color: var(--base);
-    box-shadow: var(--bxsh--10);
+    &:hover,
+    &[data-active='true'] {
+      color: var(--brand);
+      font-weight: 500;
+    }
   }
-  .siteNav_list > [data-nested] {
-    padding-inline-start: var(--s20);
+
+  .c--siteNav_sections_inner {
+    padding-block: var(--s30);
+    padding-inline: var(--s20);
+  }
+
+  /* SP モーダル: CSS Docs 含め Modal.Body 全体でスクロール。カード風の面は使わない */
+  :global(.b--modal_body) .c--siteNav {
+    flex: none;
+    min-height: auto;
+    gap: var(--s30);
+
+    .c--siteNav_toplinks,
+    .c--siteNav_sections {
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    .c--siteNav_toplinks {
+      padding: 0;
+    }
+
+    .c--siteNav_toplinks_inner {
+      background-color: transparent;
+      border-radius: 0;
+    }
+
+    .c--siteNav_sections {
+      flex: none !important;
+      min-height: auto !important;
+      overflow: visible !important;
+    }
+
+    .c--siteNav_sections_scroll {
+      flex: none !important;
+      min-height: auto !important;
+      overflow: visible !important;
+    }
+
+    .c--siteNav_sections_inner {
+      padding: 0;
+    }
+  }
+
+  .c--siteNav_list > [data-nested] {
+    /* padding-inline-start: var(--s20); */
+    padding-inline-start: calc(var(--nestedDepth, 0) * var(--s20));
   }
 </style>

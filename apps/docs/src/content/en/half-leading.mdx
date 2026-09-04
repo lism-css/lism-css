@@ -1,0 +1,72 @@
+---
+title: 'Half-Leading (line-height)'
+navtitle: 'Half-Leading'
+description: 'How and why Lism CSS manages line-height through half-leading values.'
+---
+
+import { DummyText } from '@lism-css/ui/astro/DummyText';
+
+Lism CSS manages `line-height` through **half-leading values**, which is a somewhat unconventional approach.
+
+Half-leading is the space on one side of a line of text: the gap between the `line-height` value and the actual character height, split equally above and below.
+
+
+## How Half-Leading Management Works
+
+In Lism, the following style is applied to all elements:
+
+```css
+* {
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
+}
+```
+
+This ties `line-height` to the `--hl` variable (the half-leading amount) by default, so **the spacing between text stays consistent regardless of font size**.
+
+When `--lh` is set, it takes precedence (this is what the `lh` property described below uses).
+
+:::note
+Because `line-height` is managed by this universal rule, setting `line-height` directly in plain CSS does not cascade to child elements. Control line spacing through the `hl` / `lh` properties instead.
+:::
+
+
+## Why Use Half-Leading?
+
+With a ratio like `line-height: 1.6`, the space between lines grows in proportion to the font size. That's fine for body text, but large text such as headings ends up with too much space between lines and looks loose.
+
+Managing half-leading as a fixed value keeps the space between lines constant regardless of font size.
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20" flow="s">
+    <DummyText as="h1" pre="H1: " max-w="s" />
+    <DummyText as="h2" pre="H2: " max-w="s" />
+    <DummyText as="h3" pre="H3: " max-w="s" />
+    <DummyText as="h4" pre="H4: " max-w="s" />
+    <DummyText as="h5" pre="H5: " max-w="s" />
+    <DummyText as="p" pre="p : " max-w="s" />
+    <DummyText as="p" fz="s" pre="s: " max-w="s" />
+    {/* <DummyText as="p" fz="xs" pre="xs: " max-w="s" />
+    <DummyText as="p" fz="2xs" pre="2xs: " max-w="s" /> */}
+  </PreviewArea>
+</Preview>
+
+
+## `lh` (line-height) Is Also Available
+
+`hl` manages line spacing as a fixed amount independent of font size. For cases where the spacing should scale with the font size, such as headings whose size changes significantly across screen sizes, the `lh` property sets `line-height` as a ratio instead.
+
+|Value|Behavior|
+|---|---|
+|`lh="xs"` / `"s"` / `"m"` / `"l"` / `"xl"`|Sets an [LH token](/en/docs/tokens/typography/#lh-line-height) (`1.25`–`2.25`) on `--lh`|
+|`lh="1"`|`--lh: 1` (no extra line spacing)|
+|Arbitrary numbers like `lh="1.7"`|Sets `--lh: 1.7`|
+
+Use `hl` by default. Note that `hl` has no effect on descendants of an element with `lh` set.
+
+
+## Tokens
+
+Lism provides the tokens `--hl--xs` through `--hl--xl` as values for `--hl`, and `--lh--xs` through `--lh--xl` as values for `--lh`. See the [HL](/en/docs/tokens/typography/#hl-half-leading) / [LH](/en/docs/tokens/typography/#lh-line-height) sections of Typography Tokens for the full list and a preview.
+
+<DocsLink path="/docs/tokens/typography/" />

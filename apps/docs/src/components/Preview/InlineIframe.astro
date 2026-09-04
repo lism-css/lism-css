@@ -1,0 +1,17 @@
+---
+/**
+ * ドキュメント内に固定比率で iframe を埋め込む簡易プレビュー。
+ * サイズ切替や中身へのフィットが必要な場合は PreviewFrame を使う。
+ */
+import { Frame } from 'lism-css/astro';
+
+interface Props {
+  url: string;
+  [key: string]: any;
+}
+const { url, ar = '3/2', ...props } = Astro.props;
+---
+
+<Frame ar={ar} {...props}>
+  <iframe src={url} width="800" height="600"></iframe>
+</Frame>

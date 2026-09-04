@@ -16,7 +16,13 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ## Lismコンポーネントでの使い方
 
-`<Lism isBoxLink>` のエイリアスとして `<BoxLink>` が用意されています。
+`isBoxLink` プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+| プロパティ | 出力 |
+|---|---|
+| `isBoxLink`| `is--boxLink` |
+
+さらに、`<Lism isBoxLink>` のエイリアスとして、`<BoxLink>` も用意しています。
 
 ### Import
 
@@ -96,7 +102,7 @@ BoxLink内部に**別のリンク**も配置するには、2 を採用してく�
 <Preview>
   <PreviewTitle id="boxlink-demo02">例</PreviewTitle>
   <PreviewArea p="20">
-    <BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
+    <BoxLink p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
       <Group fz="xl" fw="bold">
         <Link isCoverLink href="#boxlink-demo02">
           <Fragment>Heading link text</Fragment>

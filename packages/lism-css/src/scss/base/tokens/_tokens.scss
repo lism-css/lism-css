@@ -28,9 +28,11 @@
   /**
    * shadow の構造変数
    *   Memo: 影色そのものは color.shadow（--shadow）として tokens.ts 側で定義している。
-   *         --shc はその別名で、.set--bxsh から上書きして使う。
+   *         --shc は .set--bxsh から上書きして使うために１階層挟む
    */
   --shc: var(--shadow);
+  --shc--near: color-mix(in srgb, var(--shc), transparent 50%);
+  --shsz--5: 0px 0px 1px;
   --shsz--10: 0px 1px 3px;
   --shsz--20: 0px 2px 6px;
   --shsz--30: 0px 4px 12px;
@@ -48,6 +50,11 @@
    */
   --flow--base: var(--s30);
   --flow--s: var(--s20);
+}
+
+.set--bxsh {
+  // --shcの再セットができるように再定義
+  --shc--near: color-mix(in srgb, var(--shc), transparent 50%);
 }
 
 /**

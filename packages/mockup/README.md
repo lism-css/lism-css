@@ -208,7 +208,7 @@ Rules:
 | --- | --- |
 | Overrides of light tokens only | Only tokens that **the light side really has as a CSS variable** can be overridden. The source of truth is the merged light side: the Lism CSS defaults plus the keys `tokens.json` added. So `color.base` or `color.text` can be set here even when `tokens.json` never mentions them. |
 | No new keys | The new-key exception `tokens.json` grants to `color` does not apply here. A key that does not exist on the light side is an error. |
-| Keys without a CSS variable are out | Keys whose light value carries no real value (`lh.*`, `bdrs.inner`, `flow.s`, `palette.keycolor`, …) cannot be overridden and are an error — unless `tokens.json` gave that key a real value. |
+| Keys without a CSS variable are out | Keys whose light value carries no real value (`bdrs.inner`, `flow.s`, `palette.keycolor`, …) cannot be overridden and are an error — unless `tokens.json` gave that key a real value. |
 | No group restriction | Every group the light side has (`color`, `palette`, `space`, `fz`, `bxsh`, `vars`, …) may be overridden. |
 | Violations are errors | Like `tokens.json`, `dev` and `check` both exit non-zero. |
 

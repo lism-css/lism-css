@@ -16,7 +16,13 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ## Using with Lism Components
 
-A `<BoxLink>` component is available as an alias for `<Lism isBoxLink>`.
+It can be applied via the `isBoxLink` prop on **any component**.
+
+| Prop | Output |
+|---|---|
+| `isBoxLink`| `is--boxLink` |
+
+A dedicated `<BoxLink>` component is also available as an alias for `<Lism isBoxLink>`.
 
 ### Import
 
@@ -76,11 +82,11 @@ When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>`
   <PreviewCode slot="tab" label="HTML">
     ```html {1} "is--boxLink"
     <a class="is--boxLink -hov:-o -p:30 -bgc:base -bd -bdrs:30" href="#boxlink-demo01">
-      <p class="-fz:xl -fw:bold">Heading text</p>
-      <p class="-c:text-2 -hl:s -mbs:15">
+      <div class="-fz:xl -fw:bold">Heading text</div>
+      <p class="-hl:s -mbs:15">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
       </p>
-      <p class="-fz:s -c:text-2 -ta:right -hl:0 -mbs:10">MORE →</p>
+      <div class="-fz:s -c:text-2 -ta:right -hl:0 -mbs:10">MORE →</div>
     </a>
     ```
   </PreviewCode>
@@ -96,7 +102,7 @@ This approach also allows you to place additional links inside the BoxLink.
 <Preview>
   <PreviewTitle id="boxlink-demo02">Example</PreviewTitle>
   <PreviewArea p="20">
-    <BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
+    <BoxLink p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
       <Group fz="xl" fw="bold">
         <Link isCoverLink href="#boxlink-demo02">
           <Fragment>Heading link text</Fragment>

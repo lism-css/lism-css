@@ -1,10 +1,10 @@
 ---
 title: 'Primitive Class'
-description: 'An overview of Lism CSS primitive classes (l--, a--) and their usage.'
+description: 'An overview of Lism CSS Primitive Classes (l--, a--) and their usage.'
 ---
 
 
-Lism provides **Primitive classes** as small building blocks for assembling layouts.
+Lism provides **Primitive Classes** as small building blocks for assembling layouts.
 
 - `l--{name}`: Layout Primitives that serve as the building blocks of layouts.
 - `a--{name}`: Atomic Primitives that represent the smallest units of a layout.
@@ -39,7 +39,7 @@ Several Primitives can arrange items in columns. Pick the one that best fits you
 
 How well each Primitive fits each use case:
 
-| Use case | <ModLink slug="l--columns" /> | <ModLink slug="l--autoColumns" /> | <ModLink slug="l--switchColumns" /> | <ModLink slug="l--withSide" /> | <ModLink slug="l--grid" /> |
+| Use case | <ModLink slug="l--columns" label="columns"/> | <ModLink slug="l--autoColumns" label="autoColumns" /> | <ModLink slug="l--switchColumns" label="switchColumns" /> | <ModLink slug="l--withSide" label="withSide" /> | <ModLink slug="l--grid" label="grid" /> |
 |---|---|---|---|---|---|
 | Equal-width N columns | ◯ | ◯ | ✗ | ✗ | △ |
 | Single toggle between multi-column and 1-column | ◯ | ✗ | ◯ | ✗ | △ |
@@ -97,7 +97,7 @@ When the main side can no longer maintain `mainW`, the layout automatically swit
 </WithSide>
 ```
 
-If the media element is placed first and marked with `isSide`, combine `fxd="row-reverse"` to alternate sides horizontally — while still keeping the media on top when stacked.
+If you place the media element first and mark it `isSide`, you can alternate `fxd="row-reverse"` on each pair. This alternates which side the media sits on when laid out horizontally, while stacking always keeps the media on top — useful when arranging multiple media-and-text pairs.
 
 If you need explicit breakpoint-based switching, you can build the same look with <ModLink slug="l--grid" /> using `gta` template switching (`l--withSide` is more declarative and concise).
 

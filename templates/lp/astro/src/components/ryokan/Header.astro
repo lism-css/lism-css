@@ -1,0 +1,78 @@
+---
+import { BoxLink, Center, Container, Flex, Icon, Inline, Link, ListItem, Stack } from 'lism-css/astro';
+import { Modal } from '@lism-css/ui/astro/Modal';
+
+const logoLabel = '静寂の宿';
+
+/** デスクトップ上部ナビ / モバイルドロワー共通のアンカー */
+const headerNavItems = [
+  { href: '#about', ja: '当宿について', en: 'About' },
+  { href: '#feature', ja: '宿の特徴', en: 'Feature' },
+  { href: '#plans', ja: '宿泊プラン', en: 'Plan' },
+  { href: '#information', ja: '設備紹介', en: 'Facilities' },
+  { href: '#faq', ja: 'よくあるご質問', en: 'Faq' },
+] as const;
+---
+
+<Container as="header" class="c--header" isWrapper="xl" pos="fixed" t="0" l="0" w="100%" z="1" hasGutter>
+  <Flex class="c--header_inner" jc="between" ai="center" g="20">
+    <Link class="c--header_logoLink" href="#" td="none" ff="accent" c="inherit" lts="l" fz={['24px', null, '30px']} hl="s" whs="nowrap">
+      {logoLabel}
+    </Link>
+    <Flex g="20" ai="center">
+      <Flex class="c--headerNav" as="ul" d={['none', null, 'flex']} ai="center" g={['15', null, '30']}>
+        {
+          headerNavItems.map(({ href, ja, en }) => (
+            <ListItem>
+              <Link href={href} layout="center" c="inherit" td="none" py="10" px="5" hasTransition hov="-o" ta="center" g="5">
+                <Inline fz="s">{ja}</Inline>
+                <Inline class="b--enEyebrow" lang="en" fz="11px" c="text-2" lts="xl" hl="0">
+                  {en}
+                </Inline>
+              </Link>
+            </ListItem>
+          ))
+        }
+      </Flex>
+      <Modal.OpenBtn modalId="menu" d={['block', null, 'none']}>
+        <Center p="5">
+          <Icon icon="menu" fz="2xl" aria-hidden="true" />
+        </Center>
+      </Modal.OpenBtn>
+    </Flex>
+  </Flex>
+</Container>
+
+<Modal.Root id="menu" isContainer isWrapper="s" p="30">
+  <Modal.Inner set="light" layout="stack" c="text" pos="relative" p="30" bdrs="20" bxsh="50">
+    <Modal.CloseBtn modalId="menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
+    <Modal.Body layout="stack" g="30" py="40">
+      <Stack as="ul" class="c--header_menuNav" ov="clip">
+        {
+          headerNavItems.map(({ href, ja, en }) => (
+            <ListItem>
+              <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" py="15" px="5">
+                <Stack g="5">
+                  <Inline>{ja}</Inline>
+                  <Inline class="b--enEyebrow" lang="en" fz="s" o="pp">
+                    {en}
+                  </Inline>
+                </Stack>
+                <Icon icon="caret-right" fz="s" o="pp" />
+              </BoxLink>
+            </ListItem>
+          ))
+        }
+        <ListItem>
+          <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="center" fz="l" py="15" px="5">
+            <Stack g="5">
+              <Inline>ご予約はこちら</Inline>
+              <Inline class="b--enEyebrow" lang="en" fz="s" o="pp">Reservation</Inline>
+            </Stack>
+            <Icon icon="caret-right" fz="s" o="pp" />
+          </BoxLink>
+        </ListItem>
+      </Stack>
+    </Modal.Body>
+  </Modal.Inner>
+</Modal.Root>

@@ -74,8 +74,10 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
 
 | Prop | Description |
 |---|---|
-|`variant`<small>(optional)</small>| Outputs the `b--button--{variant}` class. Two styles are available: `fill` and `outline`. |
-
+|`variant`| Outputs the `b--button--{variant}` class. Two styles are available: `fill` and `outline`. |
+{/* |`layout`| Specifies the layout component that makes up the Button. Defaults to `Lism`. | */}
+{/* |`icon`, `endIcon` | Specifies icons to display on either side of the button text. | */}
+{/* |`hover`| Defaults to `op`. | */}
 
 
 ## Examples
@@ -85,10 +87,12 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
   <PreviewArea p="20" bg=":stripe" layout="">
     <Flex g="15">
       <Button href="###">Button</Button>
-      <Button href="###" bgc="brand" bdrs="10">Button</Button>
+      <Button href="###" bgc="brand" bdrs="10">
+        <Fragment>Button</Fragment>
+      </Button>
       <Button href="###" bgc="#d13d5e" bdrs="99">
         <Icon icon="cart" />
-        Button
+        <Fragment>Button</Fragment>
       </Button>
     </Flex>
   </PreviewArea>
@@ -97,12 +101,9 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
     ```jsx
     <Flex g="15">
       <Button href="###">Button</Button>
-      <Button href="###" bgc="brand" bdrs="10">
-        Button
-      </Button>
+      <Button href="###" bgc="brand" bdrs="10">Button</Button>
       <Button href="###" bgc="#d13d5e" bdrs="99">
-        <Icon icon="cart" />
-        Button
+        <Icon icon="cart" />Button
       </Button>
     </Flex>
     ```
@@ -122,14 +123,16 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
 
 ### variant: outline
 <Preview>
-  <PreviewTitle>Usage example of `outline`</PreviewTitle>
+  <PreviewTitle>`outline` example</PreviewTitle>
   <PreviewArea p="20" bg=":stripe" layout="">
     <Flex g="15">
       <Button href="###">Button</Button>
-      <Button href="###" variant="outline" c="brand" bdrs="10">Button</Button>
+      <Button href="###" variant="outline" c="brand" bdrs="10">
+        <Fragment>Button</Fragment>
+      </Button>
       <Button href="###" variant="outline" c="#d13d5e" bdrs="99">
         <Icon icon="cart" />
-        Button
+        <Fragment>Button</Fragment>
       </Button>
     </Flex>
   </PreviewArea>
@@ -138,12 +141,9 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
     ```jsx
     <Flex g="15">
       <Button href="###">Button</Button>
-      <Button href="###" variant="outline" c="brand" bdrs="10">
-        Button
-      </Button>
+      <Button href="###" variant="outline" c="brand" bdrs="10">Button</Button>
       <Button href="###" variant="outline" c="#d13d5e" bdrs="99">
-        <Icon icon="cart" />
-        Button
+        <Icon icon="cart" />Button
       </Button>
     </Flex>
     ```
@@ -215,6 +215,9 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
   </PreviewCode>
 </Preview>
 
+
+{/* Can be adjusted with basic props like p, fz, w.   */}
+{/* (Considering adding dedicated props like data-btn-size=s,l.) */}
 
 ### Adjusting styles
 
@@ -299,11 +302,15 @@ Specifying `layout='grid'` applies the `l--grid` class, enabling a grid layout w
 
   <PreviewCode slot="tab" label="CSS">
   ```css
-  .b--button:where(.l--grid) {
+  .b--button {
+    /* Supports both flex and grid */
+    place-content: center;
+    place-items: center;
+
+    /* Additional styles for l--grid usage */
     grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
-    justify-items: center;
   }
-  .b--button:where(.l--grid) > :not(.a--icon) {
+  :where(.b--button.l--grid) > :not(.a--icon) {
     grid-column: 2;
   }
   ```
@@ -313,7 +320,7 @@ Specifying `layout='grid'` applies the `l--grid` class, enabling a grid layout w
 
 ## Without @lism-css/ui
 
-An example of building a Button using only lism-css, without `@lism-css/ui`.
+This example builds a Button with lism-css primitives only, without `@lism-css/ui`.
 
 
 <Preview>
@@ -454,3 +461,35 @@ An example of adding a [`-hov` class](/en/docs/property-class/hov) that swaps th
     ```
   </PreviewCode>
 </Preview>
+
+{/* <Preview>
+  <PreviewTitle>Reverse example with a custom color</PreviewTitle>
+  <PreviewArea resize p="20" bg=":stripe">
+    <Flex layout="cluster" g="15">
+      <Button href="###" hov="reverse" variant="fill" bgc="brand">
+        Button
+      </Button>
+      <Button href="###" hov="reverse" variant="outline" c="#64a31c">
+        Button
+      </Button>
+      <Button href="###" hov="reverse" variant="" bgc="base-2" c="link">
+        Button
+      </Button>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Flex layout="cluster" g="15">
+      <Button href="###" hov="reverse" variant="fill" bgc="brand">
+        Button
+      </Button>
+      <Button href="###" hov="reverse" variant="outline" c="#64a31c">
+        Button
+      </Button>
+      <Button href="###" hov="reverse" variant="" bgc="base-2" c="link">
+        Button
+      </Button>
+    </Flex>
+    ```
+  </PreviewCode>
+</Preview> */}

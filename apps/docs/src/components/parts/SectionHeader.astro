@@ -1,0 +1,59 @@
+---
+import { Stack, Flex, Inline, Heading, Cluster, Link } from 'lism-css/astro';
+
+/**
+ * 一覧ページのセクション見出し。
+ * タイトル・件数・「すべて見る」リンクを1行に、補足（説明文・関連リンク）は default slot で受け取る。
+ */
+interface Props {
+  title: string;
+  count?: number;
+  /** 指定するとタイトルがリンクになり、「すべて見る」も表示される */
+  href?: string;
+  viewAllLabel?: string;
+  level?: '2' | '3';
+  id?: string;
+}
+
+const { title, count, href, viewAllLabel = 'View all', level = '2', id } = Astro.props;
+const hasNote = Astro.slots.has('default');
+---
+
+<Stack as="header" class="c--sectionHeader" g="15">
+  <Cluster ai="center" jc="space-between" g="15" bd-b py="10" px="5">
+    <Flex ai="center" g="10">
+      <Heading level={level} id={id}>
+        {
+          href ? (
+            <Link href={href} set="plain">
+              {title}
+            </Link>
+          ) : (
+            title
+          )
+        }
+      </Heading>
+      {
+        count != null && (
+          <Inline pt="5" fz="s" c="text-2" fw="normal" fxsh="0">
+            ({count})
+          </Inline>
+        )
+      }
+    </Flex>
+    {
+      href && (
+        <Link href={href} fz="xs" fxsh="0">
+          {viewAllLabel} →
+        </Link>
+      )
+    }
+  </Cluster>
+  {
+    hasNote && (
+      <Stack g="5" px="5" fz="xs" c="text-2">
+        <slot />
+      </Stack>
+    )
+  }
+</Stack>

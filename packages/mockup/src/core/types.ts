@@ -1,10 +1,4 @@
-/**
- * Shared contract types for the lism-mockup data directory.
- *
- * The data contract is documented in the package README. Everything `dev` and
- * `check` validate flows through these types so the two commands can never
- * disagree about what a valid data directory looks like.
- */
+/** Shared by`dev`and`check`so their data contracts cannot diverge. */
 
 /** Supported `mockup.config.json` schema version. Bump when the contract changes. */
 export const SCHEMA_VERSION = 2;
@@ -29,7 +23,6 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-/** Per-page metadata overrides in `mockup.config.json` (`pages` field). */
 export interface MockupConfigPageMeta {
   label?: string;
   category?: string;
@@ -56,13 +49,9 @@ export interface MockupConfigFile {
   pages?: Record<string, MockupConfigPageMeta>;
 }
 
-/** A discovered page after merging `mockup.config.json` metadata. */
 export interface PageEntry {
-  /** Page id: path relative to `pages/` without extension (e.g. `admin/users`). */
   id: string;
-  /** Absolute path to the page source file. */
   file: string;
-  /** Display label (defaults to the page id). */
   label: string;
   category?: string;
   order?: number;
@@ -76,13 +65,9 @@ export type MockupTokens = Record<string, Record<string, string | number>>;
  * Mirrors `ViewerToken` in `viewer/src/virtual-modules.d.ts` — keep both in sync.
  */
 export interface TokenEntry {
-  /** Token key inside its group (e.g. `brand`, `20`). */
   key: string;
-  /** CSS custom property name (e.g. `--brand`). */
   varName: string;
-  /** Value as it appears in the generated token CSS (numbers are stringified). */
   value: string;
-  /** How the mockup's `tokens.json` affected this token. */
   source: 'default' | 'overridden' | 'custom';
 }
 
@@ -96,13 +81,9 @@ export interface TokenEntry {
  * Mirrors `ViewerTokenGroup` in `viewer/src/virtual-modules.d.ts` — keep both in sync.
  */
 export interface TokenGroupEntry {
-  /** Unique key of the section: DOM id source and React key (e.g. `color`, `color--dark`). */
   id: string;
-  /** Token group the section lists, which also picks the preview shape (e.g. `color`). */
   group: string;
-  /** Heading text (e.g. `color`, `color (dark)`). */
   label: string;
-  /** Whether the section lists the dark values, and must render inside the dark scope. */
   isDark?: boolean;
   /**
    * CSS 変数名のプレフィックス（`--fz--`・space は `--s`・color / palette は `--`）。
@@ -118,15 +99,11 @@ export interface TokenGroupEntry {
   tokens: TokenEntry[];
 }
 
-/** Fully validated data directory, shared by `dev` and `check`. */
 export interface MockupData {
-  /** Absolute path to the data directory. */
   dataDir: string;
   config: MockupConfigFile;
-  /** Sorted for display: `order` ascending, then id lexicographic. */
   pages: PageEntry[];
   tokens: MockupTokens;
-  /** `tokens.dark.json` overrides. Empty when the mockup declares no dark theme. */
   darkTokens: MockupTokens;
 }
 
@@ -135,7 +112,6 @@ export interface MockupData {
  * Commands catch this, print `file` + `message`, and exit non-zero.
  */
 export class MockupContractError extends Error {
-  /** Absolute path of the offending file, when known. */
   file?: string;
 
   constructor(message: string, options: { file?: string } = {}) {

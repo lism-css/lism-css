@@ -1,70 +1,85 @@
+基準日: 2026-09-04・コミットc387409c
+
 # Lism CLI ガイド（運営者向け）
 
-ユーザー向けの使い方は [packages/lism-cli/README.md](../packages/lism-cli/README.md) と [apps/docs](../apps/docs/src/content/ja/installation.mdx) を見る。
-ここは運営観点の差分メモ。
+この文書が持つもの: `lism-cli` / `create-lism`の運営手順（既定ref・build・publish・publish前チェック）と、`templates/`の規約・言語判定・プレビューデプロイ。
+持たないもの: ユーザー向けの使い方（[packages/lism-cli/README.md](../packages/lism-cli/README.md)と[apps/docsのinstallation](../apps/docs/src/content/ja/installation.mdx)）、テンプレのスクショ撮影（[template-screenshots.md](./template-screenshots.md)）。
 
 
 ## 構成
 
 | パッケージ | bin | 役割 |
-|---|---|---|
-| `lism-cli` | `lism-cli` | 本体（`create` / `init` / `ui` / `skill` / `mockup`）。`mockup` は `@lism-css/mockup` の案内表示のみ |
-| `create-lism` | `create-lism` | `pnpm create lism` 用ラッパー。`lism-cli` を **bundle で内包**（runtime 依存ナシ） |
+| --- | --- | --- |
+| `lism-cli` | `lism-cli` | 本体。サブコマンドは`create` / `init` / `ui` / `skill` / `mockup` |
+| `create-lism` | `create-lism` | `pnpm create lism`用ラッパー。`lism-cli`をbundleで内包し、runtime依存を持たない |
 
-配信元はすべて giget で `github:lism-css/lism-css/...` から直 fetch（旧 HTTP Registry / `cli.lism-css.com` は廃止）。
+- `init`は`lism.config.js`のひな形を生成する。既存の`lism.config.*`があれば何もしない。`--ui-framework` / `--ui-dir`で`ui:`の値を先渡しでき、無ければ対話で聞く。
+- `mockup`は`@lism-css/mockup`の案内表示だけ。
+- 配信元はGitHubの`lism-css/lism-css`。コンポーネント・helper・skill・テンプレはgiget（`github:lism-css/lism-css/...`）で取得し、UIカタログ（`packages/lism-ui/registry-index.json`）だけはraw GitHubへ直接fetchする（`commands/ui/fetcher.ts`の`fetchCatalog`）。
 
 
-## 🚨 ref 切り替え（最重要）
+## 🚨 既定ref（最重要）
 
-`packages/lism-cli/src/constants.ts` の以下 3 つはブランチに合わせて手動切替:
+`packages/lism-cli/src/constants.ts`の`DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF`は、ブランチに関係なく常に`'main'`。dev / mainのマージで切り替えない。検証目的のbeta publishでもPRブランチに変えない（ブランチ削除で公開済みCLIが壊れる）。
 
-| 定数 | dev | main |
-|---|---|---|
-| `DEFAULT_UI_REF` | `'dev'` | `'main'` |
-| `DEFAULT_SKILL_REF` | `'dev'` | `'main'` |
-| `DEFAULT_TEMPLATES_REF` | `'dev'` | `'main'` |
-
-**dev / main マージ前に必ず grep して値を揃える。** 検証用 PR ブランチを指したまま publish すると、ブランチ削除で CLI が壊れる。
+- dev側を試すときは、コマンドの`--ref dev`で都度指定する（`create` / `ui add` / `ui list` / `skill add` / `skill check` / `skill update`）。
+- `--ref`が変えるのは取得元だけ。skill一覧（`SKILL_NAMES`）とテンプレ一覧（`TEMPLATES`）はCLI本体に焼き込まれているので、dev側で追加したskill / テンプレを試すにはdevのCLIをローカルビルドする。
 
 
 ## build / publish
 
 ```bash
-nr build:cli    # cli → create-lism の順（^build 依存で順序保証）
+nr build:cli    # cli → create-lism の順（^build依存で順序保証）
 nr publish:cli  # build → lism-cli publish → create-lism publish
 ```
 
-- `lism-cli` と `create-lism` は **同じバージョンで一緒に** publish する
-- `lism-cli create` で生成されるプロジェクトの `workspace:*` は npm レジストリの dist-tag `latest` を実行時に解決して `^x.y.z` へ置換される。レジストリ到達不可時だけ、tsup の `define` で埋め込んだ `LISM_PACKAGE_VERSIONS` にフォールバックする
-- `packages/lism-ui/registry-index.json` は **commit 対象**。コンポーネント増減時は `pnpm --filter @lism-css/ui build` で再生成して commit する
-- 検証目的の beta publish でも `DEFAULT_*_REF` を PR ブランチに固定しないこと（壊れる）。検証時は CLI 側の `--ref` フラグで都度指定する
+- `lism-cli`と`create-lism`は同じバージョンで一緒にpublishする。
+- `lism-cli create`が生成する`workspace:*`は、実行時にnpmのdist-tag `latest`を解決して`^x.y.z`へ置換する。レジストリ到達不可時だけ、tsupの`define`で埋め込んだ`LISM_PACKAGE_VERSIONS`にフォールバックする。
+- `packages/lism-ui/registry-index.json`はcommit対象。コンポーネント増減時は`pnpm --filter @lism-css/ui build`で再生成してcommitする。
 
 
-## テンプレ運用メモ
+## テンプレ運用
 
-`templates/` 配下のテンプレートは `lism-cli create` の配信元。SSOT は `templates/manifest.ts` の `TEMPLATES` 配列で、`packages/lism-cli/src/commands/create.ts` から import される。テンプレ追加・編集時の運用ルール：
+`templates/`配下が`lism-cli create`の配信元。SSOTは`templates/manifest.ts`の`TEMPLATES`で、`packages/lism-cli/src/commands/create.ts`がimportする。
 
-- **`templates/` 配下の各テンプレート（階層は問わず）の `package.json` には必ず `"private": true` を付ける**（npm への誤公開防止）。テンプレのディレクトリ階層は種類によって異なる（2階層: `templates/minimal/astro/`、3階層: `templates/blog/astro/minimal/` 等）。`scripts/check-templates-private.mjs` は `package.json` が見つかるまで再帰的に降下してチェックするため、階層の深さを問わず検出できる。
-- **`base-overlay` 型の overlay 側には `package.json` を置かない**。CLI は base の `package.json` を採用し、overlay は差分ファイルのみ上書きする想定。overlay 側に置くと merge 後の `name` 書き換え対象が二重化し、`workspace:*` 置換のロジックも崩れる。共通化したい設定は base に集約する。
-- **`templates/lp/html/_generated/`**（未実装・#375 で追加予定）: 追加された場合は手編集禁止。`static-html` 型テンプレの配信元として、source（別ディレクトリ）からの生成物を置く前提のディレクトリになる予定。手で編集すると次回再生成で消えるため、修正は generator 側で行うこと。
-- **`single-project-variant` 型**（例: `templates/lp/astro/`）は単一プロジェクトに `src/pages/{variant}/` を並べる構成。CLI 抽出時に選択 variant の `index.astro` を `src/pages/index.astro` に持ち上げ、他 variant ディレクトリを削除する。variant 追加時は `src/pages/{variant}/index.astro` を作り、`TEMPLATES` に新 slug を追加する。
-- **言語の決定順（`lism-cli create` / `create-lism` 共通）**: まず生成言語を確定してから処理を進める。`--lang <ja|en>` が明示されていればそれを使い、未指定なら**対話端末（TTY）では他のどの選択よりも先に言語選択プロンプト（`English / 日本語` の固定表示）を出す**。非対話端末（CI・パイプ等）は `en` にフォールバック。確定した言語は CLI 表示言語と「生成テンプレ本体の言語（overlay）」の両方に使う。
-- **言語別 overlay（`project` 型の `langOverlays`）**: 上で確定した言語に対応する overlay があれば、base 取得後に差分をマージして生成テンプレ本体を多言語化する。配置は base 内の `.lang/{lang}/`（例: `blog/astro/minimal/.lang/en/`）に**差分ファイルのみ**を置き、`manifest.ts` の `langOverlays` に `{ en: 'blog/astro/minimal/.lang/en' }` のように登録する。現状 `en` overlay を持つのは `blog-astro-minimal` / `blog-astro-personal` / `blog-astro-techlog` の 3 つ。base 言語（多くは `ja`）は `sourcePath` 自体が対応言語なので overlay を用意しない。生成物に画面文言をハードコードせず `siteConfig.uiText` 等へ集約しておくと overlay 差分が小さく済む（コメントや開発者向けのビルド時エラー文言は対象外）。`.lang/` は配布不要ディレクトリとして生成プロジェクトから自動削除される（`screenshots/` と同じ扱い）。ローカルで言語版の見た目を確認したい時は `nr build:template:en <pkg>`（`.lang/en` を一時的に src へマージして build → src を復元）→ `nr preview:template <pkg>` の順で、`lism-cli create --lang en` 相当の生成結果をプレビューできる。
-- **言語別 variant（`single-project-variant` 型）**: LP のように文章量が多くデザインごと差し替えたいテンプレートは、overlay（差分マージ）ではなく `src/pages/{lang}/{variant}/`（必要に応じて `src/components/{lang}/{variant}/` 等も）の**完全コピー**として言語版を同梱する。`--lang en` 等で `src/pages/{lang}/{variant}/index.astro` があればそれを抽出元の variant に使い、無ければ base（`{variant}`）へ自動フォールバックする（`manifest.ts` 側の追加定義は不要）。抽出時に他 variant と `en/` ディレクトリごと掃除され、選択 variant のみのクリーンなプロジェクトになる。`Layout.astro` は `lang` prop（既定 `ja`）を受け取り、en 版ページは `<Layout title lang="en">` で `<html lang>` を切り替える。現状 `en` 版を持つのは `lp-astro-corporate` / `lp-astro-interior`。ローカルでは `nr build:template lp-astro` で ja と `/en/{variant}/`（例 `/en/corporate/`）が同時にビルドされ、`nr preview:template lp-astro` で確認できる。
+### 規約
+
+- 各テンプレの`package.json`に必ず`"private": true`を付ける（npmへの誤公開防止）。階層の深さは問わない（`scripts/check-templates-private.mjs`が`package.json`まで再帰して検出する）。
+- `base-overlay`型のoverlay側に`package.json`を置かない。CLIはbaseの`package.json`を採用し、overlayは差分ファイルだけ上書きする。置くと`name`の書き換えが二重化し、`workspace:*`置換も崩れる。共通設定はbaseに集約する。
+- `single-project-variant`型（例: `templates/lp/astro/`）は`src/pages/{variant}/`を並べる構成。CLIは選択variantの`index.astro`を`src/pages/index.astro`へ持ち上げ、他variantを削除する。variant追加は`src/pages/{variant}/index.astro`を作り、`TEMPLATES`にslugを足す。
+- `templates/lp/html/_generated/`（未実装、#375で追加予定）はsourceからの生成物置き場。追加後は手編集禁止で、修正はgenerator側で行う。
+
+### 言語
+
+- 表示言語は全サブコマンド共通の`--lang <ja|en>`（`createProgram.ts`）。未指定時は`LC_ALL` / `LANG`→macOSの`defaults read -g AppleLanguages`→`Intl`のロケールの順に`ja`かを見て、どれにも当たらなければ`en`（`i18n.ts`の`detectLang`）。macOSはOSが日本語でもターミナルの`LANG`が英語のことがあるため`AppleLanguages`も見る。
+- `create`（`create-lism`も同じ）は先に生成言語を確定し、それを表示言語にも使う。`--lang`があればそれ。無ければTTYでは他のどの選択より先に言語選択プロンプト（`English / 日本語`の固定表示）を出し、非TTY（CI・パイプ）は`en`。
+- 言語別overlay（`project`型の`langOverlays`）
+  - base内の`.lang/{lang}/`に差分ファイルだけを置き、`manifest.ts`の`langOverlays`に`{ en: 'blog/astro/minimal/.lang/en' }`のように登録する。確定した言語のoverlayがあれば、base取得後にマージする。base言語（多くは`ja`）にoverlayは不要。
+  - 現状`en`を持つのは`blog-astro-minimal` / `blog-astro-personal` / `blog-astro-techlog`。
+  - 画面文言は`siteConfig.uiText`等へ集約すると差分が小さく済む（コメントや開発者向けのビルドエラー文言は対象外）。
+  - `.lang/`は`screenshots/`と同様に、生成プロジェクトから自動削除される。
+  - ローカル確認は`nr build:template:en <pkg>`（`.lang/en`を一時的にsrcへマージしてbuild→src復元）→`nr preview:template <pkg>`。
+- 言語別variant（`single-project-variant`型）
+  - 文章量が多くデザインごと差し替えるLPは、`.lang/`のoverlayでなく`src/pages/{lang}/{variant}/`（必要なら`src/components/{lang}/{variant}/`も）に置く。同じ`src/`内に並べるので`nr dev`で両言語を確認できる。
+  - `{lang}/{variant}/`にはbaseと違うファイルだけを置く。base側のファイル（`_style.css`や共通コンポーネント）はen側から`@/pages/{variant}/_style.css`のようにalias（`@/`）で参照する。相対パス（`../../{variant}/`）はCLIが書き換えないので使わない。
+  - CSSの言語差は1ファイル内で切り替える。ページ全体やrootトークンは`html[lang='ja']`で絞る（en版はコンポーネント内に`lang="ja"`の要素を持つことがあり、素の`[lang='ja']`だとそこにも当たる）。
+  - `--lang en`で`src/pages/en/{variant}/index.astro`があれば、CLIは`{variant}/`を持ち上げた上に`en/{variant}/`を上書きする（同名ファイルはen優先）。無ければbaseだけを持ち上げる。`manifest.ts`の追加定義は不要。抽出時に他variantと`en/`は削除され、`@/{dir}/{variant}/`と`@/{dir}/en/{variant}/`の両形式が`@/{dir}/`へ書き換わる。
+  - CLIの抽出処理を変える改修では、CLIを先に公開してからテンプレ変更をmainへマージする（公開済みCLIは常にmainのテンプレを取得するため。前述の`DEFAULT_TEMPLATES_REF`を参照）。
+  - `Layout.astro`は`lang` prop（既定`ja`）で`<html lang>`を切り替える。en版ページは`<Layout title lang="en">`。
+  - 現状`en`を持つのは`lp-astro-corporate` / `lp-astro-interior` / `lp-astro-ryokan`。
+  - ローカル確認は`nr build:template lp-astro`（jaと`/en/{variant}/`を同時にビルド）→`nr preview:template lp-astro`。
+
+### プレビューデプロイ（`templates.lism-css.com`）
+
+Cloudflare Pagesへwranglerで配信する。
+
+- `nr deploy:templates`: `build:templates`（core / uiをビルドし、`scripts/build-previews.mjs`で全テンプレを`.preview/merged`へ集約）→Pagesプロジェクト`lism-templates`へdeploy。
+- `nr deploy:template <pkg>`: 1テンプレだけビルドし、`scripts/write-noindex-headers.mjs`で`_headers`（noindex）をdistへ書いてからPagesプロジェクト`lism-<pkg>`へdeploy。
 
 
-## publish 前チェック
+## publish前チェック
 
-- [ ] `constants.ts` の 3 つの ref が `'main'`
-- [ ] `registry-index.json` が最新
+- [ ] `constants.ts`の3つのrefが`'main'`
+- [ ] `registry-index.json`が最新
 - [ ] `nr lint` / `nr typecheck` / `nr test`
-- [ ] `node packages/lism-cli/bin/lism-cli.mjs --help` でコマンド体系を目視確認
-
-
-## 関連 PR
-
-| PR | 内容 |
-|---|---|
-| #290 | `lism` / `create-lism` 統合、`skills/` 直下移動、`lism.config.js` 統合、react/astro 階層除去 |
-| #293 | `create-lism` を bundle 自己完結型へ |
-| #294 | UI 配信を giget 直 fetch へ移行、`apps/cli` 廃止 |
+- [ ] `node packages/lism-cli/bin/lism-cli.mjs --help`でコマンド体系を目視確認

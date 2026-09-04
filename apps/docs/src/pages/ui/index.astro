@@ -1,98 +1,53 @@
 ---
-/**
- * UIコンポーネント一覧ページ
- * content/ja/ui/ 配下のMDXを一覧表示
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, AutoColumns, BoxLink, Frame, Lism, Media } from 'lism-css/astro';
+import UiComponentCard from '@/components/ui/UiComponentCard.astro';
+import { AutoColumns, Lism, Text } from 'lism-css/astro';
+import SectionHeader from '@parts/SectionHeader.astro';
+import PageHeader from '@parts/PageHeader.astro';
 import { getUiPostsByLang } from '@/lib/content';
 import { getRootLang } from '@/lib/i18n';
-import fs from 'node:fs';
-import path from 'node:path';
 
-// 現在の言語の UI 記事を取得
 const currentLang = getRootLang();
 const allUiPosts = await getUiPostsByLang(currentLang);
 
-// order順にソート（未指定は999）
 const byOrder = (a: (typeof allUiPosts)[number], b: (typeof allUiPosts)[number]) => (a.data.order ?? 999) - (b.data.order ?? 999);
 
-// ui/block-examples/ 配下の記事（CSSをコピーして導入するb--部品の作例）
 const blockExamplePosts = allUiPosts.filter((post) => post.id.startsWith('ui/block-examples/')).sort(byOrder);
 
-// ui/components/ 配下の記事（Lism CSSだけで組み立てる実装例）
 const componentPosts = allUiPosts.filter((post) => post.id.startsWith('ui/components/')).sort(byOrder);
 
-// ui/ 直下の記事（パッケージ提供のUI）
 const blockPosts = allUiPosts.filter((post) => !post.id.startsWith('ui/block-examples/') && !post.id.startsWith('ui/components/')).sort(byOrder);
 
-// サムネイル画像が存在するかチェックするヘルパー
-function getThumbPath(title: string): string {
-  // タイトルからサムネイルパスを生成（例: Accordion → /thumb/components/Accordion.png）
-  const thumbPath = `/thumb/components/${title}.png`;
-  const fullPath = path.join(process.cwd(), 'public', thumbPath);
-
-  // ファイルが存在するかチェック
-  if (fs.existsSync(fullPath)) {
-    return thumbPath;
-  }
-  // 存在しない場合はEmptyを返す
-  return '/thumb/components/Empty.png';
-}
+const getPostUrl = (post: (typeof allUiPosts)[number]) => `/ui/${post.id.replace('ui/', '')}/`;
 ---
 
-<BaseLayout title="Lism　UI" description="Lism CSSをベースにしたUIパッケージ、@lism-css/ui のコンポーネント一覧" excludeFromSearch>
-  <Lism class="uiComponents">
-    <Stack as="header" g="20">
-      <h1>Lism UI</h1>
-      <p class="-c:text-2">
-        Lism CSSをベースにしたUIパッケージ（<code>@lism-css/ui</code>） のコンポーネント一覧と、実装例・サンプル集を紹介します。
-      </p>
-    </Stack>
+<BaseLayout title="Lism UI" description="Lism CSSをベースにしたUIパッケージ、@lism-css/ui のコンポーネント一覧" excludeFromSearch>
+  <Lism>
+    <PageHeader title="Lism UI">
+      <Fragment slot="description"
+        >Lism CSSをベースにしたUIパッケージ（<code>@lism-css/ui</code>） のコンポーネント一覧と、実装例・サンプル集を紹介します。</Fragment
+      >
+    </PageHeader>
     <Lism as="section" mbs="50">
-      <Stack as="header" g="20">
-        <h2>Blocks</h2>
-        <p class="-c:text-2"><code>@lism-css/ui</code>からインポートできるコンポーネント一覧です。</p>
-      </Stack>
-      <AutoColumns cols="240px" g="30" mbs="40">
-        {
-          blockPosts.map((post) => {
-            const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
-            const thumbPath = getThumbPath(post.data.title);
-            return (
-              <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
-                <Frame ar="3/2" bd bdrs="20" bgc="base">
-                  <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
-                </Frame>
-                <Lism class="u--trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
-              </BoxLink>
-            );
-          })
-        }
+      <SectionHeader title="Blocks">
+        <Text><code>@lism-css/ui</code>からインポートできるコンポーネント一覧です。</Text>
+      </SectionHeader>
+      <AutoColumns class="c--uiComponentList" cols="240px" g="5" mbs="40">
+        {blockPosts.map((post) => <UiComponentCard href={getPostUrl(post)} title={post.data.title} draft={post.data.draft} />)}
       </AutoColumns>
     </Lism>
     {
       blockExamplePosts.length > 0 && (
         <Lism as="section" mbs="50">
-          <Stack as="header" g="20">
-            <h2>Block Examples</h2>
-            <p class="-c:text-2">
+          <SectionHeader title="Block Examples">
+            <Text>
               CSSをコピーして導入する<code>b--</code>部品の作例です。
-            </p>
-          </Stack>
-          <AutoColumns cols="240px" g="30" mbs="40">
-            {blockExamplePosts.map((post) => {
-              const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
-              const thumbPath = getThumbPath(post.data.title);
-              return (
-                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
-                  <Frame ar="3/2" bd bdrs="20" bgc="base">
-                    <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
-                  </Frame>
-                  <Lism class="u--trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
-                </BoxLink>
-              );
-            })}
+            </Text>
+          </SectionHeader>
+          <AutoColumns class="c--uiComponentList" cols="240px" g="5" mbs="40">
+            {blockExamplePosts.map((post) => (
+              <UiComponentCard href={getPostUrl(post)} title={post.data.title} draft={post.data.draft} />
+            ))}
           </AutoColumns>
         </Lism>
       )
@@ -100,23 +55,13 @@ function getThumbPath(title: string): string {
     {
       componentPosts.length > 0 && (
         <Lism as="section" mbs="50">
-          <Stack as="header" g="20">
-            <h2>Components</h2>
-            <p class="-c:text-2">Lism CSS, Lism UIをベースにした、その他の実装例・サンプル集です。</p>
-          </Stack>
-          <AutoColumns cols="240px" g="30" mbs="40">
-            {componentPosts.map((post) => {
-              const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
-              const thumbPath = getThumbPath(post.data.title);
-              return (
-                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
-                  <Frame ar="3/2" bd bdrs="20" bgc="base">
-                    <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
-                  </Frame>
-                  <Lism class="u--trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
-                </BoxLink>
-              );
-            })}
+          <SectionHeader title="Components">
+            <Text>Lism CSS, Lism UIをベースにした、その他の実装例・サンプル集です。</Text>
+          </SectionHeader>
+          <AutoColumns class="c--uiComponentList" cols="240px" g="5" mbs="40">
+            {componentPosts.map((post) => (
+              <UiComponentCard href={getPostUrl(post)} title={post.data.title} draft={post.data.draft} />
+            ))}
           </AutoColumns>
         </Lism>
       )

@@ -3,21 +3,19 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { toContentSlug } from './lib/contentSlug';
 
-/**
- * 記事コレクションの共通スキーマ
- */
 const postSchema = z.object({
   title: z.string(),
-  navtitle: z.string().optional(), // サイドバーナビで表示するタイトル（省略時はtitleを使用）
+  navtitle: z.string().optional(), // サイドバー表示用。省略時はtitleを使う
+  eyebrow: z.string().optional(),
   description: z.string(),
-  date: z.date().optional(), // 公開日（ドキュメントでは任意）
-  tags: z.array(z.string()).default([]).optional(), // タグ（ドキュメントでは不要）
+  date: z.date().optional(),
+  tags: z.array(z.string()).default([]).optional(),
   draft: z.boolean().default(false),
   hero: z.string().optional(),
-  order: z.number().optional(), // サイドバーでの表示順序（小さい順、未指定は999扱い）
+  order: z.number().optional(), // ナビゲーション・一覧の表示順。未指定は999扱い
 });
 
-// `_` 付きディレクトリ内の MDX（部分テンプレート等）はコレクション対象外にする（従来の content と同様）
+// `_` 付きディレクトリ内の MDX（部分テンプレート等）はコレクション対象外にする
 const mdMdxWithUnderscoreExcludes = ['**/*.{md,mdx}', '!**/_*/**'] as const;
 
 /**
@@ -26,9 +24,7 @@ const mdMdxWithUnderscoreExcludes = ['**/*.{md,mdx}', '!**/_*/**'] as const;
  * - en: 英語
  * memo: Astro 5 の Content Layer では各コレクションに loader が必須（legacy.collections 併用だと同期がスキップされる）
  */
-// `primitives/` 配下のみ、ファイル名の大文字・小文字をそのまま ID（= URL スラッグ）に使う。
-// CSS クラス名（例: `l--tileGrid`）とドキュメント URL を一致させるための例外扱い。
-// それ以外のコレクション（core-components / ui / ui/block-examples / ui/components 等）は従来通り小文字化して URL casing の破壊的変更を避ける。
+// CSSクラス名とURLを一致させるため、primitives/とtrait-class/はケースを保持し、他は既存URL互換のため小文字化する。
 const generateId = ({ entry }: { entry: string }) => {
   const withoutExt = entry.replace(/\.(md|mdx)$/, '');
   return toContentSlug(withoutExt);
@@ -57,5 +53,4 @@ export const collections = {
   en,
 };
 
-// スキーマ型をエクスポート（必要に応じて使用）
 export type PostSchema = z.infer<typeof postSchema>;

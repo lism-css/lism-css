@@ -48,6 +48,12 @@ interface TemplateConfig {
    */
   portViaEnv?: boolean;
   waitAfterLoad?: number;
+  /**
+   * true なら `prefers-reduced-motion: reduce` を適用して撮影する。
+   * 入場アニメーションや背景の常時アニメーションがあるテンプレで、完了後の静止状態を安定して撮るために使う
+   * （テンプレ側に reduced-motion 用のスタイル分岐があることが前提）。
+   */
+  reducedMotion?: boolean;
   shots: ShotDef[];
   /**
    * 言語別 overlay（`.lang/<lang>/`）をマージして撮影する shots。`{ en: [...] }` 形式。
@@ -464,6 +470,7 @@ async function runPass(entry: TemplateEntry, pass: Pass, browser: Browser, stats
     // 公開用ページ（CDN ランダム画像はそのまま）
     const realPage = await browser.newPage();
     await realPage.setViewportSize(VIEWPORT);
+    if (entry.config.reducedMotion) await realPage.emulateMedia({ reducedMotion: 'reduce' });
 
     // 比較用ページ（CDN ランダム画像 → 1x1 グレー）。force / compare / update で使う
     let grayPage: Page | null = null;
@@ -471,6 +478,7 @@ async function runPass(entry: TemplateEntry, pass: Pass, browser: Browser, stats
     if (needsGrayPage) {
       grayPage = await browser.newPage();
       await grayPage.setViewportSize(VIEWPORT);
+      if (entry.config.reducedMotion) await grayPage.emulateMedia({ reducedMotion: 'reduce' });
       await setupImageInterception(grayPage, createGrayPixelPng());
     }
 

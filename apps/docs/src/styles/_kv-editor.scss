@@ -1,0 +1,787 @@
+// トップページKVのライブエディターとAIパネル。常時ダークで、ブレークポイントはlism-cssのmd（800px）。
+
+@layer lism-custom {
+  :root {
+    --kvEditor-sz: 56rem;
+  }
+  /* ----------------------------------------
+      ヒーロー出力エリア（エディターの描画結果）
+   ---------------------------------------- */
+  .c--kvEditorHero {
+    width: 100%;
+
+    // エディター内容が消えた時に高さが完全に潰れないための下限（JS初期化前のフォールバック）。
+    // 初期化後は editor.ts が初期表示の自然高さを min-height としてインラインで固定する
+    min-height: 2rem;
+
+    // NOTE: CSS 側が担うのはトークン化できない任意（色・行間・影など）のみ。
+
+    // Property Classを優先するため、トークン化できない既定値だけをここで当てる。
+    h1 {
+      color: var(--gray-hi-c);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    p {
+      // 和文の既定。欧文は下の html[lang='en'] で詰める（SP / PC 共通）
+      line-height: 1.75;
+    }
+
+    // トークン化できない任意色・影のためここで当てる
+    // set--plain（lism-base レイヤー）の color: inherit より lism-custom が強いため color も効く
+    button[data-modal-open] {
+      color: #757575;
+      box-shadow: var(--bxsh--base);
+    }
+
+    // トークン化できない任意色のためここで当てる（-hov:-o は初期HTMLから削除）
+    // href は言語でプレフィックスが変わる（en は /en/docs/installation/）ため後方一致で当てる
+    a[href$='/docs/installation/'] {
+      background-color: var(--gray-hi-c);
+      // ホバー時の色遷移
+      transition:
+        color 0.15s,
+        background-color 0.15s;
+
+      &:hover {
+        background-color: var(--link);
+      }
+    }
+
+    // pathのd属性とLismのdisplay propが衝突するため、caret-rightをSVG直書きせずmaskで描く。
+    a[href$='/docs/installation/']::after {
+      content: '';
+      inline-size: 1em;
+      block-size: 1em;
+      background-color: currentColor;
+      $caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z'/%3E%3C/svg%3E");
+      mask: $caret center / contain no-repeat;
+      -webkit-mask: $caret center / contain no-repeat;
+    }
+  }
+
+  // ダークモードではトークン化されていない任意色だけを上書きする。
+  :root[data-theme='dark'] .c--kvEditorHero {
+    // 検索ボックス：ダーク背景では --bxsh--base の影がほぼ見えないため、
+    // ヘッダー検索ボタンの --bxsh--search-border と同様に境界線で輪郭を出す
+    button[data-modal-open] {
+      color: hsl(220, 4%, 60%); // プレースホルダー相当の薄いグレー（ダーク用）
+      box-shadow: inset 0 0 0 1px var(--divider);
+    }
+  }
+
+  // 英語トップ専用の調整。エディター内容（INITIAL_HTML_BY_LANG）は言語間で構造を揃え、
+  // 言語差のスタイルはここで吸収する
+  html[lang='en'] .c--kvEditorHero {
+    p {
+      line-height: 1.5;
+    }
+  }
+
+  /* ----------------------------------------
+      "Edit Here!!" 手書き風装飾
+   ---------------------------------------- */
+  // overflow:hiddenの外へ出すため、手書き風画像を高さ0の直前行から絶対配置する。
+  .c--kvEditorEditHere {
+    display: none;
+
+    // ヒーロー下端の中央寄せコンテンツと重ならない幅でのみ表示する
+    @media (min-width: 54rem) {
+      position: relative;
+      display: block;
+      height: 0; // フローには高さを足さず、エディター上端からの位置基準だけを作る
+      max-width: var(--kvEditor-sz); // エディターウィンドウと同じ最大幅・中央寄せで右端を揃える
+      margin-inline: auto;
+      pointer-events: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        right: clamp(-5.6rem, calc(var(--kvEditor-sz) + 6rem - 100vw), -0.5rem);
+        // --kvEditor-sz
+        bottom: -3.125rem; // エディター上端（この行の 3.5rem 下）の少し上に矢印の先端が乗る位置
+        width: 10rem;
+        aspect-ratio: 424 / 232; // 書き出し PNG の実寸比
+        background-color: var(--gray-hi-c);
+        $editHere: url('/img/kv-edit-here.png');
+        mask: $editHere center / contain no-repeat;
+        -webkit-mask: $editHere center / contain no-repeat;
+      }
+    }
+  }
+
+  /* ----------------------------------------
+      エディターウィンドウ + AIパネル
+   ---------------------------------------- */
+  .c--kvEditor {
+    --kvEditor-bgc: hsl(228, 3%, 20%); // ウィンドウ全体の背景（Figmaモックアップ準拠のフラット構成）
+    --kvEditor-surface: rgba(255, 255, 255, 0.08); // タブ・パネル・入力欄の面（白8%オーバーレイ）
+    --kvEditor-snackbar-bgc: #1d2126;
+    --kvEditor-text: #e1e4e8; // コード既定色は github-dark に合わせる（ハイライト色は現行維持）
+    --kvEditor-text-dim: #bfbfbf;
+    --kvEditor-warning: #e3b341; // 警告色（github-dark の yellow 系。致命的でない通知に使う）
+    // ネオンの発光色（AIパネルの orb グラデーション先頭の teal と共通）。
+    // Live Demo トグルの点灯と、反映フラッシュ（.c--kvEditor_lineFlash）で使う
+    --kvEditor-neon: #89f9e1;
+
+    // iOSの自動ズームを避けるためtextareaを16pxにし、scaleで表示上の14pxへ縮小する。
+    --kvEditor-input-scale: 0.875; // = 14 / 16
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 12.6875rem;
+    width: 100%;
+    max-width: var(--kvEditor-sz);
+    height: 28rem;
+    margin-block-start: 3.5rem;
+    margin-inline: auto; // ラッパー幅がウィンドウ最大幅を超える場合も中央寄せ（ヒーローの中央揃えと揃える）
+    overflow: hidden;
+    border-radius: var(--bdrs--30);
+    background-color: var(--kvEditor-bgc);
+    box-shadow: var(--bxsh--code);
+    color: var(--kvEditor-text);
+
+    @media not (min-width: 800px) {
+      --kvEditor-input-scale: 0.75; // = 12 / 16
+
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) 9.125rem;
+      height: 33.5625rem;
+      margin-block-start: 2.5rem;
+    }
+  }
+
+  // live モード（チャットパネルなしの自動ループ再生）: エディターがウィンドウ全幅を使う
+  .c--kvEditor[data-kv-mode='live'] {
+    grid-template-columns: minmax(0, 1fr);
+
+    @media not (min-width: 800px) {
+      grid-template-rows: minmax(0, 1fr);
+      height: 24.4375rem; // ai モードの SP 高さ（33.5625rem）からパネル下段（9.125rem）を除いた高さ
+    }
+  }
+
+  .c--kvEditor_window {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  /* ウィンドウバー（信号ドット + タブ + live モードの ▶/⏸）。背景はウィンドウと同一（バーの色分けなし）。
+     タブは margin の auto で右寄せする（space-between だと live モードでトグルが増えたときにタブが中央へ動くため） */
+  .c--kvEditor_bar {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0.6rem 0.75rem 0.6rem 1rem;
+  }
+
+  .c--kvEditor_dots {
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background-color: #ed6a5e;
+    box-shadow:
+      1.25rem 0 0 #f6be4f,
+      2.5rem 0 0 #62c554;
+    // ドット2つ分の box-shadow がバーの幅に含まれないため余白で確保
+    margin-inline-end: 2.5rem;
+  }
+
+  .c--kvEditor_tabs {
+    display: flex;
+    margin-inline-start: auto;
+  }
+
+  .c--kvEditor_tab {
+    width: 4rem; // 64px 固定（モックアップ準拠）
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 2px;
+    background: transparent;
+    color: #fff;
+    font-family: var(--ff--mono);
+    font-size: 0.875rem;
+    line-height: 1.25;
+    cursor: pointer;
+
+    @media not (min-width: 800px) {
+      font-size: 0.75rem;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+    &[aria-selected='true'] {
+      background-color: var(--kvEditor-surface);
+    }
+    // 構文が不正な間の控えめなインジケーター（スナックバーと同じ warning トーン。両タブ共通）
+    &[data-invalid] {
+      color: var(--kvEditor-warning);
+    }
+    // 自動切替だけを合図として目立たせるため、切替先のタブを最大輝度から減衰させる。
+    &[data-kv-tab-flash] {
+      animation: kvEditor-tab-flash 0.8s ease-out;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+  }
+
+  /* ライブループ再生の「Live Demo ▶/⏸」トグル（live モードのみ）。 */
+  .c--kvEditor_playToggle {
+    // 再生中（playing）は ⏸、停止中（paused）は ▶
+    --kvEditor-toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 2.5v11L13.5 8Z'/%3E%3C/svg%3E");
+
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    height: 1.75rem;
+    margin-inline-start: 0.5rem;
+    padding: 0 0.5rem;
+    border: none;
+    border-radius: 2px;
+    background: transparent;
+    color: var(--kvEditor-text-dim);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: var(--kvEditor-neon);
+    }
+
+    // 再生中: ネオン点灯（ラベル・アイコンとも発光色 + グロー、ラベルはゆっくり明滅）
+    &[data-kv-loop-state='playing'] {
+      --kvEditor-toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 2.5h3v11H4Zm5 0h3v11H9Z'/%3E%3C/svg%3E");
+
+      color: var(--kvEditor-neon);
+
+      // グローは mask 済みの ::before を内包する span 側に掛ける（アイコン形状の影になる）
+      .c--kvEditor_playToggleIcon {
+        filter: drop-shadow(0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 50%));
+      }
+
+      .c--kvEditor_playToggleLabel {
+        text-shadow:
+          0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 80%),
+          0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 40%);
+        animation: kvEditor-neon-pulse 1.5s ease-in-out infinite alternate;
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+    }
+  }
+
+  .c--kvEditor_playToggleLabel {
+    font-family: var(--ff--mono);
+    font-weight: 600;
+    font-size: 0.75em;
+    letter-spacing: var(--lts--l);
+    line-height: 1;
+    white-space: nowrap;
+
+    // 320px級の極小幅ではバー（ドット + タブ 128px + トグル）が収まらないためラベルを畳む（アイコンは残る）
+    @media not (min-width: 360px) {
+      display: none;
+    }
+  }
+
+  /* ▶/⏸ アイコン（ラベルの右）。mask（形の切り抜き）と drop-shadow（グロー）は同一要素に掛けると
+     filter → mask の順で適用されて影ごと切り抜かれてしまうため、mask は ::before に分離している
+     （グローの filter は再生中に外側のこの span へ掛かる。playToggle 側を参照） */
+  .c--kvEditor_playToggleIcon {
+    flex-shrink: 0;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: currentColor;
+      mask: var(--kvEditor-toggle-icon) center / contain no-repeat;
+      -webkit-mask: var(--kvEditor-toggle-icon) center / contain no-repeat;
+    }
+  }
+
+  /* ----------------------------------------
+      エディター（textarea + ハイライトpre の重ね）
+   ---------------------------------------- */
+  .c--kvEditor_editor {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  // 両レイヤーで完全に同一のフォントメトリクスを使う（1pxでもズレると caret 位置が狂う）
+  .c--kvEditor_pre pre,
+  .c--kvEditor_pre .fallback,
+  .c--kvEditor_input {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border: none;
+    font-family: var(--ff--mono);
+    font-size: 0.875rem;
+    line-height: 1.25; // モックアップ準拠（初期コード19行が400pxにちょうど収まる）
+    letter-spacing: normal;
+    tab-size: 2;
+    white-space: pre;
+    overflow-wrap: normal;
+    word-break: normal;
+
+    @media not (min-width: 800px) {
+      font-size: 0.75rem;
+    }
+  }
+
+  // lism-base の `* { line-height: calc(1em + var(--hl) * 2) }` が
+  // shiki の code / span にも直接当たり textarea とズレるため、子孫は必ず親から継承させる
+  .c--kvEditor_pre pre * {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+
+  .c--kvEditor_pre {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    pre {
+      background-color: transparent !important; // shiki の inline 背景を打ち消す
+      min-width: max-content;
+    }
+    code {
+      display: block;
+    }
+    // ハイライター読み込み前のプレーンテキスト表示
+    .fallback {
+      display: block;
+      color: var(--kvEditor-text);
+      min-width: max-content;
+    }
+  }
+
+  // textarea のスクロールに transform で追従するレイヤー
+  .c--kvEditor_preInner {
+    width: max-content;
+    min-width: 100%;
+    will-change: transform;
+  }
+
+  // 保存→ヒーロー反映を示すため変更行をテキスト下で減衰させ、間はPAUSE_FLASH_TO_APPLYで管理する。
+  .c--kvEditor_lineFlash {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 2px;
+    background-color: color-mix(in srgb, var(--kvEditor-neon), transparent 75%);
+    box-shadow: 0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 50%); // 行の上下へのにじみ
+    opacity: 0;
+    will-change: transform; // syncScroll が縦スクロールへ transform で追従させる
+  }
+
+  .c--kvEditor_lineFlash[data-kv-flash-active] {
+    animation: kvEditor-applied-flash 0.5s ease-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .c--kvEditor_input {
+    position: absolute;
+    inset: 0;
+    // iOSの自動ズームを避け、scale後もpreとcaret位置が合うよう寸法を逆補正する。
+    font-size: 16px;
+    transform: scale(var(--kvEditor-input-scale));
+    transform-origin: 0 0;
+    width: calc(100% / var(--kvEditor-input-scale));
+    height: calc(100% / var(--kvEditor-input-scale));
+    // lism-css の reset（@layer reset）にある textarea { max-inline-size: 100% } が
+    // 拡大した width をクランプしてしまうため解除する
+    max-inline-size: none;
+    padding: calc(0.5rem / var(--kvEditor-input-scale)) calc(1rem / var(--kvEditor-input-scale));
+    background: transparent;
+    color: transparent;
+    caret-color: var(--kvEditor-text);
+    resize: none;
+    outline: none;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
+
+    &::selection {
+      background-color: rgba(56, 139, 253, 0.4);
+      color: transparent;
+    }
+
+    // WCAG 2.4.7に従い、scale後も2pxで内側に収まるフォーカス枠を編集中は常に表示する。
+    &:focus-visible {
+      outline: calc(2px / var(--kvEditor-input-scale)) solid var(--kvEditor-neon);
+      outline-offset: calc(-2px / var(--kvEditor-input-scale));
+    }
+  }
+
+  /* 通知スタック（エディター右下）。複数の通知を新しいものが下（角側）に来るよう縦積みする。
+     コンテナ自体はクリックを透過し、アクション付き通知だけ pointer-events を戻す */
+  .c--kvEditor_snackbarStack {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-width: calc(100% - 1.5rem);
+    pointer-events: none; // エディター操作を妨げない（子の is--action だけ auto に戻す）
+  }
+
+  /* 折りたたみ用のラッパー。出入り時は height だけをアニメーションさせる。
+     スタック間の隙間は内側カードの margin-top で持たせる（overflow:hidden で BFC を作り
+     この margin をラッパー高さに内包させる）。ラッパー自身は padding を持たないため
+     height:0 が本当に 0 まで縮み、「カード＋隙間」を1つの height トランジションで畳める。
+     ※ padding で隙間を持たせると border-box では padding が下限として残り、
+        height アニメーション後に隙間だけ instant に消えてカクつく。 */
+  .c--kvEditor_snackbarRow {
+    max-width: 100%;
+    min-height: 0; // flex アイテムの既定 min-height:auto を外し height:0 を効かせる
+    transition: height 0.2s ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* スナックバー風の通知（自動クローズ）。
+     動作は継続する非致命的な通知のため、赤ではなく warning トーンで表示する */
+  .c--kvEditor_snackbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    // スタック間の隙間。ラッパー(overflow:hidden)内なので height 折りたたみに含まれる
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--kvEditor-warning), transparent 65%);
+    border-radius: 0.5rem;
+    background-color: var(--kvEditor-snackbar-bgc);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    color: var(--kvEditor-text);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    pointer-events: none; // エディター操作を妨げない
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+
+    // 警告アイコン（octicon alert の三角形を mask で描画）
+    &::before {
+      content: '';
+      flex-shrink: 0;
+      width: 0.875rem;
+      height: 0.875rem;
+      background-color: var(--kvEditor-warning);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'/%3E%3C/svg%3E")
+        no-repeat center / contain;
+    }
+    // カードはフェード（opacity/transform）のみ担当。高さの折りたたみはラッパーが担う
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s linear 0.2s;
+
+    &.is--show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    // リセット提案はボタンだけを見せ、操作できるようpointer-eventsだけ戻す。
+    &.is--action {
+      pointer-events: auto;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+
+      &::before {
+        display: none;
+      }
+
+      // ボタン単体だとコードの上で背景が透けて読みにくいため、カードの地色をボタンへ移す
+      .c--kvEditor_snackbar_btn {
+        background-color: var(--kvEditor-snackbar-bgc);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* アクションボタン（スナックバーの Restore と中断ステータス行の Resume で共用） */
+  .c--kvEditor_snackbar_btn,
+  .c--kvEditor_statusBtn {
+    flex-shrink: 0;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--bdrs--20);
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--kvEditor-text);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  /* ----------------------------------------
+      AIパネル
+   ---------------------------------------- */
+  .c--kvEditor_panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    // グリッドアイテムのデフォルト min-height:auto を打ち消す。
+    // これが無いとパネルが内容の高さまで伸び、メッセージ領域の overflow スクロールが効かない
+    min-height: 0;
+    padding: 1rem;
+    background-color: var(--kvEditor-surface);
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.2);
+
+    @media not (min-width: 800px) {
+      // SPは下段に全幅表示（境界は背景差のみ・ボーダーなし）
+      border-inline-start: none;
+    }
+  }
+
+  /* 空状態: グラデーションの円形ロゴ + プレースホルダー文 */
+  .c--kvEditor_placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+
+    &[hidden] {
+      display: none;
+    }
+
+    @media not (min-width: 800px) {
+      justify-content: start;
+    }
+  }
+
+  .c--kvEditor_orb {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    // Figmaモックアップのグラデーション（teal → blue → purple）
+    background: linear-gradient(211deg, #89f9e1 0%, #87caf7 36%, #af8cff 100%);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .c--kvEditor_placeholderText {
+    margin: 0;
+    color: var(--kvEditor-text-dim);
+    font-size: 0.75rem;
+    letter-spacing: var(--lts--s);
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .c--kvEditor_messages {
+    // スクロール可能な方向を示す上下端のフェード高さ（scroll-hint.ts がスクロール位置に応じて更新）
+    --kvEditor-mask-top: 0px;
+    --kvEditor-mask-bottom: 0px;
+
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 0;
+    overflow-y: auto;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 var(--kvEditor-mask-top),
+      #000 calc(100% - var(--kvEditor-mask-bottom)),
+      transparent 100%
+    );
+    // スクロールバーの有無で幅がガタつかないよう、常に溝を確保する
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    padding-block-end: 1em;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .c--kvEditor_msg {
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.5rem;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+
+    &.is--user {
+      align-self: flex-end;
+      max-width: 90%;
+      background-color: var(--kvEditor-surface);
+    }
+    &.is--ai {
+      align-self: stretch;
+      color: var(--kvEditor-text);
+      padding-inline-start: 0;
+    }
+  }
+
+  /* ステータス行（中断時の "Interrupted" + Resume ボタン / 完了時の "Done"）。吹き出しではないシステム表示 */
+  .c--kvEditor_status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 0 0 1em;
+    color: var(--kvEditor-text-dim);
+    font-style: italic;
+  }
+
+  .c--kvEditor_statusLabel {
+    line-height: 1.25;
+  }
+
+  /* 「Ask AI to edit...」トリガー（入力欄風のボタン。右下に送信矢印の矩形） */
+  .c--kvEditor_ask {
+    flex-shrink: 0;
+    // プレースホルダーが隠れ、かつ messages がまだ空（:empty で非表示）の間も
+    // パネル上端にジャンプしないよう、常に下端へ固定する
+    margin-block-start: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    padding: 0.375rem;
+    border: none;
+    border-radius: 2px;
+    background-color: var(--kvEditor-surface);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    @media not (min-width: 800px) {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  .c--kvEditor_askText {
+    flex: 1;
+    width: 100%;
+    color: var(--kvEditor-text-dim);
+    font-size: 0.75rem;
+    letter-spacing: var(--lts--s);
+    line-height: 1.25;
+    text-align: left;
+
+    /* シナリオ再生中のタイピング表示（プレースホルダー色 → 通常テキスト + 点滅キャレット） */
+    &.is--typing {
+      color: var(--kvEditor-text);
+
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 1em;
+        margin-inline-start: 1px;
+        vertical-align: -0.125em;
+        background-color: currentColor;
+        animation: kvEditor-caret-blink 1s steps(2, jump-none) infinite;
+      }
+    }
+  }
+
+  .c--kvEditor_askArrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 2px;
+    background-color: #373a3d;
+    color: #fff;
+    font-size: 0.5625rem; // 9px
+    line-height: 1;
+  }
+}
+
+// 入力欄トリガーのキャレット点滅（is--typing は reduced-motion 時には付与されない）
+@keyframes kvEditor-caret-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// 反映フラッシュ（書き換えた行の背景）の減衰。輝度は .c--kvEditor_lineFlash 側の色が担う
+@keyframes kvEditor-applied-flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// 自動タブ切替の合図（タブ文字のネオン点灯 → 通常色へ減衰）
+@keyframes kvEditor-tab-flash {
+  from {
+    color: var(--kvEditor-neon);
+    text-shadow:
+      0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 40%),
+      0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 20%);
+  }
+  to {
+    color: #fff;
+    text-shadow:
+      0 0 4px transparent,
+      0 0 12px transparent;
+  }
+}
+
+// 「Live Demo」ラベルのネオン明滅（再生中のみ。reduced-motion 時は静的なグローに固定）。
+// 消灯までは落とさず、グローの強弱でゆらぎを出す
+@keyframes kvEditor-neon-pulse {
+  from {
+    text-shadow:
+      0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 55%),
+      0 0 12px color-mix(in srgb, var(--kvEditor-neon), transparent 75%);
+  }
+  to {
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--kvEditor-neon), transparent 25%),
+      0 0 16px color-mix(in srgb, var(--kvEditor-neon), transparent 50%);
+  }
+}

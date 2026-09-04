@@ -7,23 +7,15 @@ function tokenize(text: string): string[] {
     .filter((t) => t.length > 0);
 }
 
-// ".-g:5" or "-g:5" → prop="g", value="5" / "-p" → prop="p"
 const PROP_CLASS_RE = /^\.?-([a-z][a-z0-9-]*)(:.+)?$/i;
 
-/**
- * Property Class 記法（例: "-g:5", ".-p:20", "-fz"）から prop 名を抽出する。
- * get-props-system.ts からも利用される共通ユーティリティ。
- */
+/** Property Class記法からprop名を取り出す。get-props-system.tsからも利用する。 */
 export function parsePropClassName(input: string): string | null {
   const m = input.match(PROP_CLASS_RE);
   return m ? m[1].toLowerCase() : null;
 }
 
-/**
- * 検索クエリをCSSプロパティ名やProperty Class記法で展開する。
- * 例: "font-size" → "font-size fz"
- * 例: "-g:5" → "-g:5 g gap property class"
- */
+/** CSSプロパティとProperty Classを相互展開して検索語を補う。 */
 function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): string {
   const additions: string[] = [];
   const queryLower = query.toLowerCase();
@@ -31,11 +23,9 @@ function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): str
 
   if (cssPropertyMap) {
     for (const [cssProp, lismProps] of cssPropertyMap) {
-      // Property Class 記法の逆引き（例: "-g:5" の "g" → "gap"）
       if (parsedProp && lismProps.includes(parsedProp)) {
         additions.push(cssProp);
       }
-      // CSSプロパティ名の展開（例: "font-size" → "fz"）
       if (queryLower.includes(cssProp)) {
         additions.push(...lismProps);
       }
@@ -57,16 +47,12 @@ function scoreEntry(entry: DocsEntry, queryTokens: string[]): number {
   const keywordsLower = entry.keywords.join(' ').toLowerCase();
   const snippetLower = entry.snippet.toLowerCase();
 
+  // titleからsnippetへ順に重みを下げる。
   for (const token of queryTokens) {
-    // title matches are weighted highest
     if (titleLower.includes(token)) score += 10;
-    // keywords
     if (keywordsLower.includes(token)) score += 5;
-    // headings
     if (headingsLower.includes(token)) score += 3;
-    // description
     if (descLower.includes(token)) score += 2;
-    // snippet
     if (snippetLower.includes(token)) score += 1;
   }
 
@@ -83,7 +69,7 @@ export interface SearchDocsOptions {
 export function searchDocs(entries: DocsEntry[], query: string, options?: SearchDocsOptions): SearchResult[] {
   const { category, limit = 10, cssPropertyMap, guideTopics } = options ?? {};
 
-  // CSSプロパティ名・Property Class記法をLism prop名に展開してからトークナイズ
+  // CSSプロパティ名とProperty Class記法も同じ検索対象へ展開する。
   const expandedQuery = expandQuery(query, cssPropertyMap);
   const queryTokens = tokenize(expandedQuery);
   if (queryTokens.length === 0) return [];
@@ -123,21 +109,16 @@ function slugToPageUrl(slug: string): string {
   return slug.startsWith('ui/') ? `${SITE_BASE_URL}/${slug}/` : `${SITE_BASE_URL}/docs/${slug}/`;
 }
 
-/** `sourcePath`（拡張子なし）の末尾セグメントを返す（例: `primitives/l--flex` → `l--flex`） */
 function getBasename(withoutExt: string): string {
   const parts = withoutExt.split('/');
   return parts[parts.length - 1];
 }
 
-/**
- * 検索結果のページを詳しく見るための推奨フォローアップツール呼び出しを返す。
- * sourcePath による判定をカテゴリによる判定より優先する。
- */
+/** 検索結果を掘り下げる推奨ツールを返す。カテゴリよりsourcePathの規則を優先する。 */
 function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): string | null {
   const withoutExt = entry.sourcePath.replace(/\.mdx$/, '');
   const basename = getBasename(withoutExt);
 
-  // sourcePath ベースの判定（category より優先）
   if (withoutExt === 'core-components/lism-props') {
     return 'get_props_system()';
   }
@@ -150,14 +131,11 @@ function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): strin
   if (withoutExt.startsWith('property-class/')) {
     return `get_props_system(prop: "${basename}")`;
   }
-  // ui/block-examples/（Chat, Timeline 等）と ui/components/（Card, Hero 等）は、
-  // パッケージが提供するコンポーネントではなく Lism CSS での実装例ページなので get_component では解決できない。
-  // 詳細が必要な場合は検索結果の url を参照してもらう。
+  // 実装例ページはパッケージ提供コンポーネントではないためget_componentでは解決できない。
   if (withoutExt.startsWith('ui/block-examples/') || withoutExt.startsWith('ui/components/')) {
     return null;
   }
 
-  // category ベースの判定
   switch (entry.category) {
     case 'core-components':
       return `get_component(name: "${basename}")`;
@@ -180,12 +158,6 @@ function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): strin
  * IMPORTANT: `apps/docs/src/lib/contentSlug.ts` の `toContentSlug` と必ず同じロジックに保つこと。
  * 別ワークスペース（apps/docs）なので直接 import できず、ローカル実装で複製している。
  * apps/docs 側を変更した場合は必ずここも合わせて更新する。
- *
- * 例:
- *   `primitives/l--tileGrid.mdx`    → `primitives/l--tileGrid`
- *   `trait-class/is--boxLink.mdx`   → `trait-class/is--boxLink`
- *   `core-components/Group.mdx`     → `core-components/group`
- *   `ui/DummyText.mdx`              → `ui/dummytext`
  */
 const PRESERVE_CASE_PREFIXES = ['primitives/', 'trait-class/'];
 

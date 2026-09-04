@@ -1,110 +1,52 @@
+基準日: 2026-09-03・コミット105422df
+
 # パターン スクリーンショット
 
-パターンページのサムネイル撮影と、レイアウト差分検出の仕組みについて。
+`apps/docs`のパターンページのサムネイル撮影と、レイアウト差分検出の仕組み。テンプレ側は[template-screenshots.md](./template-screenshots.md)。
 
 
-## コマンド一覧
+## コマンド
 
-| コマンド | 説明 |
-|---------|------|
-| `pnpm screenshot:patterns:new` | 新規パターンのスクリーンショットを撮影（既存はスキップ） |
-| `pnpm screenshot:patterns:force` | 全パターンのスクリーンショットを再撮影 |
-| `pnpm screenshot:patterns:compare` | ベースラインと比較（初回はベースライン生成） |
-| `pnpm screenshot:patterns:compare --threshold 0.5` | 差分率しきい値を変更（デフォルト: 0.01%） |
-| `pnpm screenshot:patterns:update` | 差分があったパターンのベースラインとサムネイルを更新 |
+ルートからも同名コマンドで実行でき、`apps/docs`側に委譲される。
 
-`screenshot:patterns:new` / `screenshot:patterns:force` / `screenshot:patterns:compare` はビルドを含む。`screenshot:patterns:update` は既存の dist を使用する。
-ルートからも同名コマンド（`pnpm screenshot:patterns:*`）で実行でき、`apps/docs` 側に委譲される。
+| コマンド | 処理 |
+| --- | --- |
+| `pnpm screenshot:patterns:new` | ビルド後、Playwrightで新規パターンだけ撮影し`public/screenshots/patterns/`へ保存（既存はスキップ）。サイトのパターン一覧がこれをサムネイルに使う |
+| `pnpm screenshot:patterns:force` | ビルド後、全パターンのサムネイルを再撮影 |
+| `pnpm screenshot:patterns:compare` | ビルド後、CDNのランダム画像をグレーに差し替えて撮影し、`_screenshots/baseline/`とピクセル比較。初回はベースラインを生成する（コミットする）。差分画像は`_screenshots/diff/`へ出力 |
+| `pnpm screenshot:patterns:compare --threshold 0.5` | 差分率のしきい値を変更（既定0.01%） |
+| `pnpm screenshot:patterns:update` | ビルドせず既存distを使い、`_screenshots/diff/`にある差分パターンのベースライン（グレー差し替え）と公開用サムネ（本番画像）を再撮影。完了後に`diff/`と`temp/`を削除 |
 
-### パターンの絞り込み
+### 絞り込み
 
-`screenshot:patterns:new` / `screenshot:patterns:force` / `screenshot:patterns:compare` で、カテゴリやパターンを指定して対象を絞り込める。
-
-```bash
-pnpm screenshot:patterns:new cta              # カテゴリ指定
-pnpm screenshot:patterns:new cta/cta001       # パターン指定
-pnpm screenshot:patterns:new cta section      # 複数指定
-pnpm screenshot:patterns:compare cta          # 比較対象の絞り込み
-```
-
-
-## 言語別（ja / en）スクショ
-
-パターンプレビューは`ja`（デフォルト）と`en`の2言語に対応する。`generate-screenshots.ts` / `compare-screenshots.ts`は`--lang=en` / `--lang=ja`で対象言語を絞り込める（省略時は全言語を撮影・比較する）。`update-screenshots.ts`には`--lang`オプションが無く、`_screenshots/diff/`配下のディレクトリ構成（`en/`などの言語ディレクトリの有無）から対象言語を自動判定する。
+`new` / `force` / `compare`はカテゴリやパターンで対象を絞れる。
 
 ```bash
-npx tsx scripts/generate-screenshots.ts --lang=en             # 英語版のみ新規撮影
-npx tsx scripts/compare-screenshots.ts --lang=ja               # 日本語版のみ比較
-npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=en    # パターン指定 + 言語指定
+pnpm screenshot:patterns:new cta              # カテゴリ
+pnpm screenshot:patterns:new cta/cta001       # パターン
+pnpm screenshot:patterns:new cta section      # 複数
+pnpm screenshot:patterns:compare cta
 ```
 
-保存先は`ja`がプレフィックスなし、`en`は`en/`サブディレクトリに分かれる。公開用サムネ（`public/screenshots/patterns/`）・比較用ベースライン（`_screenshots/baseline/`）のどちらも同じ規則。
+### 言語（ja / en）
 
-| 言語 | 公開用サムネの例 | ベースラインの例 | 撮影URL |
-|---|---|---|---|
-| `ja`（デフォルト） | `public/screenshots/patterns/cta/cta001.png` | `_screenshots/baseline/cta/cta001.png` | `/preview/patterns/cta/cta001/` |
-| `en` | `public/screenshots/patterns/en/cta/cta001.png` | `_screenshots/baseline/en/cta/cta001.png` | `/preview/patterns/cta/cta001/en/` |
+プレビューは`ja`（既定）と`en`の2言語。`generate-screenshots.ts` / `compare-screenshots.ts`は`--lang=en` / `--lang=ja`で絞れる（省略時は全言語）。`update-screenshots.ts`に`--lang`は無く、`_screenshots/diff/`配下に`en/`があるかで対象言語を判定する。
 
-`en`撮影時はプレビューページのURL末尾に`/en/`が付く（プレビュー側が言語別ルートを持つため）。
-
-
-## サムネイル撮影（screenshot:patterns:new / screenshot:patterns:force）
-
-Playwright で各パターンのプレビューページを撮影し、`public/screenshots/patterns/` に保存する。
-サイト上のパターン一覧ページがこれをサムネイルとして表示する。
-
-```
-pnpm screenshot:patterns:new      # 新規のみ
-pnpm screenshot:patterns:force    # 全て再撮影
+```bash
+# apps/docs で実行
+npx tsx scripts/generate-screenshots.ts --lang=en
+npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja
 ```
 
-
-## レイアウト比較（screenshot:patterns:compare）
-
-CDN のランダム画像をグレーのプレースホルダーに差し替えた上で撮影し、ベースライン画像とピクセル比較してレイアウトの差分を検出する。
-
-### 初回（ベースライン生成）
-
-```
-pnpm screenshot:patterns:compare
-```
-
-`_screenshots/baseline/` にベースライン画像が生成される。これを Git にコミットしておく。
-
-### 2回目以降（比較）
-
-```
-pnpm screenshot:patterns:compare
-```
-
-ベースラインと比較し、差分があるパターンを通知する。差分画像は `_screenshots/diff/` に出力される。
-
-
-## ベースライン更新（screenshot:patterns:update）
-
-```
-pnpm screenshot:patterns:update
-```
-
-`_screenshots/diff/` にある差分パターンを対象に、以下の2つを同時に更新する:
-
-1. **比較用ベースライン** (`_screenshots/baseline/`) — グレー差し替え画像で再撮影
-2. **公開用サムネイル** (`public/screenshots/patterns/`) — 本番画像で再撮影
-
-更新後、`_screenshots/diff/` と `_screenshots/temp/` は自動で削除される。
+保存先は`ja`がプレフィックスなし、`en`が`en/`サブディレクトリ（公開用サムネもベースラインも同じ規則）。`en`の撮影URLは末尾に`/en/`が付く（`/preview/patterns/cta/cta001/en/`）。
 
 
 ## 運用フロー
 
-1. **CSS やパターンを変更した**
-   - `pnpm screenshot:patterns:compare` で意図しないレイアウト崩れがないか確認
-2. **差分が意図通り**
-   - `pnpm screenshot:patterns:update` でベースラインとサムネイルを更新 → コミット
-3. **サムネイルだけ再撮影したい場合**
-   - `pnpm screenshot:patterns:force` でサイト表示用のサムネイルを再撮影 → コミット
-4. **新しいパターンを追加した**
-   - `pnpm screenshot:patterns:new` で新規のサムネイルを撮影
-   - `pnpm screenshot:patterns:compare` でベースラインに追加される
+1. CSSやパターンを変更した: `compare`で意図しない崩れがないか確認する。
+2. 差分が意図どおり: `update`でベースラインとサムネを更新してコミットする。
+3. サムネだけ撮り直したい: `force`してコミットする。
+4. パターンを追加した: `new`でサムネを撮影し、`compare`でベースラインに追加する。
 
 
 ## ファイル構成
@@ -112,17 +54,14 @@ pnpm screenshot:patterns:update
 ```
 apps/docs/
   scripts/
-    generate-screenshots.ts    # サムネイル撮影スクリプト
-    compare-screenshots.ts     # 比較スクリプト
-    update-screenshots.ts      # 差分パターンの更新スクリプト
-  public/
-    screenshots/patterns/     # サイト表示用サムネイル（Git管理）
-      cta/cta001.png            #   ja（デフォルト、プレフィックスなし）
-      en/cta/cta001.png         #   en（言語別サブディレクトリ）
+    generate-screenshots.ts    # 撮影（new / force）
+    compare-screenshots.ts     # 比較
+    update-screenshots.ts      # 差分パターンの更新
+  public/screenshots/patterns/ # 公開用サムネ（Git管理）
+    cta/cta001.png             #   ja
+    en/cta/cta001.png          #   en
   _screenshots/
-    baseline/                  # 比較用ベースライン（Git管理）
-      cta/cta001.png            #   ja
-      en/cta/cta001.png         #   en
-    diff/                      # 差分画像の出力先（Git管理外、言語構成は baseline と同様）
+    baseline/                  # 比較用ベースライン（Git管理）。言語構成は上と同じ
+    diff/                      # 差分画像（Git管理外）。言語構成は上と同じ
     temp/                      # 比較時の一時ファイル（自動削除）
 ```

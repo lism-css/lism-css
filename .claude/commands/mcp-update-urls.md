@@ -1,105 +1,34 @@
+---
+description: MCP の docs-index.json をファイル構成の差分（移動・リネーム・新規・削除）だけに追従させる軽量版。既存エントリの文言は変えない。内容も更新するなら /mcp-update
+---
+
 # MCP Server URL / 構成更新（軽量版）
 
-`packages/mcp/src/data/docs-index.json` の構成を実ファイル構成に追従させる軽量コマンド。以下の3種類の差分に対応する:
+`packages/mcp/src/data/docs-index.json` の `sourcePath`・`category` を `apps/docs/src/content/ja/` の実ファイル構成に合わせる。既存エントリの `title`・`description`・`headings`・`keywords`・`snippet` は移動・リネーム時も変えない。新規エントリだけ生成する。
 
-1. **ファイル移動・リネーム**: `sourcePath` と `category` を新パスに合わせて更新
-2. **新規ページ追加**: 未登録の MDX を検出して新規エントリを追加
-3. **削除ページ**: 実ファイルが存在しない（かつ移動先・リネーム先もない）エントリを削除
+メインエージェントが直接処理する（サブエージェントは手順 9 の `runner` だけ可）。`en/` は参照しない。
 
-既存エントリの**テキスト系フィールド（`title`, `description`, `headings`, `keywords`, `snippet`）は変更しない**（移動・リネーム時も維持）。新規追加エントリについては、このコマンド内で frontmatter と本文から生成する。
 
-> **使い分け**:
-> - 既存エントリの内容も含めて一括で再生成したい → `/mcp-update`
-> - ファイル構成の差分（移動・新規・削除）にだけ追従したい → このコマンド
+## 手順
 
-## 作業手順
-
-### 1. 事前情報の取得
-
-- `git rev-parse --short HEAD` で現在のコミットハッシュを取得
-
-### 2. 実ファイル一覧の取得
-
-- `apps/docs/src/content/ja/**/*.mdx` を Glob で取得
-- 以下は集計対象から除外する:
-  - ファイル名・ディレクトリ名が `_` で始まるもの（例: `_demo/` 配下）
-  - `test.mdx`（この正確なファイル名のみ。「テスト用らしい」他のファイルを拡大解釈で除外しない）
-- この除外定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` と一致させている（テスト側が正）
-- 残ったファイルの相対パス（`ja/` 以下）を「実在ファイル集合」とする
-
-### 3. docs-index.json の読み込みと分類
-
-`packages/mcp/src/data/docs-index.json` を読み込み、各エントリの `sourcePath` を「実在ファイル集合」と突き合わせて以下に分類する:
-
-- **一致**: 実ファイルが存在するエントリ（処理不要）
-- **不一致**: `sourcePath` の実ファイルが存在しないエントリ → 手順 4 で移動・リネーム or 削除を判定
-- **未登録**: 実在ファイル集合にあるが `docs-index.json` に `sourcePath` として存在しないファイル → 手順 5 で新規追加
-
-> 補足: 同一 `sourcePath` を共有する複数エントリ（例: `utility-class.mdx` の分割エントリ）は、1つでも実ファイルがあれば全て「一致」扱いとする。
-
-### 4. 不一致エントリの処理（移動・リネーム or 削除）
-
-各不一致エントリについて、ファイル名（basename）で `apps/docs/src/content/ja/**/{basename}` を Glob 検索し、以下のように分岐する:
-
-- **単一マッチ**: そのパスを新 `sourcePath` として採用（移動候補）
-- **複数マッチ**: 候補をユーザーに提示して選択を仰ぐ
-- **マッチなし**: ただちに削除候補とせず、リネームの可能性を確認する:
-  - 手順 3 の「未登録」ファイルの frontmatter（`title`, `description`）とエントリの `title` 等を突き合わせ、同一ページと判断できるものがあれば**リネーム候補**とし、そのパスを新 `sourcePath` として採用する。テキスト系フィールドは維持し、対応付いた未登録ファイルは手順 5 の新規追加対象から除外する
-  - どの未登録ファイルとも対応しない場合のみ**削除候補**として扱う
-
-同一 `sourcePath` を共有する複数エントリ（分割エントリ）は1グループとして扱い、移動・リネームの判定結果を全エントリに適用する（分割エントリの `title` はセクション名のため frontmatter と一致しないが、それを理由に個別に削除候補へ分類しない）。
-
-### 5. 新規ページのエントリ生成
-
-手順 3 で抽出した「未登録」ファイル（手順 4 でリネーム候補に対応付いたものを除く）について、新規エントリを生成する。
-
-各フィールドの生成ルール（title の併記形式、category の導出、keywords の付与ルール等）は `.claude/agents/lism-mcp-editor.md` の「エントリ生成ルール」を正本とし、それに従う。このファイルには重複記載しない。
-
-新規エントリの挿入位置は、関連する既存エントリ（同じ category やディレクトリの隣）の直後を選ぶ。
-
-### 6. 変更プランの提示
-
-以下を整理してユーザーに提示し、承認を取る:
-
-- **移動・リネームエントリ**: 旧 `sourcePath` / `category` → 新 `sourcePath` / `category`（リネームはその旨を明記）
-- **追加エントリ**: 新規 `sourcePath` と category、タイトル（テキスト系フィールドの詳細は長くなるので必要なら折りたたんで提示）
-- **削除エントリ**: `sourcePath` と title
-- **保留**: 「複数マッチ」でユーザー選択待ちのエントリ
-
-### 7. docs-index.json の更新
-
-ユーザーから承認を得たら、以下の方針で更新する:
-
-- **移動・リネーム**: 該当エントリの `sourcePath` と `category` を新パス基準に置換。テキスト系フィールドは一切変更しない
-- **追加**: 手順 5 で生成したエントリを適切な位置に挿入
-- **削除**: 該当エントリを配列から除去
-- 配列の既存要素順序は可能な限り維持する（移動・追加時もローカルな順序調整に留める）
-
-### 8. meta.ts の更新
-
-`packages/mcp/src/data/meta.ts` を以下のように更新:
-
-- `generatedAt`: 今日の日付（`YYYY-MM-DD`）
-- `sourceCommit`: 手順 1 で取得した HEAD コミットハッシュ
-- `docsVersion` は `packageVersion` から自動取得されるため変更しない
-
-### 9. テストによる検証
-
-`packages/mcp` のテストを実行し（`pnpm --filter @lism-css/mcp test`）、`docs-index.test.ts` による sourcePath の実在・収録漏れ・URL スラッグ変換のチェックが通ることを確認する。失敗した場合は原因を修正してから次へ進む。
-
-### 10. 差分サマリーの報告
-
-変更点のサマリーをユーザーに報告する。報告内容:
-
-- 移動・リネームしたエントリ数と 旧 → 新 のリスト
-- 追加したエントリ数と `sourcePath` / `title` のリスト
-- 削除したエントリ数と `sourcePath` / `title` のリスト
-- 「複数マッチ」等で保留したエントリがあれば明示
-
-## 注意事項
-
-- 既存エントリの `sourcePath` / `category` 以外のフィールドは変更しないこと（移動・リネーム時も維持する）
-- 配列の要素順序は可能な限り維持すること
-- 削除候補が見つかった場合でも、単独では削除しない。必ずユーザーの承認を得てから削除する
-- 編集作業にサブエージェントは起動せず、メインエージェントが直接処理する（軽量処理のため）。手順 9 のテスト実行のみ `runner` サブエージェントに任せてもよい
-- 情報源は `apps/docs/src/content/ja/` のみ。英語版（`en/`）は参照しない
+1. `git rev-parse --short HEAD` でコミットハッシュを取る
+2. 実在ファイル集合を作る: `apps/docs/src/content/ja/**/*.mdx` を Glob し、`_` 始まりのファイル・ディレクトリと `test.mdx`（この名前だけ）を除く（定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正）。パスは `ja/` からの相対
+3. `docs-index.json` の各エントリを分類する
+   - 一致: 実ファイルあり。同一 `sourcePath` の分割エントリは 1 つでもあれば全て一致
+   - 不一致: 実ファイルなし → 手順 4
+   - 未登録: 実在ファイル集合にあるが `sourcePath` に無い → 手順 5
+4. 不一致エントリごとに basename で `apps/docs/src/content/ja/**/{basename}` を Glob する
+   - 単一マッチ: 移動候補。そのパスを新 `sourcePath` にする
+   - 複数マッチ: 保留。手順 6 でユーザーに選んでもらう
+   - マッチなし: 未登録ファイルの frontmatter（`title`・`description`）とエントリの `title` 等を突き合わせ、同一ページならリネーム候補（そのパスを新 `sourcePath` にし、その未登録ファイルは手順 5 から外す）。対応が無いものだけ削除候補
+   - 同一 `sourcePath` の分割エントリは 1 グループとして同じ判定を適用する（分割エントリの `title` はセクション名なので frontmatter と一致しなくてよい）
+5. 未登録ファイル（手順 4 でリネームに対応付いたものを除く）の新規エントリを `.claude/agents/lism-mcp-editor.md` の「フィールドのルール」で生成する。挿入位置は同じ category・ディレクトリの既存エントリの直後
+6. 変更プランを提示し、承認を得る
+   - 移動・リネーム: 旧 → 新の `sourcePath`・`category`（リネームは明記）
+   - 追加: `sourcePath`・`category`・`title`（詳細は必要なら折りたたむ）
+   - 削除: `sourcePath`・`title`
+   - 保留: 複数マッチ
+7. 承認後に `docs-index.json` を更新する。移動・リネームは `sourcePath` と、新パスから手順 5 のルールで導いた `category` だけ置換。追加は手順 5 の位置に挿入、削除は配列から除去。要素順は可能な限り維持
+8. `packages/mcp/src/data/meta.ts` の `generatedAt` を今日（`YYYY-MM-DD`）、`sourceCommit` を手順 1 のハッシュにする。`docsVersion` は触らない
+9. `nr -C packages/mcp test` を実行し、`docs-index.test.ts`（sourcePath の実在・収録漏れ・URL スラッグ）を通す。失敗したら原因を直してから進む
+10. 報告する: 移動・リネーム件数と旧 → 新、追加件数と `sourcePath`・`title`、削除件数と `sourcePath`・`title`、保留があれば明記

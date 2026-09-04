@@ -1,12 +1,8 @@
 /**
- * 単一 SCSS エントリ → CSS 文字列のオンザフライ・コンパイラ。Vite プラグイン（P2）が使う。
+ * 単一SCSSエントリをCSS文字列へ変換するオンザフライ・コンパイラ。
  *
- * 方針は P1 の `buildCssToDir` と同じ「一時ディレクトリ複製」方式:
- * src/scss をまるごと作業ディレクトリへ複製し、そこの生成 SCSS（`_prop-config*.gen.scss` / `_tokens.gen.scss`）だけを user 設定由来で差し替える。
+ * src/scssを作業ディレクトリへ複製し、生成SCSSだけをuser設定由来で差し替える。
  * `@use './prop-config.gen'` 等の相対参照を維持したまま node_modules を書き換えないため、素の sass 利用も壊さない。
- *
- * 差分は「ツリー一括 → ディスク出力」ではなく「単一エントリ → 文字列」を返す点と、
- * 作業ディレクトリ・コンパイル結果を config 署名でキャッシュして dev の再要求に応える点。
  */
 import path from 'node:path';
 import fs from 'node:fs';
@@ -37,18 +33,14 @@ export async function listCssEntries(scssDir: string): Promise<Map<string, strin
   return map;
 }
 
-/** Sass が参照し得る全 SCSS ファイル。partial も含めて dev の watch 対象に登録する。 */
+/** partialを含む全SCSSをwatch対象として列挙する。 */
 export async function listCssSourceFiles(scssDir: string): Promise<string[]> {
   const { globSync } = await import('glob');
   return globSync('**/*.scss', { cwd: scssDir, absolute: true }).sort();
 }
 
-/** main / full の prop-config 直列化結果から作業ディレクトリの一意な署名を作る。 */
 function configSignature(mainConfig: BuildConfig, fullConfig?: BuildConfig): string {
-  // serializeConfigScss は $props に加えて $breakpoints も含むため、breakpoints 変更でも
-  // 署名が変わり作業ディレクトリのキャッシュが正しく作り直される。
-  // tokens のインライン値は serializeConfigScss に含まれない（$props は変数名のみ参照）ため、
-  // 値だけの変更でもキャッシュが無効化されるよう、別途 serializeTokens を署名へ加える。
+  // breakpointsとトークン値の変更でも作業キャッシュを無効化できる署名を作る。
   const main = serializeConfigScss(mainConfig);
   const full = fullConfig ? serializeConfigScss(fullConfig) : '';
   const tokensGen = serializeTokens(mainConfig);
@@ -56,32 +48,20 @@ function configSignature(mainConfig: BuildConfig, fullConfig?: BuildConfig): str
 }
 
 export interface CssCompilerOptions {
-  /** src/scss の絶対パス。 */
   scssDir: string;
-  /** autoprefixer に加えて cssnano も通すか（既定: false。Vite が最終 minify する想定）。 */
   minify?: boolean;
-  /** ログ出力関数。 */
   log?: (message: string) => void;
 }
 
 export interface CssCompiler {
-  /** 指定エントリを CSS 文字列へコンパイルする。同一 config・同一エントリは結果をキャッシュする。 */
   compile(entry: string, mainConfig: BuildConfig, fullConfig?: BuildConfig): Promise<string>;
-  /** 指定エントリが存在するか。 */
   hasEntry(entry: string): Promise<boolean>;
-  /** 全エントリ名。 */
   entries(): Promise<string[]>;
-  /** watch 対象に登録する SCSS ソースファイル一覧。 */
   sourceFiles(): Promise<string[]>;
-  /** 作業ディレクトリとキャッシュを破棄する（dev 終了時に呼ぶ）。 */
   dispose(): void;
 }
 
-/**
- * ステートフルな CSS コンパイラを作る。
- * config 署名でキーした作業ディレクトリ（src/scss の複製 + prop-config 差し替え）を保持し、
- * config が変わると作り直す。エントリ単位のコンパイル結果もメモ化する。
- */
+/** config単位の作業ディレクトリとentry単位の結果を保持するCSSコンパイラを作る。 */
 export function createCssCompiler({ scssDir, minify = false, log }: CssCompilerOptions): CssCompiler {
   const plugins: AcceptedPlugin[] = minify ? [autoprefixer, cssnano] : [autoprefixer];
 
@@ -105,7 +85,7 @@ export function createCssCompiler({ scssDir, minify = false, log }: CssCompilerO
   function ensureWorkspace(mainConfig: BuildConfig, fullConfig?: BuildConfig): { dir: string; sig: string } {
     const sig = configSignature(mainConfig, fullConfig);
     if (workspace && workspace.sig === sig) return workspace;
-    // config が変わった（または初回）: 旧作業ディレクトリとキャッシュを捨てて作り直す。
+    // configが変わったら、作業ディレクトリとコンパイル結果をまとめて作り直す。
     disposeWorkspace();
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-css-css-'));
     fs.cpSync(scssDir, dir, { recursive: true });
@@ -129,9 +109,7 @@ export function createCssCompiler({ scssDir, minify = false, log }: CssCompilerO
       const rel = (await getEntryMap()).get(entry);
       if (!rel) throw new Error(`[lism-css] unknown CSS entry: "${entry}"`);
       const { dir, sig } = ensureWorkspace(mainConfig, fullConfig);
-      // キャッシュキーに config 署名を含める。compile 中（await postcss）に別 config の
-      // ビルドが割り込んで workspace を作り直しても、署名違いのキーには書き込まれないため、
-      // 旧 config の結果を現行 config のキャッシュとして取り違えることがない。
+      // 非同期compile中のconfig切り替えで結果を取り違えないよう、cache keyにconfig署名を含める。
       const cacheKey = `${sig}:${entry}`;
       const cached = cssCache.get(cacheKey);
       if (cached !== undefined) return cached;

@@ -5,9 +5,8 @@ draft: true
 ---
 
 
-import { Grid, Box, Center, Container, Lism, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Spacer, Group, Inline, Link, Text } from 'lism-css/astro';
+import { Grid, Box, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Group, Inline, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import { ShapeDivider } from '@lism-css/ui/astro/ShapeDivider';
 
 <Preview>
   <PreviewTitle>ステップナビゲーション</PreviewTitle>
@@ -108,7 +107,7 @@ import { ShapeDivider } from '@lism-css/ui/astro/ShapeDivider';
       <Flex ar="16/9">
         <Stack fx="1" pos="relative" g="15" p="30" z="1" min-h="100%" h="auto" c="white" bgc="black:50%">
           <h3>Card Title</h3>
-          <DummyText hl="s" mb="auto" length="l" />
+          <DummyText lang="ja" hl="s" mb="auto" length="l" />
           <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" mbs="20">
             <Fragment>Link Text</Fragment>
           </Link>
@@ -151,10 +150,10 @@ Lismのパッケージ内で用意しているクラスはありませんが、�
   <PreviewTitle>stripe</PreviewTitle>
   <PreviewArea resize nogrid p="20">
     <Box bg=":stripe" p="30">
-      <DummyText />
+      <DummyText lang="ja" length="xs" />
     </Box>
     <Box bg=":stripe" p="30" util="cbox" keycolor="blue">
-      <DummyText />
+      <DummyText lang="ja" length="xs" />
     </Box>
   </PreviewArea>
   <PreviewCode label="CSS" slot="tab">

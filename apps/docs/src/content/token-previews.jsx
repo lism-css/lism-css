@@ -16,6 +16,22 @@ export const FzDemos = ({ lang = 'ja' }) => (
   </Stack>
 );
 
+export const LthDemos = ({ lang = 'ja' }) => (
+  <Stack g="20" ov-y="auto" ov-x="clip">
+    {['xs', 's', 'base', 'l', 'xl'].map((lts, _i) => {
+      return (
+        <Stack key={lts} g="5">
+          <Inline className="is--sizeTip u--trim" fz="12px" hl="s">
+            <code>{lts}</code>
+          </Inline>
+          <DummyText lang={lang} length="s" lts={lts} className="-whs:nowrap -hl:xs" />
+          {/* <DummyText lang='en' length="s" lts={lts} className="-whs:nowrap -hl:xs" /> */}
+        </Stack>
+      );
+    })}
+  </Stack>
+);
+
 export const BoxShadowDemos = ({ shadows = [] }) => {
   return (
     <>

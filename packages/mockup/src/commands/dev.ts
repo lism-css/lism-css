@@ -19,15 +19,13 @@ import { RESOLVED_VIRTUAL_PAGES_ID, RESOLVED_VIRTUAL_TOKENS_CSS_ID, RESOLVED_VIR
 import { warnMissingStandardPackages } from './diagnostics.js';
 
 export interface DevCommandOptions {
-  /** ビューアディレクトリの上書き（テスト用。既定は同梱ビューア）。 */
   viewerDir?: string;
 }
 
-/** watch で作り直す対象の種別。 */
 export type ReloadKind = 'pages' | 'tokens';
 type WatchEvent = 'add' | 'change' | 'unlink';
 
-/** ファイル変更イベントから、作り直すべき対象を判定する。対象外は null。 */
+/** 変更イベントから、作り直すデータを判定する。 */
 export function classifyDataEvent(dataDir: string, event: WatchEvent, file: string): ReloadKind | null {
   const target = path.resolve(file);
 
@@ -60,19 +58,18 @@ function reportWatchError(server: ViteDevServer, error: unknown): void {
   server.ws.send({ type: 'error', err: { message: `[lism-mockup] ${detail}`, stack: '' } });
 }
 
-/** 2つのパッケージ名リストが同じ内容か（順序は問わない）。 */
 export function sameImports(before: readonly string[] = [], after: readonly string[] = []): boolean {
   if (before.length !== after.length) return false;
   const sortedAfter = [...after].sort();
   return [...before].sort().every((name, index) => name === sortedAfter[index]);
 }
 
-/** 変更種別に応じて runtime を作り直し、仮想モジュールを invalidate してフルリロードする。 */
+/** runtimeを更新し、対応する仮想モジュールを無効化して再読み込みする。 */
 export async function applyDataChange(server: ViteDevServer, runtime: MockupRuntime, kind: ReloadKind): Promise<void> {
   try {
     if (kind === 'tokens') {
       await runtime.refreshTokens();
-      // CSS とトークン一覧は同じ tokens.json から作るため、必ず両方を作り直させる。
+      // CSSとトークン一覧は同じ入力から作るため、両方を無効化する。
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_CSS_ID);
       invalidateVirtualModule(server, RESOLVED_VIRTUAL_TOKENS_DATA_ID);
     } else {
@@ -91,7 +88,7 @@ export async function applyDataChange(server: ViteDevServer, runtime: MockupRunt
   }
 }
 
-/** データディレクトリの監視を仕掛ける。 */
+/** データ変更をまとめて処理するwatcherを登録する。 */
 export function watchDataDir(server: ViteDevServer, runtime: MockupRuntime): void {
   const { dataDir } = runtime.data;
   server.watcher.add([
@@ -133,7 +130,7 @@ export async function createMockDevServer(dir: string, options: DevCommandOption
   // dev は依存の事前バンドルを共有 cacheDir へ書き込むため、共有キャッシュを占有してから使う。
   const runtime = await prepareMockRuntime(dir, { exclusiveViteCache: true });
   try {
-    // 許可リストは vite 設定でも使うため1回だけ作る（構築は node_modules の走査を伴う）。
+    // node_modules走査を重ねないため、許可リストはVite設定と共有する。
     const allowlist = createImportAllowlist(runtime);
     warnMissingStandardPackages(allowlist.missingPackages);
 

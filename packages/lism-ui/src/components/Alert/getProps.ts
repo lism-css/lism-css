@@ -21,7 +21,6 @@ export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex
     layout,
     flow,
     util: 'cbox',
-    // set: 'bxsh',
     keycolor: _color,
     ...props,
   };

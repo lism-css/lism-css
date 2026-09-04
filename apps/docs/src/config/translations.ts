@@ -1,42 +1,32 @@
-/**
- * UI翻訳テキストの定義
- * 各言語のUIテキストを一元管理
- */
 import type { LangCode } from './site';
 
-/**
- * 翻訳テキストの型定義
- * キー構造のみを定義し、値は string 型
- */
 type TranslationKeys = {
-  toc: 'title' | 'open';
+  toc: 'title' | 'open' | 'ariaLabel';
   search: 'title' | 'devMessage';
   header: 'openMenu';
-  themeSwitch: 'ariaLabel';
+  siteNav: 'ariaLabel';
+  main: 'ariaLabel';
+  themeSwitch: 'ariaLabel' | 'system' | 'light' | 'dark';
   langSelect: 'ariaLabel' | 'menuAriaLabel';
   share: 'share' | 'copy' | 'copied';
   copyCode: 'copy' | 'copied';
   postNav: 'prev' | 'next' | 'ariaLabel';
   translationNotice: 'title' | 'description';
   demo: 'openNewTab' | 'lismNote';
-  preview: 'resize';
+  preview: 'resize' | 'sizeAriaLabel' | 'mobile' | 'tablet' | 'desktop' | 'previewTab' | 'codeTab' | 'tabsAriaLabel';
+  kvEditor: 'tablistAriaLabel' | 'editorAriaLabel' | 'keyboardHint';
 };
 
-/**
- * UITranslations 型を TranslationKeys から生成
- */
 export type UITranslations = {
   [K in keyof TranslationKeys]: Record<TranslationKeys[K], string>;
 };
 
-/**
- * 言語別の翻訳テキスト
- */
 export const translations: Record<LangCode, UITranslations> = {
   ja: {
     toc: {
       title: '目次',
       open: '目次を開く',
+      ariaLabel: '目次',
     },
     search: {
       title: '検索',
@@ -45,8 +35,17 @@ export const translations: Record<LangCode, UITranslations> = {
     header: {
       openMenu: 'メニューを開く',
     },
+    siteNav: {
+      ariaLabel: 'サイトナビゲーション',
+    },
+    main: {
+      ariaLabel: 'メインコンテンツ',
+    },
     themeSwitch: {
       ariaLabel: 'カラーテーマを切り替える',
+      system: 'システムに従う',
+      light: 'ライトモード',
+      dark: 'ダークモード',
     },
     langSelect: {
       ariaLabel: '言語を選択',
@@ -62,8 +61,8 @@ export const translations: Record<LangCode, UITranslations> = {
       copied: 'コードをコピーしました',
     },
     postNav: {
-      prev: '← 前の記事',
-      next: '次の記事 →',
+      prev: '前の記事',
+      next: '次の記事',
       ariaLabel: '記事ナビゲーション',
     },
     translationNotice: {
@@ -76,12 +75,25 @@ export const translations: Record<LangCode, UITranslations> = {
     },
     preview: {
       resize: 'リサイズ',
+      sizeAriaLabel: 'プレビューの画面サイズ',
+      mobile: 'モバイル',
+      tablet: 'タブレット',
+      desktop: 'デスクトップ',
+      previewTab: 'プレビュー',
+      codeTab: 'コード',
+      tabsAriaLabel: 'プレビューとコードの切り替え',
+    },
+    kvEditor: {
+      tablistAriaLabel: 'コード表記の切り替え',
+      editorAriaLabel: 'ライブコードエディター',
+      keyboardHint: 'Tabキーはインデントの挿入に使われます。エディターの外へフォーカスを移動するには、Escキーを押してからTabキーを押してください。',
     },
   },
   en: {
     toc: {
       title: 'TOC',
       open: 'Open contents',
+      ariaLabel: 'Table of contents',
     },
     search: {
       title: 'Search',
@@ -90,8 +102,17 @@ export const translations: Record<LangCode, UITranslations> = {
     header: {
       openMenu: 'Open menu',
     },
+    siteNav: {
+      ariaLabel: 'Site navigation',
+    },
+    main: {
+      ariaLabel: 'Main content',
+    },
     themeSwitch: {
       ariaLabel: 'Toggle color theme',
+      system: 'Follow system',
+      light: 'Light mode',
+      dark: 'Dark mode',
     },
     langSelect: {
       ariaLabel: 'Select language',
@@ -107,8 +128,8 @@ export const translations: Record<LangCode, UITranslations> = {
       copied: 'Code copied!',
     },
     postNav: {
-      prev: '← Previous',
-      next: 'Next →',
+      prev: 'Previous',
+      next: 'Next',
       ariaLabel: 'Post navigation',
     },
     translationNotice: {
@@ -121,6 +142,18 @@ export const translations: Record<LangCode, UITranslations> = {
     },
     preview: {
       resize: 'Resize',
+      sizeAriaLabel: 'Preview screen size',
+      mobile: 'Mobile',
+      tablet: 'Tablet',
+      desktop: 'Desktop',
+      previewTab: 'Preview',
+      codeTab: 'Code',
+      tabsAriaLabel: 'Switch between preview and code',
+    },
+    kvEditor: {
+      tablistAriaLabel: 'Switch code format',
+      editorAriaLabel: 'Live code editor',
+      keyboardHint: 'The Tab key inserts indentation. To move focus out of the editor, press Escape and then Tab.',
     },
   },
 };

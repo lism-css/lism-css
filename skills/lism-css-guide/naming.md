@@ -28,12 +28,11 @@
 | 表記 | 条件 | 例 |
 | --- | --- | --- |
 | `s`, `m`, `l`, `xl`... | ベース値を中心に大小の段階を示す | `--fz--s`, `--fz--l` |
-| `base` | `:root`/`body` の初期値にセットされるもの | `--fz--base`, `--lh--base` |
+| `base` | `:root`/`body` の初期値にセットされるもの | `--fz--base`, `--hl--base` |
 | `10`, `20`, `30`... | `0`(`none`)基準で段階的に増加 | `--bdrs--20`, `--bxsh--30` |
 | セマンティック名 | 上記に当てはまらない場合 | `--ar--og` |
 
-> 🎵 **例外: opacity トークン**
-> opacity（`--o--mp` / `--o--p` / `--o--pp` / `--o--ppp`）は、音楽の強弱記号（piano 系列）に由来するセマンティック命名を採用している。`p`（piano / 弱く）の反復回数が多いほど透明度が増す構造で、「文字の反復回数で段階を表す」命名は Lism 内で opacity のみの例外。
+例外: opacity トークン（`--o--mp` / `--o--p` / `--o--pp` / `--o--ppp`）は文字の反復回数で段階を表す（由来は [tokens.md](./tokens.md#透明度-o)）。
 
 ### Property Class 用の変数
 
@@ -185,23 +184,8 @@ NG例: `flex` → `fx` としたうえで `flex-shrink` を `fsh` にする（`f
 .-bdrs:20         → border-radius: var(--bdrs--20);
 ```
 
-opacity トークンは音楽記号に由来する例外的な命名で、そのままクラス化される。
-
-```
-.-o:mp            → opacity: var(--o--mp);
-.-o:p             → opacity: var(--o--p);
-.-o:pp            → opacity: var(--o--pp);
-.-o:ppp           → opacity: var(--o--ppp);
-```
+opacity トークンもそのままクラス化される（`.-o:p` → `opacity: var(--o--p)`）。
 
 ### 長いキーワード値の省略
 
-6文字以上かつ省略しても意味が通るものは省略可:
-
-| 実際の値 | 省略名 | クラスの例 |
-| --- | --- | --- |
-| `uppercase` | `upper` | `-tt:upper` |
-| `lowercase` | `lower` | `-tt:lower` |
-| `fit-content` | `fit` | `-w:fit`, `-h:fit` |
-| `space-between` | `between` | `-ac:between`, `-jc:between` |
-| `currentColor` | `current` | `-bdc:current` |
+6文字以上かつ省略しても意味が通るものは省略可（`uppercase` → `-tt:upper` 等）。一覧は [property-class.md](./property-class.md#値の省略形例外一覧) を参照。

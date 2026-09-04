@@ -1,0 +1,64 @@
+---
+import { Stack, Flex, Cluster, Inline, Heading, Link, Text } from 'lism-css/astro';
+
+/**
+ * 一覧・詳細ページ共通の h1 まわり。
+ * - backHref: 1階層上へ戻るリンク（指定時のみ表示）
+ * - slot "eyebrow": h1 の上の行（カテゴリ名・stack バッジなど）
+ * - description または slot "description": 説明文
+ * - default slot: 説明文の下（関連リンクなど）
+ */
+interface Props {
+  title: string;
+  description?: string;
+  backHref?: string;
+  backLabel?: string;
+  count?: number;
+  draft?: boolean;
+}
+
+const { title, description, backHref, backLabel = 'Back', count, draft = false } = Astro.props;
+const hasEyebrow = Astro.slots.has('eyebrow');
+const hasDescription = !!description || Astro.slots.has('description');
+const hasExtra = Astro.slots.has('default');
+---
+
+<Stack as="header" class="c--pageHeader" g="30">
+  {
+    backHref && (
+      <Link href={backHref} fz="s" w="fit" util="trim">
+        ← {backLabel}
+      </Link>
+    )
+  }
+  <Stack g="10">
+    {
+      hasEyebrow && (
+        <Cluster ai="center" g="10" fz="xs" c="text-2">
+          <slot name="eyebrow" />
+        </Cluster>
+      )
+    }
+    <Flex ai="center" g="15">
+      <Heading level="1" fz="3xl" fw="bold">
+        {title}
+      </Heading>
+      {
+        count != null && (
+          <Inline fz="s" c="text-2" fw="normal" fxsh="0">
+            ({count})
+          </Inline>
+        )
+      }
+      {
+        draft && (
+          <Inline d="inline-flex" px="10" fz="2xs" ff="mono" bgc="text-2" c="base" bdrs="99" fxsh="0">
+            draft
+          </Inline>
+        )
+      }
+    </Flex>
+    {hasDescription && <Text c="text-2">{description ?? <slot name="description" />}</Text>}
+    {hasExtra && <slot />}
+  </Stack>
+</Stack>

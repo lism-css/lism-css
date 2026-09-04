@@ -2,27 +2,10 @@ import type { TRAITS } from '../../../config/index';
 import type { PropValueTypes } from './PropValueTypes';
 import type { WithArbitraryString } from './utils';
 
-/**
- * config/index.ts から TRAITS の型を取得
- * objDeepMerge の DeepMergeResult 型により literal types が保持される
- */
 type TraitsConfig = typeof TRAITS;
 
-// ============================================================
-// Trait 設定のパターン
-// ============================================================
-//
-// 文字列形式 (SimpleTrait)
-// 例: isContainer: 'is--container'
-// → boolean のみ受け付ける（true/false でクラスの付与を制御）
-//
 // isWrapper は現行仕様として、boolean に加えて contentSize 相当の文字列値も受け付ける。
-//
-// ============================================================
-
-/**
- * Trait 設定から Props の値の型を抽出するユーティリティ型
- */
+// hasTransition は boolean に加えて、--transitionProps に出力する文字列（例: 'color, opacity'）も受け付ける。
 type ExtractTraitValue<T> = T extends string ? boolean : never;
 
 type GeneratedTraitProps = {
@@ -31,12 +14,10 @@ type GeneratedTraitProps = {
 
 type ContentSizeStringValue = Extract<NonNullable<PropValueTypes['contentSize']>, string>;
 
-/**
- * config/index.ts の TRAITS から自動生成される Trait Props の型
- * config/index.ts の TRAITS に新しいトレイトを追加すると自動的に反映される
- */
-export type TraitProps = Omit<GeneratedTraitProps, 'isWrapper'> & {
+/** config/index.tsのTRAITSへの追加を自動反映する。 */
+export type TraitProps = Omit<GeneratedTraitProps, 'isWrapper' | 'hasTransition'> & {
   isWrapper?: boolean | ContentSizeStringValue;
+  hasTransition?: boolean | string;
 };
 
 /** set prop で使われるプリセット値（エディタ補完用） */

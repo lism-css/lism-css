@@ -1,48 +1,54 @@
 ---
-import { Link } from 'lism-css/astro';
+import { Link, Inline } from 'lism-css/astro';
 
 const { href, isActive, ...props } = Astro.props;
 ---
 
 {/* ヘッダー: Flexで横並び、両端揃え */}
-<Link
-  href={href}
-  class:list={['c--navLink', { _active: isActive }]}
-  d="block"
-  c="inherit"
-  td="none"
-  bdrs="10"
-  hl="s"
-  fz="s"
-  hov="-bgc"
-  px="10"
-  py="5"
-  {...props}
->
-  <span>
+<Link href={href} class:list={['c--navLink', { _active: isActive }]} d="block" c="inherit" td="none" hl="s" hov="-bgc" px="15" py="5" {...props}>
+  <Inline class="c--navLink_inner">
     <slot />
-  </span>
+  </Inline>
 </Link>
 
 <style is:global>
   .c--navLink {
-  }
-  .c--navLink > span {
-    /* テキストを最大2行に制限し、省略時は ... を表示 */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+    position: relative;
+    font-size: 0.875em;
 
-  /* 現在位置のハイライトスタイル（NavLinkのデフォルトスタイルを上書き） */
-  .c--navLink._active {
-    background-color: var(--base-2);
-    color: var(--brand);
-    font-weight: 600;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc((var(--bdw, 1px)) * -1 - var(--nestedDepth, 0) * var(--s20));
+      width: var(--bdw, 1px);
+      height: 100%;
+      background-color: var(--brand);
+      opacity: 0;
+    }
+
+    /* 現在位置のハイライトスタイル（NavLinkのデフォルトスタイルを上書き） */
+    &:hover,
+    &._active {
+      background-color: transparent;
+      color: var(--brand);
+      font-weight: 500;
+
+      &::before {
+        opacity: 1;
+      }
+    }
+    > .c--navLink_inner {
+      /* テキストを最大2行に制限し、省略時は ... を表示 */
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 
   /* .c--toc .c--navLink {
+    font-size: var(--fz--xs);
     padding-block: var(--s5);
   } */
 </style>

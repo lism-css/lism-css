@@ -1,20 +1,16 @@
 ---
-/**
- * UIコンポーネント詳細ページ（非root言語用）
- * - 翻訳がない場合はroot言語にフォールバック（未翻訳の注意書き付き）
- * - URL例: /en/ui/Accordion, /en/ui/block-examples/Chat, /en/ui/components/Card
- */
+// 非root言語の記事を表示し、未翻訳ならroot言語へフォールバックする
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
-import { Icon, Lism, Flow, Heading } from 'lism-css/astro';
+import { Icon, Lism, Flow } from 'lism-css/astro';
 import PostNavigation from '@parts/PostNavigation.astro';
+import ArticleTitle from '@parts/ArticleTitle.astro';
 import TranslationNotice from '@/components/TranslationNotice.astro';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, getRootLang, type LangCode } from '@/lib/i18n';
 import { getUiPostsByLang, getPostWithFallback } from '@/lib/content';
 import { render } from 'astro:content';
 
-// MDXでグローバルに使用するコンポーネント
 import * as mdxComponents from '@/components/mdx';
 
 export async function getStaticPaths() {
@@ -47,7 +43,6 @@ if (!isValidLang(lang)) {
   return Astro.redirect('/404');
 }
 
-// 記事を取得（なければroot言語にフォールバック）
 const { entry, isFallback } = await getPostWithFallback(lang, slug);
 
 if (!entry) {
@@ -57,7 +52,6 @@ if (!entry) {
 const { Content, headings } = await render(entry);
 const toc = generateToc(headings);
 
-// OG画像のパス
 const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
 ---
 
@@ -71,12 +65,10 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
   date={entry.data.date}
 >
   {/* フォールバック（未翻訳）ページは検索対象から除外 */}
-  <Lism as="article" class="c--siteArticle set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
-    {/* 未翻訳の注意書き */}
+  <Lism as="article" class="c--article set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
     {isFallback && <TranslationNotice lang={lang} />}
 
-    {/* 記事タイトル */}
-    <Heading level="1" class="articleTitle">{entry.data.title}</Heading>
+    <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
 
     <Lism class="u--cbox" keycolor="yellow" p="20" my="40" bdrs="10" bd>
       <Lism layout="flex" ai="center" g="10" fw="bold">
@@ -86,12 +78,10 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
       <Lism fz="s" mbs="5">Lism UI (@lism-css/ui) is still in preparation.</Lism>
     </Lism>
 
-    {/* 記事本文 */}
-    <Flow class="articleContent" mbs="40">
+    <Flow class="c--content" mbs="40">
       <Content components={mdxComponents} />
     </Flow>
 
-    {/* 前後記事ナビゲーション */}
     <PostNavigation currentSlug={slug} lang={lang} />
   </Lism>
 </BaseLayout>

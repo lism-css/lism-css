@@ -16,33 +16,32 @@ A component for highlighting important points within an article.
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30" resize>
     <Callout title="Callout Title">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris.
-      </p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
     </Callout>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Callout title="Callout Title">
-      <p>Lorem ipsum dolor sit amet...</p>
+      <p>
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+      </p>
     </Callout>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html
-    <div class="b--callout l--stack u--cbox" style="--keycolor:var(--gray)">
-      <div class="b--callout_title l--flex">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1.25em" height="1.25em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true">
-          <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z"></path>
-        </svg>
-        <span>Callout Title</span>
-      </div>
-      <div class="b--callout_body l--flow -flow:s">
-        <p>...Contents...</p>
-      </div>
-    </div>
-    ```
+```html
+<div class="b--callout l--stack u--cbox" style="--keycolor:var(--gray)">
+  <div class="b--callout_title l--flex">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1.25em" height="1.25em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true">
+      <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z"></path>
+    </svg>
+    <span>Callout Title</span>
+  </div>
+  <div class="b--callout_body l--flow -flow:s">
+    <p>...Contents...</p>
+  </div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
@@ -71,17 +70,17 @@ Provided as `Callout` from the `@lism-css/ui` package.
 
 | Prop | Description |
 |---|---|
-|`keycolor`| Specifies the display color. |
-|`icon`| Specifies the icon. |
+|`keycolor`| Specifies the key color. |
+|`icon`| Specifies the icon to pass to the `Icon` component. [Preset icons](/en/docs/primitives/a--icon/#preset-icons) can be specified with just a string. |
 |`type`| Specifies a preset value combining `keycolor` and `icon`. Default: `"note"` |
 |`title`| Specifies the title text. |
-|`flow`| Passed to `_body`. |
+|`flow`| Passed to the `flow` prop of the `Flow` element that wraps the content. |
+{/* - `variant`: `'fill'` | `'outline'` ? */}
 
 
 ## Examples
 
-### Available types
-
+### Available Types
 <Preview>
   <PreviewTitle>Specifying type</PreviewTitle>
   <PreviewArea p="30">
@@ -95,7 +94,7 @@ Provided as `Callout` from the `@lism-css/ui` package.
       <Callout title='Callout: type="warning"' type="warning">
         <DummyText length="codes" lang="en" />
       </Callout>
-      <Callout title='Callout: type="tip"' type="tip">
+      <Callout title='Callout: type="point"' type="point">
         <DummyText length="codes" lang="en" />
       </Callout>
       <Callout title='Callout: type="check"' type="check">
@@ -114,7 +113,7 @@ Provided as `Callout` from the `@lism-css/ui` package.
     <Callout title='Callout: type="info"' type="info">...</Callout>
     <Callout title='Callout: type="alert"' type="alert">...</Callout>
     <Callout title='Callout: type="warning"' type="warning">...</Callout>
-    <Callout title='Callout: type="tip"' type="tip">...</Callout>
+    <Callout title='Callout: type="point"' type="point">...</Callout>
     <Callout title='Callout: type="check"' type="check">...</Callout>
     <Callout title='Callout: type="help"' type="help">...</Callout>
     <Callout title='Callout: type="note"' type="note">...</Callout>
@@ -132,7 +131,7 @@ Provided as `Callout` from the `@lism-css/ui` package.
       </div>
       <!-- type="alert" → --keycolor:var(--red) -->
       <!-- type="warning" → --keycolor:var(--yellow) -->
-      <!-- type="tip" → --keycolor:var(--orange) -->
+      <!-- type="point" → --keycolor:var(--orange) -->
       <!-- type="check" → --keycolor:var(--green) -->
       <!-- type="help" → --keycolor:var(--purple) -->
       <!-- type="note" → --keycolor:var(--gray) -->
@@ -183,13 +182,13 @@ When `title` is omitted, the title row (`b--callout_title`) is not rendered, lea
   <PreviewTitle>Without `title`</PreviewTitle>
   <PreviewArea p="30">
     <Callout type="info">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Callout>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Callout type="info">
-      <p>Lorem ipsum dolor sit amet...</p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Callout>
     ```
   </PreviewCode>
@@ -197,7 +196,7 @@ When `title` is omitted, the title row (`b--callout_title`) is not rendered, lea
     ```html
     <div class="b--callout l--stack u--cbox" style="--keycolor:var(--blue)">
       <div class="b--callout_body l--flow -flow:s">
-        <p>...Contents...</p>
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       </div>
     </div>
     ```
@@ -207,7 +206,7 @@ When `title` is omitted, the title row (`b--callout_title`) is not rendered, lea
 
 ## Without @lism-css/ui
 
-An example of building the component using only lism-css core elements, without a dedicated component.
+This example builds the same UI using only lism-css core elements, without a dedicated component.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -220,7 +219,7 @@ An example of building the component using only lism-css core elements, without 
         <span>Callout</span>
       </Flex>
       <Lism>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Lism>
     </Stack>
   </PreviewArea>
@@ -234,7 +233,9 @@ An example of building the component using only lism-css core elements, without 
         <span>Callout</span>
       </Flex>
       <Lism>
-        <p>Lorem ipsum dolor sit amet...</p>
+        <p>
+          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+        </p>
       </Lism>
     </Stack>
     ```
@@ -262,7 +263,9 @@ An example of building the component using only lism-css core elements, without 
       <span>Callout</span>
     </div>
     <div>
-      <p>Lorem ipsum dolor sit amet...</p>
+      <p>
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+      </p>
     </div>
   </div>
   ```

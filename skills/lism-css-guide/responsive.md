@@ -34,7 +34,7 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 
 **`xs` / `xl` は opt-in**:
 - デフォルト値は `0`（無効）で、CSS は出力されません。`lism.config.js` の `breakpoints` でサイズを与えると有効化されます（customize.md 参照）。
-- 型（Lism コンポーネント）でも `sm` / `md` / `lg` のみがデフォルトで補完・許可されます。`xs` / `xl` を使う場合は `declare module 'lism-css'` で `BreakpointRegistry` を拡張して解禁します。
+- 型（Lism コンポーネント）でも `sm` / `md` / `lg` のみがデフォルトで補完・許可されます。`@lism-css/plugin` の統合プラグイン使用時は有効化した BP を反映した `lism-env.d.ts` が自動生成されるため手書き不要（customize.md 参照）。プラグインを使わない構成では `declare module 'lism-css'` で `BreakpointRegistry` を拡張して解禁します。
 
   ```ts
   // src/lism.d.ts など
@@ -85,6 +85,7 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 **仕組み:**
 - BPクラス `-{prop}_{bp}` は `@container (min-width: ...)` 内で発火し、`--{prop}_{bp}` 変数で切り替え先の値を指定
 - コンテナクエリ採用のため、レスポンシブ値を使うには祖先要素に `is--container` などコンテナ宣言が必要
+- base 値は任意。省くと BP 未満はそのプロパティの既定値のまま（例: `-d_sm` + `--d_sm: none` で sm 以上だけ非表示）
 - 出力形式はプロパティによって 2 パターン（基本 / 例外）
 
 **基本パターン** — BP 用変数を直接読む:
@@ -125,36 +126,15 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 
 ## Authoring時の確認ルール
 
-### base値を必ず置く
-
-BP専用値だけを書くと、BP未満で値が未指定になります。配列では先頭、オブジェクトでは`base`、HTMLでは`-{prop}:{value}`を必ず置きます。
-
-| NG | OK |
-| --- | --- |
-| `<Box p={{ sm: 30 }}>` | `<Box p={{ base: '20', sm: '30' }}>` |
-| `<div class="-p_sm" style="--p_sm:var(--s30)">` | `<div class="-p:20 -p_sm" style="--p_sm:var(--s30)">` |
+NG→OK例は [antipatterns-layout.md](./antipatterns-layout.md#レスポンシブ抜け) の「レスポンシブ抜け」「レスポンシブ配列の冗長指定」を参照。
 
 ### 冗長配列は圧縮する
 
-前のBPと同じ値を繰り返さない。変わらないBPは`null`でスキップし、全BPで同じ値なら単一値にします。
-
-| NG | OK |
-| --- | --- |
-| `fxd={['column', 'column', 'row']}` | `fxd={['column', null, 'row']}` |
-| `p={['20', '20', '20']}` | `p="20"` |
-| `cols={[1, 1, 3]}` | `cols={[1, null, 3]}` |
-
-ただし、既存コードの型・生成仕様で`null`が使えない場合は既存パターンを優先します。レスポンシブ差分を誤って単一値化しないでください。
+前のBPと同じ値を繰り返さない。変わらないBPは`null`でスキップし、全BPで同じ値なら単一値にします。ただし、既存コードの型・生成仕様で`null`が使えない場合は既存パターンを優先し、レスポンシブ差分を誤って単一値化しないでください。
 
 ### container query運用では祖先`isContainer`を確認する
 
 デフォルトではレスポンシブProperty Classは`@container`で発火します。レスポンシブ値を載せる要素の祖先に`isContainer`/`is--container`があるか確認してください。
-
-```jsx
-<Stack isContainer>
-  <Box p={{ base: '20', md: '40' }}>...</Box>
-</Stack>
-```
 
 `$is_container_query:0`などの設定でmedia query運用が確認できる場合は、`isContainer`祖先は必須ではありません。設定が不明な場合は、既存SCSS設定・`customize.md`・生成CSSを確認してから判断してください。
 

@@ -113,26 +113,16 @@
   }
 }
 
-.u--scalePreview {
-  --w-pct: 200;
-  max-width: none;
-  /* transform:scale()ではiframe内のdialogアニメーション時に表示位置がずれるため、zoomで縮小する。 */
-  width: 100%;
-  zoom: calc(10000% / var(--w-pct));
+// コード表示用のタブ（下線タイプ）。Preview と PreviewFrame で共用
+.b--tabs--prev .b--tabs_list {
+  // Memo: ov-x='auto' の時に margin がネガティブだと崩れるので、box-shadowで表現する。
+  box-shadow: inset 0 -2px 0 var(--divider);
 }
-.u--scalePreview > iframe {
-  width: 100%;
-  height: 100%;
-}
-
-@container (min-width: 440px) {
-  .u--scalePreview {
-    --w-pct: 160;
-  }
-}
-
-@container (min-width: 800px) {
-  .u--scalePreview {
-    --w-pct: 125;
-  }
+.b--tabs--prev .b--tabs_tab {
+  --hl: var(--hl--s);
+  font-size: var(--fz--s);
+  padding-block: 0.5em;
+  padding-inline: 0.875em;
+  background-color: transparent;
+  box-shadow: var(--_isSelected, inset 0 -2px 0 0 currentColor);
 }

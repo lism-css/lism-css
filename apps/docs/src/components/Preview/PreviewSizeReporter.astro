@@ -1,0 +1,33 @@
+---
+/**
+ * iframe プレビュー用: 中身の高さを親ページ（PreviewFrame）へ通知する。
+ * body には min-height: 100dvh があるため、body ではなくこのラッパーの高さを測る。
+ */
+---
+
+<div class="c--previewSizeReporter">
+  <slot />
+</div>
+
+<style>
+  /* 子要素の margin をラッパー内に含め、高さに反映させる */
+  .c--previewSizeReporter {
+    display: flow-root;
+  }
+</style>
+
+<script>
+  const SIZE_TYPE = 'lism-preview-size';
+  const REQUEST_TYPE = 'lism-preview-size-request';
+  const target = document.querySelector('.c--previewSizeReporter');
+
+  if (target && window.parent !== window) {
+    const send = () => {
+      window.parent.postMessage({ type: SIZE_TYPE, height: target.getBoundingClientRect().height }, window.location.origin);
+    };
+    new ResizeObserver(send).observe(target);
+    window.addEventListener('message', (event) => {
+      if (event.origin === window.location.origin && event.data?.type === REQUEST_TYPE) send();
+    });
+  }
+</script>

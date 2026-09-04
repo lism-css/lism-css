@@ -2,23 +2,20 @@ import satori from 'satori';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// OG画像用のSVGを生成する
+// 画像とフォントを埋め込んだOG画像用SVGを生成する
 export async function renderOgSvg(title: string, _tags: string[]) {
   // OG画像生成用アセットのディレクトリパスを取得（配信物に含めないため src 配下に配置）
   const assetsDir = path.resolve(process.cwd(), 'src/assets/og');
 
-  // 背景画像とロゴをBase64エンコードして読み込む
   const bgImagePath = path.join(assetsDir, 'og-bg.jpg');
   const logoPath = path.join(assetsDir, 'logo.png');
 
   const bgImageBase64 = fs.readFileSync(bgImagePath).toString('base64');
   const bgImageDataUrl = `data:image/jpeg;base64,${bgImageBase64}`;
 
-  // PNGロゴを読み込み
   const logoBase64 = fs.readFileSync(logoPath).toString('base64');
   const logoDataUrl = `data:image/png;base64,${logoBase64}`;
 
-  // フォントをローカルファイルから読み込み
   const fontPath = path.join(assetsDir, 'noto-sans-jp-600.woff');
   const fontData600 = fs.readFileSync(fontPath);
 
@@ -31,7 +28,6 @@ export async function renderOgSvg(title: string, _tags: string[]) {
         position: 'relative',
       }}
     >
-      {/* 背景画像 */}
       <img
         src={bgImageDataUrl}
         style={{
@@ -43,7 +39,6 @@ export async function renderOgSvg(title: string, _tags: string[]) {
           objectFit: 'cover',
         }}
       />
-      {/* コンテンツコンテナ（左側に配置） */}
       <div
         style={{
           display: 'flex',
@@ -54,10 +49,8 @@ export async function renderOgSvg(title: string, _tags: string[]) {
           width: '60%',
           height: '100%',
           position: 'relative',
-          // backgroundColor: 'rgba(25, 25, 25, 0.1)',
         }}
       >
-        {/* ロゴ */}
         <img
           src={logoDataUrl}
           style={{
@@ -66,7 +59,6 @@ export async function renderOgSvg(title: string, _tags: string[]) {
             marginTop: '-18px',
           }}
         />
-        {/* タイトル */}
         <div
           style={{
             display: 'flex',
@@ -76,7 +68,6 @@ export async function renderOgSvg(title: string, _tags: string[]) {
             lineHeight: 1.4,
             lineBreak: 'strict',
             wordBreak: 'keep-all',
-            // backgroundColor: 'rgba(25, 25, 25, 0.1)',
           }}
         >
           {title}

@@ -1,6 +1,4 @@
-/**
- * altKey押下時の処理 テスト用
- */
+/** BoxLink上でAltを押している間だけリンク判定を外し、文字選択を有効にする。 */
 export default function enableSelectTextWithAltKeyAtBoxLink() {
   const boxes = document.querySelectorAll('.is--boxLink');
 
@@ -8,7 +6,6 @@ export default function enableSelectTextWithAltKeyAtBoxLink() {
     let isAltPressed = false;
     let dragging = false;
 
-    // pointermove等のイベントを登録する関数
     function startDragEvents() {
       if (dragging) return;
       dragging = true;
@@ -18,7 +15,6 @@ export default function enableSelectTextWithAltKeyAtBoxLink() {
       window.addEventListener('pointercancel', cleanup);
     }
 
-    // pointermove等のイベントを解除する関数
     function cleanup() {
       box.classList.remove('-linkoff');
       window.removeEventListener('pointermove', onPointerMove);
@@ -27,15 +23,12 @@ export default function enableSelectTextWithAltKeyAtBoxLink() {
       dragging = false;
     }
 
-    // pointermove時の処理
     function onPointerMove(e) {
-      // Altキーが離れたら即解除
       if (!e.altKey) {
         cleanup();
       }
     }
 
-    // altKey押下時の処理
     function onKeyDown(e) {
       if (e.altKey && !isAltPressed) {
         isAltPressed = true;
@@ -43,7 +36,6 @@ export default function enableSelectTextWithAltKeyAtBoxLink() {
       }
     }
 
-    // altKey離した時の処理
     function onKeyUp(e) {
       if (!e.altKey && isAltPressed) {
         isAltPressed = false;
@@ -51,21 +43,18 @@ export default function enableSelectTextWithAltKeyAtBoxLink() {
       }
     }
 
-    // pointerenter: ホバー開始時に他のイベントを登録
     box.addEventListener('pointerenter', (e) => {
       console.log('pointerenter');
 
       window.addEventListener('keydown', onKeyDown);
       window.addEventListener('keyup', onKeyUp);
 
-      // pointerenter時点ですでにAltが押されている場合にも対応
       if (e && 'altKey' in e && e.altKey && !isAltPressed) {
         isAltPressed = true;
         startDragEvents();
       }
     });
 
-    // pointerleave: ホバー終了
     box.addEventListener('pointerleave', () => {
       console.log('pointerleave');
 

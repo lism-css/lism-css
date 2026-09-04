@@ -1,12 +1,7 @@
-/**
- * OG画像生成エンドポイント（root言語用）
- * URL例: /docs/og/overview.png
- */
 import type { APIRoute } from 'astro';
 import { getOgPathsForRoot, generateOgImage } from '@/lib/pageHelpers';
 import type { LangCode } from '@/lib/i18n';
 
-// 共通ヘルパーを使用
 export const getStaticPaths = getOgPathsForRoot;
 
 export const GET: APIRoute = async ({ props }) => {

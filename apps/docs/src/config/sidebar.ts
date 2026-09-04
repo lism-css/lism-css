@@ -1,92 +1,69 @@
-/**
- * サイドバーナビゲーションの設定
- *
- * - dir: 指定ディレクトリ内の記事を自動取得（日付順）
- * - items: メニューの並びを直接指定
- * - translate: 他言語用のラベル翻訳（例: { en: 'English Label' }）
- */
-
 import type { LangCode } from '@/config/site';
 import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, LayoutIcon, BrowsersIcon } from '@phosphor-icons/react';
 import { patterns, categoryIds, type PatternCategoryId, type PatternItem } from './patterns';
 import { visibleTemplates, categories as templateCategories } from './templates';
 import { pageLayouts, categoryIds as pageLayoutCategoryIds, type PageLayoutCategoryId, type PageLayoutItem } from './page-layouts';
 
-// 翻訳オブジェクトの型（root言語以外の翻訳を指定）
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
 
-// セパレータアイテムの型（区切り線）
 export type SeparatorItem = {
   type: 'separator';
 };
 
-// 通常のリンクアイテムの型
 export type LinkItem = {
-  label: string;
-  translate?: TranslateLabels; // アイテムごとの翻訳
-  link: string;
-};
-
-// items配列に含められるアイテムの型
-// 文字列の場合はURLとして扱い、対応するMDXのフロントマターからラベルを取得
-export type SidebarNavItem = LinkItem | SeparatorItem | string;
-
-// トップレベルの特別なリンクアイテムの型（大きめボタンとして表示）
-export type TopLevelLinkItem = {
-  type: 'toplink'; // 識別子
   label: string;
   translate?: TranslateLabels;
   link: string;
-  icon?: React.ElementType; // アイコンコンポーネント
 };
 
-// セパレータかどうかを判定するヘルパー
+// 文字列の場合はURLとして扱い、対応するMDXのフロントマターからラベルを取得
+export type SidebarNavItem = LinkItem | SeparatorItem | string;
+
+export type TopLevelLinkItem = {
+  type: 'toplink';
+  label: string;
+  translate?: TranslateLabels;
+  link: string;
+  icon?: React.ElementType;
+};
+
 export function isSeparator(item: SidebarNavItem): item is SeparatorItem {
-  // 文字列の場合はセパレータではない
   if (typeof item === 'string') return false;
   return 'type' in item && item.type === 'separator';
 }
 
-// トップレベルリンクかどうかを判定するヘルパー
 export function isTopLevelLink(item: SidebarSection | TopLevelLinkItem): item is TopLevelLinkItem {
   return 'type' in item && item.type === 'toplink';
 }
 
-// サイドバーセクションの型定義（カテゴリ）
+// dirは記事の自動取得、itemsは表示順の明示指定に使う
 export type SidebarSection =
   | {
       label: string;
-      translate?: TranslateLabels; // 他言語用ラベル
-      dir: string; // ディレクトリ名（content/{lang}/以下）
+      translate?: TranslateLabels;
+      dir: string;
     }
   | {
       label: string;
-      translate?: TranslateLabels; // 他言語用ラベル
+      translate?: TranslateLabels;
       rootPath?: string; // ネスト深度判定用のルートパス（例: '/docs/'）
       items: Array<SidebarNavItem>;
     };
 
-/**
- * 言語に応じたラベルを取得するヘルパー関数
- */
 export function getTranslatedLabel(label: string, translate: TranslateLabels | undefined, lang: LangCode): string {
-  // root言語（ja）の場合、または翻訳がない場合はデフォルトラベルを返す
   if (lang === 'ja' || !translate || !translate[lang as Exclude<LangCode, 'ja'>]) {
     return label;
   }
   return translate[lang as Exclude<LangCode, 'ja'>] || label;
 }
 
-// サイトセクションの識別子（/docs/, /ui/, /templates/, /patterns/, /page-layouts/ などの最初のパス部分）
 export type SiteSection = 'docs' | 'ui' | 'patterns' | 'templates' | 'page-layouts';
 
-// サイドバー設定の型
 export interface SidebarConfig {
-  topLevelLinks: TopLevelLinkItem[]; // 全セクション共通のトップレベルリンク
-  sections: Record<SiteSection, SidebarSection[]>; // セクションごとのサイドバー設定
+  topLevelLinks: TopLevelLinkItem[];
+  sections: Record<SiteSection, SidebarSection[]>;
 }
 
-// トップレベルリンク（全セクション共通）
 const topLevelLinks: TopLevelLinkItem[] = [
   {
     type: 'toplink',
@@ -120,15 +97,14 @@ const topLevelLinks: TopLevelLinkItem[] = [
   },
 ];
 
-// /docs/ セクション用のサイドバー設定
 const docsSidebar: SidebarSection[] = [
-  // はじめにカテゴリ
   {
     label: 'はじめに',
     translate: { en: 'Getting Started' },
     items: [
       { label: 'Lism CSSとは', translate: { en: 'What is Lism CSS?' }, link: '/docs/overview/' },
       '/docs/installation/',
+      '/docs/css-files/',
       '/docs/skills/',
       '/docs/mcp/',
       '/docs/features/',
@@ -136,7 +112,6 @@ const docsSidebar: SidebarSection[] = [
     ],
   },
 
-  // 基本概念カテゴリ
   {
     label: '基本概念',
     translate: { en: 'Core Concepts' },
@@ -147,10 +122,9 @@ const docsSidebar: SidebarSection[] = [
       '/docs/tokens/',
       '/docs/tokens/colors/',
       '/docs/tokens/typography/',
-      '/docs/tokens/half-leading/',
-      '/docs/tokens/spacing/',
       { type: 'separator' },
       // '/docs/reset-css/',
+      '/docs/half-leading/',
       '/docs/base-styles/',
       '/docs/set-class/',
       '/docs/primitives/',
@@ -164,19 +138,10 @@ const docsSidebar: SidebarSection[] = [
     ],
   },
 
-  // カスタマイズ カテゴリ
   {
-    label: 'カスタマイズ',
-    translate: { en: 'Customize' },
-    items: [
-      { label: 'カスタマイズの基本', translate: { en: 'Customization Basics' }, link: '/docs/customize/' },
-      { label: 'CSSビルド', translate: { en: 'CSS Builds' }, link: '/docs/customize/build/' },
-      { label: 'lism.config.js', link: '/docs/customize/config/' },
-      { label: 'SCSS', link: '/docs/customize/scss/' },
-      { label: 'CSS Purge', link: '/docs/customize/purge/' },
-    ],
+    label: 'Trait Class',
+    items: ['/docs/trait-class/is--container/', '/docs/trait-class/is--wrapper/', '/docs/trait-class/is--layer/', '/docs/trait-class/is--boxLink/'],
   },
-
   {
     label: 'Layout Primitives',
     items: [
@@ -208,18 +173,22 @@ const docsSidebar: SidebarSection[] = [
     items: ['/docs/primitives/a--decorator/', '/docs/primitives/a--divider/', '/docs/primitives/a--icon/', '/docs/primitives/a--spacer/'],
   },
   {
-    label: 'Trait Class',
-    items: ['/docs/trait-class/is--container/', '/docs/trait-class/is--wrapper/', '/docs/trait-class/is--layer/', '/docs/trait-class/is--boxLink/'],
-  },
-  // コアコンポーネント カテゴリ
-  {
     label: 'コアコンポーネント',
     translate: { en: 'Core Components' },
     dir: 'core-components',
   },
+  {
+    label: 'カスタマイズ',
+    translate: { en: 'Customize' },
+    items: [
+      { label: 'カスタマイズの基本', translate: { en: 'Customization Basics' }, link: '/docs/customize/' },
+      { label: 'lism.config.js', link: '/docs/customize/config/' },
+      { label: 'SCSS', link: '/docs/customize/scss/' },
+      { label: 'CSS Purge', link: '/docs/customize/purge/' },
+    ],
+  },
 ];
 
-// /ui/ セクション用のサイドバー設定
 const uiSidebar: SidebarSection[] = [
   {
     label: 'Blocks',
@@ -235,13 +204,10 @@ const uiSidebar: SidebarSection[] = [
   },
 ];
 
-// 本番環境かどうか（draft:trueのアイテムをフィルタリングするために使用）
 const isProd = import.meta.env.PROD;
 
-// /patterns/ セクション用のサイドバー設定（patterns.tsから動的生成）
 const patternsSidebar: SidebarSection[] = categoryIds.map((categoryId: PatternCategoryId) => {
   const category = patterns[categoryId];
-  // 本番環境ではdraft:trueのアイテムを除外
   const items = isProd ? (category.items as PatternItem[]).filter((item) => !item.draft) : category.items;
   return {
     label: category.label,
@@ -252,9 +218,7 @@ const patternsSidebar: SidebarSection[] = categoryIds.map((categoryId: PatternCa
   };
 });
 
-// /templates/ セクション用のサイドバー設定
-// - 集約カテゴリ（aggregateView: true）はカテゴリ詳細ページへの1リンクとして「Templates」セクション内に並べる
-// - 通常カテゴリはカテゴリごとにセクション化し、各テンプレートの詳細ページへのリンクを動的生成
+// 集約カテゴリはカテゴリリンク、通常カテゴリは各テンプレートへのリンクにする
 const aggregateCategoryLinks: LinkItem[] = templateCategories
   .filter((category) => category.aggregateView)
   .map((category) => ({
@@ -291,12 +255,9 @@ const templatesSidebar: SidebarSection[] = [
     })),
 ];
 
-// /page-layouts/ セクション用のサイドバー設定（page-layouts.tsから動的生成）
-// items が空のカテゴリは表示しない
 const pageLayoutsSidebar: SidebarSection[] = pageLayoutCategoryIds
   .map((categoryId: PageLayoutCategoryId) => {
     const category = pageLayouts[categoryId];
-    // 本番環境ではdraft:trueのアイテムを除外
     const items = isProd ? (category.items as PageLayoutItem[]).filter((item) => !item.draft) : category.items;
     return { categoryId, category, items };
   })
@@ -309,7 +270,6 @@ const pageLayoutsSidebar: SidebarSection[] = pageLayoutCategoryIds
     })),
   }));
 
-// サイドバー設定をエクスポート
 const sidebarConfig: SidebarConfig = {
   topLevelLinks,
   sections: {
@@ -323,13 +283,7 @@ const sidebarConfig: SidebarConfig = {
 
 export default sidebarConfig;
 
-/**
- * URLからサイトセクションを取得するヘルパー
- * @param pathname URLのパス部分
- * @returns サイトセクション（'docs' | 'ui' | 'templates' | 'patterns' | 'page-layouts'）、該当なしの場合は 'docs' をデフォルトとして返す
- */
 export function getSiteSection(pathname: string): SiteSection {
-  // パスから言語プレフィックスを除去してセクションを判定
   const pathWithoutLang = pathname.replace(/^\/(en|ja)\//, '/');
   if (pathWithoutLang.startsWith('/ui/') || pathWithoutLang === '/ui') {
     return 'ui';
@@ -347,35 +301,22 @@ export function getSiteSection(pathname: string): SiteSection {
   return 'docs';
 }
 
-/**
- * URLからslugを抽出するヘルパー
- * /docs/xxx/ → xxx（コンテンツは content/ja/xxx.mdx）
- * /ui/yyy/ → ui/yyy（コンテンツは content/ja/ui/yyy.mdx）
- * /templates/ → templates（テンプレートページ、MDXなし）
- * /patterns/zzz/ → patterns/zzz（パターンページ、MDXなし）
- * /page-layouts/zzz/ → page-layouts/zzz（ページレイアウトページ、MDXなし）
- */
 export function extractSlugFromUrl(url: string): string {
-  // /docs/ の場合はプレフィックスを除去（コンテンツは content/{lang}/ 直下）
+  // ルートごとのコンテンツ配置に合わせてslugを正規化する
   if (url.startsWith('/docs/')) {
     return url.replace(/^\/docs\//, '').replace(/^\/|\/$/g, '');
   }
-  // /ui/ の場合は ui/ プレフィックスを保持（コンテンツは content/{lang}/ui/ 配下）
   if (url.startsWith('/ui/')) {
     return 'ui/' + url.replace(/^\/ui\//, '').replace(/^\/|\/$/g, '');
   }
-  // /templates/ の場合は templates/ プレフィックスを保持
   if (url.startsWith('/templates/')) {
     return 'templates/' + url.replace(/^\/templates\//, '').replace(/^\/|\/$/g, '');
   }
-  // /page-layouts/ の場合は page-layouts/ プレフィックスを保持（patterns より先に判定）
   if (url.startsWith('/page-layouts/')) {
     return 'page-layouts/' + url.replace(/^\/page-layouts\//, '').replace(/^\/|\/$/g, '');
   }
-  // /patterns/ の場合は patterns/ プレフィックスを保持
   if (url.startsWith('/patterns/')) {
     return 'patterns/' + url.replace(/^\/patterns\//, '').replace(/^\/|\/$/g, '');
   }
-  // その他の場合
   return url.replace(/^\/|\/$/g, '');
 }

@@ -3,7 +3,7 @@ title: 'Banner'
 description: 'Example implementation of banner link patterns using Lism CSS.'
 ---
 
-import { Stack, Center, Layer, Media, Icon, BoxLink, Frame, Flex, Text } from 'lism-css/astro';
+import { Stack, Media, Icon, BoxLink, Flex, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 
@@ -21,7 +21,7 @@ Examples of banner link layouts built with Lism.
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "Frame" "BoxLink"
+    ```jsx 'layout="frame"' "BoxLink"
     <BoxLink layout="frame" href="#banner-link" hov="-o" hasTransition bdrs="20">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </BoxLink>
@@ -29,7 +29,7 @@ Examples of banner link layouts built with Lism.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html "l--frame" "is--boxLink"
-    <a class="l--frame is--boxLink has--transition -bdrs:20 -hov:-o" href="#banner-link">
+    <a class="l--frame is--boxLink has--transition -hov:-o -bdrs:20" href="#banner-link">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </a>
     ```
@@ -38,14 +38,16 @@ Examples of banner link layouts built with Lism.
 
 
 <Preview>
-  <PreviewTitle>Overlaying content on an image with `Layer`</PreviewTitle>
+  <PreviewTitle>Overlaying content on an image with `isLayer`</PreviewTitle>
   <PreviewArea p="20" resize>
     <BoxLink layout="frame" href="#banner-link" hov="-o" hasTransition bdrs="20">
       <Media isLayer src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
       <Flex jc="between" ai="center" pos="relative" g="20" p="30" c="#fff" bgc="rgb(0 0 0 / 50%)" min-h="30cqw">
         <Stack g="10">
-          <Text fz="xl" fw="bold">Banner</Text>
-          <DummyText fz="s" hl="s" length="s" />
+          <Text fz="xl" fw="bold">
+            <Fragment>Banner</Fragment>
+          </Text>
+          <DummyText fz="s" hl="s" lang="en" length="s" />
         </Stack>
         <Icon fz="3xl" viewBox="0 0 256 256">
           <path d="M180.24,132.24l-80,80a6,6,0,0,1-8.48-8.48L167.51,128,91.76,52.24a6,6,0,0,1,8.48-8.48l80,80A6,6,0,0,1,180.24,132.24Z"></path>
@@ -62,7 +64,7 @@ Examples of banner link layouts built with Lism.
           <Text fz="xl" fw="bold">
             Banner
           </Text>
-          <DummyText fz="s" hl="s" length="s" />
+          <p class="-fz:s -hl:s">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
         </Stack>
         <Icon fz="3xl" viewBox="0 0 256 256">
           <path d="M180.24,132.24l-80,80a6,6,0,0,1-8.48-8.48L167.51,128,91.76,52.24a6,6,0,0,1,8.48-8.48l80,80A6,6,0,0,1,180.24,132.24Z"></path>
@@ -74,7 +76,7 @@ Examples of banner link layouts built with Lism.
   <PreviewCode slot="tab" label="HTML">
     ```html "l--frame" "is--boxLink"
     <a class="l--frame is--boxLink has--transition -hov:-o -bdrs:20" href="#banner-link">
-      <img class="is--layer" src="https://picsum.photos/seed/hogeee/1200/400" width="960" height="640" loading="lazy" />
+      <img class="is--layer" src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
       <div class="l--flex -jc:between -ai:center -pos:relative -g:20 -p:30 -c -bgc -min-h" style="--c: #fff; --bgc: rgb(0 0 0 / 50%); --min-h: 30cqw">
         <div class="l--stack -g:10">
           <p class="-fz:xl -fw:bold">Banner</p>

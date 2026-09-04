@@ -1,38 +1,27 @@
 ---
-/**
- * シンプルなワンカラムレイアウト
- * - トップページや特殊ページで使用
- * - サイドバー・目次なしのシンプルな構成
- */
-
-// Lism CSS のスタイルシート読み込み
 import 'lism-css/main.css';
 
-// プロジェクト固有のスタイル
 import '../styles/main.scss';
 
-// サイト設定
 import { siteConfig } from '@/config/site';
 
-// 多言語対応
 import { getRootLang, type LangCode } from '@/lib/i18n';
 import type { SchemaType } from '@/lib/jsonLd';
 
-// コンポーネント
 import Head from '../components/Head.astro';
 import JsonLd from '../components/JsonLd.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { Lism } from 'lism-css/astro';
+import { Box, Stack } from 'lism-css/astro';
 
 interface Props {
   title: string;
   description?: string;
   ogImage?: string;
-  lang?: LangCode; // 言語コード（省略時はroot言語）
-  schemaType?: SchemaType; // 指定時のみ JSON-LD を出力
-  excludeFromSearch?: boolean; // 検索対象から除外するかどうか
-  noindex?: boolean; // 検索エンジンにインデックスさせない（noindex,follow を出力）
+  lang?: LangCode;
+  schemaType?: SchemaType;
+  excludeFromSearch?: boolean;
+  noindex?: boolean;
 }
 
 const { title = siteConfig.name, description, ogImage, lang = getRootLang(), schemaType, noindex = false } = Astro.props;
@@ -43,12 +32,16 @@ const { title = siteConfig.name, description, ogImage, lang = getRootLang(), sch
     {schemaType && <JsonLd schemaType={schemaType} title={title || siteConfig.name} description={description} lang={lang} />}
   </Head>
   <body data-pagefind-ignore>
-    <Lism layout="stack" class="is--container" min-h="100svh">
-      <Header />
-      <Lism as="main" isWrapper="l" hasGutter py="50">
-        <slot />
-      </Lism>
-      <Footer />
-    </Lism>
+    <Stack class="c--root" isContainer min-h="100svh" data-layout="SimpleLayout">
+      <Box class="p--front">
+        <Header hasMobileMenu={false} />
+      </Box>
+      <Box bgc="var(--docs-bg)" pos="relative" z="1">
+        <Box as="main">
+          <slot />
+        </Box>
+        <Footer />
+      </Box>
+    </Stack>
   </body>
 </html>

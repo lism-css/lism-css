@@ -5,6 +5,8 @@
  * - シンプルなLism CSSのみを読み込み、noindexを設定
  */
 import 'lism-css/main.css';
+// index 経由だと他の Preview コンポーネントの CSS が先に入り @layer の宣言順が崩れるため、ファイルを直接読み込む
+import PreviewSizeReporter from '@/components/Preview/PreviewSizeReporter.astro';
 
 const { title = '', lang = 'ja' } = Astro.props;
 ---
@@ -22,6 +24,8 @@ const { title = '', lang = 'ja' } = Astro.props;
     </style>
   </head>
   <body>
-    <slot />
+    <PreviewSizeReporter>
+      <slot />
+    </PreviewSizeReporter>
   </body>
 </html>

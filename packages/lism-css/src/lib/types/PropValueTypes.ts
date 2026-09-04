@@ -8,22 +8,6 @@ import type { CustomPropValueRegistry } from './CustomPropValueRegistry';
 type PropsConfig = typeof PROPS;
 type TokensConfig = typeof TOKENS;
 
-// ============================================================
-// Props 設定からプリセット値・ユーティリティ値・トークン値の型を生成
-// ============================================================
-//
-// presets: readonly ['italic'] → 'italic'
-// utils: { none: 'none' } → 'none' (キーを取得)
-// token: 'fz' → TOKENS['fz'] の値を取得
-//
-// 例:
-//   fs: { presets: ['italic'] } → fs?: 'italic' | (string & {})
-//   mx: { presets: ['auto', '0'], token: 'space' } → mx?: 'auto' | '0' | '5' | '10' | ... | (string & {})
-//   fz: { token: 'fz' } → fz?: 'base' | '5xl' | ... | (string & {})
-//   bg: { prop: 'background', bp: 1 } → bg?: string | number  (フォールバック)
-//
-// ============================================================
-
 /**
  * TOKENS のキーから対応する値の型（= トークンのキー集合）を取得
  * - 配列 / Set 形式: その要素の型
@@ -44,9 +28,6 @@ type TokenConfigValues<K extends keyof TokensConfig> = TokensConfig[K] extends r
     ? keyof TokensConfig[K] & string
     : never;
 
-/**
- * token プロパティから対応する TOKENS の値を抽出
- */
 type ExtractTokenValues<T> =
   ExtractPropertyValue<T, 'token'> extends never
     ? never
@@ -54,10 +35,6 @@ type ExtractTokenValues<T> =
       ? TokenConfigValues<ExtractPropertyValue<T, 'token'>>
       : never;
 
-/**
- * プロパティの設定から利用可能な値の型を抽出
- * presets の値 + utils のキー + token の値
- */
 type ExtractPropValues<T> = ExtractArrayValues<T, 'presets'> | ExtractObjectKeys<T, 'utils'> | ExtractTokenValues<T>;
 
 /**
@@ -101,28 +78,16 @@ type HasBreakpointSupport<T> = [ExtractPropertyValue<T, 'bp'>] extends [never]
 
 type AllPropKeys = keyof PropsConfig;
 
-/**
- * bp が有効（1 またはブレークポイント名）なプロパティのキーを抽出
- */
 type PropsWithBreakpoint = {
   [K in AllPropKeys]: HasBreakpointSupport<PropsConfig[K]> extends true ? K : never;
 }[AllPropKeys];
 
-/**
- * bp が無効なプロパティのキーを抽出
- */
 type PropsWithoutBreakpoint = Exclude<AllPropKeys, PropsWithBreakpoint>;
 
-/**
- * bp が有効なプロパティの型（レスポンシブ対応あり）
- */
 export type ResponsivePropValueTypes = {
   [K in PropsWithBreakpoint]?: PropValueType<PropsConfig[K], UserPropValues<K>>;
 };
 
-/**
- * bp が無効なプロパティの型（レスポンシブ対応なし）
- */
 export type NonResponsivePropValueTypes = {
   [K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K], UserPropValues<K>>;
 };

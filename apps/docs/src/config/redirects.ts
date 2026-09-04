@@ -100,24 +100,35 @@ export const astroRedirects: AstroRedirects = {
   // Chat をパッケージから削除し、Block Examples の作例ページへ転換（#557）
   '/ui/chat/': '/ui/block-examples/chat/',
   '/en/ui/chat/': '/en/ui/block-examples/chat/',
-  // ui/examples/* -> ui/components/* へ移動（#557）
-  // draft のまま未公開だったページは公開実績のある URL のみ登録する方針に従い対象外
-  '/ui/examples/breadcrumb/': '/ui/components/breadcrumb/',
+  // 公開実績のある旧ui/examples/*だけをui/components/*へリダイレクトする（#557）
   '/ui/examples/banner/': '/ui/components/banner/',
+  '/ui/examples/breadcrumb/': '/ui/components/breadcrumb/',
   '/ui/examples/card/': '/ui/components/card/',
   '/ui/examples/dividerlabel/': '/ui/components/dividerlabel/',
-  '/ui/examples/faq/': '/ui/components/faq/',
-  '/ui/examples/hero/': '/ui/components/hero/',
   '/ui/examples/reel/': '/ui/components/reel/',
   '/ui/examples/steps/': '/ui/components/steps/',
-  '/en/ui/examples/breadcrumb/': '/en/ui/components/breadcrumb/',
   '/en/ui/examples/banner/': '/en/ui/components/banner/',
+  '/en/ui/examples/breadcrumb/': '/en/ui/components/breadcrumb/',
   '/en/ui/examples/card/': '/en/ui/components/card/',
   '/en/ui/examples/dividerlabel/': '/en/ui/components/dividerlabel/',
-  '/en/ui/examples/faq/': '/en/ui/components/faq/',
-  '/en/ui/examples/hero/': '/en/ui/components/hero/',
   '/en/ui/examples/reel/': '/en/ui/components/reel/',
   '/en/ui/examples/steps/': '/en/ui/components/steps/',
+  // FAQ/Hero は patterns のカテゴリページへ直接リダイレクトし、ui/examples/*からの連鎖を避ける（#566）
+  '/ui/components/faq/': '/patterns/faq/',
+  // Hero は MDX を draft 化して本番非公開にしたため、作例のある patterns へ誘導する
+  '/ui/components/hero/': '/patterns/hero/',
+  '/ui/examples/faq/': '/patterns/faq/',
+  '/ui/examples/hero/': '/patterns/hero/',
+  '/en/ui/components/faq/': '/en/patterns/faq/',
+  '/en/ui/components/hero/': '/en/patterns/hero/',
+  '/en/ui/examples/faq/': '/en/patterns/faq/',
+  '/en/ui/examples/hero/': '/en/patterns/hero/',
+  // tokens/spacing ページを廃止し、tokens ページの SPACE セクションへ統合
+  '/docs/tokens/spacing/': '/docs/tokens/#space',
+  '/en/docs/tokens/spacing/': '/en/docs/tokens/#space',
+  // half-leading を tokens/ 配下から CSS設計の独立ページへ移動
+  '/docs/tokens/half-leading/': '/docs/half-leading/',
+  '/en/docs/tokens/half-leading/': '/en/docs/half-leading/',
 };
 
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。

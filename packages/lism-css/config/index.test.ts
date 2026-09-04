@@ -33,9 +33,11 @@ describe('isFullMode', () => {
     expect(props.ov.bp).toBe(1);
     expect(props.td.bp).toBe(1);
     // isVar 系は preset の対象外（bds / bdc のみ例外的に bp:1 になる）
-    expect(props.lh.isVar).toBe(1);
-    expect(props.lh.bp).toBeUndefined();
+    expect(props.hl.isVar).toBe(1);
     expect(props.contentSize.bp).toBeUndefined();
+    // lh は unitless比率が画面サイズに依らず維持されるのが本領のため、full でも BP 拡張しない（#582）
+    expect(props.lh.alwaysVar).toBe(1);
+    expect(props.lh.bp).toBeUndefined();
   });
 
   test('isFullMode でも border ショートハンド系は bp 対象外、bds / bdc は bp:1 になる（#513）', async () => {

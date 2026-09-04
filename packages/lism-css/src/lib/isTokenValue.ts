@@ -10,7 +10,6 @@ export default function isTokenValue(tokenKey: string, value: unknown): boolean 
     return false;
   }
 
-  // tokenKey が TOKENS に存在するかチェック
   if (!(tokenKey in TOKENS)) return false;
 
   const tokenValues = TOKENS[tokenKey as keyof typeof TOKENS];

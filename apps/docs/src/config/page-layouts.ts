@@ -1,28 +1,26 @@
-/**
- * Page Layouts データ設定
- *
- * ページ骨格レベル（フロントページ、記事レイアウト、404 等）のレイアウト集。
- * カテゴリごとにアイテムを定義し、preview 実体は src/pages/preview/page-layouts/{category}/{id}/index.astro に配置する。
- */
-
+// ページ全体のレイアウト集。プレビュー実体はsrc/pages/preview/page-layouts配下に置く
 import type { LangCode } from '@/config/site';
 
-// Page Layout アイテムの型
-export interface PageLayoutItem {
-  id: string; // レイアウトID（例: one-column）
-  title: string; // 表示タイトル（例: One Column）
-  description: Record<LangCode, string>; // 言語別の説明文
-  draft?: boolean; // 下書きフラグ（本番環境では非公開）
+// 関連ページへのリンク（言語プレフィックスなしのパスで保持し、表示時に言語を付与する）
+export interface PageLayoutRelatedLink {
+  label: string;
+  path: string;
 }
 
-// カテゴリ情報の型
+export interface PageLayoutItem {
+  id: string;
+  title: string;
+  description: Record<LangCode, string>;
+  related?: PageLayoutRelatedLink[];
+  draft?: boolean;
+}
+
 export interface PageLayoutCategory {
-  label: string; // カテゴリ表示名
-  description: Record<LangCode, string>; // カテゴリの概要
+  label: string;
+  description: Record<LangCode, string>;
   items: PageLayoutItem[];
 }
 
-// Page Layouts データ（satisfies でカテゴリ追加時に型定義の更新が不要）
 const pageLayouts = {
   page: {
     label: 'Page',
@@ -84,9 +82,10 @@ const pageLayouts = {
         id: 'hero-fullscreen',
         title: 'Hero Fullscreen',
         description: {
-          ja: 'ビューポート全体を覆うヒーローセクション。背景画像にタイトルやサブテキストを重ねて表示します。',
-          en: 'A hero section that covers the entire viewport, with a title and subtitle overlaid on a background image.',
+          ja: 'ビューポート全体を覆うヒーローセクション。背景画像にタイトルやサブテキストを重ねて表示します。ここでは骨格のみを扱います。',
+          en: 'A hero section that covers the entire viewport, with a title and subtitle overlaid on a background image. This page covers the structure only.',
         },
+        related: [{ label: 'Patterns: Hero', path: '/patterns/hero/' }],
       },
       {
         id: 'one-side-bleed',
@@ -125,11 +124,8 @@ const pageLayouts = {
   },
 } satisfies Record<string, PageLayoutCategory>;
 
-// カテゴリIDの型（pageLayouts のキーから自動推論）
 export type PageLayoutCategoryId = keyof typeof pageLayouts;
 
-// pageLayouts をエクスポート（型推論のため、定義とエクスポートを分離）
 export { pageLayouts };
 
-// カテゴリIDの配列（表示順）
 export const categoryIds = Object.keys(pageLayouts) as PageLayoutCategoryId[];

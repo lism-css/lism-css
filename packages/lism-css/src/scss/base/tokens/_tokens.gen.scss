@@ -4,8 +4,8 @@
   --L: 60%;
   --C: 0.2;
   --fz-mol: 8;
-  --hl-unit: calc(var(--fz--base) * 0.125);
-  --s-unit: calc(var(--fz--base) * 0.5);
+  --hl-unit: 0.125rem;
+  --s-unit: 0.5rem;
   --base: hsl(220 0% 99%);
   --base-2: hsl(220 4% 95%);
   --text: hsl(220 0% 8%);
@@ -15,7 +15,7 @@
   --brand: #1e5f8c;
   --accent: #d94a6a;
   --neutral: hsl(220, 2%, 80%);
-  --shadow: hsl(220 4% 8% / 12%);
+  --shadow: hsl(220 2% 4% / 8%);
   --red: oklch(var(--L) var(--C) 20);
   --blue: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264);
   --green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152);
@@ -47,7 +47,14 @@
   --hl--xs: var(--hl-unit);
   --hl--s: calc(var(--hl-unit) * 2);
   --hl--l: calc(var(--hl-unit) * 4);
+  --hl--xl: calc(var(--hl-unit) * 5);
+  --lh--xs: 1.25;
+  --lh--s: 1.5;
+  --lh--m: 1.75;
+  --lh--l: 2;
+  --lh--xl: 2.25;
   --lts--base: normal;
+  --lts--xs: -0.05em;
   --lts--s: -0.025em;
   --lts--l: 0.05em;
   --lts--xl: 0.1em;
@@ -56,9 +63,10 @@
   --o--pp: 0.5;
   --o--ppp: 0.25;
   --bdrs--10: 0.25rem;
-  --bdrs--20: 0.5rem;
-  --bdrs--30: 1rem;
-  --bdrs--40: 1.5rem;
+  --bdrs--20: 0.375rem;
+  --bdrs--30: 0.625rem;
+  --bdrs--40: 1rem;
+  --bdrs--50: 1.5rem;
   --bdrs--99: 99rem;
   --ar--og: 1.91/1;
   --sz--xs: 400px;
@@ -69,11 +77,11 @@
 }
 :root,
 .set--bxsh {
-  --bxsh--10: var(--shsz--10) var(--shc);
-  --bxsh--20: var(--shsz--20) var(--shc);
-  --bxsh--30: var(--shsz--30) var(--shc);
-  --bxsh--40: var(--shsz--40) var(--shc);
-  --bxsh--50: var(--shsz--50) var(--shc);
+  --bxsh--10: var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc);
+  --bxsh--20: var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc);
+  --bxsh--30: var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc);
+  --bxsh--40: var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc);
+  --bxsh--50: var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc);
 }
 :root,
 .set--s {

@@ -7,13 +7,11 @@
 export default function getUtilKey(utils: Record<string, unknown> | undefined, value: string, isShorthand = false): string {
   if (null == utils || typeof utils !== 'object') return '';
 
-  // keyから検索
   if (value in utils) {
     return isShorthand ? String(utils[value]) : value;
   }
   if (isShorthand) return '';
 
-  // 値に一致するキーを検索
   for (const [key, val] of Object.entries(utils)) {
     if (val === value) {
       return key;

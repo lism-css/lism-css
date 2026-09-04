@@ -48,6 +48,7 @@ src/
 │   │   ├── NavLink.astro
 │   │   ├── Pagination.astro
 │   │   └── PostNavigation.astro
+│   ├── patterns/             # パターン一覧（リール）・カテゴリ一覧用UI
 │   ├── templates/            # テンプレート一覧・詳細用UI
 │   ├── ex/                   # MDX 内サンプル用コンポーネント
 │   └── Preview/              # コードプレビュー UI
@@ -109,7 +110,7 @@ src/
 │   ├── _parts.scss
 │   ├── _preview.scss
 │   ├── _code.scss
-│   ├── _lg.scss
+│   ├── _kv-editor.scss
 │   ├── _theme.scss
 │   ├── _docs/                # docs 系の個別スタイル
 │   └── _memo/                # 検証用メモスタイル

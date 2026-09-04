@@ -1,6 +1,6 @@
 ---
 title: '-hov'
-description: 'hover時の挙動をコントロールする -hov プロパティクラスの使い方について解説します。'
+description: 'hover時の挙動をコントロールする -hov Property Class の使い方について解説します。'
 ---
 
 import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink, Inline, Text, Cluster, Link } from 'lism-css/astro';
@@ -9,7 +9,7 @@ import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink, Inline,
 hover時の挙動をコントロールするためのCSS設計について紹介します。
 
 
-Lismでは、hover時のスタイルは`-hov:`で始まるPropertyクラスで定義します。  
+Lism では、hover時のスタイルは`-hov:`で始まるProperty Classで定義します。<br />
 `-hov`クラスには以下の3つの形式があります。
 
 | 形式 | 役割 |
@@ -367,9 +367,9 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
 <Preview>
   <PreviewTitle>`-hov:in:show`と`-hov:in:zoom`を使う例</PreviewTitle>
   <PreviewArea p="20">
-    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="40">
       <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }} bdrs="40">
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             <Fragment>View More</Fragment>
@@ -380,9 +380,9 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html "set--hov" "-hov:in:show" "-hov:in:zoom" "has--transition"
-    <a class="l--frame set--hov is--boxLink -ar:16/9 -bdrs:30" href="#banner-link">
+    <a class="l--frame set--hov is--boxLink -ar:16/9 -bdrs:40" href="#banner-link">
       <img class="is--layer has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
-      <div class="is--layer has--transition -hov:in:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
+      <div class="is--layer has--transition -hov:in:show -bgc -bdrs:40" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
           <span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:20 -py:10">View More</span>
         </div>
@@ -392,9 +392,9 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'set="hov"' 'hov="in:show"' 'hov="in:zoom"' 'hasTransition'
-    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="40">
       <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }} bdrs="40">
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
@@ -411,6 +411,8 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
 ## トランジションを設定する方法
 
 [`has--transition`](/docs/trait-class/#has--transition)クラスを付与すると、hover時の変化になめらかなトランジションがかかります。`--duration`変数で所要時間を調整できます。
+
+初期状態でトランジションの対象になるのは、色・影・透明度・transform系・filter系のプロパティだけです。`--transitionProps`変数（Lismコンポーネントでは`hasTransition="color, opacity"`のような文字列指定）で、実際に変化させるプロパティを明示することを推奨します。
 
 
 <Preview>

@@ -1,0 +1,18 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    tooltipId?: string;
+  };
+
+// 既定値はプレースホルダー。Root 配下なら Root 側で実IDに置換される（明示指定があればそれが残る）
+const { class: className, tooltipId = '__LISM_TOOLTIP_ID__', ...props } = Astro.props;
+---
+
+<Lism as="button" type="button" class={atts(className, 'b--tooltip_trigger')} set="plain" aria-describedby={tooltipId} {...props}>
+  <slot />
+</Lism>

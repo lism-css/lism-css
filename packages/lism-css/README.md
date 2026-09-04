@@ -29,7 +29,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 ### CDN (no build required)
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.26.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.27.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -53,18 +53,6 @@ import 'lism-css/main.css';
 ```
 
 For **Next.js**, load it in `layout.js` (App Router) or `_app.js` (Pages Router).
-
-For **Astro**, add the following to `astro.config.js` to allow importing `.astro` components from `node_modules`:
-
-```js
-export default defineConfig({
-  vite: {
-    ssr: {
-      noExternal: ['lism-css'],
-    },
-  },
-});
-```
 
 ## Usage
 

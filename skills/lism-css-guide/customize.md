@@ -12,8 +12,8 @@
 詳細（公式ドキュメント）:
 
 - 概要: [https://lism-css.com/docs/customize/](https://lism-css.com/docs/customize/)
-- CSSビルドの選択（`@layer` / `full.css` / `isFullMode`）: [https://lism-css.com/docs/customize/build/](https://lism-css.com/docs/customize/build/)
-- `lism.config.js`（props / tokens / traits・breakpoints・追加スタイル）: [https://lism-css.com/docs/customize/config/](https://lism-css.com/docs/customize/config/)
+- CSSファイルの種類（`@layer` なし版 / `full.css`）: [https://lism-css.com/docs/css-files/](https://lism-css.com/docs/css-files/)
+- `lism.config.js`（props / tokens / traits・breakpoints・`isFullMode`・追加スタイル）: [https://lism-css.com/docs/customize/config/](https://lism-css.com/docs/customize/config/)
 - SCSS（`$setting` / `$props`・BP上書き）: [https://lism-css.com/docs/customize/scss/](https://lism-css.com/docs/customize/scss/)
 - CSS Purge: [https://lism-css.com/docs/customize/purge/](https://lism-css.com/docs/customize/purge/)
 
@@ -22,7 +22,7 @@
 ## `@layer` をオフにする
 
 `lism-css/main.css` の代わりに `lism-css/main_no_layer.css` を読み込むだけで、`@layer` を使わない CSS に切り替えられます。
-なお、no-layer版ではレイヤーによる優先度管理（`b--`よりProperty Classが必ず強い等の保証）が効かず、読み込み順・詳細度に依存します。
+no-layer版は既存サイトや WordPress テーマなど、カスケードを制御できない環境向けです。レイヤーの代わりに、Property Class は常に `!important` 付き、`u--trim` / `u--trimAll` / `u--cbox` / `u--divide` / `u--enclose` はセレクタ二重化（`.u--trim.u--trim` = 0-2-0）で出力され、「Property Class > Utility Class > 単一クラス」の序列を再現します。`lism.config.js` の `defaultImportant: false`・`$default_important: 0`・`props` の個別 `important: 0` を指定しても `!important` は外れません。`b--` など上記以外のクラス同士の優先度は読み込み順・詳細度に依存します。
 
 ```js
 // 通常
@@ -48,7 +48,7 @@ import 'lism-css/main_no_layer.css';
 | --- | --- | --- |
 | `$breakpoints` | ブレイクポイント数値の定義（`0` は無効＝クエリを出力しない） | `('xs': 0, 'sm': '480px', 'md': '800px', 'lg': '1120px', 'xl': 0)` |
 | `$is_container_query` | コンテナクエリで出力するか（`1` = container query, `0` = media query） | `1` |
-| `$default_important` | Property Class にデフォルトで `!important` を付与するか | `0` |
+| `$default_important` | Property Class にデフォルトで `!important` を付与するか（no-layer版では無視され、常に付与） | `0` |
 | `$props` | Property Class ごとの個別出力設定 | `prop-config` のデフォルト |
 
 ### 基本フォーマット
@@ -183,7 +183,7 @@ export default {
 
 これだけで、ブレイクポイント対応の全 Property Class が `xs` / `xl` のレスポンシブクラス（`-p_xs` / `-p_xl` 等）も出力するようになります。prop ごとの個別指定は不要です。
 
-統合プラグイン（型自動生成が有効）を使っている場合、有効化したブレイクポイントを反映した `lism-env.d.ts` がプロジェクト直下に**自動生成**されます。型補完も有効化したブレイクポイントのキーを自動で提示するため、`BreakpointRegistry` をプロジェクト側の `.d.ts` で手書き拡張する必要はありません。`lism-env.d.ts` は git にコミットしてください（`astro check` 等の型チェックがこのファイルを拠り所にします）。
+統合プラグイン使用時は有効化したブレイクポイントがプロジェクト直下の `lism-env.d.ts` に自動反映され、`BreakpointRegistry` の手書き拡張は不要です。`lism-env.d.ts` は git にコミットしてください（`astro check` 等の型チェックがこのファイルを拠り所にします）。
 
 > SCSS を直接利用する構成では、`@use 'lism-css/scss/setting' with ($breakpoints: ...)` で有効化する方法も利用できます（[SCSS でのカスタマイズ](#scss-でのカスタマイズ) を参照）。
 
@@ -257,31 +257,18 @@ export default {
 
 ### 追加した prop / trait の型解禁
 
-統合プラグイン（型自動生成が有効）を使っている場合、`lism.config.js` で追加した **prop / trait も `lism-env.d.ts` 経由で型側に自動解禁**されます（`CustomPropRegistry` / `CustomTraitRegistry` の拡張として出力）。そのため上記の `<Box filter="blur" ... isHoge>` のような新規 prop / trait も、エディタや `astro check` で型エラーになりません。手書きの型拡張は不要です。
+統合プラグイン使用時は、追加した prop / trait も `lism-env.d.ts`（`CustomPropRegistry` / `CustomTraitRegistry` の拡張）で自動解禁され、手書きの型拡張は不要です。
 
 なお、既存 prop への値追加（`ta="justify"` 等）はもともと任意の文字列を受け付けるため、型エラーにはなりません（ただし補完候補には出ません）。
 
 
 ## 追加スタイルを読み込ませる方法
 
-`lism.config.js` で props を増やしただけでは、対応するユーティリティクラスのスタイルが必要になります。構成によって反映方法が異なります。
+`lism.config.js` で props を増やしただけでは、対応するユーティリティクラスのスタイルが必要になります。構成によって反映方法が異なります。`traits` はクラス名だけを追加するため、`is--*` のスタイルはどの構成でも手動追記 / SCSS で用意します。
 
 ### Vite / Astro（統合プラグイン使用時）は自動反映（手動ビルド不要）
 
-`@lism-css/plugin` の統合プラグインを登録している場合、`lism.config.js` に props / tokens を追加すると、**dev サーバ / ビルドの CSS に自動反映されます**。追加クラス分の CSS を手動で追記したり `npx lism-css build` を回したりする必要はありません。dev 中に `lism.config.js` を変更すると HMR で CSS が再生成され、型 `.d.ts` も追従します。
-
-参照先の **CSS 変数の値そのもの**（`:root { --lts--2xl: .5em }` のような定義）も、`tokens` に値を書けば自動生成されます。値の定義・ユーティリティ生成・props 受理がまとめて反映されるため、`global.css` への手書きは不要です（既定値の上書きも可能）。
-
-```js
-// lism.config.js — 値そのものも config に集約できる
-export default {
-  tokens: {
-    lts: { '2xl': '.5em' }, // :root { --lts--2xl: .5em } + .-lts:2xl を自動生成
-  },
-};
-```
-
-> `is--*` クラスのスタイルは `traits` ではクラス名のみを追加するため、対応するスタイルは別途必要です（後述の手動追記 / SCSS を参照）。
+`@lism-css/plugin` の統合プラグインを登録している場合、`lism.config.js` に props / tokens を追加すると、**dev サーバ / ビルドの CSS に自動反映されます**。手動追記や `npx lism-css build` は不要で、dev 中の変更は HMR で CSS と型 `.d.ts` が追従します。`tokens` に書いた値は CSS 変数の定義（`:root { --lts--2xl: .5em }`）・ユーティリティクラス・props 受理がまとめて反映されるため、`global.css` への手書きも不要です（既定値の上書きも可）。
 
 軽微な追加であれば、props を増やさず Lism Props の `:value` 記法（→ [property-class.md](./property-class.md)）と `global.css` への手書きだけで済ませることもできます。
 
@@ -317,8 +304,7 @@ npx lism-css build --full   # full.css / full_no_layer.css も生成
 ```
 
 > **注意**:
-> - `tokens` に値を書けば、`-lts:2xl` の **ユーティリティクラス**と、参照先の CSS 変数（`:root { --lts--2xl: .5em }` のような **値そのもの**）の両方が CLI ビルドでも出力されます。値が `'-'` のキーはカタログ登録のみで `:root` 宣言を出力しません（`lh` のように CSS 変数を持たないものや、実値を手書きSCSS側へ置くもの）。
-> - `is--*` クラスのスタイルは自動生成されないため、手動で追加してください。
+> - `tokens` の値は CLI ビルドでも CSS 変数とユーティリティクラスの両方が出力されます。値が `'-'` のキーはカタログ登録のみで `:root` 宣言を出力しません（`flow` や `bdrs.inner` のように実値を手書きSCSS側へ置くもの）。
 > - `lism-css` パッケージ自体を上書きする処理のため、**パッケージ更新ごとに再実行**が必要です。
 
 ### 手動で CSS を追記
@@ -337,16 +323,15 @@ CLI を使わず、追加クラス分の CSS をプロジェクト側で書い�
 }
 ```
 
-### SCSS で `lism.config.js` と整合させる
+### SCSS だけで値を追加する（`lism.config.js` を使わない構成）
 
-SCSS 経由で読み込む構成なら、`lism.config.js` と同じ追加分を `$props` の `utilities` 設定として書いておけば、ビルドコマンドなしで反映できます。
+`@lism-css/plugin` を使わない構成では `lism.config.js` は読み込まれない。SCSS の `$props` の `utilities` で値を追加し、コンポーネントからは `:value` 記法（`p=":box"`）で強制クラス化するか、HTML に直接クラスを書いて使う。
 
 ```scss
 @use '../path-to/node_modules/lism-css/scss/setting' with (
   $props: (
     'ta': ( utilities: ( 'justify': 'justify' ) ),
     'p': ( utilities: ( 'box': '2em' ) ),
-    'filter': ( utilities: ( 'blur': 'blur(3px)' ) ),
     'lts': ( utilities: ( '2xl': 'var(--lts--2xl)' ) ),
   )
 );

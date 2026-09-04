@@ -1,6 +1,6 @@
 ---
 title: '-bd'
-description: 'How to use the -bd property classes and related CSS variables for border styling.'
+description: 'How to use the -bd Property Class and related CSS variables for border styling.'
 ---
 import { Box, Flex, Stack, Divider, Spacer } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
@@ -15,10 +15,13 @@ Border-related properties in Lism follow a slightly different convention.
 
 <PreviewTitle>css</PreviewTitle>
 ```scss
+/* Only the variable defaults live in the weak position (@layer lism-base in the layered build, :where() in the no_layer build) */
 :where(.-bd, [class*=' -bd-'], [class^='-bd-']) {
   --bds: solid;
   --bdw: 1px;
   --bdc: var(--divider);
+}
+.-bd, [class*=' -bd-'], [class^='-bd-'] {
   border-width: var(--bdw);
   border-color: var(--bdc);
 }
@@ -96,7 +99,7 @@ Additionally, `bdw` supports breakpoint specification.
 
 
 
-## Side Specification
+## Side specification
 
 
 :::info

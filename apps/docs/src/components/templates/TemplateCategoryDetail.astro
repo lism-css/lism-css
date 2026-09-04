@@ -1,17 +1,31 @@
 ---
 /**
- * カテゴリ単位の詳細ページ本体（aggregateView: true のカテゴリ用）
+ * カテゴリページ本体（ja / en 共通）
  *
  * URL: /templates/{category}/  または  /{lang}/templates/{category}/
- * 「中身共通・stack 違いのみ」のカテゴリ（Minimal 等）で、コマンドだけ stack ごとに並べ、
- * プレビューは representative slug の 1枚だけを表示する。
+ * - 通常カテゴリ（Blog / LP 等）: テンプレートごとに h2 セクションを並べ、長い説明・機能・コマンド・リンクで比較できるようにする。
+ * - aggregateView カテゴリ（Minimal 等）: 中身共通・stack 違いのみなので、コマンドを stack ごとに並べ、
+ *   プレビューは representative slug の 1枚だけを表示する。
  */
-import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/astro';
+import { Stack, Text, Group, Cluster, Inline, Frame, Flex, Columns, Heading, Link, BoxLink } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, getAggregateRepresentative, getThumb, getPreviewUrl, type TemplateItem, type CategoryDef } from '@/config/templates';
+import {
+  stackLabels,
+  stackOrder,
+  getAggregateRepresentative,
+  getThumb,
+  getIntro,
+  getCategoryIntro,
+  getPreviewUrl,
+  type TemplateItem,
+  type CategoryDef,
+} from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
+import TemplateFeatures from './TemplateFeatures.astro';
+import PageHeader from '@parts/PageHeader.astro';
 
 interface Props {
   category: CategoryDef;
@@ -24,22 +38,26 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      backToList: '← Templates 一覧へ',
+      backToList: 'Templates 一覧へ',
       install: 'インストールコマンド',
       installCategoryLead: '対話形式で stack を選んで生成します。',
       installStackLead: 'stack を直接指定する場合：',
-      preview: 'プレビュー',
+      commandLead: 'このテンプレートを生成する：',
+      details: '詳細を見る',
+      viewDemo: 'デモページへ ↗',
       previewMissing: 'このテンプレートはまだプレビューURLが設定されていません。',
       copy: 'コマンドをコピー',
       copied: 'コピーしました',
       thumbAlt: (title: string) => `${title} のサムネイル`,
     }
   : {
-      backToList: '← Back to Templates',
+      backToList: 'Back to Templates',
       install: 'Install command',
       installCategoryLead: 'Pick a stack through the interactive flow.',
       installStackLead: 'Or specify a stack directly:',
-      preview: 'Preview',
+      commandLead: 'Generate this template:',
+      details: 'View details',
+      viewDemo: 'View demo ↗',
       previewMissing: 'A preview URL is not configured for this template yet.',
       copy: 'Copy command',
       copied: 'Copied!',
@@ -47,90 +65,155 @@ const copy = isJa
     };
 
 const templatesUrl = getLocalizedUrl('/templates/', lang);
-const categoryCommand = `npm create lism@latest -- --template ${category.id} --lang ${lang}`;
+const buildCommand = (slug: string) => `npm create lism@latest -- --template ${slug} --lang ${lang}`;
+const buildDetailUrl = (slug: string) => getLocalizedUrl(`/templates/${category.id}/${slug}/`, lang);
+
+// aggregateView 用
+const stacks = stackOrder.filter((stack) => templates.some((tpl) => tpl.stack === stack));
 const representative = getAggregateRepresentative(category, templates) ?? templates[0];
-const previewUrl = representative ? getPreviewUrl(representative, lang) : undefined;
+const representativePreviewUrl = representative ? getPreviewUrl(representative, lang) : undefined;
 ---
 
 <Stack g="40">
-  {/* パンくず（一覧へ戻る） */}
-  <Cluster g="10" fz="xs">
-    <a href={templatesUrl} class="-c:text-2">{copy.backToList}</a>
-  </Cluster>
+  <PageHeader
+    title={category.label}
+    count={category.aggregateView ? undefined : templates.length}
+    description={getCategoryIntro(category, lang)}
+    backHref={templatesUrl}
+    backLabel={copy.backToList}
+  />
 
-  {/* ヘッダー */}
-  <Stack as="header" g="10">
-    <Cluster g="10">
-      <Text fz="xs" c="text-2" tt="uppercase" lts="l">
-        {category.label}
-      </Text>
-      {
-        templates.map((tpl) => (
-          <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
-            {stackLabels[tpl.stack]}
-          </Inline>
-        ))
-      }
-    </Cluster>
-    <Heading level="1" fz="3xl" fw="bold">{category.label}</Heading>
-    <Text c="text-2">{category.description[lang]}</Text>
-  </Stack>
+  {
+    category.aggregateView ? (
+      <Fragment>
+        {/* 対応 stack（詳細ページのメタ行と同じ位置に並べる） */}
+        <Cluster g="10">
+          {stacks.map((stack) => (
+            <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+              {stackLabels[stack]}
+            </Inline>
+          ))}
+        </Cluster>
 
-  {/* インストールコマンド */}
-  <Group>
-    <PreviewTitle>{copy.install}</PreviewTitle>
-    <Stack g="20" p="20" bd bdrs="20" bgc="base">
-      {/* カテゴリ slug 版 */}
-      <Stack g="10">
-        <Text util="trim" c="text-2" fz="xs" hl="s">{copy.installCategoryLead}</Text>
-        <CopyCommand bdrs="10" command={categoryCommand} copyLabel={copy.copy} copiedLabel={copy.copied} />
-      </Stack>
+        {/* インストールコマンド（カテゴリ slug 版 + stack 別 slug 版） */}
+        <Group>
+          <PreviewTitle>{copy.install}</PreviewTitle>
+          <Stack g="20" p="20" bd bdrs="20" bgc="base">
+            <Stack g="10">
+              <Text util="trim" c="text-2" fz="xs" hl="s">
+                {copy.installCategoryLead}
+              </Text>
+              <CopyCommand bdrs="10" command={buildCommand(category.id)} copyLabel={copy.copy} copiedLabel={copy.copied} />
+            </Stack>
+            <Stack g="10">
+              <Text util="trim" c="text-2" fz="xs" hl="s">
+                {copy.installStackLead}
+              </Text>
+              {templates.map((tpl) => (
+                <CopyCommand bdrs="10" command={buildCommand(tpl.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
+              ))}
+            </Stack>
+          </Stack>
+        </Group>
 
-      {/* stack 別 slug 版 */}
-      <Stack g="10">
-        <Text util="trim" c="text-2" fz="xs" hl="s">{copy.installStackLead}</Text>
-        {
-          templates.map((tpl) => (
-            <Stack g="5">
-              <Cluster g="10" ai="baseline">
+        {/* プレビュー（representative slug の 1 枚のみ） */}
+        <Group>
+          {representativePreviewUrl ? (
+            <PreviewFrame url={representativePreviewUrl} hasSizeSwitch externalButtonLabel={copy.viewDemo} />
+          ) : representative ? (
+            <Stack g="10">
+              <Frame bd bdrs="20">
+                <Image
+                  src={getThumb(representative, lang)}
+                  alt={copy.thumbAlt(category.label)}
+                  widths={[400, 800, 1200]}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                  loading="lazy"
+                />
+              </Frame>
+              <Text c="text-2" fz="xs" hl="s" ta="center">
+                {copy.previewMissing}
+              </Text>
+            </Stack>
+          ) : null}
+        </Group>
+      </Fragment>
+    ) : (
+      <Stack g="40">
+        {templates.map((tpl) => {
+          const title = tpl.title[lang];
+          const detailUrl = buildDetailUrl(tpl.slug);
+          const previewUrl = getPreviewUrl(tpl, lang);
+          const features = tpl.features?.[lang];
+          const headingId = `${tpl.slug}-title`;
+          return (
+            <Stack as="section" id={tpl.slug} g="25" bd-t pt="40" aria-labelledby={headingId} class="c--templateSection">
+              <Cluster ai="center" g="10">
+                <Heading level="2" id={headingId} fz="xl">
+                  <Link href={detailUrl} set="plain" hov="underline">
+                    {title}
+                  </Link>
+                </Heading>
                 <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
                   {stackLabels[tpl.stack]}
                 </Inline>
+                {tpl.draft && (
+                  <Inline d="inline-flex" px="10" fz="2xs" ff="mono" bgc="text-2" c="base" bdrs="99">
+                    draft
+                  </Inline>
+                )}
               </Cluster>
-              <CopyCommand
-                bdrs="10"
-                command={`npm create lism@latest -- --template ${tpl.slug} --lang ${lang}`}
-                copyLabel={copy.copy}
-                copiedLabel={copy.copied}
-              />
-            </Stack>
-          ))
-        }
-      </Stack>
-    </Stack>
-  </Group>
 
-  {/* プレビュー（representative slug の 1 枚のみ） */}
-  <Group>
-    {
-      previewUrl ? (
-        <PreviewFrame url={previewUrl} hasSizeSwitch />
-      ) : representative ? (
-        <Stack g="10">
-          <Frame bd bdrs="20">
-            <Image
-              src={getThumb(representative, lang)}
-              alt={copy.thumbAlt(category.label)}
-              widths={[400, 800, 1200]}
-              sizes="(max-width: 800px) 100vw, 800px"
-              loading="lazy"
-            />
-          </Frame>
-          <Text c="text-2" fz="xs" hl="s" ta="center">
-            {copy.previewMissing}
-          </Text>
-        </Stack>
-      ) : null
-    }
-  </Group>
+              <Columns cols={{ base: 1, md: 2 }} g="30" ai="start">
+                <BoxLink layout="frame" href={detailUrl} aria-label={title} class="c--templateSection_thumbLink" ar="16/9" bd bdrs="20" ov="hidden">
+                  <Image
+                    src={getThumb(tpl, lang)}
+                    alt={copy.thumbAlt(title)}
+                    widths={[400, 800, 1200]}
+                    sizes="(max-width: 800px) 100vw, 50vw"
+                    loading="lazy"
+                  />
+                </BoxLink>
+
+                <Stack g="20">
+                  <Text c="text-2" hl="s">
+                    {getIntro(tpl, lang)}
+                  </Text>
+                  {features && features.length > 0 && <TemplateFeatures features={features} />}
+                  <Stack g="10">
+                    <Text util="trim" c="text-2" fz="xs" hl="s">
+                      {copy.commandLead}
+                    </Text>
+                    <CopyCommand bdrs="10" command={buildCommand(tpl.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
+                  </Stack>
+                  <Flex g="15" fxw="wrap">
+                    <Button as="a" href={detailUrl} variant="outline" bdrs="10" fz="xs">
+                      {copy.details}
+                    </Button>
+                    {previewUrl && (
+                      <Button as="a" href={previewUrl} target="_blank" rel="noopener noreferrer" variant="fill" bdrs="10" fz="xs">
+                        {copy.viewDemo}
+                      </Button>
+                    )}
+                  </Flex>
+                </Stack>
+              </Columns>
+            </Stack>
+          );
+        })}
+      </Stack>
+    )
+  }
 </Stack>
+
+<style>
+  @layer lism-custom {
+    /* サムネイル：リンクとして拡大ホバー */
+    .c--templateSection_thumbLink img {
+      transition: transform 0.3s ease;
+    }
+    .c--templateSection_thumbLink:hover img {
+      transform: scale(1.03);
+    }
+  }
+</style>

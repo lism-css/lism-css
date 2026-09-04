@@ -1,0 +1,54 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Lism, Stack, Inline, Heading } from 'lism-css/astro';
+---
+
+<DemoLayout title="FAQ001">
+  <Container isWrapper="m" bgc="base" py="50" hasGutter>
+    <Stack g="50">
+      {/* セクション見出し */}
+      <Stack g="20" ai="center">
+        <Heading level="2" class="u--trim" fz="2xl" fw="bold" ta="center">よくある質問</Heading>
+        <Inline class="u--trim" fz="s" o="ppp" ta="center">FAQ</Inline>
+      </Stack>
+      {/* 質問と回答のリスト */}
+      <Stack as="dl" g="40">
+        <Stack g="15">
+          <Lism as="dt" fw="bold" bd-s bdc="current" bdw="2px" ps="15">無料でお試しできますか？</Lism>
+          <Lism as="dd" ps="5">
+            <p>
+              すべてのプランで14日間の無料トライアルをご用意しています。トライアル期間中は機能の制限がなく、クレジットカードの登録も必要ありません。
+            </p>
+          </Lism>
+        </Stack>
+        <Stack g="15">
+          <Lism as="dt" fw="bold" bd-s bdc="current" bdw="2px" ps="15">支払い方法には何が使えますか？</Lism>
+          <Lism as="dd" ps="5">
+            <p>主要なクレジットカードと銀行振込に対応しています。年払いをお選びいただくと、月払いに比べて2ヶ月分の料金がお得になります。</p>
+          </Lism>
+        </Stack>
+        <Stack g="15">
+          <Lism as="dt" fw="bold" bd-s bdc="current" bdw="2px" ps="15">途中でプランを変更できますか？</Lism>
+          <Lism as="dd" ps="5">
+            <p>
+              いつでも変更できます。上位プランへの変更は申し込み後すぐに反映され、差額は日割りで計算されます。下位プランへの変更は次の更新日から適用されます。
+            </p>
+          </Lism>
+        </Stack>
+        <Stack g="15">
+          <Lism as="dt" fw="bold" bd-s bdc="current" bdw="2px" ps="15">解約したあとのデータはどうなりますか？</Lism>
+          <Lism as="dd" ps="5">
+            <p>解約から90日間はデータをお預かりしています。その間に再度ご契約いただければ、解約前の状態から利用を再開できます。</p>
+          </Lism>
+        </Stack>
+        <Stack g="15">
+          <Lism as="dt" fw="bold" bd-s bdc="current" bdw="2px" ps="15">サポートへの問い合わせ方法を教えてください。</Lism>
+          <Lism as="dd" ps="5">
+            <p>管理画面のチャットとメールで受け付けています。平日10時から18時までにいただいたお問い合わせには、当日中の返信を心がけています。</p>
+          </Lism>
+        </Stack>
+      </Stack>
+    </Stack>
+  </Container>
+</DemoLayout>

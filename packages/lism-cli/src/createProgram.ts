@@ -27,6 +27,7 @@ export function createLismProgram(): Command {
     .argument('[targetDir]', t('cli.create.arg.targetDir'))
     .option('-t, --template <name>', t('cli.create.opt.template'))
     .option('-f, --force', t('cli.create.opt.force'), false)
+    .option('--ref <ref>', t('cli.create.opt.ref'))
     .action(createCommand);
 
   const init = program.command('init').description(t('cli.init.description'));

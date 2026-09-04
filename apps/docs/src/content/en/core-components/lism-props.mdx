@@ -68,8 +68,8 @@ The old dedicated `lismClass` / `variant` slots have been removed. BEM modifier 
 
 ## `set` / `util`
 
-`set` specifies [Set Class](/en/docs/set-class/) entries (`set--{value}`),  
-`util` specifies [Utility Class](/en/docs/utility-class/) entries (`u--{value}`).
+`set` specifies [Set Class](/en/docs/set-class/) entries (`set--{name}`),  
+`util` specifies [Utility Class](/en/docs/utility-class/) entries (`u--{name}`).
 
 <PreviewTitle>Example</PreviewTitle>
 ```jsx 'set="bxsh"' 'util="cbox"' "set--bxsh" "u--cbox"
@@ -103,7 +103,7 @@ Prefix a value with `-` to exclude that identifier. Use this to remove a class t
 
 ## `layout` / `atomic`
 
-`layout` and `atomic` are props for specifying Layout Primitive classes (`l--*`) and Atomic Primitive classes (`a--*`), respectively.
+`layout` and `atomic` are props for specifying Layout Primitive Classes (`l--*`) and Atomic Primitive Classes (`a--*`), respectively.
 
 
 For example, specifying `layout='flow'` outputs the `l--flow` class, and specifying `atomic='divider'` outputs the `a--divider` class.
@@ -141,7 +141,7 @@ Props corresponding to Trait Classes (`is--*` / `has--*`).
 | `isContainer` | `is--container` | Container query target |
 | `isSide` | `is--side` | Side element |
 | `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
-| `hasTransition` | `has--transition` | Sets `transition` properties via CSS variables |
+| `hasTransition(='{props}')` | `has--transition` + `--transitionProps:{props}` | Sets `transition` properties via CSS variables. Pass a string to specify which properties to transition |
 | `hasGutter` | `has--gutter` | Reserves a unified horizontal gutter (`--gutter` / `--gutter--base`) |
 | `hasSnap` | `has--snap` | Sets `scroll-snap-*` properties via CSS variables |
 | `hasMask` | `has--mask` | Sets `mask` property via CSS variables |

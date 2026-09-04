@@ -1,27 +1,19 @@
-/**
- * Templates 関連のヘルパー関数
- */
-
 import { visibleTemplates, categories, type CategoryDef, type CategoryId, type TemplateItem } from '@/config/templates';
 
 /**
- * カテゴリIDとslugからテンプレート情報を取得
  * draft:true のテンプレートは本番ビルドでは取得不可（詳細ページが 404 になる）
  */
 export function getTemplate(categoryId: string, slug: string): TemplateItem | undefined {
   return visibleTemplates.find((tpl) => tpl.category === categoryId && tpl.slug === slug);
 }
 
-/**
- * カテゴリ定義を取得
- */
 export function getCategory(categoryId: string): CategoryDef | undefined {
   return categories.find((c) => c.id === categoryId);
 }
 
 /**
  * slug 単位の詳細ページパスを生成（getStaticPaths 用）。
- * aggregateView: true のカテゴリは「カテゴリ単位の1ページ」へ統合するため除外する。
+ * aggregateView: true のカテゴリは stack 違いだけなので、カテゴリページに統合し個別ページは作らない。
  */
 export function getSingleTemplatePaths(): Array<{ category: CategoryId; slug: string }> {
   return visibleTemplates
@@ -33,9 +25,9 @@ export function getSingleTemplatePaths(): Array<{ category: CategoryId; slug: st
 }
 
 /**
- * カテゴリ単位の詳細ページパスを生成（getStaticPaths 用）。
- * aggregateView: true のカテゴリのみ対象。
+ * カテゴリページのパスを生成（getStaticPaths 用）。
+ * 公開テンプレートが 1 件以上あるカテゴリすべてが対象。
  */
-export function getAggregatedCategoryPaths(): Array<{ category: CategoryId }> {
-  return categories.filter((c) => c.aggregateView && visibleTemplates.some((tpl) => tpl.category === c.id)).map((c) => ({ category: c.id }));
+export function getCategoryPaths(): Array<{ category: CategoryId }> {
+  return categories.filter((c) => visibleTemplates.some((tpl) => tpl.category === c.id)).map((c) => ({ category: c.id }));
 }

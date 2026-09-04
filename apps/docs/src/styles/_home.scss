@@ -1,0 +1,75 @@
+@layer lism-custom {
+  .c--kvVideoBg {
+    mix-blend-mode: darken;
+
+    [data-theme='dark'] & {
+      mix-blend-mode: lighten;
+    }
+
+    video {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 150vh;
+      object-fit: cover;
+
+      [data-theme='dark'] & {
+        filter: invert(1);
+      }
+    }
+  }
+
+  .c--kvStripes {
+    background-image:
+      linear-gradient(90deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px),
+      linear-gradient(
+        90deg,
+        rgb(255 255 255 / 0.3) 0%,
+        rgb(34 34 34 / 0.3) 60%,
+        rgb(0 0 0 / 0.3) 70%,
+        rgb(34 34 34 / 0.3) 80%,
+        rgb(255 255 255 / 0.3) 100%
+      );
+    background-position: calc(50% + 32px) 0;
+    background-repeat: repeat;
+    background-size: 64px 100%;
+  }
+
+  .c--topHeading {
+    color: var(--gray-hi-c);
+    font-weight: 700;
+  }
+
+  html[lang='ja'] .c--topHeading {
+    font-feature-settings: 'palt' on;
+    letter-spacing: 0.01em;
+  }
+
+  .c--headingEyebrow {
+    --hl: 0px;
+    color: var(--brand);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .c--lpButton {
+    border: none;
+    border-radius: var(--bdrs--20);
+    background-color: var(--gray-hi-c);
+    font-weight: 500;
+    line-height: 1.5;
+    padding-inline: 0.5em;
+    gap: 0;
+
+    > span {
+      padding-inline: 0.375em;
+    }
+  }
+
+  .c--ai-bg {
+    opacity: 0.75;
+    [data-theme='dark'] & {
+      opacity: 0.15;
+    }
+  }
+}

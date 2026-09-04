@@ -158,11 +158,10 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 #### レスポンシブ指定
 
-レスポンシブ対応プロパティは、配列またはオブジェクトでブレイクポイント（`sm`,`md`）ごとの値を指定できます。（`lg`は要カスタマイズ）
-
+レスポンシブ対応プロパティは、配列またはオブジェクトでブレイクポイント（`sm` / `md` / `lg`）ごとの値を指定できます。`xs` / `xl` は opt-in（→ [responsive.md](./responsive.md#ブレイクポイント)）。
 
 ```jsx
-// 配列（base → sm → md の順）
+// 配列（[base, sm, md, lg] の順）
 <Lism p={['20', '30', '40']}>...</Lism>
 // <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:var(--s40)">...</div>
 
@@ -190,6 +189,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 | `isSide` | `is--side` |
 | `isSkipFlow` | `is--skipFlow` |
 | `hasTransition` | `has--transition` |
+| `hasTransition="{props}"` | `has--transition` + `--transitionProps:{props}` |
 | `hasGutter` | `has--gutter` |
 | `hasSnap` | `has--snap` |
 | `hasMask` | `has--mask` |
@@ -218,6 +218,8 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 | `<Link>` | `<a>`（固定） | — |
 | `<Media>` | `<img>` | `img`, `video`, `iframe`, `picture` |
 
+デフォルト要素と同じ`as`（`<Text as="p">`、`<Inline as="span">`など）は書かず、要素を変える時だけ`as`を付ける。
+
 ```jsx
 <Heading level="3" fz="xl">見出し</Heading>
 // → <h3 class="-fz:xl">見出し</h3>
@@ -239,8 +241,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 | `<Divider>` | `a--divider` | 区切り線 |
 | `<Decorator>` | `a--decorator` | 装飾要素（SCSS定義なし、クラス名のみ出力） |
 
-
-各プリミティブの詳細は SKILL.md の「プリミティブ単位の詳細リファレンス」、または `primitives/` 配下の各ファイルを参照。
+各プリミティブの詳細は `primitives/{クラス名}.md`（例: [`primitives/a--icon.md`](./primitives/a--icon.md)）を参照。
 
 
 ## Trait Components
@@ -254,7 +255,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 | `<Layer>` | `isLayer` | `is--layer` |
 | `<BoxLink>` | `isBoxLink` | `is--boxLink` |
 
-各 Trait クラスの詳細は SKILL.md の「プリミティブ単位の詳細リファレンス」、または `trait-class/` 配下の各ファイルを参照。`has--*` については [trait-class.md](./trait-class.md) を参照。
+各 Trait クラスの詳細は `trait-class/{クラス名}.md`（例: [`trait-class/is--container.md`](./trait-class/is--container.md)）を参照。`has--*` については [trait-class.md](./trait-class.md) を参照。
 
 
 ## Layout Primitives
@@ -277,7 +278,7 @@ Trait クラス（`is--*` / `has--*`）を出力するためのプロパティ�
 | `<SwitchColumns>` | `l--switchColumns` |
 | `<WithSide>` | `l--withSide` |
 
-各プリミティブの詳細は SKILL.md の「プリミティブ単位の詳細リファレンス」、または `primitives/` 配下の各ファイルを参照。
+各プリミティブの詳細は `primitives/{クラス名}.md`（例: [`primitives/l--stack.md`](./primitives/l--stack.md)）を参照。
 
 ## `getLismProps()` — 外部コンポーネントとの連携
 

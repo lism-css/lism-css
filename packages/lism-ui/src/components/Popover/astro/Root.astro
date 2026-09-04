@@ -1,0 +1,41 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+import uuid from '../../../helper/uuid.js';
+import escapeHtmlAttr from '../../../helper/escapeHtmlAttr.js';
+
+import '../_style.css';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    popoverId?: string;
+    offset?: string;
+  };
+
+const { as = 'div', popoverId: _popoverId, class: className, offset, style, ...restProps } = Astro.props;
+
+// popovertarget / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
+const popoverId = _popoverId || uuid();
+
+// offset は --popover-offset 変数として Root のインラインに出し、CSS 側で Root が受け取る
+const mergedStyle = offset ? { ...(style as object), '--popover-offset': offset } : style;
+
+// 子要素のHTMLを取得し、プレースホルダーの有無で出力方法を切り替え
+// - プレースホルダーあり → 置換して set:html で出力
+// - プレースホルダーなし → 通常の slot 出力（Trigger/Popup/Close に直接IDを指定しているケース）
+const rendered = await Astro.slots.render('default');
+// set:html で出力するため、ユーザー指定の popoverId は属性値としてエスケープしてから埋め込む（関数渡しで `$` パターンの解釈も防ぐ）
+const slotHtml = rendered.includes('__LISM_POPOVER_ID__') ? rendered.replaceAll('__LISM_POPOVER_ID__', () => escapeHtmlAttr(popoverId)) : null;
+---
+
+{
+  slotHtml !== null ? (
+    <Lism as={as} class={atts(className, 'b--popover')} style={mergedStyle} set:html={slotHtml} {...restProps} />
+  ) : (
+    <Lism as={as} class={atts(className, 'b--popover')} style={mergedStyle} {...restProps}>
+      <slot />
+    </Lism>
+  )
+}

@@ -16,13 +16,7 @@ export function toTabOrientation(value: string | null | undefined): TabOrientati
   return 'vertical' === value ? 'vertical' : 'horizontal';
 }
 
-/**
- * @param key         KeyboardEvent.key
- * @param current     現在のインデックス（1始まり）
- * @param count       タブの総数
- * @param orientation tablist の向き
- * @returns 移動先のインデックス（1始まり）。対象外のキーなら null
- */
+/** 向きに応じた矢印・Home・Endキーの移動先を1始まりで返す。対象外はnull。 */
 export function resolveTabNavKey(key: string, current: number, count: number, orientation: TabOrientation = 'horizontal'): number | null {
   if (count < 1) return null;
 

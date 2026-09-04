@@ -1,5 +1,5 @@
 {
-  "version": "0.26.0",
+  "version": "0.27.0",
   "excludeComponentFiles": ["__contexts.js", "astro.ts", "react.ts"],
   "components": [
     {
@@ -43,12 +43,20 @@
       "helpers": []
     },
     {
+      "name": "Popover",
+      "helpers": ["escapeHtmlAttr", "uuid"]
+    },
+    {
       "name": "ShapeDivider",
       "helpers": []
     },
     {
       "name": "Tabs",
       "helpers": ["buildModifierClass", "escapeHtmlAttr", "uuid"]
+    },
+    {
+      "name": "Tooltip",
+      "helpers": ["escapeHtmlAttr", "uuid"]
     }
   ],
   "helpers": ["animation", "buildModifierClass", "escapeHtmlAttr", "uuid"]

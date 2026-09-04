@@ -1,18 +1,12 @@
 /**
- * Next.js（16 以降）用の統合エントリ（ロードマップ P1）。
+ * Next.js（16以降）用の統合エントリ。
  *
  * Next.js には Vite/Astro のような「bare CSS import をオンザフライで横取りする口」が無いため、
  * config 反映済み CSS を `<root>/.lism-css/css/*` へ**事前生成**し、`lism-css/<entry>.css` をその生成物へ
  * alias で差し替える方式を取る（中立コア `generated-css` / `webpack-alias` を共有）。
  *
- * Next.js 16 は Turbopack 主導のため、`turbopack.resolveAlias` へ alias を注入するのが基本経路。
- * ただし Turbopack の `resolveAlias` は**絶対パスを渡すと解決に失敗**するため project-relative パスを使い、
- * `next dev --webpack` / `next build --webpack` の fallback 用に webpack `resolve.alias` へは**絶対パス**で
- * 同等 alias を注入する（P0.5 spike で確定した使い分け）。
- *
- * 注入対象は ① `lism-css/<entry>.css` → 生成 CSS、② `lism-css/config.js` → user lism.config の 2 系統 +
- * ③ `lism-env.d.ts` 生成。CSS 事前生成・typegen はいずれも非同期なので、Next が受け付ける
- * 「`(phase, ctx) => config | Promise<config>`」形式の **async config 関数**を返す設計にする。
+ * aliasのパス形式は`webpack-alias.ts`の制約に従う。
+ * CSS事前生成とtypegenが非同期なため、async config関数を返す。
  *
  * Next dev には Vite/Astro の watch API や webpack compiler hook 相当の汎用注入口が無いため、dev 中の
  * `lism.config.js` 変更追従は `watchLismConfig`（`fs.watch` ベース）が担う。dev フェーズで起動し、config 変更時に
@@ -23,7 +17,7 @@ import path from 'node:path';
 import { generateCssToDir } from './generated-css';
 import { buildWebpackAlias, buildTurbopackAlias } from './webpack-alias';
 import { syncLismEnvDts } from './typegen';
-import { watchLismConfig } from './config-watcher';
+import { watchLismConfig, type ConfigWatcher, type WatchLismConfigOptions } from './config-watcher';
 
 /** Next.js の dev サーバーフェーズ識別子（`next/constants` の PHASE_DEVELOPMENT_SERVER。next 非依存にするため直書き）。 */
 const PHASE_DEVELOPMENT_SERVER = 'phase-development-server';
@@ -41,6 +35,11 @@ export interface WithLismOptions {
   typegen?: boolean;
   /** full.css / full_no_layer.css も生成するか（既定: false。purge 併用時に有効化）。 */
   full?: boolean;
+  /**
+   * lism.config 監視の実装。未指定時は `watchLismConfig`。
+   * テストから差し替えて、実 `fs.watch` を介さず `onChange` を直接発火するために使う。
+   */
+  watchConfig?: (opts: WatchLismConfigOptions) => ConfigWatcher;
 }
 
 /** Turbopack 設定の最小構造（next 非依存。実際の型は `T` 側に従う）。 */
@@ -82,7 +81,8 @@ export function withLism<T extends Record<string, any>>(nextConfig?: T, opts?: W
     if (phase === PHASE_DEVELOPMENT_SERVER && generated.userConfigPath && !watchedConfigs.has(generated.userConfigPath)) {
       const userConfigPath = generated.userConfigPath;
       watchedConfigs.add(userConfigPath);
-      watchLismConfig({
+      const watch = opts?.watchConfig ?? watchLismConfig;
+      watch({
         configPath: userConfigPath,
         onChange: async () => {
           await generateCssToDir({ projectRoot, outDir, configPath: opts?.configPath, full: opts?.full ?? false, minify: false });
@@ -91,7 +91,6 @@ export function withLism<T extends Record<string, any>>(nextConfig?: T, opts?: W
       });
     }
 
-    // Turbopack は project-relative、webpack は絶対パス（spike で確定した使い分け）。
     const turboAlias = buildTurbopackAlias({ generated, userConfigPath: generated.userConfigPath }, projectRoot);
     const wpAlias = buildWebpackAlias({ generated, userConfigPath: generated.userConfigPath });
 

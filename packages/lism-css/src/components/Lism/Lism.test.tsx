@@ -1369,6 +1369,17 @@ describe('Lism', () => {
         expect(element).toHaveClass('has--transition');
       });
 
+      test('hasTransition に文字列を渡すと --transitionProps 変数も出力される', () => {
+        render(
+          <Lism hasTransition="color, opacity" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('has--transition');
+        expect(element.style.getPropertyValue('--transitionProps')).toBe('color, opacity');
+      });
+
       test('hasGutter で has--gutter クラスが出力される', () => {
         render(
           <Lism hasGutter data-testid="lism">

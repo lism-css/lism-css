@@ -1,14 +1,7 @@
 ---
-/**
- * カテゴリ単位の詳細ページ（非root言語）
- *
- * URL: /{lang}/templates/{category}/
- * aggregateView: true のカテゴリでのみ生成される。
- * 例: /en/templates/minimal/
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TemplateCategoryDetail from '@/components/templates/TemplateCategoryDetail.astro';
-import { getAggregatedCategoryPaths, getCategory } from '@/lib/templates';
+import { getCategoryPaths, getCategory } from '@/lib/templates';
 import { getCategoryTemplates } from '@/config/templates';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
@@ -16,7 +9,7 @@ import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 export function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
-  const categoryPaths = getAggregatedCategoryPaths();
+  const categoryPaths = getCategoryPaths();
 
   const paths = [];
   for (const lang of nonRootLangs) {

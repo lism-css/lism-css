@@ -41,7 +41,7 @@ export const PropTable = ({data={}, ...props}) => {
 }
 
 
-Lism provides utility classes for the most common CSS properties, letting you apply frequently used values and tokens with a single class.
+Lism provides classes for the most common CSS properties, letting you apply frequently used values and tokens with a single class.<br />
 For the most critical properties, responsive breakpoint variants are available too.
 
 These are called **Property Classes** and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
@@ -88,8 +88,10 @@ Each table covers one group of properties.
 |---|---|
 |**Shorthand**| The abbreviated form of the CSS property. This is the `{prop}` string in the `-{prop}:{val}` class format, and also the prop name used with Lism components.|
 |**Property**| The corresponding CSS property |
-|**To Class**| Values that are output as Property Utility classes |
+|**To Class**| Values that are output as Property Classes |
 |**BP**| Breakpoint support classes (`-{prop}_{bp}`). `✔` covers `sm`, `md`, and `lg`, and `-` means unsupported. |
+
+The shorthand string itself is what gets output as the class name.
 
 
 
@@ -102,8 +104,8 @@ Each table covers one group of properties.
 |`ff`|`font-family`|[`FF`](/en/docs/tokens/typography/#ff-font-family)|-|
 |`fw`|`font-weight`|[`FW`](/en/docs/tokens/typography/#fw--font-weight)|-|
 |`fs`|`font-style`|`italic`|-|
-|`hl`|`line-height` (half-leading)|[`LH`](/en/docs/tokens/half-leading/), <br/>`0`|✔|
-|`lh`|`line-height` (compat)|[`LH`](/en/docs/tokens/half-leading/), <br/>`1`|-|
+|`hl`|`line-height` (half-leading)|[`HL`](/en/docs/half-leading/), <br/>`0`|✔|
+|`lh`|`line-height` (ratio)|[`LH`](/en/docs/tokens/typography/#lh-line-height), <br/>`1`|-|
 |`lts`|`letter-spacing`|[`LTS`](/en/docs/tokens/typography/#lts-letter-spacing)|-|
 |`ta`|`text-align`|`center`<br/>`left`<br/>`right`|-|
 |`td`|`text-decoration`|`none`|-|
@@ -144,7 +146,7 @@ Each table covers one group of properties.
 
 `keycolor` outputs a class that references the `--keycolor` variable (e.g. `.-c\:keycolor { --c: var(--keycolor) }`).
 
-In [`full.css`](/en/docs/customize/build/), every semantic and palette color token is also output as a class (such as `-bgc:red`), in addition to the values listed above.
+In [`full.css`](/en/docs/css-files/#using-the-full-build-fullcss), every semantic and palette color token is also output as a class (such as `-bgc:red`), in addition to the values listed above.
 :::
 
 
@@ -172,7 +174,7 @@ Related tokens: <a href="/en/docs/tokens/colors/"><code>COLOR</code></a>
 
 ## Spacing
 
-export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</code></a>;
+export const LinkSPACE = () => <a href="/en/docs/tokens/#space"><code>SPACE</code></a>;
 
 ### Padding
 
@@ -205,6 +207,10 @@ export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</c
 |`mr`|`margin-right`|<LinkSPACE/>|✔|
 |`mt`|`margin-top`|<LinkSPACE/>|✔|
 |`mb`|`margin-bottom`|<LinkSPACE/>|✔|
+
+:::info
+Prefer logical direction properties (`ps`, `mbs`, etc.), which follow the writing direction, over physical direction ones (`pl`, `mt`, etc.).
+:::
 
 
 <Spacer h="1rem" />
@@ -277,7 +283,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
   <PreviewCode slot="tab" label="JSX">
   ```jsx 'w="fit" h="5em"'
   <Lism w="fit" h="5em" bgc="base-2" p="10" bd>
-    Example text..
+    Example text
   </Lism>
   ```
   </PreviewCode>
@@ -286,9 +292,9 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 ## Display
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`|✔|
+|`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`,<br />`inline`,<br />`inline-block`|✔|
 |`v`|`visibility`|`hidden`|-|
 |`o`|`opacity`|[`OPACITY`](/en/docs/tokens/#opacity), `0`|-|
 |`ov`|`overflow`| `auto`, `clip`, `hidden`|-|
@@ -327,7 +333,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 ## Position
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`pos`|`position`|`relative`,<br />`absolute`,<br />`static`,<br />`fixed`,<br />`sticky`|✔|
 |`t`|`top`|`0`,`50%`,`100%`|-|
@@ -429,7 +435,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Flex
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`fxw`|`flex-wrap`|`wrap`|✔|
 |`fxd`|`flex-direction`|`column`,<br /> `column-reverse`,<br /> `row-reverse`|✔|
@@ -458,7 +464,7 @@ The examples below demonstrate positioning with `position: absolute`.
   ```html
   <div class="l--flex -g:20">
     <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
-    <div class="-fxg:2 -bd -p:10 -bgc:base-2">Item</div>
+    <div class="-bd -p:10 -bgc:base-2" style="flex-grow: 2">Item</div>
     <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
   </div>
   ```
@@ -477,7 +483,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Grid
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`gt`|`grid-template`|-|✔|
 |`gta`|`grid-template-areas`|-|✔|
@@ -533,14 +539,17 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Places
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`ai`|`align-items`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|✔|
 |`ac`|`align-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
 |`ji`|`justify-items`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|✔|
 |`jc`|`justify-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
+|`pi`|`place-items`|`center`, `start`, `end`|-|
+|`pc`|`place-content`|`center`, `start`, `end`|-|
 |`aslf`|`align-self`|`center`, `start`, `end`, `stretch`|-|
 |`jslf`|`justify-self`|`center`, `start`, `end`, `stretch`|-|
+|`pslf`|`place-self`|`center`, `start`, `end`|-|
 |`order`|`order`|`-1`, `0`, `1`|✔|
 
 
@@ -574,18 +583,13 @@ The examples below demonstrate positioning with `position: absolute`.
   </PreviewCode>
 </Preview>
 
-{/* |`place-items`|`pi`|-|-|
-|`place-content`|`pc`|-|-|
-|`place-self`|`pslf`|-|-| */}
-
-
 
 
 ## Styling
 
 ### Shadow & Radius
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bxsh`|`box-shadow`|[`SHADOW`](/en/docs/tokens/#shadow)|✔|
 |`bdrs`|`border-radius`|[`RADIUS`](/en/docs/tokens/#radius)|✔|
@@ -613,7 +617,7 @@ The examples below demonstrate positioning with `position: absolute`.
 
 ### Border
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bd`|`border`|`none`|-|
 |`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
@@ -661,7 +665,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 ## Background
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`bg`|`background`|-|-|
 |`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`keycolor`,<br />`inherit`,<br />`transparent`,<br />`current`|-|
@@ -683,7 +687,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 ## Other Properties
 
-|Shorthand|Prop|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|

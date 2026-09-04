@@ -310,8 +310,8 @@ const contactFields = [
       </Box>
 
       <Container as="section" id="mission" class="c--mission" set="bleed" contentSize="l" pos="relative" py="50" mbs="60">
-        <Layer class="c--mission_bg" bgc="base-2" ms="calc(10rem + var(--bleed))" />
-        <Columns class="c--mission_content" cols={[1, null, 2]} g={['40', null, '10', '30']} pos="relative" w="100%">
+        <Layer bgc="base-2" ms="calc(10rem + var(--bleed))" />
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} pos="relative" w="100%">
           <Stack fx="1" hasGutter ps="var(--bleed)">
             <Stack g="40">
               <Stack g="10">
@@ -323,19 +323,7 @@ const contactFields = [
               </Text>
             </Stack>
           </Stack>
-          <Frame
-            as="figure"
-            class="c--mission_figure"
-            set="bleed"
-            contentSize="xl"
-            pos="relative"
-            fx="1"
-            w="100%"
-            h="100%"
-            ar="3/2"
-            ov="hidden"
-            pe="var(--bleed)"
-          >
+          <Frame as="figure" set="bleed" contentSize="xl" pos="relative" fx="1" w="100%" h="100%" ar="3/2" ov="hidden" pe="var(--bleed)">
             <Media src={missionImage.src} alt={missionImage.alt} width="1920" height="1280" loading="lazy" />
           </Frame>
         </Columns>
@@ -377,12 +365,12 @@ const contactFields = [
 
       <Container as="section" id="feature" class="c--point" ov-x="clip" mbs="60">
         <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} set="bleed" contentSize="l">
-          <Stack class="c--point_main" g="40" jc="start" hasGutter ps="var(--bleed)">
+          <Stack g="40" jc="start" hasGutter ps="var(--bleed)">
             <SectionHeading en="Point" ja="暮らしに寄り添う特長" />
             <Stack g="40">
               {
                 featureCards.map((card) => (
-                  <Grid gtc="auto 1fr" gtr="auto auto" ai="center" g="30" rg="10" p="30" bdrs="20" bxsh="20">
+                  <Grid gtc="auto 1fr" gtr="auto auto" ai="center" g="30" rg="10" p="30" bdrs="20" bxsh="20" bd bdc="base-2">
                     <Icon icon={card.icon} size="2em" c="text-2" />
                     <Heading level="3" fz="l">
                       {card.title}
@@ -417,7 +405,7 @@ const contactFields = [
                         {item.index}
                       </Inline>
                       <Decorator aslf="stretch" w="1px" bgc="text" fxsh="0" />
-                      <Stack g="10" class="c--service_cardTitles" util="trimAll">
+                      <Stack g="10" util="trimAll">
                         <Heading level="3" fz="m">
                           {item.titleJa}
                         </Heading>
@@ -435,9 +423,8 @@ const contactFields = [
             }
           </Columns>
 
-          <!-- md 未満: 1列（画像上・テキスト下）。md 以上: 2列（画像左・テキスト右） -->
-          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="center">
-            <Frame ar="3/2" ov="hidden">
+          <Columns cols={[1, null, 2]} g={['40', null, null, '50']} ai="center">
+            <Frame ar="3/2" ov="hidden" aslf="stretch" max-w="100%">
               <Media src={serviceLeadImage.src} alt={serviceLeadImage.alt} width="1920" height="1280" loading="lazy" />
             </Frame>
             <Stack g="20" jc="center">
@@ -450,10 +437,10 @@ const contactFields = [
                 暮らし方や優先して整えたい場所、購入や配置までお願いしたい範囲などを伺い、無理のない形でご提案にまとめます。来店、オンライン、お電話のいずれからでも打ち合わせを受け付けています。
               </Text>
               <Text c="text-2">
-                小さな悩み相談から、家具の買い付けに伴う作業のお願いまで、目的に合わせて一つずつ。賃貸・戸建てを問わず、住まいの性質に合う選び方を一緒に考えます。
+                小さな悩み相談から、家具の買い付けに伴う作業のお願いまで、目的に合わせて一つずつ。住まいの性質に合う選び方を一緒に考えます。
               </Text>
             </Stack>
-          </Grid>
+          </Columns>
         </Stack>
       </Container>
 
@@ -470,9 +457,9 @@ const contactFields = [
                         <Icon icon="caret-down-fill" fz="2xl" o="ppp" />
                       </Center>
                     )}
-                    <Stack class="c--step_card" g="30" p="30" bdrs="20" bxsh="20">
+                    <Stack g="30" p="30" bdrs="20" bxsh="20" bd bdc="base-2">
                       {card.image && (
-                        <Frame class="c--step_cardFrame" ar="21/9" ov="hidden" bdrs="10">
+                        <Frame ar="21/9" ov="hidden" bdrs="10">
                           <Media src={card.image.src} alt={card.image.alt} width="1920" height="1280" loading="lazy" />
                         </Frame>
                       )}
@@ -497,7 +484,7 @@ const contactFields = [
       <Container as="section" id="voice" isWrapper="l" hasGutter class="c--voice">
         <Stack g="40">
           <SectionHeading en="Voice" ja="お客様の声です" />
-          <Columns hasSnap ov="auto" g={['20', null, '30']} pbe="10" gaf={['column', 'row']} gac="85%" cols={[0, 2, null, 3]}>
+          <Columns hasSnap ov="auto" g="15" pbe="10" gaf={['column', 'row']} gac="85%" cols={[0, 2, null, 3]}>
             {
               voiceCards.map((card) => (
                 <Stack g="30" ai="center" p="30" bgc="base" bd bdrs="20">
@@ -508,7 +495,7 @@ const contactFields = [
                   <Text fz="s" c="text-2" hl="l" util="trim">
                     {card.body}
                   </Text>
-                  <Text class="c--voice_attribution" fz="2xs" c="text-2" o="p" ta="end" w="100%" mt="auto" util="trim">
+                  <Text fz="2xs" c="text-2" o="p" ta="end" w="100%" mt="auto" util="trim">
                     {card.attribution}
                   </Text>
                 </Stack>
@@ -522,7 +509,7 @@ const contactFields = [
         <Stack g="40">
           <SectionHeading en="FAQ" ja="よくあるご質問" />
 
-          <Accordion.Root class="c--faq_acc" g="20">
+          <Accordion.Root layout="stack" g="20">
             {
               faqItems.map((item) => (
                 <Accordion.Item bgc="base" bdrs="20" bxsh="10" isOpen={item.defaultOpen === true}>
@@ -553,7 +540,7 @@ const contactFields = [
           <Text fz="s" c="white" ta="center" hl="l">
             初めての方もどうぞお気軽にお問い合わせください。<br />このフォームはダミーです。
           </Text>
-          <Box as="form" class="c--contact_form" method="post" action="#">
+          <Box as="form" method="post" action="#">
             <Stack g="30">
               {
                 contactFields.map((field) => (
@@ -587,20 +574,7 @@ const contactFields = [
                   </Stack>
                 ))
               }
-              <Lism
-                as="button"
-                type="submit"
-                class="c--contact_submit"
-                set="plain"
-                fw="500"
-                hl="xs"
-                mbs="20"
-                p="20"
-                c="white"
-                bgc="black"
-                hov="-bgc"
-                bdrs="99"
-              >
+              <Lism as="button" type="submit" set="plain" fw="500" hl="xs" mbs="20" p="20" c="white" bgc="black" hov="-bgc" bdrs="99">
                 この内容で送信 (dummy)
               </Lism>
             </Stack>

@@ -17,10 +17,10 @@ export default {
     '--C': '0.2',
     // フォントサイズ倍音列の分母（7~ に対応）
     '--fz-mol': '8',
-    // ハーフレディングの計算単位 ≒ 2px
-    '--hl-unit': 'calc(var(--fz--base) * 0.125)',
-    // 余白の計算単位 ≒ 8px（フィボナッチ数列ベース）
-    '--s-unit': 'calc(var(--fz--base) * 0.5)',
+    // ハーフレディングの計算単位（≒ 2px）。
+    '--hl-unit': '0.125rem',
+    // 余白の計算単位（≒ 8px）。
+    '--s-unit': '0.5rem',
   },
   // セマンティックカラー
   color: {
@@ -39,7 +39,7 @@ export default {
     //  Memo: 黒からの変化の方がわかりづらいため、明るめにする。
     neutral: 'hsl(220, 2%, 80%)',
     // shadow: 影の色。--shc（手書き SCSS）はこの変数の別名で、.set--bxsh から上書きされる。
-    shadow: 'hsl(220 4% 8% / 12%)',
+    shadow: 'hsl(220 2% 4% / 8%)',
   },
 
   // パレットカラー: 基準の明度 --L / 彩度 --C（vars グループの構造変数）を色相ごとに微調整して算出する。
@@ -98,28 +98,30 @@ export default {
     xs: 'var(--hl-unit)',
     s: 'calc(var(--hl-unit) * 2)',
     l: 'calc(var(--hl-unit) * 4)',
+    xl: 'calc(var(--hl-unit) * 5)',
   },
 
-  // line-height: CSS 変数を持たないカタログ専用（prop 側で解釈）。
-  lh: { base: '-', xs: '-', s: '-', l: '-' },
+  // line-height: unitless比率。fz に比例した行送りを維持したい場合に使う（既定の行間管理は hl）。
+  //  hl と違い body 等で base 値としてセットしないため、中央キーは base ではなく m。
+  lh: { xs: '1.25', s: '1.5', m: '1.75', l: '2', xl: '2.25' },
 
   // letter-spacing
-  lts: { base: 'normal', s: '-0.025em', l: '0.05em', xl: '0.1em' },
+  lts: { base: 'normal', xs: '-0.05em', s: '-0.025em', l: '0.05em', xl: '0.1em' },
 
   // opacity（音楽の強弱記号 piano 系列に由来）
   o: { mp: '0.9', p: '0.75', pp: '0.5', ppp: '0.25' },
 
-  // border-radius: inner は .set 系の計算値（手書き SCSS）でカタログ専用。
-  bdrs: { '10': '0.25rem', '20': '0.5rem', '30': '1rem', '40': '1.5rem', '99': '99rem', inner: '-' },
+  // +0.125 → +0.25 → +0.375 → + 0.5 と 二階等差数列で増えつつ、10~40がフィボナッチ数列。inner は .set--bdrsInner で計算
+  bdrs: { '10': '0.25rem', '20': '0.375rem', '30': '0.625rem', '40': '1rem', '50': '1.5rem', '99': '99rem', inner: '-' },
 
   // box-shadow: 構造変数 --shsz--*（手書き SCSS）と影色 --shc を合成。.set--bxsh で再宣言され影色 --shc を上書きできる。
   //  Memo: --shc は color.shadow（--shadow）の別名（手書き SCSS で定義）。
   bxsh: {
-    '10': 'var(--shsz--10) var(--shc)',
-    '20': 'var(--shsz--20) var(--shc)',
-    '30': 'var(--shsz--30) var(--shc)',
-    '40': 'var(--shsz--40) var(--shc)',
-    '50': 'var(--shsz--50) var(--shc)',
+    '10': 'var(--shsz--5) var(--shc--near), var(--shsz--10) var(--shc)',
+    '20': 'var(--shsz--10) var(--shc--near), var(--shsz--20) var(--shc)',
+    '30': 'var(--shsz--20) var(--shc--near), var(--shsz--30) var(--shc)',
+    '40': 'var(--shsz--30) var(--shc--near), var(--shsz--40) var(--shc)',
+    '50': 'var(--shsz--40) var(--shc--near), var(--shsz--50) var(--shc)',
   },
 
   // aspect-ratio

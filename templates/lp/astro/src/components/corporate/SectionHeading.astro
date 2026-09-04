@@ -22,12 +22,14 @@ const { en, ja, level = '2' } = Astro.props;
 </Heading>
 
 <style>
-  .c--sectionHeading > :not([lang='en'])::before,
-  .c--sectionHeading > :not([lang='en'])::after {
-    content: '';
-    display: block;
-    width: 0.75rem;
-    height: 1px;
-    background-color: currentColor;
+  @layer lism-custom {
+    .c--sectionHeading > :not([lang='en'])::before,
+    .c--sectionHeading > :not([lang='en'])::after {
+      content: '';
+      display: block;
+      width: 0.75rem;
+      height: 1px;
+      background-color: currentColor;
+    }
   }
 </style>

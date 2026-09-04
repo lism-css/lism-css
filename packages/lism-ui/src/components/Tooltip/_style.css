@@ -1,0 +1,215 @@
+/*
+ * 表示は CSS（:hover / :focus-visible）、配置は CSS Anchor Positioning。
+ * anchor 配置は @supports で囲い、非対応（部分対応の Chrome 128〜130 含む）はルート基準の absolute 配置に落とす。
+ */
+@layer lism-block {
+  /* 調整用の変数は Root で受ける（Root の props がインラインに書く --tooltip-* をここで拾う） */
+  .b--tooltip {
+    --duration: var(--tooltip-duration, 0.15s);
+    --delay: var(--tooltip-delay, 0.4s); /* 表示までの待ち */
+    --delay--close: var(--tooltip-delay--close, 0.15s); /* 退場猶予。トリガーからポップアップへポインタを移す間、表示を保つ */
+    --offset: var(--tooltip-offset, var(--s5));
+    --_arrow-sz: var(--tooltip-arrow, 4px); /* 矢印の高さ。0 で矢印なし */
+    --_gap: calc(var(--offset) + var(--_arrow-sz)); /* popup 本体とトリガーの間隔。offset は矢印の先とトリガーの間隔 */
+    display: inline-block;
+    anchor-scope: --tooltip, --tooltip-popup;
+  }
+  .b--tooltip_trigger {
+    anchor-name: --tooltip;
+  }
+
+  .b--tooltip_popup {
+    --lh: 1.25;
+    z-index: 10;
+    inline-size: max-content;
+    max-inline-size: min(20rem, 90vw);
+    padding: 0.375em 0.625em;
+    border-radius: var(--bdrs--10);
+    background-color: var(--text);
+    color: var(--base);
+    font-size: var(--fz--s);
+    visibility: hidden; /* pointer-events は使わない。transition しないため退場猶予中の当たり判定が消え、橋渡しが効かなくなる */
+    opacity: 0;
+    transition: var(--duration) var(--delay--close);
+    transition-property: opacity, visibility;
+  }
+
+  /* 表示: ルートのホバー、またはトリガーのキーボードフォーカス（Popup は同じ Root 直下に置く前提） */
+  .b--tooltip:hover > .b--tooltip_popup,
+  .b--tooltip_trigger:focus-visible ~ .b--tooltip_popup {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: var(--delay);
+  }
+
+  /* Esc で閉じた状態（setTooltip.ts が付与）。同じ詳細度なので表示ルールより後に置いて勝たせる */
+  .b--tooltip[data-dismissed] > .b--tooltip_popup {
+    visibility: hidden;
+    opacity: 0;
+    transition: none;
+  }
+
+  /*
+   * anchor 配置。position-area は側（--_side）と span（--_span）を var() で合成する。
+   * align の start / end は span-* で片側に伸ばし place-self で端に揃える。span と揃える軸は side の系統ごとに違うので、
+   * 系統側で --_span* / --_place* の候補を定義し、align 側はそれを選ぶだけにする。
+   * top / bottom の align に span-x-* を使うのは RTL でも書字方向の端に揃えるため。物理と論理キーワードの混在は無効になるので混ぜない。
+   */
+  @supports (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block) {
+    .b--tooltip_popup {
+      --_span: span-all;
+      position: fixed;
+      anchor-name: --tooltip-popup; /* 矢印（::after）が popup の矩形を参照するため */
+      position-anchor: --tooltip;
+      position-area: var(--_side) var(--_span);
+      /*
+       * 非表示は display: none。visibility だけだと非表示中も配置され、スクロールで画面外に出た時点の flip が
+       * 仕様（last successful position option）で記憶され、戻っても反転したまま残る。
+       * 退場中は display を transition で残す（Firefox は display の transition 未対応で退場フェードが無くなるだけ）。
+       */
+      display: none;
+      transition-property: opacity, visibility, display;
+      transition-behavior: normal, normal, allow-discrete;
+    }
+    .b--tooltip:hover > .b--tooltip_popup,
+    .b--tooltip_trigger:focus-visible ~ .b--tooltip_popup {
+      display: block;
+    }
+    /* 入場の開始値。visibility を hidden から始め、入場ディレイ中は当たり判定を持たせない */
+    @starting-style {
+      .b--tooltip:hover > .b--tooltip_popup,
+      .b--tooltip_trigger:focus-visible ~ .b--tooltip_popup {
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
+    .b--tooltip[data-dismissed] > .b--tooltip_popup {
+      display: none;
+    }
+    /* トリガーとの隙間（offset）を透明な当たり判定で埋め、移動中に Root の :hover が外れないようにする。flip でどちら側に出ても効くよう全方向へ広げる */
+    .b--tooltip_popup::before {
+      content: '';
+      position: absolute;
+      inset: calc(-1 * var(--_gap));
+      z-index: -1; /* 中身の上には被せない */
+    }
+    /*
+     * ふきだしの矢印。ひし形の中心を「トリガー中心を popup の矩形にクランプした点」に置く。
+     * flip 後の位置は CSS から知れない（@position-try でカスタムプロパティは設定できない）ので、
+     * side / align / flip を見ずにトリガー側の辺へ寄るこの形にしている。
+     * absolute だと popup が包含ブロックになりトリガーを anchor に取れないため fixed。
+     * スクロール追従は既定アンカー（position-anchor）にしか効かないので、トリガーを既定アンカーにして省略形の anchor() で参照する。
+     */
+    .b--tooltip_popup::after {
+      content: '';
+      position: fixed;
+      position-anchor: --tooltip;
+      z-index: -1; /* 中身の下、popup の背景の上。内側半分は同色の背景に溶ける */
+      inline-size: calc(var(--_arrow-sz) * 2);
+      block-size: calc(var(--_arrow-sz) * 2);
+      background-color: inherit;
+      clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+      top: clamp(anchor(--tooltip-popup top), anchor(center), anchor(--tooltip-popup bottom));
+      left: clamp(anchor(--tooltip-popup left), anchor(center), anchor(--tooltip-popup right));
+      translate: -50% -50%;
+    }
+    /* --_place*: place-self の値（align-self justify-self）。揃える軸だけ start / end にする */
+    .b--tooltip_popup:where([data-side='top'], [data-side='bottom']) {
+      --_spanStart: span-x-end;
+      --_spanEnd: span-x-start;
+      --_placeStart: auto start;
+      --_placeEnd: auto end;
+      margin-block: var(--_gap);
+      position-try-fallbacks:
+        flip-block,
+        flip-inline,
+        flip-block flip-inline;
+    }
+    .b--tooltip_popup:where([data-side='start'], [data-side='end']) {
+      --_spanStart: span-block-end;
+      --_spanEnd: span-block-start;
+      --_placeStart: start auto;
+      --_placeEnd: end auto;
+      margin-inline: var(--_gap);
+      position-try-fallbacks:
+        flip-inline,
+        flip-block,
+        flip-inline flip-block;
+    }
+    .b--tooltip_popup[data-side='top'] {
+      --_side: top;
+    }
+    .b--tooltip_popup[data-side='bottom'] {
+      --_side: bottom;
+    }
+    .b--tooltip_popup[data-side='start'] {
+      --_side: inline-start;
+    }
+    .b--tooltip_popup[data-side='end'] {
+      --_side: inline-end;
+    }
+
+    /* align: side 系統が用意した候補から選ぶ */
+    .b--tooltip_popup:where([data-align='start']) {
+      --_span: var(--_spanStart);
+      place-self: var(--_placeStart);
+    }
+    .b--tooltip_popup:where([data-align='end']) {
+      --_span: var(--_spanEnd);
+      place-self: var(--_placeEnd);
+    }
+  }
+
+  /* anchor 非対応: ルート基準の absolute 配置。side 軸と align 軸を別ルールにして打ち消しを不要にする */
+  @supports not (
+    (anchor-name: --a) and (anchor-scope: all) and (position-area: inline-start span-block-end) and (position-try-fallbacks: flip-block)
+  ) {
+    .b--tooltip {
+      position: relative;
+    }
+    .b--tooltip_popup {
+      position: absolute;
+    }
+    .b--tooltip_popup[data-side='top'] {
+      bottom: 100%;
+    }
+    .b--tooltip_popup[data-side='bottom'] {
+      top: 100%;
+    }
+    .b--tooltip_popup[data-side='start'] {
+      inset-inline-end: 100%;
+    }
+    .b--tooltip_popup[data-side='end'] {
+      inset-inline-start: 100%;
+    }
+
+    /* align: side が top / bottom なら横方向（inset-inline-* で書字方向に追従）、start / end なら縦方向の揃え */
+    .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='center'] {
+      left: 50%;
+      translate: -50% 0;
+    }
+    .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='start'] {
+      inset-inline-start: 0;
+    }
+    .b--tooltip_popup:is([data-side='top'], [data-side='bottom'])[data-align='end'] {
+      inset-inline-end: 0;
+    }
+    .b--tooltip_popup:is([data-side='start'], [data-side='end'])[data-align='center'] {
+      top: 50%;
+      translate: 0 -50%;
+    }
+    .b--tooltip_popup:is([data-side='start'], [data-side='end'])[data-align='start'] {
+      top: 0;
+    }
+    .b--tooltip_popup:is([data-side='start'], [data-side='end'])[data-align='end'] {
+      bottom: 0;
+    }
+  }
+
+  /* 減速設定時はフェードを無効化（ディレイは残す）。インラインの --duration 指定よりも優先させるため !important */
+  @media (prefers-reduced-motion: reduce) {
+    .b--tooltip {
+      --duration: 0s !important;
+    }
+  }
+}

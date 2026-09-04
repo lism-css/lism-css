@@ -7,9 +7,10 @@
 
 // サイト設定
 import { siteConfig } from '@/config/site';
-import { Lism } from 'lism-css/astro';
 
 import 'lism-css/scss/main.scss';
+// index 経由だと他の Preview コンポーネントの CSS が先に入り @layer の宣言順が崩れるため、ファイルを直接読み込む
+import PreviewSizeReporter from '@/components/Preview/PreviewSizeReporter.astro';
 
 interface Props {
   title?: string;
@@ -27,14 +28,8 @@ const { title = 'Demo page' } = Astro.props;
     <meta name="robots" content="noindex, nofollow" />
   </head>
   <body>
-    <div>
+    <PreviewSizeReporter>
       <slot />
-    </div>
-    {
-      /* Memo: のちほど上下方向センター寄せにする
-      <Lism min-h="100svh" layout="grid">
-      <Lism my="auto"><slot /></Lism>
-    </Lism> */
-    }
+    </PreviewSizeReporter>
   </body>
 </html>

@@ -215,32 +215,32 @@ describe('getLismProps', () => {
       expect(result.style?.['--hl_sm']).toBe('var(--hl--s)');
     });
 
-    test('hl: 0 は half-leading なしのユーティリティクラスになる（lh="1" と等価）', () => {
+    test('hl: 0 は half-leading なしのユーティリティクラスになる', () => {
       const result = getLismProps({ hl: '0' });
       expect(result.className).toContain('-hl:0');
       expect(result.style?.['--hl']).toBeUndefined();
       expect(result.style?.lineHeight).toBeUndefined();
     });
 
-    test('lh: トークン値は half-leading の互換ユーティリティクラスになる', () => {
-      const result = getLismProps({ lh: 's' });
-      expect(result.className).toContain('-lh:s');
-      expect(result.style?.['--hl']).toBeUndefined();
+    test('lh: トークン値は line-height のユーティリティクラスになる', () => {
+      const result = getLismProps({ lh: 'm' });
+      expect(result.className).toContain('-lh:m');
+      expect(result.style?.['--lh']).toBeUndefined();
       expect(result.style?.lineHeight).toBeUndefined();
     });
 
-    test('lh: 1 は half-leading なしの互換ユーティリティクラスになる', () => {
+    test('lh: 1 は line-height:1 のユーティリティクラスになる', () => {
       const result = getLismProps({ lh: '1' });
       expect(result.className).toContain('-lh:1');
-      expect(result.style?.['--hl']).toBeUndefined();
+      expect(result.style?.['--lh']).toBeUndefined();
       expect(result.style?.lineHeight).toBeUndefined();
     });
 
-    test('lh: 任意値は従来互換で line-height へ直接出力される', () => {
+    test('lh: 任意値は -lh クラスと --lh 変数で出力される（素の line-height は出力しない）', () => {
       const result = getLismProps({ lh: '1.7' });
-      expect(result.className ?? '').not.toContain('-lh');
-      expect(result.style?.lineHeight).toBe('1.7');
-      expect(result.style?.['--hl']).toBeUndefined();
+      expect(result.className).toContain('-lh');
+      expect(result.style?.['--lh']).toBe('1.7');
+      expect(result.style?.lineHeight).toBeUndefined();
     });
   });
 
@@ -405,6 +405,28 @@ describe('getLismProps', () => {
       expect(result.className).toContain('is--wrapper');
       expect(result.className).toContain('-contentSize:l');
       expect(result.className).not.toContain('-contentSize:s');
+    });
+
+    test('hasTransition: true の場合クラスのみが追加される', () => {
+      const result = getLismProps({ hasTransition: true });
+      expect(result.className).toContain('has--transition');
+      expect(result.style).toBeUndefined();
+    });
+
+    test('hasTransition: 文字列の場合、クラスと --transitionProps 変数が出力される', () => {
+      const result = getLismProps({ hasTransition: 'scale, opacity' });
+      expect(result.className).toContain('has--transition');
+      expect(result.style?.['--transitionProps']).toBe('scale, opacity');
+    });
+
+    test('hasTransition: 前後の空白は除去される', () => {
+      const result = getLismProps({ hasTransition: '  color ' });
+      expect(result.style?.['--transitionProps']).toBe('color');
+    });
+
+    test('hasTransition: 空文字の場合は何も出力されない', () => {
+      const result = getLismProps({ hasTransition: '' });
+      expect(result).toEqual({});
     });
 
     test('contentSize: 単独でプリセット値を指定すると、クラスのみが出力される', () => {

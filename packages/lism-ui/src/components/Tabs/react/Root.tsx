@@ -51,9 +51,7 @@ export default function Tabs<T extends ElementType = 'div'>({
   // 範囲外のindexは1にフォールバック
   const activeIndex = selectedIndex >= 1 && selectedIndex <= itemCount ? selectedIndex : 1;
 
-  // ディープリンク（?lism-tab={パネルのID}）: SSR / ハイドレーションを崩さないようマウント後に反映。
-  // タブ数の変化でユーザーの選択を上書きしないよう、マウント時の一度だけ実行する。
-  // 範囲外の値は activeIndex 側のクランプで 1 に落ちるため、ここでは上限を見ない。
+  // SSRと選択状態を保つため、ディープリンクはマウント時に一度だけ反映し、上限確認はactiveIndexへ委ねる。
   useEffect(() => {
     const targetPanelId = new URLSearchParams(window.location.search).get('lism-tab');
     if (!targetPanelId) return;
@@ -65,7 +63,6 @@ export default function Tabs<T extends ElementType = 'div'>({
     setSelectedIndex(index);
   }, []);
 
-  // 矢印 / Home / End でのタブ移動（フォーカス移動と選択を連動させる自動アクティベーション）
   const handleTabKeyDown = (e: KeyboardEvent<HTMLElement>, index: number) => {
     const tabList = e.currentTarget.closest('[role="tablist"]');
     const orientation = toTabOrientation(tabList?.getAttribute('aria-orientation'));

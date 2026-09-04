@@ -85,15 +85,16 @@ lism-base → lism-block → lism-trait → lism-primitive → lism-custom → l
 | ファイル | 用途 |
 |----------|------|
 | `main.css` | モダンブラウザ（@layer 対応） |
-| `main_no_layer.css` | レガシー対応 |
+| `main_no_layer.css` | `@layer` なし。既存サイト・WP テーマ等カスケードを制御できない環境向け（Property Class は常に `!important`、`u--` はセレクタ二重化で 0-2-0） |
 
 ### 設定ファイル
 
 | ファイル | 説明 |
 |----------|------|
-| `_prop-config.scss` | Property Class の定義 |
+| `_prop-config.gen.scss` | Property Class の定義（生成物。full 版は `_prop-config-full.gen.scss`） |
 | `_query.scss` | ブレークポイント定義 |
 | `_auto_output.scss` | 自動出力処理 |
+| `_mixin.scss` | `$layer_mode` による出力切替（`maybe_double` / `maybe_where` / `in_base_layer`）と `!important` 既定値の解決 |
 
 
 ## Astro コンポーネントの注意点
@@ -116,6 +117,6 @@ lism-base → lism-block → lism-trait → lism-primitive → lism-custom → l
 | ファイル | 説明 |
 |----------|------|
 | `src/lib/getLismProps.ts` | Props → CSS 変換のコアロジック |
-| `src/scss/base/_tokens.scss` | デザイントークン（SCSS） |
+| `src/scss/base/tokens/_tokens.scss` | デザイントークン（SCSS。生成部分は同ディレクトリの `_tokens.gen.scss`） |
 | `config/defaults/tokens.ts` | デザイントークン（JS/TS） |
 

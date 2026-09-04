@@ -78,19 +78,36 @@ const enableGA = !isDev && siteConfig.publish;
     // ちらつきを防ぐため、 head内でテーマセットする
     (function () {
       var stored = localStorage.getItem('theme');
-      var theme;
-      if (stored === 'light' || stored === 'dark') {
-        theme = stored;
-      } else if (defaultTheme === 'light' || defaultTheme === 'dark') {
-        theme = defaultTheme;
-      } else {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
+      var mode = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : defaultTheme;
+      if (mode !== 'light' && mode !== 'dark' && mode !== 'system') mode = 'system';
+      // system は常に OS 設定へ追従する（defaultTheme は未保存時のモード選択にだけ使う）
+      var theme = mode === 'light' || mode === 'dark' ? mode : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-theme-mode', mode);
     })();
   </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script is:inline>
+    (function () {
+      var viewport = document.querySelector('meta[name="viewport"]');
+      if (!viewport) return;
+
+      var defaultViewport = 'width=device-width, initial-scale=1';
+      var minimumViewport = 'width=360';
+
+      function updateViewport() {
+        // viewport設定の影響を受けない画面幅で判定する
+        var content = window.outerWidth < 360 ? minimumViewport : defaultViewport;
+        if (viewport.getAttribute('content') !== content) {
+          viewport.setAttribute('content', content);
+        }
+      }
+
+      window.addEventListener('resize', updateViewport);
+      updateViewport();
+    })();
+  </script>
   <meta name="generator" content={Astro.generator} />
 
   {/* 基本メタタグ */}
@@ -146,6 +163,14 @@ const enableGA = !isDev && siteConfig.publish;
       gtag('config', 'G-NMXBW9GRL1');
     }
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
+    rel="stylesheet"
+  />
+  {/* ⌘（U+2318）は Google Fonts の Inter サブセットに含まれないため、text= で個別に読み込む */}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&text=%E2%8C%98&display=swap" rel="stylesheet" />
 
   {/* 追加のhead要素用スロット */}
   <slot />

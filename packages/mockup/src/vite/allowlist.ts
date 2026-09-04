@@ -1,18 +1,12 @@
 /**
- * ページから import してよい bare specifier の許可リスト。
- *
- * 許可対象は2種類ある。
- * 1. 標準パッケージ（`STANDARD_PACKAGES`）… 設定不要で常時許可し、`@lism-css/mockup` 同梱の
- *    コピーへ解決する。データディレクトリ側に同名パッケージがあっても CLI 側を使う。
- * 2. 追加パッケージ（`mockup.config.json` の `imports`）… データディレクトリを含む
- *    プロジェクトから解決する。未インストールならコマンド開始時にエラーにする。
+ * ページからimportできる標準・追加パッケージの公開entryを列挙する。
  *
  * パッケージ名の前方一致では許可しない。`@lism-css/ui` はルート `.` を export しておらず
  * `./react/Accordion` 等の個別エントリしか無いため、前方一致だと「許可済みなのに bundle できない
  * specifier」を生むため。許可リストは各パッケージの `exports` マップから実在 specifier へ展開する。
  *
- * 標準パッケージの解決は必ず `@lism-css/mockup` 自身を起点に行う（`import.meta.resolve()`）。
- * `createRequire()` は使えない — `lism-css` / `@lism-css/ui` の対象 exports は `import` 条件のみのため。
+ * 標準パッケージは`@lism-css/mockup`自身から解決する。`lism-css`と`@lism-css/ui`のexportsは
+ * `import`条件だけなので、`createRequire()`は使えない。
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,18 +17,14 @@ import { ancestorNodeModules, getMockPackageRoot, getResolveAnchor, isInsideDir,
 import { MockupContractError, STANDARD_PACKAGES } from '../core/types.js';
 import { LUCIDE_PACKAGE_NAME } from './lucide-icons.js';
 
-/** JSX 変換が注入する runtime（exports にも含まれるが、変換方式が変わっても落ちないよう明示する）。 */
 const ALWAYS_ALLOWED = ['react/jsx-runtime', 'react/jsx-dev-runtime'];
 
 /**
- * `imports` に宣言するだけで（プロジェクト側に未インストールでも）使える仮想パッケージ。
- * README の「`lucide-react` だけは例外でインストール不要」という契約に対応する。
- *
  * node_modules に実体は無く、`lucideIconsPlugin` が仮想モジュールとして供給する。
  * そのためプロジェクト側に同名パッケージがインストールされていても解決先は変えない
  * （vite プラグインが必ず仮想モジュールへ解決するので、許可リストも同じ判断に揃える）。
  *
- * 値は「実体のある package.json の代わりに使う manifest」。ルート `.` だけを export することで、
+ * ルート`.`だけをexportすることで、
  * 仮想モジュールが供給しないサブパス（`lucide-react/icons/...` 等）は許可されない。
  */
 const VIRTUAL_PACKAGES: ReadonlyMap<string, Record<string, unknown>> = new Map([[LUCIDE_PACKAGE_NAME, { exports: { '.': {} } }]]);
@@ -44,13 +34,9 @@ interface WildcardPattern {
   suffix: string;
 }
 
-/** 許可 specifier をどこから解決するか。 */
 export interface PackageResolution {
-  /** パッケージ名。 */
   name: string;
-  /** `mockup` = `@lism-css/mockup` 同梱、`data` = データディレクトリ側のプロジェクト。 */
   origin: 'mockup' | 'data';
-  /** vite / rollup の `resolve()` に渡す importer。 */
   anchor: string;
 }
 
@@ -72,11 +58,8 @@ interface WildcardEntry {
 }
 
 export interface ImportAllowlist {
-  /** 完全一致で許可する specifier（`exports` の静的エントリ）。 */
   readonly specifiers: ReadonlySet<string>;
-  /** `server.fs.allow` に渡す、許可パッケージの realpath ルート。 */
   readonly packageRoots: readonly string[];
-  /** `server.fs.allow` に渡す、追加パッケージ（データディレクトリ側）の依存解決用 node_modules ルート。 */
   readonly dependencyRoots: readonly string[];
   /**
    * 標準パッケージの解決に使った `@lism-css/mockup` 側の node_modules ルート（近い順）。
@@ -88,23 +71,17 @@ export interface ImportAllowlist {
    * `dev` / `check` はこれを起動時の警告に使う（CLI のインストール破損の診断用）。
    */
   readonly missingPackages: readonly string[];
-  /** 許可パッケージ名（標準＋追加）。エラーメッセージ用。 */
   readonly allowedPackages: readonly string[];
   isAllowed(specifier: string): boolean;
-  /** 許可済み specifier の解決情報。許可外なら null。 */
   resolutionFor(specifier: string): PackageResolution | null;
 }
 
 export interface ImportAllowlistOptions {
-  /** データディレクトリ（追加パッケージの解決起点）。 */
   dataDir: string;
-  /** `mockup.config.json` の `imports` で宣言された追加パッケージ。 */
   extraPackages?: readonly string[];
 }
 
 /**
- * 列挙済みの node_modules ルート（近い順）から `<root>/<pkg>/package.json` を探す。
- *
  * 祖先ディレクトリの走査は起動のたびに何度も走るため、列挙（`ancestorNodeModules()`）は
  * 呼び出し側で1回だけ行い、複数パッケージの検索でその結果を使い回す。
  * 引数の順序が Node の解決順（近い順）である限り、結果は親方向へ1階層ずつ探すのと同じになる。
@@ -117,18 +94,16 @@ export function findPackageDirIn(nodeModulesRoots: readonly string[], pkgName: s
   return null;
 }
 
-/** `from` から親方向へ辿って `node_modules/<pkg>/package.json` を探す（Node の解決と同じ順序）。 */
 export function findPackageDir(pkgName: string, from: string): string | null {
   return findPackageDirIn(ancestorNodeModules(from), pkgName);
 }
 
-/** `exports` オブジェクトがサブパスマップか（条件マップの糖衣ではないか）。 */
 function isSubpathMap(exportsField: Record<string, unknown>): boolean {
   const keys = Object.keys(exportsField);
   return keys.length > 0 && keys.every((key) => key.startsWith('.'));
 }
 
-/** 1パッケージの `exports` から、完全一致 specifier とワイルドカードパターンを取り出す。 */
+/** package exportsを完全一致とワイルドカードのspecifierへ分ける。 */
 export function collectPackageSpecifiers(pkgName: string, manifest: Record<string, unknown>): { statics: string[]; wildcards: WildcardPattern[] } {
   const statics: string[] = [];
   const wildcards: WildcardPattern[] = [];
@@ -168,8 +143,6 @@ function matchesWildcard(pattern: WildcardPattern, specifier: string): boolean {
 }
 
 /**
- * `.` / `..` のパスセグメントを含むか。
- *
  * bundler はサブパスをファイルパスとして解決するため、`pkg/../target` は宣言していない
  * 同階層パッケージへ、`pkg/../../outside.js` は node_modules 外のファイルへ届いてしまう。
  * Node の ESM 解決も同種の specifier を Invalid Module Specifier として拒否する。
@@ -178,15 +151,12 @@ function hasDotPathSegment(specifier: string): boolean {
   return specifier.split(/[\\/]/).some((segment) => segment === '.' || segment === '..');
 }
 
-/** 任意サブパス許可（`confineDir` 付き）で、サブパスの解決先がパッケージルート配下に留まるか。 */
 function staysInsideDir(confineDir: string, pattern: WildcardPattern, specifier: string): boolean {
   const subpath = specifier.slice(pattern.prefix.length);
   return isInsideDir(confineDir, safeRealpath(path.resolve(confineDir, subpath)));
 }
 
 /**
- * `@lism-css/mockup` 自身を起点に解決でき、かつ実ファイルが存在するか。
- *
  * `import.meta.resolve()` は exports のワイルドカード展開でファイルの存在を確認しないため、
  * 存在チェックまで行って初めて「実在 specifier」と言える。
  */
@@ -200,7 +170,6 @@ function resolvesToExistingFile(specifier: string): boolean {
   }
 }
 
-/** 1パッケージ分の manifest を読む。読めなければ null。 */
 function readManifest(pkgDir: string): Record<string, unknown> | null {
   try {
     return JSON.parse(fs.readFileSync(path.join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
@@ -209,7 +178,7 @@ function readManifest(pkgDir: string): Record<string, unknown> | null {
   }
 }
 
-/** 許可リストを構築する。追加パッケージが解決できない場合は契約エラーを投げる。 */
+/** package exportsと解決元を照合し、import許可リストを構築する。 */
 export function buildImportAllowlist({ dataDir, extraPackages = [] }: ImportAllowlistOptions): ImportAllowlist {
   const mockRoot = getMockPackageRoot();
   const mockAnchor = getResolveAnchor();

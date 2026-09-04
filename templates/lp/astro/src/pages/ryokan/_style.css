@@ -1,19 +1,211 @@
-@layer lism-custom {
-  /* ryokan: 明朝ベース（Google Fonts / Noto Serif JP） */
-  .c--ryokan-root {
-    font-family: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-    font-optical-sizing: auto;
-    /* Lism の `ff:base`（既定はゴシック系）— ryokan では日本語明朝に統一 */
-    --ff--base: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-    /* ロゴ（`ff:accent`）用: Google Fonts / Yuji Syuku（Lism タイポ `--ff--accent`） */
-    --ff--accent: 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-    /* Feature ほか和紙調のベージュ背景（セマンティック `--base` を上書き） */
+@layer lism-base {
+  /* ryokan は黒地が既定（ダーク配色）。 */
+  :root {
+    color-scheme: dark;
+    --base: hsl(30 10% 8%);
+    --base-2: hsl(30 8% 16%);
+    --text: hsl(0 0% 100%);
+    --text-2: hsl(0 0% 88%);
+    --divider: hsl(0 0% 32%);
+
+    /* gutterを少しだけ広く */
+    --gutter--base: 1.875rem;
+
+    /* フォントサイズ: 16px@1000px → 17px@1400px */
+    --fz--base: clamp(1rem, 0.8438rem + 0.25vw, 1.0625rem);
+    --fw--bold: 600;
+  }
+  /* 和紙調のベージュ区画。カラートークン一式をライト値に差し替える（区画内の Modal・フォーム部品も追従） */
+  .set--light {
+    color-scheme: light;
     --base: hsl(38 32% 92%);
-    /* #reservation の named view timeline を兄弟の FAB から参照可能に */
+    --base-2: hsl(38 28% 87%);
+    --text: hsl(30 20% 12%);
+    --text-2: hsl(30 8% 24%);
+    --divider: hsl(38 16% 76%);
+  }
+
+  [lang='ja'] {
+    --ff--base: 'Shippori Mincho B1', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+    --ff--accent: 'Yuji Syuku', 'Shippori Mincho B1', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+    --lts--base: 0.05em;
+    --lts--s: 0em;
+    --lts--l: 0.1em;
+    --lts--xl: 0.15em;
+  }
+
+  [lang='en'] {
+    --lts--base: 0.025em;
+    --lts--s: 0em;
+    --lts--l: 0.075em;
+    --lts--xl: 0.125em;
+    /* フォントサイズ: 16px@800px → 18px@1400px */
+    --fz--base: clamp(1rem, 0.8333rem + 0.3333vw, 1.125rem);
+    --ff--base: 'Lora', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+    --ff--accent: 'EB Garamond', 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+  }
+}
+
+@layer lism-block {
+  :where([lang='ja']) .b--button > * {
+    /* Noto Serif JP がちょっと下に寄っているので調整 */
+    margin-bottom: 0.125em;
+  }
+  :root[lang='en'] .b--enEyebrow {
+    display: none;
+  }
+}
+
+@layer lism-custom {
+  :root {
+    --header-h--init: 100px;
+    --header-h: 64px;
+
+    scroll-padding-top: var(--header-h);
+  }
+
+  .c--page {
+    /* .c--reservation の named view timeline を兄弟の FAB から参照可能にする */
     timeline-scope: --c--ryokan-reservation;
   }
+
+  /* --------------------------------------------------
+   Header
+  -------------------------------------------------- */
+  .c--header_logoLink {
+    transform-origin: left center;
+    transition: transform 0.4s;
+  }
+  .c--headerNav .b--enEyebrow {
+    max-height: 2.5em;
+    overflow: hidden;
+    transition:
+      opacity 0.4s,
+      max-height 0.4s;
+  }
+  .c--header_inner {
+    height: var(--header-h--init);
+    transition: 0.4s;
+    transition-property: padding, height, background-color, backdrop-filter, box-shadow;
+  }
+
+  /**
+   * スクロール後: 黒ベースの半透明 + backdrop-filter で奥行きをぼかし視認性を確保。
+   * 下端の極細ハイライトで帯として切り分ける。
+   */
+  :root[data-scrolled] .c--header_inner {
+    height: var(--header-h);
+    padding-inline: var(--s25);
+    margin-top: var(--s10);
+    border-radius: var(--bdrs--20);
+    background-color: color-mix(in srgb, var(--base) 84%, transparent);
+    backdrop-filter: blur(8px);
+    box-shadow:
+      0 4px 24px color-mix(in srgb, var(--black) 16%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--white) 8%, transparent);
+  }
+  :root[data-scrolled] .c--header_logoLink {
+    transform: scale(0.75);
+  }
+  :root[data-scrolled] .c--headerNav .b--enEyebrow {
+    display: none;
+  }
+
+  /* モーダル内ナビの破線区切り */
+  .c--header_menuNav > li:not(:last-child) {
+    border-block-end: 1px dashed var(--divider);
+  }
+
+  /* --------------------------------------------------
+   Hero
+  -------------------------------------------------- */
+  .c--hero_layer {
+    opacity: 0;
+    animation: ryokan-mv-bgFade var(--c--ryokan-mv-bgCycleDuration) infinite;
+    animation-timing-function: linear;
+    animation-delay: var(--c--ryokan-mv-layerDelay);
+  }
+
+  /* 縦組みのキャッチコピー（書字方向・字間・行間は言語別ページの props 側） */
+  :where([lang='ja']) .c--hero_line:first-child {
+    margin-inline-start: -2.5em;
+  }
+  :where([lang='ja']) .c--hero_line:last-child:not(:first-child) {
+    margin-inline-start: 2.5em;
+  }
+  /* コピー行: ブラー＋フェード（開始は --c--ryokan-mv-lineIndex でスタガード） */
+  @keyframes ryokan-mv-lineReveal {
+    from {
+      opacity: 0;
+      filter: blur(var(--c--ryokan-mv-lineBlurMax, 12px));
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  .c--hero_copy .c--hero_line {
+    opacity: 0;
+    filter: blur(var(--c--ryokan-mv-lineBlurMax, 12px));
+    animation: ryokan-mv-lineReveal var(--c--ryokan-mv-lineDuration, 1s) ease forwards;
+    animation-delay: calc(var(--c--ryokan-mv-lineStartDelay, 0s) + var(--c--ryokan-mv-lineStagger, 0.2s) * var(--c--ryokan-mv-lineIndex, 0));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .c--hero_layer {
+      animation: none;
+      opacity: 0;
+      transform: none;
+    }
+    .c--hero_layer:first-child {
+      opacity: 1;
+    }
+    .c--hero_copy .c--hero_line {
+      animation: none;
+      opacity: 1;
+      filter: none;
+    }
+  }
+
+  /* --------------------------------------------------
+   Feature
+  -------------------------------------------------- */
+  /* figure のプル（set:bleed の --bleed）・角丸・比率と lg の2列 grid はレスポンシブ Props 側 */
+  @container not (min-width: 800px) {
+    .c--feature_lead,
+    .c--feature_body {
+      text-wrap: pretty;
+    }
+  }
+  /* 共有ウォーターマーク。位置とサイズはビューポート幅基準で固定（コンテナ幅には依存しない） */
+  .c--feature_watermark {
+    pointer-events: none;
+    user-select: none;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  /* --------------------------------------------------
+   Footer
+  -------------------------------------------------- */
+  /* md 未満は左寄せ。`ta` は BP 非対応のため Props に出せず、ここへ集約する */
+  .c--footer_navStack {
+    text-align: start;
+    align-items: flex-start;
+  }
+  @container (min-width: 800px) {
+    .c--footer_navStack {
+      text-align: center;
+      align-items: center;
+    }
+  }
+
+  /* --------------------------------------------------
+   Reservation FAB
+  -------------------------------------------------- */
   /* Reservation がビューポートに入る進行に合わせて FAB を非表示 */
-  #reservation {
+  .c--reservation {
     view-timeline-name: --c--ryokan-reservation;
     view-timeline-axis: block;
   }
@@ -29,541 +221,21 @@
       visibility: hidden;
     }
   }
-  .c--ryokan-reservationFab {
+  .c--reservationFab {
     animation: ryokan_reservationFab_hide linear both;
     animation-timeline: --c--ryokan-reservation;
     animation-range: entry 0% entry 30%;
   }
+  .c--reservationFab:focus-visible {
+    outline: 2px solid var(--divider);
+    outline-offset: 3px;
+  }
   @media (prefers-reduced-motion: reduce) {
-    .c--ryokan-reservationFab {
+    .c--reservationFab {
       animation: none;
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
-  }
-
-  /* Root */
-  :root {
-    --header-h: 100px;
-    --header-h--thin: 56px;
-    --u--fadeIn--animation-range: entry 0% contain 20%;
-  }
-  /* Fadein */
-  .u--fadeIn {
-    view-timeline: --u--fadeIn y;
-    animation: u--fadeIn linear both;
-    animation-timeline: --u--fadeIn;
-    animation-range: var(--u--fadeIn--animation-range);
-  }
-  @keyframes u--fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(32px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  /* Background Parallax */
-  .u--bgParallax {
-    view-timeline: --u--bgParallax y;
-  }
-  .u--bgParallax .a--media {
-    position: absolute;
-    top: -20%;
-    height: 140%;
-    animation: u--bgParallax_media linear both;
-    animation-timeline: --u--bgParallax;
-    animation-range: entry 0% cover 100%;
-  }
-  @keyframes u--bgParallax_media {
-    from {
-      transform: translateY(-10%);
-    }
-    to {
-      transform: translateY(10%);
-    }
-  }
-
-  .c--ryokan-header {
-    height: var(--header-h);
-    color: var(--white);
-    background-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-sizing: border-box;
-    --c--header-scroll-animation-start: 80px;
-    --c--header-animation-range: var(--c--header-scroll-animation-start) calc(var(--c--header-scroll-animation-start) + 140px);
-    animation: c--header_ryokan linear both;
-    animation-timeline: scroll(root);
-    animation-range: var(--c--header-animation-range);
-  }
-  .c--ryokan-header :where(a) {
-    color: inherit;
-  }
-  /**
-   * モーダル内ナビ: Footer と同様に `li:not(:last-child)` + `border-block-end: dashed`（`u--divide` は未使用）
-   * フッターは黒地へ `color-mix(…, var(--white) 38%, …)`。モーダルは `.b--modal_inner` の `var(--base)` 地のため `var(--text)` を使用
-   * @see Footer.astro / tokens.md --text / `color-mix`
-   */
-  .c--ryokan-header_menuNav {
-    list-style: none;
-  }
-  .c--ryokan-header_menuNav > li {
-    list-style: none;
-  }
-  .c--ryokan-header_menuNav > li:not(:last-child) {
-    border-block-end: 1px dashed color-mix(in srgb, var(--text) 38%, transparent);
-  }
-  /* md 以上: has--gutter の左右に s20 を上乗せ（Lism: `--gutter--base` 既定は `--s30`） */
-  @media (min-width: 800px) {
-    .c--ryokan-header_bar {
-      padding-inline: calc(var(--gutter--base) + var(--s20));
-    }
-  }
-  .c--ryokan-header_logoLink {
-    transform-origin: left center;
-    animation: c--ryokan-header_logo_ryokan linear both;
-    animation-timeline: scroll(root);
-    /* 継承: 先祖 `.c--ryokan-header` の `--c--header-animation-range` */
-    animation-range: var(--c--header-animation-range);
-  }
-  /**
-   * スクロール後: 黒ベースの半透明 + backdrop-filter で奥行きをぼかし視認性を確保。
-   * 下端の極細ハイライトで帯として切り分ける。
-   */
-  @keyframes c--header_ryokan {
-    to {
-      background-color: hsl(0 0% 0% / 0.78);
-      color: var(--white);
-      height: var(--header-h--thin);
-      backdrop-filter: blur(14px) saturate(1.12);
-      -webkit-backdrop-filter: blur(14px) saturate(1.12);
-      box-shadow:
-        0 8px 32px hsl(0 0% 0% / 0.42),
-        inset 0 -1px 0 hsl(0 0% 100% / 0.07);
-    }
-  }
-  @keyframes c--ryokan-header_logo_ryokan {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(0.75);
-    }
-  }
-  .c--ryokan-headerNav_en {
-    max-height: 2.5em;
-    overflow: hidden;
-    animation: c--ryokan-headerNav_en_ryokan linear both;
-    animation-timeline: scroll(root);
-    animation-range: var(--c--header-animation-range);
-  }
-  @keyframes c--ryokan-headerNav_en_ryokan {
-    to {
-      opacity: 0;
-      max-height: 0;
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  .c--ryokan-mv {
-    background-color: #000;
-  }
-
-  .c--ryokan-mv_bg {
-    inset: 0;
-  }
-
-  .c--ryokan-mv_layer {
-    position: absolute;
-    inset: 0;
-    background-image: var(--c--ryokan-mv-layerBgImage);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transform-origin: center center;
-    opacity: 0;
-    transform: scale(1);
-    animation: ryokan-mv-bgFade var(--c--ryokan-mv-bgCycleDuration) infinite;
-    animation-timing-function: linear;
-    animation-delay: var(--c--ryokan-mv-layerDelay);
-  }
-
-  /* MVSimple と同一の縦書きブロック */
-  .c--ryokan-mv_copy {
-    font-feature-settings: 'palt' 1;
-    font-size: clamp(1.1rem, 3.4vw, 1.75rem);
-    line-height: 1.85;
-    letter-spacing: 0.22em;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    gap: clamp(1.4rem, 4vw, 3rem);
-  }
-  .c--ryokan-mv_copy .c--ryokan-mv_line:first-child {
-    transform: translateY(-1em);
-  }
-  .c--ryokan-mv_copy .c--ryokan-mv_line:last-child:not(:first-child) {
-    transform: translateY(1em);
-  }
-
-  /* コピー行: ブラー＋フェード（開始は --c--ryokan-mv-lineIndex でスタガード） */
-  @keyframes ryokan-mv-lineReveal {
-    from {
-      opacity: 0;
-      filter: blur(var(--c--ryokan-mv-lineBlurMax, 12px));
-    }
-    to {
-      opacity: 1;
-      filter: blur(0);
-    }
-  }
-
-  .c--ryokan-mv_copy .c--ryokan-mv_line {
-    opacity: 0;
-    filter: blur(var(--c--ryokan-mv-lineBlurMax, 12px));
-    animation: ryokan-mv-lineReveal var(--c--ryokan-mv-lineDuration, 1s) ease forwards;
-    animation-delay: calc(var(--c--ryokan-mv-lineStartDelay, 0s) + var(--c--ryokan-mv-lineStagger, 0.2s) * var(--c--ryokan-mv-lineIndex, 0));
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .c--ryokan-mv_layer {
-      animation: none;
-      opacity: 0;
-      transform: none;
-    }
-    .c--ryokan-mv_layer:first-child {
-      opacity: 1;
-    }
-    .c--ryokan-mv_copy .c--ryokan-mv_line {
-      animation: none;
-      opacity: 1;
-      filter: none;
-    }
-  }
-
-  /*
-   * ビューポート全幅: 親の max-width に依存しないよう、自身を 100vw で中央に置く。
-   */
-  .c--ryokan-about {
-    --c--ryokan-about-l-inset: max(var(--gutter--base), calc((100vw - var(--sz--l)) / 2));
-    --c--ryokan-about-xl-inset: max(var(--gutter--base), calc((100vw - var(--sz--xl)) / 2));
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    box-sizing: border-box;
-    width: 100vw;
-    max-width: 100vw;
-    overflow-x: clip;
-  }
-  .c--ryokan-about_mediaRightImg {
-    display: block;
-    object-fit: cover;
-  }
-  .c--ryokan-about_figureLeft,
-  .c--ryokan-about_figureRight {
-    margin: 0;
-  }
-  @media (min-width: 800px) {
-    .c--ryokan-about_col--left {
-      box-sizing: border-box;
-      min-width: 0;
-      /* 見出し・本文: グローバルな size=l の左端（Lism の ps はカスタム計算のため CSS のみ） */
-      padding-inline-start: var(--c--ryokan-about-l-inset);
-    }
-    .c--ryokan-about_stack {
-      align-self: start;
-      width: min(100%, var(--sz--l));
-      min-width: 0;
-    }
-    .c--ryokan-about_body {
-      padding-inline-start: var(--s50);
-    }
-    .c--ryokan-about_figureLeft {
-      align-self: start;
-      margin-block-start: auto;
-      padding-block-start: var(--s30);
-      margin-inline-start: calc(var(--c--ryokan-about-xl-inset) - var(--c--ryokan-about-l-inset));
-      box-sizing: border-box;
-      min-inline-size: 0;
-      max-inline-size: 100%;
-      inline-size: min(20rem, 100%);
-    }
-  }
-  @media (max-width: 799px) {
-    .c--ryokan-about_grid {
-      padding-inline: var(--gutter--base);
-      box-sizing: border-box;
-    }
-    .c--ryokan-about_figureLeft {
-      inline-size: 100%;
-      max-inline-size: none;
-    }
-    .c--ryokan-about_mediaRightImg {
-      aspect-ratio: 4 / 3;
-      block-size: auto;
-    }
-  }
-
-  /* 左端プル: コンテナ幅 l + gutter と整合 */
-  .c--ryokan-feature {
-    --c--ryokan-feature-pull: max(var(--gutter--base, 0px), calc((100vw - min(100vw, var(--sz--l))) / 2));
-    --c--ryokan-feature-figure-max-h: 540px;
-    position: relative;
-  }
-  /* isContainer 祖先幅: Lism md と同じ (min-width: 800px) / not で補集合（max-width:799 との境目ギャップを避ける） */
-  @container not (min-width: 800px) {
-    .c--ryokan-feature_textCol {
-      order: 1;
-    }
-    .c--ryokan-feature_figure {
-      order: 2;
-      margin-inline: 0;
-      inline-size: 100%;
-      max-inline-size: none;
-      aspect-ratio: 16 / 10;
-      max-block-size: var(--c--ryokan-feature-figure-max-h);
-    }
-    .c--ryokan-feature_bodyStack {
-      align-self: stretch;
-      margin-inline-start: 0;
-      max-inline-size: 100%;
-    }
-    .c--ryokan-feature_lead,
-    .c--ryokan-feature_body {
-      text-align: start;
-      text-wrap: pretty;
-    }
-    .c--ryokan-feature_title {
-      align-self: end;
-    }
-  }
-  .c--ryokan-feature_figure {
-    margin: 0;
-    position: relative;
-    box-sizing: border-box;
-    align-self: stretch;
-    max-block-size: var(--c--ryokan-feature-figure-max-h);
-  }
-  .c--ryokan-feature_figure > img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  @container (min-width: 800px) {
-    .c--ryokan-feature_figure {
-      margin-inline-start: calc(-1 * var(--c--ryokan-feature-pull));
-      width: calc(100% + var(--c--ryokan-feature-pull));
-      max-width: none;
-      border-radius: 0 var(--bdrs--10) var(--bdrs--10) 0;
-      min-height: min(22rem, 52vw, var(--c--ryokan-feature-figure-max-h));
-    }
-    .c--ryokan-feature_figure > img {
-      min-height: min(22rem, 52vw, var(--c--ryokan-feature-figure-max-h));
-    }
-  }
-  .c--ryokan-feature_textCol {
-    min-height: 0;
-    overflow-x: visible;
-  }
-  /* 2列時: 見出しは上・本文は下（上端・下端揃え） */
-  @container (min-width: 800px) {
-    .c--ryokan-feature_copyRow {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      grid-template-rows: 1fr auto;
-      min-height: min(22rem, 52vw);
-    }
-    .c--ryokan-feature_title {
-      grid-column: 2;
-      grid-row: 1 / -1;
-      align-self: start;
-      justify-self: end;
-    }
-    .c--ryokan-feature_bodyStack {
-      grid-column: 1;
-      grid-row: 2;
-      align-self: end;
-      max-inline-size: min(100%, 26rem);
-    }
-    .c--ryokan-feature_lead,
-    .c--ryokan-feature_body {
-      text-align: start;
-    }
-  }
-  .c--ryokan-feature_title {
-    flex-shrink: 0;
-    line-height: 1.65;
-  }
-  /* 縦書き2列: 横書きの flex 列＋子に writing-mode: vertical-rl */
-  .c--ryokan-feature_titleInner {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-    gap: 0.65em;
-  }
-  .c--ryokan-feature_titleLine1,
-  .c--ryokan-feature_titleLine2 {
-    display: block;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-  }
-  .c--ryokan-feature_titleLine2 {
-    transform: translateY(1em);
-  }
-  /* 共有。左右位置は Lism md（@container 800px）に同期 */
-  .c--ryokan-feature_watermark {
-    position: absolute;
-    z-index: 0;
-    margin: 0;
-    padding: 0;
-    inset-block-start: 0;
-    transform: none;
-    font-family: var(--ff--base, ui-serif, 'Times New Roman', Times, serif);
-    font-weight: 700;
-    line-height: 0.82;
-    letter-spacing: 0.03em;
-    color: rgb(0 0 0 / 0.07);
-    white-space: nowrap;
-    pointer-events: none;
-    user-select: none;
-    direction: ltr;
-    unicode-bidi: isolate;
-  }
-  @container (min-width: 800px) {
-    .c--ryokan-feature_watermark {
-      inset-inline-start: 0;
-      inset-inline-end: auto;
-      transform-origin: left center;
-      font-size: clamp(2.75rem, 11cqi, 7.5rem);
-    }
-  }
-  @container not (min-width: 800px) {
-    .c--ryokan-feature_watermark {
-      inset-inline-start: auto;
-      inset-inline-end: 0;
-      transform-origin: right center;
-      font-size: clamp(3.15rem, 14cqi, 6.5rem);
-    }
-  }
-
-  /*
-   * Lism の md は viewport の @media ではなく @container (min-width: 800px)（prop-responsive.md）。
-   * また -max-w:100%（max-width）と max-inline-size の併用や、flex 子の % 解決で上限が効かないことがあるため、
-   * コンテナクエリ内で max-width + cqi を使い、fxd の row 切替と同じ基準で min(32rem, 40cqi) に揃える（40cqi はクエリコンテナ行内幅の 40% 相当の上限）。
-   */
-  .c--ryokan-plans_media {
-    max-width: 100%;
-  }
-  @container (min-width: 800px) {
-    .c--ryokan-plans_media {
-      max-width: min(32rem, 40cqi);
-    }
-  }
-
-  /* UI Button のデフォルト（--text 地）を上書きし、デザインどおり白ピル＋黒字に */
-  .c--ryokan-plans_reserve.b--button {
-    --bgc: var(--white);
-    --c: var(--black);
-    --bdc: var(--white);
-  }
-
-  /*
-   * 見出し＋（画像｜質問）をひとつの Grid で管理。
-   * md 以上: 画像列と質問列を repeat(2, 1fr) で 1:1。
-   */
-  .c--ryokan-faq_layout {
-    display: grid;
-    grid-template-areas: 'head' 'acc' 'img';
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .c--ryokan-faq_head {
-    grid-area: head;
-  }
-  .c--ryokan-faq_acc {
-    grid-area: acc;
-  }
-  .c--ryokan-faq_media {
-    grid-area: img;
-  }
-  @container (min-width: 800px) {
-    .c--ryokan-faq_layout {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-areas:
-        'head head'
-        'img acc';
-    }
-  }
-
-  .c--ryokan-faq_acc .b--accordion_item {
-    border-block-end: 1px solid var(--divider);
-  }
-  .c--ryokan-faq_acc .b--accordion_item:last-of-type {
-    border-block-end: none;
-  }
-
-  .c--ryokan-footer :where(a) {
-    color: inherit;
-  }
-  .c--ryokan-footer_nav li {
-    list-style: none;
-  }
-
-  /* md 未満: 縦並びの項目間に区切り（最後の行の下には付けない） */
-  .c--ryokan-footer_nav > li:not(:last-child) {
-    border-block-end: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
-  }
-
-  /* md 以上: 縦の区切りをやめ、項目の「間」だけ左に縦線（先頭左・末尾右には付けない） */
-  @container (min-width: 800px) {
-    .c--ryokan-footer_nav > li:not(:last-child) {
-      border-block-end: none;
-    }
-    .c--ryokan-footer_nav > li + li {
-      border-inline-start: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
-      padding-inline-start: var(--s20);
-      margin-inline-start: var(--s20);
-    }
-  }
-
-  /* md 未満: 左寄せ。`ta` プロパティのインラインが CSS より優先するため、指定はここに集約 */
-  .c--ryokan-footer_navStack {
-    text-align: start;
-    align-items: flex-start;
-  }
-  @container (min-width: 800px) {
-    .c--ryokan-footer_navStack {
-      text-align: center;
-      align-items: center;
-    }
-  }
-
-  /* md 以上: caret は非表示 */
-  .c--ryokan-footer_navCaret {
-    display: block;
-  }
-  @container (min-width: 800px) {
-    .c--ryokan-footer_navCaret {
-      display: none;
-    }
-  }
-
-  /* ピル型 FAB: UI Button のセマンティック色を上書き */
-  .c--ryokan-reservationFab.b--button {
-    --bgc: var(--black);
-    --c: var(--white);
-    min-width: 12rem;
-  }
-  .c--ryokan-reservationFab:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--white) 50%, transparent);
-    outline-offset: 3px;
   }
 }

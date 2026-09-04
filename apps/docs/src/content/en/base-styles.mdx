@@ -20,7 +20,7 @@ The Reset CSS is defined as the `lism-base.reset` layer.
 
 The reset is designed to stay as close to browser defaults as possible, keeping only what is strictly necessary.
 
-### Loading only the Lism CSS reset.css
+### Reset CSS only
 
 
 <PreviewTitle>Import via JavaScript</PreviewTitle>
@@ -32,7 +32,7 @@ Or alternatively:
 
 <PreviewTitle>Load via CDN</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.26.0/dist/css/reset.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.27.0/dist/css/reset.css" rel="stylesheet" />
 ```
 
 
@@ -40,6 +40,11 @@ Or alternatively:
 ## Base styles
 
 In addition to the Reset CSS, the `lism-base` layer defines default base styles for HTML elements, making use of tokens defined on `:root`.
+
+
+<PreviewTitle>Source code</PreviewTitle>
+<SrcCode path="src/scss/base/_html.scss" />
+
 
 The styles are presented below, grouped by element type.
 
@@ -65,7 +70,7 @@ body {
 }
 ```
 
-`--hl` is a variable that manages the half-leading (the spacing above and below a line). On `body`, `--hl--base` is set and inherited by child elements.
+`--hl` is a variable that manages the half-leading (the spacing on each side, above and below, of a line). On `body`, `--hl--base` is set and inherited by child elements.
 
 `text-underline-offset` adjusts the position of link underlines, and `tab-size` sets the display width of tab characters.
 
@@ -76,16 +81,16 @@ In Lism CSS, the following style is applied to **all elements**.
 
 ```scss
 * {
-  line-height: calc(1em + var(--hl) * 2);
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
 }
 ```
 
 Unlike a typical declaration such as `line-height: 1.6`, this approach produces a **fixed line spacing that does not depend on font size**.
-The formula works by defining the half-leading amount first, then adding it above and below the cap height (approximately `1em`).
+The formula works by defining the half-leading amount first, then adding it above and below the character height (approximately `1em`). When `--lh` is set, it takes precedence.
 
 Because line spacing doesn't grow with font size, it unifies the "**vertical rhythm**" of your typography, letting you compose layouts with harmonious spacing from headings down to body text.
 
-For more details, see [Half-Leading (line-height)](/en/docs/tokens/half-leading/).
+For more details, see [Half-Leading (line-height)](/en/docs/half-leading/).
 
 
 ### Headings (h1–h6)
@@ -192,7 +197,7 @@ hr {
 }
 ```
 
-While the Reset CSS strips list styles from elements that have a class, this rule automatically restores browser defaults for lists with no class at all.
+While the Reset CSS strips list styles from elements that have a class, this rule automatically restores the browser's default styles for lists with no class at all.
 
 A `ul` / `ol` decorated only with Property Classes (e.g. `<ul class="-fz:l">`) remains in the reset state. If you want to keep the list markers in that case, add [`set--revert`](/en/docs/set-class#set--revert) explicitly.
 
@@ -242,7 +247,7 @@ td, th {
 Consistent styles are applied to form controls.
 
 ```scss
-input:not([type='range']), button, textarea, select, ::file-selector-button {
+input:where(:not([type='range'])), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
   padding: var(--controls-p, 0.25em 0.5em);
@@ -255,7 +260,7 @@ input:not([type='range']), button, textarea, select, ::file-selector-button {
 | `--controls-bdc` | `var(--divider)` | Border color |
 | `--controls-p` | `0.25em 0.5em` | Padding |
 
-Border radius is left to the browser default. If you want a consistent rounding, apply `border-radius` directly to each selector in your theme.
+Border radius is left to the browser's default styles. If you want a consistent rounding, apply `border-radius` directly to each selector in your theme.
 
 
 ### Others
@@ -280,7 +285,7 @@ The following is a preview of HTML elements with the base styles applied above.
 
 <PreviewTitle>Preview</PreviewTitle>
 <PreviewArea>
-  <PreviewFrame ar="1/1" isInline url="/demo/html-base-style" />
+  <InlineIframe ar="1/1" url="/demo/html-base-style" />
 </PreviewArea>
 <Button href="/demo/html-base-style" variant="fill" target="_blank" bdrs="10" w="fit" mx="auto">
   View in full screen

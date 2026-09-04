@@ -3,7 +3,7 @@ title: 'SCSS Customization'
 description: 'How to override lism-css SCSS variables (such as the setting module variables $breakpoints / $props) to adjust generated classes and breakpoints.'
 ---
 
-You can adjust the generated classes and breakpoints by overriding SCSS variables. This approach is for plain SCSS setups and other cases where you are not using the Vite / Astro plugin.
+You can adjust the generated classes and breakpoints by overriding SCSS variables. This approach is for setups that don't use `lism.config.js` and `@lism-css/plugin`. Values you add on the SCSS side don't reach components, so use them from components either by writing the class directly in your HTML or by forcing the class output with `:value` notation (such as `p=":box"`) — see [below](#using-added-values-in-components).
 
 
 ## Overridable variables
@@ -15,15 +15,15 @@ The variables defined in `lism-css/scss/_setting.scss` can be overridden via `@u
 
 | Variable | Purpose |
 |----------|---------|
-| `$breakpoints` | Breakpoint value definitions |
+| `$breakpoints` | Breakpoint size definitions |
 | `$is_container_query` | Whether to use container queries (`1` = container query / `0` = media query) |
-| `$default_important` | Whether to add `!important` to Property Classes by default (`0` / `1`) |
+| `$default_important` | Whether to add `!important` to Property Classes by default (`0` / `1`). Ignored by the `@layer`-free builds, which always add it |
 | `$props` | Per-Property Class output configuration |
 
 
 ## Basic format
 
-After defining your overrides, import `lism-css/scss/main.scss` to apply the customized styles.
+Override the `setting` variables, then import `lism-css/scss/main.scss` to apply the customized styles.
 
 <PreviewTitle>SCSS variable override format</PreviewTitle>
 ```scss
@@ -44,14 +44,15 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 ```
 
 :::info
-- Toggling `@layer` on or off is not controlled by a variable. Switch the `main.scss` file you import instead (see [CSS Builds](/en/docs/customize/build/)).
-- When using Astro, the `../path-to/node_modules/` prefix is not needed.
+- Toggling `@layer` on or off is not controlled by a variable. Switch which file you import — `main.scss` or `main_no_layer.scss` — instead (see [CSS File Types](/en/docs/css-files/#disabling-layer)).
+- `main_no_layer.scss` / `full_no_layer.scss` always add `!important` to Property Classes, regardless of `$default_important` or a per-prop `important` in `$props`. If you really need to remove it, copy the contents of `main_no_layer.scss` into your own entry file and replace the first `@use` with `@use '../path-to/node_modules/lism-css/scss/mixin' with ($layer_mode: 0, $default_important: 0)`.
+- In Astro, you can write imports starting from the package name — e.g. `@use 'lism-css/scss/setting'` — without the `../path-to/node_modules/` prefix.
 :::
 
 
 ## Customizing individual `$props`
 
-For each Property Class, you can limit which breakpoints are generated or add utility classes.
+For each Property Class, you can limit which breakpoints are generated or add values such as `-p:box`.
 
 <PreviewTitle>Customize Property Class output</PreviewTitle>
 ```scss
@@ -59,7 +60,7 @@ For each Property Class, you can limit which breakpoints are generated or add ut
   $props: (
     'fz': (
       important: 1,
-      // Output !important for fz utility classes
+      // Add !important to fz's Property Class
     ),
     'h': (
       bp: 0,
@@ -87,14 +88,68 @@ The following values are accepted for `bp`:
 | `0` | Do not output any breakpoint-responsive classes |
 | `('sm', 'md')`, etc. (list) | Output only the explicitly listed breakpoints |
 
-The list form is for cases where you want to restrict a specific prop to certain breakpoints. When specifying this in `lism.config.js`, use an array: `bp: ['sm', 'md']`. Note that including a disabled breakpoint (one with no size defined in `$breakpoints`, such as `xs` or `xl` by default) in the list will produce no output for that entry, and a warning will be emitted at build time.
+The list form is for cases where you want to restrict a specific prop to certain breakpoints. Note that including a disabled breakpoint (one with no size defined in `$breakpoints`, such as `xs` or `xl` by default) in the list will produce no output for that entry, and a warning will be emitted at build time.
+
+
+## Using added values in components
+
+Unlike `lism.config.js`, values you add in SCSS don't reach components. To use them from a component, force the class output with the Lism Props [`:value` notation](/en/docs/core-components/lism-props/#output-utility), or write the class directly in your HTML.
+
+<PreviewTitle>Add values in SCSS and use them with :value notation</PreviewTitle>
+```scss
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+  $props: (
+    'p': (
+      utilities: (
+        'box': '2em',
+      ),
+    ),
+    'lts': (
+      utilities: (
+        '2xl': 'var(--lts--2xl)',
+      ),
+    ),
+  )
+);
+
+@use '../path-to/node_modules/lism-css/scss/main';
+
+// Append token definition
+@layer lism-base {
+  :root {
+    --lts--2xl: 0.15em;
+  }
+}
+```
+
+```jsx
+<Box p=":box" lts=":2xl">...</Box>
+
+↓ Output
+
+<div class="l--box -p:box -lts:2xl">...</div>
+```
+
+For a small number of additions, you can skip SCSS and hand-write the rules directly in `global.css` instead.
+
+```css
+/* global.css */
+@layer lism-base {
+  :root {
+    --lts--2xl: 0.15em;
+  }
+}
+
+/* Property Classes are not wrapped in @layer */
+.-lts\:2xl {
+  letter-spacing: var(--lts--2xl);
+}
+```
 
 
 ## Enabling xs / xl breakpoints
 
-The default breakpoints are `xs: 0` (disabled) / `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0` (disabled). A value of `0` means "disabled — no CSS query is output".
-
-If you are using `lism.config.js`, specifying `breakpoints` there is the easiest approach (see [lism.config.js](/en/docs/customize/config/)). For projects using SCSS directly, you can enable `xs` / `xl` by overriding the `$breakpoints` SCSS variable:
+`xs` / `xl`, which are disabled by default, can be enabled by specifying sizes in `$breakpoints`. For the default values, the effect on CSS size, and pairing with CSS Purge, see [lism.config.js](/en/docs/customize/config/#enabling-xs--xl-breakpoints).
 
 ```scss
 @use '../path-to/node_modules/lism-css/scss/setting' with (
@@ -107,11 +162,7 @@ If you are using `lism.config.js`, specifying `breakpoints` there is the easiest
 @use '../path-to/node_modules/lism-css/scss/main';
 ```
 
-:::warning
-Enabling `xs` / `xl` adds a block for each active breakpoint to every Property Class that uses `bp: 1`, which increases the CSS size. **This feature is designed to be used together with CSS purge.**
-:::
 
-
-## Notes on SCSS compilation
+## CSS output order
 
 When you compile SCSS directly, the order of your own styles and the lism-css styles in the final CSS may differ from what you expect. A broken order changes how specificity and the cascade resolve, which can apply styles you did not intend — so pay attention to your `@use` order (whether you place your own styles before or after loading lism-css).

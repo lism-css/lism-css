@@ -5,11 +5,75 @@ description: 'A log of all notable changes and updates across Lism CSS releases.
 import { Lism, Divider, Text, Inline, Link } from 'lism-css/astro';
 
 
-Breaking changes may continue until v1.0, so all notable changes are documented here.
+Significant changes may continue until v1.0 is released, so all notable changes are documented on this page.
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.26.0 (2026.08.16)
+## lism-css v0.27.0 (2026.09.04)
+
+This release contains **breaking changes**.
+
+### Split `lh` from `hl` and redefined it as a real line-height prop (#583)
+
+- `lh` used to be a compatibility alias of `hl`. It is now an independent prop / token that manages the actual `line-height` as a unitless ratio. The tokens are `xs: 1.25` / `s: 1.5` / `m: 1.75` / `l: 2` / `xl: 2.25` (unlike `hl`, it has no default on `body`, so the middle key is `m` rather than `base`).
+- Values are emitted through the `--lh` variable and resolved as `line-height: var(--lh, calc(1em + var(--hl) * 2))`. Since `--lh` is inherited, descendants also get line spacing recalculated from their own `font-size`.
+- To migrate: replace token usages such as `lh="s"` that were adjusting half-leading with `hl="s"`. `lh="1"` still gives no extra leading (`line-height: 1`).
+- `u--trim` / `u--trimAll` now trim by `calc((1em - 1lh) / 2)`, so trimming works correctly whether line spacing is managed by `hl` or `lh`.
+
+### `--s-unit` / `--hl-unit` are now fixed rem values (#581)
+
+- Changed `--s-unit` (≈8px) and `--hl-unit` (≈2px) from `calc()` expressions tied to `--fz--base` to the fixed values `0.5rem` / `0.125rem`. Changing `--fz--base` no longer changes the base units for spacing and leading. A recipe for keeping them tied to the font size as before has been added to the Typography tokens page.
+- Added an `xl` token (5 × `--hl-unit`) to `hl`.
+
+### New `bdrs` token scale (#579)
+
+- Changed to a scale whose increments grow arithmetically (a second-order arithmetic progression) and added `50`: `10: 0.25rem` / `20: 0.375rem` / `30: 0.625rem` / `40: 1rem` / `50: 1.5rem` (`99` is unchanged). `20`–`40` are smaller than before, so bump the key up one step to keep the previous look.
+- Added a `+1px` correction to the computed `--bdrs--inner` in `.set--bdrsInner`.
+
+### Two-layer box-shadow (#591)
+
+- The `bxsh` tokens (`10`–`50`) are now two layers: a small near-side shadow on top of the previous one. Added the near-side size `--shsz--5` and color `--shc--near`, and changed the default `--shadow` color to `hsl(220 2% 4% / 8%)`.
+
+### Narrowed the properties targeted by `has--transition` (#584)
+
+- The default `--transitionProps` changed from `all` to visual properties only (`color`, `background-color`, `border-color`, `box-shadow`, `scale`, `rotate`, `translate`, `transform`, `opacity`, `filter`, `backdrop-filter`). This prevents unintended animations on load or layout changes.
+- `hasTransition` now also accepts a string such as `'color, opacity'` to specify the target properties directly.
+
+### Stronger override resistance in the no_layer build (#585)
+
+- In the `no_layer` build, Property Classes are now always `!important` and `u--` Utility Class selectors are doubled, making them harder to override from external CSS. The output of the regular `@layer` build is unchanged.
+
+### Other
+
+- Added an `xs` (`-0.05em`) token to `lts`.
+- Moved the `border-width` / `border-color` of `-bd` out of the layers so they are not overridden by `border` shorthands in higher layers (#589).
+- Fixed `Center` overflowing horizontally when it contains a long `pre` (#597).
+- Adjusted the default mix ratio of `-hov:-bgc` from 25% to 20%.
+
+### `@lism-css/ui` v0.27.0 (2026.09.04)
+
+Requires `lism-css` v0.27.0 or later.
+
+**Added Tooltip and Popover (#588)**
+
+- Added `Tooltip` and `Popover`, positioned with CSS Anchor Positioning. Unsupported browsers get a CSS fallback.
+- Tooltip: visibility is handled entirely in CSS; the only JS closes it on the Esc key. Position it with `side` (`top` / `bottom` / `start` / `end`) and `align` on `Popup`.
+- Popover: uses the native Popover API, so no client-side JS is needed. Composed of `Root` / `Trigger` / `Popup` / `Close`.
+- Tuning CSS variables (`--tooltip-offset` / `--tooltip-duration` / `--tooltip-delay` / `--tooltip-delay--close`, `--popover-offset` / `--popover-duration`) are received on `Root`.
+- A speech-bubble arrow is shown by default. Change its size with `--tooltip-arrow` / `--popover-arrow`, or set `0` to hide it.
+
+**Avatar initials placeholder (#587)**
+
+- When `src` is omitted, the first character of the `name` prop is shown as an initial. The root gets a `b--avatar--initial` modifier, where you can override the background color and so on.
+- When neither `name` nor `alt` is given, the placeholder is treated as decorative (`aria-hidden`).
+
+**Modal (#596)**
+
+- Clicking an in-page link (`#id`) inside a Modal now closes it without blocking the navigation. Clicks with modifier keys, links targeting another tab, and clicks whose default was prevented by another handler are excluded.
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.26.0 (2026.08.16)
 
 ### Added the `lism-block` layer (#546, #559)
 
@@ -27,7 +91,7 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 - Updated dependencies for security fixes.
 
-### `@lism-css/ui` v.0.26.0 (2026.08.16)
+### `@lism-css/ui` v0.26.0 (2026.08.16)
 
 This release contains **breaking changes**. It requires `lism-css` v0.26.0 or later.
 
@@ -40,7 +104,7 @@ This release contains **breaking changes**. It requires `lism-css` v0.26.0 or la
 
 - Base styles that used to be emitted as Lism Props (Property Classes) are now CSS, so you can override them from your own CSS. The following defaults changed as a result.
 - Badge: the default border radius is now a pill shape (`--bdrs--99`).
-- Tabs: `variant="line"` is now a standard style, and the default `variant` is `'default'`. The previous default decoration is isolated in `.b--tabs--default`.
+- Tabs: `variant="line"` is now a standard style, and the default `variant` is `'default'`. The previous default decoration has been separated into `.b--tabs--default`.
 - Avatar: the default size is now managed in CSS as `--w: 2em`.
 - Button / Accordion.Root / Details / NavMenu: no longer emit `l--flex` / `l--stack` by default. Pass the `layout` prop (e.g. `layout="flex"`) if you need that layout.
 - Details: removed `flow="s"` from Content, so the default spacing between child elements is now `--flow--base`. To keep the previous spacing, set `.b--details_content { --flow--base: var(--flow--s) }`.
@@ -61,7 +125,7 @@ This release contains **breaking changes**. It requires `lism-css` v0.26.0 or la
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.25.0 (2026.08.06)
+## lism-css v0.25.0 (2026.08.06)
 
 ### Structural variables can now be overridden from lism.config (#530)
 
@@ -84,39 +148,39 @@ This release contains **breaking changes**. It requires `lism-css` v0.26.0 or la
 - Fixed `set--plain` losing to the default form styles for `input` on specificity. (#537)
 - Added `.browserslistrc` and removed unnecessary vendor prefixes.
 
-### `@lism-css/plugin` v.0.4.2 (2026.08.06)
+### `@lism-css/plugin` v0.4.2 (2026.08.06)
 
 - Aligned color Property Class generation with the union of `color` and `palette`, so the `full.css` build output matches the runtime resolution rules. (#533)
 - Added `loadDefaultConfig()` for callers that only need the pre-merge default config. (#539)
 
-### `@lism-css/ui` v.0.25.0 (2026.08.06)
+### `@lism-css/ui` v0.25.0 (2026.08.06)
 
 - A follow-up release for `lism-css` v0.25.0. No component changes.
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.24.1 (2026.08.04)
+## lism-css v0.24.1 (2026.08.04)
 
 - Fixed a conflict that prevented border Property Classes (`.-bd` etc.) from working in `full.css`. (#513)
 - Fixed an issue where UA-derived `text-align` (button) and `letter-spacing` (form elements) were not being reset. (#516)
 - Removed the `l` value from the `flow` token in `tokens.ts`, as it was not implemented in CSS.
 - Updated dependencies and cleaned up internal type definitions. (No API changes)
 
-### `@lism-css/ui` v.0.24.1 (2026.08.04)
+### `@lism-css/ui` v0.24.1 (2026.08.04)
 
 - A follow-up release for `lism-css` v0.24.1. No component changes.
 - Updated dependencies.
 
 <Divider bds="dashed" my="40" />
 
-## @lism-css/plugin v.0.4.1 (2026.08.04)
+## @lism-css/plugin v0.4.1 (2026.08.04)
 
 - Export `lismConfigAlias` from `@lism-css/plugin/vite` (#521)
 - Updated dependencies (Dependabot alert fixes) (#509)
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.24.0 (2026.07.06)
+## lism-css v0.24.0 (2026.07.06)
 
 - Derive config values (utils / presets / token) into component-side autocompletion (#505)
 - Add `LismConfig` type for authoring `lism.config` (#472)
@@ -130,27 +194,27 @@ This release contains **breaking changes**. It requires `lism-css` v0.26.0 or la
 - Improved implementation accuracy: separated verification into subagents and structurally prevented check skipping (#469, #473)
 - Expanded the antipatterns collection (#488)
 
-### `@lism-css/plugin` v.0.4.0 (2026.07.06)
+### `@lism-css/plugin` v0.4.0 (2026.07.06)
 
 - Support loading `lism.config.ts` (TypeScript config files) (#461)
 - Derive types from config values (utils / presets / token) for component-side autocompletion (#505)
-- purge: scan and rewrite references in server output for Astro SSR / hybrid setups (#495)
-- purge: stricter hash detection and byte-accurate size reports (#503)
+- CSS Purge: scan and rewrite references in server output for Astro SSR / hybrid setups (#495)
+- CSS Purge: stricter hash detection and byte-accurate size reports (#503)
 
-### `@lism-css/ui` v.0.24.0 (2026.07.06)
+### `@lism-css/ui` v0.24.0 (2026.07.06)
 
 - Follow-up release for lism-css v0.24.0 (no functional changes to components)
 - Added unit tests for Accordion / Modal / Tabs (#365)
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.23.0 (2026.06.19)
+## lism-css v0.23.0 (2026.06.19)
 
 This release contains **breaking changes**.
 
 ### Split the build/plugin layer into `@lism-css/plugin` (#439)
 
-- Separated the Vite / Astro integration, purge, and the `npx lism-css build` CLI from the core, moving them into the new `@lism-css/plugin` package
+- Separated the Vite / Astro integration, CSS Purge, and the `npx lism-css build` CLI from the core, moving them into the new `@lism-css/plugin` package
 - Removed exports such as `lism-css/vite`, `lism-css/purge/*`, and `lism-css/vite-plugin`
 
 ### Unified tokens into a single value-bearing source (#434)
@@ -170,28 +234,28 @@ This release contains **breaking changes**.
 - Revised the default font families (`--ff--base` / `--ff--accent`)
 - Removed redundant explicit `bp:0` on props (output unchanged)
 
-### `@lism-css/plugin` v.0.3.0 (2026.06.19)
+### `@lism-css/plugin` v0.3.0 (2026.06.19)
 
 New package. Provides the build / framework-integration layer for `lism-css`.
 
 - Dynamic build plugin that makes `lism.config.js` the single source of truth for CSS output (`lismCss()` / `lismCssAstro()`)
-- Lightweight CSS purge (`@lism-css/plugin/purge/vite` / `/astro`, or `purge: true` on the integrated plugin)
+- CSS Purge (`@lism-css/plugin/purge/vite` / `/astro`, or `purge: true` on the integrated plugin)
 - Next.js 16 (`@lism-css/plugin/next`) / WordPress (`@lism-css/plugin/wordpress`) adapters
 - Auto-generates `lism-env.d.ts` from `breakpoints`
 
-### `@lism-css/ui` v.0.23.0 (2026.06.19)
+### `@lism-css/ui` v0.23.0 (2026.06.19)
 
 - Migrated `lh` to the recommended `hl` property in `Badge` / `Button` / `Chat` (following the `hl` addition in lism-css v0.23.0)
 - Moved the CSS build layer to `@lism-css/plugin`'s `compileCssTree`
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.22.2 (2026.06.03)
+## lism-css v0.22.2 (2026.06.03)
 
 - Slightly adjusted the saturation of the `--green` color token
 - Changed the `alert` icon in Icon presets to an octagon (warning-octagon) style
 
-### `@lism-css/ui` v.0.22.2 (2026.06.03)
+### `@lism-css/ui` v0.22.2 (2026.06.03)
 
 - Added a `tip` preset to `Alert` / `Callout` (an alias of `point`)
 - Unified and reorganized `Alert` / `Callout` presets (added `info` to `Callout`, changed `note` to gray, added `note` to `Alert`)
@@ -199,13 +263,13 @@ New package. Provides the build / framework-integration layer for `lism-css`.
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.22.1 (2026.05.30)
+## lism-css v0.22.1 (2026.05.30)
 
 - Treat a bare `:` as a `true`-equivalent flag (for paths that can't pass a boolean, such as text form inputs)
 - Fix 0.22.0 packaging issues (corrected `./config` / `./default-config` targets and distributed files)
 - Remove the deprecated `./next-js/*` export
 
-### `@lism-css/ui` v.0.22.1 (2026.06.02)
+### `@lism-css/ui` v0.22.1 (2026.06.02)
 
 - Added a default `hov="-bgc"` to `NavMenu.Link` (so a background color appears on hover)
 - Added an `isOpen` prop to `Accordion.Item` to allow expanding by default (also adjusted the toggle icon)
@@ -213,7 +277,7 @@ New package. Provides the build / framework-integration layer for `lism-css`.
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.22.0 (2026.05.28)
+## lism-css v0.22.0 (2026.05.28)
 
 This release contains **breaking changes**.
 
@@ -237,13 +301,13 @@ This release contains **breaking changes**.
 
 - Reorganized and adjusted logo icon sizes
 
-### `@lism-css/ui` v.0.22.0 (2026.05.28)
+### `@lism-css/ui` v0.22.0 (2026.05.28)
 
 - Catch-up release for lism-css v0.22.0
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.21.0 (2026.05.26)
+## lism-css v0.21.0 (2026.05.26)
 
 This release contains **breaking changes**.
 
@@ -265,13 +329,13 @@ This release contains **breaking changes**.
 - Added breakpoint support (`bp: 1`) for `pos` and `order` properties
 - Added `label` tag to `InlineAllowedTag`
 
-### `@lism-css/ui` v.0.21.0 (2026.05.26)
+### `@lism-css/ui` v0.21.0 (2026.05.26)
 
 - Aligned with lism-css core set class renaming (`set--var:xxx` → `set--xxx`).
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.20.0 (2026.05.20)
+## lism-css v0.20.0 (2026.05.20)
 
 This release contains **breaking changes**.
 
@@ -301,7 +365,7 @@ This release contains **breaking changes**.
 - Moved the `--flow` default value definition to root and set a slightly wider value for `lang="ja"`
 - Minor adjustments to base styles
 
-### `@lism-css/ui` v.0.20.0 (2026.05.20)
+### `@lism-css/ui` v0.20.0 (2026.05.20)
 
 - Added a default background blur (`backdrop-filter`) to Modal (customizable via `--modal-blur`)
 - Removed the default box-shadow from Callout / Alert for a flatter look

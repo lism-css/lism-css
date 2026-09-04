@@ -1,9 +1,22 @@
 @layer lism-block {
-  /* Note: l--frame との併用を前提としています. */
+  /* src ありの通常時: l--frame との併用が前提 */
   .b--avatar {
     --w: 2em; /* size prop未指定時のデフォルトサイズ */
     width: var(--w);
     aspect-ratio: 1/1;
     border-radius: var(--bdrs--99);
+  }
+
+  /* src 未指定時: name のイニシャル1文字を表示する。l--center との併用が前提 */
+  .b--avatar--initial {
+    --lh: 1;
+    background-color: var(--base-2);
+    text-transform: uppercase;
+    user-select: none;
+
+    /* --w が em単位の時を考慮し、子要素側で計算する */
+    > * {
+      font-size: calc(var(--w) / 2);
+    }
   }
 }

@@ -1,21 +1,22 @@
 ---
 title: 'Customize'
-description: 'Lism CSS のカスタマイズ方法の全体像。ビルドCSSの選択・lism.config.js・SCSS・CSS Purge のどれを使うべきかを目的別に案内します。'
+description: 'Lism CSS のカスタマイズ方法の全体像。lism.config.js・SCSS・CSS Purge のどれを使うべきかを構成別に案内します。'
 ---
 
-`lism-css` パッケージは、読み込むCSS、コンポーネントが受け付ける props、出力されるクラスをカスタマイズできます。カスタマイズの入口は大きく次の4つです。目的に応じて該当ページへ進んでください。
+`lism-css` パッケージは、コンポーネントが受け付ける props / tokens / traits、出力されるクラスやブレイクポイント、本番CSSのサイズをカスタマイズできます。設定の入口は `lism.config.js`（`@lism-css/plugin` が必要）と SCSS 変数（設定ファイルを使わない）の2つで、どちらを使うかはビルド構成で決まります。加えて、本番CSSの軽量化には CSS Purge を併用できます。
 
 
 ## カスタマイズの入口
 
-| やりたいこと | 使う方法 | ページ |
+| 方法 | 向いている構成 | ページ |
 |---|---|---|
-| `@layer` のオン / オフや `full.css` など、**読み込むビルド済みCSSを切り替えたい** | CSSファイルの差し替え / `isFullMode` | [CSSビルドの選択](/docs/customize/build/) |
-| **コンポーネントの props / tokens / traits を増やしたい**（Vite / Astro 向けの推奨パス） | `lism.config.js` + `@lism-css/plugin` | [lism.config.js でのカスタマイズ](/docs/customize/config/) |
-| **SCSSだけで、出力されるクラスやブレイクポイントを調整したい**（Vite / Astro プラグインを使わない構成向け） | `$breakpoints` / `$props` などのSCSS変数を上書き | [SCSS でのカスタマイズ](/docs/customize/scss/) |
-| **本番CSSから未使用クラスを削除して軽量化したい** | purge プラグイン | [CSS Purge](/docs/customize/purge/) |
+| `lism.config.js` | `@lism-css/plugin` を使う構成（推奨）。Vite / Astro / Next.js ではバンドラ連携で自動反映され、それ以外は同梱の CLI で CSS をビルドします | [lism.config.js でのカスタマイズ](/docs/customize/config/) |
+| SCSS 変数の上書き | `lism.config.js` を使わず `lism-css/scss` を直接読み込む構成。コンポーネントからは `:value` 記法で使います | [SCSS でのカスタマイズ](/docs/customize/scss/) |
+| CSS Purge | 本番CSSから未使用クラスを削除して軽量化したい場合。上のどちらとも併用できます | [CSS Purge](/docs/customize/purge/) |
 
 
 :::info
 Vite / Astro を使っている場合は、`@lism-css/plugin` の統合プラグイン1つで「`lism.config.js` の読み込み・CSSへの自動反映・型の自動生成」がまとめて有効になります。まずは [lism.config.js でのカスタマイズ](/docs/customize/config/) を起点にするのがおすすめです。
 :::
+
+`@layer` なし版や全部入りの `full.css` への切り替えは設定ではなく読み込むファイルの選択です。[CSSファイルの種類](/docs/css-files/)を参照してください。

@@ -18,7 +18,7 @@ Reset CSS を`lism-base.reset` レイヤーとして定義しています。
 <SrcCode path="src/scss/reset.scss" />
 
 
-reset.css ではできるだけブラウザの標準スタイルに従うようにしています。
+reset.css ではできるだけブラウザ標準スタイルに従うようにしています。
 
 非常にシンプルで、必要最低限な内容になっています。
 
@@ -34,7 +34,7 @@ import 'lism-css/reset.css';
 
 <PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.26.0/dist/css/reset.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.27.0/dist/css/reset.css" rel="stylesheet" />
 ```
 
 
@@ -51,7 +51,7 @@ Reset CSS のほか、`lism-base`レイヤーでは、`:root`で定義したト�
 ここでは各要素に適用されるスタイルをグループごとに紹介します。
 
 :::info
-各スタイルで使用されているトークン変数（`--{token}--{value}`）の詳細については、[デザイントークン](/docs/tokens/)のページを参照してください。
+各スタイルで使用されているトークン変数（`--{prop}--{token}`）の詳細については、[デザイントークン](/docs/tokens/)のページを参照してください。
 :::
 
 
@@ -72,7 +72,7 @@ body {
 }
 ```
 
-`--hl` はハーフレディング（行間の上下余白）を管理するための変数です。`body` では `--hl--base` がセットされ、子要素に継承されます。
+`--hl` はハーフレディング（行の上下それぞれの余白）を管理するための変数です。`body` では `--hl--base` がセットされ、子要素に継承されます。
 
 `text-underline-offset` でリンクの下線位置を、`tab-size` でタブ文字の表示幅を整えています。
 
@@ -83,16 +83,16 @@ Lism CSS では、**全要素に対して**以下のスタイルが適用され�
 
 ```scss
 * {
-  line-height: calc(1em + var(--hl) * 2);
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
 }
 ```
 
 これは一般的な `line-height: 1.6` のような指定とは異なり、**フォントサイズに依存しない固定量の行間**を実現する仕組みです。  
-ハーフレディング（Half-leading）の量を先に定義しておき、それを文字の高さ(≒`1em`)の上下に付与するという計算式です。
+ハーフレディング（Half-leading）の量を先に定義しておき、それを文字の高さ(≒`1em`)の上下に付与するという計算式です。`--lh` がセットされている場合はそちらが優先されます。
 
 フォントサイズが大きくなっても行間が過大にならないため、タイポグラフィにおける「**縦のリズム**」を統一することができ、見出しから本文まで調和の取れた余白でレイアウトを組むことができます。
 
-詳しくは [ハーフレディング（line-height）](/docs/tokens/half-leading/) を参照してください。
+詳しくは [ハーフレディング（line-height）](/docs/half-leading/) を参照してください。
 
 
 ### 見出し（h1〜h6）
@@ -187,7 +187,7 @@ hr {
 }
 ```
 
-`hr` は方向を`block-start`に固定し、 `--divider` カラーにセットしています。
+`hr`の線は`block-start`側に固定し、色には`--divider`を設定しています。
 
 
 ### リスト（ul, ol）
@@ -199,7 +199,7 @@ hr {
 }
 ```
 
-クラスを一切持たないリストはブラウザデフォルトスタイルを自動で復活させています。
+クラスを一切持たないリストはブラウザ標準スタイルを自動で復活させています。
 
 Property Class 付きの `ul` / `ol`（例: `<ul class="-fz:l">`）はリスト表示が消えた状態のままとなります。箇条書き表示を維持したい場合は [`set--revert`](/docs/set-class#set--revert) を付与してください。
 
@@ -246,10 +246,10 @@ td, th {
 
 ### フォーム要素
 
-フォームコントロールには、デフォルトで一括で統一的なスタイルが適用されます。
+フォームコントロールには、デフォルトで統一されたスタイルが適用されます。
 
 ```scss
-input:not([type='range']), button, textarea, select, ::file-selector-button {
+input:where(:not([type='range'])), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
   padding: var(--controls-p, 0.25em 0.5em);
@@ -262,7 +262,7 @@ input:not([type='range']), button, textarea, select, ::file-selector-button {
 | `--controls-bdc` | `var(--divider)` | ボーダー色 |
 | `--controls-p` | `0.25em 0.5em` | パディング |
 
-角丸はブラウザのデフォルトに委ねています。テーマで揃えたい場合は各セレクタに `border-radius` を直接指定してください。
+角丸はブラウザ標準スタイルに委ねています。テーマで揃えたい場合は各セレクタに `border-radius` を直接指定してください。
 
 
 ### その他
@@ -288,7 +288,7 @@ input:not([type='range']), button, textarea, select, ::file-selector-button {
 
 <PreviewTitle>Preview</PreviewTitle>
 <PreviewArea>
-  <PreviewFrame ar="1/1" isInline url="/demo/html-base-style" />
+  <InlineIframe ar="1/1" url="/demo/html-base-style" />
 </PreviewArea>
 <Button href="/demo/html-base-style" variant="fill" target="_blank" bdrs="10" w="fit" mx="auto">
   大きい画面で見る

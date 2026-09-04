@@ -6,10 +6,6 @@ import '../_style.css';
 
 type DetailsRootProps<T extends ElementType = 'details'> = LismComponentProps<T> & { open?: boolean };
 
-/**
- * Details - ルートコンポーネント
- * details要素をレンダリング
- */
 export default function Details<T extends ElementType = 'details'>({ children, open, className, ...props }: DetailsRootProps<T>) {
   return (
     <Lism as="details" open={open} className={atts(className, 'b--details')} {...(props as object)}>

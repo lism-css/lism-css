@@ -97,7 +97,7 @@
       "c--",
       "2分類"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility の順（Property Class はレイヤーの外）。lism-block は trait / primitive より弱いレイヤーのため、`b--` のベーススタイルには明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝つ（この優先関係が保証されるのはレイヤーありの標準ビルド（`main.css` / `full.css`）のみで、`main_no_layer.css` / `full_no_layer.css` では読み込み順と詳細度に依存する）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Custom Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。独自クラスは、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理する。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility の順（Property Class はレイヤーの外）。lism-block は trait / primitive より弱いレイヤーのため、`b--` のベーススタイルには明示的に付与したクラス（`is--` / `has--` / `l--` など）が勝つ（レイヤーによるこの優先関係が保証されるのは標準ビルド（`main.css` / `full.css`）のみ。`main_no_layer.css` / `full_no_layer.css` では Property Class は常に `!important`、`u--` はセレクタ二重化（0-2-0）で「Property Class > Utility Class > 単一クラス」の序列だけを再現し、それ以外は読み込み順と詳細度に依存する）。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Block Class (.b--name)、Custom Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。独自クラスは、サイト共通で繰り返し使う基礎部品（ボタン・バッジ・カード級）はベーススタイルをCSS側で管理する `b--{name}`（@layer lism-block）、それ以外の粒度不問なカスタムクラス全般は `c--{name}`（Custom Class、@layer lism-custom）の2分類で整理する。`b--` と `c--` はどちらも同じBEM構造（Block/Modifier/Element）を持てる。"
   },
   {
     "sourcePath": "naming.mdx",
@@ -157,9 +157,23 @@
     "title": "デザイントークン",
     "description": "Lism CSS で定義されているカラー、余白、シャドウなどのデザイントークン一覧を紹介します。",
     "category": "guide",
-    "headings": ["COLOR", "Typography", "SPACE", "RADIUS", "SHADOW", "OPACITY", "SIZE"],
-    "keywords": ["token", "トークン", "design token", "shadow", "radius", "opacity", "size", "color", "spacing", "typography"],
-    "snippet": "デザイントークンの一覧ページ。COLOR, Typography, SPACE, RADIUS, SHADOW, OPACITY, SIZE トークンを掲載。SPACEは --s5〜--s80（s25/s35 を含む12段階）、SHADOWは --bxsh--10〜--bxsh--50（5段階）、OPACITYは音楽強弱記号に由来するセマンティック命名（mp/p/pp/ppp）を採用。カラー・タイポグラフィ・余白は個別ページでも詳細を解説。"
+    "headings": ["COLOR", "Typography", "RADIUS", "SHADOW", "SPACE", "OPACITY", "SIZE"],
+    "keywords": [
+      "token",
+      "トークン",
+      "design token",
+      "shadow",
+      "radius",
+      "opacity",
+      "size",
+      "color",
+      "spacing",
+      "余白",
+      "フィボナッチ",
+      "--s-unit",
+      "typography"
+    ],
+    "snippet": "デザイントークンの一覧ページ。COLOR, Typography, RADIUS, SHADOW, SPACE, OPACITY, SIZE トークンを掲載。SPACEはフィボナッチ数列ベースの余白スケール --s5〜--s80（s25/s35 を含む12段階）で、--s-unit（デフォルト 0.5rem ≒ 8px）を基準単位として算出。SHADOWは --bxsh--10〜--bxsh--50（5段階）、OPACITYは音楽強弱記号に由来するセマンティック命名（mp/p/pp/ppp）を採用。カラー・タイポグラフィは個別ページでも詳細を解説。"
   },
   {
     "sourcePath": "tokens/colors.mdx",
@@ -187,29 +201,21 @@
       "FW : font-weight",
       "FZ: font-size",
       "フォントサイズのスケーリング規則について",
+      "HL: half-leading",
       "LH: line-height",
       "LTS: letter-spacing"
     ],
-    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size"],
-    "snippet": "フォントサイズ（調和数列ベース）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
+    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size", "line-height", "hl", "lh", "行間"],
+    "snippet": "フォントサイズ（調和数列ベース）、行間（ハーフレディングトークン --hl--xs〜xl と -hl:{token} クラス、line-height比率トークン --lh--xs〜xl と -lh:{token} クラス）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
   },
   {
-    "sourcePath": "tokens/half-leading.mdx",
+    "sourcePath": "half-leading.mdx",
     "title": "ハーフレディング（line-height）",
-    "description": "Lism CSS のハーフレディングによる line-height 管理の仕組みと、関連するデザイントークンについて解説します。",
+    "description": "Lism CSS が line-height をハーフレディングで管理する仕組みと、その設計のメリットについて解説します。",
     "category": "guide",
-    "headings": ["仕組み", "トークン", "hl クラス", "lh（互換ショートカット）", "ハーフレディング管理のメリット"],
-    "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "hl", "lh", "--hl"],
-    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理する仕組み。`calc(1em + var(--hl) * 2)` によりフォントサイズに依存しない一定の行間を実現。--hl--xs/s/base/l のトークンと -hl:{token} クラス（正規）・-lh:{token}（互換ショートカット）の使い方を解説。"
-  },
-  {
-    "sourcePath": "tokens/spacing.mdx",
-    "title": "余白トークン",
-    "description": "Lism CSS のフィボナッチ数列に基づく余白トークンと、対応するpropertyクラスについて解説します。",
-    "category": "guide",
-    "headings": ["SPACE: 余白のスケーリング", "対応する Property Class", "対応プロパティ（トークン値 5〜80）", "margin 系の auto 対応"],
-    "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "property class", "set--s", "--s-unit"],
-    "snippet": "フィボナッチ数列ベースの余白スケーリング（--s5〜--s80、s25/s35 を含む12段階）を定義。--s-unit（calc(var(--fz--base) * 0.5) ≒ 8px）を基準単位として算出。set--s クラスを使うと --s-unit が 0.5em に切り替わり、余白がフォントサイズ基準で再計算される。padding（p/px/py/ps/pe/pbs/pbe/pl/pr/pt/pb）・margin（m/mx/my/ms/me/mbs/mbe/ml/mr/mt/mb）・gap（g/cg/rg）の全propertyクラスがトークン値 5〜80 とブレイクポイント指定に対応。auto のプリセットクラスは m/mx/my/ms/me/mbs/mbe のみ。"
+    "headings": ["仕組み", "トークン", "lh（line-height）", "hl との棲み分け", "ハーフレディング管理のメリット"],
+    "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "hl", "lh", "--hl", "--lh"],
+    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理するCSS設計を解説。`var(--lh, calc(1em + var(--hl) * 2))` によりフォントサイズに依存しない一定の行間を実現。line-heightは全要素ルールで管理されるため素のCSS指定は子要素へ継承されない点、実line-height（unitless比率）を--lh経由で管理する独立プロパティlh（-lh:{token}・任意数値）とhlとの棲み分け、ハーフレディング管理のメリットも紹介。"
   },
   {
     "sourcePath": "property-class.mdx",
@@ -432,32 +438,31 @@
   {
     "sourcePath": "customize.mdx",
     "title": "Customize",
-    "description": "Lism CSS のカスタマイズ方法の全体像。ビルドCSSの選択・lism.config.js・SCSS・CSS Purge のどれを使うべきかを目的別に案内します。",
+    "description": "Lism CSS のカスタマイズ方法の全体像。lism.config.js・SCSS・CSS Purge のどれを使うべきかを構成別に案内します。",
     "category": "guide",
     "headings": ["カスタマイズの入口"],
     "keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme", "SCSS", "full.css", "isFullMode", "purge"],
-    "snippet": "Lism CSS のカスタマイズ方法の全体像。目的に応じて「CSSビルドの選択」「lism.config.js でのカスタマイズ」「SCSS でのカスタマイズ」「CSS Purge」の4つの入口を案内する概要ハブページ。"
+    "snippet": "Lism CSS のカスタマイズ方法の全体像。ビルド構成に応じて「lism.config.js でのカスタマイズ」（@lism-css/plugin を使う構成向け。プラグインなしでも CLI ビルドで反映可）「SCSS でのカスタマイズ」（lism-css/scss を直接読み込む構成向け）「CSS Purge」（両者と併用可）の3つの入口を案内する概要ハブページ。@layer なし版や full.css への切り替えは設定ではなくファイル選択のため「CSSファイルの種類」ページへ誘導。"
   },
   {
-    "sourcePath": "customize/build.mdx",
-    "title": "CSSビルドの選択",
-    "description": "@layer のオン / オフや full.css への切り替えなど、読み込むビルド済みCSSを選ぶ方法を解説します。",
+    "sourcePath": "css-files.mdx",
+    "title": "CSSファイルの種類",
+    "description": "lism-css に同梱される main.css / main_no_layer.css / full.css / full_no_layer.css の違いと、@layer なし版・全部入りビルドを使うときの注意点を解説します。",
     "category": "guide",
-    "headings": ["@layer をオフにする", "全部入りビルド（full.css）を使う", "isFullMode"],
+    "headings": ["@layer をオフにする", "全部入りビルド（full.css）を使う"],
     "keywords": [
-      "customize",
-      "カスタマイズ",
-      "build",
-      "ビルド",
       "CSS",
+      "CSSファイル",
+      "配布ファイル",
       "@layer",
       "full.css",
       "isFullMode",
       "main.css",
       "main_no_layer.css",
-      "full_no_layer.css"
+      "full_no_layer.css",
+      "!important"
     ],
-    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。full.css には main.css 非収録の Property Class ブレイクポイント対応クラス（isVar 系・border ショートハンド系を除く。border は bds / bdc のサブプロパティで BP 対応）と、カラー系 Property Class（bgc / c / bdc）の全カラートークン分のクラス（-bgc:red など。main.css は厳選したセマンティックカラーと keycolor のみ）を含む。スペーシング系（padding / margin / gap）のトークンユーティリティは main.css に収録済み。isFullMode（lism.config.js で設定）でコンポーネント出力も full.css に合わせられる。@lism-css/plugin の統合プラグイン使用時は型も isFullMode に自動追従（lism-env.d.ts 生成）。"
+    "snippet": "lism-css パッケージに同梱された複数のビルド済みCSSの使い分けを解説。main.css（標準）/ main_no_layer.css（@layerなし）/ full.css（全部入り、purge前提）/ full_no_layer.css から選択可能。@layer なし版は既存サイト・WordPress テーマなどカスケードを制御できない環境向けで、Property Class は常に !important 付き、u--trim / u--trimAll / u--cbox / u--divide / u--enclose はセレクタ二重化（.u--trim.u--trim = 0-2-0）で出力され「Property Class > Utility Class > 単一クラス」の序列を再現する（lism.config.js の defaultImportant: false・$default_important: 0・props の個別 important: 0 でも !important は外れない）。full.css には main.css 非収録の Property Class ブレイクポイント対応クラス（isVar 系・border ショートハンド系を除く。border は bds / bdc のサブプロパティで BP 対応）と、カラー系 Property Class（bgc / c / bdc）の全カラートークン分のクラス（-bgc:red など。main.css は厳選したセマンティックカラーと keycolor のみ）を含む。スペーシング系（padding / margin / gap）のトークンユーティリティは main.css に収録済み。コンポーネント出力も full.css に合わせるには lism.config.js の isFullMode を使う（詳細は customize/config.mdx）。"
   },
   {
     "sourcePath": "customize/config.mdx",
@@ -465,16 +470,17 @@
     "description": "lism.config.js と @lism-css/plugin を使って、コンポーネントの props / tokens / traits やブレイクポイントを拡張する方法を解説します。",
     "category": "guide",
     "headings": [
-      "Vite / Astro プラグインの登録（必須）",
+      "セットアップ",
+      "設定ファイルの書き方",
       "フォーマット",
-      "型サポート（LismConfig）",
       "カスタマイズ例",
       "ブレイクポイント（xs / xl）の有効化",
-      "追加スタイルを読み込ませる方法",
-      "Vite / Astro プラグイン使用時は自動反映される",
-      "軽微な追加なら手書きで済ませる",
-      "lism-css のCLIコマンドでCSSビルドする",
-      "SCSSファイルへの追加上書き"
+      "isFullMode",
+      "型サポート",
+      "設定ファイルを書くときの型（LismConfig）",
+      "コンポーネントを使うときの型（lism-env.d.ts）",
+      "統合プラグインを使わない構成で反映する",
+      "CLI ビルド"
     ],
     "keywords": [
       "customize",
@@ -498,9 +504,11 @@
       "型",
       "型チェック",
       "補完",
-      "TypeScript"
+      "TypeScript",
+      "isFullMode",
+      "full.css"
     ],
-    "snippet": "lism.config.js（または lism.config.ts / lism.config.mjs）を使ったコンポーネントの挙動カスタマイズ方法。プラグインはプロジェクトルートから lism.config.ts → lism.config.mjs → lism.config.js の順で自動検出し、configPath オプションで別パスも指定可能。@lism-css/plugin の統合プラグイン登録（必須）から props / tokens / traits の追加・拡張、lism-css/config-types の LismConfig 型による設定ファイルの型チェック・補完（.ts は satisfies LismConfig、.js は JSDoc @type）、ブレイクポイント（xs / xl）の有効化、追加スタイルの読み込み方法（自動反映・CLI・手書き・SCSS）まで解説。"
+    "snippet": "lism.config.js（または lism.config.ts / lism.config.mjs）を使ったコンポーネントの props / tokens / traits・ブレイクポイントの拡張方法。冒頭で構成別の反映範囲を整理: Vite / Astro（@lism-css/plugin の統合プラグイン）と Next.js（withLism）はコンポーネント・CSS とも自動反映、lism.config.js を使うには @lism-css/plugin が必須。それ以外の構成ではコンポーネントに lism.config.js は読み込まれず、CSS のみ同梱 CLI（lism-css build / --full）で手動反映し、コンポーネントからは :value 記法で強制クラス化（クライアント側は window._LISM_CSS_CONFIG_ で実行時マージ可、isFullMode は除く）。プラグインは lism.config.ts → .mjs → .js の順で自動検出、configPath で別パス指定可。設定ファイルの書き方（フォーマット・デフォルト値・カスタマイズ例）、ブレイクポイント（xs / xl）の有効化（bp の配列指定で絞り込み可、purge 併用前提）、isFullMode の効果と例外、型サポート（設定ファイルを書くときの LismConfig と、コンポーネントを使うときの自動生成 lism-env.d.ts。未使用時は FullModeRegistry を手書き拡張）まで解説。"
   },
   {
     "sourcePath": "customize/scss.mdx",
@@ -511,8 +519,9 @@
       "上書き可能な変数",
       "基本フォーマット",
       "$props の個別カスタマイズ",
+      "追加した値をコンポーネントから使う",
       "ブレイクポイント（xs / xl）の有効化",
-      "SCSSのコンパイル処理について"
+      "CSS の出力順について"
     ],
     "keywords": [
       "customize",
@@ -526,7 +535,7 @@
       "ブレイクポイント",
       "CSS出力"
     ],
-    "snippet": "lism-css の setting モジュールの SCSS 変数を @use ... with (...) で上書きして、出力されるクラスやブレイクポイントを調整する方法。$breakpoints / $is_container_query / $default_important / $props の個別カスタマイズ（bp・important・utilities）、ブレイクポイント（xs / xl）の有効化などを解説。純 SCSS 構成向け。"
+    "snippet": "lism-css の setting モジュールの SCSS 変数を @use ... with (...) で上書きして、出力されるクラスやブレイクポイントを調整する方法。$breakpoints / $is_container_query / $default_important（@layer なし版では無視され常に !important 付与）/ $props の個別カスタマイズ（bp・important・utilities）、SCSS で追加した値をコンポーネントから使う方法（コンポーネント側には届かないため :value 記法で強制クラス化するか HTML に直接クラスを書く。少数なら global.css に手書きでも可）、ブレイクポイント（xs / xl）の有効化などを解説。lism.config.js と @lism-css/plugin を使わない構成向け。"
   },
   {
     "sourcePath": "customize/purge.mdx",
@@ -534,17 +543,18 @@
     "description": "ビルド時に未使用の Lism CSS クラスを削除し、本番 CSS を軽量化するパージプラグインのセットアップと使い方。",
     "category": "guide",
     "headings": [
-      "推奨セットアップ（統合プラグイン経由）",
+      "推奨セットアップ（統合プラグインを使う）",
       "仕組み",
       "単体プラグインを直接使う場合",
       "full.css と組み合わせる",
       "オプション",
       "safelist",
       "report",
+      "known",
       "注意事項"
     ],
     "keywords": ["purge", "CSS purge", "パージ", "軽量化", "未使用", "full.css", "@lism-css/plugin", "lismPurge", "safelist", "build"],
-    "snippet": "ビルド成果物をスキャンして使用中の Lism CSS クラスだけを残すパージ機能。@lism-css/plugin の統合プラグインで purge: true を渡すだけで有効化可能。仕組み・単体プラグイン直接利用・full.css との併用・safelist / report オプション・注意事項を解説。"
+    "snippet": "ビルド出力をスキャンして使われている Lism CSS クラスだけを残すパージ機能。@lism-css/plugin の統合プラグインで purge: true を渡すだけで有効化可能。仕組み・単体プラグイン直接利用・full.css との併用・safelist / report / known オプション（known 未指定時は lism.config.js 反映済み full.css から自動構築。safelist に RegExp / 関数があると未一致の属性セレクタは全て残す）・注意事項を解説。"
   },
   {
     "sourcePath": "utility-class.mdx",
@@ -1466,9 +1476,23 @@
     "title": "Avatar",
     "description": "@lism-css/ui で提供する Avatar コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "Without @lism-css/ui"],
-    "keywords": ["Avatar", "アバター", "プロフィール", "画像", "丸", "user icon", "ユーザーアイコン"],
-    "snippet": "アバター画像用のコンポーネント。円形の画像表示に使用。@lism-css/uiパッケージで提供。"
+    "headings": ["Overview", "Styles", "How to use", "Import", "Props", "Examples", "イニシャル表示", "Without @lism-css/ui"],
+    "keywords": [
+      "Avatar",
+      "アバター",
+      "プロフィール",
+      "画像",
+      "丸",
+      "user icon",
+      "ユーザーアイコン",
+      "イニシャル",
+      "initial",
+      "プレースホルダー",
+      "placeholder",
+      "name",
+      "b--avatar--initial"
+    ],
+    "snippet": "アバター画像用のコンポーネント。円形の画像表示に使用。src 未指定時はルートに b--avatar--initial が付き、name の先頭1文字をイニシャルとして中央に表示し、alt は name より優先される代替テキスト（alt=\"\" で装飾扱い）。@lism-css/uiパッケージで提供。"
   },
   {
     "sourcePath": "ui/block-examples/Chat.mdx",
@@ -1569,15 +1593,6 @@
     "headings": ["Examples", "ヘッダー・フッター・レイヤー要素 を追加", "is--layer, ShapeDivider との組み合わせ", "別ページで確認する"],
     "keywords": ["Hero", "ヒーロー", "メインビジュアル", "example"],
     "snippet": "ヒーローセクション（メインビジュアル）の実装例。"
-  },
-  {
-    "sourcePath": "ui/components/FAQ.mdx",
-    "title": "FAQ",
-    "description": "Lism CSS で実装するQ&A（よくある質問）レイアウトの実装例です。",
-    "category": "ui",
-    "headings": ["Examples"],
-    "keywords": ["FAQ", "よくある質問", "example", "accordion"],
-    "snippet": "FAQ（よくある質問）セクションの実装例。"
   },
   {
     "sourcePath": "ui/components/Steps.mdx",
@@ -1685,6 +1700,80 @@
     "snippet": "行・列の固定表示に対応したテーブルUIの実装例。primitivesと少量のCSS（b--table）で構成し、CSSをlism-blockレイヤーへコピーして利用。data-table-stickyでtheadや1列目を固定でき、ボーダーやthの色はCSS変数で調整する。"
   },
   {
+    "sourcePath": "ui/Tooltip.mdx",
+    "title": "Tooltip",
+    "description": "@lism-css/ui で提供する Tooltip コンポーネントについて解説します。",
+    "category": "ui",
+    "headings": [
+      "Overview",
+      "Styles",
+      "How to use",
+      "Import",
+      "Props",
+      "CSS変数",
+      "Examples",
+      "表示する向きを変える",
+      "揃え位置を変える",
+      "待ち時間と間隔を変える",
+      "配色を変える",
+      "ブラウザ対応"
+    ],
+    "keywords": [
+      "Tooltip",
+      "ツールチップ",
+      "ホバー",
+      "hover",
+      "focus-visible",
+      "aria-describedby",
+      "role=tooltip",
+      "side",
+      "align",
+      "delay",
+      "offset",
+      "CSS Anchor Positioning",
+      "anchor positioning",
+      "b--tooltip",
+      "Esc"
+    ],
+    "snippet": "ホバーやキーボードフォーカスで補足テキストを表示するツールチップ。表示切り替えはCSSのみで行い、JavaScriptはEscで閉じる処理だけを担当する。Tooltip.Root / Tooltip.Trigger / Tooltip.Popupで構成し、side（top/bottom/start/end、初期値top）・align（start/center/end、初期値center）はTooltip.Popup、delay（表示までの待ち時間）・offset（トリガーとの間隔）はTooltip.Rootのpropsで調整できる。CSS変数は--tooltip-offset・--tooltip-delay・--tooltip-delay--close（退場猶予、初期値0.15s）・--tooltip-durationで、いずれもRoot（.b--tooltip）で受け取るためRootかその祖先に指定する（Popupに指定しても効かない）。配置にCSS Anchor Positioningを使用し、未対応ブラウザではTooltip.Root基準の絶対配置にフォールバックする（自動反転とoffsetは無効）。@lism-css/uiパッケージで提供。"
+  },
+  {
+    "sourcePath": "ui/Popover.mdx",
+    "title": "Popover",
+    "description": "@lism-css/ui で提供する Popover コンポーネントについて解説します。",
+    "category": "ui",
+    "headings": [
+      "Overview",
+      "Styles",
+      "How to use",
+      "Import",
+      "Props",
+      "CSS変数",
+      "Examples",
+      "表示位置を変える",
+      "閉じるボタンを置く（`type=\"manual\"`）",
+      "ブラウザ対応"
+    ],
+    "keywords": [
+      "Popover",
+      "ポップオーバー",
+      "popover API",
+      "popovertarget",
+      "popover属性",
+      "light dismiss",
+      "type=manual",
+      "side",
+      "align",
+      "offset",
+      "CSS Anchor Positioning",
+      "anchor positioning",
+      "b--popover",
+      "role=dialog",
+      "Esc"
+    ],
+    "snippet": "クリックで開閉するポップオーバー。ブラウザ標準のPopover API（popover属性・popovertarget属性）のみで動作し、クライアントJavaScriptは不要。Popover.Root / Popover.Trigger / Popover.Popup / Popover.Closeで構成し、side（top/bottom/start/end、初期値bottom）・align（start/center/end、初期値center）・type（auto/manual、初期値auto）はPopover.Popup、offset（トリガーとの間隔）はPopover.Rootのpropsで調整する。type=\"manual\"にするとlight dismissが無効になりPopover.Closeでのみ閉じられる。CSS変数は--popover-offset・--popover-durationで、いずれもRoot（.b--popover）で受け取るためRootかその祖先に指定する（Popupに指定しても効かない）。配置にCSS Anchor Positioningを使用し、未対応ブラウザでは画面中央配置にフォールバックする（side/align/offsetは無効、開閉・light dismiss・フォーカス制御はPopover APIのためそのまま動作）。@lism-css/uiパッケージで提供。"
+  },
+  {
     "sourcePath": "utility-class.mdx",
     "title": "u--cbox",
     "description": "keycolor変数をベースに、color/background-color/border-colorをcolor-mix()で自動生成するユーティリティクラス。",
@@ -1789,8 +1878,8 @@
     "description": "CSS変数を用いてtransitionプロパティをセットする Trait クラス。",
     "category": "guide",
     "headings": ["has--transition"],
-    "keywords": ["has--transition", "トランジション", "アニメーション", "transition"],
-    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--hov と組み合わせてスムーズなホバーアニメーションを実現。"
+    "keywords": ["has--transition", "hasTransition", "--transitionProps", "トランジション", "アニメーション", "transition"],
+    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。--transitionProps の初期値は all ではなく color, background-color, border-color, box-shadow, scale, rotate, translate, transform, opacity, filter, backdrop-filter に限定。実際に変化させるプロパティを --transitionProps で明示指定することを推奨。Lismコンポーネントでは hasTransition=\"color, opacity\" のように文字列を渡すと --transitionProps として出力。set--hov と組み合わせてスムーズなホバーアニメーションを実現。"
   },
   {
     "sourcePath": "set-class.mdx",

@@ -5,12 +5,13 @@
  * これにより素の sass / docs の `@use 'lism-css/scss/setting' with (...)` 等のスタンドアロン利用が維持される。
  *
  * ユーザー設定を反映した CSS を作る時は、**node_modules を書き換えず**に、src/scss を一時ディレクトリへ
- * 複製してそこの `_prop-config*.gen.scss` / `_tokens.gen.scss` だけ差し替えてコンパイルする（インプレース書き換えの廃止）。
+ * 複製してそこの `_prop-config*.gen.scss` / `_tokens.gen.scss` だけ差し替えてコンパイルする。
  * パッケージ自身のビルドは、同梱デフォルトの生成 SCSS を更新しつつ src/scss を直接コンパイルする。
  */
 import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
+import { randomUUID } from 'node:crypto';
 import * as sass from 'sass';
 import postcss, { type AcceptedPlugin } from 'postcss';
 import autoprefixer from 'autoprefixer';
@@ -30,7 +31,7 @@ const TOKENS_GEN_HEADER =
   '// 生成元: コア → config/defaults/tokens.ts / 利用側 → defaults + lism.config.js の tokens\n';
 
 function resolvePostcssPlugins(minify: boolean): AcceptedPlugin[] {
-  // minify=true: 従来どおり autoprefixer + cssnano（dist/css 出力相当）。
+  // minify=true: autoprefixer + cssnano（dist/css 出力相当）。
   // minify=false: autoprefixer のみ（Vite が最終 minify する用途）。
   return minify ? [autoprefixer, cssnano] : [autoprefixer];
 }
@@ -141,10 +142,23 @@ export async function buildCssToDir({
   }
 }
 
+/**
+ * 同じディレクトリの一時ファイルへ書いてから rename で差し替える。
+ * 既存ファイルをその場で上書きすると、pnpm のハードリンク配置ではストア側の実体まで書き換わり、
+ * 同じバージョンをリンクする他プロジェクトへ漏れる。新しい実体に置き換えることでストアには触れない。
+ */
 function writeCss(filePath: string, css: string): void {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  fs.writeFileSync(filePath, css);
+  // worker_threads 間では PID が共通なので、呼び出しごとに一意な値を足して衝突を避ける。
+  const tmpPath = `${filePath}.${process.pid}.${randomUUID()}.tmp`;
+  try {
+    fs.writeFileSync(tmpPath, css);
+    fs.renameSync(tmpPath, filePath);
+  } catch (error) {
+    fs.rmSync(tmpPath, { force: true });
+    throw error;
+  }
 }

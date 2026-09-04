@@ -19,6 +19,7 @@
 - [レスポンシブ配列の冗長指定](#レスポンシブ配列の冗長指定)
 - [`is--` の誤用（状態・バリエーション）](#is---の誤用状態バリエーション)
 - [クラス名の命名ミス](#クラス名の命名ミス)
+- [CSS の無い Element クラスを付ける](#css-の無い-element-クラスを付ける)
 
 ---
 
@@ -97,13 +98,14 @@ Astro/Reactで実装しているのに、`lism-css/astro`や`lism-css/react`のP
 
 ## primitive 既定値の重複指定
 
-Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ねない。既定の挙動は各`primitives/l--*.md`の「既定の挙動」を確認する。
+Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ねない。既定の挙動は各`primitives/l--*.md`の「既定の挙動」を確認する。セマンティックコンポーネントのデフォルト要素と同じ`as`も足さない。
 
 | NG | OK | 理由 |
 | --- | --- | --- |
 | `<Cluster fxw="wrap" ai="center" g="15">` | `<Cluster g="15">` | `Cluster`は`flex-wrap:wrap`/`align-items:center`を既定で持つ。gapは既定ではないので残す |
 | `<Frame ov="hidden" ar="16/9">` | `<Frame ar="16/9">` | `Frame`は`overflow:hidden`を既定で持つ |
 | `<Frame><img className="-w:100% -h:100%" style={{ objectFit: 'cover' }} /></Frame>` | `<Frame><img /></Frame>` | 直下メディアの`width/height/object-fit:cover`は既定 |
+| `<Text as="p">` / `<Inline as="span">` / `<Group as="div">` | `<Text>` / `<Inline>` / `<Group>` | `Text`/`Inline`/`Group`の既定要素は`p`/`span`/`div`（一覧は[components-core.md](./components-core.md#セマンティックコンポーネント)） |
 
 プロジェクトCSSでPrimitive既定を上書きしている場合や、既定と違う意図的上書きの場合は例外として残す。
 
@@ -165,33 +167,14 @@ Primitiveが既に持つCSSと同じ値を、Lism Props/Property Classで重ね�
 </Stack>
 ```
 
-### BP 専用クラスをベース値なしで使う
-
-BP 専用クラス（`-{prop}_{bp}`）やコンポーネントの BP キー（`{ sm: ... }` 等）だけを指定すると、BP 未満では値が空になり意図しないレイアウト崩れを起こす。必ずベース値とセットで指定する。
-
-```jsx
-// NG: sm 未満で p が未指定になる
-<Box p={{ sm: 30 }}>...</Box>
-
-// OK: ベース値（base / 配列の先頭）を必ず添える
-<Box p={{ base: 20, sm: 30 }}>...</Box>
-<Box p={[20, 30]}>...</Box>
-```
-
-生 HTML / クラス指定で書く場合も同様：
-
-| NG | OK | 理由 |
-| --- | --- | --- |
-| `<div class="-p_sm" style="--p_sm: var(--s30)">` | `<div class="-p:20 -p_sm" style="--p_sm: var(--s30)">` | BP 未満では値が空になるため、ベースクラス `-{prop}:{value}` も必要 |
-
 ### ブレイクポイントの誤用
 
-Lism CSS の標準出力で有効な BP は `sm: 480px` / `md: 800px` / `lg: 1120px`。`xs` は BP キーとして存在しない。
+Lism CSS の標準出力で有効な BP は `sm: 480px` / `md: 800px` / `lg: 1120px`。`xs` / `xl` は opt-in で既定では無効（有効化は [responsive.md](./responsive.md#ブレイクポイント) / customize.md）。
 
 | NG | OK | 理由 |
 | --- | --- | --- |
-| `<Box p={{ xs: 10, sm: 20 }}>` | `<Box p={{ base: 10, sm: 20 }}>` | デフォルトは `base`（`xs` キーは無い） |
-| `cols={[1, 2, 3, 4, 5]}` | `cols={[1, 2, 3, 4]}` | 標準出力では `[base, sm, md, lg]` までが有効。`xl` 以降は SCSS 設定が必要 |
+| `<Box p={{ xs: 10, sm: 20 }}>` | `<Box p={{ base: 10, sm: 20 }}>` | 最小サイズの値は `base` に置く。`xs` は既定で無効で、有効化しても「`xs` 以上」の意味なので `base` の代わりにならない |
+| `cols={[1, 2, 3, 4, 5]}` | `cols={[1, 2, 3, 4]}` | 標準出力では `[base, sm, md, lg]` までが有効。`xl` は `lism.config.js` の `breakpoints` または SCSS 設定で有効化してから使う |
 
 ## レスポンシブ配列の冗長指定
 
@@ -268,4 +251,17 @@ Lism CSS では、プレフィックス（`c--` / `is--` / `has--` / `u--` / `se
 ```
 
 Modifierだけは`--`ふたつを使う: `c--featureCard--featured`。
+
+## CSS の無い Element クラスを付ける
+
+Element（`c--{name}_{element}`）を付けるのは、子孫セレクタ・擬似要素・状態切替など CSS でその子要素を参照する時だけ。何のパーツかを示す名前付けのためだけに残すのは本体クラス `c--{name}` で、子要素ごとに CSS の無い Element クラスを配らない。
+
+→ 詳細: [css-rules.md](./css-rules.md#custom-classc--)
+
+| NG | OK |
+| --- | --- |
+| `<Stack className="c--card"><Heading className="c--card_title" fz="l">…</Heading><Text className="c--card_text">…</Text></Stack>`（Element を参照する CSS なし） | `<Stack className="c--card"><Heading fz="l">…</Heading><Text>…</Text></Stack>` |
+| `.c--card_title { font-size: var(--fz--l) }` + `<Heading className="c--card_title">` | `<Heading fz="l">`（宣言を Props へ移し、空になった Element も外す） |
+
+`.c--card_text::before { … }` のように CSS で参照している Element は残す。
 

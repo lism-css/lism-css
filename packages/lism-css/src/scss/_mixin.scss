@@ -1,52 +1,73 @@
+@use 'sass:list';
 @use './setting' as setting;
 
+// 1: @layer あり（main / full）, 0: @layer なし（main_no_layer / full_no_layer）
 $layer_mode: 1 !default;
 
-$maybe_important: '';
-@if setting.$default_important == 1 {
-  $maybe_important: ' !important';
-}
-
-// @function maybe_important() {
-// 	@if setting.$default_important == 1 {
-// 		@return ' !important';
-// 	}
-// 	@return '';
-// }
-
-@mixin maybe_where($selectors, $mode: '') {
-  // memo: セレクタリストを引数で受け取り、modeで出力方法を切り替える
-  @if $layer_mode == 1 {
-    @if $mode == '' {
-      #{$selectors} {
-        @content;
-      }
-    } @else if $mode == 'is' {
-      :is(#{$selectors}) {
-        @content;
-      }
-    } @else if $mode == '@base' {
-      @layer lism-base {
-        #{$selectors} {
-          @content;
-        }
-      }
-    }
+// Property Class に既定で !important を付けるか（1 / 0）。null なら $layer_mode から解決する。
+//   - $layer_mode: 0 → 常に 1。no_layer ビルドは既存サイトや WP テーマなどカスケードを制御できない環境向けのため、
+//     Property Class（!important）> Utility Class（maybe_double で 0-2-0）> 単一クラス の序列を保証する。
+//   - $layer_mode: 1 → setting.$default_important（lism.config.js の defaultImportant）に従う。
+// no_layer エントリ側で `@use './setting' with (...)` はできない（SCSS bridge 等で setting を先に設定済みだと
+// 「already loaded」エラーになる）ため、setting ではなくここで解決する。
+$default_important: null !default;
+@if not $default_important {
+  @if $layer_mode == 0 {
+    $default_important: 1;
   } @else {
-    :where(#{$selectors}) {
-      @content;
-    }
+    $default_important: setting.$default_important;
   }
 }
 
-@mixin switch_selector($s_1, $s_2) {
+$maybe_important: '';
+@if $default_important == 1 {
+  $maybe_important: ' !important';
+}
+
+// $props の個別 important 指定（null なら未指定）を解決して 0 / 1 を返す。
+// no_layer で強制付与が有効な間は個別指定より 1 を優先する（個別に外せると
+// Property Class > Utility Class の序列が崩れるため）。
+// $default_important: 0 を明示した場合はその指定を尊重し、個別指定も従来どおり効く。
+@function resolve_important($important) {
+  @if $layer_mode == 0 and $default_important == 1 {
+    @return 1;
+  }
+  // 0 は Sass では真値なので、未指定（null）だけがここに入る
+  @if not $important {
+    @return $default_important;
+  }
+  @return $important;
+}
+
+// no_layer ビルドでのみセレクタを :where() で包んで詳細度を 0 にする。@layer ありビルドではそのまま返す。
+@function maybe_where($selectors) {
   @if $layer_mode == 1 {
-    #{$s_1} {
+    @return $selectors;
+  }
+  @return ':where(#{$selectors})';
+}
+
+// no_layer ビルドでのみセレクタを二重化して詳細度を 1 段上げる（'.u--trim' → .u--trim.u--trim = 0-2-0）。
+// 単一クラス（0-1-0）の既存 CSS に負けないようにするため。@layer ありビルドではそのまま返す。
+// 引数はクォート必須（未クォートの '.' 始まりはパースエラー）。複数渡すとセレクタリストで返す。
+@function maybe_double($selectors...) {
+  @if $layer_mode == 1 {
+    @return $selectors;
+  }
+  $result: ();
+  @each $selector in $selectors {
+    $result: list.append($result, '#{$selector}#{$selector}', comma);
+  }
+  @return $result;
+}
+
+// @layer ありビルドでのみ @content を @layer lism-base に包む。no_layer ではそのまま出力する。
+@mixin in_base_layer {
+  @if $layer_mode == 1 {
+    @layer lism-base {
       @content;
     }
   } @else {
-    #{$s_2} {
-      @content;
-    }
+    @content;
   }
 }

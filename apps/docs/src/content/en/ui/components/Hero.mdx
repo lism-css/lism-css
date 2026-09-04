@@ -1,9 +1,14 @@
 ---
 title: 'Hero'
 description: 'Example implementation of hero content sections using Lism CSS.'
+draft: true
 ---
 
-import { Spacer, Box, Flow, Flex, Grid, Media, Container, Layer, Stack, Center, Frame, Heading, Text } from 'lism-css/astro';
+{/* memo: #566 moved the hero examples to /patterns/hero/.
+    This page is kept as a draft until the "is--layer / ShapeDivider" example
+    is migrated to the General (section) category. */}
+
+import { Spacer, Box, Flow, Flex, Media, Layer, Stack, Center, Frame, Heading, Text } from 'lism-css/astro';
 import { ShapeDivider } from '@lism-css/ui/astro/ShapeDivider';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 
@@ -101,7 +106,7 @@ Examples of hero sections built with Lism.
 
 {/* <Spacer h="10"/> */}
 
-The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs/ui/ShapeDivider/).
+The following example also uses the opt-in component [`<ShapeDivider>`](/en/ui/ShapeDivider/).
 <Preview>
   <PreviewTitle>With ShapDivide & Layers</PreviewTitle>
   <PreviewArea resize>
@@ -114,7 +119,7 @@ The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs
         <Layer style={{ backdropFilter: 'blur(4px)' }} bgc="black:50%" />
       </Frame>
       <Flow isWrapper py="30" my="auto" z="0">
-        <Heading level="2" fw="bold" fz="xl">ShapDivider & Layers</Heading>
+        <Heading level="2" fw="bold" fz="xl">ShapeDivider & Layers</Heading>
         <DummyText length="l" />
       </Flow>
       <ShapeDivider viewBox="0 0 10 10" c="base" level="6" z="1">
@@ -125,7 +130,7 @@ The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs
   <PreviewCode>
     ```jsx "\<Frame isLayer" "\<ShapeDivider"
     <Stack isContainer max-sz="full" hasGutter pos="relative" min-h="50vh" c="white" g="15">
-      <ShapeDivider viewBox="0 0 10 10" c="base" level="6" flip="Y" z="1">
+      <ShapeDivider viewBox="0 0 10 10" c="base" level="6" flip="XY" z="1">
         <path d="M10,10V0L0,9.5V10L10,10z" />
       </ShapeDivider>
       <Frame isLayer>
@@ -134,7 +139,7 @@ The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs
       </Frame>
       <Flow isWrapper py="30" my="auto" z="0">
         <Heading level="2" fw="bold" fz="xl">
-          ShapDivider & Layers
+          ShapeDivider & Layers
         </Heading>
         <DummyText length="l" />
       </Flow>
@@ -160,7 +165,7 @@ The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs
           <Layer bgc="black:50%" />
         </Frame>
         <Flow isWrapper py="30" pe={['0', '25%', '33%']} my="auto" z="0">
-          <Heading level="2" fw="bold" fz="xl">ShapDivider & Layers</Heading>
+          <Heading level="2" fw="bold" fz="xl">ShapeDivider & Layers</Heading>
           <DummyText length="l" />
         </Flow>
         <Spacer h="var(--slopeH)" />
@@ -177,7 +182,7 @@ The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs
         </Frame>
         <Spacer h="var(--slopeH)" />
         <Flow isWrapper py="30" ps={['0', '25%', '33%']} my="auto" z="0" ta="right">
-          <Heading level="2" fw="bold" fz="xl">ShapDivider & Layers</Heading>
+          <Heading level="2" fw="bold" fz="xl">ShapeDivider & Layers</Heading>
           <DummyText length="l" />
         </Flow>
         <ShapeDivider viewBox="0 0 10 10" h="var(--slopeH)" c="base" flip="X" z="1">
@@ -199,7 +204,7 @@ The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs
         </Frame>
         <Flow isWrapper py="30" pe={['0', '25%', '33%']} my="auto" z="0">
           <Heading level="2" fw="bold" fz="xl">
-            ShapDivider & Layers
+            ShapeDivider & Layers
           </Heading>
           <DummyText length="l" />
         </Flow>
@@ -218,7 +223,7 @@ The following example also uses the opt-in component [`<ShapeDivider>`](/en/docs
         <Spacer h="var(--slopeH)" />
         <Flow isWrapper py="30" ps={['0', '25%', '33%']} my="auto" z="0" ta="right">
           <Heading level="2" fw="bold" fz="xl">
-            ShapDivider & Layers
+            ShapeDivider & Layers
           </Heading>
           <DummyText length="l" />
         </Flow>

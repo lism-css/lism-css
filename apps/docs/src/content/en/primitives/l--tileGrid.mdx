@@ -9,7 +9,7 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
 
 `l--tileGrid` is a class for creating **uniform tile-style grid layouts** by specifying `cols` (number of columns) and `rows` (number of rows).
 
-Internally, it uses `grid-template: repeat(rows, 1fr) / repeat(cols, 1fr)`.
+Internally, it uses `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))`.
 
 
 ## CSS
@@ -73,13 +73,13 @@ Internally, it uses `grid-template: repeat(rows, 1fr) / repeat(cols, 1fr)`.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html "--cols:3;--rows:3"
-    <div class="l--tileGrid -g:5" style="--cols: 3; --rows: 3; min-height: 50svh">
+    <div class="l--tileGrid -g:5 -min-h" style="--cols: 3; --rows: 3; --min-h: 50svh">
       <div class="l--box -bgc:base-2 -p:20">item1</div>
       <div class="l--box -bgc:base-2 -p:20">item2</div>
       <div class="l--box -bgc:base-2 -p:20">item3</div>
       <div class="l--box -bgc:base-2 -p:20">item4</div>
-      <div class="l--box -bgc:base-2 -p:20 -gc:span 2">item5</div>
-      <div class="l--center -p:20 -bgc:blue" style="grid-column: 3; grid-row: 1 / -1">item6</div>
+      <div class="l--box -bgc:base-2 -p:20 -gc" style="--gc: span 2">item5</div>
+      <div class="l--center -p:20 -bgc -gc -gr:1/-1" style="--bgc: var(--blue); --gc: 3">item6</div>
     </div>
     ```
   </PreviewCode>

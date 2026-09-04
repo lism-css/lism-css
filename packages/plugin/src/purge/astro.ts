@@ -16,9 +16,7 @@ const SCAN_EXT = /\.(html?|js|mjs|cjs)$/;
 const CSS_EXT = /\.css$/;
 // 参照更新の対象拡張子: HTML / JS / JSON manifest / sourcemap / RSS など、文字列で参照を持ち得るもの
 const REF_EXT = /\.(html?|js|mjs|cjs|json|txt|xml|map)$/;
-// `<name>.<hash>.css` 形式のハッシュ部を判定する。Astro / Vite 既定・本プラグインの shortContentHash は
-// いずれも 8 文字英数字なので 8 文字ちょうどに限定する。緩い判定だと `theme.mobile.css` の `.mobile` 等を
-// 誤ってハッシュ扱いしてしまう（#496）。
+// `theme.mobile.css`などを誤認しないよう、Astro/Viteのhashを8文字に限定する（#496）。
 const HASHED_CSS_NAME = /^(.+)\.([A-Za-z0-9_-]{8})\.css$/;
 
 async function* walk(dir: string): AsyncGenerator<string> {
@@ -75,8 +73,7 @@ async function purgeCssFiles(
     const source = await readFile(file, 'utf8');
     if (!LISM_CSS_SIGNATURE.test(source)) continue;
     const purged = purgeLismCss(source, { used, safelist, known });
-    // purge による削除も sourcemap 参照も無ければ素通しする。
-    // stripCssSourceMappingUrl の trimEnd による末尾空白差分だけで不要なリネーム / hash 再計算が走るのを防ぐ。
+    // purge差分もsourcemap参照も無ければ、末尾空白だけでrenameやhash再計算が走らないよう素通しする。
     if (purged === source && !hasCssSourceMappingUrl(source)) continue;
     const output = stripCssSourceMappingUrl(purged);
 
@@ -135,16 +132,10 @@ export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegration
     name: 'lism-css:purge',
     hooks: {
       'astro:config:done': ({ config, buildOutput }) => {
-        // server ビルド（`output: 'server'` または `prerender = false` ルートあり）では、
-        // `astro:build:done` の `dir` が `config.build.client` のみを指す。
-        // オンデマンドページのクラス名は server 側チャンクにしか現れず、SSR ページへ
-        // `<link>` を注入する manifest も server 側にあるため、server 出力も走査対象に含める（#492）。
-        // buildOutput はルート解析後に確定してからこのフックへ渡されるので、hybrid 構成でも正しく判定できる。
+        // SSR用classとmanifestを拾うため、serverビルドではserver出力も走査する（#492）。
         if (buildOutput === 'server') serverDir = config.build.server;
       },
-      // Astro の SSG では HTML 生成が Vite build より後に走るため、Vite plugin 経由では
-      // 最終 HTML のクラスを拾えない。`astro:build:done` で dist を直接走査し、
-      // CSS を purge した上で内容ベースの hash を再計算して参照側も同期更新する。
+      // SSGの最終HTMLを拾うため、build完了後にdistをpurgeしてhashと参照を同期する。
       'astro:build:done': async ({ dir, logger }) => {
         // known は build 実行時に解決する（関数形式の遅延解決にも対応）。
         const known = resolveKnownSelectors(options.known);

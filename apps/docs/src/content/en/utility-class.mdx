@@ -239,7 +239,7 @@ Classes for adjusting the half-leading spacing of text.
 </Preview>
 
 
-`u--trimAll` uses an exclusion approach: it applies margin adjustment to all direct children except those that shouldn't be trimmed (`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`). The `:empty` pseudo-class automatically covers void elements like `img`, `hr`, `br`, as well as empty decorative divs (e.g. `a--divider`, `a--spacer`). If you need to exclude additional elements, add a rule like `.u--trimAll > xxx { margin-block: 0 }` on the consumer side.
+`u--trimAll` applies margin adjustment to all direct children except the excluded elements (`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`). The `:empty` selector also excludes empty elements such as `img`, `hr`, `br`, and empty decorative `div`s (e.g. `a--divider`, `a--spacer`). To exclude other elements, add a rule like `.u--trimAll > xxx { margin-block: 0 }` on the consumer side.
 
 <Preview>
   <PreviewTitle>`u--trimAll`</PreviewTitle>
@@ -289,7 +289,7 @@ Visually hides an element while keeping it accessible to screen readers.
 <SrcCode path="src/scss/utility/_divide.scss" />
 
 :::info
-- Both are implemented using `box-shadow` (not actual borders), so some care is needed when using them.
+- Both draw their lines using a child element's `box-shadow` and `gap`, not `border`. Because of this, border-related properties such as `bds` (border-style) have no effect; use the `--bdw` variable to set the line width.
 - `u--divide` applies `overflow: clip` internally. Be aware that descendant elements intended to overflow the container — such as tooltips or dropdowns — will be unintentionally clipped.
 :::
 
@@ -385,7 +385,7 @@ Visually hides an element while keeping it accessible to screen readers.
 </Preview>
 
 
-Adding `bd` to a grid with `u--divide` produces a calendar-like layout where empty cells are blank.
+Adding `bd` to a grid with `u--divide` gives you a calendar-like look, where cells with no content stay blank while their gridlines remain.
 
 <Preview>
   <PreviewTitle>With `bd` applied</PreviewTitle>
@@ -503,7 +503,7 @@ A class for clipping a background with text.
   <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Center>
-      <Box util="clipText" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
+      <Box util="clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
         <Text fz="5xl" fw="bold" hl="0" lts="l">
           TEXT
         </Text>
@@ -513,7 +513,11 @@ A class for clipping a background with text.
   </PreviewCode>
   <PreviewCode label="HTML" slot="tab">
     ```html
-    <div class="l--box u--clipText -bgi:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)"></div>
+    <div class="l--center">
+      <div class="l--box u--clipText -bgr:no-repeat" style="--bgi: linear-gradient(45deg, var(--blue), var(--pink))">
+        <p class="-fz:5xl -fw:bold -hl:0 -lts:l">TEXT</p>
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -526,8 +530,8 @@ These utility classes are not included in the Lism CSS core stylesheet, but they
 
 ### `u--inlineCenter`
 
-A class for aligning emoji or inline icons to the vertical center of surrounding text.
-Since `vertical-align: middle;` alone can cause misalignment, an additional `translate` adjustment is applied.
+A class for aligning emoji or inline icons to the vertical center of the text.
+Since `vertical-align: middle` alone can cause misalignment, `translate` compensates for it.
 
 
 <Preview css={`

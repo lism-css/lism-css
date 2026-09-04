@@ -1,11 +1,9 @@
 ---
-/**
- * Page Layouts 一覧ページ（root言語: ja）
- *
- * カテゴリ別にページレイアウトを一覧表示
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, AutoColumns, Frame, BoxLink, Box, Lism, Text, Inline, Heading } from 'lism-css/astro';
+import { Stack, AutoColumns, Box } from 'lism-css/astro';
+import PatternCard from '@/components/patterns/PatternCard.astro';
+import SectionHeader from '@parts/SectionHeader.astro';
+import PageHeader from '@parts/PageHeader.astro';
 import { pageLayouts, categoryIds, type PageLayoutCategoryId } from '@/config/page-layouts';
 import { filterDraftItems } from '@/lib/page-layouts';
 ---
@@ -15,46 +13,27 @@ import { filterDraftItems } from '@/lib/page-layouts';
   description="ページ骨格レベルでのレイアウトサンプル集。Lism CSS を活用したページ全体の組み方を紹介します。"
   excludeFromSearch
 >
-  <Stack g="40" class="pageLayouts">
-    <Stack as="header" g="20">
-      <h1>Page Layouts</h1>
-      <Text c="text-2"> ページ骨格レベルでのレイアウトサンプル集。Lism CSS を活用したページ全体の組み方を紹介します。 </Text>
-    </Stack>
+  <Stack g="40">
+    <PageHeader title="Page Layouts" description="ページ骨格レベルでのレイアウトサンプル集。Lism CSS を活用したページ全体の組み方を紹介します。" />
 
     <Stack g="40">
       {
         categoryIds.map((categoryId: PageLayoutCategoryId) => {
           const category = pageLayouts[categoryId];
-          // 本番環境ではdraft:trueのアイテムを除外
           const items = filterDraftItems(category.items);
-          // 空カテゴリは表示しない
           if (items.length === 0) return null;
           return (
             <Box as="section">
-              <Heading level="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
-                <span>{category.label}</span>
-                <Inline fz="xs" c="text-2" fw="normal">
-                  ({items.length})
-                </Inline>
-              </Heading>
+              <SectionHeader title={category.label} count={items.length} />
 
-              <AutoColumns cols="24rem" g="20" mbs="20" class="pageLayoutList">
+              <AutoColumns cols="24rem" g="20" mbs="20">
                 {items.map((item) => (
-                  <BoxLink class="pageLayoutList_link" layout="stack" href={`/page-layouts/${categoryId}/${item.id}`} p="10" g="20" set="hov">
-                    {/* スクリーンショット画像をサムネイルとして表示（画像未配置でもページは壊れない） */}
-                    <Frame ar="3/2" bd bdrs="20" ov="hidden">
-                      <img
-                        src={`/screenshots/page-layouts/${categoryId}/${item.id}.png`}
-                        alt={item.title}
-                        loading="lazy"
-                        decoding="async"
-                        class="pageLayoutList_thumb"
-                      />
-                    </Frame>
-                    <Lism layout="cluster" g="10" class="u--trim -ff:mono -fz:s">
-                      {item.title}
-                    </Lism>
-                  </BoxLink>
+                  <PatternCard
+                    href={`/page-layouts/${categoryId}/${item.id}`}
+                    thumbSrc={`/screenshots/page-layouts/${categoryId}/${item.id}.png`}
+                    title={item.title}
+                    draft={item.draft}
+                  />
                 ))}
               </AutoColumns>
             </Box>
@@ -64,26 +43,3 @@ import { filterDraftItems } from '@/lib/page-layouts';
     </Stack>
   </Stack>
 </BaseLayout>
-
-<style>
-  /* サムネイルカードのスタイル */
-  .pageLayoutList_link > .l--frame {
-    --bdw: 2px;
-    transition: box-shadow 0.2s;
-    box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--10));
-  }
-
-  /* サムネイル画像のスタイル */
-  .pageLayoutList_thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    transition: transform 0.3s ease;
-  }
-
-  /* ホバー時のズーム効果 */
-  .pageLayoutList_link:hover .pageLayoutList_thumb {
-    transform: scale(1.02);
-  }
-</style>

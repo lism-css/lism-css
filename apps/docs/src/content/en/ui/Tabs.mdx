@@ -11,7 +11,7 @@ import '../../ja/ui/_opt-in/_tabs-folder.css'
 import '../../ja/ui/_opt-in/_tabs-keep-height.css'
 
 
-A component for creating tab elements.
+A component for creating tab elements.  
 Only interaction behavior is provided — visual styling is intentionally left for you to customize.
 
 
@@ -33,6 +33,12 @@ Only interaction behavior is provided — visual styling is intentionally left f
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -50,6 +56,12 @@ Only interaction behavior is provided — visual styling is intentionally left f
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
@@ -59,9 +71,11 @@ Only interaction behavior is provided — visual styling is intentionally left f
   <div class="b--tabs_list" role="tablist">
     <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
     <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
   </div>
   <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
   <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
 </div>
 ```
   </PreviewCode>
@@ -101,7 +115,6 @@ Provided as `Tabs` from the `@lism-css/ui` package.
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used to generate each tab button's id (`{tabId}-{index}-tab`), each panel's id (`{tabId}-{index}`), and the value of `aria-controls`. If omitted, an ID is generated automatically. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. Values out of range (e.g. a number greater than the number of tabs) fall back to `1`. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`b--tabs_list`) wrapping the tab buttons. |
-
 {/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | Specifies the tab label text. | */}
 
 {/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`| Outputs `[data-tabs-height="keep"]`, fixing the overall height of the tabs to the tallest content panel. | */}
@@ -152,6 +165,12 @@ Specify `variant="line"` for a line-style tab list that underlines the selected 
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -169,6 +188,12 @@ Specify `variant="line"` for a line-style tab list that underlines the selected 
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
@@ -178,9 +203,11 @@ Specify `variant="line"` for a line-style tab list that underlines the selected 
   <div class="b--tabs_list" role="tablist">
     <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
     <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
   </div>
   <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
   <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
 </div>
 ```
   </PreviewCode>
@@ -189,7 +216,7 @@ Specify `variant="line"` for a line-style tab list that underlines the selected 
 
 ### Default open tab
 
-Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
+Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.  
 (Index numbers start from `1`.)
 
 <Preview>
@@ -206,6 +233,12 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -225,8 +258,28 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--default l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="false" tabindex="-1">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="true" tabindex="0">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
@@ -235,7 +288,7 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
 
 Opening a page with `?lism-tab={tabId}-{index}` in the URL displays the specified tab as selected from the start.
 
-To use this feature, explicitly set `tabId` on `<Tabs.Root>`.
+To use this feature, explicitly set `tabId` on `<Tabs.Root>`.  
 (If `tabId` is omitted, an ID is generated automatically, so it can't be targeted from the URL.)
 
 ```jsx 'tabId="sample-tabs"'
@@ -248,6 +301,10 @@ To use this feature, explicitly set `tabId` on `<Tabs.Root>`.
     <Tabs.Tab>Tab 2</Tabs.Tab>
     <Tabs.Panel>...</Tabs.Panel>
   </Tabs.Item>
+  <Tabs.Item>
+    <Tabs.Tab>Tab 3</Tabs.Tab>
+    <Tabs.Panel>...</Tabs.Panel>
+  </Tabs.Item>
 </Tabs.Root>
 ```
 
@@ -256,9 +313,9 @@ Visiting a page with the tabs above using `?lism-tab=sample-tabs-2` displays the
 
 ### Vertical tabs
 
-Setting `grid-template: 'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`b--tabs`) places the tab list and content side by side.
+Setting `grid-template:'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`b--tabs`) places the tab list and content side by side.
 
-At the same time, changing the tab list (`b--tabs_list`) buttons to stack vertically (`flex-direction: column;`) achieves the following layout.
+At the same time, changing the tab list (`b--tabs_list`) buttons to stack vertically (`flex-direction:column;`) achieves the following layout.
 
 <Preview>
   <PreviewTitle>Example: side-by-side layout on `@sm` and above</PreviewTitle>
@@ -280,9 +337,17 @@ At the same time, changing the tab list (`b--tabs_list`) buttons to stack vertic
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>
+          <Fragment>Tab 3</Fragment>
+        </Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
       <Tabs.Item>
@@ -297,23 +362,40 @@ At the same time, changing the tab list (`b--tabs_list`) buttons to stack vertic
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--default l--grid -gt_sm" style='--gt_sm:"list panel" auto / auto 1fr'>
+  <div class="b--tabs_list -fxd_sm" style="--fxd_sm:column" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
   </PreviewCode>
 </Preview>
 
 
 ## Opt-in
 
-This is an example of creating your own style variation.
+The following are example style variations you can build yourself.
 
-`b--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are handy for styling.
+`b--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are useful for styling.
 (They can be used in the same way as `--_isHov` and `--_notHov` from [`set--hov`](/en/docs/property-class/hov#set--hov).)
 
 ### variant="emboss"
-
-<PreviewTitle>Required additional CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />
 
 <Preview>
   <PreviewTitle>`variant='emboss'`</PreviewTitle>
@@ -329,6 +411,12 @@ This is an example of creating your own style variation.
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -348,18 +436,36 @@ This is an example of creating your own style variation.
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--emboss l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
 </Preview>
+
+<PreviewTitle>Required additional CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />
 
 
 ### variant="folder"
-
-This is an example of a folder-style variation where the tab buttons appear connected to the panel.
-
-<PreviewTitle>Required additional CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-folder.css" />
 
 <Preview>
   <PreviewTitle>`variant='folder'`</PreviewTitle>
@@ -375,6 +481,12 @@ This is an example of a folder-style variation where the tab buttons appear conn
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -394,19 +506,40 @@ This is an example of a folder-style variation where the tab buttons appear conn
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--folder l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
 </Preview>
+
+This creates a folder-style variation where the tab buttons appear connected to the panel.
+
+<PreviewTitle>Required additional CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-folder.css" />
 
 
 ### Fixed height
 
 An example of how to fix the overall tabs height to match the tallest content panel.
-
-<PreviewTitle>Required additional CSS</PreviewTitle>
-<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-keep-height.css" />
-
 
 <Preview>
   <PreviewTitle>Example (height is fixed to Tab 2)</PreviewTitle>
@@ -424,9 +557,15 @@ An example of how to fix the overall tabs height to match the tallest content pa
           <DummyText length="xl" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "data-tabs-keep-height"
     <Tabs.Root data-tabs-keep-height g="15">
       <Tabs.Item>
@@ -441,7 +580,30 @@ An example of how to fix the overall tabs height to match the tallest content pa
           <DummyText length="xl" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 3</Tabs.Tab>
+        <Tabs.Panel>
+          <DummyText length="l" offset={2} pre="Tab 03: " />
+        </Tabs.Panel>
+      </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--default l--grid -g:15" data-tabs-keep-height="true">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain -px:10" type="button" id="{id}-1-tab" role="tab" aria-controls="{id}-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button class="b--tabs_tab set--plain -px:10" type="button" id="{id}-2-tab" role="tab" aria-controls="{id}-2" aria-selected="false" tabindex="-1">Tab 2</button>
+    <button class="b--tabs_tab set--plain -px:10" type="button" id="{id}-3-tab" role="tab" aria-controls="{id}-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="{id}-1" role="tabpanel" aria-labelledby="{id}-1-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-2" role="tabpanel" aria-labelledby="{id}-2-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="{id}-3" role="tabpanel" aria-labelledby="{id}-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
 </Preview>
+
+<PreviewTitle>Required additional CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-keep-height.css" />

@@ -2,23 +2,13 @@
 import { Lism } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro/Tabs';
 interface Props {
-  css?: string; // カスタムCSS（src未指定時のslot内にのみ適用可能）
+  css?: string;
 }
 const { css, ...props } = Astro.props;
 
-// const slotKeys: string[] = Object.keys(Astro?.slots || {});
-// let tabs = '';
-// for (let index = 0; index < slotKeys.length; index++) {
-// 	const slotName = slotKeys[index];
-// 	if (slotName !== 'default') {
-// 		tabs += await Astro.slots.render(slotName);
-// 	}
-// }
-
-// カスタムCSS用のユニークなスコープIDを生成
+// カスタムCSSをプレビュー単位へ閉じ込める
 const scopeId = css ? `demo-${Math.random().toString(36).slice(2, 9)}` : '';
 
-// カスタムCSSにスコープを付与（各セレクタの前にスコープIDを追加）
 const scopedCss = `.${scopeId}{ ${css} }`;
 ---
 
@@ -33,18 +23,3 @@ const scopedCss = `.${scopeId}{ ${css} }`;
   }
 </Lism>
 {scopedCss && <style set:html={scopedCss} />}
-
-<style is:global>
-  .b--tabs--prev .b--tabs_list {
-    /* Memo: ov-x='auto' の時に margin がネガティブだと崩れるので、box-shadowで表現する。 */
-    box-shadow: inset 0 -2px 0 var(--divider);
-  }
-  .b--tabs--prev .b--tabs_tab {
-    --hl: var(--hl--s);
-    font-size: var(--fz--s);
-    padding-block: 0.5em;
-    padding-inline: 0.875em;
-    background-color: transparent;
-    box-shadow: var(--_isSelected, inset 0 -2px 0 0 currentColor);
-  }
-</style>

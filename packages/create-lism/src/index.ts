@@ -2,7 +2,6 @@ import { runCreate, setLang, t } from 'lism-cli';
 
 /**
  * `pnpm create lism` / `npm create lism@latest` から呼ばれる薄いラッパー。
- * 最小限の引数パースのみ行い、本体は `lism-cli` の `runCreate` に委譲する。
  */
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
@@ -11,10 +10,10 @@ async function main(): Promise<void> {
   let force = false;
   let showHelp = false;
   let lang: string | undefined;
+  let ref: string | undefined;
 
   // --help の description や printHelp 表示に言語選択を反映させるため、
   // まず `--lang` を先に走査してから残りの引数を処理する。
-  // 明示値は runCreate にも渡す（未指定なら runCreate 側で言語選択プロンプト or en フォールバック）。
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
     if (a === '--lang' && args[i + 1]) {
@@ -35,9 +34,20 @@ async function main(): Promise<void> {
     } else if (a === '-f' || a === '--force') {
       force = true;
     } else if (a === '--lang') {
-      i++; // 値を 1 つ飛ばす（上で既に setLang 済み）
+      i++;
     } else if (a.startsWith('--lang=')) {
-      // 何もしない（上で既に setLang 済み）
+      // 先行走査で処理済み
+    } else if (a === '--ref') {
+      const next = args[i + 1];
+      // 次が無い、または別オプションなら値不足として終了する（`--ref --help` で --help を消費しない）
+      if (!next || next.startsWith('-')) {
+        process.stderr.write("error: option '--ref <ref>' argument missing\n");
+        process.exit(1);
+      }
+      ref = next;
+      i++;
+    } else if (a.startsWith('--ref=')) {
+      ref = a.slice('--ref='.length);
     } else if (a === '-h' || a === '--help') {
       showHelp = true;
     } else if (!a.startsWith('-')) {
@@ -50,7 +60,7 @@ async function main(): Promise<void> {
     return;
   }
 
-  await runCreate({ template, targetDir, force, lang });
+  await runCreate({ template, targetDir, force, lang, ref });
 }
 
 function printHelp(): void {
@@ -62,6 +72,7 @@ function printHelp(): void {
       `  -t, --template <name>   ${t('cli.create.opt.template')}`,
       `  -f, --force             ${t('cli.create.opt.force')}`,
       `      --lang <code>       ${t('cli.opt.lang')}`,
+      `      --ref <ref>         ${t('cli.create.opt.ref')}`,
       `  -h, --help              ${t('common.help')}`,
       '',
     ].join('\n')

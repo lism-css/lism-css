@@ -21,7 +21,7 @@ CSS specificity is managed through CSS Layers, organized in the following hierar
 lism-base → lism-block → lism-trait → lism-primitive → lism-custom → lism-utility
 ```
 
-`lism-base` includes a `reset` sub-layer. `lism-block` holds the base styles for common site-wide parts prefixed with `b--` — placed low in the order so explicitly added classes (`is--` / `has--` / `l--`, etc.) take precedence. `lism-trait` is the layer for Trait classes — `is--` (role declaration) and `has--` (feature attachment) — and `lism-primitive` is further divided into `layout` and `atomic` sub-layers. `lism-custom` is the layer for your own custom classes and overrides.
+`lism-base` includes a `reset` sub-layer. `lism-block` holds the base styles for common site-wide parts prefixed with `b--` — placed low in the order so explicitly added classes (`is--` / `has--` / `l--`, etc.) take precedence. `lism-trait` is the layer for Trait Classes — `is--` (role declaration) and `has--` (feature attachment) — and `lism-primitive` is further divided into `layout` and `atomic` sub-layers. `lism-custom` is the layer for your own custom classes and overrides.
 
 
 :::check
@@ -105,7 +105,7 @@ Inspired by [Every Layout](https://every-layout.dev/), Lism CSS includes several
 
 - `l--autoColumns` — Column count adjusts automatically based on container width
 - `l--switchColumns` — Automatically switches between columns and stacked layout based on container width
-- `l--withSide` — Layout automatically switches based on the content length you want to maintain
+- `l--withSide` — Layout automatically switches based on the main content width you want to keep
 
 
 ### Container queries adopted by default
@@ -119,4 +119,4 @@ Note that **an ancestor element must have a container definition** for responsiv
 :::
 
 Beyond that, there are a few behavioral quirks to be aware of — for example, `position: fixed` behaves differently inside a container element.
-However, in return, components can independently switch their layout based on the width of their context, enabling highly reusable designs that work correctly no matter where they are placed.
+In return, components can independently switch their layout based on the width of their context, enabling highly reusable designs that work correctly no matter where they are placed.
