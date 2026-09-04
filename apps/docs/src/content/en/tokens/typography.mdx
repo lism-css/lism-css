@@ -262,11 +262,13 @@ Tokens for `letter-spacing`.
 
 | Token | Variable | Class | Default value |
 |---|---|---|---|
-|`base`|`--lts--base`|`-lts:base`|`normal`|
-|`xs`|`--lts--xs`|`-lts:xs`|`-0.05em`|
-|`s`|`--lts--s`|`-lts:s`|`-0.025em`|
-|`l`|`--lts--l`|`-lts:l`|`0.05em`|
-|`xl`|`--lts--xl`|`-lts:xl`|`0.1em`|
+|`base`|`--lts--base`|`-lts:base`|`0em`|
+|`xs`|`--lts--xs`|`-lts:xs`|`calc(var(--lts--base) - 0.05em)`|
+|`s`|`--lts--s`|`-lts:s`|`calc(var(--lts--base) - 0.025em)`|
+|`l`|`--lts--l`|`-lts:l`|`calc(var(--lts--base) + 0.05em)`|
+|`xl`|`--lts--xl`|`-lts:xl`|`calc(var(--lts--base) + 0.1em)`|
+
+`--lts--base` must be a length (`normal` cannot be used because the value goes into `calc()`). `xs` to `xl` are offsets from `--lts--base`, so changing `--lts--base` on `:root` shifts all of them. Overriding `--lts--base` on a descendant element does not affect `xs` to `xl`.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -288,3 +290,7 @@ Tokens for `letter-spacing`.
     ```
   </PreviewCode>
 </Preview>
+
+:::info
+This site slightly adjusts `--ff--base` and `--lts--base` for its body text, so this preview does not show the exact defaults.
+:::

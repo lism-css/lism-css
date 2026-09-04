@@ -105,8 +105,15 @@ export default {
   //  hl と違い body 等で base 値としてセットしないため、中央キーは base ではなく m。
   lh: { xs: '1.25', s: '1.5', m: '1.75', l: '2', xl: '2.25' },
 
-  // letter-spacing
-  lts: { base: 'normal', xs: '-0.05em', s: '-0.025em', l: '0.05em', xl: '0.1em' },
+  // letter-spacing: xs〜xl は base からの相対値。base は calc() に入るため長さで指定する（normal 不可）。
+  //  Memo: var() は :root で置換されるため、base の上書きは :root で行う（子孫要素での上書きは xs〜xl に伝わらない）。
+  lts: {
+    base: '0em',
+    xs: 'calc(var(--lts--base) - 0.05em)',
+    s: 'calc(var(--lts--base) - 0.025em)',
+    l: 'calc(var(--lts--base) + 0.05em)',
+    xl: 'calc(var(--lts--base) + 0.1em)',
+  },
 
   // opacity（音楽の強弱記号 piano 系列に由来）
   o: { mp: '0.9', p: '0.75', pp: '0.5', ppp: '0.25' },
