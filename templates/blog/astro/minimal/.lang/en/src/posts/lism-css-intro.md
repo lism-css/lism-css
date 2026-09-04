@@ -33,7 +33,7 @@ When you add custom CSS, place it in whichever layer fits its purpose.
 
 ## Design tokens
 
-Almost every design value — colors, spacing, font sizes, line heights, letter spacing, border radii, shadows, and more — is exposed as a CSS variable. Spacing tokens range from `--s5` to `--s80` (based on the Fibonacci sequence), font sizes from `--fz--2xs` to `--fz--5xl` (based on a harmonic sequence), border radii as the `--bdrs--10` family, and colors under semantic names such as `--base` / `--base-2` / `--text` / `--text-2` / `--divider` / `--link` / `--brand` / `--accent`.
+Almost every design value — colors, spacing, font sizes, line heights, letter spacing, border radii, shadows, and more — is exposed as a CSS variable. Spacing tokens range from `--s5` to `--s70` (based on the Fibonacci sequence), font sizes from `--fz--2xs` to `--fz--5xl` (based on a harmonic sequence), border radii as the `--bdrs--10` family, and colors under semantic names such as `--base` / `--base-2` / `--text` / `--text-2` / `--divider` / `--link` / `--brand` / `--accent`.
 
 To adjust the overall tone of your site, you only need to override these variables on `:root`.
 

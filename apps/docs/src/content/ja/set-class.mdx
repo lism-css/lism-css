@@ -148,7 +148,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 
 ## `set--s`
 
-余白トークン（`--s5`〜`--s80`）を現在のフォントサイズ基準で再計算するためのクラスです。ButtonやBadgeなど、内部余白を要素自身のfont-sizeに追従させたい時に利用します。
+余白トークン（`--s5`〜`--s70`）を現在のフォントサイズ基準で再計算するためのクラスです。ButtonやBadgeなど、内部余白を要素自身のfont-sizeに追従させたい時に利用します。
 
 ```css
 :root,
@@ -164,10 +164,10 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
   --s30: calc(var(--s-unit) * 3);
   --s35: calc(var(--s-unit) * 4);
   --s40: calc(var(--s-unit) * 5);
+  --s45: calc(var(--s-unit) * 6.5);
   --s50: calc(var(--s-unit) * 8);
   --s60: calc(var(--s-unit) * 13);
   --s70: calc(var(--s-unit) * 21);
-  --s80: calc(var(--s-unit) * 34);
 }
 
 .set--s {
@@ -175,7 +175,7 @@ classless な `ul` / `ol`（`class` 属性を一切持たないリスト）は�
 }
 ```
 
-`set--s`を指定したスコープでは`--s-unit`が`0.5em`に切り替わり、`--s10`〜`--s80`がフォントサイズ基準で再計算されます。
+`set--s`を指定したスコープでは`--s-unit`が`0.5em`に切り替わり、`--s10`〜`--s70`がフォントサイズ基準で再計算されます。
 
 ```html
 <!-- ボタンの padding が button 自身の font-size に追従する -->

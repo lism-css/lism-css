@@ -31,10 +31,10 @@ describe('PropValueTypes', () => {
         | '30'
         | '35'
         | '40'
+        | '45'
         | '50'
         | '60'
         | '70'
-        | '80'
         | (string & {})
         | number
         | boolean
@@ -58,10 +58,10 @@ describe('PropValueTypes', () => {
         | '30'
         | '35'
         | '40'
+        | '45'
         | '50'
         | '60'
         | '70'
-        | '80'
         | (string & {})
         | number
         | boolean
@@ -123,7 +123,7 @@ describe('PropValueTypes', () => {
   it('cg（column-gap）には space トークンの値を設定できる（bp: 1 なので Responsive でラップされる）', () => {
     expectTypeOf<PropValueTypes['cg']>().toEqualTypeOf<
       Responsive<
-        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '45' | '50' | '60' | '70' | (string & {}) | number | boolean | null | undefined
       >
     >();
   });
@@ -131,7 +131,7 @@ describe('PropValueTypes', () => {
   it('rg（row-gap）には space トークンの値を設定できる（bp: 1 なので Responsive でラップされる）', () => {
     expectTypeOf<PropValueTypes['rg']>().toEqualTypeOf<
       Responsive<
-        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '45' | '50' | '60' | '70' | (string & {}) | number | boolean | null | undefined
       >
     >();
   });
@@ -139,7 +139,7 @@ describe('PropValueTypes', () => {
   it('pl（padding-left）には space トークンの値を設定できる（bp: 1 なので Responsive でラップされる）', () => {
     expectTypeOf<PropValueTypes['pl']>().toEqualTypeOf<
       Responsive<
-        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '45' | '50' | '60' | '70' | (string & {}) | number | boolean | null | undefined
       >
     >();
   });

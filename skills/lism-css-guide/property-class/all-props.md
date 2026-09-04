@@ -153,7 +153,7 @@
 | `pt` | `padding-top` | `-pt:5`, `-pt:10`, `-pt:20`, ... (SPACEトークン) | ✔ |
 | `pb` | `padding-bottom` | `-pb:5`, `-pb:10`, `-pb:20`, ... (SPACEトークン) | ✔ |
 
-SPACEトークンの全値（`5`〜`80`の離散値）は [tokens.md の余白 (space)](../tokens.md#余白-space) を参照。
+SPACEトークンの全値（`5`〜`70`の離散値）は [tokens.md の余白 (space)](../tokens.md#余白-space) を参照。
 
 ### 余白 — Margin
 

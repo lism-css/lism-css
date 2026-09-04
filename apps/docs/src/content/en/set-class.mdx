@@ -148,7 +148,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
 
 ## `set--s`
 
-A class that recalculates spacing tokens (`--s5` through `--s80`) against the current font size. Use it for parts like Buttons or Badges where internal spacing should follow the element's own font-size.
+A class that recalculates spacing tokens (`--s5` through `--s70`) against the current font size. Use it for parts like Buttons or Badges where internal spacing should follow the element's own font-size.
 
 ```css
 :root,
@@ -164,10 +164,10 @@ A class that recalculates spacing tokens (`--s5` through `--s80`) against the cu
   --s30: calc(var(--s-unit) * 3);
   --s35: calc(var(--s-unit) * 4);
   --s40: calc(var(--s-unit) * 5);
+  --s45: calc(var(--s-unit) * 6.5);
   --s50: calc(var(--s-unit) * 8);
   --s60: calc(var(--s-unit) * 13);
   --s70: calc(var(--s-unit) * 21);
-  --s80: calc(var(--s-unit) * 34);
 }
 
 .set--s {
@@ -175,7 +175,7 @@ A class that recalculates spacing tokens (`--s5` through `--s80`) against the cu
 }
 ```
 
-Within a `set--s` scope, `--s-unit` swaps to `0.5em`, and `--s10`–`--s80` are recalculated against the current font size.
+Within a `set--s` scope, `--s-unit` swaps to `0.5em`, and `--s10`–`--s70` are recalculated against the current font size.
 
 ```html
 <!-- Button padding scales with the button's own font-size -->

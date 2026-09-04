@@ -134,7 +134,8 @@ export default {
   // aspect-ratio
   ar: { og: '1.91/1' },
 
-  // space: 構造変数 --s-unit（vars グループ）の倍数。フィボナッチ数列ベース。.set--s で --s-unit を em 化すると再ベースされる。
+  // space: 構造変数 --s-unit（vars グループ）の倍数。.set--s で --s-unit を em 化すると再ベースされる。
+  //  10 刻みはフィボナッチ数列で縦のリズム用。5 刻みは水平方向の gap / padding 用の中間値で 50 まで。
   space: {
     '5': 'calc(var(--s-unit) * 0.5)', // ≒ 4px
     '10': 'var(--s-unit)', // ≒ 8px
@@ -144,10 +145,10 @@ export default {
     '30': 'calc(var(--s-unit) * 3)', // ≒ 24px
     '35': 'calc(var(--s-unit) * 4)', // ≒ 32px
     '40': 'calc(var(--s-unit) * 5)', // ≒ 40px
+    '45': 'calc(var(--s-unit) * 6.5)', // ≒ 52px
     '50': 'calc(var(--s-unit) * 8)', // ≒ 64px
     '60': 'calc(var(--s-unit) * 13)', // ≒ 104px
     '70': 'calc(var(--s-unit) * 21)', // ≒ 168px
-    '80': 'calc(var(--s-unit) * 34)', // ≒ 272px
   },
 
   // flow: lang スコープ上書きありのため手書き SCSS。
