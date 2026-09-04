@@ -2,7 +2,6 @@
 import Layout from '@/layouts/Layout.astro';
 import {
   Box,
-  BoxLink,
   Cluster,
   Columns,
   Container,
@@ -15,7 +14,6 @@ import {
   Layer,
   Link,
   Lism,
-  ListItem,
   Media,
   Stack,
   Text,
@@ -23,6 +21,7 @@ import {
 } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
+import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 import Header from '@/components/ryokan/Header.astro';
 import SectionHeading from '@/components/ryokan/SectionHeading.astro';
 import './_style.css';
@@ -364,11 +363,7 @@ const reservationSites: readonly SiteCard[] = [
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400..700&display=swap" rel="stylesheet" slot="head" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&text=%E9%9D%99%E5%AF%82%E3%81%AE%E5%AE%BF&display=swap"
-    rel="stylesheet"
-    slot="head"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
   <Container class="c--page">
     <!-- Header -->
     <Header />
@@ -413,7 +408,7 @@ const reservationSites: readonly SiteCard[] = [
           pbe="40"
           min-h="100svh"
         >
-          <Text class="c--hero_copy">
+          <Text class="c--hero_copy -ff:accent">
             {
               mvCopyLines.map((line, i) => (
                 <Inline class="c--hero_line" style={{ '--c--ryokan-mv-lineIndex': i }}>
@@ -557,7 +552,7 @@ const reservationSites: readonly SiteCard[] = [
               {
                 plans.map((plan) => (
                   <Flex fxd={['column', null, 'row-reverse']} g={['30', null, '50']}>
-                    <Frame as="figure" ar="16/10" bdrs="10" w="100%" max-w={['100%', null, 'min(32rem, 40cqi)']}>
+                    <Frame as="figure" ar="16/9" bdrs="10" w="100%" max-w={['100%', null, 'min(32rem, 40cqi)']}>
                       <Media src={plan.image.src} alt={plan.image.alt} width={plan.image.width} height={plan.image.height} loading="lazy" />
                     </Frame>
 
@@ -651,15 +646,15 @@ const reservationSites: readonly SiteCard[] = [
       </Lism>
 
       <Lism as="section" id="faq" class="c--faq" isContainer set="light" bgc="base" c="text" py="60">
-        <Lism isWrapper="l" hasGutter>
-          <Columns cols={[1, null, 2]} gta={["'head' 'acc' 'img'", null, "'head head' 'img acc'"]} g={['40', null, null, '50']}>
-            <SectionHeading en="FAQ" ja="よくあるご質問" ga="head" ai="center" ta="center" />
+        <Lism isWrapper="l" hasGutter layout="stack" g={['40', null, null, '50']}>
+          <SectionHeading en="FAQ" ja="よくあるご質問" ai="center" ta="center" />
 
-            <Frame as="figure" ga="img" ar={['16/10', null, '1/1']} bdrs="10">
+          <Columns cols={[1, null, 2]} g={['40', null, null, '50']}>
+            <Frame as="figure" order={[1, null, 0]} ar={['16/9', null, '1/1']} bdrs="10">
               <Media src={faqImage.src} alt={faqImage.alt} width={faqImage.width} height={faqImage.height} loading="lazy" />
             </Frame>
 
-            <Accordion.Root layout="stack" ga="acc" bd-b>
+            <Accordion.Root layout="stack" bd-b>
               {
                 faqItems.map((item) => (
                   <Accordion.Item isOpen={item.defaultOpen === true} bd-t>
@@ -688,7 +683,7 @@ const reservationSites: readonly SiteCard[] = [
         <Layer bgc="black:50%" style={{ backdropFilter: 'blur(6px)' }} aria-hidden="true" />
 
         <Lism isWrapper="l" hasGutter pos="relative" z="1">
-          <Grid gtc={['1fr', null, 'minmax(0, 0.6fr) minmax(0, 1fr)']} g={['40', null, '50']}>
+          <Grid gtc={['1fr', null, null, 'minmax(0, 1.5fr) minmax(0, 2fr)']} g={['40', null, '50']}>
             <Stack g="30" ai="start">
               <SectionHeading en="Reservation" ja="ご予約はこちら" ai="start" />
               <Text fz="s" c="text-2">
@@ -700,18 +695,18 @@ const reservationSites: readonly SiteCard[] = [
               {
                 reservationSites.map((site) => (
                   <Lism pos="relative" bgc="text" c="base" bdrs="20" ov="hidden">
-                    <Flex fxd={['column', null, 'row']}>
-                      <Frame as="figure" ar="16/10" bdrs="0" w={['100%', null, '12rem']} fxsh="0">
+                    <Flex fxd={['column', 'row']}>
+                      <Frame as="figure" ar="16/9" bdrs="0" w={['100%', '33.3%']} fxsh="0">
                         <Media src={site.image.src} alt={site.image.alt} width={site.image.width} height={site.image.height} loading="lazy" />
                       </Frame>
-                      <Stack g="15" min-h="0" fx="1" px={['20', null, '30']} py={['20', null, '30']} ov="auto">
-                        <Heading level="3" fz="l" fw="600">
+                      <Stack aslf="center" g="30" min-h="0" fx="1" px="25" py="30">
+                        <Heading level="3" class="u--trim" fz="l">
                           {site.title}
                         </Heading>
-                        <Text fz="s" o="mp">
+                        <Text class="u--trim" fz="s" o="mp">
                           {site.body}
                         </Text>
-                        <Button href={site.href} bgc="base" c="text" bdrs="20" py="15" px="20" fz="s" fw="500" ta="center">
+                        <Button href={site.href} aslf="end" bgc="base" c="text" bdrs="10" py="15" px="20" fz="s" ta="center">
                           サイトに移動する
                         </Button>
                       </Stack>
@@ -728,51 +723,47 @@ const reservationSites: readonly SiteCard[] = [
     <Lism as="footer" id="footer" class="c--footer" isContainer py={['50', null, '60']}>
       <Lism isWrapper="xl" hasGutter>
         <Stack g={['40', null, '50']}>
-          <Cluster ai="end" g={['15', null, '40']}>
-            <Heading level="2" fz={['2xl', null, '3xl']} fw="normal" lts="l" hl="l" ff="accent">
+          <Flex fxd={['column', null, null, 'row']} ai={['center', null, null, 'end']} g={['20', null, null, '40']}>
+            <Heading level="2" fz="2xl" fw="normal" lts="l" hl="l" ff="accent">
               {logoLabel}
             </Heading>
-            <Text fz={['s', null, 'm']} c="text-2">都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。</Text>
-          </Cluster>
+            <Text fz="s" c="text-2">都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。</Text>
+          </Flex>
 
-          <Flex fxd={['column', null, 'row']} ai="end" jc="between" g={['30', null, '40']}>
-            <Flex as="ul" class="c--footer_nav" fxd={['column', null, 'row']} fxw="wrap" w={['100%', null, 'auto']} fx="1">
+          <Flex fxd={['column', null, null, 'row']} ai="center" ji={['center', null, null, 'between']} g="30">
+            <NavMenu.Root layout="flex" fxd={['column', null, 'row']} jc={['center', null, null, 'start']} fxw="wrap" w="100%" bdc="divider">
               {
-                footerNavItems.map(({ href, ja, en }) => (
-                  <ListItem>
-                    <BoxLink
+                footerNavItems.map(({ href, ja, en }, index) => (
+                  <NavMenu.Item bd bdw={[index < footerNavItems.length - 1 ? '0 0 1px 0' : '0', null, index > 0 ? '0 0 0 1px' : '0']}>
+                    <NavMenu.Link
                       href={href}
                       layout="grid"
                       gtc={['1fr auto', null, '1fr']}
                       ji={['start', null, 'center']}
                       ai="center"
-                      fz="m"
-                      td="none"
-                      py={['15', null, '0']}
-                      px={['5', null, '10']}
-                      c="inherit"
+                      py={['15', null, '5']}
+                      px={['5', null, '20']}
                       hov="-o"
                     >
                       <Stack class="c--footer_navStack" g="5">
                         <Inline>{ja}</Inline>
-                        <Inline fz="s" o="pp">
+                        <Inline fz="xs" o="pp">
                           {en}
                         </Inline>
                       </Stack>
-                      {/* Icon の `d` prop は SVG の `d` 属性と型が衝突するため、表示切替は Box で包んで指定する */}
                       <Box d={['block', null, 'none']}>
                         <Icon icon="caret-right" fz="s" o="pp" />
                       </Box>
-                    </BoxLink>
-                  </ListItem>
+                    </NavMenu.Link>
+                  </NavMenu.Item>
                 ))
               }
-            </Flex>
+            </NavMenu.Root>
 
-            <Cluster g="20" jc={['center', null, 'end']} ai="end" w={['100%', null, 'auto']}>
+            <Cluster g="15" jc={['center', null, 'end']} ai="end" fxsh="0">
               {
                 footerSnsLinks.map(({ href, icon, label }) => (
-                  <Link href={href} td="none" c="inherit" o="pp" hov={{ o: 1 }} hasTransition aria-label={label}>
+                  <Link href={href} set="plain" p="5" o="p" hov={{ o: 1 }} hasTransition aria-label={label}>
                     <Icon icon={icon} fz="xl" />
                   </Link>
                 ))

@@ -219,23 +219,6 @@
   /* --------------------------------------------------
    Footer
   -------------------------------------------------- */
-  /* md 未満: 縦並びの項目間に区切り（最後の行の下には付けない） */
-  .c--footer_nav > li:not(:last-child) {
-    border-block-end: 1px dashed var(--divider);
-  }
-
-  /* md 以上: 縦の区切りをやめ、項目の「間」だけ左に縦線（先頭左・末尾右には付けない） */
-  @container (min-width: 800px) {
-    .c--footer_nav > li:not(:last-child) {
-      border-block-end: none;
-    }
-    .c--footer_nav > li + li {
-      border-inline-start: 1px dashed var(--divider);
-      padding-inline-start: var(--s20);
-      margin-inline-start: var(--s20);
-    }
-  }
-
   /* md 未満は左寄せ。`ta` は BP 非対応のため Props に出せず、ここへ集約する */
   .c--footer_navStack {
     text-align: start;
