@@ -50,6 +50,27 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 - `Center` 内に長い `pre` があるときに横幅を超過する問題を修正しました（#597）。
 - `-hov:-bgc` の既定の混色率を 25% から 20% へ調整しました。
 
+### `@lism-css/ui` v0.27.0 (2026.09.04)
+
+`lism-css` v0.27.0 以上が必要です。
+
+**Tooltip / Popover の追加 (#588)**
+
+- CSS Anchor Positioning で配置する `Tooltip` と `Popover` を追加しました。非対応ブラウザでは CSS のフォールバックで表示します。
+- Tooltip: 表示制御は CSS だけで行い、JS は Esc キーで閉じる処理のみです。`Popup` の `side`（`top` / `bottom` / `start` / `end`）と `align` で位置を指定します。
+- Popover: ネイティブ Popover API を使うため、クライアント JS は不要です。`Root` / `Trigger` / `Popup` / `Close` で構成します。
+- 調整用の CSS 変数（`--tooltip-offset` / `--tooltip-duration` / `--tooltip-delay` / `--tooltip-delay--close`、`--popover-offset` / `--popover-duration`）は `Root` で受け取ります。
+- 既定でふきだしの矢印を表示します。サイズは `--tooltip-arrow` / `--popover-arrow` で変更でき、`0` で非表示になります。
+
+**Avatar のイニシャル表示 (#587)**
+
+- `src` 未指定のとき、`name` prop の先頭1文字をイニシャルとして表示するようにしました。ルートに `b--avatar--initial` モディファイアが付くので、背景色などはここで上書きできます。
+- `name` と `alt` の両方がないときは装飾扱い（`aria-hidden`）になります。
+
+**Modal (#596)**
+
+- Modal 内のページ内リンク（`#id`）をクリックしたときにモーダルを閉じるようにしました。ページ遷移自体は妨げません。修飾キー付き・別タブ向け・他のハンドラで `preventDefault` されたクリックは対象外です。
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v0.26.0 (2026.08.16)

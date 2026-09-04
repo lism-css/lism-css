@@ -50,6 +50,27 @@ This release contains **breaking changes**.
 - Fixed `Center` overflowing horizontally when it contains a long `pre` (#597).
 - Adjusted the default mix ratio of `-hov:-bgc` from 25% to 20%.
 
+### `@lism-css/ui` v0.27.0 (2026.09.04)
+
+Requires `lism-css` v0.27.0 or later.
+
+**Added Tooltip and Popover (#588)**
+
+- Added `Tooltip` and `Popover`, positioned with CSS Anchor Positioning. Unsupported browsers get a CSS fallback.
+- Tooltip: visibility is handled entirely in CSS; the only JS closes it on the Esc key. Position it with `side` (`top` / `bottom` / `start` / `end`) and `align` on `Popup`.
+- Popover: uses the native Popover API, so no client-side JS is needed. Composed of `Root` / `Trigger` / `Popup` / `Close`.
+- Tuning CSS variables (`--tooltip-offset` / `--tooltip-duration` / `--tooltip-delay` / `--tooltip-delay--close`, `--popover-offset` / `--popover-duration`) are received on `Root`.
+- A speech-bubble arrow is shown by default. Change its size with `--tooltip-arrow` / `--popover-arrow`, or set `0` to hide it.
+
+**Avatar initials placeholder (#587)**
+
+- When `src` is omitted, the first character of the `name` prop is shown as an initial. The root gets a `b--avatar--initial` modifier, where you can override the background color and so on.
+- When neither `name` nor `alt` is given, the placeholder is treated as decorative (`aria-hidden`).
+
+**Modal (#596)**
+
+- Clicking an in-page link (`#id`) inside a Modal now closes it without blocking the navigation. Clicks with modifier keys, links targeting another tab, and clicks whose default was prevented by another handler are excluded.
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v0.26.0 (2026.08.16)
