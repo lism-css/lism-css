@@ -1,24 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import {
-  Box,
-  Cluster,
-  Columns,
-  Container,
-  Flex,
-  Frame,
-  Grid,
-  Heading,
-  Icon,
-  Inline,
-  Layer,
-  Link,
-  Lism,
-  Media,
-  Stack,
-  Text,
-  WithSide,
-} from 'lism-css/astro';
+import { Box, Cluster, Columns, Container, Flex, Frame, Grid, Heading, Icon, Inline, Layer, Link, Lism, Media, Stack, Text } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
@@ -128,8 +110,9 @@ type PlanStat = {
 
 type Plan = {
   title: string;
+  roomType: PlanStat;
   description: string;
-  stats: readonly [PlanStat, PlanStat, PlanStat];
+  stats: readonly [PlanStat, PlanStat];
   image: {
     src: string;
     alt: string;
@@ -141,12 +124,12 @@ type Plan = {
 const plans = [
   {
     title: '夕朝食・露天風呂付きゆったりプラン',
+    roomType: { label: 'お部屋タイプ', value: '露天付き和室' },
     description:
       '季節の会席と朝の御膳、そして湯冷めしない露天風呂までひと続きの時間。お部屋でゆっくりとお食事をご堪能いただき、湯浴みの合間には庭園を眺めながらのんびりとお過ごしください。お飲み物の追加オーダーやアレルギー対応も可能ですので、ご予約時にお申し付けください。',
     stats: [
       { label: 'ご予約可能人数', value: '1〜2名様' },
       { label: '料金', value: '29,800円〜' },
-      { label: 'お部屋タイプ', value: '露天付き和室' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_YWq6k0dioX.jpg',
@@ -157,12 +140,12 @@ const plans = [
   },
   {
     title: '旬会席・半露天付き特別室ステイ',
+    roomType: { label: 'お部屋タイプ', value: '半露天付き特別室' },
     description:
       'その日の仕入れで組み立てる旬会席と、半露天から望む山並みのグラデーション。記念日やご家族のお祝いに、少し贅沢なお時間をご用意いたしました。',
     stats: [
       { label: 'ご予約可能人数', value: '2〜4名様' },
       { label: '料金', value: '39,800円〜' },
-      { label: 'お部屋タイプ', value: '半露天付き特別室' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_AgvZ1VdMXz.jpg',
@@ -173,12 +156,12 @@ const plans = [
   },
   {
     title: '一泊朝食のみ・湯めぐり楽々プラン',
+    roomType: { label: 'お部屋タイプ', value: '和室10畳＋広縁' },
     description:
       '夕食は外で自由に、朝は当宿の炊きたてご飯と汁物で。近隣の外湯めぐりや散策を楽しみたい方に、身軽な滞在スタイルをご提案します。チェックアウト後の荷物預かりも承りますので、観光の前後にご活用ください。',
     stats: [
       { label: 'ご予約可能人数', value: '1〜3名様' },
       { label: '料金', value: '18,500円〜' },
-      { label: 'お部屋タイプ', value: '和室10畳＋広縁' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/u-qQGCFQFlkT.jpg',
@@ -189,12 +172,12 @@ const plans = [
   },
   {
     title: '連泊エコノミー・温泉三昧プラン',
+    roomType: { label: 'お部屋タイプ', value: '和洋室ツイン' },
     description:
       'お得な連泊料金で、名湯と静寂にどっぷり浸かる旅。お食事はシンプルな定番御膳に、湯上がりの甘味までお部屋にお届けする心地よさをご用意しました。',
     stats: [
       { label: 'ご予約可能人数', value: '2名様〜' },
       { label: '料金', value: '52,000円〜 / 2泊' },
-      { label: 'お部屋タイプ', value: '和洋室ツイン' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_BybmIMidVa.jpg',
@@ -363,6 +346,7 @@ const reservationSites: readonly SiteCard[] = [
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400..700&display=swap" rel="stylesheet" slot="head" />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700&display=swap" rel="stylesheet" slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
   <Container class="c--page">
     <Header />
@@ -374,7 +358,6 @@ const reservationSites: readonly SiteCard[] = [
         pos="relative"
         ov="clip"
         bgc="base"
-        min-h="100svh"
         style={{
           '--c--ryokan-mv-bgCycleDuration': `${mvBgCycleDuration}s`,
           '--c--ryokan-mv-lineBlurMax': `${mvLineRevealBlurPx}px`,
@@ -383,22 +366,34 @@ const reservationSites: readonly SiteCard[] = [
           '--c--ryokan-mv-lineStagger': `${mvLineRevealStagger}s`,
         }}
       >
-        <Frame isLayer>
+        <Layer>
           {
             mvImages.map((src, index) => (
               <Layer
                 class="c--hero_layer"
+                bgi={`url('${src}')`}
+                bgsz="cover"
+                bgp="center"
+                bgr="no-repeat"
                 style={{
-                  '--c--ryokan-mv-layerBgImage': `url('${src}')`,
                   '--c--ryokan-mv-layerDelay': `${index * mvDurationPerImage - mvBgCycleDuration}s`,
                 }}
               />
             ))
           }
-        </Frame>
+        </Layer>
         <Layer bgc="black:30%" aria-hidden="true" />
-        <Stack pos="relative" z="1" ai="center" jc="center" hasGutter pbs="calc(var(--header-h--init) + var(--s30))" pbe="40" min-h="100svh">
-          <Text class="c--hero_copy -ff:accent">
+        <Stack
+          pos="relative"
+          z="1"
+          ai="center"
+          jc="center"
+          hasGutter
+          pbs="calc(var(--header-h--init) + var(--s30))"
+          pbe="40"
+          min-h="min(100svh, 200vw)"
+        >
+          <Stack as="p" class="c--hero_copy" ff="accent" fz="clamp(1.5rem, 1.2857rem + 0.9524vw, 2rem)" wm="vertical-rl" lts="0.4em" lh="2.5">
             {
               mvCopyLines.map((line, i) => (
                 <Inline class="c--hero_line" style={{ '--c--ryokan-mv-lineIndex': i }}>
@@ -406,14 +401,14 @@ const reservationSites: readonly SiteCard[] = [
                 </Inline>
               ))
             }
-          </Text>
+          </Stack>
         </Stack>
       </Container>
       <!-- MV の動的 @keyframes はマージで抽出されないため、set:html で明示注入 -->
       <style set:html={mvLayeredKeyframesStyle}></style>
 
       <Container as="section" id="about" class="c--about" set="bleed" contentSize="l" py="60">
-        <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 50%)']} g={['30', null, '0']} ai={['start', null, 'stretch']}>
+        <Grid gtc={['1fr', null, '1fr 50%']} g={['30', null, '0']} ai={['start', null, 'stretch']}>
           <Stack g={['40', null, null, '50']} h={['auto', null, '100%']}>
             <Stack g={['40', null, null, '50']} ps="var(--bleed)" pe={['var(--gutter--base)', null, '40', '50']}>
               <SectionHeading en="About us" ja="当宿について" ai="start" />
@@ -434,7 +429,7 @@ const reservationSites: readonly SiteCard[] = [
 
       <Lism as="section" id="feature" class="c--feature" isContainer set="light" pos="relative" bgc="base" c="text" py="60">
         <Lism isWrapper="l" hasGutter set="bleed" pos="relative">
-          <Grid gtc={['1fr', null, 'minmax(0, 1.05fr) minmax(0, 1fr)']} g={['40', null, null, '50']}>
+          <Grid gtc={['1fr', null, '1.05fr 1fr']} g={['40', null, null, '50']}>
             <Frame
               as="figure"
               class="c--feature_figure"
@@ -456,7 +451,23 @@ const reservationSites: readonly SiteCard[] = [
               />
             </Frame>
             <Stack class="c--feature_textCol" pos="relative" min-h="0" h="100%">
-              <Lism as="span" class="c--feature_watermark" aria-hidden="true">Experience</Lism>
+              <Lism
+                as="span"
+                class="c--feature_watermark"
+                aria-hidden="true"
+                pos="absolute"
+                z="0"
+                i-bs="max(-0.75em, -50px)"
+                i-s="-0.25em"
+                ff="base"
+                fz="clamp(3.25rem, -0.75rem + 8vw, 6.25rem)"
+                fw="700"
+                lts="0.025em"
+                c="text:6%"
+                whs="nowrap"
+              >
+                Experience
+              </Lism>
               <!-- lg 以上は2列 grid: 見出しは右列上端、本文は左列下端 -->
               <Grid
                 class="c--feature_copyRow"
@@ -471,15 +482,15 @@ const reservationSites: readonly SiteCard[] = [
                   level="2"
                   class="c--feature_title"
                   fz={['2xl', null, '3xl']}
-                  fw="600"
+                  fw="bold"
                   lts="l"
                   aslf="start"
                   gc={[null, null, null, 2]}
                   gr={[null, null, null, '1/-1']}
                 >
-                  <Flex class="c--feature_titleInner" fxd={['column', null, null, 'row-reverse']} ai="start" g={['0', null, null, '20']} lts="l">
-                    <Inline class="c--feature_titleLine1" d="block" wm={[null, null, null, 'vertical-rl']}>特別な旅と</Inline>
-                    <Inline class="c--feature_titleLine2" ms="1em" d="block" wm={[null, null, null, 'vertical-rl']}>静寂の体験</Inline>
+                  <Flex class="c--feature_titleInner" fxd={['column', null, null, 'row-reverse']} ai="start" g={['0', null, null, '20']}>
+                    <Inline class="c--feature_titleLine1" wm={[null, null, null, 'vertical-rl']}>特別な旅と</Inline>
+                    <Inline class="c--feature_titleLine2" ms="1em" wm={[null, null, null, 'vertical-rl']}>静寂の体験</Inline>
                   </Flex>
                 </Heading>
                 <Stack
@@ -489,10 +500,10 @@ const reservationSites: readonly SiteCard[] = [
                   gr={[null, null, null, 2]}
                   max-w={[null, null, null, 'min(100%, 26rem)']}
                 >
-                  <Text fz={['l', null, 'xl']} fw="600" lts="l">
+                  <Text fz={['l', null, 'xl']} fw="bold" lts="l">
                     {featureLead}
                   </Text>
-                  <Text fz="m" hl="l">
+                  <Text hl="l">
                     {featureBody}
                   </Text>
                 </Stack>
@@ -509,9 +520,9 @@ const reservationSites: readonly SiteCard[] = [
         <Layer bgc="black:75%" style={{ backdropFilter: 'blur(6px)' }} aria-hidden="true" />
         <Lism isWrapper="l" hasGutter pos="relative" z="1" pt="60">
           <Grid gtc={['1fr', null, 'min-content 1fr']} g={['40', null, '30', '50']} ai="start">
-            <Stack isSide g="25">
+            <Stack g="25">
               <Heading level="2" fz={['3xl', null, null, '4xl']} lts="l" hl="l">
-                <span class="-whs:nowrap">季節の移ろいを、</span>肌で感じる。
+                <Inline whs="nowrap">季節の移ろいを、</Inline>肌で感じる。
               </Heading>
               <Inline class="b--enEyebrow" lang="en" o="pp" lts="l">Feeling the seasons</Inline>
             </Stack>
@@ -524,7 +535,7 @@ const reservationSites: readonly SiteCard[] = [
           <Columns cols={[2, null, 4]} mbs="50" g={['15', null, null, '25']} ai="start">
             {
               seasonGalleryPhotos.map(({ src, alt }, i) => (
-                <Frame as="figure" ar="4/3" pos="relative" mbs={i === 1 || i === 3 ? ['0', null, '40'] : '0'}>
+                <Frame as="figure" ar="4/3" pos="relative" mbs={i % 2 === 1 ? [null, null, '40'] : undefined}>
                   <Media src={src} alt={alt} width={800} height={600} loading="lazy" />
                 </Frame>
               ))
@@ -538,66 +549,55 @@ const reservationSites: readonly SiteCard[] = [
           <Stack g="50">
             <SectionHeading en="Plan" ja="宿泊プラン" ai="center" ta="center" />
 
-            <Stack g="50">
-              {
-                plans.map((plan) => (
-                  <Flex fxd={['column', null, 'row-reverse']} g={['30', null, '50']}>
-                    <Frame as="figure" ar="16/9" bdrs="10" w="100%" max-w={['100%', null, 'min(32rem, 40cqi)']}>
-                      <Media src={plan.image.src} alt={plan.image.alt} width={plan.image.width} height={plan.image.height} loading="lazy" />
-                    </Frame>
+            {
+              plans.map((plan) => (
+                <Flex fxd={['column', null, 'row-reverse']} g={['30', null, '40', '50']}>
+                  <Frame as="figure" ar="16/9" bdrs="10" w="100%" max-w={['100%', null, 'min(32rem, 40cqi)']}>
+                    <Media src={plan.image.src} alt={plan.image.alt} width={plan.image.width} height={plan.image.height} loading="lazy" />
+                  </Frame>
 
-                    <Stack g="30" fx="1" min-h="0" jc="between">
-                      <Stack g="30">
-                        <Heading level="3" fz={['l', null, 'xl']} fw="500" lts="l">
-                          {plan.title}
-                        </Heading>
-                        <Text fz="s" hl="l" c="text-2">
-                          {plan.description}
+                  <Stack g="30" fx="1" min-h="0" jc="between">
+                    <Stack g="30">
+                      <Heading level="3" fz={['l', null, 'xl']} fw="500" lts="l">
+                        {plan.title}
+                      </Heading>
+                      <Stack g="5">
+                        <Text fz="xs" c="text-2" o="p">
+                          {plan.roomType.label}
+                        </Text>
+                        <Text fw="bold" lts="l">
+                          {plan.roomType.value}
                         </Text>
                       </Stack>
-
-                      <Stack g="30" fxsh="0">
-                        <Columns cols="3" bd bdc="divider" bdrs="20" ov="hidden" bgc="base-2">
-                          {plan.stats.map((stat, index) => (
-                            <Stack g="10" p="20" py="25" ai="center" hl="s" ta="center" bdc="divider" class:list={[{ '-bd-s': index > 0 }]}>
-                              <Text fz="xs" c="text-2" o="p">
-                                {stat.label}
-                              </Text>
-                              <Text fw="bold" lts="l">
-                                {stat.value}
-                              </Text>
-                            </Stack>
-                          ))}
-                        </Columns>
-
-                        {/* ボタン自身の幅を基準に fxd / ai を切り替えるためのクエリコンテナ */}
-                        <Box isContainer>
-                          <Button
-                            href="#reservation"
-                            layout="flex"
-                            w="100%"
-                            fxd={['column', 'row']}
-                            jc="center"
-                            ai={['center', null, 'end']}
-                            g="10"
-                            bgc="text"
-                            c="base"
-                            bdrs="10"
-                            py="15"
-                            px="20"
-                            ta="center"
-                          >
-                            <Inline fw="500" lts="l">
-                              このプランを予約する
-                            </Inline>
-                          </Button>
-                        </Box>
-                      </Stack>
+                      <Text fz="s" hl="l" c="text-2">
+                        {plan.description}
+                      </Text>
                     </Stack>
-                  </Flex>
-                ))
-              }
-            </Stack>
+
+                    <Stack g="30" fxsh="0">
+                      <Columns cols="2" bd bdrs="20" ov="hidden" bgc="base-2">
+                        {plan.stats.map((stat, index) => (
+                          <Stack g="10" px="20" py="25" ai="center" hl="s" ta="center" bd-s={index > 0 || undefined}>
+                            <Text fz="xs" c="text-2" o="p">
+                              {stat.label}
+                            </Text>
+                            <Text fw="bold" lts="l">
+                              {stat.value}
+                            </Text>
+                          </Stack>
+                        ))}
+                      </Columns>
+
+                      <Button href="#reservation" variant="outline" hov="-bgc" w="100%" bdrs="10" py="15" px="20" ta="center">
+                        <Inline fw="500" lts="l">
+                          このプランを予約する
+                        </Inline>
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </Flex>
+              ))
+            }
           </Stack>
         </Lism>
       </Lism>
@@ -615,18 +615,16 @@ const reservationSites: readonly SiteCard[] = [
             <Columns cols={[1, null, 2]} g="30">
               {
                 informationItems.map((item) => (
-                  <Flex ai="center" bd bdrs="20" bdc="divider" ov="hidden" p={['20', null, '30']} bgc="base">
-                    <Flex g={['20', null, '30']} ai="center">
-                      <Icon icon={item.icon} size="2.5em" c="text-2" />
-                      <Stack g="10" fx="1">
-                        <Heading level="3" fz={['m', null, 'l']} fw="500" lts="l">
-                          {item.title}
-                        </Heading>
-                        <Text fz="s" c="text-2">
-                          {item.description}
-                        </Text>
-                      </Stack>
-                    </Flex>
+                  <Flex g={['20', null, '30']} ai="center" bd bdrs="20" ov="hidden" p={['20', null, '30']} bgc="base">
+                    <Icon icon={item.icon} size="2.5em" c="text-2" />
+                    <Stack g="10" fx="1">
+                      <Heading level="3" fz={['m', null, 'l']} fw="500" lts="l">
+                        {item.title}
+                      </Heading>
+                      <Text fz="s" c="text-2">
+                        {item.description}
+                      </Text>
+                    </Stack>
                   </Flex>
                 ))
               }
@@ -653,7 +651,7 @@ const reservationSites: readonly SiteCard[] = [
                         {item.question}
                       </Accordion.Button>
                     </Accordion.Heading>
-                    <Accordion.Panel py="0" pb="20" isOpen={item.defaultOpen === true}>
+                    <Accordion.Panel pt="0" pb="20" isOpen={item.defaultOpen === true}>
                       <Text fz="s" c="text-2" hl="l">
                         {item.answer}
                       </Text>
@@ -673,7 +671,7 @@ const reservationSites: readonly SiteCard[] = [
         <Layer bgc="black:50%" style={{ backdropFilter: 'blur(6px)' }} aria-hidden="true" />
 
         <Lism isWrapper="l" hasGutter pos="relative" z="1">
-          <Grid gtc={['1fr', null, null, 'minmax(0, 1.5fr) minmax(0, 2fr)']} g={['40', null, '50']}>
+          <Grid gtc={['1fr', null, null, '1.5fr 2fr']} g={['40', null, '50']}>
             <Stack g="30" ai="start">
               <SectionHeading en="Reservation" ja="ご予約はこちら" ai="start" />
               <Text fz="s" c="text-2">
@@ -684,24 +682,22 @@ const reservationSites: readonly SiteCard[] = [
             <Stack g="40">
               {
                 reservationSites.map((site) => (
-                  <Lism pos="relative" bgc="text" c="base" bdrs="20" ov="hidden">
-                    <Flex fxd={['column', 'row']}>
-                      <Frame as="figure" ar="16/9" bdrs="0" w={['100%', '33.3%']} fxsh="0">
-                        <Media src={site.image.src} alt={site.image.alt} width={site.image.width} height={site.image.height} loading="lazy" />
-                      </Frame>
-                      <Stack aslf="center" g="30" min-h="0" fx="1" px="25" py="30">
-                        <Heading level="3" class="u--trim" fz="l">
-                          {site.title}
-                        </Heading>
-                        <Text class="u--trim" fz="s" o="mp">
-                          {site.body}
-                        </Text>
-                        <Button href={site.href} aslf="end" bgc="base" c="text" bdrs="10" py="15" px="20" fz="s" ta="center">
-                          サイトに移動する
-                        </Button>
-                      </Stack>
-                    </Flex>
-                  </Lism>
+                  <Flex fxd={['column', 'row']} pos="relative" bgc="text" c="base" bdrs="20" ov="hidden">
+                    <Frame as="figure" ar="16/9" w={['100%', '33.3%']} fxsh="0">
+                      <Media src={site.image.src} alt={site.image.alt} width={site.image.width} height={site.image.height} loading="lazy" />
+                    </Frame>
+                    <Stack aslf="center" g="30" min-h="0" fx="1" px="25" py="30">
+                      <Heading level="3" class="u--trim" fz="l">
+                        {site.title}
+                      </Heading>
+                      <Text class="u--trim" fz="s" o="mp">
+                        {site.body}
+                      </Text>
+                      <Button href={site.href} aslf="end" bgc="base" c="text" bdrs="10" py="15" px="20" fz="s" ta="center">
+                        サイトに移動する
+                      </Button>
+                    </Stack>
+                  </Flex>
                 ))
               }
             </Stack>
@@ -720,8 +716,8 @@ const reservationSites: readonly SiteCard[] = [
             <Text fz="s" c="text-2">都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。</Text>
           </Flex>
 
-          <Flex fxd={['column', null, null, 'row']} ai="center" ji={['center', null, null, 'between']} g="30">
-            <NavMenu.Root layout="flex" fxd={['column', null, 'row']} jc={['center', null, null, 'start']} fxw="wrap" w="100%" bdc="divider">
+          <Flex fxd={['column', null, null, 'row']} ai="center" g="30">
+            <NavMenu.Root layout="flex" fxd={['column', null, 'row']} jc={['center', null, null, 'start']} fxw="wrap" w="100%">
               {
                 footerNavItems.map(({ href, ja, en }, index) => (
                   <NavMenu.Item bd bdw={[index < footerNavItems.length - 1 ? '0 0 1px 0' : '0', null, index > 0 ? '0 0 0 1px' : '0']}>
@@ -730,7 +726,6 @@ const reservationSites: readonly SiteCard[] = [
                       layout="grid"
                       gtc={['1fr auto', null, '1fr']}
                       ji={['start', null, 'center']}
-                      ai="center"
                       py={['15', null, '5']}
                       px={['5', null, '20']}
                       hov="-o"
@@ -770,14 +765,13 @@ const reservationSites: readonly SiteCard[] = [
       <Button
         class="c--reservationFab"
         href="#reservation"
-        layout="center"
-        g="10"
-        py="1em"
-        px="1.5em"
+        set="s"
+        py="20"
+        px="30"
         lts="l"
         bdrs="10"
         bd
-        bdc="divider"
+        bdc="text:40%"
         bgc="base"
         c="text"
         bxsh="20"

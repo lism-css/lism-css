@@ -18,6 +18,6 @@ const { en, ja, level = '2', ...rest } = Astro.props;
 ---
 
 <Stack g="10" {...rest}>
-  <Text class="b--enEyebrow" lang="en" fz="m" lts="l" hl="xs" o="pp">{en}</Text>
+  <Text class="b--enEyebrow" lang="en" lts="l" hl="xs" o="pp">{en}</Text>
   <Heading level={level} fz={['2xl', null, '3xl']} lts="l">{ja}</Heading>
 </Stack>

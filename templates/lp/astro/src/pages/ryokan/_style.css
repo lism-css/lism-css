@@ -6,7 +6,6 @@
     --base-2: hsl(30 8% 16%);
     --text: hsl(0 0% 100%);
     --text-2: hsl(0 0% 88%);
-    /* --text-2: red; */
     --divider: hsl(0 0% 32%);
 
     /* gutterを少しだけ広く */
@@ -27,19 +26,23 @@
   }
 
   [lang='ja'] {
-    /* font-feature-settings: 'halt'; */
+    --ff--base: 'Shippori Mincho B1', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+    --ff--accent: 'Yuji Syuku', 'Shippori Mincho B1', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
     --lts--base: 0.05em;
-    --lts--xs: -0.025em;
     --lts--s: 0em;
     --lts--l: 0.1em;
     --lts--xl: 0.15em;
   }
 
   [lang='en'] {
+    --lts--base: 0.025em;
+    --lts--s: 0em;
+    --lts--l: 0.075em;
+    --lts--xl: 0.125em;
     /* フォントサイズ: 16px@800px → 18px@1400px */
     --fz--base: clamp(1rem, 0.8333rem + 0.3333vw, 1.125rem);
-    --ff--base: 'Source Serif 4', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-    --ff--accent: 'Cormorant Garamond', 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+    --ff--base: 'Lora', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+    --ff--accent: 'EB Garamond', 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
   }
 }
 
@@ -61,27 +64,14 @@
     scroll-padding-top: var(--header-h);
   }
 
-  /* ryokan: 明朝ベース（Google Fonts / Noto Serif JP） */
   .c--page {
-    /* Lism の `ff:base`（既定はゴシック系）— ryokan では日本語明朝に統一 */
-    --ff--base: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-
-    /* ロゴ（`ff:accent`）用: Google Fonts / Yuji Syuku */
-    --ff--accent: 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-
     /* .c--reservation の named view timeline を兄弟の FAB から参照可能にする */
     timeline-scope: --c--ryokan-reservation;
-
-    font-family: var(--ff--base);
-    font-optical-sizing: auto;
   }
 
   /* --------------------------------------------------
    Header
   -------------------------------------------------- */
-  .c--header {
-    /* height: var(--header-h--init); */
-  }
   .c--header_logoLink {
     transform-origin: left center;
     transition: transform 0.4s;
@@ -130,43 +120,19 @@
    Hero
   -------------------------------------------------- */
   .c--hero_layer {
-    background-image: var(--c--ryokan-mv-layerBgImage);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transform-origin: center center;
     opacity: 0;
-    transform: scale(1);
     animation: ryokan-mv-bgFade var(--c--ryokan-mv-bgCycleDuration) infinite;
     animation-timing-function: linear;
     animation-delay: var(--c--ryokan-mv-layerDelay);
   }
 
-  /* 縦組みのキャッチコピー */
-  .c--hero_copy {
-    font-size: clamp(1.5rem, 1.2857rem + 0.9524vw, 2rem);
-    display: flex;
-    flex-direction: column;
-    letter-spacing: 0.25em;
-    --lh: 2;
-  }
-  :where([lang='ja']) .c--hero_copy {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    letter-spacing: 0.4em;
-    --lh: 2.5;
-  }
+  /* 縦組みのキャッチコピー（書字方向・字間・行間は言語別ページの props 側） */
   :where([lang='ja']) .c--hero_line:first-child {
     margin-inline-start: -2.5em;
   }
   :where([lang='ja']) .c--hero_line:last-child:not(:first-child) {
     margin-inline-start: 2.5em;
   }
-
-  :where([lang='en']) .c--hero_copy {
-    margin-inline-end: auto;
-  }
-
   /* コピー行: ブラー＋フェード（開始は --c--ryokan-mv-lineIndex でスタガード） */
   @keyframes ryokan-mv-lineReveal {
     from {
@@ -214,16 +180,6 @@
   }
   /* 共有ウォーターマーク。位置とサイズはビューポート幅基準で固定（コンテナ幅には依存しない） */
   .c--feature_watermark {
-    position: absolute;
-    z-index: 0;
-    inset-block-start: max(-0.75em, -50px);
-    inset-inline-start: -0.25em;
-    font-family: var(--ff--base, ui-serif, 'Times New Roman', Times, serif);
-    font-size: clamp(3.25rem, -0.75rem + 8vw, 6.25rem);
-    font-weight: 700;
-    letter-spacing: 0.025em;
-    color: color-mix(in srgb, var(--text) 6%, transparent);
-    white-space: nowrap;
     pointer-events: none;
     user-select: none;
     direction: ltr;
