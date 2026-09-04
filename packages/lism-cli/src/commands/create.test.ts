@@ -225,8 +225,8 @@ describe('runCreate', () => {
         description: { ja: 'Astro minimal', en: 'Astro minimal' },
       },
     ];
-    vi.mocked(select).mockResolvedValue('minimal' as never);
-    vi.mocked(input).mockResolvedValue('picked-app' as never);
+    vi.mocked(select).mockResolvedValue('minimal');
+    vi.mocked(input).mockResolvedValue('picked-app');
 
     await runCreateWithTemplates({ force: true }, templates);
 
@@ -264,10 +264,8 @@ describe('runCreate', () => {
         description: { ja: 'Tech blog', en: 'Tech blog' },
       },
     ];
-    vi.mocked(select)
-      .mockResolvedValueOnce('blog' as never)
-      .mockResolvedValueOnce('minimal' as never);
-    vi.mocked(input).mockResolvedValue('blog-app' as never);
+    vi.mocked(select).mockResolvedValueOnce('blog').mockResolvedValueOnce('minimal');
+    vi.mocked(input).mockResolvedValue('blog-app');
 
     await runCreateWithTemplates({ force: true }, templates);
 
@@ -435,7 +433,7 @@ describe('runCreate', () => {
   it('--lang未指定+TTYは最初に言語選択を出し、選択言語(en)のoverlayを適用する', async () => {
     setStdinTTY(true);
     mockBaseWithEnOverlay();
-    vi.mocked(select).mockResolvedValueOnce('en' as never);
+    vi.mocked(select).mockResolvedValueOnce('en');
 
     await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-app', force: true }, LANG_OVERLAY_TEMPLATE);
 
@@ -450,7 +448,7 @@ describe('runCreate', () => {
   it('--lang未指定+TTYで言語にjaを選ぶと、enのoverlayは適用されずjaベースになる', async () => {
     setStdinTTY(true);
     mockBaseWithEnOverlay();
-    vi.mocked(select).mockResolvedValueOnce('ja' as never);
+    vi.mocked(select).mockResolvedValueOnce('ja');
 
     await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-ja', force: true }, LANG_OVERLAY_TEMPLATE);
 
@@ -497,10 +495,10 @@ describe('runCreate', () => {
       },
     ];
     vi.mocked(select)
-      .mockResolvedValueOnce('en' as never) // 言語
-      .mockResolvedValueOnce('blog' as never) // カテゴリ
-      .mockResolvedValueOnce('minimal' as never); // タイプ（variant）
-    vi.mocked(input).mockResolvedValue('blog-app' as never);
+      .mockResolvedValueOnce('en') // 言語
+      .mockResolvedValueOnce('blog') // カテゴリ
+      .mockResolvedValueOnce('minimal'); // タイプ（variant）
+    vi.mocked(input).mockResolvedValue('blog-app');
 
     await runCreateWithTemplates({ force: true }, templates);
 
@@ -746,7 +744,7 @@ describe('runCreate', () => {
     );
   });
 
-  it('single-project-variant型はlang=enでsrc/pages/en/{variant}/を抽出元に使い、ja系・他variant・enディレクトリを掃除する', async () => {
+  it('single-project-variant型はlang=enで{variant}/を持ち上げた上にen/{variant}/を上書きし、両形式のalias importを書き換え、他variant・enディレクトリを掃除する', async () => {
     const templates: Parameters<typeof runCreateWithTemplates>[1] = [
       {
         slug: 'lp-astro-corporate',
@@ -765,18 +763,25 @@ describe('runCreate', () => {
       const dir = (options as { dir: string }).dir;
       fs.mkdirSync(dir, { recursive: true });
       writePackageJson(dir, { name: 'lp-astro', dependencies: { 'lism-css': 'workspace:*' } });
-      // ja base（各 variant）
+      // ja base（各 variant）。_style.css と Footer は en に無く、base から持ち上がる
       writeFile(path.join(dir, 'src/pages/index.astro'), 'gallery');
       writeFile(path.join(dir, 'src/pages/corporate/index.astro'), 'ja corporate');
+      writeFile(path.join(dir, 'src/pages/corporate/_style.css'), '.corp{}');
       writeFile(path.join(dir, 'src/pages/interior/index.astro'), 'ja interior');
       writeFile(path.join(dir, 'src/components/corporate/Header.astro'), '<div>ja corp header</div>');
+      writeFile(path.join(dir, 'src/components/corporate/Footer.astro'), '<div>shared footer</div>');
       writeFile(path.join(dir, 'src/components/interior/Header.astro'), '<div>ja interior header</div>');
-      // en 完全コピー（src/pages/en/{variant}/ + src/components/en/{variant}/）
+      // en 差分（src/pages/en/{variant}/ + src/components/en/{variant}/）。base 側は @/{dir}/{variant}/ の alias で参照する
       writeFile(
         path.join(dir, 'src/pages/en/corporate/index.astro'),
-        ["import Header from '@/components/en/corporate/Header.astro';", '<Header /> en corporate'].join('\n')
+        [
+          "import Header from '@/components/en/corporate/Header.astro';",
+          "import Footer from '@/components/corporate/Footer.astro';",
+          "import '@/pages/corporate/_style.css';",
+          '<Header /> en corporate <Footer />',
+        ].join('\n')
       );
-      writeFile(path.join(dir, 'src/pages/en/corporate/_style.css'), '.corp{}');
+      writeFile(path.join(dir, 'src/pages/en/index.astro'), 'en gallery');
       writeFile(path.join(dir, 'src/pages/en/interior/index.astro'), 'en interior');
       writeFile(path.join(dir, 'src/components/en/corporate/Header.astro'), '<div>en corp header</div>');
       writeFile(path.join(dir, 'src/components/en/interior/Header.astro'), '<div>en interior header</div>');
@@ -787,22 +792,27 @@ describe('runCreate', () => {
 
     const outDir = path.join(tmpDir, 'lp-en');
 
-    // en/corporate の index.astro が src/pages/index.astro に持ち上がる（ja ではなく en）
+    // en/corporate の index.astro が ja の index.astro を上書きして src/pages/index.astro になる
     const indexContent = fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8');
     expect(indexContent).toContain('en corporate');
-    // en/corporate の付随ファイルも持ち上がる
+    // en に無い base の付随ファイルは base から持ち上がる
     expect(fs.readFileSync(path.join(outDir, 'src/pages/_style.css'), 'utf-8')).toBe('.corp{}');
-    // 2 セグメント variant でも @/components/en/corporate/ → @/components/ に書き換わる
+    // @/{dir}/en/corporate/ と @/{dir}/corporate/ の両形式が @/{dir}/ に書き換わる
     expect(indexContent).toContain("import Header from '@/components/Header.astro';");
+    expect(indexContent).toContain("import Footer from '@/components/Footer.astro';");
+    expect(indexContent).toContain("import '@/pages/_style.css';");
     expect(indexContent).not.toContain('/en/corporate/');
+    expect(indexContent).not.toContain('/corporate/');
 
     // ja variant・他 variant・en ディレクトリは生成物に残らない
     expect(fs.existsSync(path.join(outDir, 'src/pages/corporate'))).toBe(false);
     expect(fs.existsSync(path.join(outDir, 'src/pages/interior'))).toBe(false);
     expect(fs.existsSync(path.join(outDir, 'src/pages/en'))).toBe(false);
+    expect(fs.readdirSync(path.join(outDir, 'src/pages')).sort()).toEqual(['_style.css', 'index.astro']);
 
-    // components も en/corporate が持ち上がり、ja・他 variant・en は消える
+    // components は base を持ち上げた上に en/corporate が上書きされ、ja・他 variant・en は消える
     expect(fs.readFileSync(path.join(outDir, 'src/components/Header.astro'), 'utf-8')).toBe('<div>en corp header</div>');
+    expect(fs.readFileSync(path.join(outDir, 'src/components/Footer.astro'), 'utf-8')).toBe('<div>shared footer</div>');
     expect(fs.existsSync(path.join(outDir, 'src/components/corporate'))).toBe(false);
     expect(fs.existsSync(path.join(outDir, 'src/components/interior'))).toBe(false);
     expect(fs.existsSync(path.join(outDir, 'src/components/en'))).toBe(false);
@@ -891,7 +901,7 @@ describe('runCreate', () => {
         description: { ja: 'Vite minimal', en: 'Vite minimal' },
       },
     ];
-    vi.mocked(select).mockResolvedValueOnce('vite' as never);
+    vi.mocked(select).mockResolvedValueOnce('vite');
 
     await runCreateWithTemplates({ template: 'minimal', targetDir: 'cat-app', force: true }, templates);
 
@@ -959,7 +969,7 @@ describe('runCreate', () => {
     const outDir = path.join(tmpDir, 'occupied');
     fs.mkdirSync(outDir, { recursive: true });
     fs.writeFileSync(path.join(outDir, 'keep.txt'), 'keep');
-    vi.mocked(confirm).mockResolvedValue(false as never);
+    vi.mocked(confirm).mockResolvedValue(false);
 
     await runCreate({ template: 'minimal-astro', targetDir: 'occupied' });
 

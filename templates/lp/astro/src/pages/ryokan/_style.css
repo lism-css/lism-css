@@ -189,6 +189,12 @@
    Feature
   -------------------------------------------------- */
   /* figure のプル（set:bleed の --bleed）・角丸・比率と lg の2列 grid はレスポンシブ Props 側 */
+  @container not (min-width: 800px) {
+    .c--feature_lead,
+    .c--feature_body {
+      text-wrap: pretty;
+    }
+  }
   /* 共有ウォーターマーク。位置とサイズはビューポート幅基準で固定（コンテナ幅には依存しない） */
   .c--feature_watermark {
     position: absolute;

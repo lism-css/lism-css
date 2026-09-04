@@ -311,27 +311,32 @@ function cleanupDevArtifacts(projectDir: string): void {
   }
 }
 
-// 言語別コンテンツは文章量が多いため完全コピーとし、無ければbase言語へフォールバックする。
-function resolveVariantDir(srcDir: string, variant: string, lang: Lang): string {
+/**
+ * 言語別 variant（`src/{dir}/{lang}/{variant}/`）を base に重ねるか判定する。
+ * `src/pages/{lang}/{variant}/index.astro` があるときだけ lang 層を適用し、無ければ base のみを使う。
+ */
+function resolveLangVariantDir(srcDir: string, variant: string, lang: Lang): string | undefined {
   const langVariant = `${lang}/${variant}`;
   const hasLangVariant = fs.existsSync(path.join(srcDir, 'pages', langVariant, 'index.astro'));
-  return hasLangVariant ? langVariant : variant;
+  return hasLangVariant ? langVariant : undefined;
 }
 
 /**
  * single-project-variant 用の後処理。
  *
  * `src/` 直下のサブディレクトリ（`src/pages/`, `src/components/`, `src/styles/`, ...）について、
- * その中に対象 variant のディレクトリ（例: `src/components/{variant}/`）が存在するものを
- * 「variant 規約のディレクトリ」とみなす。
+ * その中に対象 variant のディレクトリ（例: `src/components/{variant}/`）か言語別 variant のディレクトリ
+ * （例: `src/components/{lang}/{variant}/`）が存在するものを「variant 規約のディレクトリ」とみなす。
  * （variant ディレクトリ直下はファイルのみを想定。ネストしたサブディレクトリ構成は非対応）
  *
  * `src/pages/{variant}/index.astro` の存在だけは必須（無ければエラー）。
- * 対象variantを持つディレクトリでは中身を親へマージし、直下の全サブディレクトリを削除する。
+ * 対象 variant を持つディレクトリでは base（`{variant}/`）→ lang（`{lang}/{variant}/`）の順に中身を親へ
+ * マージし（同名ファイルは lang が上書き）、直下の全サブディレクトリを削除する。
+ * lang 側には差分ファイルだけを置けばよく、base 側のファイルは `@/{dir}/{variant}/...` の alias で参照できる。
  */
 function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef, lang: Lang): void {
   const srcDir = path.join(projectDir, 'src');
-  const variant = resolveVariantDir(srcDir, tpl.variant, lang);
+  const { variant } = tpl;
 
   const pagesVariantIndex = path.join(srcDir, 'pages', variant, 'index.astro');
   if (!fs.existsSync(pagesVariantIndex)) {
@@ -345,16 +350,23 @@ function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTempla
 
   if (!fs.existsSync(srcDir) || !fs.statSync(srcDir).isDirectory()) return;
 
+  // マージ順が優先順位。後の lang 側が base の同名ファイルを上書きする。
+  const langVariant = resolveLangVariantDir(srcDir, variant, lang);
+  const variantDirs = langVariant ? [variant, langVariant] : [variant];
+
   // variant配下を親へ持ち上げ、他variantもまとめて取り除く。
   for (const entry of fs.readdirSync(srcDir, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
     const parentDir = path.join(srcDir, entry.name);
-    const variantDirInside = path.join(parentDir, variant);
+    const variantDirsInside = variantDirs
+      .map((dir) => path.join(parentDir, dir))
+      .filter((dir) => fs.existsSync(dir) && fs.statSync(dir).isDirectory());
 
-    if (!fs.existsSync(variantDirInside)) continue;
-    if (!fs.statSync(variantDirInside).isDirectory()) continue;
+    if (variantDirsInside.length === 0) continue;
 
-    mergeDirectory(variantDirInside, parentDir);
+    for (const variantDirInside of variantDirsInside) {
+      mergeDirectory(variantDirInside, parentDir);
+    }
 
     for (const child of fs.readdirSync(parentDir, { withFileTypes: true })) {
       if (!child.isDirectory()) continue;
@@ -363,12 +375,13 @@ function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTempla
   }
 
   // 持ち上げ後の構成に合わせてalias importを直す。
-  rewriteVariantAliasImports(srcDir, variant);
+  rewriteVariantAliasImports(srcDir, variantDirs);
 }
 
 /**
  * 配布後のファイル群に対して、path alias 経由の `@/{dir}/{variant}/...` 形式の参照を
- * `@/{dir}/...` に置換する。variant 名にメタ文字が含まれても安全なように escape する。
+ * `@/{dir}/...` に置換する。`variantDirs` には base（`{variant}`）と lang（`{lang}/{variant}`）の
+ * 両方を渡し、どちらの形式も置換する。variant 名にメタ文字が含まれても安全なように escape する。
  *
  * 対象拡張子はテキスト系のソース/スタイルのみ。マッチしないファイルはそのまま。
  */
@@ -391,10 +404,10 @@ const ALIAS_REWRITE_EXTENSIONS = new Set([
   '.html',
 ]);
 
-function rewriteVariantAliasImports(srcDir: string, variant: string): void {
+function rewriteVariantAliasImports(srcDir: string, variantDirs: string[]): void {
   if (!fs.existsSync(srcDir)) return;
 
-  const pattern = new RegExp(`(@/[^/'"\\s\`]+)/${escapeRegExp(variant)}/`, 'g');
+  const patterns = variantDirs.map((dir) => new RegExp(`(@/[^/'"\\s\`]+)/${escapeRegExp(dir)}/`, 'g'));
 
   walkFiles(srcDir, (filePath) => {
     const ext = path.extname(filePath);
@@ -406,9 +419,12 @@ function rewriteVariantAliasImports(srcDir: string, variant: string): void {
     } catch {
       return; // バイナリ等は無視
     }
-    if (!original.includes(`/${variant}/`)) return;
+    if (!variantDirs.some((dir) => original.includes(`/${dir}/`))) return;
 
-    const replaced = original.replace(pattern, '$1/');
+    let replaced = original;
+    for (const pattern of patterns) {
+      replaced = replaced.replace(pattern, '$1/');
+    }
     if (replaced !== original) {
       fs.writeFileSync(filePath, replaced);
     }

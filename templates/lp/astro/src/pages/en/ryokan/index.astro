@@ -6,7 +6,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 import Header from '@/components/en/ryokan/Header.astro';
 import SectionHeading from '@/components/en/ryokan/SectionHeading.astro';
-import './_style.css';
+import '@/pages/ryokan/_style.css';
 
 export const title = '静寂の宿';
 
@@ -473,7 +473,7 @@ const reservationSites: readonly SiteCard[] = [
                 >
                   <Flex class="c--feature_titleInner" fxd={['column', null, null, 'row-reverse']} ai="start" g={['0', null, null, '20']} lts="l">
                     <Inline class="c--feature_titleLine1" d="block" wm={[null, null, null, 'vertical-rl']}>A Special Journey,</Inline>
-                    <Inline class="c--feature_titleLine2" d="block" wm={[null, null, null, 'vertical-rl']}>an Experience of Silence</Inline>
+                    <Inline class="c--feature_titleLine2" ms="1em" d="block" wm={[null, null, null, 'vertical-rl']}>an Experience of Silence</Inline>
                   </Flex>
                 </Heading>
                 <Stack
