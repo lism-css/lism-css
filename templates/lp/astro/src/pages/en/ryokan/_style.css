@@ -17,9 +17,6 @@
 
     /* gutterを少しだけ広く */
     --gutter--base: 1.875rem;
-
-    /* フォントサイズ: 16px@1000px → 17px@1400px */
-    --fz--base: clamp(1rem, 0.8438rem + 0.25vw, 1.0625rem);
   }
   /* 和紙調のベージュ区画。カラートークン一式をライト値に差し替える（区画内の Modal・フォーム部品も追従） */
   .set--light {
@@ -189,6 +186,18 @@
    Feature
   -------------------------------------------------- */
   /* figure のプル（set:bleed の --bleed）・角丸・比率と lg の2列 grid はレスポンシブ Props 側 */
+  @container not (min-width: 800px) {
+    .c--feature_lead,
+    .c--feature_body {
+      text-wrap: pretty;
+    }
+  }
+  /* lg 以上の縦書き2列（wm / fxd は Props 側）で2行目を下にずらす。Lism lg = @container 1120px に同期 */
+  @container (min-width: 1120px) {
+    .c--feature_titleLine2 {
+      transform: translateY(1em);
+    }
+  }
   /* 共有ウォーターマーク。位置とサイズはビューポート幅基準で固定（コンテナ幅には依存しない） */
   .c--feature_watermark {
     position: absolute;

@@ -46,6 +46,7 @@ pnpm create lism --template blog-astro-minimal --lang en ./my-blog
 | `blog-astro-techlog` | 技術ブログ向け。コードハイライト・カテゴリ・タグ・TOC・年月アーカイブ・検索を装備した Astro ブログ |
 | `lp-astro-corporate` | コーポレートサイト向けの Astro ランディングページ |
 | `lp-astro-interior` | インテリア・暮らし系サービス向けの Astro ランディングページ |
+| `lp-astro-ryokan` | 旅館・宿泊業向けの Astro ランディングページ |
 
 テンプレートは [`templates/`](https://github.com/lism-css/lism-css/tree/main/templates) 配下のカテゴリ別ディレクトリに順次追加される予定です。
 

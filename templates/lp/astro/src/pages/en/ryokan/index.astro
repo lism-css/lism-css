@@ -19,12 +19,11 @@ import {
   Media,
   Stack,
   Text,
-  WithSide,
 } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
-import Header from '@/components/ryokan/Header.astro';
-import SectionHeading from '@/components/ryokan/SectionHeading.astro';
+import Header from '@/components/en/ryokan/Header.astro';
+import SectionHeading from '@/components/en/ryokan/SectionHeading.astro';
 import './_style.css';
 
 export const title = '静寂の宿';
@@ -32,7 +31,7 @@ export const title = '静寂の宿';
 const logoLabel = title;
 
 const mvImages = ['https://cdn.lism-css.com/img/japan/u-Dczv0Klww4.jpg', 'https://cdn.lism-css.com/img/japan/a_JNaB1eSLPA.jpg'];
-const mvCopyLines = ['都会の喧騒から離れ、', '心安らぐ自然の中で', '至福のひとときを。'];
+const mvCopyLines = ["Away from the city's noise,", 'in the calm of nature,', 'a moment of pure bliss.'];
 
 const mvDurationPerImage = 7;
 const mvFadeTime = 3;
@@ -81,30 +80,30 @@ const mvLayeredKeyframesStyle = `@layer lism-custom {
 
 const aboutImgLeft = {
   src: 'https://cdn.lism-css.com/img/japan/u-qQGCFQFlkT.jpg',
-  alt: '池を泳ぐ鯉',
+  alt: 'Koi swimming in the garden pond',
   width: 1920,
   height: 1280,
 };
 const aboutImgRight = {
   src: 'https://cdn.lism-css.com/img/japan/u-lCzkkcbJUb.jpg',
-  alt: '座敷から望む秋の庭園',
+  alt: 'An autumn garden seen from the tatami room',
   width: 1600,
   height: 1200,
 };
 
 const aboutBodyCopy =
-  '百余年の歴史を刻む、風格ある佇まい。古き良き日本の情緒を残しつつ、現代の快適さを融合させた空間で皆様をお迎えいたします。手入れの行き届いた日本庭園を眺め、静寂に包まれて味わう名湯は、格別な癒やし。受け継がれてきたおもてなしの心で、特別な旅を鮮やかに彩ります。四季折々の風情が移ろく庭先では、新緑の香り、深緑の日陰、紅葉の燃えるような美しさ、静かな雪化粧の趣まで、日々違う表情を呈します。佇まい、器、会席、湯、そして言葉少ななもてなし。それらすべてに至るまで、余韻深く、お客さまの記憶に残る一時を大切に紡ぎたい。都会を離れ、ここ静寂の宿で、心ほどけゆく至福のひとときをどうぞお味わいください。';
+  'A stately presence shaped by more than a century of history. We welcome you into a space where the quiet charm of old Japan meets the comforts of today. Gaze out over a meticulously tended Japanese garden, wrapped in silence, as the hot spring waters offer a rare kind of healing. With a spirit of hospitality handed down through generations, we bring color to a journey unlike any other. In the garden, where the seasons turn, each day wears a different face: the scent of new leaves, the shade of deep summer green, the blazing beauty of autumn maples, the hushed elegance of fresh snow. The setting, the tableware, the kaiseki, the bath, and a hospitality that speaks softly. In every one of these, we hope to weave a moment that lingers long in your memory. Leave the city behind, and here at our quiet hidden retreat, let yourself unwind into pure bliss.';
 
 const featureImg = {
   src: 'https://cdn.lism-css.com/img/japan/u-L4YLmcBryx.jpg',
-  alt: '千本鳥居が続く参道',
+  alt: 'A path lined with rows of vermilion torii gates',
   width: 1920,
   height: 1280,
 };
 
-const featureLead = '春の桜、秋の紅葉。';
+const featureLead = 'Cherry blossoms in spring, maple leaves in autumn.';
 const featureBody =
-  '四季の移ろいが最も美しい瞬間を切り取る当宿は、まるで一幅の絵画のように自然と調和いたします。名湯と旬の味わいを、大切な方々とご一緒にお楽しみください。桜の頃は窓越しに淡い色の雪の様子を、夏は深い緑と風鈴の音を、秋は燃えるような紅葉と澄んだ空を、冬は静かな雪化粧と湯けむりを、それぞれ五感で味わえます。';
+  'Framing the most beautiful moment of every passing season, our ryokan sits in harmony with nature like a single painted scroll. Enjoy the celebrated waters and the flavors of the moment with the people who matter most. In spring, pale petals drifting past the window; in summer, deep green and the sound of wind chimes; in autumn, blazing maples under a clear sky; in winter, a quiet blanket of snow and rising steam from the bath.';
 
 const seasonBg = {
   src: 'https://cdn.lism-css.com/img/japan/u-MES3nTNrVq.jpg',
@@ -113,14 +112,14 @@ const seasonBg = {
 };
 
 const seasonGalleryPhotos = [
-  { src: 'https://cdn.lism-css.com/img/japan/u-1.jpg', alt: '富士と朝焼けの風景' },
-  { src: 'https://cdn.lism-css.com/img/japan/u-Dczv0Klww4.jpg', alt: '日本の山並みと雲海' },
-  { src: 'https://cdn.lism-css.com/img/japan/u-xJdqvxp0ak.jpg', alt: '湖畔の夕景' },
-  { src: 'https://cdn.lism-css.com/img/japan/u-LGjnEWb619.jpg', alt: '雪化粧の峰' },
+  { src: 'https://cdn.lism-css.com/img/japan/u-1.jpg', alt: 'Mount Fuji at sunrise' },
+  { src: 'https://cdn.lism-css.com/img/japan/u-Dczv0Klww4.jpg', alt: 'Japanese mountain ridges above a sea of clouds' },
+  { src: 'https://cdn.lism-css.com/img/japan/u-xJdqvxp0ak.jpg', alt: 'Evening light on the lakeshore' },
+  { src: 'https://cdn.lism-css.com/img/japan/u-LGjnEWb619.jpg', alt: 'Snow-covered peaks' },
 ] as const;
 
 const seasonIntroBody =
-  '静寂に包まれた隠れ宿で、四季の移ろいを五感で味わうひととき。露天風呂に身をゆだねれば、木々のざわめきや鳥の声、移ろう空の色が心を解きほぐします。伝統美と現代の心地よさが溶け合う空間で、大切な方との時間をお過ごしください。春は霧雨に濡れる石畳、夏は池面を揺らす蛍火。秋の名月を浴びるテラスでは、澄んだ大気の中、遠い街の明かりが金砂のように輝きます。雪が庭を覆う冬には、囲炉裏端で温めた一献が旅の疲れをそっと癒します。茶寮では厳選した茶葉の香りを楽しみ、図書角では旅立ち前の一冊を。土地の恵みを生かした季節の献立と、丁寧に手入れされた庭が、旅の記憶に深く残ることを願っています。名湯の湯煙の向こうに、明日への活力と、人や自然との新たな出会いを抱いてお戻りください。';
+  'At a hidden retreat wrapped in silence, savor the changing seasons with all five senses. Sink into the open-air bath and let the rustle of trees, birdsong, and shifting colors of the sky ease your mind. In a space where traditional beauty meets modern comfort, enjoy precious time with someone special. In spring, stone paths glisten with rain; in summer, fireflies shimmer across the pond. From the terrace beneath the autumn moon, distant town lights shine like scattered gold in the clear air. When winter snow blankets the garden, a warm cup by the hearth gently soothes the weariness of travel. Enjoy the aroma of carefully selected tea in the tearoom, or choose a book in the reading corner before setting out. We hope seasonal dishes made with local ingredients and the lovingly tended garden remain vivid in your memory. Beyond the hot-spring mist, carry home renewed energy and new connections with people and nature.';
 
 type PlanStat = {
   label: string;
@@ -141,65 +140,65 @@ type Plan = {
 
 const plans = [
   {
-    title: '夕朝食・露天風呂付きゆったりプラン',
+    title: 'Unhurried Stay with Dinner, Breakfast and Open-Air Bath',
     description:
-      '季節の会席と朝の御膳、そして湯冷めしない露天風呂までひと続きの時間。お部屋でゆっくりとお食事をご堪能いただき、湯浴みの合間には庭園を眺めながらのんびりとお過ごしください。お飲み物の追加オーダーやアレルギー対応も可能ですので、ご予約時にお申し付けください。',
+      'A seasonal kaiseki dinner, a morning tray, and an open-air bath that keeps the warmth in: one unbroken stretch of time. Dine at your own pace in your room, and between soaks, linger over the garden. Extra drink orders and allergy accommodations are also possible, so please let us know when you book.',
     stats: [
-      { label: 'ご予約可能人数', value: '1〜2名様' },
-      { label: '料金', value: '29,800円〜' },
-      { label: 'お部屋タイプ', value: '露天付き和室' },
+      { label: 'Guests', value: '1–2 guests' },
+      { label: 'Rate', value: 'From ¥29,800' },
+      { label: 'Room type', value: 'Japanese-style room with open-air bath' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_YWq6k0dioX.jpg',
-      alt: '紅葉の庭園と母屋',
+      alt: 'The main building beside a garden in autumn colors',
       width: 1920,
       height: 1080,
     },
   },
   {
-    title: '旬会席・半露天付き特別室ステイ',
+    title: 'Seasonal Kaiseki in a Suite with Semi-Open-Air Bath',
     description:
-      'その日の仕入れで組み立てる旬会席と、半露天から望む山並みのグラデーション。記念日やご家族のお祝いに、少し贅沢なお時間をご用意いたしました。',
+      "A seasonal kaiseki course built around the day's finest ingredients, and the layered gradations of the mountains seen from a semi-open-air bath. A slightly more lavish stretch of time, for anniversaries and family celebrations.",
     stats: [
-      { label: 'ご予約可能人数', value: '2〜4名様' },
-      { label: '料金', value: '39,800円〜' },
-      { label: 'お部屋タイプ', value: '半露天付き特別室' },
+      { label: 'Guests', value: '2–4 guests' },
+      { label: 'Rate', value: 'From ¥39,800' },
+      { label: 'Room type', value: 'Suite with semi-open-air bath' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_AgvZ1VdMXz.jpg',
-      alt: '千本鳥居が続く参道',
+      alt: 'A path lined with rows of vermilion torii gates',
       width: 1920,
       height: 1280,
     },
   },
   {
-    title: '一泊朝食のみ・湯めぐり楽々プラン',
+    title: 'One Night with Breakfast: Easy Hot-Spring Hopping',
     description:
-      '夕食は外で自由に、朝は当宿の炊きたてご飯と汁物で。近隣の外湯めぐりや散策を楽しみたい方に、身軽な滞在スタイルをご提案します。チェックアウト後の荷物預かりも承りますので、観光の前後にご活用ください。',
+      'Dinner out on your own terms, and mornings with freshly cooked rice and soup from our kitchen. A light, unencumbered way to stay for anyone who wants to tour the public baths nearby or wander the town. We also hold luggage after checkout, so use it before or after sightseeing.',
     stats: [
-      { label: 'ご予約可能人数', value: '1〜3名様' },
-      { label: '料金', value: '18,500円〜' },
-      { label: 'お部屋タイプ', value: '和室10畳＋広縁' },
+      { label: 'Guests', value: '1–3 guests' },
+      { label: 'Rate', value: 'From ¥18,500' },
+      { label: 'Room type', value: '10-mat Japanese room with veranda' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/u-qQGCFQFlkT.jpg',
-      alt: '池を泳ぐ鯉と庭園',
+      alt: 'Koi swimming in the garden pond',
       width: 1920,
       height: 1280,
     },
   },
   {
-    title: '連泊エコノミー・温泉三昧プラン',
+    title: 'Multi-Night Value Plan: Nothing but Hot Springs',
     description:
-      'お得な連泊料金で、名湯と静寂にどっぷり浸かる旅。お食事はシンプルな定番御膳に、湯上がりの甘味までお部屋にお届けする心地よさをご用意しました。',
+      'A trip to soak fully in famed waters and deep quiet, at a friendly multi-night rate. Meals are our simple signature trays, with a post-bath sweet delivered right to your room.',
     stats: [
-      { label: 'ご予約可能人数', value: '2名様〜' },
-      { label: '料金', value: '52,000円〜 / 2泊' },
-      { label: 'お部屋タイプ', value: '和洋室ツイン' },
+      { label: 'Guests', value: '2 guests or more' },
+      { label: 'Rate', value: 'From ¥52,000 / 2 nights' },
+      { label: 'Room type', value: 'Japanese-Western twin room' },
     ],
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_BybmIMidVa.jpg',
-      alt: '座敷から望む秋の庭園',
+      alt: 'An autumn garden seen from the tatami room',
       width: 1600,
       height: 1200,
     },
@@ -219,87 +218,88 @@ type InformationItem = {
 const informationItems = [
   {
     icon: 'home',
-    title: 'ロビー・ラウンジ',
-    description: '到着直後のひとときから夜の湯上がりまで。珈琲や茶菓のセルフサービスとともに、庭側の座敷席で静かにお過ごしいただけます。',
+    title: 'Lobby and Lounge',
+    description:
+      'From the moment you arrive to the quiet hours after your evening bath. Help yourself to coffee and tea sweets, and settle into the garden-side tatami seating.',
   },
   {
     icon: 'clock',
-    title: '24時間対応のフロント',
-    description: 'チェックインのご案内、周辺の散策コース、タクシーや送迎の手配まで。お困りごとがあれば、いつでもお声がけください。',
+    title: 'Front Desk, Open 24 Hours',
+    description: 'Check-in guidance, walking routes nearby, taxis and shuttle arrangements. Whenever something comes up, just say the word.',
   },
   {
     icon: 'cart',
-    title: '館内売店・土産コーナー',
-    description: '地酒や銘菓、オリジナルタオルに浴用アメニティまで。旅のちょっとした備えやお土産選びに、ぜひお立ち寄りください。',
+    title: 'Shop and Souvenir Corner',
+    description: 'Local sake and confections, original towels and bath amenities. Stop by for small travel essentials or for gifts to take home.',
   },
   {
     icon: 'book',
-    title: '閲覧室・書斎コーナー',
-    description: '旅館・温泉郷のガイドブックや写真集をご用意しました。湯上がりにページをめくりながら、翌日の予定をゆっくり練るのもおすすめです。',
+    title: 'Reading Room and Study Corner',
+    description: 'Guidebooks and photo collections on ryokan and hot-spring towns. Turn a few pages after your bath and plan tomorrow at leisure.',
   },
 ] as const satisfies readonly InformationItem[];
 
 const informationIntro =
-  '湯治から滞在型の寛ぎまで、館内の設備で旅のリズムを整えられます。湯殿から客室まで動線を短くし、夜遅くのご利用にも配慮した案内でお迎えいたします。';
+  'From a traditional cure to a longer, slower stay, our facilities let you set the rhythm of your trip. Short paths from the baths to the guest rooms, and guidance designed with late-night use in mind.';
 
 /** 各項目は質問・回答を独立して管理（必要に応じて初期展開を指定） */
 const faqItems: { question: string; answer: string; defaultOpen?: boolean }[] = [
   {
-    question: '初めて利用するのですが難しくないですか？',
+    question: 'This is my first stay at a ryokan. Is it complicated?',
     answer:
-      'はい、全く問題ありません。初めての方でも戸惑うことなくご利用いただけます。もしお困りの際はフロントがお問い合わせにも対応いたしますので、安心してご利用ください。',
+      'Not at all. First-time guests find everything easy to follow. If anything is unclear, the front desk is glad to answer your questions, so please relax and enjoy your stay.',
     defaultOpen: true,
   },
   {
-    question: '予約のキャンセルはできますか？',
+    question: 'Can I cancel my reservation?',
     answer:
-      'プランごとにキャンセル規定が定められております。ご予約確定メールに記載の期限までにマイページまたはお電話にてお手続きください。直前の変更については空室状況を確認のうえご案内いたします。',
+      'Cancellation terms are set for each plan. Please complete the process from My Page or by phone before the deadline stated in your confirmation email. For last-minute changes, we will check availability and advise you.',
   },
   {
-    question: '宿泊プランを予約後に変更したくなった場合は、どのように変更できますか？',
+    question: 'If I want to change my plan after booking, how do I do that?',
     answer:
-      'ご希望の日付・人数・お部屋タイプをお知らせいただければ、空室状況を確認のうえ差し替えを承ります。アップグレードに伴う差額やキャンセル規定の適用については、フロントにてご説明いたします。',
+      'Let us know your preferred dates, number of guests and room type, and we will check availability and make the switch. The front desk can explain any price difference for an upgrade and how the cancellation terms apply.',
   },
   {
-    question: 'チェックイン・アウトの時間は決まっていますか？',
+    question: 'Are check-in and check-out times fixed?',
     answer:
-      'チェックインは15時、チェックアウトは11時を目安としております。早めのご到着や遅めのご出発をご希望の場合は、事前にフロントまでお問い合わせください。空き状況に応じてご相談に乗れます。',
+      'Check-in is from 3:00 p.m. and check-out is by 11:00 a.m. as a guide. If you would like to arrive earlier or leave later, please contact the front desk in advance. We can often accommodate you depending on availability.',
   },
   {
-    question: 'お食事のアレルギー・苦手な食材には対応できますか？',
+    question: 'Can you accommodate allergies or ingredients I would rather avoid?',
     answer:
-      'ご予約時にできる限り詳しくお知らせください。取り扱いの難しい食材もございますが、可能な範囲で代替や調整をいたします。当日のご変更は調理の都合上お受けできない場合がございます。',
+      'Please tell us in as much detail as possible when you book. Some ingredients are difficult to work around, but we will substitute or adjust wherever we can. Same-day changes may not be possible because of kitchen preparation.',
   },
   {
-    question: 'お部屋に露天風呂は付いていますか？',
+    question: 'Do the rooms have an open-air bath?',
     answer:
-      'プランおよびお部屋タイプにより異なります。露天風呂付きの客室、大浴場のみのプランなどをご用意しております。ご予約画面の設備欄またはフロントまでお問い合わせください。',
+      'It depends on the plan and the room type. We offer rooms with a private open-air bath as well as plans that use the large communal baths only. Please check the amenities column on the booking screen or ask the front desk.',
   },
   {
-    question: 'Wi-Fi は利用できますか？',
+    question: 'Is Wi-Fi available?',
     answer:
-      '全館で無料の Wi-Fi をご利用いただけます。お部屋番号とご案内のパスワードで接続ください。混雑時は速度が落ちる場合がございますのでご了承ください。',
+      'Free Wi-Fi is available throughout the ryokan. Connect using your room number and the password we provide. Please note that speeds may drop during busy periods.',
   },
   {
-    question: '子ども連れの宿泊は可能ですか？',
+    question: 'Can I stay with children?',
     answer:
-      '可能です。添い寝のお子様の料金やベッドのご用意はプランにより異なります。ベビーベッドの貸し出しは台数に限りがございますので、事前にご予約ください。',
+      'Yes. Rates for children sharing a bed and the availability of extra beds vary by plan. Cribs are limited in number, so please reserve one in advance.',
   },
   {
-    question: '記念日のサプライズを依頼できますか？',
+    question: 'Can you help with a surprise for a special occasion?',
     answer:
-      'ケーキや花束の手配、お食事のメッセージプレートなど、事前にご相談いただければ可能な範囲でお手伝いいたします。ご予算やお届けタイミングをお聞きしたうえでご提案いたします。',
+      'Cakes, bouquets, a message plate with your meal and more. If you talk to us in advance, we will help however we can. Tell us your budget and the timing, and we will suggest some options.',
   },
   {
-    question: '近隣の観光地へのアクセスや送迎はありますか？',
+    question: 'Is there transport or a shuttle to sights nearby?',
     answer:
-      '最寄り駅からの送迎は定時運行のシャトルをご利用いただけます（要予約・台数限定）。観光地までのタクシー手配や地図の貸し出しも承りますので、フロントまでお声がけください。',
+      'A scheduled shuttle runs from the nearest station (reservation required, limited seats). We can also arrange taxis to sightseeing spots and lend you maps, so please ask at the front desk.',
   },
 ];
 
 const faqImage = {
   src: 'https://cdn.lism-css.com/img/japan/u-v9tUs6AiFT.jpg',
-  alt: '雨上がりの石畳の路地を、赤い和傘を差して歩く舞妓さんの後ろ姿',
+  alt: 'A maiko seen from behind, walking a cobbled lane after rain under a red paper parasol',
   width: 1920,
   height: 1280,
 };
@@ -308,9 +308,9 @@ const faqImage = {
 const footerNavItems = [
   { href: '#about', ja: '当宿について', en: 'About' },
   { href: '#feature', ja: '宿の特徴', en: 'Feature' },
-  { href: '#plans', ja: '宿泊プラン', en: 'Plan' },
+  { href: '#plans', ja: '宿泊プラン', en: 'Plans' },
   { href: '#information', ja: '設備紹介', en: 'Facilities' },
-  { href: '#faq', ja: 'よくあるご質問', en: 'Faq' },
+  { href: '#faq', ja: 'よくあるご質問', en: 'FAQ' },
 ] as const;
 
 const footerSnsLinks = [
@@ -336,23 +336,23 @@ type SiteCard = {
 
 const reservationSites: readonly SiteCard[] = [
   {
-    title: 'トラベルトリップ',
-    body: '特典：早期予約で料金が割引になるキャンペーンを実施中です。空室カレンダーから日程を選べます。',
+    title: 'Travel Trip',
+    body: 'Perk: an early-booking discount campaign is running now. Choose your dates from the availability calendar.',
     href: '#',
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_77prliRsZS.jpg',
-      alt: 'トラベルトリップのイメージ写真',
+      alt: 'Promotional photo for Travel Trip',
       width: 1920,
       height: 1080,
     },
   },
   {
-    title: 'らくらく旅行予約',
-    body: '特典：地域密着サポート付きプランをご用意しています。変更・キャンセルは各サイトの規定に従います。',
+    title: 'Easy Travel Booking',
+    body: "Perk: plans that come with local, on-the-ground support. Changes and cancellations follow each site's own terms.",
     href: '#',
     image: {
       src: 'https://cdn.lism-css.com/img/japan/a_AgvZ1VdMXz.jpg',
-      alt: 'らくらく旅行予約のイメージ写真',
+      alt: 'Promotional photo for Easy Travel Booking',
       width: 1920,
       height: 1280,
     },
@@ -360,7 +360,7 @@ const reservationSites: readonly SiteCard[] = [
 ];
 ---
 
-<Layout title={title}>
+<Layout title={title} lang="en">
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400..700&display=swap" rel="stylesheet" slot="head" />
@@ -488,13 +488,14 @@ const reservationSites: readonly SiteCard[] = [
                   fz={['2xl', null, '3xl']}
                   fw="600"
                   lts="l"
+                  lh="1.65"
                   aslf="start"
                   gc={[null, null, null, 2]}
                   gr={[null, null, null, '1/-1']}
                 >
                   <Flex class="c--feature_titleInner" fxd={['column', null, null, 'row-reverse']} ai="start" g={['0', null, null, '20']} lts="l">
-                    <Inline class="c--feature_titleLine1" d="block" wm={[null, null, null, 'vertical-rl']}>特別な旅と</Inline>
-                    <Inline class="c--feature_titleLine2" ms="1em" d="block" wm={[null, null, null, 'vertical-rl']}>静寂の体験</Inline>
+                    <Inline class="c--feature_titleLine1" d="block" wm={[null, null, null, 'vertical-rl']}>A Special Journey,</Inline>
+                    <Inline class="c--feature_titleLine2" d="block" wm={[null, null, null, 'vertical-rl']}>an Experience of Silence</Inline>
                   </Flex>
                 </Heading>
                 <Stack
@@ -504,10 +505,10 @@ const reservationSites: readonly SiteCard[] = [
                   gr={[null, null, null, 2]}
                   max-w={[null, null, null, 'min(100%, 26rem)']}
                 >
-                  <Text fz={['l', null, 'xl']} fw="600" lts="l">
+                  <Text class="c--feature_lead" fz={['l', null, 'xl']} fw="600" lts="l">
                     {featureLead}
                   </Text>
-                  <Text fz="m" hl="l">
+                  <Text class="c--feature_body" fz="m" hl="l">
                     {featureBody}
                   </Text>
                 </Stack>
@@ -526,9 +527,9 @@ const reservationSites: readonly SiteCard[] = [
           <Grid gtc={['1fr', null, 'min-content 1fr']} g={['40', null, '30', '50']} ai="start">
             <Stack isSide g="25">
               <Heading level="2" fz={['3xl', null, null, '4xl']} lts="l" hl="l">
-                <span class="-whs:nowrap">季節の移ろいを、</span>肌で感じる。
+                <span class="-whs:nowrap">Feel the changing</span> seasons.
               </Heading>
-              <Inline o="pp" lts="l">Feeling the seasons</Inline>
+              <Inline lang="ja" o="pp" lts="l">季節の移ろいを、肌で感じる。</Inline>
             </Stack>
             <Text hl="xl" o="mp">
               {seasonIntroBody}
@@ -536,7 +537,7 @@ const reservationSites: readonly SiteCard[] = [
           </Grid>
         </Lism>
         <Lism isWrapper="xl" hasGutter pos="relative" z="1" pb="60">
-          <Columns cols={[2, null, 4]} mbs="50" g={['15', null, null, '25']} ai="start">
+          <Columns cols={[2, null, 4]} mbs="50" g={['20', null, '40']} ai="start">
             {
               seasonGalleryPhotos.map(({ src, alt }, i) => (
                 <Frame as="figure" ar="4/3" pos="relative" mbs={i === 1 || i === 3 ? ['0', null, '40'] : '0'}>
@@ -551,7 +552,7 @@ const reservationSites: readonly SiteCard[] = [
       <Lism as="section" id="plans" class="c--plans" isContainer py="60">
         <Lism isWrapper="l" hasGutter>
           <Stack g="50">
-            <SectionHeading en="Plan" ja="宿泊プラン" ai="center" ta="center" />
+            <SectionHeading en="Plans" ja="宿泊プラン" ai="center" ta="center" />
 
             <Stack g="50">
               {
@@ -603,7 +604,7 @@ const reservationSites: readonly SiteCard[] = [
                             ta="center"
                           >
                             <Inline fw="500" lts="l">
-                              このプランを予約する
+                              Book this plan
                             </Inline>
                           </Button>
                         </Box>
@@ -692,7 +693,8 @@ const reservationSites: readonly SiteCard[] = [
             <Stack g="30" ai="start">
               <SectionHeading en="Reservation" ja="ご予約はこちら" ai="start" />
               <Text fz="s" c="text-2">
-                お好みの予約サイトからご予約いただけます。予約完了後は各サイトから確認メールが届きます。キャンセルや変更はご利用のサイトの案内に従ってお手続きください。
+                Book through whichever reservation site you prefer. Once your booking is complete, a confirmation email will arrive from that site.
+                For cancellations and changes, please follow the instructions given by the site you used.
               </Text>
             </Stack>
 
@@ -712,7 +714,7 @@ const reservationSites: readonly SiteCard[] = [
                           {site.body}
                         </Text>
                         <Button href={site.href} bgc="base" c="text" bdrs="20" py="15" px="20" fz="s" fw="500" ta="center">
-                          サイトに移動する
+                          Go to the site
                         </Button>
                       </Stack>
                     </Flex>
@@ -729,10 +731,10 @@ const reservationSites: readonly SiteCard[] = [
       <Lism isWrapper="xl" hasGutter>
         <Stack g={['40', null, '50']}>
           <Cluster ai="end" g={['15', null, '40']}>
-            <Heading level="2" fz={['2xl', null, '3xl']} fw="normal" lts="l" hl="l" ff="accent">
+            <Heading lang="ja" level="2" fz={['2xl', null, '3xl']} fw="normal" lts="l" hl="l" ff="accent">
               {logoLabel}
             </Heading>
-            <Text fz={['s', null, 'm']} c="text-2">都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。</Text>
+            <Text fz={['s', null, 'm']} c="text-2">Away from the city's noise, in the calm of nature, a moment of pure bliss.</Text>
           </Cluster>
 
           <Flex fxd={['column', null, 'row']} ai="end" jc="between" g={['30', null, '40']}>
@@ -754,9 +756,9 @@ const reservationSites: readonly SiteCard[] = [
                       hov="-o"
                     >
                       <Stack class="c--footer_navStack" g="5">
-                        <Inline>{ja}</Inline>
-                        <Inline fz="s" o="pp">
-                          {en}
+                        <Inline>{en}</Inline>
+                        <Inline lang="ja" fz="s" o="pp">
+                          {ja}
                         </Inline>
                       </Stack>
                       {/* Icon の `d` prop は SVG の `d` 属性と型が衝突するため、表示切替は Box で包んで指定する */}
@@ -803,7 +805,7 @@ const reservationSites: readonly SiteCard[] = [
         hov="-bgc"
         fz={['xs', null, 's']}
       >
-        <Inline fw="500">ご予約はこちら</Inline>
+        <Inline fw="500">Book Your Stay</Inline>
       </Button>
     </Lism>
   </Container>

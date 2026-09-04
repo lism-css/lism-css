@@ -10,7 +10,7 @@
 //   - project / static-html             : /{slug}/        （en overlay があれば /{slug}/en/ も）
 //   - single-project-variant（lp/astro）: /{prefix}/      （en は dist 同梱の /{prefix}/en/...）
 //     prefix = sourcePath.replace('/', '-')（lp/astro → lp-astro）
-//   - draft variant（ryokan 等）は merged から除外する
+//   - draft variant は merged から除外する
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync, mkdirSync, existsSync, writeFileSync, copyFileSync } from 'node:fs';
 import path from 'node:path';

@@ -259,6 +259,7 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'lp/astro',
     title: { ja: 'LP Ryokan', en: 'LP Ryokan' },
     description: { ja: '旅館・宿泊業向けの Astro ランディングページ', en: 'Astro landing page for ryokan / lodging' },
-    draft: true,
+    previewUrl: `${PREVIEW_ORIGIN}/lp-astro/ryokan/`,
+    previewUrlEn: `${PREVIEW_ORIGIN}/lp-astro/en/ryokan/`,
   },
 ];

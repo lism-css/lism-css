@@ -63,7 +63,7 @@ nr publish:cli  # build → lism-cli publish → create-lism publish
   - 文章量が多くデザインごと差し替えるLPは、overlayでなく`src/pages/{lang}/{variant}/`（必要なら`src/components/{lang}/{variant}/`も）の完全コピーを同梱する。
   - `--lang en`で`src/pages/en/{variant}/index.astro`があればそれを抽出元にし、無ければbaseへフォールバックする。`manifest.ts`の追加定義は不要。抽出時に他variantと`en/`は削除される。
   - `Layout.astro`は`lang` prop（既定`ja`）で`<html lang>`を切り替える。en版ページは`<Layout title lang="en">`。
-  - 現状`en`を持つのは`lp-astro-corporate` / `lp-astro-interior`。
+  - 現状`en`を持つのは`lp-astro-corporate` / `lp-astro-interior` / `lp-astro-ryokan`。
   - ローカル確認は`nr build:template lp-astro`（jaと`/en/{variant}/`を同時にビルド）→`nr preview:template lp-astro`。
 
 ### プレビューデプロイ（`templates.lism-css.com`）
