@@ -1,14 +1,1 @@
 /* === ブログコンテンツのスタイリングなどがあればここに === */
-/* === Opt-in ユーティリティ（lism-css コアには含まれない。https://lism-css.com/docs/utility-class/ の Opt-in 参照） === */
-@layer lism-utility {
-  /* 子要素の間に区切り線を表示する */
-  .u--divide {
-    --bdw: 1px;
-    --bdc: var(--divider);
-    gap: var(--bdw);
-    overflow: clip;
-  }
-  .u--divide > * {
-    box-shadow: 0 0 0 var(--bdw) var(--bdc);
-  }
-}

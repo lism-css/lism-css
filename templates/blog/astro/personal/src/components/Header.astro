@@ -50,10 +50,10 @@ import { siteConfig } from '@/config/site';
         </Modal.CloseBtn>
       </Flex>
       <Modal.Body layout="stack" g="20" ov-y="auto">
-        <Stack as="nav" aria-label={siteConfig.uiText.nav.aria} util="divide" fz="s" bd-y>
+        <Stack as="nav" aria-label={siteConfig.uiText.nav.aria} fz="s" bd-be>
           {
             siteConfig.nav.map((item) => (
-              <Link href={item.href} set="plain" hl="s" py="15" px="5" hov={{ c: 'brand' }}>
+              <Link href={item.href} set="plain" bd-bs hl="s" py="15" px="5" hov={{ c: 'brand' }}>
                 {item.label}
               </Link>
             ))

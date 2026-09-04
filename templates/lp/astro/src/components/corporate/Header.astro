@@ -68,16 +68,16 @@ const headerOthersNavItems = [
       <Modal.Inner layout="stack" me="0" pos="relative" w="100%" p="30" bdrs="20" bxsh="50" c="text" bgc="base">
         <Modal.CloseBtn modalId="menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
         <Modal.Body layout="stack" g="30" my="10" mbs="40">
-          <Stack class="c--header_menuNav u--divide" bd-y>
+          <Stack class="c--header_menuNav" bd-be>
             {
               headerNavItems.map(({ href, en }) => (
-                <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5">
+                <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" bd-bs fz="l" td="none" py="15" px="5">
                   <Inline>{en}</Inline>
                   <Icon icon="caret-right" />
                 </BoxLink>
               ))
             }
-            <Accordion.Root>
+            <Accordion.Root bd-bs>
               <Accordion.Item>
                 <Accordion.Heading p="0" w="100%">
                   <Accordion.Button fz="l" py="15" px="5" w="100%" td="none" g="0" ai="center" ta="left">
@@ -85,10 +85,10 @@ const headerOthersNavItems = [
                   </Accordion.Button>
                 </Accordion.Heading>
                 <Accordion.Panel p="0" ov="clip">
-                  <Stack class="c--header_menuNav_sub u--divide" ml="20" p="0" ov="clip">
+                  <Stack class="c--header_menuNav_sub" ml="20" p="0" ov="clip">
                     {
                       headerOthersNavItems.map(({ href, en }) => (
-                        <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5">
+                        <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" bd-bs fz="l" td="none" py="15" px="5">
                           <Inline>{en}</Inline>
                           <Icon icon="caret-right" />
                         </BoxLink>

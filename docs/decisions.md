@@ -8,7 +8,7 @@
 
 - 決定: `_divide.scss` を削除し、`util` prop のプリセット型からも `divide` / `enclose` を外す。
 - 決定: Utility Class ドキュメントの Opt-in 節に、`@layer lism-utility` へ追加する CSS 例として残す。`u--enclose` も同じ仕組みなのでセットで移す。
-- 決定: docs のパターンプレビューは親 `bd-be` + 各行 `bd-bs` に置き換える。templates は各テンプレートの global.css に Opt-in の CSS を追加して従来の見た目を維持する。
+- 決定: docs のパターンプレビューと templates の使用箇所は `bd` 系へ置き換える。縦並びは親 `bd-be` + 各子 `bd-bs`、横並び（Footer の Cluster）は項目間に `Divider` を挟む。templates に Opt-in の CSS を持ち込まない。
 - 却下: `u--divide` だけ外して `u--enclose` を残す。同じ描画方式で同じ弱点を持つ。
 - 受容: 利用側で `u--divide` / `u--enclose` を使っていた箇所は、Opt-in の CSS を追加するか `bd` 系へ置き換える必要がある。changelog に破壊的変更として記載する。
 

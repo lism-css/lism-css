@@ -1,5 +1,5 @@
 ---
-import { Lism, Cluster, Link, Center } from 'lism-css/astro';
+import { Lism, Cluster, Link, Center, Divider } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
 import SnsLinks from '@/components/SnsLinks.astro';
 import type { ComponentProps } from 'astro/types';
@@ -11,12 +11,15 @@ type Props = LismProps;
 
 <Lism as="footer" py="40" hasGutter bd-bs {...Astro.props}>
   <Center g="30" max-sz="l" mx="auto">
-    <Cluster as="nav" aria-label={siteConfig.uiText.footer.aria} fz="xs" c="text-2" hl="xs" util="divide">
+    <Cluster as="nav" aria-label={siteConfig.uiText.footer.aria} fz="xs" c="text-2" hl="xs">
       {
-        siteConfig.footer.nav.map((item) => (
-          <Link href={item.href} set="plain" px="10" hov={{ c: 'brand' }}>
-            {item.label}
-          </Link>
+        siteConfig.footer.nav.map((item, i) => (
+          <>
+            {i > 0 && <Divider wm="vertical-rl" aslf="stretch" />}
+            <Link href={item.href} set="plain" px="10" hov={{ c: 'brand' }}>
+              {item.label}
+            </Link>
+          </>
         ))
       }
     </Cluster>
