@@ -38,7 +38,14 @@ async function main(): Promise<void> {
     } else if (a.startsWith('--lang=')) {
       // 先行走査で処理済み
     } else if (a === '--ref') {
-      ref = args[++i];
+      const next = args[i + 1];
+      // 次が無い、または別オプションなら値不足として終了する（`--ref --help` で --help を消費しない）
+      if (!next || next.startsWith('-')) {
+        process.stderr.write("error: option '--ref <ref>' argument missing\n");
+        process.exit(1);
+      }
+      ref = next;
+      i++;
     } else if (a.startsWith('--ref=')) {
       ref = a.slice('--ref='.length);
     } else if (a === '-h' || a === '--help') {
