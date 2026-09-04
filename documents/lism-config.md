@@ -1,4 +1,4 @@
-基準日: 2026-09-03・コミット105422df
+基準日: 2026-09-04・コミット5331445f
 
 # lism.config.js メモ（運営者向け）
 
@@ -45,6 +45,7 @@
 
 - 出力先はインストール済み`lism-css`の`dist/css`（`node_modules/lism-css/dist/css`、`builder/paths.ts`の`cssDistDir`）で、同梱CSSを直接上書きする。変更するオプションは無い。
 - 上書きするので、プラグイン無しの`import 'lism-css/main.css'`でも生成後のCSSが読まれる。これが狙い。
+- 書き込みは同じディレクトリの一時ファイルへ書いて`fs.renameSync`で差し替える（`compile.ts`の`writeCss`）。新しい実体になるので、pnpmのハードリンク配置でもストア側のファイルは変わらない。
 - `node_modules`を入れ直すと消える。インストール後に毎回実行する運用にする。
 - 処理フロー5の「`node_modules`内は書き換えない」はSCSSソースの話で、CSS出力先には当てはまらない。
 

@@ -141,10 +141,22 @@ export async function buildCssToDir({
   }
 }
 
+/**
+ * 同じディレクトリの一時ファイルへ書いてから rename で差し替える。
+ * 既存ファイルをその場で上書きすると、pnpm のハードリンク配置ではストア側の実体まで書き換わり、
+ * 同じバージョンをリンクする他プロジェクトへ漏れる。新しい実体に置き換えることでストアには触れない。
+ */
 function writeCss(filePath: string, css: string): void {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  fs.writeFileSync(filePath, css);
+  const tmpPath = `${filePath}.${process.pid}.tmp`;
+  try {
+    fs.writeFileSync(tmpPath, css);
+    fs.renameSync(tmpPath, filePath);
+  } catch (error) {
+    fs.rmSync(tmpPath, { force: true });
+    throw error;
+  }
 }
