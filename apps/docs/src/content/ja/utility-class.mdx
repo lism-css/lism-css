@@ -384,6 +384,8 @@ import { Dog, Cat } from "@phosphor-icons/react";
 
 使う場合は、コアのユーティリティクラスと同じ`@layer lism-utility`に追加します。
 
+`@layer`なし版（[`main_no_layer.css` / `full_no_layer.css`](/docs/css-files/#layer-をオフにする)）では、コアのユーティリティクラスが`@layer`の外にセレクタ二重化（`.u--trim.u--trim`）で出力されます。そのため下の追加CSSも、`@layer lism-utility { ... }`の囲みを外し、`.u--divide` / `.u--enclose`を`.u--divide.u--divide` / `.u--enclose.u--enclose`に置き換えてください。
+
 :::info
 - `border`ではないため、`bds`（border-style）などの border 系プロパティは効きません。線幅は`--bdw`変数で指定します。
 - `u--divide`は`overflow: clip`を指定しているため、子孫にツールチップやドロップダウンなど外側にはみ出す要素を配置すると意図せずクリップされます。

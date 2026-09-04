@@ -380,6 +380,8 @@ Both draw their lines with `gap` and each child's `box-shadow`. Compared with `b
 
 If you do use them, add them to the same `@layer lism-utility` as the core utility classes.
 
+In the no-layer builds ([`main_no_layer.css` / `full_no_layer.css`](/en/docs/css-files/#disabling-layer)), the core utility classes are emitted outside `@layer` with doubled selectors (`.u--trim.u--trim`). So in those builds, remove the `@layer lism-utility { ... }` wrapper from the CSS below and replace `.u--divide` / `.u--enclose` with `.u--divide.u--divide` / `.u--enclose.u--enclose`.
+
 :::info
 - They are not `border`, so border-related properties such as `bds` (border-style) have no effect. Set the line width with the `--bdw` variable.
 - `u--divide` applies `overflow: clip`, so descendants meant to overflow the container, such as tooltips or dropdowns, will be unintentionally clipped.
