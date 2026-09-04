@@ -9,6 +9,49 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v0.27.0 (2026.09.04)
+
+This release contains **breaking changes**.
+
+### Split `lh` from `hl` and redefined it as a real line-height prop (#583)
+
+- `lh` used to be a compatibility alias of `hl`. It is now an independent prop / token that manages the actual `line-height` as a unitless ratio. The tokens are `xs: 1.25` / `s: 1.5` / `m: 1.75` / `l: 2` / `xl: 2.25` (unlike `hl`, it has no default on `body`, so the middle key is `m` rather than `base`).
+- Values are emitted through the `--lh` variable and resolved as `line-height: var(--lh, calc(1em + var(--hl) * 2))`. Since `--lh` is inherited, descendants also get line spacing recalculated from their own `font-size`.
+- To migrate: replace token usages such as `lh="s"` that were adjusting half-leading with `hl="s"`. `lh="1"` still gives no extra leading (`line-height: 1`).
+- `u--trim` / `u--trimAll` now trim by `calc((1em - 1lh) / 2)`, so trimming works correctly whether line spacing is managed by `hl` or `lh`.
+
+### `--s-unit` / `--hl-unit` are now fixed rem values (#581)
+
+- Changed `--s-unit` (≈8px) and `--hl-unit` (≈2px) from `calc()` expressions tied to `--fz--base` to the fixed values `0.5rem` / `0.125rem`. Changing `--fz--base` no longer changes the base units for spacing and leading. A recipe for keeping them tied to the font size as before has been added to the Typography tokens page.
+- Added an `xl` token (5 × `--hl-unit`) to `hl`.
+
+### New `bdrs` token scale (#579)
+
+- Changed to a scale whose increments grow arithmetically (a second-order arithmetic progression) and added `50`: `10: 0.25rem` / `20: 0.375rem` / `30: 0.625rem` / `40: 1rem` / `50: 1.5rem` (`99` is unchanged). `20`–`40` are smaller than before, so bump the key up one step to keep the previous look.
+- Added a `+1px` correction to the computed `--bdrs--inner` in `.set--bdrsInner`.
+
+### Two-layer box-shadow (#591)
+
+- The `bxsh` tokens (`10`–`50`) are now two layers: a small near-side shadow on top of the previous one. Added the near-side size `--shsz--5` and color `--shc--near`, and changed the default `--shadow` color to `hsl(220 2% 4% / 8%)`.
+
+### Narrowed the properties targeted by `has--transition` (#584)
+
+- The default `--transitionProps` changed from `all` to visual properties only (`color`, `background-color`, `border-color`, `box-shadow`, `scale`, `rotate`, `translate`, `transform`, `opacity`, `filter`, `backdrop-filter`). This prevents unintended animations on load or layout changes.
+- `hasTransition` now also accepts a string such as `'color, opacity'` to specify the target properties directly.
+
+### Stronger override resistance in the no_layer build (#585)
+
+- In the `no_layer` build, Property Classes are now always `!important` and `u--` Utility Class selectors are doubled, making them harder to override from external CSS. The output of the regular `@layer` build is unchanged.
+
+### Other
+
+- Added an `xs` (`-0.05em`) token to `lts`.
+- Moved the `border-width` / `border-color` of `-bd` out of the layers so they are not overridden by `border` shorthands in higher layers (#589).
+- Fixed `Center` overflowing horizontally when it contains a long `pre` (#597).
+- Adjusted the default mix ratio of `-hov:-bgc` from 25% to 20%.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.26.0 (2026.08.16)
 
 ### Added the `lism-block` layer (#546, #559)
