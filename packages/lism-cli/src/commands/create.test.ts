@@ -151,6 +151,16 @@ describe('runCreate', () => {
     expect(pkg.dependencies['lism-css']).not.toBe('workspace:*');
   });
 
+  it('ref指定時はそのrefのテンプレートを取得する', async () => {
+    await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true, ref: 'dev' });
+
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/minimal/astro#dev', {
+      dir: path.join(tmpDir, 'my-app'),
+      force: true,
+      forceClean: true,
+    });
+  });
+
   it('workspace依存をnpmレジストリのlatestへ置換する', async () => {
     mockTemplateWithWorkspaceDeps();
     const latest: Record<string, string> = {

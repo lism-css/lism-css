@@ -49,6 +49,10 @@ export const messages = {
     ja: '既存ディレクトリを強制上書き',
     en: 'Overwrite existing directory',
   },
+  'cli.create.opt.ref': {
+    ja: 'テンプレート取得元の Git ref（ブランチ / タグ / コミット）',
+    en: 'Git ref to fetch templates from (branch / tag / commit)',
+  },
 
   // init
   'cli.init.description': {
