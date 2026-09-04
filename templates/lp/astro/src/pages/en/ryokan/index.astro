@@ -345,10 +345,17 @@ const reservationSites: readonly SiteCard[] = [
 <Layout title={title} lang="en">
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400..700&display=swap" rel="stylesheet" slot="head" />
-  <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400..600&family=Cormorant+Garamond&family=Noto+Serif+JP:wght@400..700&display=swap"
+    rel="stylesheet"
+    slot="head"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&text=%E9%9D%99%E5%AF%82%E3%81%AE%E5%AE%BF&display=swap"
+    rel="stylesheet"
+    slot="head"
+  />
   <Container class="c--page">
-    <!-- Header -->
     <Header />
     <!-- Main Content。各セクションは section 自身を container にし、内側の wrapper は container にしない（--bleed の 100cqi を gutter 込みの幅で解決するため。BP の基準もセクション幅） -->
     <Container as="main" class="c--main" pos="relative" z="0">
@@ -381,17 +388,8 @@ const reservationSites: readonly SiteCard[] = [
           }
         </Frame>
         <Layer bgc="black:30%" aria-hidden="true" />
-        <Stack
-          pos="relative"
-          z="1"
-          ai="center"
-          jc="center"
-          px={['20', null, '40']}
-          pbs="calc(var(--header-h--init) + var(--s30))"
-          pbe="40"
-          min-h="100svh"
-        >
-          <Text class="c--hero_copy -ff:accent">
+        <Stack pos="relative" z="1" hasGutter pbs="calc(var(--header-h--init) + var(--s30))" pbe="40" min-h="100svh">
+          <Text class="c--hero_copy -ff:accent" sz="l" max-sz="100%" m="auto">
             {
               mvCopyLines.map((line, i) => (
                 <Inline class="c--hero_line" style={{ '--c--ryokan-mv-lineIndex': i }}>
@@ -507,7 +505,7 @@ const reservationSites: readonly SiteCard[] = [
               <Heading level="2" fz={['3xl', null, null, '4xl']} lts="l" hl="l">
                 <span class="-whs:nowrap">Feel the changing</span> seasons.
               </Heading>
-              <Inline lang="ja" o="pp" lts="l">季節の移ろいを、肌で感じる。</Inline>
+              <Inline class="b--enEyebrow" lang="ja" o="pp" lts="l">季節の移ろいを、肌で感じる。</Inline>
             </Stack>
             <Text hl="xl" o="mp">
               {seasonIntroBody}
@@ -732,7 +730,7 @@ const reservationSites: readonly SiteCard[] = [
                     >
                       <Stack class="c--footer_navStack" g="5">
                         <Inline>{en}</Inline>
-                        <Inline lang="ja" fz="xs" o="pp">
+                        <Inline class="b--enEyebrow" lang="ja" fz="xs" o="pp">
                           {ja}
                         </Inline>
                       </Stack>

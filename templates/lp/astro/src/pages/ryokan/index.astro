@@ -365,7 +365,6 @@ const reservationSites: readonly SiteCard[] = [
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400..700&display=swap" rel="stylesheet" slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
   <Container class="c--page">
-    <!-- Header -->
     <Header />
     <!-- Main Content。各セクションは section 自身を container にし、内側の wrapper は container にしない（--bleed の 100cqi を gutter 込みの幅で解決するため。BP の基準もセクション幅） -->
     <Container as="main" class="c--main" pos="relative" z="0">
@@ -398,16 +397,7 @@ const reservationSites: readonly SiteCard[] = [
           }
         </Frame>
         <Layer bgc="black:30%" aria-hidden="true" />
-        <Stack
-          pos="relative"
-          z="1"
-          ai="center"
-          jc="center"
-          px={['20', null, '40']}
-          pbs="calc(var(--header-h--init) + var(--s30))"
-          pbe="40"
-          min-h="100svh"
-        >
+        <Stack pos="relative" z="1" ai="center" jc="center" hasGutter pbs="calc(var(--header-h--init) + var(--s30))" pbe="40" min-h="100svh">
           <Text class="c--hero_copy -ff:accent">
             {
               mvCopyLines.map((line, i) => (
@@ -523,7 +513,7 @@ const reservationSites: readonly SiteCard[] = [
               <Heading level="2" fz={['3xl', null, null, '4xl']} lts="l" hl="l">
                 <span class="-whs:nowrap">季節の移ろいを、</span>肌で感じる。
               </Heading>
-              <Inline o="pp" lts="l">Feeling the seasons</Inline>
+              <Inline class="b--enEyebrow" lang="en" o="pp" lts="l">Feeling the seasons</Inline>
             </Stack>
             <Text hl="xl" o="mp">
               {seasonIntroBody}
@@ -747,7 +737,7 @@ const reservationSites: readonly SiteCard[] = [
                     >
                       <Stack class="c--footer_navStack" g="5">
                         <Inline>{ja}</Inline>
-                        <Inline fz="xs" o="pp">
+                        <Inline class="b--enEyebrow" lang="en" fz="xs" o="pp">
                           {en}
                         </Inline>
                       </Stack>

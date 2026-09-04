@@ -14,18 +14,8 @@ const headerNavItems = [
 ] as const;
 ---
 
-<Container
-  as="header"
-  class="c--header"
-  isWrapper="xl"
-  pos="fixed"
-  t="0"
-  l="0"
-  w="100%"
-  z="1"
-  px={['var(--gutter--base)', null, 'calc(var(--gutter--base) + var(--s20))']}
->
-  <Grid gtc="minmax(0,auto) 1fr" ai="center" h="100%" g="20">
+<Container as="header" class="c--header" isWrapper="xl" pos="fixed" t="0" l="0" w="100%" z="1" hasGutter>
+  <Grid class="c--header_inner" gtc="minmax(0,auto) 1fr" ai="center" g="20">
     <Stack>
       <Link
         class="c--header_logoLink"
@@ -36,7 +26,7 @@ const headerNavItems = [
         ff="accent"
         c="inherit"
         lts="l"
-        fz={['2xl', null, '3xl']}
+        fz={['24px', null, '30px']}
         hl="s"
         whs="nowrap"
       >
@@ -49,8 +39,8 @@ const headerNavItems = [
           headerNavItems.map(({ href, ja, en }) => (
             <ListItem>
               <Link href={href} c="inherit" d="grid" jc="center" ji="c" td="none" py="10" px="5" hasTransition hov="-o" ta="center" g="5">
-                <Inline>{en}</Inline>
-                <Inline class="c--headerNav_en" lang="ja" fz="2xs" fw="normal" lts="l" hl="xs" ta="center" d="block">
+                <Inline fz="s">{en}</Inline>
+                <Inline class="b--enEyebrow" lang="ja" fz="11px" c="text-2" lts="xl" hl="0" ta="center">
                   {ja}
                 </Inline>
               </Link>
@@ -78,7 +68,7 @@ const headerNavItems = [
               <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5">
                 <Stack g="5">
                   <Inline>{en}</Inline>
-                  <Inline lang="ja" fz="s" o="pp">
+                  <Inline class="b--enEyebrow" lang="ja" fz="s" o="pp">
                     {ja}
                   </Inline>
                 </Stack>
@@ -91,7 +81,7 @@ const headerNavItems = [
           <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5">
             <Stack g="5">
               <Inline>Book Your Stay</Inline>
-              <Inline lang="ja" fz="s" o="pp">ご予約</Inline>
+              <Inline class="b--enEyebrow" lang="ja" fz="s" o="pp">ご予約</Inline>
             </Stack>
             <Icon icon="caret-right" fz="s" o="pp" />
           </BoxLink>

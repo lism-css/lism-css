@@ -70,6 +70,7 @@ nr test
 ## 注意事項
 
 - `lism-css` パッケージ本体の編集中は、明示的な指示がない限り `lism-css-guide` スキルを読まない。
+- `templates/*`を編集するときは、先に`templates/README.md`の保守ルールと意図的な言語差分を確認する。
 - `templates/*` の新規追加時は `package.json` に `"private": true` を付ける（npmへの誤公開防止）。
 - `.claude/skills/` にローカルスキルを新規作成するときは、SKILL.md のfrontmatterに `metadata.internal: true` を付ける（`npx skills`の配布対象から除外するため。配布用スキルは `skills/` 配下のみ）。
 - `skills/lism-css-guide/` の更新時:

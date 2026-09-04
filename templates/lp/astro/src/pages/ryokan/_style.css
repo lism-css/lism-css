@@ -1,11 +1,5 @@
-@layer lism-block {
-  :where([lang='ja']) .b--button > * {
-    /* Noto Serif JP がちょっと下に寄っているので調整 */
-    margin-bottom: 0.125em;
-  }
-}
 @layer lism-base {
-  /* ryokan は黒地が既定（ダーク配色）。純黒は硬いので、和紙・桜に合わせた暖色寄りの黒にする */
+  /* ryokan は黒地が既定（ダーク配色）。 */
   :root {
     color-scheme: dark;
     --base: hsl(30 10% 8%);
@@ -20,6 +14,7 @@
 
     /* フォントサイズ: 16px@1000px → 17px@1400px */
     --fz--base: clamp(1rem, 0.8438rem + 0.25vw, 1.0625rem);
+    --fw--bold: 600;
   }
   /* 和紙調のベージュ区画。カラートークン一式をライト値に差し替える（区画内の Modal・フォーム部品も追従） */
   .set--light {
@@ -39,11 +34,29 @@
     --lts--l: 0.1em;
     --lts--xl: 0.15em;
   }
+
+  [lang='en'] {
+    /* フォントサイズ: 16px@800px → 18px@1400px */
+    --fz--base: clamp(1rem, 0.8333rem + 0.3333vw, 1.125rem);
+    --ff--base: 'Source Serif 4', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+    --ff--accent: 'Cormorant Garamond', 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+  }
 }
+
+@layer lism-block {
+  :where([lang='ja']) .b--button > * {
+    /* Noto Serif JP がちょっと下に寄っているので調整 */
+    margin-bottom: 0.125em;
+  }
+  :root[lang='en'] .b--enEyebrow {
+    display: none;
+  }
+}
+
 @layer lism-custom {
   :root {
     --header-h--init: 100px;
-    --header-h: 56px;
+    --header-h: 64px;
 
     scroll-padding-top: var(--header-h);
   }
@@ -67,44 +80,45 @@
    Header
   -------------------------------------------------- */
   .c--header {
-    height: var(--header-h--init);
-    transition:
-      height 0.4s,
-      background-color 0.4s,
-      backdrop-filter 0.4s,
-      box-shadow 0.4s;
+    /* height: var(--header-h--init); */
   }
   .c--header_logoLink {
     transform-origin: left center;
     transition: transform 0.4s;
   }
-  .c--headerNav_en {
+  .c--headerNav .b--enEyebrow {
     max-height: 2.5em;
     overflow: hidden;
     transition:
       opacity 0.4s,
       max-height 0.4s;
   }
+  .c--header_inner {
+    height: var(--header-h--init);
+    transition: 0.4s;
+    transition-property: padding, height, background-color, backdrop-filter, box-shadow;
+  }
 
   /**
    * スクロール後: 黒ベースの半透明 + backdrop-filter で奥行きをぼかし視認性を確保。
    * 下端の極細ハイライトで帯として切り分ける。
    */
-  :root[data-scrolled] .c--header {
+  :root[data-scrolled] .c--header_inner {
     height: var(--header-h);
-    background-color: color-mix(in srgb, var(--base) 82%, transparent);
-    backdrop-filter: blur(14px) saturate(1.12);
-    -webkit-backdrop-filter: blur(14px) saturate(1.12);
+    padding-inline: var(--s25);
+    margin-top: var(--s10);
+    border-radius: var(--bdrs--20);
+    background-color: color-mix(in srgb, var(--base) 84%, transparent);
+    backdrop-filter: blur(8px);
     box-shadow:
-      0 8px 32px color-mix(in srgb, var(--black) 42%, transparent),
-      inset 0 -1px 0 color-mix(in srgb, var(--white) 7%, transparent);
+      0 4px 24px color-mix(in srgb, var(--black) 16%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--white) 8%, transparent);
   }
   :root[data-scrolled] .c--header_logoLink {
     transform: scale(0.75);
   }
-  :root[data-scrolled] .c--headerNav_en {
-    opacity: 0;
-    max-height: 0;
+  :root[data-scrolled] .c--headerNav .b--enEyebrow {
+    display: none;
   }
 
   /* モーダル内ナビの破線区切り */
@@ -130,24 +144,27 @@
 
   /* 縦組みのキャッチコピー */
   .c--hero_copy {
-    /* font-size: clamp(1.1rem, 3.4vw, 1.75rem); */
     font-size: clamp(1.5rem, 1.2857rem + 0.9524vw, 2rem);
-    letter-spacing: 0.4em;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    gap: 1.5em;
+    letter-spacing: 0.25em;
+    --lh: 2;
   }
   :where([lang='ja']) .c--hero_copy {
     writing-mode: vertical-rl;
     text-orientation: mixed;
+    letter-spacing: 0.4em;
+    --lh: 2.5;
   }
-  .c--hero_copy .c--hero_line:first-child {
-    transform: translateY(-2em);
+  :where([lang='ja']) .c--hero_line:first-child {
+    margin-inline-start: -2.5em;
   }
-  .c--hero_copy .c--hero_line:last-child:not(:first-child) {
-    transform: translateY(2em);
+  :where([lang='ja']) .c--hero_line:last-child:not(:first-child) {
+    margin-inline-start: 2.5em;
+  }
+
+  :where([lang='en']) .c--hero_copy {
+    margin-inline-end: auto;
   }
 
   /* コピー行: ブラー＋フェード（開始は --c--ryokan-mv-lineIndex でスタガード） */

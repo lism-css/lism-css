@@ -1,6 +1,6 @@
 ---
 /**
- * セクション見出し。日本語ラベル（小）＋ 英語見出し（大）の 2 段構成。
+ * セクション見出し。英語版では日本語ラベルを非表示にし、英語見出しだけを表示する。
  * 残りの props は外側の `Stack` へ渡すため、呼び出し側で `ai` / `ta` / `ga` などを指定できる。
  */
 import type { ComponentProps } from 'astro/types';
@@ -18,6 +18,6 @@ const { en, ja, level = '2', ...rest } = Astro.props;
 ---
 
 <Stack g="10" {...rest}>
-  <Text lang="ja" fz="m" lts="l" o="pp">{ja}</Text>
+  <Text class="b--enEyebrow" lang="ja" fz="m" lts="l" o="pp">{ja}</Text>
   <Heading level={level} fz={['2xl', null, '3xl']} fw="500" lts="l">{en}</Heading>
 </Stack>
