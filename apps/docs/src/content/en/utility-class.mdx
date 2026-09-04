@@ -281,210 +281,6 @@ Visually hides an element while keeping it accessible to screen readers.
 <SrcCode path="src/scss/utility/_srOnly.scss" />
 
 
-## `u--divide` & `u--enclose`
-
-- `u--divide` displays dividing lines between children of a grid or flexbox container.
-- `u--enclose` wraps each child in a border so they look like cells in a table.
-
-<SrcCode path="src/scss/utility/_divide.scss" />
-
-:::info
-- Both draw their lines using a child element's `box-shadow` and `gap`, not `border`. Because of this, border-related properties such as `bds` (border-style) have no effect; use the `--bdw` variable to set the line width.
-- `u--divide` applies `overflow: clip` internally. Be aware that descendant elements intended to overflow the container — such as tooltips or dropdowns — will be unintentionally clipped.
-:::
-
-<Preview>
-  <PreviewTitle>Comparing `u--divide` and `u--enclose`</PreviewTitle>
-  <PreviewArea resize p="20">
-    <AutoColumns util="divide" cols="16rem" bdrs="20">
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-    </AutoColumns>
-    <AutoColumns util="enclose" cols="16rem" bdrs="20">
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-    </AutoColumns>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-  ```html "u--divide" "u--enclose"
-  <div class="l--autoColumns u--divide -bdrs:20" style="--cols:16rem">
-    <div class="l--box -p:15">divide</div>
-    <div class="l--box -p:15">divide</div>
-    <div class="l--box -p:15">divide</div>
-    <div class="l--box -p:15">divide</div>
-    <div class="l--box -p:15">divide</div>
-  </div>
-  <div class="l--autoColumns u--enclose -bdrs:20" style="--cols:16rem">
-    <div class="l--box -p:15">enclose</div>
-    <div class="l--box -p:15">enclose</div>
-    <div class="l--box -p:15">enclose</div>
-    <div class="l--box -p:15">enclose</div>
-    <div class="l--box -p:15">enclose</div>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'util="divide"' 'util="enclose"'
-    <AutoColumns util="divide" cols="16rem" bdrs="20">
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-      <Box p="15">divide</Box>
-    </AutoColumns>
-    <AutoColumns util="enclose" cols="16rem" bdrs="20">
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-      <Box p="15">enclose</Box>
-    </AutoColumns>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-`u--divide` lets you show dividers between items in layouts that switch between horizontal and vertical.
-
-<Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p="20">
-    <Flex fxd={['column', 'row']} util="divide">
-      <Lism fx="1" p="15">Item</Lism>
-      <Lism fx="1" p="15">Item</Lism>
-      <Lism fx="1" p="15">Item</Lism>
-      <Lism fx="1" p="15">Item</Lism>
-    </Flex>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-    ```html "u--divide"
-    <div class="l--flex u--divide -fxd:column -fxd_sm" style="--fxd_sm:row">
-      <div class="-fx:1 -p:15">Item</div>
-      <div class="-fx:1 -p:15">Item</div>
-      <div class="-fx:1 -p:15">Item</div>
-      <div class="-fx:1 -p:15">Item</div>
-    </div>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Flex fxd={['column', 'row']} util="divide">
-      <Lism fx="1" p="15">Item</Lism>
-      <Lism fx="1" p="15">Item</Lism>
-      <Lism fx="1" p="15">Item</Lism>
-      <Lism fx="1" p="15">Item</Lism>
-    </Flex>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-Adding `bd` to a grid with `u--divide` gives you a calendar-like look, where cells with no content stay blank while their gridlines remain.
-
-<Preview>
-  <PreviewTitle>With `bd` applied</PreviewTitle>
-  <PreviewArea resize p="20">
-    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-    </Columns>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-    ```html
-    <div class="l--columns u--divide -cols_sm -bd -bdc:current -fz:s" style="--cols:4;--cols_sm:5">
-      <div class="-p:10">Item</div>
-      <div class="-p:10">Item</div>
-      <div class="-p:10">Item</div>
-      <div class="-p:10">Item</div>
-      <div class="-p:10">Item</div>
-      <div class="-p:10">Item</div>
-    </div>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-      <Lism p="10">Item</Lism>
-    </Columns>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-With Grid, `u--enclose` can be used to create a table-like layout.
-<Preview>
-  <PreviewTitle>Table-like layout using `u--enclose`</PreviewTitle>
-  <PreviewArea resize p="15">
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="enclose">
-      <Box p="15" bgc="base-2">A</Box>
-      <Box p="15" bgc="base-2">B</Box>
-      <Box p="15">Lorem ipsum</Box>
-      <Box p="15">
-        <DummyText />
-      </Box>
-      <Box p="15">Dolor sit amet</Box>
-      <Box p="15">
-        <DummyText length="l" />
-      </Box>
-    </Grid>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="enclose">
-      <Box p="15" bgc="base-2">A</Box>
-      <Box p="15" bgc="base-2">B</Box>
-      <Box p="15">Lorem ipsum</Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box p="15">Dolor sit amet</Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
-        </p>
-      </Box>
-    </Grid>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html
-    <div class="l--grid u--enclose -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
-      <div class="l--box -p:15 -bgc:base-2">A</div>
-      <div class="l--box -p:15 -bgc:base-2">B</div>
-      <div class="l--box -p:15">Lorem ipsum</div>
-      <div class="l--box -p:15">
-        <p>Lorem ipsum dolor sit, amet...</p>
-      </div>
-      <div class="l--box -p:15">Dolor sit amet</div>
-      <div class="l--box -p:15">
-        <p>Lorem ipsum dolor sit, amet...</p>
-      </div>
-    </div>
-    ```
-  </PreviewCode>
-</Preview>
-
-
 ## `u--clipText`
 
 A class for clipping a background with text.
@@ -572,5 +368,161 @@ Since `vertical-align: middle` alone can cause misalignment, `translate` compens
     translate: 0 calc(-1 * (0.35em - 0.5ex)); /* Fine-tune based on the middle calculation. (0.5cap - 0.5ex is ideal for Latin text.) */
   }
   ```
+  </PreviewCode>
+</Preview>
+
+
+### `u--divide` / `u--enclose`
+
+`u--divide` draws dividing lines between the children of a grid or flexbox container, and `u--enclose` wraps each child in a frame so they look like table cells.
+
+Both draw their lines with `gap` and each child's `box-shadow`. Compared with `border`, the rendering is slightly rougher, and the lines can break in unexpected places when flex children wrap. For these reasons they are not part of the core. For dividers in layouts that switch direction, prefer [switching `bdw` at breakpoints](/en/docs/property-class/bd/#switching-the-border-side).
+
+If you do use them, add them to the same `@layer lism-utility` as the core utility classes.
+
+In the no-layer builds ([`main_no_layer.css` / `full_no_layer.css`](/en/docs/css-files/#disabling-layer)), the core utility classes are emitted outside `@layer` with doubled selectors (`.u--trim.u--trim`). So in those builds, remove the `@layer lism-utility { ... }` wrapper from the CSS below and replace `.u--divide` / `.u--enclose` with `.u--divide.u--divide` / `.u--enclose.u--enclose`.
+
+:::info
+- They are not `border`, so border-related properties such as `bds` (border-style) have no effect. Set the line width with the `--bdw` variable.
+- `u--divide` applies `overflow: clip`, so descendants meant to overflow the container, such as tooltips or dropdowns, will be unintentionally clipped.
+:::
+
+export const divideCss = `
+@layer lism-utility {
+  .u--divide,
+  .u--enclose {
+    --bdw: 1px;
+    --bdc: var(--divider);
+    gap: var(--bdw);
+  }
+  .u--divide > *,
+  .u--enclose > * {
+    box-shadow: 0 0 0 var(--bdw) var(--bdc);
+  }
+  .u--divide {
+    overflow: clip;
+  }
+  .u--enclose {
+    padding: var(--bdw);
+  }
+}`;
+
+<Preview css={divideCss}>
+  <PreviewTitle>Comparing `u--divide` and `u--enclose`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+    </AutoColumns>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+    </AutoColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "u--divide" "u--enclose"
+  <div class="l--autoColumns u--divide -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+  </div>
+  <div class="l--autoColumns u--enclose -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'util="divide"' 'util="enclose"'
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+    </AutoColumns>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+    </AutoColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="**Additional CSS**">
+  ```css
+  @layer lism-utility {
+    .u--divide,
+    .u--enclose {
+      --bdw: 1px;
+      --bdc: var(--divider);
+      gap: var(--bdw); /* Leave a gap as wide as the line */
+    }
+    .u--divide > *,
+    .u--enclose > * {
+      box-shadow: 0 0 0 var(--bdw) var(--bdc); /* Fill the gap with each child's shadow so it reads as a line */
+    }
+    /* Keep only the inner dividers (clip the outer shadows) */
+    .u--divide {
+      overflow: clip;
+    }
+    /* Frame every cell */
+    .u--enclose {
+      padding: var(--bdw);
+    }
+  }
+  ```
+  </PreviewCode>
+</Preview>
+
+Adding `bd` to `u--divide` produces a calendar-like layout where empty cells stay blank while the grid lines remain.
+
+<Preview css={divideCss}>
+  <PreviewTitle>With `bd`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--columns u--divide -cols_sm -bd -bdc:current -fz:s" style="--cols:4;--cols_sm:5">
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
+    ```
   </PreviewCode>
 </Preview>

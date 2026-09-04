@@ -73,9 +73,9 @@ export default function DashboardPage() {
               <Heading level="2" fz="l">
                 Recent orders
               </Heading>
-              <List layout="stack" util="divide" g="15" fz="s">
-                {orders.map(({ id, customer, total, status }) => (
-                  <Cluster as="li" key={id} jc="between" g="15">
+              <List layout="stack" g="15" fz="s">
+                {orders.map(({ id, customer, total, status }, i) => (
+                  <Cluster as="li" key={id} jc="between" g="15" bd-bs={i > 0} pbs={i > 0 ? '15' : undefined}>
                     <Cluster g="15">
                       <Text as="div" ff="mono" c="text-2">
                         {id}
