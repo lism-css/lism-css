@@ -53,11 +53,14 @@
 
 ## OG 画像生成
 
-- `src/pages/og/[...slug].png.ts` - OG 画像エンドポイント（root 言語）
-- `src/pages/[lang]/og/[...slug].png.ts` - OG 画像エンドポイント（非 root 言語）
+- `src/pages/docs/og/[...slug].png.ts` / `src/pages/ui/og/[...slug].png.ts` - OG 画像エンドポイント（root 言語）
+- `src/pages/[lang]/docs/og/[...slug].png.ts` / `src/pages/[lang]/ui/og/[...slug].png.ts` - OG 画像エンドポイント（非 root 言語）
 - `src/lib/ogImage.tsx` - OG 画像の JSX テンプレート
-- `src/lib/pageHelpers.ts` - `generateOgImage()` 関数
-- キャッシュ: `.cache/og/{lang}/{slug}/{hash}.png`
+- `src/lib/pageHelpers.ts` - `generateOgImage()` 関数（記事取得 + PNG 化）
+- フォント: `src/assets/og/gen-interface-jp-400.ttf` / `gen-interface-jp-600.ttf`（サイト本体と同じ Gen Interface JP のサブセット）
+- `src/assets/og/og-font-chars.txt` - 収録文字の一覧。フォントのサブセット化とビルド時の文字カバレッジ照合が参照する唯一の正
+- `pnpm og:font`（`scripts/subset-og-font.ts`）- フォントと文字一覧の再生成。`pyftsubset`（fonttools）が必要
+- `src/lib/ogFontCoverage.ts` - 記事の title / description にフォント未収録の文字があるとビルドを失敗させる
 
 
 ## コードブロック（Expressive Code）
