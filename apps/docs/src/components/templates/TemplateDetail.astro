@@ -3,14 +3,15 @@
  * テンプレート詳細ページ本体（ja / en 共通）
  *
  * URL: /templates/{category}/{slug}/  または  /{lang}/templates/{category}/{slug}/
- * 一覧（TemplatesIndex）から遷移して使う、テンプレート1件の紹介ページ。
+ * カテゴリページ（TemplateCategoryDetail）から遷移して使う、テンプレート1件の紹介ページ。
  */
-import { Stack, Text, Group, Inline, Frame } from 'lism-css/astro';
+import { Stack, Text, Group, Cluster, Inline, Frame } from 'lism-css/astro';
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, getThumb, getPreviewUrl, type TemplateItem, type CategoryDef } from '@/config/templates';
+import { stackLabels, getThumb, getIntro, getPreviewUrl, type TemplateItem, type CategoryDef } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
+import TemplateFeatures from './TemplateFeatures.astro';
 import PageHeader from '@parts/PageHeader.astro';
 
 interface Props {
@@ -24,48 +25,52 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      backToList: 'Templates 一覧へ',
+      backToCategory: `${category.label} 一覧へ`,
       install: 'インストールコマンド',
       installLead: '対話なしで生成する場合：',
-      preview: 'プレビュー',
+      viewDemo: 'デモページへ ↗',
       previewMissing: 'このテンプレートはまだプレビューURLが設定されていません。',
       copy: 'コマンドをコピー',
       copied: 'コピーしました',
       thumbAlt: (title: string) => `${title} のサムネイル`,
     }
   : {
-      backToList: 'Back to Templates',
+      backToCategory: `Back to ${category.label}`,
       install: 'Install command',
       installLead: 'Skip the interactive flow:',
-      preview: 'Preview',
+      viewDemo: 'View demo ↗',
       previewMissing: 'A preview URL is not configured for this template yet.',
       copy: 'Copy command',
       copied: 'Copied!',
       thumbAlt: (title: string) => `${title} thumbnail`,
     };
 
-const templatesUrl = getLocalizedUrl('/templates/', lang);
+const categoryUrl = getLocalizedUrl(`/templates/${category.id}/`, lang);
 const installCommand = `npm create lism@latest -- --template ${template.slug} --lang ${lang}`;
 const previewUrl = getPreviewUrl(template, lang);
+const features = template.features?.[lang];
 ---
 
 <Stack g="40">
   <PageHeader
     title={template.title[lang]}
-    description={template.description[lang]}
+    description={getIntro(template, lang)}
     draft={template.draft}
-    backHref={templatesUrl}
-    backLabel={copy.backToList}
+    backHref={categoryUrl}
+    backLabel={copy.backToCategory}
   >
-    <Fragment slot="eyebrow">
-      <Text tt="uppercase" lts="l">
-        {category.label}
-      </Text>
-      <Inline d="inline-flex" px="10" ff="mono" bd bdc="current" bdrs="99">
-        {stackLabels[template.stack]}
-      </Inline>
-    </Fragment>
+    <Text slot="eyebrow" tt="uppercase" lts="l">
+      {category.label}
+    </Text>
   </PageHeader>
+
+  {/* stack と機能リスト（ヘッダーの責務から外し、直下に独立した行として置く） */}
+  <Cluster ai="center" g="10 15">
+    <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+      {stackLabels[template.stack]}
+    </Inline>
+    {features && features.length > 0 && <TemplateFeatures features={features} />}
+  </Cluster>
 
   {/* インストールコマンド */}
   <Group>
@@ -80,7 +85,7 @@ const previewUrl = getPreviewUrl(template, lang);
   <Group>
     {
       previewUrl ? (
-        <PreviewFrame url={previewUrl} hasSizeSwitch />
+        <PreviewFrame url={previewUrl} hasSizeSwitch externalButtonLabel={copy.viewDemo} />
       ) : (
         <Stack g="10">
           <Frame bd bdrs="20" w="100%">

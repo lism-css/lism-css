@@ -29,7 +29,10 @@ interface TemplateMetaBase {
   variant?: string;
   variantLabel?: LocalizedText;
   title: LocalizedText;
+  /** 短い説明。CLI の選択肢と docs 一覧カードの抜粋に使うため 1 文に収める */
   description: LocalizedText;
+  /** 長い説明（docs 専用 / 任意）。カテゴリページ・詳細ページで使う。未指定なら description を表示する */
+  intro?: LocalizedText;
   /** プレビューサイトの URL（無い場合は docs でボタン非表示） */
   previewUrl?: string;
   /**
@@ -152,6 +155,10 @@ export const TEMPLATES: TemplateDef[] = [
     },
     title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
     description: { ja: '記事一覧 / 詳細 / Tags のみの最小構成の Astro ブログ', en: 'Minimal Astro blog with posts and tags only' },
+    intro: {
+      ja: '記事一覧・記事詳細・タグページだけで構成した、いちばん小さな Astro ブログです。余計な機能を持たないので、Lism CSS でブログを組む手順を最短で追えます。独自の機能を足していく土台にもおすすめです。',
+      en: 'The smallest Astro blog, made up of only a post list, post pages, and tag pages. With no extra features, it is the quickest way to see how a blog is built with Lism CSS, and a good base to add your own features to.',
+    },
     previewUrl: `${PREVIEW_ORIGIN}/blog-astro-minimal/`,
     previewUrlEn: `${PREVIEW_ORIGIN}/blog-astro-minimal/en/`,
     features: {
@@ -175,6 +182,10 @@ export const TEMPLATES: TemplateDef[] = [
       ja: '個人ブログ・エッセイ向け。年月アーカイブつきの落ち着いた Astro ブログ',
       en: 'Personal / essay-style Astro blog with monthly archives',
     },
+    intro: {
+      ja: '個人ブログやエッセイ向けの、落ち着いた読み物系デザインの Astro ブログです。タグと年月アーカイブで過去記事をたどれ、シェアボタンと OGP 画像の自動生成も備えています。文章を主役にしたサイトをすぐ始められます。',
+      en: 'A calm, reading-focused Astro blog for personal sites and essays. Tags and monthly archives make older posts easy to find, and share buttons and auto-generated OG images are included. Ideal for a site where the writing comes first.',
+    },
     previewUrl: `${PREVIEW_ORIGIN}/blog-astro-personal/`,
     previewUrlEn: `${PREVIEW_ORIGIN}/blog-astro-personal/en/`,
     features: {
@@ -197,6 +208,10 @@ export const TEMPLATES: TemplateDef[] = [
     description: {
       ja: '技術ブログ向け。コードハイライト・カテゴリ・タグ・TOC・年月アーカイブ・検索を装備した Astro ブログ',
       en: 'Tech blog with code highlighting, categories, tags, TOC, monthly archives and search',
+    },
+    intro: {
+      ja: '技術ブログ向けに機能を揃えた Astro ブログです。コードハイライトと目次、カテゴリとタグ、年月アーカイブに加え、Pagefind による全文検索とダークモードも備えています。記事数が増えても探しやすい、本格運用向けの構成です。',
+      en: 'A fully equipped Astro blog for technical writing. It includes code highlighting, a table of contents, categories and tags, monthly archives, full-text search with Pagefind, and dark mode. Built for blogs that keep growing and need to stay easy to navigate.',
     },
     previewUrl: `${PREVIEW_ORIGIN}/blog-astro-techlog/`,
     previewUrlEn: `${PREVIEW_ORIGIN}/blog-astro-techlog/en/`,
@@ -235,6 +250,10 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'lp/astro',
     title: { ja: 'LP Corporate', en: 'LP Corporate' },
     description: { ja: 'コーポレートサイト向けの Astro ランディングページ', en: 'Astro landing page for corporate sites' },
+    intro: {
+      ja: '企業サイト向けの1ページ構成の Astro ランディングページです。会社紹介・特徴・制作実績・お知らせ・FAQ・お客様の声・企業情報・お問い合わせと、コーポレートサイトに必要なセクションを一通り含みます。',
+      en: 'A one-page Astro landing page for corporate sites. It covers the sections a company site needs: about, features, works, news, FAQ, testimonials, company information, and contact.',
+    },
     previewUrl: `${PREVIEW_ORIGIN}/lp-astro/corporate/`,
     previewUrlEn: `${PREVIEW_ORIGIN}/lp-astro/en/corporate/`,
   },
@@ -248,6 +267,10 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'lp/astro',
     title: { ja: 'LP Interior', en: 'LP Interior' },
     description: { ja: 'インテリア・暮らし系サービス向けの Astro ランディングページ', en: 'Astro landing page for interior / lifestyle services' },
+    intro: {
+      ja: 'インテリアや暮らしに関わるサービス向けの、写真を大きく見せる Astro ランディングページです。ミッション・メッセージ・特長・サービス・ご依頼の流れ・お客様の声・FAQ・お問い合わせのセクションで構成しています。',
+      en: 'A photo-forward Astro landing page for interior and lifestyle services. It is made up of mission, message, features, services, process, customer voices, FAQ, and contact sections.',
+    },
     previewUrl: `${PREVIEW_ORIGIN}/lp-astro/interior/`,
     previewUrlEn: `${PREVIEW_ORIGIN}/lp-astro/en/interior/`,
   },

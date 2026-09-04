@@ -1,11 +1,16 @@
 ---
-import { Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, Inline } from 'lism-css/astro';
-import { Button } from '@lism-css/ui/astro/Button';
+/**
+ * Templates 一覧ページ本体（ja / en 共通）
+ *
+ * URL: /templates/  または  /{lang}/templates/
+ * クイックスタートと、カテゴリごとの軽いカード（サムネ・stack・タイトル・短い説明）だけを載せる。
+ * 長い説明・機能比較・生成コマンドはカテゴリページ（TemplateCategoryDetail）に置く。
+ */
+import { Stack, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, Inline } from 'lism-css/astro';
 import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, groupByCategory, getAggregateRepresentative, getThumb, getPreviewUrl } from '@/config/templates';
+import { stackLabels, groupByCategory, getAggregateRepresentative, getThumb } from '@/config/templates';
 import { Preview, PreviewCode } from '@/components/Preview';
-import CopyCommand from './CopyCommand.astro';
 import SectionHeader from '@parts/SectionHeader.astro';
 import PageHeader from '@parts/PageHeader.astro';
 
@@ -22,45 +27,39 @@ const copy = isJa
       lead: 'Lism CSSで新しいプロジェクトを始めるための雛形です。CLIの対話選択、またはテンプレートslugの直接指定で生成できます。',
       quickStart: 'クイックスタート',
       available: '利用できるテンプレート',
-      availableLead: 'CLIから直接生成できるテンプレート一覧です。',
+      availableLead: 'CLIから直接生成できるテンプレートの一覧です。詳しい説明・機能の比較・生成コマンドは各カテゴリのページで確認できます。',
       commandLead: '対話形式でカテゴリ、スタック、バリアントを選んで生成します。',
       fullFormLead: '引数を渡すと選択UIをスキップして直接生成できます。',
       termTitle: 'TemplatesとPatternsの違い',
       termBody: 'Templatesはプロジェクト一式を生成する雛形です。Patternsは既存サイトへコピーして使うセクション単位・パーツ単位のパターン集です。',
       patternsLink: 'Patternsを見る',
-      copy: 'コマンドをコピー',
-      copied: 'コピーしました',
-      preview: 'Preview',
+      viewAll: 'すべて見る',
       details: '詳細を見る',
       thumbAlt: (title: string) => `${title} のサムネイル`,
-      stat: (count: number) => `${count} templates`,
     }
   : {
       title: 'Project Templates',
       lead: 'Project starters for building new sites with Lism CSS. Generate them through the interactive CLI flow or by passing a template slug directly.',
       quickStart: 'Quick start',
       available: 'Available templates',
-      availableLead: 'Templates you can generate directly from the CLI.',
+      availableLead:
+        'Templates you can generate directly from the CLI. See each category page for full descriptions, feature comparisons, and install commands.',
       commandLead: 'Start the interactive flow and choose category, stack, and variant in order.',
       fullFormLead: 'Pass arguments to skip the selection UI and generate directly.',
       termTitle: 'Templates vs. Patterns',
       termBody: 'Templates generate a full project. Patterns are copy-and-paste section patterns for an existing site.',
       patternsLink: 'View Patterns',
-      copy: 'Copy command',
-      copied: 'Copied!',
-      preview: 'Preview',
+      viewAll: 'View all',
       details: 'View details',
       thumbAlt: (title: string) => `${title} thumbnail`,
-      stat: (count: number) => `${count} templates`,
     };
 
 const grouped = groupByCategory();
 
 const patternsUrl = getLocalizedUrl('/patterns/', lang);
 
-const buildCommand = (slug: string) => `npm create lism@latest -- --template ${slug} --lang ${lang}`;
 const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/templates/${category}/${slug}/`, lang);
-const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates/${category}/`, lang);
+const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${category}/`, lang);
 ---
 
 <Stack g="50" data-pagefind-body>
@@ -113,144 +112,102 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
       <Text c="text-2" hl="s">{copy.availableLead}</Text>
     </Stack>
 
-    {/* カテゴリ別グルーピング */}
-
+    {/* カテゴリ別グルーピング（見出しの「すべて見る」でカテゴリページへ） */}
     {
-      grouped.map(({ category, items }) => (
-        <Stack g="30">
-          <SectionHeader id={`templates-${category.id}`} level="3" title={category.label} count={items.length}>
-            <Text>{category.description[lang]}</Text>
-          </SectionHeader>
+      grouped.map(({ category, items }) => {
+        const categoryUrl = buildCategoryUrl(category.id);
+        /* カード描画用データを正規化。aggregateView はカテゴリ 1 枚に集約し、リンク先もカテゴリページにする */
+        const cards = category.aggregateView
+          ? (() => {
+              const rep = getAggregateRepresentative(category, items) ?? items[0];
+              return [
+                {
+                  id: category.id,
+                  title: category.label,
+                  description: category.description[lang],
+                  thumb: getThumb(rep, lang),
+                  stacks: items.map((tpl) => tpl.stack),
+                  href: categoryUrl,
+                  draft: false,
+                },
+              ];
+            })()
+          : items.map((tpl) => ({
+              id: tpl.slug,
+              title: tpl.title[lang],
+              description: tpl.description[lang],
+              thumb: getThumb(tpl, lang),
+              stacks: [tpl.stack],
+              href: buildDetailUrl(tpl.category, tpl.slug),
+              draft: tpl.draft,
+            }));
 
-          {() => {
-            /* カード描画用データを正規化 */
-            const cards = category.aggregateView
-              ? (() => {
-                  const rep = getAggregateRepresentative(category, items) ?? items[0];
-                  return [
-                    {
-                      id: category.id,
-                      title: category.label,
-                      description: category.description[lang],
-                      thumb: getThumb(rep, lang),
-                      stacks: items.map((tpl) => tpl.stack),
-                      detailUrl: buildCategoryDetailUrl(category.id),
-                      command: buildCommand(category.id),
-                      previewUrl: rep ? getPreviewUrl(rep, lang) : undefined,
-                      features: undefined as string[] | undefined,
-                      draft: false,
-                    },
-                  ];
-                })()
-              : items.map((tpl) => ({
-                  id: tpl.slug,
-                  title: tpl.title[lang],
-                  description: tpl.description[lang],
-                  thumb: getThumb(tpl, lang),
-                  stacks: [tpl.stack],
-                  detailUrl: buildDetailUrl(tpl.category, tpl.slug),
-                  command: buildCommand(tpl.slug),
-                  previewUrl: getPreviewUrl(tpl, lang),
-                  features: tpl.features?.[lang],
-                  draft: tpl.draft,
-                }));
+        return (
+          <Stack g="30">
+            <SectionHeader
+              id={`templates-${category.id}`}
+              level="3"
+              title={category.label}
+              count={items.length}
+              href={categoryUrl}
+              viewAllLabel={copy.viewAll}
+            >
+              <Text>{category.description[lang]}</Text>
+            </SectionHeader>
 
-            return (
-              <AutoColumns cols="20em" g="30">
-                {cards.map((card) => (
-                  <Stack as="article" id={card.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="c--templatesCard">
-                    <BoxLink
-                      layout="frame"
-                      href={card.detailUrl}
-                      aria-label={card.title}
-                      class="c--templatesCard_thumbLink"
-                      ar="16/9"
-                      ov="hidden"
-                      bd-b
-                      fxsh="0"
-                    >
-                      <Image
-                        src={card.thumb}
-                        alt={copy.thumbAlt(card.title)}
-                        widths={[400, 800]}
-                        sizes="(max-width: 600px) 100vw, 33vw"
-                        loading="lazy"
-                      />
-                    </BoxLink>
+            <AutoColumns cols="18em" g="30">
+              {cards.map((card) => (
+                <Stack as="article" id={card.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="c--templatesCard">
+                  <BoxLink
+                    layout="frame"
+                    href={card.href}
+                    aria-label={card.title}
+                    class="c--templatesCard_thumbLink"
+                    ar="16/9"
+                    ov="hidden"
+                    bd-b
+                    fxsh="0"
+                  >
+                    <Image
+                      src={card.thumb}
+                      alt={copy.thumbAlt(card.title)}
+                      widths={[400, 800]}
+                      sizes="(max-width: 600px) 100vw, 33vw"
+                      loading="lazy"
+                    />
+                  </BoxLink>
 
-                    <Stack p="20" g="20" fxg="1">
-                      <Cluster g="5">
-                        {card.stacks.map((stack) => (
-                          <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
-                            {stackLabels[stack]}
-                          </Inline>
-                        ))}
-                      </Cluster>
-                      <Heading level="4" fz="l" util="trim">
-                        <Link href={card.detailUrl} set="plain" hov="underline">
-                          {card.title}
-                        </Link>
-                        {card.draft && (
-                          <Inline px="10" fz="2xs" bdrs="99" c="red">
-                            draft
-                          </Inline>
-                        )}
-                      </Heading>
-                      <Text c="text-2" fz="s" hl="s" util="trim">
-                        {card.description}
-                      </Text>
-                      {card.features && card.features.length > 0 && (
-                        <Cluster as="ul" g="5" cg="15" fz="xs" hl="s" class="c--templatesCard_features">
-                          {card.features.map((feat) => (
-                            <li class="-d:flex -g:5 -c:text-2">{feat}</li>
-                          ))}
-                        </Cluster>
+                  <Stack p="20" g="15" fxg="1">
+                    <Cluster g="10">
+                      {card.stacks.map((stack) => (
+                        <Inline d="inline-flex" px="5px" fz="11px" hl="s" ff="mono" c="text-2" bd bdc="current" bdrs="10">
+                          {stackLabels[stack]}
+                        </Inline>
+                      ))}
+                    </Cluster>
+                    <Heading level="4" fz="l" util="trim">
+                      <Link href={card.href} set="plain" hov="underline">
+                        {card.title}
+                      </Link>
+                      {card.draft && (
+                        <Inline px="10" fz="2xs" bdrs="99" c="red">
+                          draft
+                        </Inline>
                       )}
-                      <Stack g="15" mt="auto">
-                        <CopyCommand bdrs="10" command={card.command} copyLabel={copy.copy} copiedLabel={copy.copied} />
-                        <Flex g="15" ai="stretch">
-                          <Button as="a" href={card.detailUrl} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
-                            <span>{copy.details}</span>
-                          </Button>
-                          <Button
-                            as="a"
-                            variant="fill"
-                            href={card.previewUrl ?? '#'}
-                            target={card.previewUrl ? '_blank' : undefined}
-                            rel={card.previewUrl ? 'noopener noreferrer' : undefined}
-                            aria-disabled={card.previewUrl ? undefined : 'true'}
-                            tabindex={card.previewUrl ? undefined : -1}
-                            bdrs="10"
-                            g="5"
-                            fz="xs"
-                            fx="1"
-                          >
-                            <span>{copy.preview}</span>
-                            <svg
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              aria-hidden="true"
-                            >
-                              <line x1="7" y1="17" x2="17" y2="7" />
-                              <polyline points="7 7 17 7 17 17" />
-                            </svg>
-                          </Button>
-                        </Flex>
-                      </Stack>
-                    </Stack>
+                    </Heading>
+                    <Text c="text-2" fz="s" hl="s" util="trim">
+                      {card.description}
+                    </Text>
+                    <Link href={card.href} fz="xs" w="fit" mt="auto" pt="5">
+                      {copy.details} →
+                    </Link>
                   </Stack>
-                ))}
-              </AutoColumns>
-            );
-          }}
-        </Stack>
-      ))
+                </Stack>
+              ))}
+            </AutoColumns>
+          </Stack>
+        );
+      })
     }
   </Stack>
 
@@ -277,19 +234,6 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
       }
       .c--templatesCard_thumbLink:hover img {
         transform: scale(1.03);
-      }
-
-      /* 機能リスト：✅ プレフィックス付きで縦並び */
-      .c--templatesCard_features li::before {
-        content: '✅';
-        flex-shrink: 0;
-        font-size: 0.9em;
-      }
-
-      /* previewUrl 未設定の Preview ボタン等：クリック自体を抑止 */
-      [aria-disabled='true'] {
-        opacity: 0.5;
-        pointer-events: none;
       }
     }
   </style>

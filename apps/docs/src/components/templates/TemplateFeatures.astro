@@ -1,0 +1,28 @@
+---
+/**
+ * テンプレートの機能リスト（✅ 付きの横並び）。カテゴリページと詳細ページで共用する。
+ */
+import { Cluster } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type ClusterProps = ComponentProps<typeof Cluster>;
+type Props = ClusterProps & {
+  features: string[];
+};
+
+const { features, ...rest } = Astro.props as Props;
+---
+
+<Cluster as="ul" g="5" cg="15" fz="xs" hl="s" class="c--templateFeatures" {...rest}>
+  {features.map((feat) => <li class="-d:flex -g:5 -c:text-2">{feat}</li>)}
+</Cluster>
+
+<style>
+  @layer lism-custom {
+    .c--templateFeatures li::before {
+      content: '✅';
+      flex-shrink: 0;
+      font-size: 0.9em;
+    }
+  }
+</style>

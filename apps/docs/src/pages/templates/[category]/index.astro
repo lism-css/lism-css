@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TemplateCategoryDetail from '@/components/templates/TemplateCategoryDetail.astro';
-import { getAggregatedCategoryPaths, getCategory } from '@/lib/templates';
+import { getCategoryPaths, getCategory } from '@/lib/templates';
 import { getCategoryTemplates } from '@/config/templates';
 
 export function getStaticPaths() {
-  return getAggregatedCategoryPaths().map(({ category }) => ({
+  return getCategoryPaths().map(({ category }) => ({
     params: { category },
   }));
 }

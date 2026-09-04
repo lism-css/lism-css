@@ -11,8 +11,9 @@ import SrcCode from '@/components/mdx/SrcCode.astro';
  * 高さは iframe 内の PreviewSizeReporter から通知される中身の高さにフィットさせ、
  * 上限は --ar（アスペクト比）から求めた高さ。上限を超える分は iframe 内でスクロールする。
  *
- * files を渡すと「プレビュー / コード」のタブ切り替え付きになり、
- * サイズ切替と別タブリンクはツールバー右側にまとまる。コード側はファイルが複数ならさらにタブで切り替える。
+ * files を渡すと「プレビュー / コード」のタブ切り替え付きになり、コード側はファイルが複数ならさらにタブで切り替える。
+ * ツールバー（タブまたはサイズ切替）がある時は、別タブリンクをアイコンとして右端に置く。
+ * タブが無い時はフレーム下に別タブリンクのボタンも出す（externalButtonLabel で文言を差し替え可）。
  */
 interface PreviewFile {
   path: string; // docs ルートからの相対パス
@@ -25,9 +26,11 @@ interface Props {
   hasSizeSwitch?: boolean;
   hasExternalLink?: boolean;
   externalLinkLabel?: string;
+  /** フレーム下のボタンの文言（省略時は externalLinkLabel と同じ） */
+  externalButtonLabel?: string;
   [key: string]: any;
 }
-const { hasSizeSwitch = false, hasExternalLink = true, externalLinkLabel, url, files = [], ...props } = Astro.props;
+const { hasSizeSwitch = false, hasExternalLink = true, externalLinkLabel, externalButtonLabel, url, files = [], ...props } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
@@ -119,7 +122,7 @@ const panelAttrs = (id: string, isActive: boolean) => ({
               ))}
             </Flex>
           )}
-          {hasTabs && hasExternalLink && (
+          {hasExternalLink && (
             <Lism
               as="a"
               href={url}
@@ -182,7 +185,7 @@ const panelAttrs = (id: string, isActive: boolean) => ({
   {
     !hasTabs && hasExternalLink && (
       <Button href={url} variant="fill" target="_blank" rel="noopener noreferrer" bdrs="10" w="fit" mx="auto">
-        {externalLabel}
+        {externalButtonLabel ?? externalLabel}
       </Button>
     )
   }
