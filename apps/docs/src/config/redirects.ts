@@ -134,6 +134,17 @@ export const astroRedirects: AstroRedirects = {
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。
 // Vercel の redirects はデフォルトで case-sensitive にマッチする。
 export const vercelRedirects: VercelRedirect[] = [
+  // /docs/ は Astro 側だと meta refresh の中間ページが 200 で返り一瞬見えるため、本番はサーバー側で 301 させる
+  {
+    source: '/docs/',
+    destination: '/docs/overview/',
+    statusCode: 301,
+  },
+  {
+    source: '/en/docs/',
+    destination: '/en/docs/overview/',
+    statusCode: 301,
+  },
   {
     source: '/docs/primitives/l--fluidCols/',
     destination: '/docs/primitives/l--autoColumns/',

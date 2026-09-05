@@ -1,11 +1,9 @@
 import { siteConfig } from '@/config/site';
 import { getPostsByLang, getDocsPostsByLang, getUiPostsByLang, getPostWithFallback, type PostEntry } from '@/lib/content';
 import { getRootLang, isRootLang, type LangCode } from '@/lib/i18n';
-import { createHash } from 'crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
-import { join, dirname } from 'path';
 import sharp from 'sharp';
 import { renderOgSvg } from '@/lib/ogImage';
+import { findUncoveredChars, loadOgFontChars } from '@/lib/ogFontCoverage';
 
 // 記事ページ、一覧、OG画像の静的パスと生成処理をまとめる
 const langCodes = Object.keys(siteConfig.langs) as LangCode[];
@@ -181,18 +179,6 @@ export async function getTagPathsForNonRoot(): Promise<TagPath[]> {
 // OG画像関連
 // ============================================================
 
-const CACHE_DIR = '.cache/og';
-
-function generateCacheKey(title: string, tags: string[] | undefined, lang: string): string {
-  const safeTags = Array.isArray(tags) ? tags : [];
-  const content = JSON.stringify({ title, tags: [...safeTags].sort(), lang });
-  return createHash('md5').update(content).digest('hex');
-}
-
-function getCachePath(lang: string, slug: string, hash: string): string {
-  return join(CACHE_DIR, lang, slug, `${hash}.png`);
-}
-
 export interface OgPath {
   params: { slug: string; lang?: string };
   props: { lang: LangCode; slug: string };
@@ -259,7 +245,7 @@ export async function getUiOgPathsForNonRoot(): Promise<OgPath[]> {
   return paths;
 }
 
-// 記事を取得し、キャッシュを使いながらOG画像を生成する
+// 記事を取得してOG画像を生成する
 export async function generateOgImage(lang: LangCode, slug: string): Promise<Response> {
   const { entry: post } = await getPostWithFallback(lang, slug);
 
@@ -267,31 +253,20 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
     return new Response('Not found', { status: 404 });
   }
 
-  const title = post.data.title;
-  const tags = post.data.tags ?? [];
+  const { title, description } = post.data;
 
-  const cacheKey = generateCacheKey(title, tags, lang);
-  const cachePath = getCachePath(lang, slug, cacheKey);
-
-  // 同じタイトル・タグ・言語の生成済み画像は再利用する
-  if (existsSync(cachePath)) {
-    console.log(`[OG] Cache hit: ${lang}/${slug}`);
-    const cachedPng = readFileSync(cachePath);
-    return new Response(new Uint8Array(cachedPng), {
-      headers: { 'Content-Type': 'image/png' },
-    });
+  // satori は未収録の文字を空白で描いてエラーにしないため、描画前に照合してビルドを止める
+  const uncovered = findUncoveredChars(`${title}${description ?? ''}`, loadOgFontChars());
+  if (uncovered.length > 0) {
+    throw new Error(
+      `[OG] フォントに未収録の文字があります: ${uncovered.join('')} (${lang}/${slug})\n` +
+        'pnpm --filter lism-docs og:font を実行してフォントと文字一覧を再生成し、コミットしてください'
+    );
   }
 
   console.log(`[OG] Generating: ${lang}/${slug}`);
-  const svg = await renderOgSvg(title, tags);
+  const svg = await renderOgSvg({ title, description });
   const png = await sharp(Buffer.from(svg)).png().toBuffer();
-
-  // 新しく生成した画像は次回のビルド用に保存する
-  const cacheDir = dirname(cachePath);
-  if (!existsSync(cacheDir)) {
-    mkdirSync(cacheDir, { recursive: true });
-  }
-  writeFileSync(cachePath, png);
 
   return new Response(new Uint8Array(png), {
     headers: { 'Content-Type': 'image/png' },

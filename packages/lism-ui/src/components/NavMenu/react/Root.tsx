@@ -18,7 +18,7 @@ export default function Root<T extends ElementType = 'ul'>({ children, className
   const computedStyle = { ...style };
   if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
   if (hovC) computedStyle['--hov-c'] = getMaybeCssVar(hovC, 'color');
-  if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
+  if (itemP) computedStyle['--item-p'] = getMaybeCssVar(itemP, 'space');
 
   return (
     <Lism as="ul" className={atts(className, 'b--navMenu')} style={computedStyle} {...(props as object)}>

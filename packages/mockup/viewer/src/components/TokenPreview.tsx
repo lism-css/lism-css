@@ -142,7 +142,7 @@ const PREVIEWS = new Map<string, PreviewSpec>([
   [
     'space',
     {
-      // The bars run to `--s80` (272px), which leaves the value nowhere to go
+      // The bars run to `--s70` (168px), which leaves the value nowhere to go
       // until the row is a good deal wider than the other groups need.
       isWide: true,
       render: (_tokenKey, varName) => <Bar length={`var(${varName})`} />,

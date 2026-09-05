@@ -40,7 +40,7 @@ import { Group, Wrapper, Cluster, Link } from 'lism-css/astro';
 ```jsx
 import { Group, Wrapper, Stack, Cluster, Heading, Text } from 'lism-css/astro';
 
-<Group as="section" className="c--frontHero" bgc="base-2" py={['60', null, '80']} hasGutter isContainer>
+<Group as="section" className="c--frontHero" bgc="base-2" py={['60', null, '70']} hasGutter isContainer>
   <Wrapper contentSize="l">
     <Stack g="30" ai="center" ta="center">
       <Heading level="1" fz={['3xl', null, '5xl']}>キャッチコピー</Heading>

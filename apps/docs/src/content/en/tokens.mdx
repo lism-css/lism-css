@@ -162,19 +162,19 @@ From `10` upward, the shadow sizes form a scale in which both the offset and the
 |`30`|`--s30`|`24px`|
 |`35`|`--s35`|`32px`|
 |`40`|`--s40`|`40px`|
+|`45`|`--s45`|`52px`|
 |`50`|`--s50`|`64px`|
 |`60`|`--s60`|`104px`|
 |`70`|`--s70`|`168px`|
-|`80`|`--s80`|`272px`|
 
-The main scale (`--s10` through `--s80`) follows the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...). The base unit is `--s-unit` (default `0.5rem` ≈ 8px).
+The main scale (`--s10` through `--s70`) follows the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, ...) and is designed to build the vertical rhythm of typography. The base unit is `--s-unit` (default `0.5rem` ≈ 8px).
 
-Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px), `--s15` (12px), `--s25` (20px), and `--s35` (32px) are added as selected filler values between the main scale tokens.
+Horizontal gaps and paddings do not need to follow the vertical rhythm, so up to `50` the main scale is filled in with 5-step midpoints: `--s5` (4px), `--s15` (12px), `--s25` (20px), `--s35` (32px), and `--s45` (52px).
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20" flow="s" resize>
-    <SpacingDemos spaces={[5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80]} isValueLabel />
+  <PreviewArea p="5" py="20">
+    <SpacingDemos spaces={[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70]} />
   </PreviewArea>
 </Preview>
 
@@ -191,13 +191,13 @@ Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px),
   --s50: calc(var(--s-unit) * 8);  /* ≒ 64px */
   --s60: calc(var(--s-unit) * 13); /* ≒ 104px */
   --s70: calc(var(--s-unit) * 21); /* ≒ 168px */
-  --s80: calc(var(--s-unit) * 34); /* ≒ 272px */
 
-  /* Lower-end fillers (up to s40) */
+  /* 5-step fillers up to s50 (for horizontal gaps / paddings) */
   --s5:  calc(var(--s-unit) * 0.5); /* ≒ 4px */
   --s15: calc(var(--s-unit) * 1.5); /* ≒ 12px */
   --s25: calc(var(--s-unit) * 2.5); /* ≒ 20px */
   --s35: calc(var(--s-unit) * 4);   /* ≒ 32px */
+  --s45: calc(var(--s-unit) * 6.5); /* ≒ 52px */
 }
 
 .set--s {

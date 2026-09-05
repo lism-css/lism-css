@@ -2,13 +2,13 @@
 @layer lism-block {
   .b--details {
     --duration: var(--acc-duration, 0.25s);
-    --_icon-scale: 1.1;
-    --_icon-transform: rotate(0deg);
-    --_content-gtr: 0fr;
+    --icon-scale: 1.1;
+    --icon-transform: rotate(0deg);
+    --_contentGtr: 0fr;
   }
   .b--details[open] {
-    --_icon-transform: scaleY(-1);
-    --_content-gtr: 1fr;
+    --icon-transform: scaleY(-1);
+    --_contentGtr: 1fr;
   }
 
   /* display: flex により summary のデフォルトマーカー（display: list-item）も解除される */
@@ -30,15 +30,15 @@
     display: inline-grid;
     background-color: currentColor;
     mask: var(--svg) no-repeat center center / contain;
-    scale: var(--_icon-scale);
+    scale: var(--icon-scale);
 
     transition: transform var(--duration);
-    transform: var(--_icon-transform);
+    transform: var(--icon-transform);
   }
 
   .b--details::details-content {
     display: grid;
-    grid-template-rows: var(--_content-gtr);
+    grid-template-rows: var(--_contentGtr);
     transition-duration: var(--duration);
     transition-property: content-visibility, grid-template;
     transition-behavior: allow-discrete;

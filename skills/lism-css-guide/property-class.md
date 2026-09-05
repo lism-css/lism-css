@@ -107,7 +107,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 | `-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
 | `-hov:in:{preset}` | 親の `set--hov` を起点に子のスタイルを変化させる | 親に `set--hov` が必要 |
 
-**標準クラス:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
+**標準クラス:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:-transform`, `-hov:underline`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
 
 **`<Lism>` の `hov` prop:** 文字列指定（`hov="-c"` → `-hov:-c`。自動変換なし、カンマ区切りで複数可）とオブジェクト指定（`hov={{ c: 'red' }}` → `-hov:-c` + `--hov-c: var(--red)`。値 `true` でクラスのみ出力）が可能。
 

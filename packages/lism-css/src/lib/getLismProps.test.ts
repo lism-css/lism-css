@@ -502,6 +502,12 @@ describe('getLismProps', () => {
       expect(result.style?.['--hov-bgc']).toBe('var(--blue)');
     });
 
+    test('hov: transform はトークン変換されず値がそのまま --hov-transform に入る', () => {
+      const result = getLismProps({ hov: { transform: 'scale(1.05)' } });
+      expect(result.className).toContain('-hov:-transform');
+      expect(result.style?.['--hov-transform']).toBe('scale(1.05)');
+    });
+
     test('hov: オブジェクト形式で true の場合はクラスのみ（- は付かない）', () => {
       const result = getLismProps({
         hov: { c: true, shadowUp: true },

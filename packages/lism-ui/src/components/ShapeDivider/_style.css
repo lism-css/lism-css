@@ -4,8 +4,8 @@
     --level: 5;
 
     /* svg配置調整用 */
-    --_inner-offset: 0px;
-    --_inner-stretch: 1;
+    --inner-offset: 0px;
+    --inner-stretch: 1;
 
     /* flip がオンなら -1 にセット */
     --_flipX: 1;
@@ -29,8 +29,8 @@
     --offsetX: -0.5px;
     height: 100%;
     width: calc(100% + 1px);
-    scale: calc(var(--_flipX) * var(--_inner-stretch)) var(--_flipY);
-    translate: calc(var(--offsetX) + var(--_inner-offset)) calc(var(--offsetY) * var(--_flipY));
+    scale: calc(var(--_flipX) * var(--inner-stretch)) var(--_flipY);
+    translate: calc(var(--offsetX) + var(--inner-offset)) calc(var(--offsetY) * var(--_flipY));
   }
 
   .b--shapeDivider_svg {

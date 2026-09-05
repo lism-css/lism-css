@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "astro sync && tsc --noEmit && astro check --tsconfig ./tsconfig.json",
+    "og:font": "tsx scripts/subset-og-font.ts",
     "generate:lastmod": "tsx scripts/generate-lastmod-map.ts",
     "screenshot:patterns:new": "pnpm build:astro && npx tsx scripts/generate-screenshots.ts",
     "screenshot:patterns:force": "pnpm build:astro && npx tsx scripts/generate-screenshots.ts --force",
@@ -53,7 +54,7 @@
     "remark-directive": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "remark-stringify": "^11.0.0",
-    "satori": "^0.18.4",
+    "satori": "^0.33.4",
     "sharp": "^0.35.0",
     "unified": "^11.0.5"
   },

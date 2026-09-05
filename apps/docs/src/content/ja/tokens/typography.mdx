@@ -1,6 +1,6 @@
 ---
-title: 'タイポグラフィトークン'
-navtitle: 'Typography'
+title: 'タイポグラフィ'
+navtitle: 'タイポグラフィ'
 description: 'Lism CSS で使用するフォントファミリー、フォントサイズ、行間などのタイポグラフィ関連のデザイントークンについて解説します。'
 ---
 
@@ -42,6 +42,10 @@ import { FzDemos, LthDemos } from "@/content/token-previews.jsx";
   ```
   </PreviewCode>
 </Preview>
+
+:::info
+このサイトでは本文の `--ff--base` を変更しているため、このプレビューは既定値そのままの表示ではありません。
+:::
 
 
 ## FW : font-weight
@@ -262,11 +266,13 @@ Lism CSSでは、全要素に対して `line-height` をハーフレディング
 
 |トークン|変数|クラス|初期値
 |---|---|---|---|
-|`base`|`--lts--base`|`-lts:base`|`normal`|
-|`xs`|`--lts--xs`|`-lts:xs`|`-0.05em`|
-|`s`|`--lts--s`|`-lts:s`|`-0.025em`|
-|`l`|`--lts--l`|`-lts:l`|`0.05em`|
-|`xl`|`--lts--xl`|`-lts:xl`|`0.1em`|
+|`base`|`--lts--base`|`-lts:base`|`0em`|
+|`xs`|`--lts--xs`|`-lts:xs`|`calc(var(--lts--base) - 0.05em)`|
+|`s`|`--lts--s`|`-lts:s`|`calc(var(--lts--base) - 0.025em)`|
+|`l`|`--lts--l`|`-lts:l`|`calc(var(--lts--base) + 0.05em)`|
+|`xl`|`--lts--xl`|`-lts:xl`|`calc(var(--lts--base) + 0.1em)`|
+
+`--lts--base` は長さで指定します（`calc()` で使うため `normal` は不可）。`xs` 〜 `xl` は `--lts--base` からの相対値なので、`:root` で `--lts--base` を変えると全体が連動します。子孫要素で `--lts--base` を上書きしても `xs` 〜 `xl` には反映されません。
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -288,3 +294,7 @@ Lism CSSでは、全要素に対して `line-height` をハーフレディング
     ```
   </PreviewCode>
 </Preview>
+
+:::info
+このサイトでは本文の `--ff--base` と `--lts--base` を少し調整しているため、このプレビューは既定値そのままの表示ではありません。
+:::

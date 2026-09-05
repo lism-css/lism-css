@@ -79,7 +79,10 @@ export default defineConfig({
     },
     rollupOptions: {
       plugins: [preserveDirectives()],
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
+      // lism-css 本体は dependencies として利用側で解決させる（バンドルするとトークン・CONFIG の
+      // スナップショットが焼き込まれ、lism-css/react と併用時にランタイムが2重になる）。
+      // lism-css/config.js は @lism-css/plugin が利用者の lism.config へ alias する差し替え点なので単独でも external に残す。
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js', /^lism-css(\/|$)/],
       output: {
         dir: 'dist',
         // exports: 'named',

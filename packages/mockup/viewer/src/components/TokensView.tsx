@@ -197,7 +197,7 @@ function TokenGroupSection({ section }: TokenGroupSectionProps) {
         // `subgrid`, so a column ends up exactly as wide as the widest cell of
         // the group and no preview has to hard-code a width to line up.
         // The preview track is `minmax(0, auto)` rather than `auto` so a wide
-        // preview — the `space` bars run to `--s80` — can give way instead of
+        // preview — the `space` bars run to `--s70` — can give way instead of
         // pushing the row past the section.
         <Grid
           as="ul"

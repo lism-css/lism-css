@@ -396,10 +396,10 @@ const footerSnsLinks = [
 
       <Container id="faq" class="c--faq" isWrapper layout="stack" g="40" py="60" hasGutter>
         <SectionHeading en="FAQ" ja="Common Questions" />
-        <Accordion.Root class="u--divide u--fadeIn" layout="stack">
+        <Accordion.Root class="u--fadeIn" layout="stack" bd-be>
           {
             faqItems.map((item) => (
-              <Accordion.Item>
+              <Accordion.Item bd-bs>
                 <Accordion.Heading>
                   <Accordion.Button py="30" px="15" hov="-bgc">
                     {item.question}
@@ -444,10 +444,10 @@ const footerSnsLinks = [
 
       <Container id="information" class="c--information" isWrapper layout="stack" g="40" py="60" hasGutter>
         <SectionHeading en="Information" ja="Company Overview" />
-        <Grid as="dl" class="u--divide u--fadeIn" gtc="auto 1fr">
+        <Grid as="dl" class="u--fadeIn" gtc="auto 1fr" bd-be>
           {
             informations.map((row) => (
-              <Grid gtc="subgrid" gc="1/-1" py="30" px="15" g={['30', null, '40']}>
+              <Grid gtc="subgrid" gc="1/-1" bd-bs py="30" px="15" g={['30', null, '40']}>
                 <dt class="u--trim">{row.term}</dt>
                 <dd class="u--trim">{row.description}</dd>
               </Grid>

@@ -223,7 +223,7 @@ describe('getMaybeTokenValue', () => {
   describe('実際の使用例', () => {
     test('space トークン（TOKEN_VAR_PREFIX の --s 命名）', () => {
       const TOKENS = {
-        space: { '5': '-', '10': '-', '15': '-', '20': '-', '30': '-', '40': '-', '50': '-', '60': '-', '70': '-', '80': '-' },
+        space: { '5': '-', '10': '-', '15': '-', '20': '-', '30': '-', '40': '-', '45': '-', '50': '-', '60': '-', '70': '-' },
       };
       expect(getMaybeTokenValue('space', '20', TOKENS)).toBe('var(--s20)');
       expect(getMaybeTokenValue('space', '100', TOKENS)).toBe('100');

@@ -1,6 +1,6 @@
 ---
 title: 'CSSファイルの種類'
-description: 'lism-css に同梱される main.css / main_no_layer.css / full.css / full_no_layer.css の違いと、@layer なし版・全部入りビルドを使うときの注意点を解説します。'
+description: 'Lism CSS に同梱されるCSSファイルの違いと、用途に応じた選び方を解説します。'
 ---
 
 `lism-css` パッケージは、用途に応じて複数のビルド済みCSSを同梱しています。読み込むファイルを差し替えるだけで、`@layer` のオン / オフや「全部入り」ビルドへ切り替えられます。通常は `main.css` を使い、必要なときだけほかのファイルに切り替えてください。
@@ -22,7 +22,7 @@ description: 'lism-css に同梱される main.css / main_no_layer.css / full.cs
 | クラス | `@layer` なし版での出力 | 詳細度 |
 |---|---|---|
 | Property Class（`-p:20` など） | 常に `!important` 付き | 0-1-0 + `!important` |
-| Utility Class（`u--trim` / `u--trimAll` / `u--cbox` / `u--divide` / `u--enclose`） | セレクタを二重化（`.u--trim.u--trim`） | 0-2-0 |
+| Utility Class（`u--trim` / `u--trimAll` / `u--cbox`） | セレクタを二重化（`.u--trim.u--trim`） | 0-2-0 |
 | 上記以外のクラス | `main.css` と同じ | - |
 
 そのため、`@layer` なし版では次の点に注意してください。
@@ -46,7 +46,7 @@ import 'lism-css/full.css'; // @layer なし版は 'lism-css/full_no_layer.css'
 - border サブプロパティ `bds` / `bdc` のブレイクポイント対応クラス（`bdw` は `main.css` でも対応済み）。border のブレイクポイント対応は、ショートハンドではなくサブプロパティで行います
 - カラー系 Property Class（`bgc` / `c` / `bdc`）の全カラートークン分のクラス（`-bgc:red` など）。`main.css` では厳選したセマンティックカラーと `keycolor` だけがクラス化されますが、`full.css` では[パレットカラー](/docs/tokens/colors/)を含む全トークンが対象になります
 
-そのぶんCSSサイズは `main.css` より大きくなるため、**未使用のクラスをビルド時に削除する [CSS Purge](/docs/customize/purge/) との併用を前提とした配布物**です。
+そのぶんCSSサイズは `main.css` より大きくなるため、**未使用のクラスをビルド時に削除する [CSS Purge](/docs/customize/purge/) との併用を推奨します**。
 
 :::info
 `full.css` を読み込むだけでは、コンポーネント側の出力は変わりません（例: `t="20"` はインラインスタイルとして出力されます）。コンポーネントの出力も `full.css` に合わせるには、`lism.config.js` の [`isFullMode`](/docs/customize/config/#isfullmode) を有効にしてください。

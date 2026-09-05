@@ -2,8 +2,8 @@
 // チャット演出（player.ts）は使わず、シナリオのコード編集だけを自動でループ再生する。
 // - 各ステップの resultCode へ順に diff タイピングし、最後に「初期コードへ戻す編集」もアニメして循環する
 //   （チャット文言との整合が不要なため、編集を巻き戻す演出がそのままループの継ぎ目になる）
-// - ヒーローへの反映（editor.commitView）はハンク確定ごと。書き換えた行のフラッシュ
-//   （editor.flashLines）を先に点灯し、ひと呼吸置いて反映される
+// - ヒーローへの反映（editor.commitView）はハンク確定ごと。変更箇所のフラッシュ
+//   （editor.highlightRanges）を先に点灯し、ひと呼吸置いて反映される
 //   （「保存 → 結果が変わる」の順序。タイミングは code-anim.ts が管理する）
 // - 自動一時停止: コード編集領域へのホバー（マウス系ポインターのみ。バーは対象外）/ 画面外 / 非アクティブタブ。
 //   条件が戻れば少し間を置いて、止まった位置の続きから自動再開する
@@ -30,7 +30,7 @@ import { STRINGS } from './strings';
 // ポーズ設定（ms）
 const PAUSE_BETWEEN_STEPS = 1600; // 編集と次の編集の「間」
 const PAUSE_AFTER_CYCLE = 2800; // 初期コードへ戻ってから次の周回を始めるまでの「間」
-const INITIAL_START_DELAY = 2000; // 表示・ハイライター準備完了から初回再生までの「間」
+const INITIAL_START_DELAY = 4000; // 表示・ハイライター準備完了から初回再生までの「間」
 const RESUME_DELAY = 600; // ホバー解除・再表示から自動再開するまでの「間」
 const TAB_RESUME_DELAY = 800; // タブ切替後に新しい表記で再開するまでの「間」
 const PAUSE_AFTER_TAB_SWITCH = 800; // 周回の継ぎ目でタブを自動切替してから次の周回を始めるまでの「間」
@@ -52,11 +52,13 @@ interface LoopPlayerOptions {
 
 export function createLoopPlayer({ editor, root, hoverTarget, toggleButtons, ready, initialHtml, scenario }: LoopPlayerOptions): void {
   // 自動再生がユーザーのスクロール位置を奪わないよう、reveal のページスクロールは無効にする。
-  // onApply（ハンク確定の反映演出）は live モードだけの配線: 書き換えた行をフラッシュで光らせる
+  // 編集前の予告と反映フラッシュはliveモードだけに付ける。
   const animator = createCodeAnimator(editor, {
     scrollWindowOnReveal: false,
     scrollWindowOnRestore: false,
-    onApply: ({ line, lineCount }) => editor.flashLines(line, lineCount),
+    onBeforeEdit: (range) => editor.highlightRanges([range], 'before'),
+    onApply: (ranges) => editor.highlightRanges(ranges, 'applied'),
+    onClearHighlights: () => editor.clearHighlights(),
   });
 
   // 再生ターゲットの循環列: 各ステップの resultCode + 末尾に「初期コードへ戻す」ステップ
@@ -103,6 +105,7 @@ export function createLoopPlayer({ editor, root, hoverTarget, toggleButtons, rea
   /** 再生を止め、停止時点の表示テキストを控える（すべての停止経路がここを通る） */
   const abortRun = (): void => {
     controller?.abort();
+    editor.clearHighlights();
     controller = null;
     running = false;
     pausedViewText = editor.getViewText();

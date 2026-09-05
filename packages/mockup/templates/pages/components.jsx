@@ -164,9 +164,9 @@ export default function ComponentsPage() {
               </Columns>
             </Sample>
             <Sample label="Divided list">
-              <List layout="stack" util="divide" g="15" fz="s">
-                {orders.map(({ id, total }) => (
-                  <Cluster as="li" key={id} jc="between" g="15">
+              <List layout="stack" g="15" fz="s">
+                {orders.map(({ id, total }, i) => (
+                  <Cluster as="li" key={id} jc="between" g="15" bd-bs={i > 0} pbs={i > 0 ? '15' : undefined}>
                     <Text as="div" ff="mono" c="text-2">
                       {id}
                     </Text>

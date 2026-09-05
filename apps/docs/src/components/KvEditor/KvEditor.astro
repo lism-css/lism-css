@@ -80,8 +80,8 @@ const highlighted = await highlight(initialHtml, 'html');
     <div class="c--kvEditor_editor" role="tabpanel" id="kv-editor-panel" aria-labelledby="kv-tab-html">
       {/* preInner は textarea のスクロールに transform で追従する（要素自体は差し替えない） */}
       <div class="c--kvEditor_pre" aria-hidden="true">
-        {/* 反映フラッシュ（書き換えた行の背景をひと呼吸光らせる）。テキストの下に敷くため preInner より前に置く */}
-        <span class="c--kvEditor_lineFlash" data-kv-line-flash></span>
+        {/* 編集前の範囲と反映済みの範囲を、文字の下に矩形で示す */}
+        <div class="c--kvEditor_highlights" data-kv-highlights></div>
         <div class="c--kvEditor_preInner" data-kv-pre-inner set:html={highlighted} />
       </div>
       <textarea

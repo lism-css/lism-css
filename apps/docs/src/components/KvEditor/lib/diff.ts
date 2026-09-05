@@ -15,6 +15,12 @@ export interface CodeDiff {
   tail: string;
 }
 
+/** 表示コードのUTF-16範囲。endは含まず、startとendが同じなら挿入・削除位置を示す。 */
+export interface CodeRange {
+  start: number;
+  end: number;
+}
+
 const isHighSurrogate = (code: number): boolean => code >= 0xd800 && code <= 0xdbff;
 const isLowSurrogate = (code: number): boolean => code >= 0xdc00 && code <= 0xdfff;
 

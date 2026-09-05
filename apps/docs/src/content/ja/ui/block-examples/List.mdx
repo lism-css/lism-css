@@ -80,10 +80,10 @@ List のベーススタイルは、以下の CSS で定義されています。�
 |---|---|
 | `b--list` | ルート要素。`<ul>` / `<ol>` に付与します。 |
 | `b--list--check` | チェックマークのアイコンに切り替えるモディファイア。 |
-| `--_icon-c` | アイコンの色（デフォルトは `var(--brand)`）。 |
-| `--_icon-img` | アイコンとして表示する画像（`mask` に渡す `url()`）。 |
-| `--_icon-size` | アイコンのサイズ（デフォルトは `1em`）。 |
-| `--_li-ps` | `li` の行頭に確保する余白（デフォルトは `1.875em`）。 |
+| `--icon-c` | アイコンの色（デフォルトは `var(--brand)`）。 |
+| `--icon-img` | アイコンとして表示する画像（`mask` に渡す `url()`）。 |
+| `--icon-size` | アイコンのサイズ（デフォルトは `1em`）。 |
+| `--li-ps` | `li` の行頭に確保する余白（デフォルトは `1.875em`）。 |
 
 余白は `li` 側の `padding-inline-start` で確保しているため、`li` にボーダー系の Property Class（`-bd-be` など）をそのまま付与できます。
 
@@ -145,19 +145,19 @@ List のベーススタイルは、以下の CSS で定義されています。�
 </Preview>
 
 
-### アイコンを差し替える（`--_icon-c` / `--_icon-img`）
+### アイコンを差し替える（`--icon-c` / `--icon-img`）
 
-`--_icon-c` で色、`--_icon-img` で画像を上書きすると、任意のアイコンのリストになります。
+`--icon-c` で色、`--icon-img` で画像を上書きすると、任意のアイコンのリストになります。
 
 <Preview>
-  <PreviewTitle>`--_icon-c` と `--_icon-img`</PreviewTitle>
+  <PreviewTitle>`--icon-c` と `--icon-img`</PreviewTitle>
   <PreviewArea resize p="20">
     <Lism
       as="ul"
       class="b--list"
       style={{
-        '--_icon-c': 'var(--purple)',
-        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+        '--icon-c': 'var(--purple)',
+        '--icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
       }}
     >
       <li>List item 1</li>
@@ -166,13 +166,13 @@ List のベーススタイルは、以下の CSS で定義されています。�
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "'--_icon-c'" "'--_icon-img'"
+    ```jsx "'--icon-c'" "'--icon-img'"
     <Lism
       as="ul"
       class="b--list"
       style={{
-        '--_icon-c': 'var(--purple)',
-        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+        '--icon-c': 'var(--purple)',
+        '--icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
       }}
     >
       <li>List item 1</li>
@@ -182,12 +182,12 @@ List のベーススタイルは、以下の CSS で定義されています。�
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html "--_icon-c" "--_icon-img"
+    ```html "--icon-c" "--icon-img"
     <ul
       class="b--list"
       style="
-        --_icon-c: var(--purple);
-        --_icon-img: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>');
+        --icon-c: var(--purple);
+        --icon-img: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>');
       "
     >
       <li>List item 1</li>

@@ -105,11 +105,18 @@ export default {
   //  hl と違い body 等で base 値としてセットしないため、中央キーは base ではなく m。
   lh: { xs: '1.25', s: '1.5', m: '1.75', l: '2', xl: '2.25' },
 
-  // letter-spacing
-  lts: { base: 'normal', xs: '-0.05em', s: '-0.025em', l: '0.05em', xl: '0.1em' },
+  // letter-spacing: xs〜xl は base からの相対値。base は calc() に入るため長さで指定する（normal 不可）。
+  //  Memo: var() は :root で置換されるため、base の上書きは :root で行う（子孫要素での上書きは xs〜xl に伝わらない）。
+  lts: {
+    base: '0em',
+    xs: 'calc(var(--lts--base) - 0.05em)',
+    s: 'calc(var(--lts--base) - 0.025em)',
+    l: 'calc(var(--lts--base) + 0.05em)',
+    xl: 'calc(var(--lts--base) + 0.1em)',
+  },
 
   // opacity（音楽の強弱記号 piano 系列に由来）
-  o: { mp: '0.9', p: '0.75', pp: '0.5', ppp: '0.25' },
+  o: { mp: '0.9', p: '0.8', pp: '0.6', ppp: '0.4' },
 
   // +0.125 → +0.25 → +0.375 → + 0.5 と 二階等差数列で増えつつ、10~40がフィボナッチ数列。inner は .set--bdrsInner で計算
   bdrs: { '10': '0.25rem', '20': '0.375rem', '30': '0.625rem', '40': '1rem', '50': '1.5rem', '99': '99rem', inner: '-' },
@@ -127,7 +134,8 @@ export default {
   // aspect-ratio
   ar: { og: '1.91/1' },
 
-  // space: 構造変数 --s-unit（vars グループ）の倍数。フィボナッチ数列ベース。.set--s で --s-unit を em 化すると再ベースされる。
+  // space: 構造変数 --s-unit（vars グループ）の倍数。.set--s で --s-unit を em 化すると再ベースされる。
+  //  10 刻みはフィボナッチ数列で縦のリズム用。5 刻みは水平方向の gap / padding 用の中間値で 50 まで。
   space: {
     '5': 'calc(var(--s-unit) * 0.5)', // ≒ 4px
     '10': 'var(--s-unit)', // ≒ 8px
@@ -137,10 +145,10 @@ export default {
     '30': 'calc(var(--s-unit) * 3)', // ≒ 24px
     '35': 'calc(var(--s-unit) * 4)', // ≒ 32px
     '40': 'calc(var(--s-unit) * 5)', // ≒ 40px
+    '45': 'calc(var(--s-unit) * 6.5)', // ≒ 52px
     '50': 'calc(var(--s-unit) * 8)', // ≒ 64px
     '60': 'calc(var(--s-unit) * 13)', // ≒ 104px
     '70': 'calc(var(--s-unit) * 21)', // ≒ 168px
-    '80': 'calc(var(--s-unit) * 34)', // ≒ 272px
   },
 
   // flow: lang スコープ上書きありのため手書き SCSS。

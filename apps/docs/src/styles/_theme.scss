@@ -5,7 +5,9 @@
     --code-c: currentColor;
     --code-bgc: color-mix(in srgb, var(--divider), transparent 60%);
 
-    --ff--base: 'Inter', 'Noto Sans JP', sans-serif;
+    --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif;
+    --lts--base: 0.0125em;
+    // --fz-mol: 8;
 
     // 基本背景はコアのデフォルト（hsl(220 0% 99%)）より白くする（docsサイトのみの調整）
     --base: #fff;
@@ -31,9 +33,12 @@
     --toc-w: clamp(240px, 16vw, 300px);
   }
 
-  // .u--cbox {
-  // 	--code-bgc: color-mix(in srgb, var(--keycolor), transparent 88%);
-  // }
+  /* コンテナクエリ単位 での流体トークンをセット */
+  .set--cqUnit {
+    /* 800px ~ 1000px で変化*/
+    --REM: clamp(1rem, 0.8rem + 0.4cqw, 1.05rem);
+    font-size: var(--REM);
+  }
 
   :root[data-theme='dark'] {
     --L: 76%;
@@ -121,9 +126,9 @@
     text-decoration-skip-ink: none;
   }
 
-  html[lang='en'] {
-    --fz-mol: 7;
-  }
+  // html[lang='en'] {
+  //   --fz-mol: 7;
+  // }
 
   /* ------------------------------------------------------------
 	折り返し制御
@@ -141,10 +146,11 @@
   }
 
   .b--eyebrow {
-    --hl: var(--hl--xs);
+    font-family: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif;
+    font-weight: 500;
     color: var(--eyebrow-c);
-    font-size: 0.65rem;
-    font-weight: 400;
+    font-size: var(--fz--2xs);
+    --hl: var(--hl--xs);
   }
 }
 

@@ -122,7 +122,6 @@ describe('no_layer エントリ', () => {
     expect(css).toContain('.u--trim.u--trim {');
     expect(css).toContain('.u--trimAll.u--trimAll > :not(');
     expect(css).toContain('.u--cbox.u--cbox {');
-    expect(css).toContain('.u--divide.u--divide, .u--enclose.u--enclose {');
     expect(css).toContain(':where(.-bd, [class*=" -bd-"], [class^=-bd-]) {');
     // 二重化対象外
     expect(css).toContain('.u--srOnly:not(#_) {');

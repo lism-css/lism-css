@@ -30,7 +30,7 @@ React / Astro向けのコンポーネントも提供しており、propsを通�
 ### CDN（ビルド不要）
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.27.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.28.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -171,7 +171,7 @@ Lism CSSは構造化された命名規則をCSSクラスに使用しています
 Lism CSSは一貫したデザインのためのCSSカスタムプロパティを提供します:
 
 - **カラー:** `--base`、`--base-2`、`--text`、`--text-2`、`--link`、`--divider`、`--brand`、`--accent`、`--neutral`、パレットカラー（`--red`、`--blue`、`--green` など）
-- **余白:** `--s5`, `--s10`, `--s15`, `--s20`, `--s25`, `--s30`, `--s35`, `--s40` … `--s80`（rem値にマッピング）
+- **余白:** `--s5`, `--s10`, `--s15` … `--s45`, `--s50`, `--s60`, `--s70`（rem値にマッピング）
 - **フォントサイズ:** `--fz--2xs` 〜 `--fz--5xl`
 - **ボーダー半径:** `--bdrs--10`（0.25rem）〜 `--bdrs--99`（99rem）
 - **シャドウ:** `--bxsh--10` 〜 `--bxsh--50`（シャドウカラー設定可能）

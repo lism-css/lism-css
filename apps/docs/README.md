@@ -9,7 +9,7 @@ Astro + TypeScript + MDX で構築された、Lism CSS (`packages/lism-css`) & L
 | CSS | lism-css |
 | 検索 | Pagefind（静的検索ライブラリ） |
 | コードハイライト | Expressive Code（Shiki ベース） |
-| OG 画像生成 | satori + sharp（キャッシュ付き） |
+| OG 画像生成 | satori + sharp |
 | 目次生成 | Starlight の generateToC 移植 |
 
 
@@ -114,7 +114,7 @@ src/
 │   ├── _theme.scss
 │   ├── _docs/                # docs 系の個別スタイル
 │   └── _memo/                # 検証用メモスタイル
-├── assets/               # OG画像生成用のフォント・画像
+├── assets/               # OG画像生成用のフォント・文字一覧・ロゴ画像
 ├── img/                  # 画像アセット
 ├── utils/                # 汎用ユーティリティ
 │   └── getSvgUrl.ts

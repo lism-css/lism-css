@@ -39,11 +39,14 @@ The Lism core package provides the following classes by default:
 | `-hov:-bdc` | `border-color` | `currentColor` |
 | `-hov:-o` | `opacity` | `var(--o--p)` |
 | `-hov:-bxsh` | `box-shadow` | `var(--bxsh--50)` |
+| `-hov:-transform` | `transform` | `translate(0, -4px)` |
 
 
-### Using default values
+## Using default values
 
 Each `-hov:-{prop}` class has a default value, so you can use it without setting a destination CSS variable.
+
+### `-hov:-bgc`
 
 <Preview>
   <PreviewTitle>The default `-hov:-bgc` value works across different background colors</PreviewTitle>
@@ -101,6 +104,8 @@ Each `-hov:-{prop}` class has a default value, so you can use it without setting
   </PreviewCode>
 </Preview>
 
+### `-hov:-o`
+
 For buttons and button-like links, lowering the whole element's opacity makes the text harder to read. Prefer `-hov:-bgc` over `-hov:-o` to affect only the background.
 
 <Preview>
@@ -142,23 +147,52 @@ For buttons and button-like links, lowering the whole element's opacity makes th
 </Preview>
 
 
+### `-hov:-c`, `-hov:-bdc`
+
 <Preview>
-  <PreviewTitle>Default-value examples for `-hov:-c`, `-hov:-bdc`, and `-hov:-bxsh`</PreviewTitle>
+  <PreviewTitle>Changing text and border colors</PreviewTitle>
   <PreviewArea p="30">
-    <BoxLink href="###" hov="-c,-bdc,-bxsh" bd p="20">
+    <BoxLink href="###" hov="-c,-bdc" bd p="20">
       <p>BoxLink</p>
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-hov:-c" "-hov:-bdc" "-hov:-bxsh"
-    <a href="###" class="is--boxLink -hov:-c -hov:-bdc -hov:-bxsh -bd -p:20">
+    ```html "-hov:-c" "-hov:-bdc"
+    <a href="###" class="is--boxLink -hov:-c -hov:-bdc -bd -p:20">
       <p>BoxLink</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hov="-c,-bdc,-bxsh"'
-    <BoxLink href="###" hov="-c,-bdc,-bxsh" bd p="20">
+    ```jsx 'hov="-c,-bdc"'
+    <BoxLink href="###" hov="-c,-bdc" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
+### `-hov:-bxsh`, `-hov:-transform`
+
+Combining `-hov:-bxsh` and `-hov:-transform` adds a shadow and moves the element up by 4px on hover. Add `has--transition` to make the changes smooth.
+
+<Preview>
+  <PreviewTitle>Combining movement and shadow</PreviewTitle>
+  <PreviewArea p="30">
+    <BoxLink href="###" hasTransition hov="-bxsh,-transform" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:-bxsh" "-hov:-transform" "has--transition"
+    <a href="###" class="is--boxLink has--transition -hov:-bxsh -hov:-transform -bd -p:20">
+      <p>BoxLink</p>
+    </a>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov="-bxsh,-transform"' 'hasTransition'
+    <BoxLink href="###" hasTransition hov="-bxsh,-transform" bd p="20">
       <p>BoxLink</p>
     </BoxLink>
     ```
@@ -172,7 +206,7 @@ In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string su
 <Spacer h="20" />
 
 
-### Changing a property to an arbitrary value
+## Specifying custom values
 
 Specify a value with the `--hov-{prop}` variable to make the property transition to that value on hover.
 
@@ -202,15 +236,83 @@ Specify a value with the `--hov-{prop}` variable to make the property transition
   </PreviewCode>
 </Preview>
 
+You can also customize the movement and shadow. The following example moves the element up by 3px and sets the hover shadow to `var(--bxsh--40)`.
+
+<Preview>
+  <PreviewTitle>Specifying movement and shadow values</PreviewTitle>
+  <PreviewArea p="30">
+    <BoxLink href="###" hasTransition hov={{ transform: 'translateY(-3px)', bxsh: '40' }} bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:-transform" "-hov:-bxsh" "--hov-transform" "--hov-bxsh"
+    <a href="###" class="is--boxLink has--transition -hov:-transform -hov:-bxsh -bxsh:10 -bd -p:20" style="--hov-transform: translateY(-3px); --hov-bxsh: var(--bxsh--40)">
+      <p>BoxLink</p>
+    </a>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov='
+    <BoxLink href="###" hasTransition hov={{ transform: 'translateY(-3px)', bxsh: '40' }} bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
+### Combining styles into a custom class
+
+To reuse the same effect in multiple places, you can combine the styles from the previous example into a custom class called `-hov:shadowUp`. Give it a name in the `-hov:{preset}` format and define the hover styles in CSS.
+
+<Preview css={`
+@media (any-hover: hover) {
+  .-hov\\:shadowUp:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--bxsh--40);
+  }
+}`}>
+  <PreviewTitle>Combining movement and shadow into `-hov:shadowUp`</PreviewTitle>
+  <PreviewArea p="30">
+    <BoxLink href="###" hasTransition hov="shadowUp" bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="Additional CSS">
+    ```scss
+    @media (any-hover: hover) {
+      .-hov\:shadowUp:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--bxsh--40);
+      }
+    }
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:shadowUp"
+    <a href="###" class="is--boxLink has--transition -hov:shadowUp -bxsh:10 -bd -p:20">
+      <p>BoxLink</p>
+    </a>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov="shadowUp"'
+    <BoxLink href="###" hasTransition hov="shadowUp" bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
 <Spacer h="20" />
 
 
-### Specifying `hov` on the `<Lism>` component
+## Specifying `hov` on the `<Lism>` component
 
 On the [`<Lism>` component](/en/docs/core-components/Lism/) (and components that extend it), you can pass either a **string** or an **object** to the `hov` prop to flexibly output `-hov` classes and `--hov-{prop}` CSS variables.
 
 
-#### When passing a string
+### When passing a string
 
 The string you pass is output as-is as a `-hov:{string}` class. You can also pass multiple classes separated by commas.
 
@@ -226,7 +328,7 @@ The string you pass is output as-is as a `-hov:{string}` class. You can also pas
 ```
 
 
-#### When passing an object
+### When passing an object
 
 Mainly used to assign a **custom value** to a `-hov:-{prop}` class.
 
@@ -284,55 +386,7 @@ The Lism core package provides the following preset by default:
 </Preview>
 
 
-### Creating a custom `-hov` class
-
-You can freely add your own presets to fit each project.
-
-<Preview css={`
-@media (any-hover: hover) {
-  .-hov\\:shadowUp:hover {
-    box-shadow: var(--bxsh--40);
-    translate: 0 -3px;
-  }
-}`}>
-  <PreviewTitle>Adding `-hov:shadowUp`</PreviewTitle>
-  <PreviewArea p="30">
-    <BoxLink href="###" hasTransition hov="shadowUp" bxsh="10" bd p="20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </BoxLink>
-  </PreviewArea>
-
-  <PreviewCode slot="tab" label="Additional CSS">
-    ```scss
-    @media (any-hover: hover) {
-      .-hov\:shadowUp:hover {
-        box-shadow: var(--bxsh--40);
-        translate: 0 -3px;
-      }
-    }
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html "-hov:shadowUp"
-    <a href="###" class="is--boxLink has--transition -hov:shadowUp -bd -p:20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </a>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hov="shadowUp"'
-    <BoxLink href="###" hasTransition hov="shadowUp" bd p="20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </BoxLink>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-<div class="u--srOnly" id="set--hov"></div>
+<div class="c--scrollTarget" id="set--hov"></div>
 ## `-hov:in:{preset}`
 
 `-hov:in:{preset}` is used to **trigger style changes on child elements from a parent's hover state**.
@@ -405,7 +459,7 @@ The Lism core package provides the following classes by default:
 </Preview>
 
 
-<div class="u--srOnly" id="has--transition"></div>
+<div class="c--scrollTarget" id="has--transition"></div>
 ## Configuring transitions
 
 Adding the [`has--transition`](/en/docs/trait-class/#has--transition) class makes hover changes transition smoothly. Use the `--duration` variable to adjust the transition time.

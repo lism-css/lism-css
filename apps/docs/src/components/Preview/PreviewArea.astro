@@ -3,13 +3,13 @@ import { Lism, Icon } from 'lism-css/astro';
 import { ArrowDownRightIcon } from '@phosphor-icons/react';
 import { getLangFromUrl, t } from '@/lib/i18n';
 
-const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
+const { resize, p = '5', ...props } = Astro.props || {};
 const lang = getLangFromUrl(Astro.url);
 const previewText = t(lang, 'preview');
 ---
 
 <Lism className="c--preview_area">
-  <div class={`c--preview_area_frame ${setCqUnit ? 'set--cqUnit set--s' : ''}`}>
+  <div class="c--preview_area_frame">
     <Lism class:list={['c--preview_inner', resize ? 'set--hov is--resize' : '']} layout="flow" p={p} {...props}>
       <slot />
       {

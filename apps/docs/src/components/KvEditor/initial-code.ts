@@ -22,12 +22,12 @@ const buildInitialHtml = (
   lead1: string,
   lead2: string,
   urlPrefix: string
-): string => `<h1 class="u--trim -fw:700 -fz:3xl -fz_sm -fz_md -hl:l -ta:center" style="--fz_sm: var(--fz--4xl); --fz_md: var(--fz--5xl)">
+): string => `<h1 class="u--trim -fw:700 -fz -lh:xs -lts:s -ta:center" style="--fz: clamp(2rem, 0.6667rem + 5.3333vw, 4rem)">
   The CSS Design Framework
   <br />
   for AI and Humans
 </h1>
-<p class="-fz:s -fz_sm -fz_md -c:text-2 -ta:center -my:40" style="--fz_sm: var(--fz--m); --fz_md: var(--fz--l)">
+<p class="-fz:s -fz_sm -fz_md -lh:m -c:text-2 -ta:center -my:40" style="--fz_sm: var(--fz--m); --fz_md: var(--fz--l)">
   ${lead1}
   <br />
   ${lead2}
@@ -36,8 +36,8 @@ const buildInitialHtml = (
   <a class="l--flex -ai:center -p:10 -c:base -bdrs:20 -fw:500 -td:none -hl:s" href="${urlPrefix}/docs/installation/">
     <span class="-px:10">Get Started</span>
   </a>
-  <button class="l--flex set--plain -ai:center -p:10 -bgc:base -bdrs:20 -hl:s" type="button" data-modal-open="search-modal">
-    <span class="-px:10">Search documentation...</span>
+  <button class="l--flex set--plain -ai:center -p:10 -bgc:base -bdrs:20 -bxsh:10 -hl:s" type="button" data-modal-open="search-modal">
+    <span class="-px:10 -o:pp">Search documentation...</span>
     <span class="-px:10 -py:5 -c:text -bgc:base-2 -bdrs:10 -fz:s -lh:1 -lts:s -d:none -d_md -bd" style="--d_md: inline-block">
       ⌘K
     </span>

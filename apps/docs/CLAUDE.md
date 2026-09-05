@@ -47,5 +47,4 @@ pnpm preview  # プレビューサーバー
 | `/dist/` | 静的ビルド出力（編集禁止） |
 | `/dist/pagefind/` | Pagefind 検索インデックス |
 | `/dist/og/**/*.png` | 各記事の OG 画像 |
-| `.cache/og/` | OG 画像のビルドキャッシュ |
 | `.cache/ogp/` | 外部サイト OGP データのキャッシュ |

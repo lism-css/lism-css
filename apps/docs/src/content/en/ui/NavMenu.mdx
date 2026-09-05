@@ -1,6 +1,6 @@
 ---
 title: 'NavMenu'
-description: 'Documentation for the NavMenu component provided by @lism-css/ui.'
+description: 'A UI component that creates lists for navigation menus.'
 ---
 import { Lism, Icon, Box, Flex, Stack, Frame } from 'lism-css/astro'
 import { Accordion } from '@lism-css/ui/astro/Accordion';
@@ -102,7 +102,7 @@ Provided as `NavMenu` (`b--navMenu`) from the `@lism-css/ui` package.
 |---|---|
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | Outputs `--hov-bgc`. (For use when `-hov:-bgc` is applied to `b--navMenu_link`.) |
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | Outputs `--hov-c`. (For use when `-hov:-c` is applied to `b--navMenu_link`.) |
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | Outputs the `--_item-p` variable. Adjusts the padding of each link at once. |
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | Outputs the `--item-p` variable. Adjusts the padding of each link at once. |
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | Specifies the hover style. Defaults to `-bgc`, changing the background color on hover. |
 
 
@@ -112,7 +112,7 @@ Provided as `NavMenu` (`b--navMenu`) from the `@lism-css/ui` package.
 
 Some props can be specified on `NavMenu.Root` and applied to all links at once, instead of setting them directly on each `NavMenu.Link`.
 
-- `itemP` adjusts the padding (`--_item-p`) of each `NavMenu.Link`.
+- `itemP` adjusts the padding (`--item-p`) of each `NavMenu.Link`.
 - `hovBgc` provides the hover background color (`--hov-bgc`). (Requires `-hov:-bgc` on `NavMenu.Link`.)
 - `hovC` provides the hover text color (`--hov-c`). (Requires `-hov:-c` on `NavMenu.Link`.)
 
@@ -151,7 +151,7 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
-<ul class="b--navMenu -bd" style="--hov-bgc:var(--text);--hov-c:var(--base);--_item-p:var(--s20)">
+<ul class="b--navMenu -bd" style="--hov-bgc:var(--text);--hov-c:var(--base);--item-p:var(--s20)">
   <li class="b--navMenu_item">
     <a class="b--navMenu_link -hov:-bgc -hov:-c" href="#menu1">Menu item</a>
   </li>
@@ -226,7 +226,7 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
-<ul class="b--navMenu" style="--_item-p:1em">
+<ul class="b--navMenu" style="--item-p:1em">
   <li class="b--navMenu_item">
     <a class="b--navMenu_link -hov:-bgc -bgc:text -c:base" href="#menu1">
       <span>Menu item</span>
@@ -374,7 +374,7 @@ To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead o
 
 ### Expanding nested menus with an accordion
 
-Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` inside an accordion to apply the same padding amount.
+Since link padding is managed by `--item-p`, you can use `var(--item-p)` inside an accordion to apply the same padding amount.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -389,7 +389,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
         <Accordion.Root>
           <Accordion.Item>
             <Accordion.Heading>
-              <Accordion.Button hov="-bgc" p="var(--_item-p)">
+              <Accordion.Button hov="-bgc" p="var(--item-p)">
                 <Fragment>Menu item (Accordion)</Fragment>
               </Accordion.Button>
             </Accordion.Heading>
@@ -424,7 +424,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
         <Accordion.Root>
           <Accordion.Item>
             <Accordion.Heading>
-              <Accordion.Button hov="-bgc" p="var(--_item-p)">
+              <Accordion.Button hov="-bgc" p="var(--item-p)">
                 Menu item (Accordion)
               </Accordion.Button>
             </Accordion.Heading>
@@ -450,7 +450,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
 ```html
-<ul class="b--navMenu -bd-y" style="--hov-bgc:var(--base-2);--_item-p:0.75em">
+<ul class="b--navMenu -bd-y" style="--hov-bgc:var(--base-2);--item-p:0.75em">
   <li class="b--navMenu_item">
     <a class="b--navMenu_link -hov:-bgc" href="#menu1">Menu item</a>
   </li>
@@ -460,7 +460,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
         <div class="b--accordion_heading" role="heading">
           <button
             class="b--accordion_button set--plain -hov:-bgc -p"
-            style="--p:var(--_item-p)"
+            style="--p:var(--item-p)"
             aria-controls="{id}"
             aria-expanded="false"
           >
@@ -661,7 +661,7 @@ Set `layout='flex'` on `<NavMenu.Root>` to lay out items horizontally, then add 
   <PreviewCode slot="tab" label="HTML">
 ```html
 <div class="l--box -min-h" style="--min-h:15rem">
-  <ul class="b--navMenu l--flex -hl:s -pos:relative" style="--_item-p:0.5em .75em">
+  <ul class="b--navMenu l--flex -hl:s -pos:relative" style="--item-p:0.5em .75em">
     <li class="b--navMenu_item set--hov -pos:relative">
       <a class="b--navMenu_link -hov:-bgc" href="#menu3">
         <p>
@@ -695,7 +695,7 @@ Set `layout='flex'` on `<NavMenu.Root>` to lay out items horizontally, then add 
       </a>
       <div class="l--box -hov:in:show -pos:absolute -t:100% -l:0 -w:100% -pt:5">
         <div class="l--box -fz:s -hl:s -bgc:base -bxsh:30 -bd -ov:hidden -p:5">
-          <ul class="b--navMenu l--columns -g:5" style="--_item-p:var(--s10);--cols:2">
+          <ul class="b--navMenu l--columns -g:5" style="--item-p:var(--s10);--cols:2">
             <li class="b--navMenu_item">
               <a class="b--navMenu_link -hov:-bgc -g:10" href="#child-menu-a">
                 <div class="l--frame -ar:1/1 -bgc:base-2 -w -bdrs:10" style="--w:3rem">
