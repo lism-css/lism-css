@@ -58,11 +58,11 @@ export async function renderOgSvg({ title, description }: OgImageParams) {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 32,
+          gap: 20,
           position: 'absolute',
-          top: RULE_INSET + RULE_HEIGHT + 64,
+          top: RULE_INSET + RULE_HEIGHT + 48,
           left: 80,
-          width: 1040,
+          width: 960,
         }}
       >
         <div
@@ -72,6 +72,7 @@ export async function renderOgSvg({ title, description }: OgImageParams) {
             fontSize: 72,
             fontWeight: 600,
             lineHeight: 1.375,
+            letterSpacing: '0.0125em',
             color: '#1a1a1a',
             lineClamp: 2,
             textOverflow: 'ellipsis',
@@ -85,11 +86,12 @@ export async function renderOgSvg({ title, description }: OgImageParams) {
           <div
             style={{
               display: 'block',
-              fontSize: 32,
+              fontSize: 30,
               fontWeight: 400,
               lineHeight: 1.625,
+              letterSpacing: '0.0125em',
               color: '#555',
-              lineClamp: 3,
+              lineClamp: 2,
               textOverflow: 'ellipsis',
             }}
           >
@@ -101,8 +103,8 @@ export async function renderOgSvg({ title, description }: OgImageParams) {
         src={logoDataUrl}
         style={{
           position: 'absolute',
-          right: 40,
-          bottom: RULE_INSET + RULE_HEIGHT + 40,
+          right: 32,
+          bottom: RULE_INSET + RULE_HEIGHT + 29,
           height: 36,
         }}
       />
