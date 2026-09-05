@@ -46,7 +46,7 @@ In addition to everything in `main.css`, `full.css` includes:
 - Breakpoint support classes for the border sub-properties `bds` / `bdc` (`bdw` supports breakpoints in `main.css` already). Responsive borders are handled via sub-properties, not the shorthands
 - Classes for every color token on the color Property Classes (`bgc` / `c` / `bdc`), such as `-bgc:red`. `main.css` only outputs classes for a curated set of semantic colors plus `keycolor`, while `full.css` covers all tokens including the [palette colors](/en/docs/tokens/colors/)
 
-This makes the CSS larger than `main.css`, so **this build is intended to be used together with [CSS Purge](/en/docs/customize/purge/), which removes unused classes at build time**.
+This makes the CSS larger than `main.css`, so **we recommend using [CSS Purge](/en/docs/customize/purge/) to remove unused classes at build time**.
 
 :::info
 Importing `full.css` alone does not change the component output (for example, `t="20"` is still output as an inline style). To align the component output with `full.css`, enable [`isFullMode`](/en/docs/customize/config/#isfullmode) in your `lism.config.js`.
