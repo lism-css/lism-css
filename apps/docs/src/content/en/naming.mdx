@@ -50,7 +50,7 @@ Rules for variable names used in Property Classes (`-{prop}:{value}`).
 | `--{propName}` | Variables controlling a class's own main feature. Initialized on the element itself and cannot be given an initial value on `:root` | `--sideW`, `--mainW` |
 | `--_{varName}` | Helper variables for state checks and internal calculations | `--_isHov`, `--_flipX` |
 
-Use `--{target}-{prop}` in the same form whether the starting selector is `:root`, `.b--*`, or `.c--*`. However, when a component initializes a variable on its own selector, that declaration may take precedence over the value from `:root`. Use this form even when state changes the final property value.
+`--{target}-{prop}` takes the same form whether the origin selector is `:root`, `.b--*`, or `.c--*`. A variable whose origin is not `:root` must be initialized on the origin selector so it never inherits a same-named value from ancestors or other components (e.g. `.b--list { --icon-size: 1em; }`). To change the value, set it on the origin element via inline style or props rather than on `:root`.
 
 ## Class Naming Conventions
 
