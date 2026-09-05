@@ -1,7 +1,7 @@
 ---
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import KvEditor from '@/components/KvEditor/KvEditor.astro';
-import { Stack, Lism, Heading, Text, Columns, Grid, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
+import { Stack, Lism, Flex, Heading, Text, Link, Columns, Grid, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { siteConfig } from '@/config/site';
 import { getLocalizedUrl, isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
@@ -100,6 +100,8 @@ const features = [
 const tools = [
   {
     title: 'MCP Server',
+    buttonLabel: 'Connect MCP',
+    href: '/docs/mcp/',
     body: 'Provides Lism CSS specifications to AI coding tools such as Claude Code, Cursor, and VS Code. AI assists your coding while referencing the latest Lism CSS documentation and API information in real time, so it guides you to the correct class names and props even if you are unsure about Lism’s naming conventions.',
     src: '/img/ai-02.png',
     width: 1120,
@@ -107,6 +109,8 @@ const tools = [
   },
   {
     title: 'Skills',
+    buttonLabel: 'Get Skills',
+    href: '/docs/skills/',
     body: 'Implementation guide skills for AI agents. By correctly understanding Lism CSS’s naming conventions and design principles, AI can generate accurate code that follows best practices. Works with Claude Code and other popular AI coding tools.',
     src: '/img/ai-03.png',
     width: 1120,
@@ -187,11 +191,11 @@ const presets = [
   {/* 機能紹介 */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
-      <Stack ai="center" g={['20', '25']}>
-        <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Features</Text>
-        <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>A Sophisticated Design Theory</Heading>
+      <Stack ai="center" g={['25', '30', '35']}>
+        <Text class="c--headingEyebrow" fz={['xs', 's', 'm']}>Features</Text>
+        <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>A Sophisticated Design Theory</Heading>
       </Stack>
-      <Text ta="center" mbs={['20', '25', '35']} fz={['s', 'm', 'l']} max-w="48em">
+      <Text class="u--trim" ta="center" mbs={['30', '35', '40']} fz={['s', 'm', 'l']} max-w="48em">
         Lism CSS is a lightweight CSS framework for building the structural foundation of your website quickly and smoothly. Its CSS architecture is
         designed from the ground up to bring a natural, pleasing rhythm to your designs.
       </Text>
@@ -219,10 +223,10 @@ const presets = [
               g={{ base: '40', sm: '50', lg: '35' }}
             >
               <Stack g="25">
-                <Heading level="3" class="c--topHeading u--trim" fz={['l', null, 'xl']}>
+                <Heading level="3" class="c--topHeading u--trim" fz={['l', 'xl']}>
                   {card.title}
                 </Heading>
-                <Text fz={['s', null, 'base']}>{card.desc}</Text>
+                <Text fz={['s', 'm']}>{card.desc}</Text>
               </Stack>
               <Media
                 src={card.src}
@@ -259,38 +263,38 @@ const presets = [
       <Media src="/img/ai-bg.png" alt="" width="2600" height="1559" w="100%" h="auto" />
     </Group>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
-      <Stack ai="center" g={['20', '25']}>
-        <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Artificial Intelligence</Text>
-        <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>AI Tool Integration</Heading>
+      <Stack ai="center" g={['25', '30', '35']}>
+        <Text class="c--headingEyebrow" fz={['xs', 's', 'm']}>Artificial Intelligence</Text>
+        <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>AI Tool Integration</Heading>
       </Stack>
-      <Text ta="center" mbs={['20', '30', '35']} fz={['s', 'm', 'l']} max-w="48em">
+      <Text class="u--trim" ta="center" mbs={['30', '35', '40']} fz={['s', 'm', 'l']} max-w="48em">
         Lism CSS is designed with AI agents in mind. With an MCP server, Skills, and machine-readable documentation, AI tools like Claude Code and
         Cursor can accurately understand the Lism system and generate code that matches your intent.
       </Text>
       <Frame mt="50" w={{ base: '18.375rem', md: '24.5625rem' }}>
         <Media src="/img/ai-01.png" alt="" width="1120" height="840" />
       </Frame>
-      <Columns cols={{ base: 1, md: 2 }} g="10" w="100%" mt="50">
+      <Columns class="b--shadowBox" cols={{ base: 1, md: 2 }} g="0" w="100%" mt="50" ov="hidden">
         {
-          tools.map((item) => (
-            <Stack class="b--shadowBox" p={['35', '40']}>
-              <Heading level="3" class="c--topHeading u--trim" fz={['l', 'xl', '2xl']}>
-                {item.title}
-              </Heading>
-              <Text fz={['s', null, 'base']} mt="25" max-w={{ base: '100%', md: '24rem' }} fxg="1">
-                {item.body}
-              </Text>
-              <Media
-                src={item.src}
-                alt=""
-                width={item.width}
-                height={item.height}
-                mbs="40"
-                ms="auto"
-                me={{ base: 'auto', md: '0' }}
-                w="auto"
-                h={{ base: '9.375rem', md: '12.5rem' }}
-              />
+          tools.map((item, index) => (
+            <Stack
+              p={['30', '35']}
+              pb={['35', '40']}
+              g="25"
+              bd={index > 0}
+              bdc="var(--shc)"
+              bdw={index > 0 ? { base: '1px 0 0', md: '0 0 0 1px' } : undefined}
+            >
+              <Flex jc="between" ai="center" g="15">
+                <Heading level="3" class="c--topHeading u--trim" fz={['l', 'xl', '2xl']}>
+                  {item.title}
+                </Heading>
+                <Media src={item.src} alt="" width={item.width} height={item.height} w="25%" h="auto" />
+              </Flex>
+              <Text fz={['s', 'm']}>{item.body}</Text>
+              <Link href={getLocalizedUrl(item.href, lang)} fz={['s', 'm']} mt="auto" aslf="flex-end">
+                <span>{item.buttonLabel} →</span>
+              </Link>
             </Stack>
           ))
         }
@@ -301,14 +305,14 @@ const presets = [
   {/* テンプレート */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
-      <Stack ai="center" g={['20', '25']}>
-        <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Templates</Text>
-        <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>Lism CSS Templates</Heading>
+      <Stack ai="center" g={['25', '30', '35']}>
+        <Text class="c--headingEyebrow" fz={['xs', 's', 'm']}>Templates</Text>
+        <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>Lism CSS Templates</Heading>
       </Stack>
-      <Text ta="center" mbs={['20', '30', '35']} fz={['s', 'm', 'l']} max-w="35em">
+      <Text class="u--trim" ta="center" mbs={['30', '35', '40']} fz={['s', 'm', 'l']} max-w="35em">
         Use them as a base for your design, or copy and paste just the parts you need to instantly add polished layouts to your project.
       </Text>
-      <Button class="c--lpButton" href={getLocalizedUrl('/templates/', lang)} fz={['s', null, 'base']} hov={{ bgc: 'var(--link)' }} mt="40">
+      <Button class="c--lpButton" href={getLocalizedUrl('/templates/', lang)} fz={['s', 'm']} hov={{ bgc: 'var(--link)' }} mt="40">
         <span>View More</span>
         <Icon icon="caret-right" />
       </Button>
@@ -327,15 +331,15 @@ const presets = [
   {/* CTA */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" pt={['60', '70']}>
-      <Center class="b--shadowBox" ai="center" w="100%" max-w="l" min-h="min(125vw, calc(100svh - 21.25rem))" px={{ base: '25', md: '40' }} py="40">
-        <Stack ai="center" g={['20', '25']}>
-          <Text class="c--headingEyebrow" fz={['s', null, 'base']}>Get Started</Text>
-          <Heading level="2" class="c--topHeading" ta="center" fz={['2xl', '3xl', '4xl']}>Lism CSS Works Everywhere</Heading>
+      <Center class="b--shadowBox" ai="center" w="100%" max-w="l" min-h="min(125vw, calc(100svh - 21.25rem))" px={['30', '40']} py="40">
+        <Stack ai="center" g={['25', '30', '35']}>
+          <Text class="c--headingEyebrow" fz={['xs', 's', 'm']}>Get Started</Text>
+          <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>Lism CSS Works Everywhere</Heading>
         </Stack>
-        <Text ta="center" mbs={['20', '30', '35']} fz={['s', null, 'base']}>
+        <Text class="u--trim" ta="center" mbs={['30', '35', '40']} fz={['s', 'm', 'l']}>
           No build process, no setup required.<br />Just load a single CSS file to add Lism CSS to your site.
         </Text>
-        <Button class="c--lpButton" href={getLocalizedUrl('/docs/installation/', lang)} fz={['s', null, 'base']} hov={{ bgc: 'var(--link)' }} mt="40">
+        <Button class="c--lpButton" href={getLocalizedUrl('/docs/installation/', lang)} fz={['s', 'm']} hov={{ bgc: 'var(--link)' }} mt="40">
           <span>Get Started</span>
           <Icon icon="caret-right" />
         </Button>
