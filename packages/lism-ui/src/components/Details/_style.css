@@ -4,11 +4,11 @@
     --duration: var(--acc-duration, 0.25s);
     --icon-scale: 1.1;
     --icon-transform: rotate(0deg);
-    --content-gtr: 0fr;
+    --_contentGtr: 0fr;
   }
   .b--details[open] {
     --icon-transform: scaleY(-1);
-    --content-gtr: 1fr;
+    --_contentGtr: 1fr;
   }
 
   /* display: flex により summary のデフォルトマーカー（display: list-item）も解除される */
@@ -38,7 +38,7 @@
 
   .b--details::details-content {
     display: grid;
-    grid-template-rows: var(--content-gtr);
+    grid-template-rows: var(--_contentGtr);
     transition-duration: var(--duration);
     transition-property: content-visibility, grid-template;
     transition-behavior: allow-discrete;

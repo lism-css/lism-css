@@ -39,7 +39,7 @@ async function openAccordion(accordionItem: HTMLElement): Promise<void> {
   panel.removeAttribute('hidden');
   await waitFrame();
 
-  accordionItem.style.setProperty('--panel-h', `${content.offsetHeight}px`);
+  accordionItem.style.setProperty('--_panelH', `${content.offsetHeight}px`);
   await waitFrame();
 
   accordionItem.setAttribute('data-opened', '');
@@ -48,7 +48,7 @@ async function openAccordion(accordionItem: HTMLElement): Promise<void> {
   const status = await waitAnimation(panel);
 
   if ('canceled' !== status) {
-    accordionItem.style.removeProperty('--panel-h');
+    accordionItem.style.removeProperty('--_panelH');
   }
 }
 
@@ -56,12 +56,12 @@ async function closeAccordion(accordionItem: HTMLElement): Promise<void> {
   const { panel, button } = getAccordionElements(accordionItem);
 
   maybePauseAnimation(panel);
-  accordionItem.style.setProperty('--panel-h', `${panel.offsetHeight}px`);
+  accordionItem.style.setProperty('--_panelH', `${panel.offsetHeight}px`);
   await waitFrame();
 
   accordionItem.removeAttribute('data-opened');
   button.setAttribute('aria-expanded', 'false');
-  accordionItem.style.removeProperty('--panel-h');
+  accordionItem.style.removeProperty('--_panelH');
 
   const status = await waitAnimation(panel);
 

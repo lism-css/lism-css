@@ -25,8 +25,8 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 | `--_inner-stretch` | `--inner-stretch` |
 | `--_inner-offset` | `--inner-offset` |
 | `--_arrow-sz` | `--arrow-sz` |
-| `--_panel-h` | `--panel-h` |
-| `--_content-gtr` | `--content-gtr` |
+| `--_panel-h` | `--_panelH` |
+| `--_content-gtr` | `--_contentGtr` |
 | `--_gap` | `--popup-gap` |
 
 **実装例**
@@ -53,7 +53,7 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 - 独自のCSS・HTMLで指定した変数と、`var()`の参照を新名へ変更してください。`itemP`・`stretch`・`offset`などのProps名は変わりません。
 - CLIで追加したコンポーネントを更新する場合は、CSSとReact / Astro / JSのソースをまとめて更新してください。
 - List・Timeline・Table・Chatの実装例も同じ命名に統一しました。コピーしたCSSと独自の上書き指定を、各ページの新しい例に合わせて更新してください。
-- `--_isHov`・`--_flipX`などの状態判定・内部計算用の補助変数には`_`を残しています。
+- 上書きを想定しない内部処理用の変数・状態判定用の変数には`_`を残しています。`--_panelH`と`--_contentGtr`はcamelCaseに統一しました。
 
 <Divider bds="dashed" my="40" />
 

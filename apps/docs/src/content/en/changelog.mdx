@@ -25,8 +25,8 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 | `--_inner-stretch` | `--inner-stretch` |
 | `--_inner-offset` | `--inner-offset` |
 | `--_arrow-sz` | `--arrow-sz` |
-| `--_panel-h` | `--panel-h` |
-| `--_content-gtr` | `--content-gtr` |
+| `--_panel-h` | `--_panelH` |
+| `--_content-gtr` | `--_contentGtr` |
 | `--_gap` | `--popup-gap` |
 
 **Examples**
@@ -53,7 +53,7 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 - Update variable declarations in custom CSS / HTML and references in `var()` to the new names. Prop names such as `itemP`, `stretch`, and `offset` are unchanged.
 - When updating components added through the CLI, update their CSS and React / Astro / JS sources together.
 - The List, Timeline, Table, and Chat examples use the same naming rule. Update copied CSS and custom overrides to match the new examples on each page.
-- Helper variables for state detection and internal calculations, such as `--_isHov` and `--_flipX`, keep their `_` prefix.
+- Variables for internal processing or state checks that are not intended to be overridden keep their `_` prefix. `--_panelH` and `--_contentGtr` now use camelCase.
 
 <Divider bds="dashed" my="40" />
 

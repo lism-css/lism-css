@@ -45,10 +45,10 @@ Rules for variable names used in Property Classes (`-{prop}:{value}`).
 ### Other Variables
 
 | Form | Use | Example |
-|------|------|-----|
+| --- | --- | --- |
 | `--{target}-{prop}` | Property set on a child element from a specific selector | `--link-td`, `--headings-ff`, `--icon-size` |
 | `--{propName}` | Variables controlling a class's own main feature. Initialized on the element itself and cannot be given an initial value on `:root` | `--sideW`, `--mainW` |
-| `--_{varName}` | Helper variables for state checks and internal calculations | `--_isHov`, `--_flipX` |
+| `--_{varName}` | Variables for internal processing or state checks that are not intended to be overridden | `--_panelH`, `--_flipX`, `--_isHov` |
 
 `--{target}-{prop}` takes the same form whether the origin selector is `:root`, `.b--*`, or `.c--*`. A variable whose origin is not `:root` follows these rules so that it is closed off from outside influence:
 
