@@ -1,6 +1,6 @@
 ---
-title: 'Customize'
-description: 'Lism CSS のカスタマイズ方法の全体像。lism.config.js・SCSS・CSS Purge のどれを使うべきかを構成別に案内します。'
+title: 'カスタマイズの基本'
+description: 'Lism CSS の設定方法の選び方と、CSS Purgeによる未使用CSSの削除について解説します。'
 ---
 
 `lism-css` パッケージは、コンポーネントが受け付ける props / tokens / traits、出力されるクラスやブレイクポイント、本番CSSのサイズをカスタマイズできます。設定の入口は `lism.config.js`（`@lism-css/plugin` が必要）と SCSS 変数（設定ファイルを使わない）の2つで、どちらを使うかはビルド構成で決まります。加えて、本番CSSの軽量化には CSS Purge を併用できます。
