@@ -42,9 +42,11 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
 | `-hov:-transform` | `transform` | `translate(0, -4px)` |
 
 
-### 初期値の活用
+## 初期値の活用例
 
 `-hov:-{prop}`はそれぞれ初期値が定義されているため、変化先のCSS変数をセットせずに使うこともできます。
+
+### `-hov:-bgc`
 
 <Preview>
   <PreviewTitle>`-hov:-bgc`の初期値はいろんな背景色に対して使えるようになっています</PreviewTitle>
@@ -102,6 +104,8 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
   </PreviewCode>
 </Preview>
 
+### `-hov:-o`
+
 ボタンなどに対しては、全体の透明度を下げるとテキストが読みづらくなることがあるため、`-hov:-o`ではなく`-hov:-bgc`を使うのがおすすめです。
 
 <Preview>
@@ -117,7 +121,7 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-hov:-o" "-hov:-c" "-hov:-bxsh"
+    ```html "-hov:-o"
     <div class="l--cluster -g:10">
       <a class="-hov:-o -c:text -bd -bdc:current -px:20 -py:10 -hl:s -td:none -bdrs:99" href="###">
         Button
@@ -143,23 +147,52 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
 </Preview>
 
 
+### `-hov:-c`, `-hov:-bdc`
+
 <Preview>
-  <PreviewTitle>`-hov:-c`,`-hov:-bdc`,`-hov:-bxsh`の初期値の使用例</PreviewTitle>
+  <PreviewTitle>文字色と枠線の色を変える例</PreviewTitle>
   <PreviewArea p="30">
-    <BoxLink href="###" hov="-c,-bdc,-bxsh" bd p="20">
+    <BoxLink href="###" hov="-c,-bdc" bd p="20">
       <p>BoxLink</p>
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-hov:-c" "-hov:-bdc" "-hov:-bxsh"
-    <a href="###" class="is--boxLink -hov:-c -hov:-bdc -hov:-bxsh -bd -p:20">
+    ```html "-hov:-c" "-hov:-bdc"
+    <a href="###" class="is--boxLink -hov:-c -hov:-bdc -bd -p:20">
       <p>BoxLink</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hov="-c,-bdc,-bxsh"'
-    <BoxLink href="###" hov="-c,-bdc,-bxsh" bd p="20">
+    ```jsx 'hov="-c,-bdc"'
+    <BoxLink href="###" hov="-c,-bdc" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
+### `-hov:-bxsh`, `-hov:-transform`
+
+`-hov:-bxsh`と`-hov:-transform`を組み合わせると、hover時に影が付き、要素が上へ4px移動します。`has--transition`を組み合わせると、なめらかに変化します。
+
+<Preview>
+  <PreviewTitle>移動と影を組み合わせる例</PreviewTitle>
+  <PreviewArea p="30">
+    <BoxLink href="###" hasTransition hov="-bxsh,-transform" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:-bxsh" "-hov:-transform" "has--transition"
+    <a href="###" class="is--boxLink has--transition -hov:-bxsh -hov:-transform -bd -p:20">
+      <p>BoxLink</p>
+    </a>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov="-bxsh,-transform"' 'hasTransition'
+    <BoxLink href="###" hasTransition hov="-bxsh,-transform" bd p="20">
       <p>BoxLink</p>
     </BoxLink>
     ```
@@ -173,7 +206,7 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
 <Spacer h="20" />
 
 
-### 任意の値へ変化させる例
+## 任意の値を指定する方法
 
 `--hov-{prop}`変数で値を指定すると、hover時にその値へ変化するようになります。
 
@@ -203,15 +236,83 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
   </PreviewCode>
 </Preview>
 
+移動量や影も変更できます。次の例では、移動量を上へ3px、hover時の影を`var(--bxsh--40)`に指定しています。
+
+<Preview>
+  <PreviewTitle>移動量と影を指定する例</PreviewTitle>
+  <PreviewArea p="30">
+    <BoxLink href="###" hasTransition hov={{ transform: 'translateY(-3px)', bxsh: '40' }} bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:-transform" "-hov:-bxsh" "--hov-transform" "--hov-bxsh"
+    <a href="###" class="is--boxLink has--transition -hov:-transform -hov:-bxsh -bxsh:10 -bd -p:20" style="--hov-transform: translateY(-3px); --hov-bxsh: var(--bxsh--40)">
+      <p>BoxLink</p>
+    </a>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov='
+    <BoxLink href="###" hasTransition hov={{ transform: 'translateY(-3px)', bxsh: '40' }} bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
+### 自作クラスにまとめる
+
+同じ効果を複数の場所で使う場合は、先ほどの例を`-hov:shadowUp`という自作クラスにまとめることもできます。`-hov:{preset}`の形式で名前を付け、hover時のスタイルをCSSで定義します。
+
+<Preview css={`
+@media (any-hover: hover) {
+  .-hov\\:shadowUp:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--bxsh--40);
+  }
+}`}>
+  <PreviewTitle>移動と影を`-hov:shadowUp`にまとめる例</PreviewTitle>
+  <PreviewArea p="30">
+    <BoxLink href="###" hasTransition hov="shadowUp" bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="追加CSS">
+    ```scss
+    @media (any-hover: hover) {
+      .-hov\:shadowUp:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--bxsh--40);
+      }
+    }
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:shadowUp"
+    <a href="###" class="is--boxLink has--transition -hov:shadowUp -bxsh:10 -bd -p:20">
+      <p>BoxLink</p>
+    </a>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov="shadowUp"'
+    <BoxLink href="###" hasTransition hov="shadowUp" bxsh="10" bd p="20">
+      <p>BoxLink</p>
+    </BoxLink>
+    ```
+  </PreviewCode>
+</Preview>
+
 <Spacer h="20" />
 
 
-### `<Lism>`コンポーネントでの `hov` の指定方法
+## `<Lism>`コンポーネントでの `hov` の指定方法
 
 [`<Lism>`コンポーネント](/docs/core-components/Lism/)（およびそれを継承するコンポーネント）では、`hov`プロパティに**文字列**または**オブジェクト**を渡すことで、`-hov`クラスおよび`--hov-{prop}`変数を柔軟に出力できます。
 
 
-#### 文字列で指定する場合
+### 文字列で指定する場合
 
 入力した文字列がそのまま`-hov:{入力文字列}`クラスとして出力されます。カンマ区切りで複数指定も可能です。
 
@@ -227,7 +328,7 @@ Lismのコアパッケージでは、以下のクラスを標準で用意して�
 ```
 
 
-#### オブジェクトで指定する場合
+### オブジェクトで指定する場合
 
 主に`-hov:-{prop}`に対して**任意の値**を指定するために使います。
 
@@ -285,54 +386,6 @@ Lismのコアパッケージでは以下のプリセットを標準で用意し�
 </Preview>
 
 
-
-
-### `-hov`クラスを自作する例
-
-プロジェクトごとに必要なプリセットを自由に追加できます。
-
-<Preview css={`
-@media (any-hover: hover) {
-  .-hov\\:shadowUp:hover {
-    box-shadow: var(--bxsh--40);
-    translate: 0 -3px;
-  }
-}`}>
-  <PreviewTitle>`-hov:shadowUp`を追加</PreviewTitle>
-  <PreviewArea p="30">
-    <BoxLink href="###" hasTransition hov="shadowUp" bxsh="10" bd p="20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </BoxLink>
-  </PreviewArea>
-
-  <PreviewCode slot="tab" label="追加CSS">
-    ```scss
-    @media (any-hover: hover) {
-      .-hov\:shadowUp:hover {
-        box-shadow: var(--bxsh--40);
-        translate: 0 -3px;
-      }
-    }
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html "-hov:shadowUp"
-    <a href="###" class="is--boxLink has--transition -hov:shadowUp -bd -p:20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </a>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hov="shadowUp"'
-    <BoxLink href="###" hasTransition hov="shadowUp" bd p="20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </BoxLink>
-    ```
-  </PreviewCode>
-</Preview>
 
 
 <div class="u--srOnly" id="set--hov"></div>
