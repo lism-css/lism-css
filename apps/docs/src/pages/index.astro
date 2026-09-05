@@ -170,15 +170,17 @@ const presets = [
         CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
       </Text>
 
-      <Columns cols={{ base: 1, md: 2, lg: 3 }} g="10" w="100%" mbs={{ base: '50', md: '60' }}>
+      <Columns cols={[1, null, 2, 3]} g="10" w="100%" mbs={['50', null, '60']}>
         {
           features.map((card) => (
-            <Grid class="b--shadowBox" p={['35', '40']} gtc="minmax(0, 1fr)" gtr="1fr auto" g={{ base: '40', sm: '50' }}>
+            <Grid class="b--shadowBox" p={['30', '35', '40']} gtr="1fr auto" g={['40', '50']}>
               <Stack g="25">
-                <Heading level="3" class="c--topHeading u--trim" fz={['l', 'xl']}>
+                <Heading level="3" class="c--topHeading" fz={['l', 'xl']}>
                   {card.title}
                 </Heading>
-                <Text fz={['s', 'm']}>{card.desc}</Text>
+                <Text fz={['s', 'm']} class="u--trim">
+                  {card.desc}
+                </Text>
               </Stack>
               <Media
                 src={card.src}
@@ -203,17 +205,17 @@ const presets = [
     <Group
       class="c--ai-bg"
       pos="absolute"
-      w={{ base: '121.875rem', md: '162.5rem' }}
+      w={['100rem', null, '120rem']}
       l="50%"
-      t="clamp(-2.625rem, calc(-2rem - 1.25vw), -2rem)"
-      ms={{ base: '-60.9375rem', md: '-81.25rem' }}
+      t="0%"
       z="-1"
       max-w="none"
+      style={{ translate: '-50% 0%' }}
       aria-hidden="true"
     >
       <Media src="/img/ai-bg.png" alt="" width="2600" height="1559" w="100%" h="auto" />
     </Group>
-    <Stack as="div" ai="center" py={{ base: '60', md: '70' }}>
+    <Stack as="div" ai="center" py={['60', null, '70']}>
       <Stack ai="center" g={['25', '30', '35']}>
         <Text class="c--headingEyebrow" fz={['xs', 's', 'm']}>Artificial Intelligence</Text>
         <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>AI ツール連携</Heading>
@@ -222,25 +224,34 @@ const presets = [
         Lism CSSはAIエージェントとの親和性を重視して設計されています。MCPサーバーとSkills、そして機械可読なドキュメントを提供することで、 Claude
         CodeやCursorなどのAIツールがLismの体系を正確に把握し、意図通りのコードを生成できます。
       </Text>
-      <Frame mt="50" w={{ base: '18.375rem', md: '24.5625rem' }}>
-        <Media src="/img/ai-01.png" alt="" width="1120" height="840" />
+      <Frame mt={['45', null, '50']} w={['16rem', '18rem', '20rem', '24rem']} z="1">
+        <Media src="/img/ai-01.png" alt="" width="1120" height="840" style={{ filter: 'drop-shadow(1px 3px 2px rgb(0 0 0 / 0.1))' }} />
       </Frame>
-      <Columns class="b--shadowBox" cols={{ base: 1, md: 2 }} g="0" w="100%" mt="50" ov="hidden">
+      <Columns
+        class="b--shadowBox"
+        cols={[1, null, 2]}
+        g="0"
+        pt={{ md: '50' }}
+        pb={{ md: '45' }}
+        w="100%"
+        mt={['45', null, '-3.75rem', '-4.25rem']}
+        ov="hidden"
+      >
         {
           tools.map((item, index) => (
             <Stack
-              p={['30', '35']}
-              pb={['35', '40']}
-              g="25"
+              px={['30', '35', '40']}
+              py={['30', '35', '25']}
+              g={['25', null, '30']}
               bd={index > 0}
               bdc="var(--shc)"
               bdw={index > 0 ? { base: '1px 0 0', md: '0 0 0 1px' } : undefined}
             >
-              <Flex jc="between" ai="center" g="15">
-                <Heading level="3" class="c--topHeading u--trim" fz={['l', 'xl', '2xl']}>
+              <Flex fxd={['row', null, 'column']} jc="between" ai="center" g={['15', null, '30']}>
+                <Heading level="3" class="c--topHeading u--trim" fz={['xl', null, '2xl', '3xl']}>
                   {item.title}
                 </Heading>
-                <Media src={item.src} alt="" width={item.width} height={item.height} w="25%" h="auto" />
+                <Media src={item.src} alt="" width={item.width} height={item.height} w={['25%', null, '10rem']} h="auto" />
               </Flex>
               <Text fz={['s', 'm']}>{item.body}</Text>
               <Link href={item.href} fz={['s', 'm']} mt="auto" aslf="flex-end">
