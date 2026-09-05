@@ -31,8 +31,8 @@ export function ShapeDivider<T extends ElementType = 'div'>({
   const computedStyle = {
     ...style,
     ...(level != null && { '--level': String(level) }),
-    ...(offset != null && { '--_inner-offset': offset }),
-    ...(stretch != null && { '--_inner-stretch': stretch }),
+    ...(offset != null && { '--inner-offset': offset }),
+    ...(stretch != null && { '--inner-stretch': stretch }),
   };
 
   return (

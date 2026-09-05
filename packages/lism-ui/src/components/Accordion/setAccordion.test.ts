@@ -70,6 +70,42 @@ describe('setEvent', () => {
     cleanup();
   });
 
+  it('開閉中だけ計測した高さを --panel-h に設定し、完了後にCSSへ戻す', async () => {
+    const item = document.querySelector<HTMLElement>('.b--accordion_item')!;
+    const button = item.querySelector<HTMLElement>('.b--accordion_button')!;
+    const panel = item.querySelector<HTMLElement>('.b--accordion_panel')!;
+    const content = item.querySelector<HTMLElement>('.b--accordion_content')!;
+    Object.defineProperty(content, 'offsetHeight', { value: 240 });
+    Object.defineProperty(panel, 'offsetHeight', { value: 180 });
+    let finishOpening!: (status: 'finished') => void;
+    vi.mocked(waitAnimation).mockReturnValueOnce(
+      new Promise((resolve) => {
+        finishOpening = resolve;
+      })
+    );
+    const cleanup = setEvent(item);
+
+    button.click();
+    await vi.waitFor(() => {
+      expect(item).toHaveAttribute('data-opened');
+      expect(item.style.getPropertyValue('--panel-h')).toBe('240px');
+    });
+
+    finishOpening('finished');
+    await vi.waitFor(() => {
+      expect(item.style.getPropertyValue('--panel-h')).toBe('');
+    });
+
+    button.click();
+    expect(item.style.getPropertyValue('--panel-h')).toBe('180px');
+    await vi.waitFor(() => {
+      expect(panel).toHaveAttribute('hidden', 'until-found');
+      expect(item.style.getPropertyValue('--panel-h')).toBe('');
+    });
+
+    cleanup();
+  });
+
   it('beforematch イベントでもトグルする', async () => {
     const item = document.querySelector<HTMLElement>('.b--accordion_item')!;
     const panel = item.querySelector<HTMLElement>('.b--accordion_panel')!;

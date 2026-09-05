@@ -46,10 +46,11 @@ Rules for variable names used in Property Classes (`-{prop}:{value}`).
 
 | Form | Use | Example |
 |------|------|-----|
-| `--{target}-{prop}` | Property applied to an element or class (can be overridden on `:root`) | `--link-td`, `--headings-ff` |
+| `--{target}-{prop}` | Property set on a child element from a specific selector | `--link-td`, `--headings-ff`, `--icon-size` |
 | `--{propName}` | Variables controlling a class's own main feature. Initialized on the element itself and cannot be given an initial value on `:root` | `--sideW`, `--mainW` |
-| `--_{item}-{propName}` | Properties for child elements of a custom class (`c--`) | `--_icon-size` |
-| `--_{varName}` | Internal variables for state management | `--_isHov`, `--_notHov` |
+| `--_{varName}` | Helper variables for state checks and internal calculations | `--_isHov`, `--_flipX` |
+
+Use `--{target}-{prop}` in the same form whether the starting selector is `:root`, `.b--*`, or `.c--*`. However, when a component initializes a variable on its own selector, that declaration may take precedence over the value from `:root`. Use this form even when state changes the final property value.
 
 ## Class Naming Conventions
 

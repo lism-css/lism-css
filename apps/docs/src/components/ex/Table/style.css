@@ -12,8 +12,8 @@
     --bdw-x: 1px;
 
     /* Note: collape にしているので、 1pxだと見えないことに注意。 */
-    --_thead-bd-be: solid 2px;
-    --_tfoot-bd-bs: solid 2px;
+    --thead-bd-be: solid 2px;
+    --tfoot-bd-bs: solid 2px;
 
     border: none;
     border-collapse: collapse; /* memo: oveflow の指定によっては separate にしないとborderが表示されない場合がある. 横スクロール時には注意。 */
@@ -37,10 +37,10 @@
     background-color: var(--th-bgc, transparent);
   }
   .b--table > thead {
-    border-block-end: var(--_thead-bd-be);
+    border-block-end: var(--thead-bd-be);
   }
   .b--table > tfoot {
-    border-block-start: var(--_tfoot-bd-bs);
+    border-block-start: var(--tfoot-bd-bs);
   }
 
   /* ._nofix: rowspan の対応に使用するクラス */
@@ -75,6 +75,6 @@
     z-index: 2;
     inset: 0 0 calc(var(--bdw-y) * -0.5) 0;
     border-block: var(--bdw-y) var(--bds) var(--bdc);
-    border-block-end: var(--_thead-bd-be);
+    border-block-end: var(--thead-bd-be);
   }
 }

@@ -80,10 +80,10 @@ The markup consists of the following classes and variables.
 |---|---|
 | `b--list` | Root element. Applied to `<ul>` / `<ol>`. |
 | `b--list--check` | Modifier that switches the icon to a check mark. |
-| `--_icon-c` | Icon color (defaults to `var(--brand)`). |
-| `--_icon-img` | The image displayed as the icon (a `url()` passed to `mask`). |
-| `--_icon-size` | Icon size (defaults to `1em`). |
-| `--_li-ps` | Space reserved at the start of each `li` (defaults to `1.875em`). |
+| `--icon-c` | Icon color (defaults to `var(--brand)`). |
+| `--icon-img` | The image displayed as the icon (a `url()` passed to `mask`). |
+| `--icon-size` | Icon size (defaults to `1em`). |
+| `--li-ps` | Space reserved at the start of each `li` (defaults to `1.875em`). |
 
 Since the spacing is reserved via `padding-inline-start` on the `li` itself, you can apply border-related Property Classes (such as `-bd-be`) directly to the `li`.
 
@@ -145,19 +145,19 @@ Adding `b--list--check` switches the icon to a check mark. This example also add
 </Preview>
 
 
-### Swapping the icon (`--_icon-c` / `--_icon-img`)
+### Swapping the icon (`--icon-c` / `--icon-img`)
 
-Override the color with `--_icon-c` and the image with `--_icon-img` to create a list with any icon you like.
+Override the color with `--icon-c` and the image with `--icon-img` to create a list with any icon you like.
 
 <Preview>
-  <PreviewTitle>`--_icon-c` and `--_icon-img`</PreviewTitle>
+  <PreviewTitle>`--icon-c` and `--icon-img`</PreviewTitle>
   <PreviewArea resize p="20">
     <Lism
       as="ul"
       class="b--list"
       style={{
-        '--_icon-c': 'var(--purple)',
-        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+        '--icon-c': 'var(--purple)',
+        '--icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
       }}
     >
       <li>List item 1</li>
@@ -166,13 +166,13 @@ Override the color with `--_icon-c` and the image with `--_icon-img` to create a
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "'--_icon-c'" "'--_icon-img'"
+    ```jsx "'--icon-c'" "'--icon-img'"
     <Lism
       as="ul"
       class="b--list"
       style={{
-        '--_icon-c': 'var(--purple)',
-        '--_icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
+        '--icon-c': 'var(--purple)',
+        '--icon-img': `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`,
       }}
     >
       <li>List item 1</li>
@@ -182,12 +182,12 @@ Override the color with `--_icon-c` and the image with `--_icon-img` to create a
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html "--_icon-c" "--_icon-img"
+    ```html "--icon-c" "--icon-img"
     <ul
       class="b--list"
       style="
-        --_icon-c: var(--purple);
-        --_icon-img: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>');
+        --icon-c: var(--purple);
+        --icon-img: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>');
       "
     >
       <li>List item 1</li>

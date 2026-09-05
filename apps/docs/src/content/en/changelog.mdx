@@ -9,6 +9,32 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 <Divider bds="dashed" my="40" />
 
+## Unreleased
+
+### Renamed CSS variables for child elements (#592)
+
+**Breaking change**: Removed the leading `_` from child-element CSS variables in UI components and examples. The old names are no longer supported.
+
+| Old name | New name |
+| --- | --- |
+| `--_item-p` | `--item-p` |
+| `--_icon-size` | `--icon-size` |
+| `--_icon-transform` | `--icon-transform` |
+| `--_icon-scale` | `--icon-scale` |
+| `--_inner-stretch` | `--inner-stretch` |
+| `--_inner-offset` | `--inner-offset` |
+| `--_arrow-sz` | `--arrow-sz` |
+| `--_panel-h` | `--panel-h` |
+| `--_content-gtr` | `--content-gtr` |
+| `--_gap` | `--gap` |
+
+- Update variable declarations in custom CSS / HTML and references in `var()` to the new names. Prop names such as `itemP`, `stretch`, and `offset` are unchanged.
+- When updating components added through the CLI, update their CSS and React / Astro / JS sources together.
+- The List, Timeline, Table, and Chat examples use the same naming rule. Update copied CSS and custom overrides to match the new examples on each page.
+- Helper variables for state detection and internal calculations, such as `--_isHov` and `--_flipX`, keep their `_` prefix.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.27.0 (2026.09.04)
 
 This release contains **breaking changes**.

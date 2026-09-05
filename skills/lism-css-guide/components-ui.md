@@ -223,7 +223,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | --- | --- | --- | --- | --- |
 | `hovBgc` | Root | `string` | — | ホバー時の背景カラー。`--hov-bgc` 変数として出力 |
 | `hovC` | Root | `string` | — | ホバー時のテキストカラー。`--hov-c` 変数として出力 |
-| `itemP` | Root | `string` | — | 各アイテムのパディング。`--_item-p` 変数として出力 |
+| `itemP` | Root | `string` | — | 各アイテムのパディング。`--item-p` 変数として出力 |
 | `href` | Link | `string` | — | リンク先URL（Link は常に `a` 要素として出力） |
 | `hov` | Link | `string` | `-bgc` | ホバー時のスタイル。デフォルトで背景色が変化 |
 
@@ -342,8 +342,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `viewBox` | `string` | — | SVG の viewBox |
 | `level` | `number` | `5` | シェイプの高さレベル。`0` で非表示 |
 | `flip` | `'X' \| 'Y' \| 'XY'` | — | 反転方向。`data-flip` 属性として出力 |
-| `stretch` | `string` | — | 水平方向の引き伸ばし量。`--_inner-stretch` 変数として出力 |
-| `offset` | `string` | — | 水平方向のオフセット。`--_inner-offset` 変数として出力 |
+| `stretch` | `string` | — | 水平方向の引き伸ばし量。`--inner-stretch` 変数として出力 |
+| `offset` | `string` | — | 水平方向のオフセット。`--inner-offset` 変数として出力 |
 | `isEmpty` | `boolean` | — | シェイプを非表示にしてスペーサーとして使用 |
 | `isAnimation` | `boolean` | — | アニメーションを有効化。`data-has-animation` 属性として出力 |
 

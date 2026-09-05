@@ -9,8 +9,8 @@
     --delay: var(--tooltip-delay, 0.4s); /* 表示までの待ち */
     --delay--close: var(--tooltip-delay--close, 0.15s); /* 退場猶予。トリガーからポップアップへポインタを移す間、表示を保つ */
     --offset: var(--tooltip-offset, var(--s5));
-    --_arrow-sz: var(--tooltip-arrow, 4px); /* 矢印の高さ。0 で矢印なし */
-    --_gap: calc(var(--offset) + var(--_arrow-sz)); /* popup 本体とトリガーの間隔。offset は矢印の先とトリガーの間隔 */
+    --arrow-sz: var(--tooltip-arrow, 4px); /* 矢印の高さ。0 で矢印なし */
+    --gap: calc(var(--offset) + var(--arrow-sz)); /* popup 本体とトリガーの間隔。offset は矢印の先とトリガーの間隔 */
     display: inline-block;
     anchor-scope: --tooltip, --tooltip-popup;
   }
@@ -90,7 +90,7 @@
     .b--tooltip_popup::before {
       content: '';
       position: absolute;
-      inset: calc(-1 * var(--_gap));
+      inset: calc(-1 * var(--gap));
       z-index: -1; /* 中身の上には被せない */
     }
     /*
@@ -105,8 +105,8 @@
       position: fixed;
       position-anchor: --tooltip;
       z-index: -1; /* 中身の下、popup の背景の上。内側半分は同色の背景に溶ける */
-      inline-size: calc(var(--_arrow-sz) * 2);
-      block-size: calc(var(--_arrow-sz) * 2);
+      inline-size: calc(var(--arrow-sz) * 2);
+      block-size: calc(var(--arrow-sz) * 2);
       background-color: inherit;
       clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
       top: clamp(anchor(--tooltip-popup top), anchor(center), anchor(--tooltip-popup bottom));
@@ -119,7 +119,7 @@
       --_spanEnd: span-x-start;
       --_placeStart: auto start;
       --_placeEnd: auto end;
-      margin-block: var(--_gap);
+      margin-block: var(--gap);
       position-try-fallbacks:
         flip-block,
         flip-inline,
@@ -130,7 +130,7 @@
       --_spanEnd: span-block-start;
       --_placeStart: start auto;
       --_placeEnd: end auto;
-      margin-inline: var(--_gap);
+      margin-inline: var(--gap);
       position-try-fallbacks:
         flip-inline,
         flip-block,
