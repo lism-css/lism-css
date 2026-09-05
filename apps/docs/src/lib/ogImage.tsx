@@ -30,28 +30,28 @@ export async function renderOgSvg({ title, description }: OgImageParams) {
         position: 'relative',
         width: '100%',
         height: '100%',
-        backgroundColor: '#fafafa',
+        backgroundColor: '#fbfbfb',
         fontFamily: 'Gen Interface JP',
       }}
     >
       <div
         style={{
           position: 'absolute',
-          top: RULE_INSET,
+          top: RULE_INSET - RULE_HEIGHT / 2,
           left: 0,
           width: '100%',
           height: RULE_HEIGHT,
-          backgroundColor: '#d4d4d4',
+          backgroundColor: '#E2E2E2',
         }}
       />
       <div
         style={{
           position: 'absolute',
-          bottom: RULE_INSET,
+          bottom: RULE_INSET - RULE_HEIGHT / 2,
           left: 0,
           width: '100%',
           height: RULE_HEIGHT,
-          backgroundColor: '#d4d4d4',
+          backgroundColor: '#E2E2E2',
         }}
       />
       <div
@@ -73,7 +73,7 @@ export async function renderOgSvg({ title, description }: OgImageParams) {
             fontWeight: 600,
             lineHeight: 1.375,
             letterSpacing: '0.0125em',
-            color: '#1a1a1a',
+            color: '#111',
             lineClamp: 2,
             textOverflow: 'ellipsis',
             lineBreak: 'strict',
