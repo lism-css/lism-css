@@ -9,6 +9,54 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 <Divider bds="dashed" my="40" />
 
+## Unreleased
+
+### Renamed CSS variables for child elements (#592)
+
+**Breaking change**: Renamed child-element CSS variables in UI components and examples to identify the target child element. The old names are no longer supported.
+
+**UI components**
+
+| Old name | New name |
+| --- | --- |
+| `--_item-p` | `--item-p` |
+| `--_icon-transform` | `--icon-transform` |
+| `--_icon-scale` | `--icon-scale` |
+| `--_inner-stretch` | `--inner-stretch` |
+| `--_inner-offset` | `--inner-offset` |
+| `--_arrow-sz` | `--arrow-sz` |
+| `--_panel-h` | `--_panelH` |
+| `--_content-gtr` | `--_contentGtr` |
+| `--_gap` | `--popup-gap` |
+
+**Examples**
+
+| Example | Old name | New name |
+| --- | --- | --- |
+| List | `--_icon-size` | `--icon-size` |
+| List | `--_icon-c` | `--icon-c` |
+| List | `--_icon-img` | `--icon-img` |
+| List | `--_li-ps` | `--li-ps` |
+| Timeline | `--_shape-size` | `--shape-size` |
+| Timeline | `--_line-len` | `--line-len` |
+| Timeline | `--_line-bold` | `--line-bold` |
+| Timeline | `--_highlight-inset` | `--highlight-inset` |
+| Table | `--_thead-bd-be` | `--thead-bd-be` |
+| Table | `--_tfoot-bd-bs` | `--tfoot-bd-bs` |
+| Chat | `--_avator-size` | `--avator-size` |
+| Chat | `--_deco-size` | `--deco-size` |
+| Chat | `--_deco-mask` | `--deco-mask` |
+| Chat | `--_deco-t` | `--deco-t` |
+| Chat | `--_deco-scale` | `--deco-scale` |
+| Chat | `--_deco-inset-x` | `--deco-inset-x` |
+
+- Update variable declarations in custom CSS / HTML and references in `var()` to the new names. Prop names such as `itemP`, `stretch`, and `offset` are unchanged.
+- When updating components added through the CLI, update their CSS and React / Astro / JS sources together.
+- The List, Timeline, Table, and Chat examples use the same naming rule. Update copied CSS and custom overrides to match the new examples on each page.
+- Variables for internal processing or state checks that are not intended to be overridden keep their `_` prefix. `--_panelH` and `--_contentGtr` now use camelCase.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.27.0 (2026.09.04)
 
 This release contains **breaking changes**.

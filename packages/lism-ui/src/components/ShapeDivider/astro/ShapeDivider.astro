@@ -20,8 +20,8 @@ const { class: className, as = 'div', viewBox, isAnimation, isEmpty, level, stre
 
 const computedStyle: Record<string, unknown> = { ...(style as Record<string, string | undefined>) };
 if (level != null) computedStyle['--level'] = String(level);
-if (offset != null) computedStyle['--_inner-offset'] = offset;
-if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
+if (offset != null) computedStyle['--inner-offset'] = offset;
+if (stretch != null) computedStyle['--inner-stretch'] = stretch;
 ---
 
 {

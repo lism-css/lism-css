@@ -3,14 +3,14 @@
     --duration: var(--acc-duration, 0.25s);
   }
   .b--accordion_item {
-    --_panel-h: 0px;
-    --_icon-transform: rotate(90deg);
+    --_panelH: 0px;
+    --icon-transform: rotate(90deg);
   }
 
   /* 開いている時 */
   .b--accordion_item[data-opened] {
-    --_icon-transform: rotate(0deg);
-    --_panel-h: auto; /* Note: アニメーション時、jsでセットされる */
+    --icon-transform: rotate(0deg);
+    --_panelH: auto; /* Note: アニメーション時、jsでセットされる */
   }
 
   .b--accordion_button {
@@ -24,7 +24,7 @@
   .b--accordion_panel {
     position: relative;
     overflow: hidden;
-    height: var(--_panel-h);
+    height: var(--_panelH);
     transition: height var(--duration);
   }
   .b--accordion_content {
@@ -57,7 +57,7 @@
     }
     &::before {
       transition: transform var(--duration);
-      transform: var(--_icon-transform);
+      transform: var(--icon-transform);
     }
   }
 

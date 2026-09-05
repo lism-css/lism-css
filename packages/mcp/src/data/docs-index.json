@@ -150,7 +150,7 @@
       "max-",
       "min-"
     ],
-    "snippet": "Lism CSS の命名規則をまとめたページ。CSS変数はトークン変数 `--{prop}--{token}`、Property Class 用変数 `--{prop}` / `--{prop}_{bp}`、状態管理用の内部変数 `--_{varName}` などの形式で統一。クラスはプレフィックス（`b--`, `c--`, `a--`, `l--`, `is--`, `set--`, `u--`）で分類を示し、続く名称は camelCase。Prop 名は Emmet を参考に 1 文字プロパティ（p, m, g, c, f, w, h, d, o, v, i, t, b, l, r, z）やグループ略称 + サブプロパティ形式（fz, bgc, gtc 等）で省略。方向サフィックスは `-t` / `-b` / `-l` / `-r` / `-x` / `-y` / `-s` / `-e` を使用し、p/m のみ最初のハイフンを省略（pt, px, my 等）。値は基本的に CSS の実値をそのまま使用し、トークン値を使う場合は `--{prop}--{value}` の `{value}` 部分を採用。"
+    "snippet": "Lism CSS の命名規則をまとめたページ。CSS変数はトークン変数 `--{prop}--{token}`、Property Class 用変数 `--{prop}` / `--{prop}_{bp}`、上書きを想定しない内部処理用の変数・状態判定用の変数 `--_{varName}` などの形式で統一。クラスはプレフィックス（`b--`, `c--`, `a--`, `l--`, `is--`, `set--`, `u--`）で分類を示し、続く名称は camelCase。Prop 名は Emmet を参考に 1 文字プロパティ（p, m, g, c, f, w, h, d, o, v, i, t, b, l, r, z）やグループ略称 + サブプロパティ形式（fz, bgc, gtc 等）で省略。方向サフィックスは `-t` / `-b` / `-l` / `-r` / `-x` / `-y` / `-s` / `-e` を使用し、p/m のみ最初のハイフンを省略（pt, px, my 等）。値は基本的に CSS の実値をそのまま使用し、トークン値を使う場合は `--{prop}--{value}` の `{value}` 部分を採用。"
   },
   {
     "sourcePath": "tokens.mdx",
@@ -1676,10 +1676,10 @@
       "Markup",
       "Examples",
       "チェックマークのリスト（b--list--check）",
-      "アイコンを差し替える（--_icon-c / --_icon-img）"
+      "アイコンを差し替える（--icon-c / --icon-img）"
     ],
     "keywords": ["List", "b--list", "リスト", "箇条書き", "アイコン", "チェックマーク", "checklist"],
-    "snippet": "行頭にアイコンを表示する装飾リストUIの実装例。primitivesと少量のCSS（b--list）で構成し、CSSをlism-blockレイヤーへコピーして利用。b--list--checkでチェックマークに切り替え、--_icon-c / --_icon-imgでアイコンの色・画像を変更できる。"
+    "snippet": "行頭にアイコンを表示する装飾リストUIの実装例。primitivesと少量のCSS（b--list）で構成し、CSSをlism-blockレイヤーへコピーして利用。b--list--checkでチェックマークに切り替え、--icon-c / --icon-imgでアイコンの色・画像を変更できる。"
   },
   {
     "sourcePath": "ui/components/Others.mdx",

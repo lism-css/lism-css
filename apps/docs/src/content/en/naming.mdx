@@ -45,11 +45,15 @@ Rules for variable names used in Property Classes (`-{prop}:{value}`).
 ### Other Variables
 
 | Form | Use | Example |
-|------|------|-----|
-| `--{target}-{prop}` | Property applied to an element or class (can be overridden on `:root`) | `--link-td`, `--headings-ff` |
+| --- | --- | --- |
+| `--{target}-{prop}` | Property set on a child element from a specific selector | `--link-td`, `--headings-ff`, `--icon-size` |
 | `--{propName}` | Variables controlling a class's own main feature. Initialized on the element itself and cannot be given an initial value on `:root` | `--sideW`, `--mainW` |
-| `--_{item}-{propName}` | Properties for child elements of a custom class (`c--`) | `--_icon-size` |
-| `--_{varName}` | Internal variables for state management | `--_isHov`, `--_notHov` |
+| `--_{varName}` | Variables for internal processing or state checks that are not intended to be overridden | `--_panelH`, `--_flipX`, `--_isHov` |
+
+`--{target}-{prop}` takes the same form whether the origin selector is `:root`, `.b--*`, or `.c--*`. A variable whose origin is not `:root` follows these rules so that it is closed off from outside influence:
+
+- Always initialize it on the origin selector (e.g. `.b--list { --icon-size: 1em; }`) so it never inherits a same-named value from ancestors or other components.
+- To change the value, set it on the origin element via inline style or props rather than on `:root`.
 
 ## Class Naming Conventions
 

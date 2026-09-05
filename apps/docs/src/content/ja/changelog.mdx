@@ -9,6 +9,54 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 <Divider bds="dashed" my="40" />
 
+## 未リリース
+
+### 子要素用CSS変数の命名変更 (#592)
+
+**破壊的変更**: UIコンポーネントと実装例の子要素用CSS変数を、対象の子要素が分かる名前に統一しました。旧名の互換対応はありません。
+
+**UIコンポーネント**
+
+| 旧名 | 新名 |
+| --- | --- |
+| `--_item-p` | `--item-p` |
+| `--_icon-transform` | `--icon-transform` |
+| `--_icon-scale` | `--icon-scale` |
+| `--_inner-stretch` | `--inner-stretch` |
+| `--_inner-offset` | `--inner-offset` |
+| `--_arrow-sz` | `--arrow-sz` |
+| `--_panel-h` | `--_panelH` |
+| `--_content-gtr` | `--_contentGtr` |
+| `--_gap` | `--popup-gap` |
+
+**実装例**
+
+| 実装例 | 旧名 | 新名 |
+| --- | --- | --- |
+| List | `--_icon-size` | `--icon-size` |
+| List | `--_icon-c` | `--icon-c` |
+| List | `--_icon-img` | `--icon-img` |
+| List | `--_li-ps` | `--li-ps` |
+| Timeline | `--_shape-size` | `--shape-size` |
+| Timeline | `--_line-len` | `--line-len` |
+| Timeline | `--_line-bold` | `--line-bold` |
+| Timeline | `--_highlight-inset` | `--highlight-inset` |
+| Table | `--_thead-bd-be` | `--thead-bd-be` |
+| Table | `--_tfoot-bd-bs` | `--tfoot-bd-bs` |
+| Chat | `--_avator-size` | `--avator-size` |
+| Chat | `--_deco-size` | `--deco-size` |
+| Chat | `--_deco-mask` | `--deco-mask` |
+| Chat | `--_deco-t` | `--deco-t` |
+| Chat | `--_deco-scale` | `--deco-scale` |
+| Chat | `--_deco-inset-x` | `--deco-inset-x` |
+
+- 独自のCSS・HTMLで指定した変数と、`var()`の参照を新名へ変更してください。`itemP`・`stretch`・`offset`などのProps名は変わりません。
+- CLIで追加したコンポーネントを更新する場合は、CSSとReact / Astro / JSのソースをまとめて更新してください。
+- List・Timeline・Table・Chatの実装例も同じ命名に統一しました。コピーしたCSSと独自の上書き指定を、各ページの新しい例に合わせて更新してください。
+- 上書きを想定しない内部処理用の変数・状態判定用の変数には`_`を残しています。`--_panelH`と`--_contentGtr`はcamelCaseに統一しました。
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.27.0 (2026.09.04)
 
 **破壊的変更**を含むリリースです。

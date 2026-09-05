@@ -33,12 +33,12 @@
    *   .c--mv 側でfont-sizeを定義し、 h1 の font-size は inheritする。（全体を em で位置調整をしている。）
    *
    * [見出し・画像の配置]
-   *   --_title-offset … 固定ヘッダーを考慮した値
-   *   --_mv-offset … 見出しに少し入り込むためのオフセット値
+   *   --title-offset … 固定ヘッダーを考慮した値
+   *   --visual-offset … 見出しに少し入り込むためのオフセット値
    */
   .c--mv {
-    --_title-offset: calc(var(--header-h--init) + 0.5em);
-    --_mv-offset: 1.75em;
+    --title-offset: calc(var(--header-h--init) + 0.5em);
+    --visual-offset: 1.75em;
     font-size: clamp(2.75rem, 1.5rem + 9vw, 6rem);
     height: min(100svh, min(72rem, 200vw));
     background: linear-gradient(to bottom, var(--base-2) 80%, var(--base) 80%);
@@ -47,12 +47,12 @@
   .c--mv_title {
     font-size: inherit;
     line-height: 1.1;
-    margin-top: var(--_title-offset);
+    margin-top: var(--title-offset);
   }
 
   .c--mv_visual {
     padding: var(--gutter--base);
-    padding-block-start: calc(var(--_title-offset) + var(--_mv-offset));
+    padding-block-start: calc(var(--title-offset) + var(--visual-offset));
   }
 
   /**
