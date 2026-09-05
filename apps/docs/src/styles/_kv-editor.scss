@@ -119,9 +119,11 @@
     --kvEditor-snackbar-bgc: #1d2126;
     --kvEditor-text: #e1e4e8; // コード既定色は github-dark に合わせる（ハイライト色は現行維持）
     --kvEditor-text-dim: #bfbfbf;
+    --kvEditor-selection-bgc: hsla(215, 100%, 70%, 0.4);
+    --kvEditor-code-lh: 1.375;
     --kvEditor-warning: #e3b341; // 警告色（github-dark の yellow 系。致命的でない通知に使う）
     // ネオンの発光色（AIパネルの orb グラデーション先頭の teal と共通）。
-    // Live Demo トグルの点灯と、反映フラッシュ（.c--kvEditor_lineFlash）で使う
+    // Live Demo トグルと、反映済み範囲のハイライトで使う
     --kvEditor-neon: #89f9e1;
 
     // iOSの自動ズームを避けるためtextareaを16pxにし、scaleで表示上の14pxへ縮小する。
@@ -131,7 +133,7 @@
     grid-template-columns: minmax(0, 1fr) 12.6875rem;
     width: 100%;
     max-width: var(--kvEditor-sz);
-    height: 28rem;
+    height: 29.5rem;
     margin-block-start: 3.5rem;
     margin-inline: auto; // ラッパー幅がウィンドウ最大幅を超える場合も中央寄せ（ヒーローの中央揃えと揃える）
     overflow: hidden;
@@ -145,7 +147,7 @@
 
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: minmax(0, 1fr) 9.125rem;
-      height: 33.5625rem;
+      height: 34.8125rem;
       margin-block-start: 2.5rem;
     }
   }
@@ -156,7 +158,7 @@
 
     @media not (min-width: 800px) {
       grid-template-rows: minmax(0, 1fr);
-      height: 24.4375rem; // ai モードの SP 高さ（33.5625rem）からパネル下段（9.125rem）を除いた高さ
+      height: 25.6875rem; // ai モードの SP 高さからパネル下段を除いた高さ
     }
   }
 
@@ -326,7 +328,7 @@
     border: none;
     font-family: var(--ff--mono);
     font-size: 0.875rem;
-    line-height: 1.25; // モックアップ準拠（初期コード19行が400pxにちょうど収まる）
+    line-height: var(--kvEditor-code-lh);
     letter-spacing: normal;
     tab-size: 2;
     white-space: pre;
@@ -375,23 +377,43 @@
     will-change: transform;
   }
 
-  // 保存→ヒーロー反映を示すため変更行をテキスト下で減衰させ、間はPAUSE_FLASH_TO_APPLYで管理する。
-  .c--kvEditor_lineFlash {
+  // 編集前と反映後の文字範囲を、構文ハイライトの下に表示する。
+  .c--kvEditor_highlights {
     position: absolute;
+    top: 0;
     left: 0;
-    right: 0;
-    border-radius: 2px;
-    background-color: color-mix(in srgb, var(--kvEditor-neon), transparent 75%);
-    box-shadow: 0 0 4px color-mix(in srgb, var(--kvEditor-neon), transparent 50%); // 行の上下へのにじみ
-    opacity: 0;
-    will-change: transform; // syncScroll が縦スクロールへ transform で追従させる
+    will-change: transform;
   }
 
-  .c--kvEditor_lineFlash[data-kv-flash-active] {
-    animation: kvEditor-applied-flash 0.5s ease-out;
+  .c--kvEditor_highlightRect {
+    position: absolute;
+  }
 
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
+  .c--kvEditor_highlight {
+    position: absolute;
+    inset: -1px -2px;
+    border-radius: 2px;
+  }
+
+  .c--kvEditor_highlights[data-kv-highlight-phase='before'] .c--kvEditor_highlight {
+    background-color: var(--kvEditor-selection-bgc);
+    box-shadow: 0 0 3px rgba(56, 139, 253, 0.18);
+  }
+
+  .c--kvEditor_highlights[data-kv-highlight-phase='applied'] {
+    animation: kvEditor-applied-flash 0.6s ease-in;
+  }
+
+  .c--kvEditor_highlights[data-kv-highlight-phase='applied'] .c--kvEditor_highlight {
+    background-color: color-mix(in srgb, var(--kvEditor-neon), transparent 80%);
+    box-shadow:
+      0 0 1px color-mix(in srgb, var(--kvEditor-neon), transparent 50%),
+      0 0 6px color-mix(in srgb, var(--kvEditor-neon), transparent 50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .c--kvEditor_highlights {
+      display: none;
     }
   }
 
@@ -418,7 +440,7 @@
     scrollbar-color: #555 transparent;
 
     &::selection {
-      background-color: rgba(56, 139, 253, 0.4);
+      background-color: var(--kvEditor-selection-bgc);
       color: transparent;
     }
 
@@ -745,7 +767,7 @@
   }
 }
 
-// 反映フラッシュ（書き換えた行の背景）の減衰。輝度は .c--kvEditor_lineFlash 側の色が担う
+// 反映済み範囲のハイライトを減衰させる
 @keyframes kvEditor-applied-flash {
   from {
     opacity: 1;

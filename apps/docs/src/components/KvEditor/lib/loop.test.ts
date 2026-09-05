@@ -61,7 +61,8 @@ describe('createLoopPlayer', () => {
       tabButtons: [],
       getActiveTab: () => 'html',
       getViewText: () => '<div>initial</div>',
-      flashLines: vi.fn(),
+      highlightRanges: vi.fn(),
+      clearHighlights: vi.fn(),
       syncRestorePrompt: vi.fn(),
     } as unknown as EditorApi;
 

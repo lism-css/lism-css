@@ -12,6 +12,8 @@ import { sanitize } from './sanitize';
 import { MAX_CODE_LENGTH, findHtmlIssue } from './validate';
 import { createSnackbar } from './snackbar';
 import { STRINGS } from './strings';
+import { measureTextWithTabs, splitCodeRanges } from './code-highlights';
+import type { CodeRange } from './diff';
 import type { EditorLang, highlightSync as HighlightSyncFn } from './highlight';
 import { createLoopPlayer } from './loop';
 import { createPlayer } from './player';
@@ -43,10 +45,11 @@ export interface EditorApi {
    * JSXタブで変換できない途中状態（閉じタグ側のハンクが未適用等）では何もしない
    */
   commitView(): void;
-  /** commitView で反映できる状態か。反映フラッシュを反映より先に点灯させるための事前判定 */
+  /** commitView で反映できる状態か。反映範囲を反映より先に点灯させるための事前判定 */
   canCommitView(): boolean;
-  /** 書き換えた行範囲の背景をひと呼吸光らせる（ハンク確定時の反映フラッシュ。live モードが配線する） */
-  flashLines(line: number, lineCount: number): void;
+  /** 編集前または反映済みの文字範囲を表示する。 */
+  highlightRanges(ranges: readonly CodeRange[], phase: 'before' | 'applied'): void;
+  clearHighlights(): void;
   /**
    * 編集位置（行番号と行内の先行テキスト）を可視範囲へスクロールする。スクロールが発生したら true。
    * scrollWindow: false で textarea 内部のみスクロールし、ページ側は動かさない
@@ -67,8 +70,7 @@ export function initKvEditor(): void {
   const textarea = demo?.querySelector<HTMLTextAreaElement>('[data-kv-input]') ?? null;
   const preInner = demo?.querySelector<HTMLElement>('[data-kv-pre-inner]') ?? null;
   if (!hero || !demo || !textarea || !preInner) return;
-  // 反映フラッシュの行ハイライト。無くてもエディター自体は動く（演出だけがスキップされる）
-  const lineFlash = demo.querySelector<HTMLElement>('[data-kv-line-flash]');
+  const highlights = demo.querySelector<HTMLElement>('[data-kv-highlights]');
 
   // SSR側（KvEditor.astro）が決めた言語を DOM 経由で受け取る（このスクリプトは全ページ共通バンドル）。
   // siteConfig.langs を情報源とする isValidLang で判定するため、言語追加時にここの修正は不要
@@ -132,15 +134,17 @@ export function initKvEditor(): void {
   // 縮小率（--kvEditor-input-scale）は md ブレークポイントでしか変わらないため、
   // 毎スクロールで computed style を読まずにキャッシュし、境界を跨いだ時だけ再取得する
   let inputScale = 1;
+  let rerenderHighlights = (): void => {};
   const syncScroll = (): void => {
-    preInner.style.transform = `translate3d(${-textarea.scrollLeft * inputScale}px, ${-textarea.scrollTop * inputScale}px, 0)`;
-    // 行フラッシュは縦だけ追従する（横は表示幅いっぱいに敷くため固定）
-    if (lineFlash) lineFlash.style.transform = `translate3d(0, ${-textarea.scrollTop * inputScale}px, 0)`;
+    const transform = `translate3d(${-textarea.scrollLeft * inputScale}px, ${-textarea.scrollTop * inputScale}px, 0)`;
+    preInner.style.transform = transform;
+    if (highlights) highlights.style.transform = transform;
   };
   const updateInputScale = (): void => {
     const transform = getComputedStyle(textarea).transform;
     inputScale = transform === 'none' ? 1 : new DOMMatrixReadOnly(transform).a;
     syncScroll();
+    rerenderHighlights();
   };
   updateInputScale();
   window.matchMedia('(min-width: 800px)').addEventListener('change', updateInputScale);
@@ -160,7 +164,7 @@ export function initKvEditor(): void {
     const cs = getComputedStyle(textarea);
     // 等幅前提にせず実測する（行の先行部分に日本語等が混ざっても正確な x を得るため）
     measureCtx.font = `${cs.fontSize} ${cs.fontFamily}`;
-    return measureCtx.measureText(text).width;
+    return measureTextWithTabs(text, (plainText) => measureCtx?.measureText(plainText).width ?? 0);
   };
 
   const revealPosition = (line: number, linePrefix: string, scrollWindow = true): boolean => {
@@ -170,16 +174,20 @@ export function initKvEditor(): void {
     const y = parseFloat(cs.paddingTop) + line * lineHeight;
     const behavior: ScrollBehavior = reducedMotionQuery.matches ? 'auto' : 'smooth';
 
-    // 縦: 上下2行分の余裕を持って見えていなければ、編集行が画面の上1/3に来る位置へ
+    // 先頭でも編集位置とその先の余白が見えるなら、縦横それぞれ先頭へ戻す。
     let top = textarea.scrollTop;
     const vMargin = lineHeight * 2;
-    if (y < top + vMargin || y + lineHeight > top + textarea.clientHeight - vMargin) {
+    if (y + lineHeight <= textarea.clientHeight - vMargin) {
+      top = 0;
+    } else if (y < top + vMargin || y + lineHeight > top + textarea.clientHeight - vMargin) {
       top = Math.max(0, y - textarea.clientHeight / 3);
     }
     // 横: 編集は開始位置から右へ伸びていくため、開始位置が幅の 60% より右
     //（= 編集の続きを見せる余白が足りない）なら、左 1/4 の位置に来るようスクロールする
     let left = textarea.scrollLeft;
-    if (x < left + 24 || x > left + textarea.clientWidth * 0.6) {
+    if (x <= textarea.clientWidth * 0.6) {
+      left = 0;
+    } else if (x < left + 24 || x > left + textarea.clientWidth * 0.6) {
       left = Math.max(0, x - textarea.clientWidth / 4);
     }
 
@@ -206,22 +214,60 @@ export function initKvEditor(): void {
     return scrolled;
   };
 
-  // ---- 反映フラッシュ（書き換えた行の背景をひと呼吸光らせる） ----------------
-  // 位置は textarea のローカル座標（行番号 × line-height）を scale で視覚座標へ換算する。
-  // スクロール追従は syncScroll が縦の transform で行う（見た目は _kv-editor.scss 側）
-  const flashLines = (line: number, lineCount: number): void => {
-    if (!lineFlash) return;
+  // ---- 編集範囲のハイライト ------------------------------------------------
+  let highlightState: { ranges: CodeRange[]; phase: 'before' | 'applied' } | null = null;
+
+  const clearHighlights = (): void => {
+    highlightState = null;
+    highlights?.removeAttribute('data-kv-highlight-phase');
+    highlights?.replaceChildren();
+  };
+
+  const renderCodeHighlights = (): void => {
+    if (!highlights || !highlightState) return;
     const cs = getComputedStyle(textarea);
     const lineHeight = parseFloat(cs.lineHeight);
-    lineFlash.style.top = `${(parseFloat(cs.paddingTop) + line * lineHeight) * inputScale}px`;
-    lineFlash.style.height = `${lineHeight * lineCount * inputScale}px`;
-    // 連続反映でもアニメを毎回リスタートさせるため、属性を一度外しリフローを挟んでから付け直す
-    lineFlash.removeAttribute('data-kv-flash-active');
-    void lineFlash.offsetWidth;
-    lineFlash.setAttribute('data-kv-flash-active', '');
+    const paddingTop = parseFloat(cs.paddingTop);
+    const paddingLeft = parseFloat(cs.paddingLeft);
+    const fragment = document.createDocumentFragment();
+    for (const segment of splitCodeRanges(textarea.value, highlightState.ranges)) {
+      const linePrefix = textarea.value.slice(segment.lineStart, segment.start);
+      const throughRange = textarea.value.slice(segment.lineStart, segment.end);
+      const startX = measureTextWidth(linePrefix);
+      const endX = measureTextWidth(throughRange);
+      // 測った文字範囲を外側で固定し、内側のinsetはCSSで調整できるようにする。
+      const rect = document.createElement('span');
+      rect.className = 'c--kvEditor_highlightRect';
+      rect.style.left = `${(paddingLeft + startX) * inputScale}px`;
+      rect.style.top = `${(paddingTop + segment.line * lineHeight) * inputScale}px`;
+      rect.style.width = `${segment.marker ? 2 : Math.max(2, (endX - startX) * inputScale)}px`;
+      rect.style.height = `${lineHeight * inputScale}px`;
+      const highlight = document.createElement('span');
+      highlight.className = 'c--kvEditor_highlight';
+      rect.append(highlight);
+      fragment.append(rect);
+    }
+    highlights.replaceChildren(fragment);
   };
-  // アニメ終了で属性を外す（付けっぱなしにしない）
-  lineFlash?.addEventListener('animationend', () => lineFlash?.removeAttribute('data-kv-flash-active'));
+
+  rerenderHighlights = renderCodeHighlights;
+  new ResizeObserver(renderCodeHighlights).observe(textarea);
+  document.fonts.ready.then(renderCodeHighlights).catch(() => {});
+  reducedMotionQuery.addEventListener('change', (event) => {
+    if (event.matches) clearHighlights();
+  });
+
+  const highlightRanges = (ranges: readonly CodeRange[], phase: 'before' | 'applied'): void => {
+    clearHighlights();
+    if (!highlights || ranges.length === 0 || reducedMotionQuery.matches) return;
+    highlightState = { ranges: ranges.map(({ start, end }) => ({ start, end })), phase };
+    renderCodeHighlights();
+    if (phase === 'applied') void highlights.offsetWidth;
+    highlights.setAttribute('data-kv-highlight-phase', phase);
+  };
+  highlights?.addEventListener('animationend', (event) => {
+    if (event.target === highlights && highlightState?.phase === 'applied') clearHighlights();
+  });
 
   // ---- シンタックスハイライト（遅延ロード、初期化後は同期実行） --------------
   let highlightSyncFn: typeof HighlightSyncFn | null = null;
@@ -235,9 +281,10 @@ export function initKvEditor(): void {
     preInner.innerHTML = out ?? `<span class="fallback">${escapeText(code)}</span>`;
     // innerHTML 差し替え後もスクロール位置を必ず一致させる
     syncScroll();
+    rerenderHighlights();
   };
 
-  // 再生アニメのフレームは 12〜18ms ごとに来るため、1 フレームに複数回走らないようまとめる。
+  // 再生アニメのフレームが短い間隔で続くため、1フレームに複数回走らないようまとめる。
   // こちらは caret が動かない（プログラム的な書き換え）ので、遅らせても見え方は変わらない
   let highlightRenderQueued = false;
   const queueHighlight = (): void => {
@@ -534,6 +581,7 @@ export function initKvEditor(): void {
   };
 
   const processInput = (): void => {
+    clearHighlights();
     const text = textarea.value;
     state.tabText[state.activeTab] = text;
     // 提案の出し入れはデバウンス評価に任せる（打鍵のたびに出し直すとちらつくため）
@@ -568,6 +616,7 @@ export function initKvEditor(): void {
 
   const switchTab = (tab: EditorLang): void => {
     if (tab === state.activeTab) return;
+    clearHighlights();
     state.activeTab = tab;
 
     // モデルから再生成が必要なタブはここで変換する
@@ -650,11 +699,12 @@ export function initKvEditor(): void {
   // アクティブタブの表示テキストも同時に確定する。JSXタブなら htmlToJsx で変換した表記を表示する
   //（表示テキストの決定は呼び出し側へ委ねず、ここで一括して行う。表示とモデルの乖離を作らないため）
   const setCode = (code: string): void => {
+    const viewText = state.activeTab === 'jsx' ? htmlToJsx(code) : code;
+    if (textarea.value !== viewText) clearHighlights();
     state.html = code;
     state.tabText.html = code;
     state.stale.html = false;
     if (state.activeTab === 'jsx') {
-      const viewText = htmlToJsx(code);
       state.tabText.jsx = viewText;
       state.stale.jsx = false;
       textarea.value = viewText;
@@ -672,6 +722,7 @@ export function initKvEditor(): void {
   // タイピング途中は書きかけの不完全なコードになり、ヒーローに崩れた瞬間が描画されてしまうため
   // フレームではヒーローを更新しない（反映はハンク確定ごとの commitView と完了時の setCode で行う）
   const setViewText = (text: string): void => {
+    if (textarea.value !== text) clearHighlights();
     state.tabText[state.activeTab] = text;
     textarea.value = text;
     if (state.activeTab === 'html') {
@@ -718,7 +769,8 @@ export function initKvEditor(): void {
     setViewText,
     commitView,
     canCommitView,
-    flashLines,
+    highlightRanges,
+    clearHighlights,
     revealPosition,
     resetSyntaxCheck,
     syncRestorePrompt,
