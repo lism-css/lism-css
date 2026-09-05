@@ -31,41 +31,6 @@ const features = [
     title: 'Layout Primitives',
     desc: 'Common layout patterns like Stack, Flex, Grid, and Columns are provided as layout primitives. Combine them to build your site structure in no time.',
     src: '/img/features-layout.png',
-    area: 'layout',
-    wide: true,
-    width: 280,
-    height: 210,
-    ar: '280/210',
-    widthBase: '11.25rem',
-    widthMd: '15.625rem',
-  },
-  {
-    title: 'CSS Layer Architecture',
-    desc: 'A strict CSS layer design powered by @layer. Prevents specificity conflicts while maintaining both extensibility and maintainability.',
-    src: '/img/features-layer.png',
-    area: 'layer',
-    width: 280,
-    height: 210,
-    ar: '280/210',
-    widthBase: '11.25rem',
-    widthMd: '15.625rem',
-  },
-  {
-    title: 'Design Tokens',
-    desc: 'Colors, font sizes, spacing, border radius, shadows and more — all managed as stepped CSS variables for site-wide consistency.',
-    src: '/img/features-tokens.png',
-    area: 'tokens',
-    width: 280,
-    height: 210,
-    ar: '280/210',
-    widthBase: '11.25rem',
-    widthMd: '15.625rem',
-  },
-  {
-    title: 'Property Class',
-    desc: 'Style quickly with intuitive class names like -fz:l and -p:20. A clear, concise notation that even AI can understand without confusion.',
-    src: '/img/features-props.png',
-    area: 'props',
     width: 280,
     height: 210,
     ar: '280/210',
@@ -76,8 +41,36 @@ const features = [
     title: 'Harmonic Scale',
     desc: 'Spacing, font sizes, and line heights designed with harmonic ratios. A typography system that creates a natural, pleasing rhythm.',
     src: '/img/features-scale.png',
-    area: 'scale',
-    wide: true,
+    width: 280,
+    height: 210,
+    ar: '280/210',
+    widthBase: '11.25rem',
+    widthMd: '15.625rem',
+  },
+  {
+    title: 'Design Tokens',
+    desc: 'Colors, font sizes, spacing, border radius, shadows and more — all managed as stepped CSS variables for site-wide consistency.',
+    src: '/img/features-tokens.png',
+    width: 280,
+    height: 210,
+    ar: '280/210',
+    widthBase: '11.25rem',
+    widthMd: '15.625rem',
+  },
+  {
+    title: 'Property Class',
+    desc: 'Style quickly with intuitive class names like -fz:l and -p:20. A clear, concise notation that even AI can understand without confusion.',
+    src: '/img/features-props.png',
+    width: 280,
+    height: 210,
+    ar: '280/210',
+    widthBase: '11.25rem',
+    widthMd: '15.625rem',
+  },
+  {
+    title: 'CSS Layer Architecture',
+    desc: 'A strict CSS layer design powered by @layer. Prevents specificity conflicts while maintaining both extensibility and maintainability.',
+    src: '/img/features-layer.png',
     width: 280,
     height: 210,
     ar: '280/210',
@@ -88,7 +81,6 @@ const features = [
     title: 'Responsive',
     desc: 'A unique responsive approach combining CSS variables and classes. Lightweight yet flexible enough for a wide range of layouts.',
     src: '/img/features-responsive.png',
-    area: 'responsive',
     width: 280,
     height: 210,
     ar: '280/210',
@@ -200,28 +192,10 @@ const presets = [
         designed from the ground up to bring a natural, pleasing rhythm to your designs.
       </Text>
 
-      <Grid
-        gtc={{
-          base: 'minmax(0, 1fr)',
-          md: 'repeat(2, minmax(0, 1fr))',
-          lg: 'minmax(0, 3fr) minmax(0, 1fr) minmax(0, 3fr) minmax(0, 3fr)',
-        }}
-        gta={{ base: 'none', lg: '"layout layout layer tokens" "props scale scale responsive"' }}
-        g="10"
-        w="100%"
-        mbs={{ base: '50', md: '60' }}
-      >
+      <Columns cols={{ base: 1, md: 2, lg: 3 }} g="10" w="100%" mbs={{ base: '50', md: '60' }}>
         {
           features.map((card) => (
-            <Grid
-              class="b--shadowBox"
-              px={card.wide ? ['35', '40'] : ['35', '40', null, '30']}
-              py={['35', '40']}
-              ga={{ base: 'auto', lg: card.area }}
-              gtc="minmax(0, 1fr)"
-              gtr="1fr auto"
-              g={{ base: '40', sm: '50', lg: '35' }}
-            >
+            <Grid class="b--shadowBox" p={['35', '40']} gtc="minmax(0, 1fr)" gtr="1fr auto" g={{ base: '40', sm: '50' }}>
               <Stack g="25">
                 <Heading level="3" class="c--topHeading u--trim" fz={['l', 'xl']}>
                   {card.title}
@@ -234,7 +208,6 @@ const presets = [
                 width={card.width}
                 height={card.height}
                 mx="auto"
-                me={card.wide ? { base: 'auto', lg: '0' } : undefined}
                 aslf="end"
                 ar={card.ar}
                 w={{ base: card.widthBase, md: card.widthMd }}
@@ -243,7 +216,7 @@ const presets = [
             </Grid>
           ))
         }
-      </Grid>
+      </Columns>
     </Stack>
   </Lism>
 
