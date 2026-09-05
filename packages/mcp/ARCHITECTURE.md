@@ -1,3 +1,5 @@
+基準日: 2026-09-05・e2b7ac10（作業ツリー変更を含む）
+
 # MCP サーバー アーキテクチャガイド
 
 このドキュメントでは、`@lism-css/mcp` パッケージの全体像と処理の流れを解説します。
@@ -30,11 +32,11 @@ Lism CSS のドキュメント・API情報を、AI が正確に参照できる�
 ### 提供するツール（7つ）
 
 | ツール名 | 用途 | 返却形式 | 入力パラメータ |
-|---------|------|---------|--------------|
-| `get_overview` | フレームワークの概要を取得 | Markdown | （なし） |
+| --- | --- | --- | --- |
+| `get_overview` | 基本ルール、参照先、用途別の選定、クラス一覧、Layer、ブレークポイントを取得 | Markdown | （なし） |
 | `get_tokens` | デザイントークンを取得 | Markdown | （なし） |
 | `get_props_system` | Props → CSS マッピングを参照 | Markdown | `prop?`: Lism prop 名 or CSS プロパティ名 |
-| `get_component` | コンポーネントの詳細を取得 | Markdown | `name`: コンポーネント名（`"Flex"` / `"<Flex>"` / `"l--flex"` / `"flex"` を同一視）, `package?`: `"lism-css"` \| `"@lism-css/ui"` |
+| `get_component` | コンポーネントまたは個別クラスの詳細を取得 | Markdown | `name`: コンポーネント名またはクラス名、`package?`: `"lism-css"` \| `"@lism-css/ui"` |
 | `get_guide` | 特定トピックのガイドを取得 | Markdown | `topic`: トピック一覧から選択（後述） |
 | `search_docs` | ドキュメントをキーワード検索 | JSON | `query`: 検索キーワード, `category?`, `limit?` |
 | `convert_css` | CSS を lism-css props に変換 | JSON | `css`: CSS コード（宣言のみ、@ルール非対応） |
@@ -58,7 +60,7 @@ packages/mcp/
 │   │   ├── version.ts          # package.json の version 読み込み（サーバーバージョンの単一情報源）
 │   │   └── types.ts            # TypeScript 型定義（MetaInfo, SearchResult, DocsEntry）
 │   ├── tools/
-│   │   ├── get-overview.ts     # SKILL.md + css-rules.md の Layer 構造 + responsive.md の BP
+│   │   ├── get-overview.ts     # SKILL.md の必要な節 + css-rules.md の Layer 構造 + responsive.md の BP
 │   │   ├── get-tokens.ts       # tokens.md をそのまま返却
 │   │   ├── get-props-system.ts # property-class.md の全文 or prop 名で絞り込み検索
 │   │   ├── get-component.ts    # primitives/・trait-class/ の *.md → components-core.md → components-ui.md の順で名前解決
@@ -96,9 +98,9 @@ packages/mcp/
 ② skills/lism-css-guide/
         ├─ *.md                  # ルート直下のトピック別ガイド
         ├─ primitives/{l--|a--}*.md    # プリミティブ単位の詳細ファイル
-        ├─ trait-class/{is--}*.md      # Trait クラス単位の詳細ファイル
+        ├─ trait-class/{is--|has--}*.md # Traitクラス単位の詳細ファイル
         ├─ property-class/*.md         # property-class.md の分冊（all-props, bd, hov, max-sz）
-        └─ references/*.md             # スキル専用の作業手順書（MCP からは露出しない・後述）
+        └─ references/*.md             # page-sections.mdのみMCPから公開（後述）
         │
         ├─ load-markdown.ts が再帰的に直接参照（開発・テスト時）
         │   skillsDir が存在すれば優先、なければ distDir にフォールバック
@@ -106,9 +108,11 @@ packages/mcp/
         └─ pnpm build（cp -r）→ dist/data/guides/**/*.md（npm 配布時）
 ```
 
-参照系ツール（get_overview, get_tokens, get_props_system, get_component, get_guide）は **Markdown を直接返却**します。
+参照系ツール（get_overview, get_tokens, get_props_system, get_component, get_guide）はMarkdownを返却します。クライアントはその内容を回答や実装の参照資料として使い、資料にないクラス名・Prop・トークン値を創作しません。
 
-`get_component` は primitives/ および trait-class/ 配下の個別ファイルを **第一候補**として解決します。初回呼び出し時に各ファイルの先頭見出し（例: `# l--flex / \`<Flex>\``）をパースしてクラス名・コンポーネント名の alias map を構築し、`Flex` / `<Flex>` / `l--flex` / `flex` の表記揺れを同一視します。
+`get_overview`はSKILL.mdから冒頭、最小ゲート、資料確認トリガー、目的別実装ガイド、クラス単位の詳細リファレンスを抽出します。そこにMCPツールへの読み替え案内、css-rules.mdのCSS Layer構造、responsive.mdのブレイクポイントを加えます。実装フロー、判定記号の独立した節、C0–C8、実行レベル、提出前セルフチェック、`.lism/`保存、lism-cli skillの案内は含めません。読み替え案内には、抽出された規則で使う🔁/⏸/✅例外の意味を短く含めます。
+
+`get_component`はprimitives/およびtrait-class/配下の個別ファイルを第一候補として解決します。初回呼び出し時に各ファイルの先頭見出し（例: `# l--flex / \`<Flex>\``）をパースしてクラス名・コンポーネント名のalias mapを構築し、`Flex`/`<Flex>`/`l--flex`/`flex`などの表記揺れを同一視します。個別のTraitクラスは`is--*`と`has--*`のどちらもこの経路で取得できます。
 
 ### docs-index.json
 
@@ -120,8 +124,7 @@ packages/mcp/
 ### ガイドファイル一覧（get_guide で選択可能な topic）
 
 | topic | ファイル | 内容 |
-|-------|---------|------|
-| `overview` | SKILL.md | フレームワーク概要・パッケージ・実装ルール |
+| --- | --- | --- |
 | `tokens` | tokens.md | デザイントークン（spacing, colors, font-size 等） |
 | `property-class` | property-class.md + property-class/*.md | Property Class システム・全 props リファレンス表・bd / hov / max-sz の詳細 |
 | `components-core` | components-core.md | コアコンポーネント（Lism, Box, Flex, Stack, Grid 等） |
@@ -137,10 +140,11 @@ packages/mcp/
 | `customize` | customize.md | カスタマイズ（@layer オフ・SCSS・lism.config.js・パージ） |
 | `antipatterns` | antipatterns.md | AI コード生成のアンチパターン（値・スタイル宣言系） |
 | `antipatterns-layout` | antipatterns-layout.md | AI コード生成のアンチパターン（構造・レイアウト・レスポンシブ系） |
+| `page-sections` | references/page-sections.md | ヒーロー・サイトヘッダー・フッターなどの標準構成例 |
 
 個別プリミティブ（`l--flex`, `is--container`, `a--icon` 等）は `get_guide` の topic としては露出しません。代わりに `get_component` から名前ベースで取得できます。
 
-`references/` 配下（authoring.md, page-sections.md, verification.md）は、`lism-css-guide` スキルで作業するエージェント向けの作業手順書（実装プランの作り方等）であり、ドキュメント参照用途の MCP ツールからは**意図的に露出していません**。起動時のプリロード対象には含まれますが、これは guides ディレクトリを一括読み込みする実装の副作用であり問題ありません。
+`references/page-sections.md`は`get_guide`の`page-sections`トピックとして公開します。`authoring.md`と`verification.md`はスキル用の作業手順書であり、MCPのツールからは公開しません。起動時のプリロード対象にはいずれも含まれますが、これはguidesディレクトリを一括読み込みする実装によるものです。
 
 
 ## 処理の流れ

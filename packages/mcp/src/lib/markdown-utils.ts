@@ -34,6 +34,14 @@ export function extractSection(md: string, heading: string): string {
   return lines.slice(startIdx, endIdx).join('\n').trimEnd();
 }
 
+/** 冒頭（frontmatter を除き、最初の `##` 見出しの手前まで）を返す。H1 は含む。 */
+export function extractPreamble(md: string): string {
+  const body = md.replace(/^---\n[\s\S]*?\n---\n/, '');
+  const lines = body.split('\n');
+  const endIdx = lines.findIndex((line) => headingLevel(line) >= 2);
+  return (endIdx === -1 ? lines : lines.slice(0, endIdx)).join('\n').trim();
+}
+
 export function listHeadings(md: string): { level: number; text: string; line: number }[] {
   return md.split('\n').flatMap((line, i) => {
     const lv = headingLevel(line);

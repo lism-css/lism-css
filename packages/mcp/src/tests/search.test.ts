@@ -139,6 +139,15 @@ describe('searchDocs — nextTool', () => {
     expect(results[0].nextTool).toBeNull();
   });
 
+  it('overview.mdx は get_overview() を返す', () => {
+    const results = searchDocs(
+      [{ sourcePath: 'overview.mdx', title: '概要', description: '', category: 'guide', headings: [], keywords: ['overview'], snippet: '' }],
+      'overview',
+      { guideTopics }
+    );
+    expect(results[0].nextTool).toBe('get_overview()');
+  });
+
   it('category=guide かつ guideTopics に含まれる場合は get_guide(topic) を返す', () => {
     const results = searchDocs(
       [entry({ sourcePath: 'guide/responsive.mdx', title: 'Responsive', keywords: ['responsive'], category: 'guide' })],

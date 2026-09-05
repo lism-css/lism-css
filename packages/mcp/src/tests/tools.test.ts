@@ -35,14 +35,37 @@ function getText(result: Awaited<ReturnType<Client['callTool']>>): string {
 }
 
 describe('MCP Tools (integration)', () => {
-  it('get_overview が Markdown を返す（SKILL.md ベース）', async () => {
+  it('get_overview が基本ルール・ツール案内・Layer・BP を含む Markdown を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_overview', arguments: {} });
     expect(result.isError).toBeFalsy();
 
     const text = getText(result);
-    expect(text).toContain('Lism CSS');
-    expect(text).toContain('lism-css');
+    expect(text).toContain('# Lism CSS 実装ガイド');
+    expect(text).toContain('`@lism-css/mcp`の更新');
+    expect(text).toContain('## Looking up details with this MCP server');
+    expect(text).toContain('## 最小ゲート');
+    expect(text).toContain('## 資料確認トリガー');
+    expect(text).toContain('## 目的別実装ガイド');
+    expect(text).toContain('## クラス単位の詳細リファレンス');
+    expect(text).toContain('CSS Layer 構造');
+    expect(text).toContain('ブレイクポイント');
+  });
+
+  it('get_overview にスキル専用の作業手順（実装フロー・判定記号・.lism/ 保存等）を含めない', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_overview', arguments: {} });
+
+    const text = getText(result);
+    expect(text).not.toContain('## 実装フロー');
+    expect(text).not.toContain('## 判定記号');
+    expect(text).not.toContain('## 実装前チェック項目');
+    expect(text).not.toContain('## 事前チェック実行レベル');
+    expect(text).not.toContain('## 提出前セルフチェック');
+    expect(text).not.toContain('実行レベル');
+    expect(text).not.toContain('.lism/');
+    expect(text).not.toContain('references/authoring.md');
+    expect(text).not.toContain('lism-cli skill');
   });
 
   it('get_tokens が Markdown を返す', async () => {
@@ -149,6 +172,32 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('https://lism-css.com/docs/primitives/a--icon.md');
   });
 
+  it.each([
+    { name: 'has--transition', filename: 'trait-class/has--transition.md', aliases: ['transition', 'HAS--TRANSITION'] },
+    { name: 'has--gutter', filename: 'trait-class/has--gutter.md', aliases: [] },
+    { name: 'has--snap', filename: 'trait-class/has--snap.md', aliases: [] },
+    { name: 'has--mask', filename: 'trait-class/has--mask.md', aliases: [] },
+  ])('get_component で $name は個別Trait資料を返す', async ({ name, filename, aliases }) => {
+    const client = await createTestClient();
+    const expected = loadMarkdown(filename);
+
+    for (const query of [name, ...aliases]) {
+      const result = await client.callTool({ name: 'get_component', arguments: { name: query } });
+      expect(result.isError).toBeFalsy();
+      expect(getText(result)).toBe(expected);
+    }
+  });
+
+  it('get_component はクラス専用TraitをReactコンポーネント名として解決しない', async () => {
+    const client = await createTestClient();
+
+    for (const name of ['<Transition>', '<Gutter>']) {
+      const result = await client.callTool({ name: 'get_component', arguments: { name } });
+      expect(result.isError).toBeFalsy();
+      expect(JSON.parse(getText(result)).message).toContain(`Component "${name}" not found`);
+    }
+  });
+
   it('get_component で Lism を検索すると該当セクションの Markdown が返る', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'Lism' } });
@@ -209,6 +258,24 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('-bd-');
     expect(text).toContain('-hov:');
     expect(text).toContain('-max-sz:bleed');
+  });
+
+  it('get_guide で page-sections は構成例とスキル手順に依存しない確認事項を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'page-sections' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('# ページ定番セクションの構成例');
+    expect(text).toContain('## サイトヘッダー');
+    expect(text).toContain('tokens.md');
+    expect(text).not.toMatch(/SKILL\.md|C[0-8]|トークン差分表|\.lism\//);
+  });
+
+  it('get_guide の overview トピックは廃止済み（get_overview を使う）', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'overview' } });
+    expect(result.isError).toBeTruthy();
   });
 
   it('get_guide で antipatterns トピックが NG/OK カタログの Markdown を返す', async () => {

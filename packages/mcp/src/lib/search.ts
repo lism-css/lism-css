@@ -119,6 +119,9 @@ function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): strin
   const withoutExt = entry.sourcePath.replace(/\.mdx$/, '');
   const basename = getBasename(withoutExt);
 
+  if (withoutExt === 'overview') {
+    return 'get_overview()';
+  }
   if (withoutExt === 'core-components/lism-props') {
     return 'get_props_system()';
   }
