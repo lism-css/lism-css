@@ -72,4 +72,29 @@
       opacity: 0.15;
     }
   }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .c--ai-section {
+        view-timeline: --ai-bg block;
+        view-timeline-inset: 0;
+      }
+
+      .c--ai-bg {
+        --ai-bg-parallax-offset: clamp(3rem, 9vh, 6rem);
+        animation: ai-bg-parallax linear both;
+        animation-timeline: --ai-bg;
+        animation-range: entry 0% exit 100%;
+      }
+
+      @keyframes ai-bg-parallax {
+        from {
+          transform: translateY(calc(-1 * var(--ai-bg-parallax-offset)));
+        }
+        to {
+          transform: translateY(var(--ai-bg-parallax-offset));
+        }
+      }
+    }
+  }
 }
