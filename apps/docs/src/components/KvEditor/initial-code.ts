@@ -27,7 +27,7 @@ const buildInitialHtml = (
   <br />
   for AI and Humans
 </h1>
-<p class="-fz:s -fz_sm -fz_md -lh:m -c:text-2 -ta:center -my:40" style="--fz_sm: var(--fz--m); --fz_md: var(--fz--l)">
+<p class="u--trim -fz:s -fz_sm -fz_md -lh:m -c:text-2 -ta:center -py:40" style="--fz_sm: var(--fz--m); --fz_md: var(--fz--l)">
   ${lead1}
   <br />
   ${lead2}
