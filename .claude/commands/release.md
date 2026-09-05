@@ -116,6 +116,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 リリースノートをもとに日本語・英語の両方で生成する。
 
+- 既存の `## 未リリース` / `## Unreleased` があれば、今回のリリース対象の項目と移行案内を新エントリへ取り込む
 - 親は常に `lism-css` の H2。`@lism-css/plugin` / `@lism-css/ui` はその中に H3 でネストする
 - `lism-css` のリリースがない場合だけ `## @lism-css/ui v{バージョン} (YYYY.MM.DD)` の独立 H2 にする
 - 同日に `lism-css` と追従パッケージを両方リリースするなら必ずネストする
@@ -177,7 +178,8 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 `apps/docs/src/content/ja/changelog.mdx` と `apps/docs/src/content/en/changelog.mdx` にエントリを追記する。
 
-- 追記位置: 冒頭の `<Divider bds="dashed" my="40" />` の直後、既存の最初の H2 の直前。挿入後、新エントリと既存エントリの間に `<Divider>` があることを確認する
+- 未リリースのセクションから、新エントリへ取り込んだ項目を削除する。対象外の項目は先頭に残し、空になったセクションは見出しと末尾の `<Divider>` を削除する
+- 追記位置: 未リリースのセクションが残る場合はその直後、それ以外は冒頭の `<Divider bds="dashed" my="40" />` の直後。挿入後、H2エントリ間に `<Divider>` があることを確認する
 - `lism-css` を先にリリース済みで、追従パッケージを後からリリースする場合: 既存の `## lism-css v{バージョン}` エントリの末尾（最後の H3 の下、次の `<Divider>` の前）に H3 をネスト追加する
 - 同時リリースの場合: 親 + ネストの新規エントリを一度に作る
 

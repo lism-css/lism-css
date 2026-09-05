@@ -15,7 +15,7 @@
     --duration: var(--popover-duration, 0.15s);
     --offset: var(--popover-offset, var(--s5));
     --arrow-sz: var(--popover-arrow, 6px); /* 矢印の高さ（突出量）。0 で矢印なし */
-    --gap: calc(var(--offset) + var(--arrow-sz)); /* popup 本体とトリガーの間隔。offset は矢印の先とトリガーの間隔 */
+    --popup-gap: calc(var(--offset) + var(--arrow-sz)); /* popup 本体とトリガーの間隔。offset は矢印の先とトリガーの間隔 */
     display: inline-block;
     anchor-scope: --popover, --popover-popup;
   }
@@ -105,7 +105,7 @@
       --_spanEnd: span-x-start;
       --_placeStart: auto start;
       --_placeEnd: auto end;
-      margin-block: var(--gap);
+      margin-block: var(--popup-gap);
       position-try-fallbacks:
         flip-block,
         flip-inline,
@@ -116,7 +116,7 @@
       --_spanEnd: span-block-start;
       --_placeStart: start auto;
       --_placeEnd: end auto;
-      margin-inline: var(--gap);
+      margin-inline: var(--popup-gap);
       position-try-fallbacks:
         flip-inline,
         flip-block,
