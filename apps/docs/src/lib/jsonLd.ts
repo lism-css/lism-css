@@ -26,11 +26,11 @@ export function generateWebSiteSchema(params: { url: string; lang: string }) {
 }
 
 /** ソフトウェアプロジェクトとしての説明 */
-export function generateSoftwareSourceCodeSchema(params: { url: string; lang: string }) {
+export function generateSoftwareSourceCodeSchema(params: { url: string; lang: string; description?: string }) {
   return {
     '@type': 'SoftwareSourceCode',
     name: siteConfig.name,
-    description: 'A lightweight, layout-first CSS framework with React and Astro components.',
+    ...(params.description && { description: params.description }),
     url: params.url,
     codeRepository: siteConfig.author.github,
     programmingLanguage: 'CSS',
@@ -40,7 +40,7 @@ export function generateSoftwareSourceCodeSchema(params: { url: string; lang: st
 }
 
 /** トップページ用: WebSite + SoftwareSourceCode を @graph で並列出力 */
-export function generateHomePageSchema(params: { url: string; lang: string }) {
+export function generateHomePageSchema(params: { url: string; lang: string; description?: string }) {
   return {
     '@context': 'https://schema.org',
     '@graph': [generateWebSiteSchema(params), generateSoftwareSourceCodeSchema(params)],
@@ -48,7 +48,7 @@ export function generateHomePageSchema(params: { url: string; lang: string }) {
 }
 
 /** ローカライズ版トップページ用: SoftwareSourceCode のみを単独出力（WebSite は root のみ） */
-export function generateLocalizedHomePageSchema(params: { url: string; lang: string }) {
+export function generateLocalizedHomePageSchema(params: { url: string; lang: string; description?: string }) {
   return {
     '@context': 'https://schema.org',
     ...generateSoftwareSourceCodeSchema(params),

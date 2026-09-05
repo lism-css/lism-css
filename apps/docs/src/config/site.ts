@@ -6,7 +6,7 @@ export type LangConfig = {
 export const siteConfig = {
   publish: true,
   name: 'Lism CSS',
-  description: 'Lism CSS の公式ドキュメントサイトです。',
+  description: 'Lism CSS は、心地よいレイアウトを手軽に組める軽量CSSフレームワークです。人にもAIにも扱いやすい、洗練されたCSS設計を提供します。',
 
   // root: true の言語はURLにプレフィックスが付かない（例: /introduction）
   // root: false/未指定の言語はURLにプレフィックスが付く（例: /en/introduction）
