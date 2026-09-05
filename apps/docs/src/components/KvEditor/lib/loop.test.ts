@@ -81,7 +81,7 @@ describe('createLoopPlayer', () => {
     };
   };
 
-  it.each(['highlight first', 'intersection first'])('waits two seconds after both initial gates pass: %s', async (order) => {
+  it.each(['highlight first', 'intersection first'])('waits four seconds after both initial gates pass: %s', async (order) => {
     const { resolveReady, showRoot } = setup();
 
     if (order === 'highlight first') {
@@ -94,7 +94,7 @@ describe('createLoopPlayer', () => {
       await Promise.resolve();
     }
 
-    await vi.advanceTimersByTimeAsync(1999);
+    await vi.advanceTimersByTimeAsync(3999);
     expect(mocks.animateCode).not.toHaveBeenCalled();
     await vi.advanceTimersByTimeAsync(1);
     expect(mocks.animateCode).toHaveBeenCalledTimes(1);

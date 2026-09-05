@@ -12,14 +12,14 @@ import { charBoundary, diffTokenEdits, diffLineHunks, type LineHunk } from './di
 import type { EditorApi } from './editor';
 
 // タイピング速度・ポーズ（ms）
-const CODE_DELETE_INTERVAL = 12;
-const CODE_INSERT_INTERVAL = 18;
+const CODE_DELETE_INTERVAL = 48;
+const CODE_INSERT_INTERVAL = 72;
 const CODE_DELETE_CHUNK = 2;
 const PAUSE_BETWEEN_EDITS = 350; // 離れた編集箇所（ハンク）へ移る間
 const PAUSE_BETWEEN_MICRO_EDITS = 200; // ハンク内でカーソルを次の変更トークンへ移す間
 const PAUSE_AFTER_REVEAL = 300; // 編集位置へのスクロールを見せてから書き換え始めるまでの間
 const PAUSE_FLASH_TO_APPLY = 120; // 反映フラッシュの点灯からヒーロー反映までの間（「保存 → 結果が変わる」の因果を見せる）
-const MAX_CODE_ANIM_MS = 3000; // 書き換えアニメの想定所要時間の上限。超える場合はステップ開始コードへ復元してから再生する
+const MAX_CODE_ANIM_MS = 12000; // 書き換えアニメの想定所要時間の上限。超える場合はステップ開始コードへ復元してから再生する
 
 /** 再生の中断（AbortController の abort）を表す。想定内の脱出なので呼び出し側は握り潰してよい */
 export class AbortedError extends Error {}

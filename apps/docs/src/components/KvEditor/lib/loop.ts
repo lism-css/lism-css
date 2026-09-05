@@ -30,7 +30,7 @@ import { STRINGS } from './strings';
 // ポーズ設定（ms）
 const PAUSE_BETWEEN_STEPS = 1600; // 編集と次の編集の「間」
 const PAUSE_AFTER_CYCLE = 2800; // 初期コードへ戻ってから次の周回を始めるまでの「間」
-const INITIAL_START_DELAY = 2000; // 表示・ハイライター準備完了から初回再生までの「間」
+const INITIAL_START_DELAY = 4000; // 表示・ハイライター準備完了から初回再生までの「間」
 const RESUME_DELAY = 600; // ホバー解除・再表示から自動再開するまでの「間」
 const TAB_RESUME_DELAY = 800; // タブ切替後に新しい表記で再開するまでの「間」
 const PAUSE_AFTER_TAB_SWITCH = 800; // 周回の継ぎ目でタブを自動切替してから次の周回を始めるまでの「間」
