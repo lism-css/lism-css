@@ -9,9 +9,42 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 <Divider bds="dashed" my="40" />
 
-## Unreleased
+## lism-css v0.28.0 (2026.09.05)
 
-### Renamed CSS variables for child elements (#592)
+This release contains **breaking changes**.
+
+### Revised spacing tokens
+
+- Added `--s45` (6.5 × `--s-unit`, ≈52px) and removed `--s80` (34 ×, ≈272px). Replace `s="80"` with `s="70"` or an arbitrary value.
+- The 10-step keys (`10`–`70`) follow the Fibonacci sequence for vertical rhythm, while the 5-step intermediate keys (`15` / `25` / `35` / `45`) are for horizontal `gap` / `padding`. The 5-step keys stop at `45`; none are provided above `50`.
+
+### Removed `u--divide` / `u--enclose` from the core (#603)
+
+- These utilities drew lines with `gap` and the children's `box-shadow`, which renders coarsely and breaks when flex items wrap (lines appear at row ends). They have been removed from the core. If you need them, add the extra CSS shown in the Opt-in section of the Utility Class page to `@layer lism-utility`.
+- For dividers in layouts whose direction changes at a breakpoint, we recommend drawing them with `border` by switching `bdw` per breakpoint.
+- Removed `divide` / `enclose` from the preset type of the `util` prop (arbitrary strings are still accepted).
+
+### `lts` tokens are now relative to `--lts--base`
+
+- `xs`–`xl` are now offsets from `--lts--base` (e.g. `calc(var(--lts--base) - 0.05em)`), and the default of `base` changed from `normal` to `0em`. Overriding `--lts--base` alone shifts every step.
+- Because `--lts--base` is used inside `calc()`, set it to a length rather than `normal`. Override it on `:root`; overrides on descendant elements do not propagate to `xs`–`xl`.
+
+### Other
+
+- Added `-hov:-transform`, which changes `transform` on hover. The default is `translate(0, -4px)` and can be changed via `--hov-transform` (#605).
+- Raised the opacity tokens `p` / `pp` / `ppp` from `0.75` / `0.5` / `0.25` to `0.8` / `0.6` / `0.4` so the lighter steps are no longer too faint.
+
+### `@lism-css/plugin` v0.4.4 (2026.09.05)
+
+- Updated the `lism-css` dependency to v0.28.0. No code changes.
+
+### `@lism-css/ui` v0.28.0 (2026.09.05)
+
+This release contains **breaking changes**.
+
+Requires `lism-css` v0.28.0 or later.
+
+**Renamed CSS variables for child elements (#607)**
 
 **Breaking change**: Renamed child-element CSS variables in UI components and examples to identify the target child element. The old names are no longer supported.
 
@@ -54,6 +87,15 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 - When updating components added through the CLI, update their CSS and React / Astro / JS sources together.
 - The List, Timeline, Table, and Chat examples use the same naming rule. Update copied CSS and custom overrides to match the new examples on each page.
 - Variables for internal processing or state checks that are not intended to be overridden keep their `_` prefix. `--_panelH` and `--_contentGtr` now use camelCase.
+
+**`lism-css` is no longer bundled and is now an external dependency (#604)**
+
+- `dist` no longer ships a copy of the whole `lism-css` core; `lism-css` is imported as an external dependency instead. Token changes made through `lism.config` are reflected without rebuilding `@lism-css/ui`.
+- `lism-css` is listed in `dependencies`, so no extra installation is normally needed.
+
+**Other**
+
+- Fixed the default `gap` of the Accordion button from `--s10` to `--s15`.
 
 <Divider bds="dashed" my="40" />
 
