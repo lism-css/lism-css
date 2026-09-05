@@ -23,7 +23,7 @@ const buildInitialHtml = (
   lead2: string,
   urlPrefix: string
 ): string => `<h1 class="u--trim -fw:700 -fz -lh:xs -lts:s -ta:center" style="--fz: clamp(2rem, 0.6667rem + 5.3333vw, 4rem)">
-  The CSS Design Framework
+  CSS Design Framework
   <br />
   for AI and Humans
 </h1>
@@ -45,6 +45,6 @@ const buildInitialHtml = (
 </div>`;
 
 export const INITIAL_HTML_BY_LANG: Record<DemoLang, string> = {
-  ja: buildInitialHtml('軽量でビルド不要。どんなサイトにも導入できます。', 'あなたはもう、CSS設計に悩む必要はありません。', ''),
-  en: buildInitialHtml('Lightweight and build-free. Works on any site.', 'You never have to worry about CSS architecture again.', '/en'),
+  ja: buildInitialHtml('心地よいレイアウトが手軽に組める。', '洗練されたCSS設計が、ここにあります。', ''),
+  en: buildInitialHtml('Build harmonious layouts with ease.', 'Refined CSS architecture starts here.', '/en'),
 };

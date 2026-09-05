@@ -29,7 +29,7 @@ if (!isValidLang(lang)) {
 const features = [
   {
     title: 'Layout Primitives',
-    desc: 'Common layout patterns like Stack, Flex, Grid, and Columns are provided as layout primitives. Combine them to build your site structure in no time.',
+    desc: 'Common layout patterns like Flex, Grid, Stack, and Columns are provided as primitive classes. Combine them to build your site structure in no time.',
     src: '/img/features-layout.png',
     width: 280,
     height: 210,
@@ -39,7 +39,7 @@ const features = [
   },
   {
     title: 'Harmonic Scale',
-    desc: 'Spacing, font sizes, and line heights designed with harmonic ratios. A typography system that creates a natural, pleasing rhythm.',
+    desc: 'Spacing, font sizes, line heights, and more are designed with harmonic ratios. The included typography system naturally brings a pleasing rhythm to your designs.',
     src: '/img/features-scale.png',
     width: 280,
     height: 210,
@@ -49,7 +49,7 @@ const features = [
   },
   {
     title: 'Design Tokens',
-    desc: 'Colors, font sizes, spacing, border radius, shadows and more — all managed as stepped CSS variables for site-wide consistency.',
+    desc: 'Values for colors, typography, spacing, border radius, shadows, and more are organized into scales and provided as CSS variables. They maintain consistency across your site and improve reusability.',
     src: '/img/features-tokens.png',
     width: 280,
     height: 210,
@@ -59,7 +59,7 @@ const features = [
   },
   {
     title: 'Property Class',
-    desc: 'Style quickly with intuitive class names like -fz:l and -p:20. A clear, concise notation that even AI can understand without confusion.',
+    desc: 'Each utility class corresponds to a single CSS property and is defined in the clear -prop:value format. This reduces confusion for AI and makes styling intuitive for people.',
     src: '/img/features-props.png',
     width: 280,
     height: 210,
@@ -69,7 +69,7 @@ const features = [
   },
   {
     title: 'CSS Layer Architecture',
-    desc: 'A strict CSS layer design powered by @layer. Prevents specificity conflicts while maintaining both extensibility and maintainability.',
+    desc: 'A strict CSS layer design using @layer. It prevents specificity conflicts and helps you organize classes naturally by their roles, supporting both extensibility and maintainability.',
     src: '/img/features-layer.png',
     width: 280,
     height: 210,
@@ -79,7 +79,7 @@ const features = [
   },
   {
     title: 'Responsive',
-    desc: 'A unique responsive approach combining CSS variables and classes. Lightweight yet flexible enough for a wide range of layouts.',
+    desc: 'We developed a unique responsive approach combining classes (-prop_bp) and CSS variables (--prop_bp). It supports a wide range of layouts while keeping file sizes small.',
     src: '/img/features-responsive.png',
     width: 280,
     height: 210,
@@ -94,16 +94,16 @@ const tools = [
     title: 'MCP Server',
     buttonLabel: 'Connect MCP',
     href: '/docs/mcp/',
-    body: 'Provides Lism CSS specifications to AI coding tools such as Claude Code, Cursor, and VS Code. AI assists your coding while referencing the latest Lism CSS documentation and API information in real time, so it guides you to the correct class names and props even if you are unsure about Lism’s naming conventions.',
+    body: 'Connect the MCP server to let AI agents search and retrieve Lism CSS specifications. They can look up component usage, props, design tokens, and other information they need while coding.',
     src: '/img/ai-02.png',
     width: 1120,
     height: 840,
   },
   {
     title: 'Skills',
-    buttonLabel: 'Get Skills',
+    buttonLabel: 'Install Skills',
     href: '/docs/skills/',
-    body: 'Implementation guide skills for AI agents. By correctly understanding Lism CSS’s naming conventions and design principles, AI can generate accurate code that follows best practices. Works with Claude Code and other popular AI coding tools.',
+    body: 'Skills that teach AI agents how to use Lism CSS. By correctly understanding Lism CSS’s naming conventions and design principles, AI can generate accurate code that follows best practices.',
     src: '/img/ai-03.png',
     width: 1120,
     height: 840,
@@ -159,7 +159,13 @@ const presets = [
 ];
 ---
 
-<SimpleLayout title={siteConfig.name} description="The official documentation site for Lism CSS." lang={lang} schemaType="HomePage" excludeFromSearch>
+<SimpleLayout
+  title={siteConfig.name}
+  description="Lism CSS is a lightweight CSS framework for building harmonious layouts with ease. Its refined CSS architecture is easy for both humans and AI to use."
+  lang={lang}
+  schemaType="SoftwareSourceCode"
+  excludeFromSearch
+>
   {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
   <Box class="c--kvVideoBg" pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true">
     <Frame h="100%" ar="16/9">
@@ -188,8 +194,8 @@ const presets = [
         <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>A Sophisticated Design Theory</Heading>
       </Stack>
       <Text class="u--trim" ta="center" mbs={['30', '35', '40']} fz={['s', 'm', 'l']} max-w="48em">
-        Lism CSS is a lightweight CSS framework for building the structural foundation of your website quickly and smoothly. Its CSS architecture is
-        designed from the ground up to bring a natural, pleasing rhythm to your designs.
+        Lism CSS is a lightweight CSS framework for building pleasing layouts quickly and easily. We designed its CSS from the ground up to let a
+        mathematically beautiful, harmonious rhythm emerge naturally in your designs.
       </Text>
 
       <Columns cols={[1, null, 2, 3]} g="10" w="100%" mbs={['50', null, '60']}>
@@ -243,8 +249,8 @@ const presets = [
         <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>AI Tool Integration</Heading>
       </Stack>
       <Text class="u--trim" ta="center" mbs={['30', '35', '40']} fz={['s', 'm', 'l']} max-w="48em">
-        Lism CSS is designed with AI agents in mind. With an MCP server, Skills, and machine-readable documentation, AI tools like Claude Code and
-        Cursor can accurately understand the Lism system and generate code that matches your intent.
+        Lism CSS is designed with AI agents in mind. With an MCP server, Skills, and documentation that AI can easily read, AI coding agents like
+        Claude Code, Codex, and Cursor can accurately understand the Lism system and generate code that matches your intent.
       </Text>
       <Frame mt={['45', null, '50']} w={['16rem', '18rem', '20rem', '24rem']} z="1">
         <Media src="/img/ai-01.png" alt="" width="1120" height="840" style={{ filter: 'drop-shadow(1px 3px 2px rgb(0 0 0 / 0.1))' }} />
@@ -294,12 +300,9 @@ const presets = [
         <Heading level="2" class="c--topHeading u--trim" ta="center" fz={['2xl', '3xl', '4xl']}>Lism CSS Templates</Heading>
       </Stack>
       <Text class="u--trim" ta="center" mbs={['30', '35', '40']} fz={['s', 'm', 'l']} max-w="35em">
-        Use them as a base for your design, or copy and paste just the parts you need to instantly add polished layouts to your project.
+        We offer templates and design patterns built with Lism CSS. Simply copy and paste to try them out, and use them as a starting point for your
+        site.
       </Text>
-      <Button class="c--lpButton" href={getLocalizedUrl('/templates/', lang)} fz={['s', 'm']} hov={{ bgc: 'var(--link)' }} mt="40">
-        <span>View More</span>
-        <Icon icon="caret-right" />
-      </Button>
       <Box mbs={{ base: '50', md: '60' }} mx="clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)" cg="10" style={{ columnCount: 3 }}>
         {
           presets.map((item) => (
@@ -309,6 +312,10 @@ const presets = [
           ))
         }
       </Box>
+      <Button class="c--lpButton" href={getLocalizedUrl('/templates/', lang)} fz={['s', 'm']} hov={{ bgc: 'var(--link)' }} mt="40">
+        <span>View More</span>
+        <Icon icon="caret-right" />
+      </Button>
     </Stack>
   </Lism>
 
