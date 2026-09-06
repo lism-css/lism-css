@@ -7,6 +7,7 @@
 
 import { siteConfig } from '@/config/site';
 import { getAlternateUrls, getRootLang, getLocalizedUrl, getPathWithoutLang } from '@/lib/i18n';
+import { filterPatternAlternates } from '@/lib/patterns';
 import type { LangCode } from '@/lib/i18n';
 
 interface Props {
@@ -56,9 +57,10 @@ const ogLocaleMap: Record<LangCode, string> = {
 const ogLocale = ogLocaleMap[lang] || 'ja_JP';
 
 // 多言語 hreflang 用の代替URL一覧
-const alternateUrls = getAlternateUrls(Astro.url);
+const alternateUrls = filterPatternAlternates(getAlternateUrls(Astro.url));
 const rootLang = getRootLang();
-const rootPath = getLocalizedUrl(getPathWithoutLang(Astro.url), rootLang);
+const rootPath =
+  alternateUrls.find(({ lang: code }) => code === rootLang)?.url ?? alternateUrls[0]?.url ?? getLocalizedUrl(getPathWithoutLang(Astro.url), rootLang);
 
 // パスを絶対URLに変換（canonical と一致するよう末尾スラッシュを保証）
 const toAbsoluteUrl = (path: string): string => {

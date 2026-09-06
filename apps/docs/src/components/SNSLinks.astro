@@ -2,6 +2,7 @@
 import { Cluster, Icon, Lism, ListItem } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
 import { getAlternateUrls, getLangFromUrl, getLangLabel, t } from '@/lib/i18n';
+import { filterPatternAlternates } from '@/lib/patterns';
 
 // phosphor icons icon: https://phosphoricons.com/?weight=fill&q=github
 
@@ -15,7 +16,7 @@ const show = (key: IconKey) => icons.includes(key);
 
 // 言語切替ドロップダウン用
 const currentLang = getLangFromUrl(Astro.url);
-const alternateUrls = getAlternateUrls(Astro.url);
+const alternateUrls = filterPatternAlternates(getAlternateUrls(Astro.url));
 const langSelectText = t(currentLang, 'langSelect');
 
 // ドロップダウン項目の共通プロップ

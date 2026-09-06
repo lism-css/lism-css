@@ -1,0 +1,42 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Columns, Frame, Group, Heading, Stack, Text, Wrapper } from 'lism-css/astro';
+---
+
+<DemoLayout title="Feature019">
+  <Group as="section" aria-label="旅づくりのこだわり" isContainer hasGutter bgc="base">
+    <Wrapper contentSize="l" py={['40', null, '50']}>
+      <Stack g="40">
+        <Columns cols={[1, null, 2]} g={['30', null, '50']} ai="center">
+          <Frame ar="16/9" bdrs="20">
+            <img src="/img/img-4.jpg" alt="山々と針葉樹に囲まれた静かな湖" width="1920" height="1281" />
+          </Frame>
+          <Stack g="20">
+            <Text fz="s" c="brand" fw="bold">01 ／ あなたに合う旅程</Text>
+            <Heading level="2" fz="2xl" class="u--trim">行きたい場所から、<br />無理のない旅を。</Heading>
+            <Text c="text-2">湖畔をゆっくり歩く日も、山の景色に会いに行く日も。好みや体力、移動時間に合わせて、一組ずつ旅程を組み立てます。</Text>
+            <Stack g="10" bd-bs pbs="20">
+              <Heading level="3" fz="l">出発前の相談で、不安を減らす</Heading>
+              <Text c="text-2">歩く距離や必要な装備まで、担当者が事前にご案内。はじめての場所でも、自分のペースで楽しめます。</Text>
+            </Stack>
+          </Stack>
+        </Columns>
+
+        <Columns cols={[1, null, 2]} g={['30', null, '50']} ai="center" bd-bs pbs="40">
+          <Frame ar="16/9" bdrs="20" order={[0, null, 1]}>
+            <img src="/img/img-6.jpg" alt="夕日が差し込む海と岩場の風景" width="2000" height="1120" loading="lazy" />
+          </Frame>
+          <Stack g="20">
+            <Text fz="s" c="brand" fw="bold">02 ／ 現地を知る案内</Text>
+            <Heading level="2" fz="2xl" class="u--trim">その場所の、<br />いちばんいい時間へ。</Heading>
+            <Text c="text-2">夕日が海を染めるひとときや、人の少ない静かな朝。土地を知るガイドが、季節と時間に合わせた過ごし方をご提案します。</Text>
+            <Stack g="10" bd-bs pbs="20">
+              <Heading level="3" fz="l">天候に合わせて、柔軟に</Heading>
+              <Text c="text-2">現地の状況を見ながら、安全を優先してルートを調整。予定を詰め込みすぎず、景色を味わう時間を大切にします。</Text>
+            </Stack>
+          </Stack>
+        </Columns>
+      </Stack>
+    </Wrapper>
+  </Group>
+</DemoLayout>

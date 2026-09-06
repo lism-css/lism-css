@@ -1,0 +1,53 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Cluster, Container, Heading, Inline, Stack, Text } from 'lism-css/astro';
+---
+
+<DemoLayout title="CTA006">
+  <Container as="section" isWrapper="s" isContainer hasGutter bgc="base-2" py="50">
+    <Stack g="30" bd-bs bdc="text" pbs="30">
+      <Stack g="20">
+        <Inline fz="s" c="text-2">週刊ニュースレター</Inline>
+        <Heading level="2" class="u--trim" fz="2xl" fw="light">考える時間をつくる、<br />週末の小さな便り。</Heading>
+        <Text max-sz="xs" c="text-2">暮らしと仕事のヒントを、毎週金曜日に1通だけお届けします。</Text>
+      </Stack>
+
+      <Stack as="form" g="15" data-newsletter-form>
+        <Inline as="label" for="newsletter-email" fz="s" fw="bold">メールアドレス</Inline>
+        <Cluster g="15">
+          <input
+            id="newsletter-email"
+            class="-fx:1 -min-w:100% -min-w_md -bgc:base -bd -bdrs:10 -px:20 -py:15"
+            style="--min-w_md:auto"
+            type="email"
+            name="email"
+            placeholder="hello@example.com"
+            autocomplete="email"
+            required
+          />
+          <button
+            class="set--plain -ta:center -w:100% -w_md -bgc:text -c:base -bdrs:10 -px:30 -py:15 -fw:bold"
+            style="--w_md:fit-content"
+            type="submit"
+          >
+            登録する
+          </button>
+        </Cluster>
+        <Text fz="xs" c="text-2">登録は無料です。不要になったらいつでも解除できます。</Text>
+        <Text data-newsletter-status role="status" aria-live="polite" fz="s" fw="bold" />
+      </Stack>
+    </Stack>
+  </Container>
+</DemoLayout>
+
+<script>
+  const form = document.querySelector('[data-newsletter-form]');
+  const status = form?.querySelector('[data-newsletter-status]');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+    if (status) status.textContent = 'デモのため、実際には登録されません。';
+  });
+</script>

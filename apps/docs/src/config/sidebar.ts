@@ -1,6 +1,6 @@
 import type { LangCode } from '@/config/site';
 import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, LayoutIcon, BrowsersIcon } from '@phosphor-icons/react';
-import { patterns, categoryIds, type PatternCategoryId, type PatternItem } from './patterns';
+import { getPatternCategories } from '@/lib/patterns';
 import { visibleTemplates, categories as templateCategories } from './templates';
 import { pageLayouts, categoryIds as pageLayoutCategoryIds, type PageLayoutCategoryId, type PageLayoutItem } from './page-layouts';
 
@@ -206,17 +206,15 @@ const uiSidebar: SidebarSection[] = [
 
 const isProd = import.meta.env.PROD;
 
-const patternsSidebar: SidebarSection[] = categoryIds.map((categoryId: PatternCategoryId) => {
-  const category = patterns[categoryId];
-  const items = isProd ? (category.items as PatternItem[]).filter((item) => !item.draft) : category.items;
-  return {
+export function getPatternsSidebar(lang: LangCode): SidebarSection[] {
+  return getPatternCategories(lang).map((category) => ({
     label: category.label,
-    items: items.map((item) => ({
+    items: category.items.map((item) => ({
       label: item.title,
-      link: `/patterns/${categoryId}/${item.id}`,
+      link: `/patterns/${item.categoryId}/${item.id}`,
     })),
-  };
-});
+  }));
+}
 
 // 集約カテゴリはカテゴリリンク、通常カテゴリは各テンプレートへのリンクにする
 const aggregateCategoryLinks: LinkItem[] = templateCategories
@@ -275,7 +273,7 @@ const sidebarConfig: SidebarConfig = {
   sections: {
     docs: docsSidebar,
     ui: uiSidebar,
-    patterns: patternsSidebar,
+    patterns: getPatternsSidebar('ja'),
     templates: templatesSidebar,
     'page-layouts': pageLayoutsSidebar,
   },

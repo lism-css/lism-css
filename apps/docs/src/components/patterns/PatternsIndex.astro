@@ -2,8 +2,7 @@
 import { Stack, Flex, Box, Text, Cluster, Link } from 'lism-css/astro';
 import SectionHeader from '@parts/SectionHeader.astro';
 import PageHeader from '@parts/PageHeader.astro';
-import { patterns, categoryIds, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
-import { filterDraftItems, getPatternThumbSrc } from '@/lib/patterns';
+import { getPatternCategories, getPatternThumbSrc } from '@/lib/patterns';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
 import PatternCard from './PatternCard.astro';
 
@@ -32,9 +31,8 @@ const copy = isJa
 
   <Stack g="40">
     {
-      categoryIds.map((categoryId: PatternCategoryId) => {
-        const category: PatternCategory = patterns[categoryId];
-        const items = filterDraftItems(category.items);
+      getPatternCategories(lang).map((category) => {
+        const { id: categoryId, items } = category;
         const categoryUrl = getLocalizedUrl(`/patterns/${categoryId}/`, lang);
         return (
           /* idは外部から /patterns/#{category} で参照されても飛べるように残す */
@@ -53,8 +51,8 @@ const copy = isJa
             <Flex hasSnap ov="auto" g="20" mbs="20" px="5" py="15" class="c--patternReel">
               {items.map((item) => (
                 <PatternCard
-                  href={getLocalizedUrl(`/patterns/${categoryId}/${item.id}/`, lang)}
-                  thumbSrc={getPatternThumbSrc(lang, categoryId, item.id)}
+                  href={getLocalizedUrl(`/patterns/${item.categoryId}/${item.id}/`, lang)}
+                  thumbSrc={getPatternThumbSrc(lang, item.categoryId, item.id)}
                   title={item.title}
                   draft={item.draft}
                   fxsh="0"

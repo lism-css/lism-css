@@ -1,0 +1,46 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Columns, Group, Heading, Inline, Stack, Text, Wrapper } from 'lism-css/astro';
+---
+
+<DemoLayout title="Logos001">
+  <Group as="section" className="c--partnerLogos" isContainer hasGutter bgc="base">
+    <Wrapper contentSize="l" py={['40', null, '50']}>
+      <Stack g="30">
+        <Stack g="15" ai="center" ta="center">
+          <Inline fz="s" c="text-2">導入企業</Inline>
+          <Heading level="2" className="u--trim" fz="2xl" hl="s">さまざまなチームの、日々の仕事に。</Heading>
+          <Text fz="m" hl="l" c="text-2" max-sz="s">スタートアップから地域のものづくり企業まで、チームの共同作業を支えています。</Text>
+        </Stack>
+        <Columns as="ul" cols={[2, 3, 6]} g="30">
+          <Stack as="li" g="10" py="25" bd-bs bdc="divider">
+            <Inline fz="xl" fw="bold" lts="s">NORTH</Inline>
+            <Inline fz="2xs" c="text-2" lts="xl">FOODS</Inline>
+          </Stack>
+          <Stack as="li" g="10" py="25" bd-bs bdc="divider">
+            <Inline fz="xl" ff="accent" fs="italic">mori.</Inline>
+            <Inline fz="2xs" c="text-2">暮らしの道具</Inline>
+          </Stack>
+          <Stack as="li" g="10" py="25" bd-bs bdc="divider">
+            <Inline fz="xl" ff="mono" fw="bold">&lt;FLUX/&gt;</Inline>
+            <Inline fz="2xs" c="text-2" lts="l">TECHNOLOGY</Inline>
+          </Stack>
+          <Stack as="li" g="10" py="25" bd-bs bdc="divider">
+            <Inline fz="xl" fw="light" lts="xl">AOI</Inline>
+            <Inline fz="2xs" c="text-2">URBAN DESIGN</Inline>
+          </Stack>
+          <Stack as="li" g="10" py="25" bd-bs bdc="divider">
+            <Inline fz="xl" ff="accent" fw="bold">Kite &amp; Co.</Inline>
+            <Inline fz="2xs" c="text-2">STRATEGY STUDIO</Inline>
+          </Stack>
+          <Stack as="li" g="10" py="25" bd-bs bdc="divider">
+            <Inline fz="xl" fw="bold">日日</Inline>
+            <Inline fz="2xs" c="text-2" lts="l">HINICHI MARKET</Inline>
+          </Stack>
+        </Columns>
+        <Text fz="2xs" c="text-2" ta="center">※掲載している企業名は、レイアウト確認用の架空企業です。</Text>
+      </Stack>
+    </Wrapper>
+  </Group>
+</DemoLayout>

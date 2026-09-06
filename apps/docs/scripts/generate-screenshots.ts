@@ -61,12 +61,12 @@ const filters = args.filter((a) => !a.startsWith('--'));
 /**
  * パターン設定からパス一覧を取得（draft除外）
  */
-async function getPatternPaths(): Promise<Array<{ category: string; id: string }>> {
-  const { patterns } = await import('../src/config/patterns.ts');
+async function getPatternPaths(lang: Lang): Promise<Array<{ category: string; id: string }>> {
+  const { patterns, isPatternAvailable } = await import('../src/config/patterns.ts');
   const paths: Array<{ category: string; id: string }> = [];
   for (const [categoryId, category] of Object.entries(patterns)) {
-    for (const item of category.items as Array<{ id: string; draft?: boolean }>) {
-      if (!item.draft) {
+    for (const item of category.items as Array<{ id: string; draft?: boolean; languages?: Lang[] }>) {
+      if (!item.draft && isPatternAvailable(item, lang)) {
         paths.push({ category: categoryId, id: item.id });
       }
     }
@@ -274,12 +274,11 @@ async function main() {
   }
 
   // パターンパスを取得・フィルタ
-  const allPaths = await getPatternPaths();
-  const patternPaths = filterPatternPaths(allPaths);
+  const pathsByLang = new Map(await Promise.all(targetLangs.map(async (lang) => [lang, filterPatternPaths(await getPatternPaths(lang))] as const)));
   if (filters.length > 0) {
     console.log(`   フィルタ: ${filters.join(', ')}`);
   }
-  console.log(`📋 対象パターン数: ${patternPaths.length}`);
+  console.log(`📋 対象パターン数: ${Array.from(pathsByLang.values()).reduce((count, paths) => count + paths.length, 0)}`);
   console.log('');
 
   // プレビューサーバーを起動
@@ -317,6 +316,7 @@ async function main() {
     // 各パターンのスクリーンショットを言語ごとに撮影
     console.log('📸 スクリーンショット撮影開始...');
     for (const lang of targetLangs) {
+      const patternPaths = pathsByLang.get(lang)!;
       if (targetLangs.length > 1) {
         console.log(`\n🌐 [${lang}]`);
       }

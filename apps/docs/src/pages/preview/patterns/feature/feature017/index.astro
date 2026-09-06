@@ -1,0 +1,48 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Columns, Container, Heading, Icon, Inline, Stack, Text } from 'lism-css/astro';
+---
+
+<DemoLayout title="Feature017">
+  <Container as="section" isWrapper="l" hasGutter bgc="white" py="50">
+    <Stack g="40">
+      <Stack g="30" max-sz="s">
+        <Inline fz="s" c="text-2">予約管理サービス</Inline>
+        <Heading level="2" class="u--trim" fz="2xl" fw="bold">予約も連絡も、<Inline d="inline-block">ひとつの画面で。</Inline></Heading>
+        <Text fz="m" c="text-2">
+          Reserve Noteは、小さなサロンや教室のための予約管理サービスです。受付から来店後の案内まで、毎日のやり取りをすっきりまとめます。
+        </Text>
+      </Stack>
+
+      <Columns cols={[1, null, 3]} g="30">
+        <Stack as="article" g="30" py="30" bd-bs>
+          <Icon icon="calendar" fz="l" c="brand" />
+          <Stack g="15">
+            <Heading level="3" fz="l">空き枠を自動で反映</Heading>
+            <Text fz="base">予約が入るたびに空き状況を更新。電話とWebの予定を同じカレンダーで確認できます。</Text>
+          </Stack>
+          <Text fz="s" c="text-2">24時間いつでも受付</Text>
+        </Stack>
+
+        <Stack as="article" g="30" py="30" bd-bs>
+          <Icon icon="clock" fz="l" c="brand" />
+          <Stack g="15">
+            <Heading level="3" fz="l">一日の予定がすぐ分かる</Heading>
+            <Text fz="base">担当者ごとの予約と準備時間を一覧表示。重なりや見落としを防ぎ、受付を迷わせません。</Text>
+          </Stack>
+          <Text fz="s" c="text-2">担当者別の表示に対応</Text>
+        </Stack>
+
+        <Stack as="article" g="30" py="30" bd-bs>
+          <Icon icon="chat" fz="l" c="brand" />
+          <Stack g="15">
+            <Heading level="3" fz="l">お客様への連絡も簡単</Heading>
+            <Text fz="base">予約前日の確認や来店後のお礼を自動送信。大切な案内を、ちょうどよい時に届けます。</Text>
+          </Stack>
+          <Text fz="s" c="text-2">送信内容は自由に編集</Text>
+        </Stack>
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>

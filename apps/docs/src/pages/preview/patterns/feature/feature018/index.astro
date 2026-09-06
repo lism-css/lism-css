@@ -1,0 +1,77 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Flex, Group, Heading, Inline, Stack, Text, WithSide, Wrapper } from 'lism-css/astro';
+
+const features = [
+  { title: '担当と状況を、ひと目で', text: '問い合わせごとに担当者と対応状況を共有。返信の重複や、対応の抜けを防ぎます。' },
+  { title: 'これまでの会話も、ひとつに', text: 'メールやフォームから届いた相談を、お客様ごとに整理。経緯を追ってから返信できます。' },
+  { title: '相談は、社内メモで', text: 'お客様には見えないメモで、チームに確認。担当が変わっても、判断の理由まで引き継げます。' },
+];
+---
+
+<DemoLayout title="Feature018">
+  <Group as="section" isContainer hasGutter bgc="base">
+    <Wrapper contentSize="l" py={['40', null, '50']}>
+      <WithSide sideW="xs" g="40 50" ai="center">
+        <Stack isSide g="30">
+          <Stack g="15">
+            <Text fz="s" c="brand" fw="bold">チームで使う共有受信箱</Text>
+            <Heading level="2" fz="2xl" class="u--trim">誰が応えても、<br />話がつながる。</Heading>
+            <Text c="text-2">問い合わせの受付から解決まで。お客様とのやりとりを、チームの知識に変えていきます。</Text>
+          </Stack>
+          <Stack as="ul" g="25">
+            {
+              features.map(({ title, text }) => (
+                <Stack as="li" g="10" bd-bs pbs="20">
+                  <Heading level="3" fz="l">
+                    {title}
+                  </Heading>
+                  <Text c="text-2">{text}</Text>
+                </Stack>
+              ))
+            }
+          </Stack>
+        </Stack>
+
+        <Stack as="figure" g="15">
+          <Stack bd bdrs="20" bgc="base" bxsh="10" ov="hidden">
+            <Flex ai="center" jc="between" g="20" p="20" bgc="base-2" bd-be>
+              <Text fw="bold">共有受信箱</Text>
+              <Inline fz="s" c="text-2">サポートチーム</Inline>
+            </Flex>
+            <Stack g="25" p={['20', null, '30']}>
+              <Stack g="15" bd-be pbe="25">
+                <Flex ai="center" jc="between" g="15">
+                  <Inline fz="s" c="text-2">お問い合わせ #1042</Inline>
+                  <Inline fz="s" c="brand" fw="bold" fxsh="0">対応中</Inline>
+                </Flex>
+                <Heading level="3" fz="l">配送日の変更について</Heading>
+                <Text fz="s" c="text-2">担当：カスタマーサポート</Text>
+              </Stack>
+              <Stack g="15">
+                <Flex ai="center" jc="between" g="15" fz="s">
+                  <Inline fw="bold">お客様からのメール</Inline>
+                  <Inline c="text-2" fxsh="0">10:24</Inline>
+                </Flex>
+                <Text>注文した商品の受け取りを、来週の土曜日に変更できますか？</Text>
+              </Stack>
+              <Stack g="10" p="20" bgc="base-2" bdrs="10">
+                <Flex ai="center" jc="between" g="15" fz="s">
+                  <Inline fw="bold">社内メモ</Inline>
+                  <Inline c="text-2" fxsh="0">10:32</Inline>
+                </Flex>
+                <Text>出荷前なので変更できます。倉庫チームへ確認済みです。</Text>
+                <Text fz="s" c="text-2">チームのメンバーだけに表示</Text>
+              </Stack>
+              <Flex ai="center" jc="between" g="15" fz="s" bd-bs pbs="20">
+                <Inline c="text-2" fxsh="0">対応履歴</Inline>
+                <Inline>担当者を設定しました · 10:28</Inline>
+              </Flex>
+            </Stack>
+          </Stack>
+          <Text as="figcaption" fz="s" c="text-2">共有受信箱の画面例。内容はサンプルです。</Text>
+        </Stack>
+      </WithSide>
+    </Wrapper>
+  </Group>
+</DemoLayout>
