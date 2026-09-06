@@ -10,12 +10,12 @@
       position: absolute;
       top: 0;
       width: 100%;
-      height: 110vh;
+      height: 115vh;
       object-fit: cover;
 
       @media not (min-width: 800px) {
         transform-origin: 25% bottom;
-        transform: scale(1.5);
+        transform: scale(1.4);
       }
 
       [data-theme='dark'] & {
@@ -25,23 +25,10 @@
   }
 
   .c--kvVideoBlur {
-    backdrop-filter: blur(60px);
+    backdrop-filter: blur(80px) brightness(0.99);
   }
-
-  .c--kvStripes {
-    mix-blend-mode: overlay;
-    background-image: linear-gradient(
-      90deg,
-      rgb(255 255 255 / 0.2) 0%,
-      rgb(255 255 255 / 0.4) 3%,
-      rgb(255 255 255 / 0.1) 6%,
-      rgb(0 0 0 / 0.25) 16%,
-      rgb(255 255 255 / 0.2) 100%
-    );
-    background-position: calc(50% + 40px) 0;
-    background-repeat: repeat;
-    background-size: 80px 100%;
-
+  .c--kvVideoBlur + .c--kvVideoBlur {
+    backdrop-filter: blur(20px) brightness(1.01);
     mask-image: linear-gradient(90deg, #000 50%, transparent 50%);
     mask-size: 160px 100%;
     mask-position: 50% 0;
@@ -54,9 +41,19 @@
     }
   }
 
-  .c--kvStripes:last-child {
-    backdrop-filter: blur(40px);
-    mask-image: linear-gradient(90deg, transparent 50%, #000 50%);
+  .c--kvStripes {
+    mix-blend-mode: overlay;
+    background-image: linear-gradient(
+      90deg,
+      rgb(255 255 255 / 0.2) 0%,
+      rgb(255 255 255 / 0.3) 3%,
+      rgb(255 255 255 / 0.1) 6%,
+      rgb(0 0 0 / 0.25) 16%,
+      rgb(255 255 255 / 0.2) 100%
+    );
+    background-position: calc(50% + 40px) 0;
+    background-repeat: repeat;
+    background-size: 80px 100%;
   }
 
   .c--topHeading {
@@ -91,7 +88,7 @@
   }
 
   .c--ai-bg {
-    opacity: 0.75;
+    opacity: 0.9;
     pointer-events: none;
     [data-theme='dark'] & {
       opacity: 0.15;
