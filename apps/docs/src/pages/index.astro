@@ -141,12 +141,13 @@ const presets = [
   {/* inert: Firefoxではvideo要素がフォーカス可能なため、装飾用背景をタブ順から除外 */}
   <Box class="c--kvVideoBg" pos="fixed" i-x="0" t="0" z="-1" h="100vh" ov="hidden" bgc="base" inert aria-hidden="true">
     <Frame h="100%" ar="16/9">
-      <video autoplay loop muted playsinline>
+      <video autoplay loop muted playsinline poster="/video/video-kv-poster.webp">
         <source src="/video/video-kv.mp4" type="video/mp4" />
       </video>
     </Frame>
-    <Box pos="absolute" i="0" style={{ backdropFilter: 'blur(80px)' }} />
-    <Box class="c--kvStripes" pos="absolute" i="0" style={{ mixBlendMode: 'overlay' }} />
+    <Box class="c--kvVideoBlur" pos="absolute" i="0" />
+    <Box class="c--kvStripes" pos="absolute" i="0" />
+    <Box class="c--kvStripes" pos="absolute" i="0" />
   </Box>
   <Lism as="section" isWrapper="l" px="20">
     {
