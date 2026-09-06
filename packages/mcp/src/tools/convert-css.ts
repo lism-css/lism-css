@@ -160,7 +160,8 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
   const flexDirection = propMap.get('flex-direction');
   const placeItems = propMap.get('place-items');
 
-  if (display === 'flex' && (flexDirection === 'column' || flexDirection === 'column-reverse')) {
+  // column-reverse は Stack にせず、Flex + fxd で方向を保つ。
+  if (display === 'flex' && flexDirection === 'column') {
     return {
       name: 'Stack',
       reason: 'display: flex + flex-direction: column → Stack (vertical flex)',
@@ -204,24 +205,29 @@ function findCategory(mappings: PropMapping[], propName: string): string {
   return found?.sectionName ?? 'unknown';
 }
 
+/** `property: value` を比較用に正規化する。 */
+function normalizeDeclaration(css: string): string {
+  const [prop, ...rest] = css.split(':');
+  return `${prop.trim().toLowerCase()}: ${rest.join(':').trim().toLowerCase()}`;
+}
+
 /** 変換結果からJSX使用例を組み立てる。 */
 function buildExample(conversions: ConversionEntry[], component: ComponentSuggestion | null): string {
   const tagName = component?.name ?? 'Lism';
-  const implicitCssSet = new Set(component?.implicitCss.map((c) => c.split(':')[0].trim()) ?? []);
+  // プロパティ名だけで照合すると値違い（例: flex-direction: column-reverse）まで落ちるため、値込みで照合する。
+  const implicitCssSet = new Set(component?.implicitCss.map(normalizeDeclaration) ?? []);
 
   const props: string[] = [];
   const styles: string[] = [];
 
   for (const conv of conversions) {
-    const cssProp = conv.css.split(':')[0].trim();
-
     if (!conv.lismProp) {
       styles.push(conv.css);
       continue;
     }
 
     // コンポーネントが暗黙に持つCSSは重複出力しない。
-    if (implicitCssSet.has(cssProp)) continue;
+    if (implicitCssSet.has(normalizeDeclaration(conv.css))) continue;
 
     if (conv.suggestedValue != null) {
       props.push(`${conv.lismProp}='${conv.suggestedValue}'`);

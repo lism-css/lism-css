@@ -9,7 +9,7 @@ AIツール（Claude Code, Cursor 等）が、インストールされている�
 
 | ツール | 説明 |
 |--------|------|
-| `get_overview` | フレームワークの全体像（アーキテクチャ、設計思想、パッケージ構成、ブレークポイント、CSS Layers、実装ルール） |
+| `get_overview` | フレームワークの全体像（基本ルール、何を書く前にどの資料を引くか、目的別のPrimitive/コンポーネント選定、クラス一覧、CSS Layers、ブレークポイント） |
 | `get_tokens` | デザイントークン（色、余白、フォントサイズ、影、角丸など）のリファレンス全文を取得 |
 | `get_props_system` | Propsシステム対応表 — React/Astro のpropsがCSSクラス・スタイルにどう変換されるか。CSSプロパティ名での逆引き（例: `padding` → `p`）や Property Class 記法（`-g:5` 等）にも対応 |
 | `get_component` | コンポーネント詳細（props、使用例、サブコンポーネント構成）。パッケージ（`lism-css` / `@lism-css/ui`）での絞り込みも可能 |

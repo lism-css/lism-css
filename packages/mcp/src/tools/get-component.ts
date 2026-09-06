@@ -11,7 +11,7 @@ function normalizeComponentKey(input: string): string {
     .trim()
     .toLowerCase()
     .replace(/^<|>$/g, '')
-    .replace(/^(l--|is--|a--|c--)/, '');
+    .replace(/^(l--|is--|has--|a--|c--)/, '');
 }
 
 /** 入力が `<ComponentName>` 形式（React コンポーネントとしての問い合わせ）か判定する */
@@ -22,7 +22,7 @@ function isAngleBracketNotation(input: string): boolean {
 /** primitives/*.md の先頭行 `# l--flex / \`<Flex>\`` からクラス名とコンポーネント名を抽出する */
 function parsePrimitiveHeading(md: string): { className: string; componentName?: string } | null {
   const firstLine = md.split('\n', 1)[0] ?? '';
-  const match = firstLine.match(/^#\s+((?:l|is|a|c)--[A-Za-z0-9]+)(?:\s*\/\s*`<([A-Za-z0-9]+)>`)?/);
+  const match = firstLine.match(/^#\s+((?:l|is|has|a|c)--[A-Za-z0-9]+)(?:\s*\/\s*`<([A-Za-z0-9]+)>`)?/);
   if (!match) return null;
   return { className: match[1], componentName: match[2] };
 }
@@ -72,7 +72,7 @@ export function registerGetComponent(server: McpServer): void {
         'Accepts multiple notations: "Flex", "<Flex>", "l--flex", "flex" all resolve to the same entry.\n' +
         'Do NOT use this for broad topic guides (use get_guide with "components-core" or "components-ui") or keyword search across all docs (use search_docs).\n' +
         'If the component is not found, suggestions will be provided — follow up with search_docs for a broader query.\n' +
-        'The response is pre-formatted Markdown. Output it verbatim. Do NOT summarize or omit code examples.',
+        'The response is Markdown reference material. Use it as context; when you write code, follow the code examples and class names exactly as documented rather than inventing variants.',
       inputSchema: {
         name: z.string().describe('Component name to look up (e.g. "Box", "Flex", "Accordion", "l--flex", "<Flex>").'),
         package: z

@@ -9,7 +9,7 @@ Enables AI tools (Claude Code, Cursor, etc.) to accurately reference Lism CSS do
 
 | Tool | Description |
 |------|-------------|
-| `get_overview` | Framework overview (architecture, design philosophy, packages, breakpoints, CSS layers, implementation rules) |
+| `get_overview` | Framework overview (core rules, which reference to look up before writing what, primitive/component selection by goal, class inventory, CSS layers, breakpoints) |
 | `get_tokens` | Get the full design token reference (colors, spacing, font sizes, shadows, radii, etc.) |
 | `get_props_system` | Props system reference — how React/Astro props map to CSS classes and styles. Supports reverse lookup by CSS property name (e.g. `padding` → `p`) and Property Class notation (e.g. `-g:5`) |
 | `get_component` | Component details (props, usage examples, sub-component structure). Optionally filter by package (`lism-css` or `@lism-css/ui`) |

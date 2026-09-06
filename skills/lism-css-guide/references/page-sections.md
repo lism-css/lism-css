@@ -1,6 +1,6 @@
 # ページ定番セクションの構成例
 
-ヒーロー・サイトヘッダー・フッターなど、ページの定番セクションを`Group`/`Wrapper`/`Stack`＋Propsで組む時の出発点です。ここにある構成をベースにし、実際の値は値・トークン照合（C5）を通してから確定します。
+ヒーロー・サイトヘッダー・フッターなど、ページの定番セクションを`Group`/`Wrapper`/`Stack`＋Propsで組む時の出発点です。ここにある構成をベースにし、実際の値は`tokens.md`のトークンと照合してから確定します。
 
 共通の考え方:
 
@@ -94,6 +94,6 @@ import { Group, Wrapper, Stack, Heading, Columns } from 'lism-css/astro';
 
 ## 使う前の確認
 
-- 使うPrimitive/Traitの詳細ファイル（`primitives/l--*.md`・`trait-class/*.md`）を、`SKILL.md`の資料確認トリガーに従って読む。
+- 使うPrimitive/Traitの詳細ファイル（`primitives/*.md`・`trait-class/*.md`）で、既定のスタイル・Props・CSS変数を確認する。
 - レスポンシブ値（配列・オブジェクト指定）を使う場合は、祖先の`isContainer`または`@media`運用の確認が必要（[`responsive.md`](../responsive.md)）。
-- ここに書いた値はすべて例。実際のデザイン値は`tokens.md`との照合（C5）とトークン差分表を通す。
+- ここに書いた値はすべて例。実際のデザイン値を`tokens.md`と照合し、使うトークンを決める。

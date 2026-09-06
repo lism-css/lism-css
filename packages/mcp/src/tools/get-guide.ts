@@ -6,7 +6,6 @@ import { markdownResponse, loadFailureError, READ_ONLY_ANNOTATIONS } from '../li
 // files に複数指定したトピックは結合して返す。
 // MCP クライアントは Markdown 内の相対リンクを辿れないため、分冊ファイルは本体に結合する。
 const GUIDE_TOPICS = {
-  overview: { files: ['SKILL.md'], label: 'Framework overview, packages, implementation rules' },
   tokens: { files: ['tokens.md'], label: 'Design tokens (spacing, colors, font sizes, etc.)' },
   'property-class': {
     files: ['property-class.md', 'property-class/all-props.md', 'property-class/bd.md', 'property-class/hov.md', 'property-class/max-sz.md'],
@@ -50,6 +49,10 @@ const GUIDE_TOPICS = {
     label:
       'AI code-generation antipatterns (structure / layout / responsive): layout choice errors, responsive omissions, is-- misuse, naming mistakes',
   },
+  'page-sections': {
+    files: ['references/page-sections.md'],
+    label: 'Standard page section patterns (hero, site header, footer, etc.) built from Group + Wrapper / Stack / Cluster',
+  },
 } as const;
 
 type GuideTopic = keyof typeof GUIDE_TOPICS;
@@ -67,8 +70,8 @@ export function registerGetGuide(server: McpServer): void {
     {
       description:
         'Get a detailed guide on a specific lism-css topic. Use this when you need comprehensive documentation on a broad topic rather than a specific component or prop.\n' +
-        'For individual component lookup, get_component is more direct. For individual prop lookup, use get_props_system.\n' +
-        'The response is the full guide as pre-formatted Markdown. Output it verbatim. Do NOT summarize or omit sections.\n' +
+        'For the framework overview, use get_overview. For individual component lookup, get_component is more direct. For individual prop lookup, use get_props_system.\n' +
+        'The response is the full guide as Markdown reference material. Use it as context; apply its rules and examples exactly as documented rather than paraphrasing them from memory.\n' +
         `\nAvailable topics:\n${TOPIC_DESCRIPTION}`,
       inputSchema: {
         topic: z.enum(Object.keys(GUIDE_TOPICS) as [GuideTopic, ...GuideTopic[]]).describe('The guide topic to retrieve.'),
