@@ -1,9 +1,9 @@
 ---
-import { Stack, Cluster, Link } from 'lism-css/astro';
+import { Stack, Cluster, Heading, Inline, Link } from 'lism-css/astro';
 import PageHeader from '@parts/PageHeader.astro';
-import { getPatternCategory, getPatternThumbSrc, type PatternCategoryView } from '@/lib/patterns';
-import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import PatternCard from './PatternCard.astro';
+import PreviewFrame from '@/components/Preview/PreviewFrame.astro';
+import { getPatternCategory, type PatternCategoryView } from '@/lib/patterns';
+import { getLocalizedUrl, isRootLang, type LangCode } from '@/lib/i18n';
 
 interface Props {
   lang: LangCode;
@@ -14,7 +14,7 @@ const { lang, categoryId } = Astro.props as Props;
 const category = getPatternCategory(categoryId, lang)!;
 const items = category.items;
 
-const copy = lang === 'ja' ? { back: 'Patterns 一覧へ' } : { back: 'Back to Patterns' };
+const copy = lang === 'ja' ? { back: 'Patterns 一覧へ', details: '詳細を見る' } : { back: 'Back to Patterns', details: 'View details' };
 ---
 
 <Stack g="40">
@@ -36,17 +36,32 @@ const copy = lang === 'ja' ? { back: 'Patterns 一覧へ' } : { back: 'Back to P
     }
   </PageHeader>
 
-  <Stack g="25">
+  <Stack g="50">
     {
-      items.map((item) => (
-        <PatternCard
-          href={getLocalizedUrl(`/patterns/${item.categoryId}/${item.id}/`, lang)}
-          thumbSrc={getPatternThumbSrc(lang, item.categoryId, item.id)}
-          title={item.title}
-          draft={item.draft}
-          thumbRatio="auto"
-          thumbFit="contain"
-        />
+      items.map((item, index) => (
+        <Stack as="section" g="20">
+          <PreviewFrame
+            url={`/preview/patterns/${item.categoryId}/${item.id}/${isRootLang(lang) ? '' : `${lang}/`}`}
+            title={item.title}
+            hasSizeSwitch
+            hasExternalLink={false}
+            loading={index === 0 ? 'eager' : 'lazy'}
+          >
+            <Cluster slot="toolbar-start" g="15">
+              <Heading level="2" fz="xl">
+                {item.title}
+              </Heading>
+              {item.draft && (
+                <Inline px="10" fz="2xs" ff="mono" bgc="text-2" c="base" bdrs="99">
+                  draft
+                </Inline>
+              )}
+            </Cluster>
+            <Link slot="toolbar-end" href={getLocalizedUrl(`/patterns/${item.categoryId}/${item.id}/`, lang)} fz="s" w="fit">
+              {copy.details} →
+            </Link>
+          </PreviewFrame>
+        </Stack>
       ))
     }
   </Stack>
