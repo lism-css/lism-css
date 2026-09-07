@@ -16,7 +16,7 @@ const { href, thumbSrc, title, draft = false, thumbRatio = '3/2', thumbFit = 'co
 ---
 
 <BoxLink class={draft ? 'c--patternCard _draft' : 'c--patternCard'} layout="stack" href={href} g="15" set="hov" {...props}>
-  <Frame ar={thumbRatio} bd bdrs="10">
+  <Frame ar={thumbRatio} bgc="divider" bg=":stripe" bd bdrs="10">
     <Lism
       as="img"
       src={thumbSrc}
@@ -24,8 +24,11 @@ const { href, thumbSrc, title, draft = false, thumbRatio = '3/2', thumbFit = 'co
       loading="lazy"
       decoding="async"
       class="c--patternCard_thumb"
-      h={thumbRatio === 'auto' ? 'auto' : undefined}
-      style={{ objectFit: thumbFit }}
+      w="calc(100% + 2px)"
+      max-sz="none"
+      h={thumbRatio === 'auto' ? 'auto' : 'calc(100% + 2px)'}
+      m="-1px"
+      style={{ objectFit: thumbFit, objectPosition: thumbFit === 'contain' ? 'center' : 'top' }}
       data-fit={thumbFit}
     />
   </Frame>
@@ -43,12 +46,16 @@ const { href, thumbSrc, title, draft = false, thumbRatio = '3/2', thumbFit = 'co
     }
 
     .c--patternCard_thumb {
-      object-position: top;
       transition: transform 0.3s ease;
     }
 
     .c--patternCard:hover .c--patternCard_thumb[data-fit='cover'] {
       transform: scale(1.02);
+    }
+
+    .-bg\:stripe {
+      background-image: repeating-linear-gradient(50deg, color-mix(in srgb, var(--text), transparent 95%) 0 1px, transparent 1px 6px) !important;
+      background-position: center !important;
     }
   }
 </style>
