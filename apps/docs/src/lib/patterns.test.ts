@@ -38,7 +38,7 @@ describe('言語ごとのパターン公開', () => {
       'footer',
     ]);
     expect(Object.keys(patterns)).toEqual(categoryIds);
-    expect(Object.values(patterns).flatMap(({ items }) => items)).toHaveLength(59);
+    expect(Object.values(patterns).flatMap(({ items }) => items)).toHaveLength(61);
     for (const category of categoryIds) {
       const { items } = patterns[category];
       expect(items.map(({ id }) => id)).toEqual(items.map((_, index) => `${category}${String(index + 1).padStart(2, '0')}`));

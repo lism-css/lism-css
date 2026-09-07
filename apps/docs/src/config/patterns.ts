@@ -42,8 +42,24 @@ const patterns = {
         id: 'hero01',
         title: 'Hero01',
         description: {
-          ja: '画面の高さいっぱいの背景画像に、ヘッダー・中央コンテンツ・スクロール導線を重ねたヒーローです。',
-          en: 'A full-height hero with a header, centered content and a scroll cue layered over a background image.',
+          ja: '画面の高さいっぱいの背景画像に、ヘッダー・中央コンテンツを重ねたヒーローです。',
+          en: 'A full-height hero with a header and centered content layered over a background image.',
+        },
+      },
+      {
+        id: 'hero02',
+        title: 'Hero02',
+        description: {
+          ja: '画面いっぱいの背景画像に、ヘッダー・大きな見出し・右下のスクロール表示を重ねたヒーローです。',
+          en: 'A full-height hero with a header, a large heading and a scroll cue at the bottom right.',
+        },
+      },
+      {
+        id: 'hero03',
+        title: 'Hero03',
+        description: {
+          ja: '余白で囲んだ角丸の背景画像に、ヘッダー・左下の大きな見出し・右下のスクロール表示を重ねたヒーローです。',
+          en: 'A rounded, inset hero with a header, a large heading at the bottom left and a scroll cue at the bottom right.',
         },
       },
     ],

@@ -1,0 +1,98 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Stack, Box, Divider, Frame, Flex, Grid, Media, Layer, Icon, Heading, Text, Inline, Link } from 'lism-css/astro';
+---
+
+<DemoLayout title="Hero03">
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&display=swap" rel="stylesheet" />
+  </Fragment>
+  <Stack
+    as="section"
+    class="c--hero03"
+    isContainer
+    pos="relative"
+    min-h="calc(100svh - var(--gutter))"
+    m="calc(var(--gutter) / 2)"
+    p="calc(var(--gutter))"
+    bdrs="30"
+    bgc="black"
+    c="white"
+    style={{ '--gutter': 'max(var(--s30), 2.25vw)', '--ff--accent': "'Lora', Georgia, serif" }}
+  >
+    <Frame isLayer bdrs="inherit">
+      <Media src="https://cdn.lism-css.com/img/portrait/a_sfCFPyi5J0.jpg" alt="" width="960" height="640" style={{ scale: '-1 1' }} />
+      <Layer bgc="black:25%" />
+    </Frame>
+    <Flex as="header" ai="center" g="30" z="2">
+      <Inline fz="l" fw="normal" lts="xl">LISM</Inline>
+      <Flex as="nav" ai="center" g="25" fz="s" d={['none', null, 'flex']}>
+        <Link href="#" set="plain" hov="-o">About</Link>
+        <Link href="#" set="plain" hov="-o">Works</Link>
+      </Flex>
+      <Link href="#" set="plain" ms="auto" fz="s" bgc="white" c="black" py="5" px="25" bdrs="99" hov="-bgc" d={['none', null, 'block']}>Contact</Link>
+      <Flex ai="center" ms="auto" d={['flex', null, 'none']}>
+        <Icon icon="menu" fz="2xl" label="Open the menu" />
+      </Flex>
+    </Flex>
+    <Grid gtc="1fr auto" fxg="1" ai="end" g="20" pt="50" z="1">
+      <Stack fz="2xl" g="30">
+        <Heading level="1" class="u--trim" ff="accent" fz="clamp(var(--fz--2xl), 8vw, var(--fz--5xl))" fw="600" lh="1.15">Lorem Ipus</Heading>
+        <Divider w="2em" />
+        <Text class="u--trim" max-sz="min(var(--sz--xs), 75%)" fz="clamp(12px, 3.2vw, 1.1rem)" py="5" lh="m" lts="l" fw="light">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+      </Stack>
+      <Box px="calc(var(--gutter) / 2)" pos="absolute" b="0" r="0">
+        <Flex as="a" href="#" set="plain" wm="vertical-rl" ai="center" g="15" fz={['10px', '11px']} lh="1" lts="xl" tt="upper">
+          <Inline>Scroll</Inline>
+          <Divider h={['4em', '5em']} fxsh="0" bdc="current" o="ppp" />
+        </Flex>
+      </Box>
+    </Grid>
+  </Stack>
+</DemoLayout>
+
+<style>
+  @layer lism-custom {
+    .c--hero03_scroll::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: calc(50% - 0.5px);
+      width: 1px;
+      height: 5em;
+      background: currentColor;
+      opacity: var(--o--ppp);
+      animation: hero03-scroll-line 2.5s cubic-bezier(1, 0, 0, 1) infinite;
+    }
+
+    @keyframes hero03-scroll-line {
+      0% {
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+      35% {
+        transform: scaleY(1);
+        transform-origin: top;
+      }
+      35.1% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+      }
+      70%,
+      100% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .c--hero03_scroll::after {
+        animation: none;
+      }
+    }
+  }
+</style>
