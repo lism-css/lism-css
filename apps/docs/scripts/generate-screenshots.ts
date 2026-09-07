@@ -24,6 +24,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { PNG } from 'pngjs';
+import { capturePatternScreenshot } from './capture-pattern-screenshot';
 
 // 現在のディレクトリを取得
 const __filename = fileURLToPath(import.meta.url);
@@ -208,9 +209,7 @@ async function captureTo(page: Page, url: string, outputPath: string): Promise<{
     if (!existsSync(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(CONFIG.waitAfterLoad);
-    await page.screenshot({ path: outputPath, type: 'png' });
+    await capturePatternScreenshot(page, url, outputPath, CONFIG.waitAfterLoad);
     return { ok: true };
   } catch (error) {
     return { ok: false, error: error instanceof Error ? error.message : String(error) };

@@ -1,5 +1,5 @@
 ---
-import { Stack, AutoColumns, Cluster, Link } from 'lism-css/astro';
+import { Stack, Cluster, Link } from 'lism-css/astro';
 import PageHeader from '@parts/PageHeader.astro';
 import { getPatternCategory, getPatternThumbSrc, type PatternCategoryView } from '@/lib/patterns';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
@@ -36,7 +36,7 @@ const copy = lang === 'ja' ? { back: 'Patterns 一覧へ' } : { back: 'Back to P
     }
   </PageHeader>
 
-  <AutoColumns cols="24rem" g="25">
+  <Stack g="25">
     {
       items.map((item) => (
         <PatternCard
@@ -44,8 +44,10 @@ const copy = lang === 'ja' ? { back: 'Patterns 一覧へ' } : { back: 'Back to P
           thumbSrc={getPatternThumbSrc(lang, item.categoryId, item.id)}
           title={item.title}
           draft={item.draft}
+          thumbRatio="auto"
+          thumbFit="contain"
         />
       ))
     }
-  </AutoColumns>
+  </Stack>
 </Stack>

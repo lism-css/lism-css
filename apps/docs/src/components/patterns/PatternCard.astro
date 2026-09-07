@@ -7,15 +7,27 @@ interface Props {
   thumbSrc: string;
   title: string;
   draft?: boolean;
+  thumbRatio?: '3/2' | 'auto';
+  thumbFit?: 'cover' | 'contain';
   [key: string]: unknown;
 }
 
-const { href, thumbSrc, title, draft = false, ...props } = Astro.props as Props;
+const { href, thumbSrc, title, draft = false, thumbRatio = '3/2', thumbFit = 'cover', ...props } = Astro.props as Props;
 ---
 
 <BoxLink class={draft ? 'c--patternCard _draft' : 'c--patternCard'} layout="stack" href={href} g="15" set="hov" {...props}>
-  <Frame ar="3/2" bd bdrs="10" ov="hidden">
-    <img src={thumbSrc} alt={title} loading="lazy" decoding="async" class="c--patternCard_thumb" />
+  <Frame ar={thumbRatio} bd bdrs="10">
+    <Lism
+      as="img"
+      src={thumbSrc}
+      alt={title}
+      loading="lazy"
+      decoding="async"
+      class="c--patternCard_thumb"
+      h={thumbRatio === 'auto' ? 'auto' : undefined}
+      style={{ objectFit: thumbFit }}
+      data-fit={thumbFit}
+    />
   </Frame>
   <Lism class="u--trim -ff:mono -fz:2xs -c:text-2 -px:5" pb="10">
     {title}
@@ -23,21 +35,20 @@ const { href, thumbSrc, title, draft = false, ...props } = Astro.props as Props;
 </BoxLink>
 
 <style>
-  .c--patternCard > .l--frame {
-    /* --bdw: 2px; */
-    transition: box-shadow 0.2s;
-    box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--0));
-  }
+  @layer lism-custom {
+    .c--patternCard > .l--frame {
+      /* --bdw: 2px; */
+      transition: box-shadow 0.2s;
+      box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--0));
+    }
 
-  .c--patternCard_thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    transition: transform 0.3s ease;
-  }
+    .c--patternCard_thumb {
+      object-position: top;
+      transition: transform 0.3s ease;
+    }
 
-  .c--patternCard:hover .c--patternCard_thumb {
-    transform: scale(1.02);
+    .c--patternCard:hover .c--patternCard_thumb[data-fit='cover'] {
+      transform: scale(1.02);
+    }
   }
 </style>

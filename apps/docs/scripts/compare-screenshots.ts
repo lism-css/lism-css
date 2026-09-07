@@ -20,6 +20,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, type ChildProcess } from 'node:child_process';
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
+import { capturePatternScreenshot } from './capture-pattern-screenshot';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -189,9 +190,7 @@ async function captureScreenshot(page: Page, outputDir: string, category: string
       lang === 'ja'
         ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
         : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(CONFIG.waitAfterLoad);
-    await page.screenshot({ path: outputPath, type: 'png' });
+    await capturePatternScreenshot(page, url, outputPath, CONFIG.waitAfterLoad);
     return outputPath;
   } catch {
     return null;
@@ -207,6 +206,9 @@ function compareImages(baselinePath: string, newPath: string, diffPath: string):
 
   // サイズが異なる場合は100%差分とする
   if (baselinePng.width !== newPng.width || baselinePng.height !== newPng.height) {
+    // updateはdiff内のPNGを走査するため、寸法差分でも更新対象を残す。
+    mkdirSync(dirname(diffPath), { recursive: true });
+    writeFileSync(diffPath, readFileSync(newPath));
     return { diffPercent: 100 };
   }
 
