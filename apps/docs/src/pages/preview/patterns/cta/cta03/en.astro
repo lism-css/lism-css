@@ -1,23 +1,53 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Heading, Inline, Stack, Text, WithSide } from 'lism-css/astro';
-import { Button } from '@lism-css/ui/astro/Button';
+import { Cluster, Container, Heading, Inline, Stack, Text } from 'lism-css/astro';
 ---
 
-<DemoLayout title="03 - A horizontal sign-up CTA">
-  <Container as="section" isWrapper="l" hasGutter bgc="orange:10%" py="40">
-    <WithSide g="30 50" ai="center" sideW="xs" mainW="xs">
+<DemoLayout title="03 - Newsletter sign-up">
+  <Container as="section" isWrapper="s" isContainer hasGutter bgc="base-2" py="50">
+    <Stack g="30" bd-bs bdc="text" pbs="30">
       <Stack g="20">
-        <Inline fz="s" c="text-2">Free trial</Inline>
-        <Heading level="2" class="u--trim" fz="2xl" fw="bold"
-          ><Inline d="inline-block">There’s no better time </Inline><Inline d="inline-block">to get started.</Inline></Heading
-        >
-        <Text max-sz="xs">Try every feature free for 14 days.</Text>
-        <Text fz="s">No credit card required. Cancel anytime.</Text>
+        <Inline fz="s" c="text-2">Weekly newsletter</Inline>
+        <Heading level="2" class="u--trim" fz="2xl" fw="light">A little weekend reading.<br />A little time to reflect.</Heading>
+        <Text max-sz="xs" c="text-2">Ideas for life and work, delivered in one email every Friday.</Text>
       </Stack>
 
-      <Button isSide href="#" bgc="text" c="base" jc="center" px="40" py="20" bdrs="99" fw="bold">Start your free trial</Button>
-    </WithSide>
+      <Stack as="form" g="15" data-newsletter-form>
+        <Inline as="label" for="newsletter-email" fz="s" fw="bold">Email address</Inline>
+        <Cluster g="15">
+          <input
+            id="newsletter-email"
+            class="-fx:1 -min-w:100% -min-w_md -bgc:base -bd -bdrs:10 -px:20 -py:15"
+            style="--min-w_md:auto"
+            type="email"
+            name="email"
+            placeholder="hello@example.com"
+            autocomplete="email"
+            required
+          />
+          <button
+            class="set--plain -ta:center -w:100% -w_md -bgc:text -c:base -bdrs:10 -px:30 -py:15 -fw:bold"
+            style="--w_md:fit-content"
+            type="submit"
+          >
+            Subscribe
+          </button>
+        </Cluster>
+        <Text fz="xs" c="text-2">It’s free to subscribe. Unsubscribe anytime.</Text>
+        <Text data-newsletter-status role="status" aria-live="polite" fz="s" fw="bold" />
+      </Stack>
+    </Stack>
   </Container>
 </DemoLayout>
+
+<script>
+  const form = document.querySelector('[data-newsletter-form]');
+  const status = form?.querySelector('[data-newsletter-status]');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+    if (status) status.textContent = 'This is a demo. No subscription has been created.';
+  });
+</script>

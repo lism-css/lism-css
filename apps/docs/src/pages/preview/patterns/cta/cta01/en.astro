@@ -1,57 +1,43 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, TileGrid, Media, Layer, Icon, Text, Heading } from 'lism-css/astro';
+import { Stack, Grid, Container, Frame, Columns, Media, Layer, Icon, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 ---
 
 <DemoLayout title="CTA01">
   <Stack pos="relative">
     <Frame isLayer>
-      <Media isLayer src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+      <Media isLayer src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
       <Layer style={{ backdropFilter: 'blur(4px)' }} bgc="black:50%" />
     </Frame>
-    <Container isWrapper="s" hasGutter py="50" z="1">
-      <Stack ai="center" g="40">
-        <Stack ai="center" g="30">
-          <Heading level="2" class="u--trim" fz="4xl" fw="bold" ff="mono" lts="l" c="white" ta="center">Contact</Heading>
-          <Text class="u--trim" fz="m" c="white" ta="center">Feel free to reach out to us<br />Our team will respond promptly</Text>
-        </Stack>
-        <TileGrid cols={['1', null, '2']} ai="center" g="30 40" w="stretch">
-          <Button
-            href="#"
-            g="15"
-            variant="outline"
-            w="stretch"
-            jc="center"
-            c="white"
-            bdrs="10"
-            py="20"
-            fw="bold"
-            hasTransition
-            hov={{ bgc: 'base', c: 'text' }}
-          >
-            <Icon icon="chat" fz="2em" />
+    <Container isWrapper="s" px="35" py="60" z="1">
+      <Grid ai="center" g="40">
+        <Heading level="2" class="u--trim" fz="4xl" fw="bold" lts="l" c="white" ta="center">Contact</Heading>
+        <Text class="u--trim" fz="m" hl="l" c="white" ta="center">Feel free to reach out to us<br />Our team will respond promptly</Text>
+        <Columns cols={[1, null, 2]} g="25">
+          <Button href="#" g="15" variant="outline" jc="center" c="white" bdrs="10" py="15" fw="500" hasTransition hov={{ bgc: 'text', bdc: 'text' }}>
+            <Icon icon="chat" fz="1.4em" />
             <span>Chat with us</span>
           </Button>
           <Button
             href="#"
             g="15"
-            w="stretch"
             jc="center"
             bgc="base"
             c="text"
+            bdc="transparent"
             bdrs="10"
-            py="20"
-            fw="bold"
+            py="15"
+            fw="500"
             hasTransition
-            hov={{ bgc: 'accent', c: 'white' }}
+            hov={{ bgc: 'text', c: 'base' }}
           >
-            <Icon icon="user" fz="2em" />
-            <span>Contact via email</span>
+            <Icon icon="user" fz="1.4em" />
+            <span>Contact us</span>
           </Button>
-        </TileGrid>
-      </Stack>
+        </Columns>
+      </Grid>
     </Container>
   </Stack>
 </DemoLayout>

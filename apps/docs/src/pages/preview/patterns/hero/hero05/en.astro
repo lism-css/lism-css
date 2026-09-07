@@ -1,0 +1,34 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Stack, Flex, Cluster, Frame, Media, Heading, Text, Link } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+---
+
+<DemoLayout title="Hero05">
+  <Stack isContainer hasGutter bgc="base" c="text" pt="30" g="40">
+    <Flex as="header" max-sz="s" w="100%" mx="auto" ai="center" fxw="wrap" g="20" p="10" ps="25" bgc="text" c="base" bdrs="99">
+      <Link href="#" set="plain" ff="accent" fz="xl" fw="bold">Lism</Link>
+      <Cluster as="nav" aria-label="Main navigation" g="20" jc="center" mx="auto" fz="s" order={[2, null, 0]} w={['100%', null, 'auto']} py="5">
+        <Link href="#" set="plain">Home</Link>
+        <Link href="#" set="plain">About us</Link>
+        <Link href="#" set="plain">Pricing</Link>
+      </Cluster>
+      <Button href="#" bgc="base" c="text" bdrs="99" fz="s" ms="auto" px="20">Try for free</Button>
+    </Flex>
+    <Stack as="section" max-sz="xl" w="100%" mx="auto">
+      <Frame ar={['16/9', null, '21/9']} bdrs="40">
+        <Media src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Flex fxd={['column', null, null, 'row']} ai={['start', null, null, 'end']} jc="between" g="40" py="50" px={['0', null, '40']}>
+        <Stack g="30" fxg="1">
+          <Heading level="1" fz={['3xl', null, '4xl']} fw="bold" lh="xs" lts="s">Take Control of Your<br />Financial Future Today</Heading>
+          <Text c="text-2" lh="m">Simplify budgeting, track expenses, and grow your wealth with intelligent insights.</Text>
+        </Stack>
+        <Cluster g="20" fxsh="0">
+          <Button href="#" bdrs="99" px="30">Get Started</Button>
+          <Button href="#" variant="outline" bdc="divider" bdrs="99" px="30">Get a Free Quote</Button>
+        </Cluster>
+      </Flex>
+    </Stack>
+  </Stack>
+</DemoLayout>

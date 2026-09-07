@@ -1,52 +1,20 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { AutoColumns, Container, Heading, Icon, Inline, Stack, Text, WithSide } from 'lism-css/astro';
+import { Container, Heading, Inline, Stack, Text, WithSide } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 ---
 
-<DemoLayout title="CTA02">
-  <Container as="section" isWrapper="l" isContainer hasGutter bgc="base" py="50">
-    <Stack g="40">
-      <WithSide g="30 50" ai="end" sideW="xs" mainW="xs">
-        <Stack g="20">
-          <Inline fz="s" c="text-2">お問い合わせ</Inline>
-          <Heading level="2" class="u--trim" fz={['2xl', null, '3xl']} fw="bold">話しやすい方法で、<br />ご相談ください。</Heading>
-        </Stack>
-        <Text isSide max-sz="xs" c="text-2"> ご相談内容が決まっていなくても大丈夫です。担当者が状況を伺い、次の一歩を一緒に整理します。 </Text>
-      </WithSide>
-
-      <AutoColumns g="30">
-        <Stack as="article" g="30" py="30" bd-bs>
-          <Inline ff="mono" fz="xs" c="text-2">01 / 資料請求</Inline>
-          <Stack g="15">
-            <Icon icon="book" fz="2xl" c="accent" />
-            <Heading level="3" fz="xl">まずは資料を見る</Heading>
-            <Text fz="s" c="text-2">サービスの特徴や導入の流れを、短くまとめた資料をお送りします。</Text>
-          </Stack>
-          <Button href="#" variant="outline" jc="center" py="15" bdrs="10">資料を請求する</Button>
-        </Stack>
-
-        <Stack as="article" g="30" py="30" bd-bs>
-          <Inline ff="mono" fz="xs" c="text-2">02 / 電話相談</Inline>
-          <Stack g="15">
-            <Icon icon="user" fz="2xl" c="accent" />
-            <Heading level="3" fz="xl">電話で相談する</Heading>
-            <Text fz="s" c="text-2">お急ぎの方はお電話ください。平日9:00〜18:00に受け付けています。</Text>
-          </Stack>
-          <Button href="#" jc="center" py="15" bdrs="10">0123-xx-xxxx</Button>
-        </Stack>
-
-        <Stack as="article" g="30" py="30" bd-bs>
-          <Inline ff="mono" fz="xs" c="text-2">03 / フォーム</Inline>
-          <Stack g="15">
-            <Icon icon="chat" fz="2xl" c="accent" />
-            <Heading level="3" fz="xl">文章で問い合わせる</Heading>
-            <Text fz="s" c="text-2">フォームは24時間受付。内容を確認し、2営業日以内に返信します。</Text>
-          </Stack>
-          <Button href="#" variant="outline" jc="center" py="15" bdrs="10">お問い合わせフォーム</Button>
-        </Stack>
-      </AutoColumns>
-    </Stack>
+<DemoLayout title="02 - 横長の申し込みCTA">
+  <Container as="section" isWrapper="l" p="30">
+    <WithSide g="40" ai="center" sideW="auto" mainW="xs" bgc="base-2" px="35" py="45" bd bdc="var(--shadow)" bxsh="10" bdrs="20">
+      <Stack g="30">
+        <Text class="u--trim" fz="2xl">
+          <span class="-d:inline-block">思いついた今日が、</span><span class="-d:inline-block">始めどき。</span>
+        </Text>
+        <Text>14日間、すべての機能を無料でお試しいただけます。クレジットカード不要・いつでも解約可能。</Text>
+      </Stack>
+      <Button isSide href="#" fw="bold" lts="l" bgc="text" c="base" px="40" py="20" bdrs="99">無料で試してみる</Button>
+    </WithSide>
   </Container>
 </DemoLayout>

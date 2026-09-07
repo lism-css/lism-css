@@ -16,7 +16,7 @@ const { href, thumbSrc, title, draft = false, thumbRatio = '3/2', thumbFit = 'co
 ---
 
 <BoxLink class={draft ? 'c--patternCard _draft' : 'c--patternCard'} layout="stack" href={href} g="15" set="hov" {...props}>
-  <Frame ar={thumbRatio} bgc="divider" bg=":stripe" bd bdrs="10">
+  <Frame ar={thumbRatio} bg=":stripe" bd bdrs="10">
     <Lism
       as="img"
       src={thumbSrc}
@@ -54,7 +54,8 @@ const { href, thumbSrc, title, draft = false, thumbRatio = '3/2', thumbFit = 'co
     }
 
     .-bg\:stripe {
-      background-image: repeating-linear-gradient(50deg, color-mix(in srgb, var(--text), transparent 95%) 0 1px, transparent 1px 6px) !important;
+      background-color: var(--divider);
+      background-image: repeating-linear-gradient(50deg, color-mix(in srgb, var(--base-2), transparent 50%) 0 3px, transparent 3px 5px) !important;
       background-position: center !important;
     }
   }

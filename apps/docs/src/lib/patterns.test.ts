@@ -21,24 +21,22 @@ describe('言語ごとのパターン公開', () => {
     expect(categoryIds).toEqual([
       'hero',
       'feature',
-      'process',
       'pricetable',
-      'stats',
-      'logos',
       'testimonials',
       'posts',
-      'greeting',
+      'about',
       'member',
-      'history',
-      'information',
       'faq',
       'cta',
-      'content-links',
-      'section',
+      'page-links',
+      'general',
+      'process',
+      'stats',
+      'logos',
       'footer',
     ]);
     expect(Object.keys(patterns)).toEqual(categoryIds);
-    expect(Object.values(patterns).flatMap(({ items }) => items)).toHaveLength(61);
+    expect(Object.values(patterns).flatMap(({ items }) => items)).toHaveLength(59);
     for (const category of categoryIds) {
       const { items } = patterns[category];
       expect(items.map(({ id }) => id)).toEqual(items.map((_, index) => `${category}${String(index + 1).padStart(2, '0')}`));
@@ -53,10 +51,10 @@ describe('言語ごとのパターン公開', () => {
     expect(catalog.getPatternCategoryIds('en')).toEqual(catalog.getPatternCategoryIds('ja'));
     expect(catalog.getAllPatternPaths('en')).toEqual(catalog.getAllPatternPaths('ja'));
     for (const lang of ['ja', 'en'] as const) {
-      expect(catalog.getPatternCategory('feature', lang)?.items.map(({ id }) => id)).toEqual(['feature01', 'feature02']);
-      expect(catalog.getPatternCategory('footer', lang)?.items.map(({ id }) => id)).toEqual(['footer01', 'footer02']);
-      expect(catalog.getPattern('feature', 'feature03', lang)).toBeUndefined();
-      expect(catalog.getPattern('footer', 'footer03', lang)).toBeUndefined();
+      expect(catalog.getPatternCategory('testimonials', lang)?.items.map(({ id }) => id)).toEqual(['testimonials01', 'testimonials02']);
+      expect(catalog.getPatternCategory('footer', lang)).toBeUndefined();
+      expect(catalog.getPattern('testimonials', 'testimonials03', lang)).toBeUndefined();
+      expect(catalog.getPattern('footer', 'footer02', lang)).toBeUndefined();
     }
   });
 
@@ -77,14 +75,7 @@ describe('言語ごとのパターン公開', () => {
 
   it('NewsとWorksを日英共通のPostsへ統合し、旧カテゴリと旧IDを公開しない', () => {
     for (const lang of ['ja', 'en'] as const) {
-      expect(catalog.getPatternCategory('posts', lang)?.items.map(({ id }) => id)).toEqual([
-        'posts01',
-        'posts02',
-        'posts03',
-        'posts04',
-        'posts05',
-        'posts06',
-      ]);
+      expect(catalog.getPatternCategory('posts', lang)?.items.map(({ id }) => id)).toEqual(['posts01', 'posts02', 'posts03', 'posts04']);
       expect(catalog.getPatternCategory('posts', lang)?.label).toBe('Posts');
       for (const category of ['news', 'works', 'navigation']) {
         expect(catalog.getPatternCategory(category, lang)).toBeUndefined();
@@ -95,24 +86,26 @@ describe('言語ごとのパターン公開', () => {
     }
   });
 
-  it('リンク集・フッター・CTAを日英共通のカテゴリとURLで取得できる', () => {
-    expect(catalog.getPatternCategory('content-links', 'ja')?.items.map(({ id }) => id)).toEqual([
-      'content-links01',
-      'content-links02',
-      'content-links03',
-      'content-links04',
-      'content-links05',
-      'content-links06',
-      'content-links07',
-      'content-links08',
-      'content-links09',
+  it('リンク集・CTAを日英共通のカテゴリとURLで取得できる', () => {
+    expect(catalog.getPatternCategory('page-links', 'ja')?.items.map(({ id }) => id)).toEqual([
+      'page-links01',
+      'page-links02',
+      'page-links03',
+      'page-links04',
+      'page-links05',
+      'page-links06',
+      'page-links07',
     ]);
-    expect(catalog.getPatternCategory('content-links', 'en')?.items).toHaveLength(9);
+    expect(catalog.getPatternCategory('page-links', 'en')?.items).toHaveLength(7);
     for (const lang of ['ja', 'en'] as const) {
-      expect(catalog.getPattern('content-links', 'content-links09', lang)?.title).toBe('ContentLinks09');
-      expect(catalog.getPattern('footer', 'footer01', lang)?.title).toBe('Footer01');
-      expect(catalog.getPattern('cta', 'cta05', lang)?.title).toBe('CTA05');
-      expect(catalog.getPattern('section', 'section005', lang)).toBeUndefined();
+      expect(catalog.getPattern('page-links', 'page-links07', lang)?.title).toBe('PageLinks07');
+      expect(catalog.getPatternCategory('feature', lang)?.items.map(({ id }) => id)).toEqual(['feature03', 'feature04']);
+      expect(catalog.getPattern('feature', 'feature03', lang)?.title).toBe('Feature03');
+      expect(catalog.getPattern('feature', 'feature04', lang)?.title).toBe('Feature04');
+      expect(catalog.getPatternCategory('cta', lang)?.items.map(({ id }) => id)).toEqual(['cta01', 'cta02', 'cta03', 'cta04']);
+      expect(catalog.getPattern('cta', 'cta04', lang)?.title).toBe('CTA04');
+      expect(catalog.getPattern('cta', 'cta05', lang)).toBeUndefined();
+      expect(catalog.getPattern('section', 'section01', lang)).toBeUndefined();
     }
   });
 
@@ -141,25 +134,42 @@ describe('言語ごとのパターン公開', () => {
     }
   });
 
-  it('下書き3件は本番で除外し、開発時には同じ番号で日英とも表示する', async () => {
+  it('下書き9件は本番で除外し、開発時には同じ番号で日英とも表示する', async () => {
+    const drafts = [
+      ['hero', 'hero04'],
+      ['hero', 'hero05'],
+      ['feature', 'feature01'],
+      ['feature', 'feature02'],
+      ['process', 'process01'],
+      ['pricetable', 'pricetable02'],
+      ['stats', 'stats01'],
+      ['logos', 'logos01'],
+      ['footer', 'footer01'],
+    ] as const;
+    const draftOnlyCategories = ['process', 'stats', 'logos', 'footer'];
     for (const lang of ['ja', 'en'] as const) {
-      for (const category of ['process', 'stats', 'logos']) {
-        expect(catalog.getPattern(category, `${category}01`, lang)).toBeUndefined();
+      for (const [category, id] of drafts) {
+        expect(catalog.getPattern(category, id, lang), `${lang}: ${category}/${id}`).toBeUndefined();
+      }
+      for (const category of draftOnlyCategories) {
         expect(catalog.getPatternCategoryIds(lang)).not.toContain(category);
       }
+      expect(catalog.getPatternCategory('pricetable', lang)?.items.map(({ id }) => id)).toEqual(['pricetable01']);
     }
     vi.stubEnv('PROD', false);
     vi.resetModules();
     const devCatalog = await import('./patterns');
     expect(devCatalog.getAllPatternPaths('en')).toEqual(devCatalog.getAllPatternPaths('ja'));
     for (const lang of ['ja', 'en'] as const) {
-      expect(devCatalog.getAllPatternPaths(lang)).toHaveLength(catalog.getAllPatternPaths(lang).length + 3);
-      for (const category of ['process', 'stats', 'logos']) {
-        const pattern = devCatalog.getPattern(category, `${category}01`, lang);
-        expect(pattern?.draft).toBe(true);
+      expect(devCatalog.getAllPatternPaths(lang)).toHaveLength(catalog.getAllPatternPaths(lang).length + drafts.length);
+      const file = lang === 'ja' ? 'index.astro' : 'en.astro';
+      for (const [category, id] of drafts) {
+        const pattern = devCatalog.getPattern(category, id, lang);
+        expect(pattern?.draft, `${lang}: ${category}/${id}`).toBe(true);
         expect(pattern?.description[lang]).toBeTruthy();
-        const file = lang === 'ja' ? 'index.astro' : 'en.astro';
-        expect(existsSync(resolve('src/pages/preview/patterns', category, `${category}01`, file))).toBe(true);
+        expect(existsSync(resolve('src/pages/preview/patterns', category, id, file))).toBe(true);
+      }
+      for (const category of draftOnlyCategories) {
         expect(devCatalog.getPatternCategoryIds(lang)).toContain(category);
       }
       expect(devCatalog.getPattern('hero', 'hero01', lang)).toEqual(catalog.getPattern('hero', 'hero01', lang));
@@ -168,10 +178,11 @@ describe('言語ごとのパターン公開', () => {
 
   it('言語切替とhreflangに存在する同一IDのページ・カテゴリだけを含める', () => {
     const alternates = (path: string) => catalog.filterPatternAlternates(getAlternateUrls(path)).map(({ lang }) => lang);
-    expect(alternates('/patterns/feature/feature01/')).toEqual(['ja', 'en']);
-    expect(alternates('/en/patterns/content-links/content-links15/')).toEqual([]);
+    expect(alternates('/patterns/hero/hero01/')).toEqual(['ja', 'en']);
+    expect(alternates('/en/patterns/page-links/page-links15/')).toEqual([]);
     expect(alternates('/patterns/logos/')).toEqual([]);
-    for (const category of ['posts', 'content-links', 'footer']) {
+    expect(alternates('/patterns/footer/')).toEqual([]);
+    for (const category of ['posts', 'page-links']) {
       expect(alternates(`/patterns/${category}/`)).toEqual(['ja', 'en']);
       expect(alternates(`/patterns/${category}/${category}01/`)).toEqual(['ja', 'en']);
     }
@@ -180,7 +191,7 @@ describe('言語ごとのパターン公開', () => {
     }
     expect(alternates('/patterns/news/news001/')).toEqual([]);
     expect(alternates('/patterns/testimonials/testimonials02/')).toEqual(['ja', 'en']);
-    expect(alternates('/patterns/cta/cta05/')).toEqual(['ja', 'en']);
+    expect(alternates('/patterns/cta/cta04/')).toEqual(['ja', 'en']);
     expect(alternates('/patterns/')).toEqual(['ja', 'en']);
     expect(alternates('/docs/overview/')).toEqual(['ja', 'en']);
   });
