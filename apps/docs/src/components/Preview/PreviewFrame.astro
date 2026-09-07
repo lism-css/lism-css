@@ -37,7 +37,7 @@ const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
 const previewText = t(lang, 'preview');
 
 const sizes = [
-  { id: 'mobile', label: previewText.mobile, icon: DeviceMobileCameraIcon, size: '380px', ar: '2/3' },
+  { id: 'mobile', label: previewText.mobile, icon: DeviceMobileCameraIcon, size: '380px', ar: '1/2' },
   { id: 'tablet', label: previewText.tablet, icon: DeviceTabletCameraIcon, size: '640px', ar: '3/4' },
   { id: 'desktop', label: previewText.desktop, icon: DesktopIcon, size: '100%', ar: '3/2' },
 ];
@@ -276,6 +276,10 @@ const panelAttrs = (id: string, isActive: boolean) => ({
         frame.style.width = button.dataset.size ?? '';
         frame.style.setProperty('--ar', button.dataset.ar ?? '');
         sizeButtons.forEach((b) => b.setAttribute('aria-pressed', b === button ? 'true' : 'false'));
+        // svh/vh を使う中身を、切替後の比率で測り直す。
+        contentHeight = null;
+        frame.style.removeProperty('aspect-ratio');
+        iframe.style.removeProperty('height');
         requestSize();
       });
     });
