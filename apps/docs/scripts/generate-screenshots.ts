@@ -11,11 +11,11 @@
  *   pnpm screenshot:patterns:new       # 新規のみ生成（全言語、ビルド後に実行）
  *   pnpm screenshot:patterns:force     # 全て再生成（public + baseline、全言語）
  *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定（全言語）
- *   npx tsx scripts/generate-screenshots.ts cta/cta001     # パターン指定（全言語）
+ *   npx tsx scripts/generate-screenshots.ts cta/cta01     # パターン指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定
  *   npx tsx scripts/generate-screenshots.ts --lang=en      # 英語版のみ生成
  *   npx tsx scripts/generate-screenshots.ts --lang=ja      # 日本語版のみ生成
- *   npx tsx scripts/generate-screenshots.ts cta/cta001 --lang=en --force  # 特定パターンの英語版を再生成
+ *   npx tsx scripts/generate-screenshots.ts cta/cta01 --lang=en --force  # 特定パターンの英語版を再生成
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -55,7 +55,7 @@ const forceRegenerate = args.includes('--force');
 // --lang オプション: 指定言語のみ生成（省略時は全言語）
 const langValue = args.find((a) => a.startsWith('--lang='))?.split('=')[1];
 const targetLangs: readonly Lang[] = langValue ? [langValue as Lang] : ALL_LANGS;
-// --force, --lang 以外の引数をフィルタとして使用（例: "cta", "cta/cta001"）
+// --force, --lang 以外の引数をフィルタとして使用（例: "cta", "cta/cta01"）
 const filters = args.filter((a) => !a.startsWith('--'));
 
 /**
@@ -76,14 +76,14 @@ async function getPatternPaths(lang: Lang): Promise<Array<{ category: string; id
 
 /**
  * フィルタ引数でパターンを絞り込む
- * "cta" → カテゴリ全体, "cta/cta001" → 特定パターン
+ * "cta" → カテゴリ全体, "cta/cta01" → 特定パターン
  */
 function filterPatternPaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
   if (filters.length === 0) return paths;
   return paths.filter(({ category, id }) =>
     filters.some((f) => {
       if (f.includes('/')) {
-        // "cta/cta001" 形式: 完全一致
+        // "cta/cta01" 形式: 完全一致
         return `${category}/${id}` === f;
       }
       // "cta" 形式: カテゴリ一致

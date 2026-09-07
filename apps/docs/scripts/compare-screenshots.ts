@@ -9,8 +9,8 @@
  *   npx tsx scripts/compare-screenshots.ts --threshold 0.5    # 差分率しきい値を変更（デフォルト: 0.01%）
  *   npx tsx scripts/compare-screenshots.ts --lang=en          # 英語版のみ比較
  *   npx tsx scripts/compare-screenshots.ts cta                # カテゴリ指定（全言語）
- *   npx tsx scripts/compare-screenshots.ts cta/cta001         # パターン指定（全言語）
- *   npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja  # 特定パターンの日本語版のみ比較
+ *   npx tsx scripts/compare-screenshots.ts cta/cta01         # パターン指定（全言語）
+ *   npx tsx scripts/compare-screenshots.ts cta/cta01 --lang=ja  # 特定パターンの日本語版のみ比較
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -52,7 +52,7 @@ const filters = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--
 
 /**
  * フィルタ引数でパターンを絞り込む
- * "cta" → カテゴリ全体, "cta/cta001" → 特定パターン
+ * "cta" → カテゴリ全体, "cta/cta01" → 特定パターン
  */
 function filterPatternPaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
   if (filters.length === 0) return paths;

@@ -1,0 +1,55 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Columns, Container, Heading, Icon, Inline, Stack, Text } from 'lism-css/astro';
+---
+
+<DemoLayout title="01 - Three strengths with icons">
+  <Container as="section" isWrapper="l" hasGutter bgc="base" py="50">
+    <Stack g="40">
+      <Stack g="30" max-sz="s">
+        <Inline fz="s" c="text-2">Appointment management</Inline>
+        <Heading level="2" class="u--trim" fz="2xl" fw="bold">Bookings and messages, <Inline d="inline-block">all in one place.</Inline></Heading>
+        <Text fz="m" c="text-2">
+          Reserve Note helps small salons and studios manage appointments. Keep everyday communication organized, from the first booking to follow-up
+          messages.
+        </Text>
+      </Stack>
+
+      <Columns cols={[1, null, 3]} g="30">
+        <Stack as="article" g="30" py="30" bd-bs>
+          <Icon icon="calendar" fz="l" c="brand" />
+          <Stack g="15">
+            <Heading level="3" fz="l">Availability stays up to date</Heading>
+            <Text fz="base">Availability updates with every booking. View phone and online appointments on the same calendar.</Text>
+          </Stack>
+          <Text fz="s" c="text-2">Accept bookings around the clock</Text>
+        </Stack>
+
+        <Stack as="article" g="30" py="30" bd-bs>
+          <Icon icon="clock" fz="l" c="brand" />
+          <Stack g="15">
+            <Heading level="3" fz="l">See your day at a glance</Heading>
+            <Text fz="base"
+              >See each staff member’s appointments and preparation time together. Avoid overlaps and missed bookings, and keep reception running
+              smoothly.</Text
+            >
+          </Stack>
+          <Text fz="s" c="text-2">View schedules by staff member</Text>
+        </Stack>
+
+        <Stack as="article" g="30" py="30" bd-bs>
+          <Icon icon="chat" fz="l" c="brand" />
+          <Stack g="15">
+            <Heading level="3" fz="l">Stay in touch with ease</Heading>
+            <Text fz="base"
+              >Automatically send reminders the day before an appointment and thank-you messages after a visit. Deliver helpful updates at the right
+              time.</Text
+            >
+          </Stack>
+          <Text fz="s" c="text-2">Customize every message</Text>
+        </Stack>
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>

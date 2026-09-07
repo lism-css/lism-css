@@ -1,0 +1,53 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Columns, Frame, Group, Heading, Stack, Text, Wrapper } from 'lism-css/astro';
+---
+
+<DemoLayout title="02 - Strengths shown through photos">
+  <Group as="section" aria-label="Our approach to travel" isContainer hasGutter bgc="base">
+    <Wrapper contentSize="l" py={['40', null, '50']}>
+      <Stack g="40">
+        <Columns cols={[1, null, 2]} g={['30', null, '50']} ai="center">
+          <Frame ar="16/9" bdrs="20">
+            <img src="/img/img-4.jpg" alt="A quiet lake surrounded by mountains and evergreen trees" width="1920" height="1281" />
+          </Frame>
+          <Stack g="20">
+            <Text fz="s" c="brand" fw="bold">01 / A trip that fits you</Text>
+            <Heading level="2" fz="2xl" class="u--trim">Your favorite places,<br />at your own pace.</Heading>
+            <Text c="text-2"
+              >Whether you prefer a gentle lakeside walk or a day in the mountains, we create an itinerary for your group, taking your interests,
+              fitness and travel time into account.</Text
+            >
+            <Stack g="10" bd-bs pbs="20">
+              <Heading level="3" fz="l">Feel prepared before you leave</Heading>
+              <Text c="text-2"
+                >Your trip planner explains everything from walking distances to the gear you need. Enjoy somewhere new at a pace that feels right for
+                you.</Text
+              >
+            </Stack>
+          </Stack>
+        </Columns>
+
+        <Columns cols={[1, null, 2]} g={['30', null, '50']} ai="center" bd-bs pbs="40">
+          <Frame ar="16/9" bdrs="20" order={[0, null, 1]}>
+            <img src="/img/img-6.jpg" alt="Sunset light over the sea and a rocky shore" width="2000" height="1120" loading="lazy" />
+          </Frame>
+          <Stack g="20">
+            <Text fz="s" c="brand" fw="bold">02 / Local knowledge</Text>
+            <Heading level="2" fz="2xl" class="u--trim">Discover each place<br />at its best.</Heading>
+            <Text c="text-2"
+              >From sunsets over the sea to peaceful mornings away from the crowds, local guides help you make the most of each place, season and time
+              of day.</Text
+            >
+            <Stack g="10" bd-bs pbs="20">
+              <Heading level="3" fz="l">Flexible plans for changing weather</Heading>
+              <Text c="text-2"
+                >We adjust routes to local conditions, keeping safety first. With time to pause and enjoy the scenery, your trip never feels rushed.</Text
+              >
+            </Stack>
+          </Stack>
+        </Columns>
+      </Stack>
+    </Wrapper>
+  </Group>
+</DemoLayout>

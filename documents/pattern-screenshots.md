@@ -1,4 +1,4 @@
-基準日: 2026-09-03・コミット105422df
+基準日: 2026-09-07・コミットa9edc0ad
 
 # パターン スクリーンショット
 
@@ -23,7 +23,7 @@
 
 ```bash
 pnpm screenshot:patterns:new cta              # カテゴリ
-pnpm screenshot:patterns:new cta/cta001       # パターン
+pnpm screenshot:patterns:new cta/cta01       # パターン
 pnpm screenshot:patterns:new cta section      # 複数
 pnpm screenshot:patterns:compare cta
 ```
@@ -35,10 +35,10 @@ pnpm screenshot:patterns:compare cta
 ```bash
 # apps/docs で実行
 npx tsx scripts/generate-screenshots.ts --lang=en
-npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja
+npx tsx scripts/compare-screenshots.ts cta/cta01 --lang=ja
 ```
 
-保存先は`ja`がプレフィックスなし、`en`が`en/`サブディレクトリ（公開用サムネもベースラインも同じ規則）。`en`の撮影URLは末尾に`/en/`が付く（`/preview/patterns/cta/cta001/en/`）。
+保存先は`ja`がプレフィックスなし、`en`が`en/`サブディレクトリ（公開用サムネもベースラインも同じ規則）。`en`の撮影URLは末尾に`/en/`が付く（`/preview/patterns/cta/cta01/en/`）。
 
 
 ## 運用フロー
@@ -58,8 +58,8 @@ apps/docs/
     compare-screenshots.ts     # 比較
     update-screenshots.ts      # 差分パターンの更新
   public/screenshots/patterns/ # 公開用サムネ（Git管理）
-    cta/cta001.png             #   ja
-    en/cta/cta001.png          #   en
+    cta/cta01.png             #   ja
+    en/cta/cta01.png          #   en
   _screenshots/
     baseline/                  # 比較用ベースライン（Git管理）。言語構成は上と同じ
     diff/                      # 差分画像（Git管理外）。言語構成は上と同じ

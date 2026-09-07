@@ -1,0 +1,23 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Heading, Inline, Stack, Text, WithSide } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+---
+
+<DemoLayout title="03 - A horizontal sign-up CTA">
+  <Container as="section" isWrapper="l" hasGutter bgc="orange:10%" py="40">
+    <WithSide g="30 50" ai="center" sideW="xs" mainW="xs">
+      <Stack g="20">
+        <Inline fz="s" c="text-2">Free trial</Inline>
+        <Heading level="2" class="u--trim" fz="2xl" fw="bold"
+          ><Inline d="inline-block">There’s no better time </Inline><Inline d="inline-block">to get started.</Inline></Heading
+        >
+        <Text max-sz="xs">Try every feature free for 14 days.</Text>
+        <Text fz="s">No credit card required. Cancel anytime.</Text>
+      </Stack>
+
+      <Button isSide href="#" bgc="text" c="base" jc="center" px="40" py="20" bdrs="99" fw="bold">Start your free trial</Button>
+    </WithSide>
+  </Container>
+</DemoLayout>

@@ -1,20 +1,12 @@
 import { getPathWithoutLang, getRootLang, isRootLang, type LangCode } from '@/lib/i18n';
-import {
-  patterns,
-  postsCategory,
-  patternCategoryOverrides,
-  patternCategoryAliases,
-  categoryIds,
-  isPatternAvailable,
-  type PatternCategory,
-  type PatternCategoryId,
-  type PatternItem,
-} from '@/config/patterns';
+import { patterns, categoryIds, isPatternAvailable, type PatternCategory, type PatternCategoryId, type PatternItem } from '@/config/patterns';
 
 const isProd = import.meta.env.PROD;
 
 export function filterPatternItems(items: PatternItem[], lang: LangCode = getRootLang()): PatternItem[] {
-  return items.filter((item) => isPatternAvailable(item, lang) && (!isProd || !item.draft));
+  return items
+    .filter((item) => isPatternAvailable(item, lang) && (!isProd || !item.draft))
+    .map((item) => (lang === 'en' && item.titleEn ? { ...item, title: item.titleEn } : item));
 }
 
 export function getPattern(categoryId: string, patternId: string, lang: LangCode = getRootLang()): PatternItem | undefined {
@@ -24,33 +16,22 @@ export function getPattern(categoryId: string, patternId: string, lang: LangCode
 }
 
 export interface PatternCategoryView extends Omit<PatternCategory, 'items'> {
-  id: PatternCategoryId | 'posts';
+  id: PatternCategoryId;
   items: Array<PatternItem & { categoryId: PatternCategoryId }>;
 }
 
 export function getPatternCategories(lang: LangCode = getRootLang()): PatternCategoryView[] {
-  const items = categoryIds.flatMap((id) => filterPatternItems(patterns[id].items, lang).map((item) => ({ ...item, categoryId: id })));
-  const categories: PatternCategoryView[] = categoryIds.map((id) => ({
-    ...patterns[id],
-    id,
-    items: items.filter((item) => (patternCategoryOverrides[lang]?.[item.id] ?? item.categoryId) === id),
-  }));
-  const news = categories.find(({ id }) => id === 'news');
-  const works = categories.find(({ id }) => id === 'works');
-
-  // 日本語の分類だけを統合し、各例のURLとプレビュー・画像の保存先は維持する。
-  if (lang === 'ja' && news && works) {
-    const posts: PatternCategoryView = { ...postsCategory, id: 'posts', items: [...news.items, ...works.items] };
-    return categories
-      .flatMap((category) => (category.id === 'works' ? [] : [category.id === 'news' ? posts : category]))
-      .filter(({ items }) => items.length > 0);
-  }
-  return categories.filter(({ items }) => items.length > 0);
+  return categoryIds
+    .map((id) => ({
+      ...patterns[id],
+      id,
+      items: filterPatternItems(patterns[id].items, lang).map((item) => ({ ...item, categoryId: id })),
+    }))
+    .filter(({ items }) => items.length > 0);
 }
 
 export function getPatternCategory(categoryId: string, lang: LangCode = getRootLang()): PatternCategoryView | undefined {
-  const id = patternCategoryAliases[lang]?.[categoryId] ?? categoryId;
-  return getPatternCategories(lang).find((category) => category.id === id);
+  return getPatternCategories(lang).find((category) => category.id === categoryId);
 }
 
 export function getPatternCategoryForItem(categoryId: string, patternId: string, lang: LangCode = getRootLang()): PatternCategoryView | undefined {
