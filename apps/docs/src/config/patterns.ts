@@ -92,7 +92,6 @@ const patterns = {
       {
         id: 'feature01',
         title: '01 - アイコンを添えた2列の特徴',
-        draft: true,
         description: {
           ja: '中央の見出しの下に、アイコン・見出し・説明文を2列で配置するセクションです。',
           en: 'A section with a centered introduction and two columns of features, each pairing an icon with a heading and description.',
@@ -102,7 +101,6 @@ const patterns = {
       {
         id: 'feature02',
         title: '02 - 罫線で区切る3列の特徴',
-        draft: true,
         description: {
           ja: 'アイコン・見出し・説明文と控えめなリンクを3列で並べ、カラム間を罫線で区切るセクションです。',
           en: 'A section with three columns of icons, headings, descriptions and subtle links, separated by dividers.',
@@ -412,6 +410,7 @@ const patterns = {
       },
       {
         id: 'cta03',
+        draft: true,
         title: '03 - ニュースレター登録',
         description: {
           ja: 'メール入力欄を備えた登録セクションです。入力の確認を試せますが、実際の送信や登録は行いません。',
@@ -421,6 +420,7 @@ const patterns = {
       },
       {
         id: 'cta04',
+        draft: true,
         title: 'CTA04',
         description: {
           ja: '1枚の背景写真の中央に見出し・説明・ボタンを置き、旅の相談へ案内するCTAです。',
