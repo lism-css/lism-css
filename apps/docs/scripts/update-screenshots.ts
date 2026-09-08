@@ -176,7 +176,8 @@ async function setupImageInterception(page: Page, grayPng: Buffer): Promise<void
  */
 async function captureScreenshot(page: Page, outputDir: string, category: string, id: string, lang: Lang): Promise<boolean> {
   // ja はプレフィックスなし、それ以外は lang/ サブディレクトリ
-  const outputPath = lang === 'ja' ? join(outputDir, category, `${id}.png`) : join(outputDir, lang, category, `${id}.png`);
+  const extension = outputDir === CONFIG.publicDir ? 'webp' : 'png';
+  const outputPath = join(outputDir, lang === 'ja' ? '' : lang, category, `${id}.${extension}`);
   const dir = dirname(outputPath);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
 

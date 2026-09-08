@@ -228,7 +228,7 @@ async function takeScreenshot(
 ): Promise<{ success: boolean; skipped?: boolean; error?: string }> {
   // ja はプレフィックスなし、それ以外は lang/ サブディレクトリに保存
   const langPrefix = lang === 'ja' ? '' : lang;
-  const publicPath = lang === 'ja' ? join(CONFIG.outputDir, category, `${id}.png`) : join(CONFIG.outputDir, lang, category, `${id}.png`);
+  const publicPath = join(CONFIG.outputDir, langPrefix, category, `${id}.webp`);
   const baselinePath = join(CONFIG.baselineDir, langPrefix, category, `${id}.png`);
 
   // 強制再生成でない場合、既存ファイルをスキップ

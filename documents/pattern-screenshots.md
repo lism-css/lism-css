@@ -1,4 +1,4 @@
-基準日: 2026-09-07・コミット29fd7da3（作業ツリーの変更を含む）
+基準日: 2026-09-08・コミット31cf66e3（作業ツリーの変更を含む）
 
 # パターン スクリーンショット
 
@@ -7,6 +7,8 @@
 ## 撮影サイズと表示
 
 ブラウザは1200×800pxで固定し、保存範囲の高さをコンテンツに合わせて最大800pxにする。高さは`body`ではなく、コンテンツを包む`.c--previewSizeReporter`で測る。生成・比較・更新は同じ撮影処理を使う。
+
+公開用サムネイルは撮影直後にSharpでWebPへ圧縮する（quality: 80、effort: 6）。画像の幅・高さは維持する。ピクセル比較用のベースライン・差分・一時画像はPNGで保存する。
 
 `patterns/`一覧は横スクロールと比率3:2の画像枠を使い、`object-fit: contain`で画像全体を表示する。カテゴリページは縦1列に並べ、画像を元の比率で表示する。
 
@@ -68,8 +70,8 @@ apps/docs/
     compare-screenshots.ts     # 比較
     update-screenshots.ts      # 差分パターンの更新
   public/screenshots/patterns/ # 公開用サムネ（Git管理）
-    cta/cta01.png             #   ja
-    en/cta/cta01.png          #   en
+    cta/cta01.webp            #   ja
+    en/cta/cta01.webp         #   en
   _screenshots/
     baseline/                  # 比較用ベースライン（Git管理）。言語構成は上と同じ
     diff/                      # 差分画像（Git管理外）。言語構成は上と同じ

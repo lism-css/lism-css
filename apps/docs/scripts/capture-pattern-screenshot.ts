@@ -1,4 +1,5 @@
 import type { Page } from 'playwright';
+import sharp from 'sharp';
 
 export async function capturePatternScreenshot(page: Page, url: string, outputPath: string, waitAfterLoad: number): Promise<void> {
   await page.goto(url, { waitUntil: 'networkidle' });
@@ -16,9 +17,13 @@ export async function capturePatternScreenshot(page: Page, url: string, outputPa
 
   // bodyは画面高まで広がるため、内側のコンテンツの末端を測る。
   const contentBottom = await page.locator('.c--previewSizeReporter').evaluate((element) => element.getBoundingClientRect().bottom);
-  await page.screenshot({
-    path: outputPath,
+  const isWebp = outputPath.endsWith('.webp');
+  const screenshot = await page.screenshot({
+    path: isWebp ? undefined : outputPath,
     type: 'png',
     clip: { x: 0, y: 0, width: viewport.width, height: Math.max(1, Math.min(viewport.height, Math.ceil(contentBottom))) },
   });
+  if (isWebp) {
+    await sharp(screenshot).webp({ quality: 80, effort: 6 }).toFile(outputPath);
+  }
 }
