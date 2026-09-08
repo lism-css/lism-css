@@ -19,7 +19,7 @@ Old buildings have a quiet all their own.
 
 I ordered a croissant and a coffee.
 
-![A croissant and coffee](https://cdn.lism-css.com/img/cafe/a_pqmAYLDGpj.jpg)
+![A croissant and coffee](https://cdn.lism-css.com/img/cafe/vtxBnIr7CYWs.webp)
 
 The croissant had a rich, buttery aroma — crisp on the outside, soft on the inside. It paired nicely with the coffee, and made for a perfect weekend morning.
 

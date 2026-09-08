@@ -7,65 +7,79 @@ import { Stack, Container, Frame, Grid, Media, Box, Text, Heading } from 'lism-c
 <DemoLayout title="About03">
   <Container isWrapper="m" bgc="base" py="50" hasGutter>
     <Stack g="50">
-      <Heading level="2" class="u--trim" fz="3xl" fw="bold" ff="accent" ta="center">Our Journey</Heading>
+      <Heading level="2" class="u--trim" fz="3xl" fw="bold" ff="accent" ta="center">Our Story</Heading>
       <Stack bd-l g="40">
+        <Grid gtc={['auto', null, '16rem 1fr']} g="30">
+          <Box>
+            <Text bd-l bdc="text" fz="2xl" p="15 30" ms="-1px">2016</Text>
+          </Box>
+          <Stack g="30" ps={['30', null, '0']} pb="20">
+            <Frame as="figure" ar="16/9" bdrs="10">
+              <Media
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=max&w=1920&q=80"
+                alt=""
+                width="960"
+                height="640"
+              />
+            </Frame>
+            <Stack g="20">
+              <Text fz="l" fw="bold">Journeyful Inc. founded</Text>
+              <p>
+                "We want to deliver a trip that fits each person." With that idea, founders Sato and Suzuki started the company in a small apartment
+                in Tokyo.
+              </p>
+              <p>
+                Five people in total: travel experts and engineers. Instead of fixed package tours, they began building a service that lets anyone
+                design their own journey.
+              </p>
+            </Stack>
+          </Stack>
+        </Grid>
+        <Grid gtc={['auto', null, '16rem 1fr']} g="30">
+          <Box>
+            <Text bd-l bdc="text" fz="2xl" p="15 30" ms="-1px">2019</Text>
+          </Box>
+          <Stack g="30" ps={['30', null, '0']} pb="20">
+            <Frame as="figure" ar="16/9" bdrs="10">
+              <Media
+                src="https://images.pexels.com/photos/3184668/pexels-photo-3184668.jpeg?auto=compress&cs=tinysrgb&w=1920"
+                alt=""
+                width="960"
+                height="640"
+              />
+            </Frame>
+            <Stack g="20">
+              <Text fz="l" fw="bold">Travel web service "Journeyful" launched</Text>
+              <p>After about three years of development, the service went live.</p>
+              <p>
+                A dedicated concierge listens to your wishes online and proposes an itinerary made just for you. The experience spread on social media
+                and won over many travelers.
+              </p>
+            </Stack>
+          </Stack>
+        </Grid>
         <Grid gtc={['auto', null, '16rem 1fr']} g="30">
           <Box>
             <Text bd-l bdc="text" fz="2xl" p="15 30" ms="-1px">2025</Text>
           </Box>
           <Stack g="30" ps={['30', null, '0']} pb="20">
             <Frame as="figure" ar="16/9" bdrs="10">
-              <Media src="https://cdn.lism-css.com/random/img?category=building" alt="" width="960" height="640" />
+              <Media
+                src="https://images.unsplash.com/photo-1605540827677-693bad36b91f?auto=format&fit=max&w=1920&q=80"
+                alt=""
+                width="960"
+                height="640"
+              />
             </Frame>
             <Stack g="20">
-              <Text fz="l" fw="bold">Lism Inc. Founded</Text>
-              <p>"We want to deliver travel that truly connects with each individual's heart" --</p>
+              <Text fz="l" fw="bold">New brand "Journeyful Earth" started</Text>
               <p>
-                Driven by this singular passion, founders Sato and Suzuki established "Journeyful Inc." in a small apartment room in Tokyo.
-                Questioning conventional package tours, they set out to develop a service that would enable anyone to design a journey that weaves
-                their own story, powered by technology. Travel specialists and engineers gathered, and with just five members, they took the first
-                step toward a grand dream.
-              </p>
-            </Stack>
-          </Stack>
-        </Grid>
-        <Grid gtc={['auto', null, '16rem 1fr']} g="30">
-          <Box>
-            <Text bd-l bdc="text" fz="2xl" p="15 30" ms="-1px">2026</Text>
-          </Box>
-          <Stack g="30" ps={['30', null, '0']} pb="20">
-            <Frame as="figure" ar="16/9" bdrs="10">
-              <Media src="https://cdn.lism-css.com/random/img?category=japan" alt="" width="960" height="640" />
-            </Frame>
-            <Stack g="20">
-              <Text fz="l" fw="bold">"Journeyful" Launched</Text>
-              <p>After approximately 18 months of development, the travel web service "Journeyful" was officially launched.</p>
-              <p>
-                At launch, the service started with dedicated concierges providing online consultations, proposing custom-made travel plans tailored
-                to each user's preferences. The personalized travel experiences, far from generic tours, became a hot topic on social media and gained
-                support from travel enthusiasts. It presented a new option for those seeking their own special journey.
-              </p>
-            </Stack>
-          </Stack>
-        </Grid>
-        <Grid gtc={['auto', null, '16rem 1fr']} g="30">
-          <Box>
-            <Text bd-l bdc="text" fz="2xl" p="15 30" ms="-1px">2027</Text>
-          </Box>
-          <Stack g="30" ps={['30', null, '0']} pb="20">
-            <Frame as="figure" ar="16/9" bdrs="10">
-              <Media src="https://cdn.lism-css.com/random/img?category=room" alt="" width="960" height="640" />
-            </Frame>
-            <Stack g="20">
-              <Text fz="l" fw="bold">New Brand "Journeyful Earth" Launched</Text>
-              <p>
-                Under the philosophy of "contributing to local communities and the environment through travel," we launched "Journeyful Earth," a new
-                brand specializing in sustainable tourism.
+                A travel brand that chooses low-impact transport and lodging, and donates part of its revenue to environmental groups in the places
+                you visit.
               </p>
               <p>
-                We introduced a system that selects environmentally-friendly transportation and accommodation, and donates a portion of travel revenue
-                to local environmental organizations. This initiative was recognized with the Sustainability Award at the "Japan Travel Awards 2025."
-                We will continue to pursue a form of travel that enriches travelers, the communities that welcome them, and the planet as a whole.
+                The initiative won the Sustainability Grand Prize at the Japan Travel Awards 2025. We will keep growing trips that enrich both
+                travelers and the places that welcome them.
               </p>
             </Stack>
           </Stack>

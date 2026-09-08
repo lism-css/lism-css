@@ -64,5 +64,5 @@ export function filterPatternAlternates(alternates: Array<{ lang: LangCode; url:
 
 // スクリーンショットはroot言語だけ言語ディレクトリなしで置かれている
 export function getPatternThumbSrc(lang: LangCode, categoryId: string, patternId: string): string {
-  return isRootLang(lang) ? `/screenshots/patterns/${categoryId}/${patternId}.png` : `/screenshots/patterns/${lang}/${categoryId}/${patternId}.png`;
+  return isRootLang(lang) ? `/screenshots/patterns/${categoryId}/${patternId}.webp` : `/screenshots/patterns/${lang}/${categoryId}/${patternId}.webp`;
 }

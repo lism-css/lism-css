@@ -28,7 +28,7 @@ hover 時の挙動を制御する Property Class。`:hover` 擬似クラスで�
 | --- | --- | --- |
 | `-hov:-c` | `color` | `var(--hov-c, var(--link))` |
 | `-hov:-bdc` | `border-color` | `var(--hov-bdc, currentColor)` |
-| `-hov:-bgc` | `background-color` | `var(--hov-bgc, var(--hov-bgc--default, color-mix(in srgb, var(--bgc, var(--base)), var(--neutral) 25%)))` |
+| `-hov:-bgc` | `background-color` | `var(--hov-bgc, var(--hov-bgc--default, color-mix(in srgb, var(--bgc, var(--base)), var(--neutral) 20%)))` |
 | `-hov:-o` | `opacity` | `var(--hov-o, var(--o--p))` |
 | `-hov:-bxsh` | `box-shadow` | `var(--hov-bxsh, var(--bxsh--50))` |
 | `-hov:-transform` | `transform` | `var(--hov-transform, translate(0, -4px))` |

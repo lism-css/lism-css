@@ -19,7 +19,7 @@ tags: [コーヒー, おでかけ]
 
 クロワッサンとコーヒーを注文しました。
 
-![クロワッサンとコーヒー](https://cdn.lism-css.com/img/cafe/a_pqmAYLDGpj.jpg)
+![クロワッサンとコーヒー](https://cdn.lism-css.com/img/cafe/vtxBnIr7CYWs.webp)
 
 クロワッサンはバターの香りがしっかりしていて、外はサクッ、中はふんわり。コーヒーとの相性も良くて、休日の朝にぴったりでした。
 

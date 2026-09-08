@@ -8,11 +8,18 @@ import { HandSwipeLeftIcon, MouseScrollIcon } from '@phosphor-icons/react';
 export const SwipeHelp = ({icon}) => <span> ( <Icon icon={icon || HandSwipeLeftIcon} /> <small>Scroll to preview</small> )</span>;
 
 export const ReelImages = ({ length=6, hasID, isV, ...props }) => {
+  const imageUrls = [
+    'https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80',
+    'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80',
+    'https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80',
+    'https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80',
+    'https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80',
+    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=max&w=1920&q=80',
+  ];
   return (
     <>
       {Array.from({length}, (v, i) => i).map((i) => {
-        let imgNum = i + 1; //(i + 1) % 3 || 3;
-        const src = 'https://cdn.lism-css.com/img/u-' + imgNum + '.jpg';
+        const src = imageUrls[i];
         return <Frame id={hasID ? `image-${i+1}` : ''} ar="16/9" key={i} {...props}>
           <img src={src} alt="" loading="lazy" width="960" height="640" />
         </Frame>
@@ -54,19 +61,19 @@ Examples of horizontally scrollable reel layouts built with Lism.
   <PreviewArea resize p="10">
     <Flex hasSnap ov="auto" bgc="black" p="20" g="20" bdrs="30" style={{ 'scroll-padding': 'var(--p)' }}>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
     </Flex>
   </PreviewArea>
@@ -74,19 +81,19 @@ Examples of horizontally scrollable reel layouts built with Lism.
     ```jsx
     <Flex hasSnap ov="auto" bgc="black" p="20" g="20" bdrs="30" style={{ 'scroll-padding': 'var(--p)' }}>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
-        <img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
     </Flex>
     ```
@@ -102,19 +109,19 @@ Examples of horizontally scrollable reel layouts built with Lism.
   <PreviewArea resize p="10">
     <Flex hasSnap ov="auto" g="20" p="15" bgc="black" bdrs="20" style={{ '--snapAlign': 'center' }}>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} ms={['10%', '20%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} me={['10%', '20%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
     </Flex>
   </PreviewArea>
@@ -122,19 +129,19 @@ Examples of horizontally scrollable reel layouts built with Lism.
     ```jsx
     <Flex hasSnap ov="auto" g="20" p="15" bgc="black" bdrs="20" style={{ '--snapAlign': 'center' }}>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} ms={['10%', '20%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} me={['10%', '20%']} bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
     </Flex>
     ```
@@ -178,19 +185,19 @@ To responsively adjust child element sizes in a Grid-based reel, specify `--cols
   <PreviewArea resize p="10">
     <Grid hasSnap ov="auto" gaf="column" gac="var(--cols)" cols={['70%', '40%']} g="15" bdrs="20" tabIndex="0">
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
     </Grid>
   </PreviewArea>
@@ -198,19 +205,19 @@ To responsively adjust child element sizes in a Grid-based reel, specify `--cols
     ```jsx
     <Grid hasSnap ov="auto" gaf="column" gac="var(--cols)" cols={['70%', '40%']} g="15" bdrs="20" tabIndex="0">
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
     </Grid>
     ```
@@ -264,19 +271,19 @@ By adding an `id` to each reel item and providing anchor links, you can create n
   <PreviewArea p="30 20" layout="">
     <Grid hasSnap ov="auto" gaf="column" gac="75%" g="15" bdrs="20" style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
       <Frame id="image-1" ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame id="image-2" ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame id="image-3" ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame id="image-4" ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
       <Frame id="image-5" ar="16/9" bdrs="20">
-        <img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" />
+        <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" />
       </Frame>
     </Grid>
     <Flex g="15" jc="center" hl="0" mbs="15">
@@ -290,11 +297,11 @@ By adding an `id` to each reel item and providing anchor links, you can create n
   <PreviewCode>
     ```jsx "id=" "href="
     <Grid hasSnap ov="auto" gaf="column" gac="75%" g="15" bdrs="20" style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
-      <Frame id="image-1" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" /></Frame>
-      <Frame id="image-2" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" /></Frame>
-      <Frame id="image-3" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" /></Frame>
-      <Frame id="image-4" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-4.jpg" alt="" /></Frame>
-      <Frame id="image-5" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-5.jpg" alt="" /></Frame>
+      <Frame id="image-1" ar="16/9" bdrs="20"><img src="https://images.unsplash.com/photo-1615209853186-e4bd66602508?auto=format&fit=max&w=1920&q=80" alt="" /></Frame>
+      <Frame id="image-2" ar="16/9" bdrs="20"><img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=max&w=1920&q=80" alt="" /></Frame>
+      <Frame id="image-3" ar="16/9" bdrs="20"><img src="https://images.unsplash.com/photo-1534868489953-ef37c20abb25?auto=format&fit=max&w=1920&q=80" alt="" /></Frame>
+      <Frame id="image-4" ar="16/9" bdrs="20"><img src="https://images.unsplash.com/photo-1761597327650-fa885c49bef4?auto=format&fit=max&w=1920&q=80" alt="" /></Frame>
+      <Frame id="image-5" ar="16/9" bdrs="20"><img src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=max&w=1920&q=80" alt="" /></Frame>
     </Grid>
     <Flex g="15" jc="center" hl="0" mbs="15">
       <Lism as="a" href="#image-1" c="inherit" bgc="base-2" w="2em" h="2em" ta="center" ac="center" bdrs="10" td="none" hov="-o">1</Lism>
@@ -339,16 +346,16 @@ The following example demonstrates switching to a 2-column layout by setting `gt
     <Box max-w="24rem" mx="auto">
       <Box hasSnap ov="auto" ar="3/4" bdrs="20" bgc="black">
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-1.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1614368558214-f8922bd49987?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-2.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1707597757577-1d88e59671c0?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-3.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1533918793792-7c67fec577a4?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-4.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1761810399655-8be9a861e241?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
       </Box>
     </Box>
@@ -358,16 +365,16 @@ The following example demonstrates switching to a 2-column layout by setting `gt
     <Box max-w="24rem" mx="auto">
       <Box hasSnap ov="auto" ar="3/4" bdrs="20" bgc="black">
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-1.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1614368558214-f8922bd49987?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-2.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1707597757577-1d88e59671c0?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-3.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1533918793792-7c67fec577a4?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
         <Frame ar="3/4">
-          <img src="https://cdn.lism-css.com/img/v/u-4.jpg" alt="" />
+          <img src="https://images.unsplash.com/photo-1761810399655-8be9a861e241?auto=format&fit=max&w=1400&q=80" alt="" />
         </Frame>
       </Box>
     </Box>
