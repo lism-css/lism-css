@@ -1,0 +1,20 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Heading, Inline, Stack, Text, WithSide } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+---
+
+<DemoLayout title="02 - 横長の申し込みCTA">
+  <Container as="section" isWrapper="l" p="30">
+    <WithSide g="40" ai="center" sideW="auto" mainW="xs" bgc="base-2" px="35" py="45" bd bdc="var(--shadow)" bxsh="10" bdrs="20">
+      <Stack g="30">
+        <Text class="u--trim" fz="2xl">
+          <span class="-d:inline-block">思いついた今日が、</span><span class="-d:inline-block">始めどき。</span>
+        </Text>
+        <Text>14日間、すべての機能を無料でお試しいただけます。クレジットカード不要・いつでも解約可能。</Text>
+      </Stack>
+      <Button isSide href="#" fw="bold" lts="l" bgc="text" c="base" px="40" py="20" bdrs="99">無料で試してみる</Button>
+    </WithSide>
+  </Container>
+</DemoLayout>

@@ -1,0 +1,100 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, AutoColumns, Grid, Media, Stack, Text, Heading } from 'lism-css/astro';
+---
+
+<DemoLayout title="Testimonials01">
+  <Container isWrapper="l" py="50" hasGutter bgc="base-2">
+    <Heading level="2" fz="2xl" fw="bold" ta="center">Testimonials</Heading>
+    <AutoColumns cols="20rem" g="20" mbs="40">
+      <Grid gtr="subgrid" gr="span 2" g="30" bgc="base" p="30" bdrs="20">
+        <Grid gtc="auto 1fr" ai="center" g="25">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="4.5rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=1" alt="" width="960" height="640" />
+          </Frame>
+          <Stack w="stretch" g="15">
+            <Text class="u--trim" fw="bold">More free time than ever</Text>
+            <Text class="u--trim" fz="xs" o="pp">30s / Office Worker</Text>
+          </Stack>
+        </Grid>
+        <Text class="u--trim" fz="s" c="text-2">
+          I love coming home to a clean house after work. With less cleaning to do, I have more time to relax on weekday evenings.
+        </Text>
+      </Grid>
+      <Grid gtr="subgrid" gr="span 2" g="30" bgc="base" p="30" bdrs="20">
+        <Grid gtc="auto 1fr" ai="center" g="25">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="4.5rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=2" alt="" width="960" height="640" />
+          </Frame>
+          <Stack w="stretch" g="15">
+            <Text class="u--trim" fw="bold">Like having a second me</Text>
+            <Text class="u--trim" fz="xs" o="pp">40s / Homemaker</Text>
+          </Stack>
+        </Grid>
+        <Text class="u--trim" fz="s" c="text-2">
+          Just add the ingredients and press a button for a delicious stew. With no open flame, I can cook while keeping an eye on the kids.
+        </Text>
+      </Grid>
+      <Grid gtr="subgrid" gr="span 2" g="30" bgc="base" p="30" bdrs="20">
+        <Grid gtc="auto 1fr" ai="center" g="25">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="4.5rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=3" alt="" width="960" height="640" />
+          </Frame>
+          <Stack w="stretch" g="15">
+            <Text class="u--trim" fw="bold">Quick clean anytime!</Text>
+            <Text class="u--trim" fz="xs" o="pp">20s / College Student</Text>
+          </Stack>
+        </Grid>
+        <Text class="u--trim" fz="s" c="text-2">
+          I love being able to clean up as soon as I spot a mess. It's cordless, so I can even use it to clean inside the car.
+        </Text>
+      </Grid>
+      <Grid gtr="subgrid" gr="span 2" g="30" bgc="base" p="30" bdrs="20">
+        <Grid gtc="auto 1fr" ai="center" g="25">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="4.5rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=4" alt="" width="960" height="640" />
+          </Frame>
+          <Stack w="stretch" g="15">
+            <Text class="u--trim" fw="bold">More time after dinner</Text>
+            <Text class="u--trim" fz="xs" o="pp">30s / Part-time Worker</Text>
+          </Stack>
+        </Grid>
+        <Text class="u--trim" fz="s" c="text-2">
+          Without the daily chore of washing dishes, I have more time to relax with my family after meals. The dishes even seem cleaner than when I
+          wash them by hand.
+        </Text>
+      </Grid>
+      <Grid gtr="subgrid" gr="span 2" g="30" bgc="base" p="30" bdrs="20">
+        <Grid gtc="auto 1fr" ai="center" g="25">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="4.5rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=5" alt="" width="960" height="640" />
+          </Frame>
+          <Stack w="stretch" g="15">
+            <Text class="u--trim" fw="bold">Healthy food, great flavor</Text>
+            <Text class="u--trim" fz="xs" o="pp">40s / Office Worker</Text>
+          </Stack>
+        </Grid>
+        <Text class="u--trim" fz="s" c="text-2">
+          Cooking without oil makes fried favorites healthier and cleanup easier. Everything comes out crispy on the outside, juicy on the inside, and
+          full of flavor.
+        </Text>
+      </Grid>
+      <Grid gtr="subgrid" gr="span 2" g="30" bgc="base" p="30" bdrs="20">
+        <Grid gtc="auto 1fr" ai="center" g="25">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="4.5rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=6" alt="" width="960" height="640" />
+          </Frame>
+          <Stack w="stretch" g="15">
+            <Text class="u--trim" fw="bold">A great everyday companion</Text>
+            <Text class="u--trim" fz="xs" o="pp">20s / IT Engineer</Text>
+          </Stack>
+        </Grid>
+        <Text class="u--trim" fz="s" c="text-2">
+          Playing music or checking the weather with just my voice feels like the future. I especially love listening to the news while getting ready
+          on busy mornings.
+        </Text>
+      </Grid>
+    </AutoColumns>
+  </Container>
+</DemoLayout>

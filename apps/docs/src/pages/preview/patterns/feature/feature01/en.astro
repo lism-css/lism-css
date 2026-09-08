@@ -1,0 +1,62 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Center, Columns, Container, Flex, Heading, Icon, Stack, Text } from 'lism-css/astro';
+
+const features = [
+  {
+    icon: 'check-circle',
+    title: 'Manage tasks in one place',
+    description: 'Assign owners and deadlines to organize your tasks. Use boards and lists to see what to work on next.',
+  },
+  {
+    icon: 'clockwise',
+    title: 'Track project progress',
+    description: 'See completed tasks and remaining work at a glance. Adjust your plans with a clear view of how your team is doing.',
+  },
+  {
+    icon: 'book',
+    title: 'Keep your team informed',
+    description: 'Bring documents and daily updates together. Share the information your team needs and keep everyone on the same page.',
+  },
+  {
+    icon: 'calendar',
+    title: 'See your schedule at a glance',
+    description: 'Bring task deadlines and sprint schedules into one calendar. See what is coming up and plan a manageable workload.',
+  },
+] as const;
+---
+
+<DemoLayout title="01 - Two-column features with icons">
+  <Container as="section" isWrapper="m" hasGutter bgc="base">
+    <Stack py={['50', null, '60']} g={['40', null, '50']}>
+      <Stack class="u--trim" g="20" max-sz="s" mx="auto" ta="center">
+        <Text fz="s" c="brand" fw="bold" lts="l" tt="upper">Features</Text>
+        <Heading fz={['2xl', null, '3xl']}>Your team’s work,<br />all in one place.</Heading>
+        <Text fz={['s', 'm']} c="text-2" max-sz="xs">
+          Tasks, progress and team information, all together. DevFlow keeps everyday project management simple and organized.
+        </Text>
+      </Stack>
+
+      <Columns cols={[1, null, 2]} cg="50" rg={['40', null, '50']}>
+        {
+          features.map((feature) => (
+            <Flex as="article" ai="start" g={['20', null, '25']}>
+              <Center as="span" ar="1/1" fz="xl" p=".25em" fxsh="0" bgc="brand" c="white" bdrs="20">
+                <Icon icon={feature.icon} size="1em" />
+              </Center>
+              <Stack g="10">
+                <Heading level="3" fz="m">
+                  {feature.title}
+                </Heading>
+                <Text c="text-2" fz="s">
+                  {feature.description}
+                </Text>
+              </Stack>
+            </Flex>
+          ))
+        }
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>

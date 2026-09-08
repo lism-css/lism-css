@@ -1,0 +1,42 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Grid, Frame, Media, Stack, Flow, Layer, Center, Text, Inline, Heading } from 'lism-css/astro';
+---
+
+<DemoLayout title="General11">
+  <Container isWrapper="l" py="50" hasGutter>
+    <Grid gtc={['auto', null, 'auto 1fr']} g="50 60">
+      <Frame ar="5/2" gc="1 / -1" pos="relative">
+        <Media src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+        <Layer bgc="rgb(0 0 0 / 30%)">
+          <Center h="100%" c="white">
+            <Inline class="u--trim" fz="3xl" fw="light" ff="accent" lts="l" px="20" py="10">Concept</Inline>
+          </Center>
+        </Layer>
+      </Frame>
+      <Stack g="40" max-w={['stretch', null, '24rem']}>
+        <Heading level="2" class="u--trim" fz="3xl" fw="bold">Natural Materials<br />for Everyday Life</Heading>
+        <Text class="u--trim" fz="xl" o="pp">Handmade tools built to last</Text>
+      </Stack>
+      <Flow class="u--trim" fz="m">
+        <p>
+          Our tools are made from natural materials such as wood, linen and iron. We keep the texture and changing colors of each material as they
+          are, and avoid unnecessary processing. This is the most important idea behind making tools that last for years.
+        </p>
+        <p>"Something you pick up every day should become dearer the more you use it." That thought guides every decision about shape and size.</p>
+        <p>
+          Each piece is made by craftspeople who have worked with their material for many years. From drying the wood to the final polish, almost
+          every step is done by hand, so no two items share the same grain or tone even within the same product line. Small marks and knots are left
+          as the character of that particular tool. We also offer repairs and replacement parts, so a well-worn tool can be restored and passed on to
+          the next generation.
+        </p>
+        <p>
+          A tool is completed in the life of the person who uses it. When natural materials find their way into small everyday scenes such as the
+          kitchen, the study or the garden, time seems to pass a little more slowly. We will keep facing our materials and valuing the work of the
+          hand, making tools that stay close to daily life.
+        </p>
+      </Flow>
+    </Grid>
+  </Container>
+</DemoLayout>

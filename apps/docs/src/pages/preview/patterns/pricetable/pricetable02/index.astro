@@ -1,0 +1,103 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Box, Cluster, Container, Heading, Inline, Lism, Stack, Text } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+---
+
+<DemoLayout title="02 - 機能で選ぶ料金比較">
+  <Container as="section" isWrapper="l" hasGutter bgc="base" py="50">
+    <Stack g="40">
+      <Stack g="20" ai="center" ta="center">
+        <Inline fz="s" c="text-2">料金プラン</Inline>
+        <Heading level="2" class="u--trim" fz="2xl" fw="bold"
+          ><Inline d="inline-block">機能で比べる</Inline><Inline d="inline-block">料金プラン</Inline></Heading
+        >
+        <Text max-sz="s" c="text-2">チームの規模と必要なサポートに合わせてお選びください。</Text>
+      </Stack>
+
+      <Box ov-x="auto" pb="10" tabindex={0} role="region" aria-label="料金プラン比較表。横にスクロールできます">
+        <Lism as="table" w="100%" min-w="m" style={{ borderSpacing: 0 }}>
+          <Lism as="caption" ta="start" fz="s" c="text-2" pbe="20">月額料金と主な機能の比較</Lism>
+          <thead>
+            <tr>
+              <Lism as="th" scope="col" ta="start" p="20" bd-bs bd-be>機能</Lism>
+              <Lism as="th" scope="col" ta="start" p="20" bd-bs bd-be>
+                <Stack g="10">
+                  <Inline fz="s" fw="bold">スターター</Inline>
+                  <Cluster g="5" ai="end">
+                    <Inline fz="3xl" fw="bold">0</Inline>
+                    <Inline fz="xs" c="text-2">円/月</Inline>
+                  </Cluster>
+                </Stack>
+              </Lism>
+              <Lism as="th" scope="col" ta="start" p="20" bd-bs bd-be bgc="base-2">
+                <Stack g="10">
+                  <Inline w="fit" fz="xs" fw="bold" c="accent">おすすめ</Inline>
+                  <Inline fz="s" fw="bold">スタンダード</Inline>
+                  <Cluster g="5" ai="end">
+                    <Inline fz="3xl" fw="bold">2,980</Inline>
+                    <Inline fz="xs" c="text-2">円/月</Inline>
+                  </Cluster>
+                </Stack>
+              </Lism>
+              <Lism as="th" scope="col" ta="start" p="20" bd-bs bd-be>
+                <Stack g="10">
+                  <Inline fz="s" fw="bold">ビジネス</Inline>
+                  <Cluster g="5" ai="end">
+                    <Inline fz="3xl" fw="bold">8,980</Inline>
+                    <Inline fz="xs" c="text-2">円/月</Inline>
+                  </Cluster>
+                </Stack>
+              </Lism>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <Lism as="th" scope="row" ta="start" p="20" bd-be>メンバー数</Lism>
+              <Lism as="td" p="20" bd-be>1名</Lism>
+              <Lism as="td" p="20" bd-be bgc="base-2" fw="bold">10名まで</Lism>
+              <Lism as="td" p="20" bd-be>無制限</Lism>
+            </tr>
+            <tr>
+              <Lism as="th" scope="row" ta="start" p="20" bd-be>プロジェクト数</Lism>
+              <Lism as="td" p="20" bd-be>3件</Lism>
+              <Lism as="td" p="20" bd-be bgc="base-2" fw="bold">50件</Lism>
+              <Lism as="td" p="20" bd-be>無制限</Lism>
+            </tr>
+            <tr>
+              <Lism as="th" scope="row" ta="start" p="20" bd-be>ストレージ</Lism>
+              <Lism as="td" p="20" bd-be>2GB</Lism>
+              <Lism as="td" p="20" bd-be bgc="base-2" fw="bold">100GB</Lism>
+              <Lism as="td" p="20" bd-be>1TB</Lism>
+            </tr>
+            <tr>
+              <Lism as="th" scope="row" ta="start" p="20" bd-be>変更履歴</Lism>
+              <Lism as="td" p="20" bd-be>7日間</Lism>
+              <Lism as="td" p="20" bd-be bgc="base-2" fw="bold">1年間</Lism>
+              <Lism as="td" p="20" bd-be>無制限</Lism>
+            </tr>
+            <tr>
+              <Lism as="th" scope="row" ta="start" p="20" bd-be>チャットサポート</Lism>
+              <Lism as="td" p="20" bd-be>—</Lism>
+              <Lism as="td" p="20" bd-be bgc="base-2" fw="bold">対応</Lism>
+              <Lism as="td" p="20" bd-be>優先対応</Lism>
+            </tr>
+            <tr>
+              <Lism as="th" scope="row" ta="start" p="20" bd-be>操作ログ</Lism>
+              <Lism as="td" p="20" bd-be>—</Lism>
+              <Lism as="td" p="20" bd-be bgc="base-2" fw="bold">対応</Lism>
+              <Lism as="td" p="20" bd-be>詳細ログ</Lism>
+            </tr>
+            <tr>
+              <Lism as="th" scope="row" ta="start" p="20">お申し込み</Lism>
+              <Lism as="td" p="20"><Button href="#" variant="outline" jc="center" w="100%" py="15" bdrs="10">無料で始める</Button></Lism>
+              <Lism as="td" p="20" bgc="base-2"><Button href="#" jc="center" w="100%" py="15" bdrs="10">このプランを選ぶ</Button></Lism>
+              <Lism as="td" p="20"><Button href="#" variant="outline" jc="center" w="100%" py="15" bdrs="10">このプランを選ぶ</Button></Lism>
+            </tr>
+          </tbody>
+        </Lism>
+      </Box>
+    </Stack>
+  </Container>
+</DemoLayout>

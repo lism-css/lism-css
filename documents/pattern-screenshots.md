@@ -1,8 +1,18 @@
-基準日: 2026-09-03・コミット105422df
+基準日: 2026-09-07・コミット29fd7da3（作業ツリーの変更を含む）
 
 # パターン スクリーンショット
 
 `apps/docs`のパターンページのサムネイル撮影と、レイアウト差分検出の仕組み。テンプレ側は[template-screenshots.md](./template-screenshots.md)。
+
+## 撮影サイズと表示
+
+ブラウザは1200×800pxで固定し、保存範囲の高さをコンテンツに合わせて最大800pxにする。高さは`body`ではなく、コンテンツを包む`.c--previewSizeReporter`で測る。生成・比較・更新は同じ撮影処理を使う。
+
+`patterns/`一覧は横スクロールと比率3:2の画像枠を使い、`object-fit: contain`で画像全体を表示する。カテゴリページは縦1列に並べ、画像を元の比率で表示する。
+
+比較時に画像サイズが異なる場合は100%差分とし、新しい画像を`diff/`に保存して`update`の対象にする。
+
+比較用ベースラインはランダム画像を1×1pxのグレー画像に置き換えるため、画像本来の比率でレイアウトが決まるパターンでは公開用と高さが異なる場合がある。
 
 
 ## コマンド
@@ -12,7 +22,7 @@
 | コマンド | 処理 |
 | --- | --- |
 | `pnpm screenshot:patterns:new` | ビルド後、Playwrightで新規パターンだけ撮影し`public/screenshots/patterns/`へ保存（既存はスキップ）。サイトのパターン一覧がこれをサムネイルに使う |
-| `pnpm screenshot:patterns:force` | ビルド後、全パターンのサムネイルを再撮影 |
+| `pnpm screenshot:patterns:force` | ビルド後、全パターンの公開用サムネイルと比較用ベースラインを再撮影 |
 | `pnpm screenshot:patterns:compare` | ビルド後、CDNのランダム画像をグレーに差し替えて撮影し、`_screenshots/baseline/`とピクセル比較。初回はベースラインを生成する（コミットする）。差分画像は`_screenshots/diff/`へ出力 |
 | `pnpm screenshot:patterns:compare --threshold 0.5` | 差分率のしきい値を変更（既定0.01%） |
 | `pnpm screenshot:patterns:update` | ビルドせず既存distを使い、`_screenshots/diff/`にある差分パターンのベースライン（グレー差し替え）と公開用サムネ（本番画像）を再撮影。完了後に`diff/`と`temp/`を削除 |
@@ -23,7 +33,7 @@
 
 ```bash
 pnpm screenshot:patterns:new cta              # カテゴリ
-pnpm screenshot:patterns:new cta/cta001       # パターン
+pnpm screenshot:patterns:new cta/cta01       # パターン
 pnpm screenshot:patterns:new cta section      # 複数
 pnpm screenshot:patterns:compare cta
 ```
@@ -35,10 +45,10 @@ pnpm screenshot:patterns:compare cta
 ```bash
 # apps/docs で実行
 npx tsx scripts/generate-screenshots.ts --lang=en
-npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja
+npx tsx scripts/compare-screenshots.ts cta/cta01 --lang=ja
 ```
 
-保存先は`ja`がプレフィックスなし、`en`が`en/`サブディレクトリ（公開用サムネもベースラインも同じ規則）。`en`の撮影URLは末尾に`/en/`が付く（`/preview/patterns/cta/cta001/en/`）。
+保存先は`ja`がプレフィックスなし、`en`が`en/`サブディレクトリ（公開用サムネもベースラインも同じ規則）。`en`の撮影URLは末尾に`/en/`が付く（`/preview/patterns/cta/cta01/en/`）。
 
 
 ## 運用フロー
@@ -58,8 +68,8 @@ apps/docs/
     compare-screenshots.ts     # 比較
     update-screenshots.ts      # 差分パターンの更新
   public/screenshots/patterns/ # 公開用サムネ（Git管理）
-    cta/cta001.png             #   ja
-    en/cta/cta001.png          #   en
+    cta/cta01.png             #   ja
+    en/cta/cta01.png          #   en
   _screenshots/
     baseline/                  # 比較用ベースライン（Git管理）。言語構成は上と同じ
     diff/                      # 差分画像（Git管理外）。言語構成は上と同じ

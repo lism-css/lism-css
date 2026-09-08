@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PatternCategoryIndex from '@/components/patterns/PatternCategoryIndex.astro';
-import { patterns, categoryIds, type PatternCategoryId } from '@/config/patterns';
+import { getPatternCategory, getPatternCategoryIds } from '@/lib/patterns';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 
@@ -11,7 +11,7 @@ export function getStaticPaths() {
 
   const paths = [];
   for (const lang of nonRootLangs) {
-    for (const category of categoryIds) {
+    for (const category of getPatternCategoryIds(lang)) {
       paths.push({ params: { lang, category }, props: { lang } });
     }
   }
@@ -29,8 +29,8 @@ if (!isValidLang(lang)) {
   return Astro.redirect('/404');
 }
 
-const categoryId = category as PatternCategoryId;
-const categoryData = patterns[categoryId];
+const categoryData = getPatternCategory(category!, lang)!;
+const categoryId = categoryData.id;
 ---
 
 <BaseLayout title={`${categoryData.label} - Patterns`} description={categoryData.description[lang]} lang={lang} excludeFromSearch>

@@ -1,0 +1,46 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Wrapper, Grid, Frame, Media, Stack, Flow, Layer, Center, Text, Inline, Heading } from 'lism-css/astro';
+---
+
+<DemoLayout title="General12">
+  <Wrapper isContainer contentSize="full" py="50">
+    <Frame ar={['3/2', '16/9', '21/9']} gc="1 / -1" w="stretch" pos="relative">
+      <Media src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+      <Layer bgc="rgb(0 0 0 / 20%)" style={{ backdropFilter: 'blur(8px)' }}>
+        <Center h="100%" c="white">
+          <Inline class="u--trim" fz="4xl" fw="normal" ff="mono" fs="italic" lts="l" px="20" py="10" mbs={['-20', '-30']}>Story</Inline>
+        </Center>
+      </Layer>
+    </Frame>
+    <Wrapper contentSize="m" hasGutter mbs={['-50', '-60']} pos="relative">
+      <Grid gtc="auto" g="40" bgc="base" p={['40', '50']}>
+        <Stack g="30">
+          <Heading level="2" class="u--trim" fz="3xl" fw="bold" ff="accent">Quiet Hours, Living with the Forest</Heading>
+          <Text class="u--trim" fz="xl" o="pp">The story of wooden tools that follow the seasons</Text>
+        </Stack>
+        <Flow fz="m">
+          <p>
+            Our workshop sits in a small village in the mountains. Mornings begin with birdsong, and opening a window lets the scent of the forest
+            drift in. In this place, we work with wood every day. The forest changes its expression with each season, and that quietly shapes the
+            color and form of our tools.
+          </p>
+          <p>
+            Most of the wood comes from thinning the nearby mountains as part of their upkeep. After cutting, we let it dry thoroughly and read its
+            warp and grain before any shaping begins. Not rushing, and keeping pace with the wood's own time, is the surest way we know to make tools
+            that stay true.
+          </p>
+          <p>
+            For the finish, we apply thin layers of plant-based oil again and again. A new piece starts out pale, but as it is handled and touched by
+            light, it slowly deepens into a warm amber. Enjoying that change is an important part of owning one of our tools.
+          </p>
+          <p>
+            A tree grown in the forest becomes a tool, then gathers time in someone's daily life. We are simply present for one part of that long
+            story. Standing between the forest and the home, we will keep making tools that bring quiet moments to everyday life.
+          </p>
+        </Flow>
+      </Grid>
+    </Wrapper>
+  </Wrapper>
+</DemoLayout>

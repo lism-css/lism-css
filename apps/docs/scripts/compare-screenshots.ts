@@ -9,8 +9,8 @@
  *   npx tsx scripts/compare-screenshots.ts --threshold 0.5    # 差分率しきい値を変更（デフォルト: 0.01%）
  *   npx tsx scripts/compare-screenshots.ts --lang=en          # 英語版のみ比較
  *   npx tsx scripts/compare-screenshots.ts cta                # カテゴリ指定（全言語）
- *   npx tsx scripts/compare-screenshots.ts cta/cta001         # パターン指定（全言語）
- *   npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja  # 特定パターンの日本語版のみ比較
+ *   npx tsx scripts/compare-screenshots.ts cta/cta01         # パターン指定（全言語）
+ *   npx tsx scripts/compare-screenshots.ts cta/cta01 --lang=ja  # 特定パターンの日本語版のみ比較
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -20,6 +20,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, type ChildProcess } from 'node:child_process';
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
+import { capturePatternScreenshot } from './capture-pattern-screenshot';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -52,7 +53,7 @@ const filters = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--
 
 /**
  * フィルタ引数でパターンを絞り込む
- * "cta" → カテゴリ全体, "cta/cta001" → 特定パターン
+ * "cta" → カテゴリ全体, "cta/cta01" → 特定パターン
  */
 function filterPatternPaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
   if (filters.length === 0) return paths;
@@ -65,10 +66,7 @@ function filterPatternPaths(paths: Array<{ category: string; id: string }>): Arr
 }
 
 type CompareResult =
-  | { status: 'unchanged' }
-  | { status: 'changed'; diffPercent: number; diffPath: string }
-  | { status: 'new' }
-  | { status: 'error'; message: string };
+  { status: 'unchanged' } | { status: 'changed'; diffPercent: number; diffPath: string } | { status: 'new' } | { status: 'error'; message: string };
 
 /**
  * 1x1 グレーPNGバッファを生成（ランダム画像の代替用）
@@ -86,12 +84,12 @@ function createGrayPixelPng(): Buffer {
 /**
  * パターン設定からパス一覧を取得（draft除外）
  */
-async function getPatternPaths(): Promise<Array<{ category: string; id: string }>> {
-  const { patterns } = await import('../src/config/patterns.ts');
+async function getPatternPaths(lang: Lang): Promise<Array<{ category: string; id: string }>> {
+  const { patterns, isPatternAvailable } = await import('../src/config/patterns.ts');
   const paths: Array<{ category: string; id: string }> = [];
   for (const [categoryId, category] of Object.entries(patterns)) {
-    for (const item of category.items as Array<{ id: string; draft?: boolean }>) {
-      if (!item.draft) {
+    for (const item of category.items as Array<{ id: string; draft?: boolean; languages?: Lang[] }>) {
+      if (!item.draft && isPatternAvailable(item, lang)) {
         paths.push({ category: categoryId, id: item.id });
       }
     }
@@ -192,9 +190,7 @@ async function captureScreenshot(page: Page, outputDir: string, category: string
       lang === 'ja'
         ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
         : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(CONFIG.waitAfterLoad);
-    await page.screenshot({ path: outputPath, type: 'png' });
+    await capturePatternScreenshot(page, url, outputPath, CONFIG.waitAfterLoad);
     return outputPath;
   } catch {
     return null;
@@ -210,6 +206,9 @@ function compareImages(baselinePath: string, newPath: string, diffPath: string):
 
   // サイズが異なる場合は100%差分とする
   if (baselinePng.width !== newPng.width || baselinePng.height !== newPng.height) {
+    // updateはdiff内のPNGを走査するため、寸法差分でも更新対象を残す。
+    mkdirSync(dirname(diffPath), { recursive: true });
+    writeFileSync(diffPath, readFileSync(newPath));
     return { diffPercent: 100 };
   }
 
@@ -297,12 +296,11 @@ async function main() {
     process.exit(1);
   }
 
-  const allPaths = await getPatternPaths();
-  const patternPaths = filterPatternPaths(allPaths);
+  const pathsByLang = new Map(await Promise.all(targetLangs.map(async (lang) => [lang, filterPatternPaths(await getPatternPaths(lang))] as const)));
   if (filters.length > 0) {
     console.log(`   フィルタ: ${filters.join(', ')}`);
   }
-  console.log(`📋 対象パターン数: ${patternPaths.length}`);
+  console.log(`📋 対象パターン数: ${Array.from(pathsByLang.values()).reduce((count, paths) => count + paths.length, 0)}`);
 
   // ベースラインの有無で初回かどうか判定
   const isInitialRun = !existsSync(CONFIG.baselineDir);
@@ -347,6 +345,7 @@ async function main() {
 
     console.log(isInitialRun ? '📸 ベースライン撮影開始...' : '📸 撮影・比較開始...');
     for (const lang of targetLangs) {
+      const patternPaths = pathsByLang.get(lang)!;
       if (targetLangs.length > 1) {
         console.log(`\n🌐 [${lang}]`);
       }
