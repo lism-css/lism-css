@@ -1,0 +1,70 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Columns, Container, Frame, Heading, Media, Stack, Text, WithSide } from 'lism-css/astro';
+
+const features = [
+  {
+    image: 'tasks-green-person.webp',
+    title: 'タスクをまとめて管理',
+    description: '担当者や期限を決めて、やることを整理。ボードや一覧で、次に取り組む仕事を確認できます。',
+  },
+  {
+    image: 'progress-green-person.webp',
+    title: 'プロジェクトの進捗を把握',
+    description: '完了したタスクや残りの作業をひと目で確認。チームの状況を見ながら、計画を調整できます。',
+  },
+  {
+    image: 'sharing-green-person.webp',
+    title: 'チームの情報を共有',
+    description: 'ドキュメントや日々の更新をひとつの場所に。必要な情報を共有し、認識のずれを減らします。',
+  },
+  {
+    image: 'calendar-green-person.webp',
+    title: '予定をひと目で確認',
+    description: 'タスクの期限やスプリントの予定をカレンダーに集約。先の予定を見渡して、無理なく仕事を進められます。',
+  },
+  {
+    image: 'files-green-person.webp',
+    title: 'ファイルをひとつの場所に',
+    description: '資料やデザインをプロジェクトごとに整理。必要なファイルがすぐに見つかり、探す手間を減らせます。',
+  },
+  {
+    image: 'automation-green-person.webp',
+    title: '繰り返す作業を自動化',
+    description: '定期的なタスクの作成や担当者への通知を自動化。毎日の細かな作業を減らし、大切な仕事に集中できます。',
+  },
+];
+---
+
+<DemoLayout title="03 - グラフィックを添えた6つの特徴">
+  <Container as="section" isWrapper="xl" hasGutter bgc="base-2:green:1%" lang="ja">
+    <Stack py={['50', null, '60']} g={['40', null, '50']}>
+      <Stack class="u--trim" g="20" max-sz="s" mx="auto" ta="center">
+        <Text fz="s" c="text-2" o="p" fw="bold" lts="l" tt="upper" c="text:green:50%">Features</Text>
+        <Heading fz={['2xl', null, '3xl']} lh="xs">チームの今が、<br />ひと目でわかる</Heading>
+        <Text fz={['s', 'm']} c="text-2" max-sz="xs" mx="auto"
+          >タスクも、進捗も、チームの情報も。DevFlowが毎日のプロジェクト管理をすっきりまとめます。</Text
+        >
+      </Stack>
+
+      <Columns cols={[1, null, 2, 3]} g="15">
+        {
+          features.map((feature) => (
+            <WithSide as="article" mainW="12rem" sideW="clamp(200px, 40%, 240px)" ai="center" g="30" p={['30', '35']} bgc="base" bdrs="20" bxsh="10">
+              <Stack g="20">
+                <Heading level="3" fz="l">
+                  {feature.title}
+                </Heading>
+                <Text c="text-2">{feature.description}</Text>
+              </Stack>
+              <Frame isSide ar="1/1" bdrs="30">
+                <Media src={`/img/devflow/${feature.image}`} alt="" width="1254" height="1254" loading="lazy" />
+              </Frame>
+            </WithSide>
+          ))
+        }
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>

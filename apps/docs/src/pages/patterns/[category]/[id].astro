@@ -5,8 +5,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Flow, Text, Group } from 'lism-css/astro';
 import { PreviewFrame } from '@/components/Preview';
 import PageHeader from '@parts/PageHeader.astro';
-import { patterns, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
-import { getAllPatternPaths, getPattern } from '@/lib/patterns';
+import { getAllPatternPaths, getPattern, getPatternCategoryForItem } from '@/lib/patterns';
 
 export function getStaticPaths() {
   const paths = getAllPatternPaths();
@@ -22,7 +21,7 @@ if (!pattern) {
   return Astro.redirect('/404');
 }
 
-const categoryData: PatternCategory = patterns[category as PatternCategoryId];
+const categoryData = getPatternCategoryForItem(category!, id!)!;
 
 const previewUrl = `/preview/patterns/${category}/${id}/`;
 const patternPath = `src/pages/preview/patterns/${category}/${id}`;
@@ -36,7 +35,7 @@ const hasStyle = existsSync(resolve(process.cwd(), stylePath));
       title={pattern.title}
       description={pattern.description.ja}
       draft={pattern.draft}
-      backHref={`/patterns/${category}/`}
+      backHref={`/patterns/${categoryData.id}/`}
       backLabel={`${categoryData.label} 一覧へ`}
     >
       <Text slot="eyebrow" tt="uppercase" lts="l">

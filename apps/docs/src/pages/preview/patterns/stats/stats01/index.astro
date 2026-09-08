@@ -1,0 +1,50 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Columns, Divider, Group, Heading, Inline, Lism, Stack, Text, Wrapper } from 'lism-css/astro';
+---
+
+<DemoLayout title="01 - 数字で伝える実績">
+  <Group as="section" className="c--impactStats" isContainer hasGutter bgc="yellow:10%">
+    <Wrapper contentSize="xl" py={['40', null, '50']}>
+      <Columns cols={[1, null, 2]} g={['30', null, '50']} ai="center">
+        <Stack g="30" max-sz="m">
+          <Inline fz="s" c="text-2">数字で見る、わたしたちの取り組み</Inline>
+          <Heading level="2" className="u--trim" fz="2xl" hl="s">小さな改善を、<br />大きな変化へ。</Heading>
+          <Text fz="m" hl="l" c="text-2">
+            導入チームの働き方を定点観測し、プロダクトの改善へつなげています。数字は直近1年間の利用状況をもとにしています。
+          </Text>
+          <Text fz="2xs" c="text-2">※以下はレイアウト確認用のサンプルデータです。</Text>
+        </Stack>
+        <Stack g="35" bgc="base" p={['30', null, '40']} bdrs="30" bd bdc="divider">
+          <Stack as="dl" g="5">
+            <Lism as="dt" fz="xs" c="text-2">毎週生まれた集中時間</Lism>
+            <Lism as="dd" fz={['3xl', null, '4xl']} fw="bold" hl="xs">12,480<Inline fz="base" fw="normal">時間</Inline></Lism>
+            <Lism as="dd" fz="s" c="text-2">検索や進捗確認に使っていた時間を削減</Lism>
+          </Stack>
+          <Divider />
+          <Columns cols={2} g="30">
+            <Stack as="dl" g="10">
+              <Lism as="dt" fz="xs" c="text-2">継続利用率</Lism>
+              <Lism as="dd" fz="2xl" fw="bold" hl="xs">94<Inline fz="base" fw="normal">%</Inline></Lism>
+              <Lism as="dd" fz="2xs" c="text-2">導入12か月後</Lism>
+            </Stack>
+            <Stack as="dl" g="10">
+              <Lism as="dt" fz="xs" c="text-2">参加チーム</Lism>
+              <Lism as="dd" fz="2xl" fw="bold" hl="xs">386</Lism>
+              <Lism as="dd" fz="2xs" c="text-2">国内外の組織</Lism>
+            </Stack>
+          </Columns>
+          <Divider />
+          <Columns cols={[1, 2]} g="20">
+            <Stack as="dl" g="5">
+              <Lism as="dt" fz="2xs" c="text-2">判断までの時間</Lism>
+              <Lism as="dd" fz="xl" fw="bold">−38%</Lism>
+            </Stack>
+            <Text fz="s" hl="l" c="text-2">意思決定までの平均時間が、導入前より短くなりました。</Text>
+          </Columns>
+        </Stack>
+      </Columns>
+    </Wrapper>
+  </Group>
+</DemoLayout>

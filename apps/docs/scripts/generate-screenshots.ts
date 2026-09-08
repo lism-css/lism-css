@@ -11,11 +11,11 @@
  *   pnpm screenshot:patterns:new       # 新規のみ生成（全言語、ビルド後に実行）
  *   pnpm screenshot:patterns:force     # 全て再生成（public + baseline、全言語）
  *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定（全言語）
- *   npx tsx scripts/generate-screenshots.ts cta/cta001     # パターン指定（全言語）
+ *   npx tsx scripts/generate-screenshots.ts cta/cta01     # パターン指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定
  *   npx tsx scripts/generate-screenshots.ts --lang=en      # 英語版のみ生成
  *   npx tsx scripts/generate-screenshots.ts --lang=ja      # 日本語版のみ生成
- *   npx tsx scripts/generate-screenshots.ts cta/cta001 --lang=en --force  # 特定パターンの英語版を再生成
+ *   npx tsx scripts/generate-screenshots.ts cta/cta01 --lang=en --force  # 特定パターンの英語版を再生成
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -24,6 +24,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { PNG } from 'pngjs';
+import { capturePatternScreenshot } from './capture-pattern-screenshot';
 
 // 現在のディレクトリを取得
 const __filename = fileURLToPath(import.meta.url);
@@ -55,18 +56,18 @@ const forceRegenerate = args.includes('--force');
 // --lang オプション: 指定言語のみ生成（省略時は全言語）
 const langValue = args.find((a) => a.startsWith('--lang='))?.split('=')[1];
 const targetLangs: readonly Lang[] = langValue ? [langValue as Lang] : ALL_LANGS;
-// --force, --lang 以外の引数をフィルタとして使用（例: "cta", "cta/cta001"）
+// --force, --lang 以外の引数をフィルタとして使用（例: "cta", "cta/cta01"）
 const filters = args.filter((a) => !a.startsWith('--'));
 
 /**
  * パターン設定からパス一覧を取得（draft除外）
  */
-async function getPatternPaths(): Promise<Array<{ category: string; id: string }>> {
-  const { patterns } = await import('../src/config/patterns.ts');
+async function getPatternPaths(lang: Lang): Promise<Array<{ category: string; id: string }>> {
+  const { patterns, isPatternAvailable } = await import('../src/config/patterns.ts');
   const paths: Array<{ category: string; id: string }> = [];
   for (const [categoryId, category] of Object.entries(patterns)) {
-    for (const item of category.items as Array<{ id: string; draft?: boolean }>) {
-      if (!item.draft) {
+    for (const item of category.items as Array<{ id: string; draft?: boolean; languages?: Lang[] }>) {
+      if (!item.draft && isPatternAvailable(item, lang)) {
         paths.push({ category: categoryId, id: item.id });
       }
     }
@@ -76,14 +77,14 @@ async function getPatternPaths(): Promise<Array<{ category: string; id: string }
 
 /**
  * フィルタ引数でパターンを絞り込む
- * "cta" → カテゴリ全体, "cta/cta001" → 特定パターン
+ * "cta" → カテゴリ全体, "cta/cta01" → 特定パターン
  */
 function filterPatternPaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
   if (filters.length === 0) return paths;
   return paths.filter(({ category, id }) =>
     filters.some((f) => {
       if (f.includes('/')) {
-        // "cta/cta001" 形式: 完全一致
+        // "cta/cta01" 形式: 完全一致
         return `${category}/${id}` === f;
       }
       // "cta" 形式: カテゴリ一致
@@ -208,9 +209,7 @@ async function captureTo(page: Page, url: string, outputPath: string): Promise<{
     if (!existsSync(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(CONFIG.waitAfterLoad);
-    await page.screenshot({ path: outputPath, type: 'png' });
+    await capturePatternScreenshot(page, url, outputPath, CONFIG.waitAfterLoad);
     return { ok: true };
   } catch (error) {
     return { ok: false, error: error instanceof Error ? error.message : String(error) };
@@ -274,12 +273,11 @@ async function main() {
   }
 
   // パターンパスを取得・フィルタ
-  const allPaths = await getPatternPaths();
-  const patternPaths = filterPatternPaths(allPaths);
+  const pathsByLang = new Map(await Promise.all(targetLangs.map(async (lang) => [lang, filterPatternPaths(await getPatternPaths(lang))] as const)));
   if (filters.length > 0) {
     console.log(`   フィルタ: ${filters.join(', ')}`);
   }
-  console.log(`📋 対象パターン数: ${patternPaths.length}`);
+  console.log(`📋 対象パターン数: ${Array.from(pathsByLang.values()).reduce((count, paths) => count + paths.length, 0)}`);
   console.log('');
 
   // プレビューサーバーを起動
@@ -317,6 +315,7 @@ async function main() {
     // 各パターンのスクリーンショットを言語ごとに撮影
     console.log('📸 スクリーンショット撮影開始...');
     for (const lang of targetLangs) {
+      const patternPaths = pathsByLang.get(lang)!;
       if (targetLangs.length > 1) {
         console.log(`\n🌐 [${lang}]`);
       }

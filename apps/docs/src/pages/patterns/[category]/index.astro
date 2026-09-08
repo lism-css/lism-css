@@ -1,15 +1,15 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PatternCategoryIndex from '@/components/patterns/PatternCategoryIndex.astro';
-import { patterns, categoryIds, type PatternCategoryId } from '@/config/patterns';
+import { getPatternCategory, getPatternCategoryIds } from '@/lib/patterns';
 
 export function getStaticPaths() {
-  return categoryIds.map((category) => ({ params: { category } }));
+  return getPatternCategoryIds().map((category) => ({ params: { category } }));
 }
 
 const { category } = Astro.params;
-const categoryId = category as PatternCategoryId;
-const categoryData = patterns[categoryId];
+const categoryData = getPatternCategory(category!)!;
+const categoryId = categoryData.id;
 ---
 
 <BaseLayout title={`${categoryData.label} - Patterns`} description={categoryData.description.ja} excludeFromSearch>

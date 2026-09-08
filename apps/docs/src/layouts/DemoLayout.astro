@@ -26,6 +26,7 @@ const { title = 'Demo page' } = Astro.props;
     <title>Demo | {title} - {siteConfig.name}</title>
     <!-- 検索エンジンにインデックスさせない -->
     <meta name="robots" content="noindex, nofollow" />
+    <slot name="head" />
   </head>
   <body>
     <PreviewSizeReporter>

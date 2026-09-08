@@ -2,7 +2,7 @@
 import { Stack, Inline, Heading, Link, List, ListItem } from 'lism-css/astro';
 import { Icon } from 'lism-css/react';
 import NavLink from '@parts/NavLink.astro';
-import sidebarConfig, { getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
+import sidebarConfig, { getTranslatedLabel, getPatternsSidebar, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
 import { groupPostsBySidebarDirs, hasDirProperty, getPostUrl } from '@/lib/sidebarPosts';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, t } from '@/lib/i18n';
@@ -29,7 +29,7 @@ if (currentLang !== 'ja') {
 
 const topLevelLinks = sidebarConfig.topLevelLinks;
 
-const sectionItems = sidebarConfig.sections[currentSection];
+const sectionItems = currentSection === 'patterns' ? getPatternsSidebar(currentLang) : sidebarConfig.sections[currentSection];
 
 const postsBySlug = new Map<string, PostEntry>();
 allPosts.forEach((post) => {

@@ -1,0 +1,50 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Columns, Divider, Group, Heading, Inline, Lism, Stack, Text, Wrapper } from 'lism-css/astro';
+---
+
+<DemoLayout title="01 - Results in numbers">
+  <Group as="section" className="c--impactStats" isContainer hasGutter bgc="yellow:10%">
+    <Wrapper contentSize="xl" py={['40', null, '50']}>
+      <Columns cols={[1, null, 2]} g={['30', null, '50']} ai="center">
+        <Stack g="30" max-sz="m">
+          <Inline fz="s" c="text-2">Our work in numbers</Inline>
+          <Heading level="2" className="u--trim" fz="2xl" hl="s">Small improvements.<br />Big changes.</Heading>
+          <Text fz="m" hl="l" c="text-2">
+            We track how teams work to keep improving our product. These figures reflect usage over the past year.
+          </Text>
+          <Text fz="2xs" c="text-2">These figures are sample data for this layout.</Text>
+        </Stack>
+        <Stack g="35" bgc="base" p={['30', null, '40']} bdrs="30" bd bdc="divider">
+          <Stack as="dl" g="5">
+            <Lism as="dt" fz="xs" c="text-2">Focus time reclaimed each week</Lism>
+            <Lism as="dd" fz={['3xl', null, '4xl']} fw="bold" hl="xs">12,480<Inline fz="base" fw="normal"> hours</Inline></Lism>
+            <Lism as="dd" fz="s" c="text-2">Less time spent searching and checking progress</Lism>
+          </Stack>
+          <Divider />
+          <Columns cols={2} g="30">
+            <Stack as="dl" g="10">
+              <Lism as="dt" fz="xs" c="text-2">Retention rate</Lism>
+              <Lism as="dd" fz="2xl" fw="bold" hl="xs">94<Inline fz="base" fw="normal">%</Inline></Lism>
+              <Lism as="dd" fz="2xs" c="text-2">After 12 months</Lism>
+            </Stack>
+            <Stack as="dl" g="10">
+              <Lism as="dt" fz="xs" c="text-2">Teams using the product</Lism>
+              <Lism as="dd" fz="2xl" fw="bold" hl="xs">386</Lism>
+              <Lism as="dd" fz="2xs" c="text-2">Organizations around the world</Lism>
+            </Stack>
+          </Columns>
+          <Divider />
+          <Columns cols={[1, 2]} g="20">
+            <Stack as="dl" g="5">
+              <Lism as="dt" fz="2xs" c="text-2">Time to a decision</Lism>
+              <Lism as="dd" fz="xl" fw="bold">−38%</Lism>
+            </Stack>
+            <Text fz="s" hl="l" c="text-2">Teams reach decisions faster on average than before adopting the product.</Text>
+          </Columns>
+        </Stack>
+      </Columns>
+    </Wrapper>
+  </Group>
+</DemoLayout>

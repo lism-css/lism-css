@@ -13,11 +13,10 @@ import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 export function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
-  const patternPaths = getAllPatternPaths();
 
   const paths = [];
   for (const lang of nonRootLangs) {
-    for (const { category, id } of patternPaths) {
+    for (const { category, id } of getAllPatternPaths(lang)) {
       paths.push({
         params: { lang, category, id },
         props: { lang },
@@ -38,7 +37,7 @@ if (!isValidLang(lang)) {
   return Astro.redirect('/404');
 }
 
-const pattern = getPattern(category!, id!);
+const pattern = getPattern(category!, id!, lang);
 
 if (!pattern) {
   return Astro.redirect('/404');

@@ -10,8 +10,10 @@ export interface PatternRelatedLink {
 export interface PatternItem {
   id: string;
   title: string;
+  titleEn?: string;
   description: Record<LangCode, string>;
   draft?: boolean;
+  languages?: LangCode[];
 }
 
 // ページ側では related の有無に関係なく、この共通型で受ける
@@ -23,43 +25,336 @@ export interface PatternCategory {
 }
 
 const patterns = {
-  cta: {
-    label: 'CTA',
+  hero: {
+    label: 'Hero',
     description: {
-      ja: '問い合わせや申し込みなど、次の行動を促すセクション。',
-      en: 'Sections that prompt the next action, such as making an inquiry or signing up.',
+      ja: 'ページ冒頭に置く、見た目まで作り込んだヒーローセクション。骨格だけのレイアウトが必要な場合はPage Layoutsを参照してください。',
+      en: 'Fully styled hero sections placed at the top of a page. See Page Layouts when you need the bare structure instead.',
+    },
+    related: [
+      {
+        label: 'Page Layouts: Hero Fullscreen',
+        path: '/page-layouts/sections/hero-fullscreen/',
+      },
+    ],
+    items: [
+      {
+        id: 'hero01',
+        title: 'Hero01',
+        description: {
+          ja: '画面の高さいっぱいの背景画像に、ヘッダー・中央コンテンツを重ねたヒーローです。',
+          en: 'A full-height hero with a header and centered content layered over a background image.',
+        },
+      },
+      {
+        id: 'hero02',
+        title: 'Hero02',
+        description: {
+          ja: '画面いっぱいの背景画像に、ヘッダー・大きな見出し・右下のスクロール表示を重ねたヒーローです。',
+          en: 'A full-height hero with a header, a large heading and a scroll cue at the bottom right.',
+        },
+      },
+      {
+        id: 'hero03',
+        title: 'Hero03',
+        description: {
+          ja: '余白で囲んだ角丸の背景画像に、ヘッダー・左下の大きな見出し・右下のスクロール表示を重ねたヒーローです。',
+          en: 'A rounded, inset hero with a header, a large heading at the bottom left and a scroll cue at the bottom right.',
+        },
+      },
+      {
+        id: 'hero04',
+        title: 'Hero04',
+        draft: true,
+        description: {
+          ja: '左側にロゴ・メニューボタンとコンテンツ、右半分に画像を配置したヒーローです。',
+          en: 'A split hero with a logo, menu button and content on the left, and a full-height image on the right.',
+        },
+      },
+      {
+        id: 'hero05',
+        title: 'Hero05',
+        draft: true,
+        description: {
+          ja: '幅を絞った塗りつぶしヘッダーの下に、角丸の横長画像と文章・ボタンを配置したヒーローです。',
+          en: 'A hero with a narrow filled header, followed by a wide rounded image, text and action buttons.',
+        },
+      },
+    ],
+  },
+  feature: {
+    label: 'Feature',
+    description: {
+      ja: 'サービスや商品の機能・強みを、説明文や画面・写真で伝えるセクション。',
+      en: 'Sections that line up the features or highlights of a service or product.',
     },
     items: [
       {
-        id: 'cta001',
-        title: 'CTA001',
+        id: 'feature01',
+        title: '01 - アイコンを添えた2列の特徴',
         description: {
-          ja: 'CTA用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A CTA pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+          ja: '中央の見出しの下に、アイコン・見出し・説明文を2列で配置するセクションです。',
+          en: 'A section with a centered introduction and two columns of features, each pairing an icon with a heading and description.',
+        },
+        titleEn: '01 - Two-column features with icons',
+      },
+      {
+        id: 'feature02',
+        title: '02 - 罫線で区切る3列の特徴',
+        description: {
+          ja: 'アイコン・見出し・説明文と控えめなリンクを3列で並べ、カラム間を罫線で区切るセクションです。',
+          en: 'A section with three columns of icons, headings, descriptions and subtle links, separated by dividers.',
+        },
+        titleEn: '02 - Three-column features with dividers',
+      },
+      {
+        id: 'feature03',
+        title: 'Feature03',
+        description: {
+          ja: '統一感のあるグラフィックと説明文を添えた6枚のカード。画面幅に応じて1列・2列・3列に切り替わりつつ、内部のテキストと画像は、テキストが読みやすい長さを最低限維持するように自動で横並びと縦並びが切り替わります。',
+          en: 'Six cards pairing cohesive illustrations with feature descriptions. The grid adapts to one, two, or three columns based on screen width. Within each card, the text and image automatically switch between side-by-side and stacked layouts to keep the text wide enough for comfortable reading.',
         },
       },
       {
-        id: 'cta002',
-        title: 'CTA002',
+        id: 'feature04',
+        title: 'Feature04',
         description: {
-          ja: 'CTA用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A CTA pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A pattern for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'cta003',
-        title: 'CTA003',
+        id: 'feature05',
+        title: '05 - 見出しと3つの特徴を並べるグリッド',
+        draft: true,
         description: {
-          ja: 'CTA用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A CTA pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+          ja: '左上の見出しと3つの特徴を、罫線で区切った2列のグリッドに配置するセクションです。狭い画面では1列に切り替わります。',
+          en: 'A two-column grid pairing a heading in the top-left cell with three features, separated by fine borders. It stacks into one column on narrow screens.',
+        },
+        titleEn: '05 - A heading and three features in a grid',
+      },
+    ],
+  },
+  pricetable: {
+    label: 'Price Table',
+    description: {
+      ja: '料金プランを比較できる形で並べるセクション。',
+      en: 'Sections that lay out pricing plans for comparison.',
+    },
+    items: [
+      {
+        id: 'pricetable01',
+        title: 'PriceTable01',
+        description: {
+          ja: '価格表用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A pricing table pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
         },
       },
       {
-        id: 'cta004',
-        title: 'CTA004',
+        id: 'pricetable02',
+        title: '02 - 機能で選ぶ料金比較',
+        draft: true,
         description: {
-          ja: 'CTA用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A CTA pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+          ja: '機能を行、プランを列に並べた料金比較表です。狭い幅では表だけを横にスクロールできます。',
+          en: 'A pricing comparison section that helps visitors choose a plan by comparing its features.',
+        },
+        titleEn: '02 - Compare plans by feature',
+      },
+    ],
+  },
+  testimonials: {
+    label: 'Testimonials',
+    description: {
+      ja: '利用者の声やレビューを紹介するセクション。',
+      en: 'Sections that showcase customer voices and reviews.',
+    },
+    items: [
+      {
+        id: 'testimonials01',
+        title: 'Testimonials01',
+        description: {
+          ja: 'お客様の声用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A testimonials pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
+      },
+      {
+        id: 'testimonials02',
+        title: '02 - 導入成果と担当者の声',
+        description: {
+          ja: '成果を伝える見出しに、担当者の写真と声を組み合わせたセクションです。',
+          en: 'A customer story highlighting measurable results and feedback from a company representative.',
+        },
+        titleEn: '02 - Customer results and feedback',
+      },
+    ],
+  },
+  posts: {
+    label: 'Posts',
+    description: {
+      ja: 'ニュース・ブログ記事・制作実績など、投稿を一覧で紹介するセクション。',
+      en: 'Sections that showcase news, blog posts, portfolio works and other entries.',
+    },
+    items: [
+      {
+        id: 'posts01',
+        title: 'Posts01',
+        description: {
+          ja: 'お知らせ用のパターンです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements pattern. Below the "sm" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+      },
+      {
+        id: 'posts02',
+        title: 'Posts02',
+        description: {
+          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+      },
+      {
+        id: 'posts03',
+        title: 'Posts03',
+        description: {
+          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+      },
+      {
+        id: 'posts04',
+        title: 'Posts04',
+        description: {
+          ja: '実績用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A portfolio/works pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
+      },
+    ],
+  },
+  about: {
+    label: 'About',
+    description: {
+      ja: '会社案内やAboutページに置く、挨拶・沿革・会社情報のセクション。',
+      en: 'Sections for company profile and About pages: greetings, history and basic information.',
+    },
+    items: [
+      {
+        id: 'about01',
+        title: '01 - 写真つきの代表挨拶',
+        description: {
+          ja: '見出しの下に、写真と役職・氏名つきの挨拶文を並べるセクションです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A greeting section with a portrait, title and name beside the message. Below the "md" breakpoint, it switches to a single column with items stacked vertically.',
+        },
+        titleEn: '01 - Greeting with a portrait',
+      },
+      {
+        id: 'about02',
+        title: '02 - 署名つきの代表メッセージ',
+        description: {
+          ja: '大きな飾り文字と見出しの下にメッセージを置き、末尾に丸い写真と役職・氏名を添えるセクションです。',
+          en: 'A message section with a large decorative word and heading, closed by a round portrait with title and name.',
+        },
+        titleEn: '02 - Message with a signature',
+      },
+      {
+        id: 'about03',
+        title: '03 - 罫線で区切る沿革',
+        description: {
+          ja: '年号と出来事を罫線で区切って時系列に並べる沿革セクションです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A history section that lists years and events in order, separated by dividing lines. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+        titleEn: '03 - Timeline with dividing lines',
+      },
+      {
+        id: 'about04',
+        title: '04 - 年号を大きく見せる沿革',
+        description: {
+          ja: '斜体の大きな年号を軸に出来事を並べる沿革セクションです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A history section built around large italic years. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+        titleEn: '04 - Timeline with large years',
+      },
+      {
+        id: 'about05',
+        title: '05 - 会社概要と地図',
+        description: {
+          ja: '地図と会社概要の定義リストを縦に並べるセクションです。内容は全てダミーコンテンツです。',
+          en: 'A company profile section stacking a map and a definition-list table. All content is placeholder text.',
+        },
+        titleEn: '05 - Company profile with a map',
+      },
+      {
+        id: 'about06',
+        title: '06 - 会社概要と沿革の表',
+        description: {
+          ja: '会社概要と沿革の定義リストを2カラムで並べるセクションです。breakpoint「md」以下は1カラムになります。内容は全てダミーコンテンツです。',
+          en: 'A section placing company profile and history definition lists in two columns. Below the "md" breakpoint, it switches to a single column. All content is placeholder text.',
+        },
+        titleEn: '06 - Profile and history tables',
+      },
+      {
+        id: 'about07',
+        title: '07 - 店舗一覧',
+        description: {
+          ja: '店舗ごとの情報とリンクボタンを並べる一覧セクションです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
+          en: 'A list section with details and link buttons for each shop. Below the "md" breakpoint, it switches to a single column with items stacked vertically. All content is placeholder text.',
+        },
+        titleEn: '07 - Shop list',
+      },
+      {
+        id: 'about08',
+        title: '08 - 拠点一覧',
+        description: {
+          ja: '拠点ごとの情報とリンクボタンを並べる一覧セクションです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
+          en: 'A list section with details and link buttons for each office. Below the "md" breakpoint, it switches to a single column with items stacked vertically. All content is placeholder text.',
+        },
+        titleEn: '08 - Office list',
+      },
+    ],
+  },
+  member: {
+    label: 'Member',
+    description: {
+      ja: 'メンバーやスタッフを一覧で紹介するセクション。',
+      en: 'Sections that introduce team members or staff as a list.',
+    },
+    items: [
+      {
+        id: 'member01',
+        title: 'Member01',
+        description: {
+          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
+      },
+      {
+        id: 'member02',
+        title: 'Member02',
+        description: {
+          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
+      },
+      {
+        id: 'member03',
+        title: 'Member03',
+        description: {
+          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
+      },
+      {
+        id: 'member04',
+        title: 'Member04',
+        description: {
+          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
+      },
+      {
+        id: 'member05',
+        title: 'Member05',
+        description: {
+          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
         },
       },
     ],
@@ -72,16 +367,16 @@ const patterns = {
     },
     items: [
       {
-        id: 'faq001',
-        title: 'FAQ001',
+        id: 'faq01',
+        title: 'FAQ01',
         description: {
           ja: '質問と回答を常に表示するシンプルなFAQセクションです。dl・dt・ddでマークアップしています。',
           en: 'A simple FAQ section that always shows both questions and answers, marked up with dl, dt and dd.',
         },
       },
       {
-        id: 'faq002',
-        title: 'FAQ002',
+        id: 'faq02',
+        title: 'FAQ02',
         description: {
           ja: 'Accordionを使って回答を開閉できるFAQセクションです。項目数が多い場合に適しています。',
           en: 'An FAQ section using Accordion so answers can be expanded and collapsed. Suited to lists with many items.',
@@ -89,716 +384,301 @@ const patterns = {
       },
     ],
   },
-  feature: {
-    label: 'Feature',
+  cta: {
+    label: 'CTA',
     description: {
-      ja: 'サービスや商品の特徴・注目コンテンツを並べるセクション。',
-      en: 'Sections that line up the features or highlights of a service or product.',
+      ja: '問い合わせや申し込みなど、次の行動を促すセクション。',
+      en: 'Sections that prompt the next action, such as making an inquiry or signing up.',
     },
     items: [
       {
-        id: 'feature001',
-        title: 'Feature001',
+        id: 'cta01',
+        title: 'CTA01',
+        description: {
+          ja: 'CTA用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A CTA pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
+      },
+      {
+        id: 'cta02',
+        title: '02 - 横長の申し込みCTA',
+        description: {
+          ja: '写真を使わず、一言のメッセージとボタンで申し込みを促す横長のCTAです。',
+          en: 'A horizontal CTA encouraging sign-ups with a short message and a button, without photos.',
+        },
+        titleEn: '02 - A horizontal sign-up CTA',
+      },
+      {
+        id: 'cta03',
+        draft: true,
+        title: '03 - ニュースレター登録',
+        description: {
+          ja: 'メール入力欄を備えた登録セクションです。入力の確認を試せますが、実際の送信や登録は行いません。',
+          en: 'A sign-up section with an email field. Input validation can be tried, but no data is submitted or registered.',
+        },
+        titleEn: '03 - Newsletter sign-up',
+      },
+      {
+        id: 'cta04',
+        draft: true,
+        title: 'CTA04',
+        description: {
+          ja: '1枚の背景写真の中央に見出し・説明・ボタンを置き、旅の相談へ案内するCTAです。',
+          en: 'A CTA inviting visitors to discuss their travel plans, with a heading, description and button centered over a single background photo.',
+        },
+      },
+    ],
+  },
+  'page-links': {
+    label: 'Page Links',
+    description: {
+      ja: '画像や説明文を添えて、関連ページやおすすめコンテンツへ案内するリンク集。',
+      en: 'Collections of links with images and descriptions that guide visitors to related pages and recommended content.',
+    },
+    items: [
+      {
+        id: 'page-links01',
+        title: 'PageLinks01',
         description: {
           ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
           en: 'A pattern for featured content. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
         },
       },
       {
-        id: 'feature002',
-        title: 'Feature002',
+        id: 'page-links02',
+        title: 'PageLinks02',
         description: {
           ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下でレイアウトが変わり、アイテムの並びが変更されます。',
           en: 'A pattern for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'feature003',
-        title: 'Feature003',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'feature004',
-        title: 'Feature004',
+        id: 'page-links03',
+        title: 'PageLinks03',
         description: {
           ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
           en: 'A pattern for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
         },
       },
       {
-        id: 'feature005',
-        title: 'Feature005',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'feature006',
-        title: 'Feature006',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'feature007',
-        title: 'Feature007',
+        id: 'page-links04',
+        title: 'PageLinks04',
         description: {
           ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
           en: 'A pattern for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'feature008',
-        title: 'Feature008',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'feature009',
-        title: 'Feature009',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A pattern for featured content. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'feature010',
-        title: 'Feature010',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
-        },
-      },
-      {
-        id: 'feature011',
-        title: 'Feature011',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'feature012',
-        title: 'Feature012',
+        id: 'page-links05',
+        title: 'PageLinks05',
         description: {
           ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。',
           en: 'A pattern for featured content. Below the "md" breakpoint, it displays in 2 columns, and below "sm" it switches to a single column.',
         },
       },
       {
-        id: 'feature013',
-        title: 'Feature013',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it displays in 2 columns, and below "sm" it switches to a single column.',
-        },
-      },
-      {
-        id: 'feature014',
-        title: 'Feature014',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
-        },
-      },
-      {
-        id: 'feature015',
-        title: 'Feature015',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'feature016',
-        title: 'Feature016',
-        description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-    ],
-  },
-  greeting: {
-    label: 'Greeting',
-    description: {
-      ja: '挨拶文やメッセージを伝えるセクション。',
-      en: 'Sections that deliver a greeting or message.',
-    },
-    items: [
-      {
-        id: 'greeting001',
-        title: 'Greeting001',
-        description: {
-          ja: '挨拶用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A greeting pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      { id: 'greeting002', title: 'Greeting002', description: { ja: '挨拶用のパターンです。', en: 'A greeting pattern.' } },
-      {
-        id: 'greeting003',
-        title: 'Greeting003',
-        description: {
-          ja: '挨拶用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A greeting pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      { id: 'greeting004', title: 'Greeting004', description: { ja: '挨拶用のパターンです。', en: 'A greeting pattern.' } },
-    ],
-  },
-  hero: {
-    label: 'Hero',
-    description: {
-      ja: 'ページ冒頭に置く、見た目まで作り込んだヒーローセクション。骨格だけのレイアウトが必要な場合はPage Layoutsを参照してください。',
-      en: 'Fully styled hero sections placed at the top of a page. See Page Layouts when you need the bare structure instead.',
-    },
-    related: [{ label: 'Page Layouts: Hero Fullscreen', path: '/page-layouts/sections/hero-fullscreen/' }],
-    items: [
-      {
-        id: 'hero001',
-        title: 'Hero001',
-        description: {
-          ja: '画面の高さいっぱいの背景画像に、ヘッダー・中央コンテンツ・スクロール導線を重ねたヒーローです。',
-          en: 'A full-height hero with a header, centered content and a scroll cue layered over a background image.',
-        },
-      },
-      {
-        id: 'hero002',
-        title: 'Hero002',
-        description: {
-          ja: 'テキストと画像を左右に並べたヒーローです。breakpoint「md」以下は1カラムになり、縦に並びます。',
-          en: 'A hero with text and an image side by side. Below the "md" breakpoint, it switches to a single column layout.',
-        },
-        draft: true,
-      },
-    ],
-  },
-  history: {
-    label: 'History',
-    description: {
-      ja: '沿革や年表を時系列で伝えるセクション。',
-      en: 'Sections that present a history or timeline in chronological order.',
-    },
-    items: [
-      {
-        id: 'history001',
-        title: 'History001',
-        description: {
-          ja: '沿革コンテンツ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A history/timeline pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'history002',
-        title: 'History002',
-        description: {
-          ja: '沿革コンテンツ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A history/timeline pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-    ],
-  },
-  information: {
-    label: 'Information',
-    description: {
-      ja: '所在地・営業時間などの基本情報を伝えるセクション。',
-      en: 'Sections that present basic information such as location and business hours.',
-    },
-    items: [
-      {
-        id: 'information001',
-        title: 'Information001',
-        description: {
-          ja: '情報用のパターンです。内容は全てダミーコンテンツです。',
-          en: 'An information pattern. All content is placeholder text.',
-        },
-      },
-      {
-        id: 'information002',
-        title: 'Information002',
-        description: {
-          ja: '情報用のパターンです。内容は全てダミーコンテンツです。',
-          en: 'An information pattern. All content is placeholder text.',
-        },
-      },
-      {
-        id: 'information003',
-        title: 'Information003',
-        description: {
-          ja: '情報用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
-          en: 'An information pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically. All content is placeholder text.',
-        },
-      },
-      {
-        id: 'information004',
-        title: 'Information004',
-        description: {
-          ja: '情報用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
-          en: 'An information pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically. All content is placeholder text.',
-        },
-      },
-    ],
-  },
-  member: {
-    label: 'Member',
-    description: {
-      ja: 'メンバーやスタッフを一覧で紹介するセクション。',
-      en: 'Sections that introduce team members or staff as a list.',
-    },
-    items: [
-      {
-        id: 'member001',
-        title: 'Member001',
-        description: {
-          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'member002',
-        title: 'Member002',
-        description: {
-          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'member003',
-        title: 'Member003',
-        description: {
-          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'member004',
-        title: 'Member004',
-        description: {
-          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'member005',
-        title: 'Member005',
-        description: {
-          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'member006',
-        title: 'Member006',
-        description: {
-          ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-    ],
-  },
-  navigation: {
-    label: 'Navigation',
-    description: {
-      ja: 'カテゴリや下層ページへの導線をまとめたセクション。',
-      en: 'Sections that gather links to categories or lower-level pages.',
-    },
-    items: [
-      {
-        id: 'navigation001',
-        title: 'Navigation001',
+        id: 'page-links06',
+        title: 'PageLinks06',
         description: {
           ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
           en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
         },
       },
       {
-        id: 'navigation002',
-        title: 'Navigation002',
+        id: 'page-links07',
+        title: 'PageLinks07',
         description: {
           ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。breakpoint「md」以下は1カラムで表示されます。',
           en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width. Below the "md" breakpoint, it displays in a single column.',
         },
       },
-      {
-        id: 'navigation003',
-        title: 'Navigation003',
-        description: {
-          ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'navigation004',
-        title: 'Navigation004',
-        description: {
-          ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'navigation005',
-        title: 'Navigation005',
-        description: {
-          ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'navigation006',
-        title: 'Navigation006',
-        description: {
-          ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'navigation007',
-        title: 'Navigation007',
-        description: {
-          ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'navigation008',
-        title: 'Navigation008',
-        description: {
-          ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
     ],
   },
-  news: {
-    label: 'News',
-    description: {
-      ja: 'お知らせや新着情報を一覧で並べるセクション。',
-      en: 'Sections that list news and announcements.',
-    },
-    items: [
-      {
-        id: 'news001',
-        title: 'News001',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "sm" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'news002',
-        title: 'News002',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "sm" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'news003',
-        title: 'News003',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'news004',
-        title: 'News004',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'news005',
-        title: 'News005',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'news006',
-        title: 'News006',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-    ],
-  },
-  pricetable: {
-    label: 'Price Table',
-    description: {
-      ja: '料金プランを比較できる形で並べるセクション。',
-      en: 'Sections that lay out pricing plans for comparison.',
-    },
-    items: [
-      {
-        id: 'pricetable001',
-        title: 'PriceTable001',
-        description: {
-          ja: '価格表用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pricing table pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'pricetable002',
-        title: 'PriceTable002',
-        description: {
-          ja: '価格表用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pricing table pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'pricetable003',
-        title: 'PriceTable003',
-        description: {
-          ja: '価格表用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pricing table pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'pricetable004',
-        title: 'PriceTable004',
-        description: {
-          ja: '価格表用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pricing table pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-    ],
-  },
-  // カテゴリid・アイテムid・previewディレクトリは `section` のまま据え置き、表示ラベルのみ `General` にしている。
-  // 親グループ `Sections` とカテゴリ名が衝突するのを避けるため（#566）。
-  section: {
+  general: {
     label: 'General',
     description: {
       ja: '特定の用途に限定しない汎用的なセクション構成。見出し・本文・画像の組み合わせ方の作例です。',
       en: 'General-purpose section structures that are not tied to a specific use case. Examples of combining headings, body text and images.',
     },
     items: [
-      { id: 'section001', title: 'Section001', description: { ja: 'セクション用のパターンです。', en: 'A section pattern.' } },
       {
-        id: 'section002',
-        title: 'Section002',
+        id: 'general01',
+        title: 'General01',
+        description: {
+          ja: 'セクション用のパターンです。',
+          en: 'A section pattern.',
+        },
+      },
+      {
+        id: 'general02',
+        title: 'General02',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
           en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'section002-2',
-        title: 'Section002-2',
+        id: 'general03',
+        title: 'General03',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
           en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'section003',
-        title: 'Section003',
+        id: 'general04',
+        title: 'General04',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
           en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'section003-2',
-        title: 'Section003-2',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'section004',
-        title: 'Section004',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      { id: 'section005', title: 'Section005', description: { ja: 'セクション用のパターンです。', en: 'A section pattern.' } },
-      {
-        id: 'section006',
-        title: 'Section006',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'section007',
-        title: 'Section007',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'section008',
-        title: 'Section008',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'section009',
-        title: 'Section009',
+        id: 'general05',
+        title: 'General05',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
           en: 'A section pattern. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
         },
       },
       {
-        id: 'section009-2',
-        title: 'Section009-2',
+        id: 'general06',
+        title: 'General06',
+        description: {
+          ja: 'セクション用のパターンです。',
+          en: 'A section pattern.',
+        },
+      },
+      {
+        id: 'general07',
+        title: 'General07',
+        description: {
+          ja: 'セクション用のパターンです。',
+          en: 'A section pattern.',
+        },
+      },
+      {
+        id: 'general08',
+        title: 'General08',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
           en: 'A section pattern. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
         },
       },
-      { id: 'section010', title: 'Section010', description: { ja: 'セクション用のパターンです。', en: 'A section pattern.' } },
-      { id: 'section011', title: 'Section011', description: { ja: 'セクション用のパターンです。', en: 'A section pattern.' } },
       {
-        id: 'section012',
-        title: 'Section012',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
-          en: 'A section pattern. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
-        },
-      },
-      {
-        id: 'section013',
-        title: 'Section013',
+        id: 'general09',
+        title: 'General09',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
           en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'section014',
-        title: 'Section014',
+        id: 'general10',
+        title: 'General10',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
           en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
       {
-        id: 'section015',
-        title: 'Section015',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A section pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'section015-2',
-        title: 'Section015-2',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A section pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
-        },
-      },
-      {
-        id: 'section016',
-        title: 'Section016',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A section pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'section901',
-        title: '調整中：Section901',
+        id: 'general11',
+        title: 'General11',
         description: {
           ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
           en: 'A section pattern. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
         },
-        draft: true,
       },
       {
-        id: 'section901-2',
-        title: '調整中：Section901-2',
+        id: 'general12',
+        title: 'General12',
         description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
-          en: 'A section pattern. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
-        },
-        draft: true,
-      },
-      {
-        id: 'section902',
-        title: '調整中：Section902',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
-          en: 'A section pattern. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
-        },
-        draft: true,
-      },
-      {
-        id: 'section902-2',
-        title: '調整中：Section902-2',
-        description: {
-          ja: 'セクション用のパターンです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
-          en: 'A section pattern. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
-        },
-        draft: true,
-      },
-    ],
-  },
-  testimonials: {
-    label: 'Testimonials',
-    description: {
-      ja: '利用者の声やレビューを紹介するセクション。',
-      en: 'Sections that showcase customer voices and reviews.',
-    },
-    items: [
-      {
-        id: 'testimonials001',
-        title: 'Testimonials001',
-        description: {
-          ja: 'お客様の声用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A testimonials pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'testimonials002',
-        title: 'Testimonials002',
-        description: {
-          ja: 'お客様の声用のパターンです。breakpoint毎にアイテムの幅が変更されます。またアイテムをスナップした際に特定の位置で止まります。',
-          en: 'A testimonials pattern. Item widths change at each breakpoint. Items snap to specific positions when scrolled.',
+          ja: 'セクション用のパターンです。',
+          en: 'A section pattern.',
         },
       },
     ],
   },
-  works: {
-    label: 'Works',
+  process: {
+    label: 'Process',
     description: {
-      ja: '制作実績や導入事例を一覧で並べるセクション。',
-      en: 'Sections that list portfolio works and case studies.',
+      ja: '利用開始やサービス提供の手順を伝えるセクション。',
+      en: 'Sections explaining the steps to get started or use a service.',
     },
     items: [
       {
-        id: 'works001',
-        title: 'Works001',
+        id: 'process01',
+        draft: true,
+        title: '01 - はじめるまでの3ステップ',
         description: {
-          ja: '実績用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A portfolio/works pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+          ja: '番号と罫線を使って、利用開始までの手順を順番に伝えるセクションです。',
+          en: 'A section explaining the steps to get started with numbers and dividing lines.',
         },
+        titleEn: '01 - Three steps to get started',
       },
       {
-        id: 'works002',
-        title: 'Works002',
+        id: 'process02',
+        draft: true,
+        title: 'Process02',
         description: {
-          ja: '実績用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A portfolio/works pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+          ja: '番号付きのカードを縦に並べた、手順紹介用のパターンです。',
+          en: 'A process pattern with numbered cards arranged vertically.',
+        },
+      },
+    ],
+  },
+  stats: {
+    label: 'Stats',
+    description: {
+      ja: '実績・規模・成果を数字で伝えるセクション。',
+      en: 'Sections that communicate results, scale and achievements through numbers.',
+    },
+    items: [
+      {
+        id: 'stats01',
+        draft: true,
+        title: '01 - 数字で伝える実績',
+        description: {
+          ja: '説明文と大きな数字を非対称に配置して、実績や規模を伝えるセクションです。',
+          en: 'An asymmetrical section pairing descriptions with large numbers to communicate results and scale.',
+        },
+        titleEn: '01 - Results in numbers',
+      },
+    ],
+  },
+  logos: {
+    label: 'Logo Cloud',
+    description: {
+      ja: '導入企業やパートナーのロゴを並べるセクション。',
+      en: 'Sections displaying customer and partner logos.',
+    },
+    items: [
+      {
+        id: 'logos01',
+        draft: true,
+        title: '01 - 導入企業のロゴ',
+        description: {
+          ja: '余白と文字のロゴで導入企業を紹介するセクションです。企業名は架空のサンプルです。',
+          en: 'A section introducing customers with text-based logos and generous spacing. Company names are fictional samples.',
+        },
+        titleEn: '01 - Customer logos',
+      },
+    ],
+  },
+  footer: {
+    label: 'Footer',
+    description: {
+      ja: 'ページ末尾に置くカテゴリ一覧やサイト内リンクをまとめたセクション。',
+      en: 'Sections at the bottom of a page that collect categories and site navigation links.',
+    },
+    items: [
+      {
+        id: 'footer01',
+        title: 'Footer01',
+        draft: true,
+        description: {
+          ja: 'ナビゲーション用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
         },
       },
     ],
@@ -809,4 +689,25 @@ export type PatternCategoryId = keyof typeof patterns;
 
 export { patterns };
 
-export const categoryIds = Object.keys(patterns) as PatternCategoryId[];
+export const categoryIds: PatternCategoryId[] = [
+  'hero',
+  'feature',
+  'pricetable',
+  'testimonials',
+  'posts',
+  'about',
+  'member',
+  'faq',
+  'cta',
+  'page-links',
+  'general',
+  'process',
+  'stats',
+  'logos',
+  'footer',
+];
+
+// 翻訳前の新規例と、片方の言語だけで整理した例を公開対象から分ける。
+export function isPatternAvailable(item: Pick<PatternItem, 'languages'>, lang: LangCode): boolean {
+  return !item.languages || item.languages.includes(lang);
+}

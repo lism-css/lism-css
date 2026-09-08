@@ -14,6 +14,7 @@ import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { PNG } from 'pngjs';
+import { capturePatternScreenshot } from './capture-pattern-screenshot';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -184,9 +185,7 @@ async function captureScreenshot(page: Page, outputDir: string, category: string
       lang === 'ja'
         ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
         : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(CONFIG.waitAfterLoad);
-    await page.screenshot({ path: outputPath, type: 'png' });
+    await capturePatternScreenshot(page, url, outputPath, CONFIG.waitAfterLoad);
     return true;
   } catch {
     return false;

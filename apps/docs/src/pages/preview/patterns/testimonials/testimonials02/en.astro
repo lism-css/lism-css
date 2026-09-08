@@ -1,0 +1,35 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Heading, Inline, Media, Box, Stack, Text, WithSide } from 'lism-css/astro';
+---
+
+<DemoLayout title="02 - Customer results and feedback">
+  <Container as="section" isWrapper="l" hasGutter bgc="base-2" py="50">
+    <WithSide cg="45" rg="40" ai="center" sideW="300px" mainW="xs">
+      <Frame isSide as="figure" ar="4/5" bdrs="40" max-sz="60%" mx="auto">
+        <Media
+          src="https://cdn.lism-css.com/random/img?category=ceo"
+          alt="Customer representative"
+          width="1024"
+          height="1024"
+          style={{ objectPosition: '50% 30%' }}
+        />
+      </Frame>
+      <Box>
+        <Stack class="u--trimAll">
+          <Inline fz="s" c="text-2" o="p" pbe="20">Customer Story</Inline>
+          <Heading level="3" fz="xl">42% less time spent on monthly reports</Heading>
+          <Text fs="italic" pbs="30">
+            “We spend less time gathering numbers and more time discussing how to improve each store. From the very first month, everyone has been
+            able to make decisions using the same dashboard.”
+          </Text>
+        </Stack>
+        <Stack class="u--trimAll" g="15" bd-bs mbs="30" pbs="30">
+          <Inline fw="bold">Misaki Sato</Inline>
+          <Inline fz="xs" c="text-2">Corporate Planning Manager, Aoba Foods</Inline>
+        </Stack>
+      </Box>
+    </WithSide>
+  </Container>
+</DemoLayout>

@@ -1,5 +1,5 @@
 ---
-import { Stack, Frame, Flex, Lism, Icon } from 'lism-css/astro';
+import { Stack, Frame, Flex, Cluster, Lism, Icon } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Tabs } from '@lism-css/ui/astro/Tabs';
 import { ArrowSquareOutIcon, DesktopIcon, DeviceMobileCameraIcon, DeviceTabletCameraIcon } from '@phosphor-icons/react';
@@ -12,7 +12,7 @@ import SrcCode from '@/components/mdx/SrcCode.astro';
  * 上限は --ar（アスペクト比）から求めた高さ。上限を超える分は iframe 内でスクロールする。
  *
  * files を渡すと「プレビュー / コード」のタブ切り替え付きになり、コード側はファイルが複数ならさらにタブで切り替える。
- * ツールバー（タブまたはサイズ切替）がある時は、別タブリンクをアイコンとして右端に置く。
+ * ツールバーがある時は、別タブリンクをアイコンとして右端に置く。
  * タブが無い時はフレーム下に別タブリンクのボタンも出す（externalButtonLabel で文言を差し替え可）。
  */
 interface PreviewFile {
@@ -23,6 +23,8 @@ interface PreviewFile {
 interface Props {
   url: string;
   files?: PreviewFile[];
+  loading?: 'eager' | 'lazy';
+  title?: string;
   hasSizeSwitch?: boolean;
   hasExternalLink?: boolean;
   externalLinkLabel?: string;
@@ -30,20 +32,32 @@ interface Props {
   externalButtonLabel?: string;
   [key: string]: any;
 }
-const { hasSizeSwitch = false, hasExternalLink = true, externalLinkLabel, externalButtonLabel, url, files = [], ...props } = Astro.props;
+const {
+  hasSizeSwitch = false,
+  hasExternalLink = true,
+  externalLinkLabel,
+  externalButtonLabel,
+  loading = 'eager',
+  title,
+  url,
+  files = [],
+  ...props
+} = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
 const previewText = t(lang, 'preview');
 
 const sizes = [
-  { id: 'mobile', label: previewText.mobile, icon: DeviceMobileCameraIcon, size: '380px', ar: '2/3' },
+  { id: 'mobile', label: previewText.mobile, icon: DeviceMobileCameraIcon, size: '380px', ar: '1/2' },
   { id: 'tablet', label: previewText.tablet, icon: DeviceTabletCameraIcon, size: '640px', ar: '3/4' },
   { id: 'desktop', label: previewText.desktop, icon: DesktopIcon, size: '100%', ar: '3/2' },
 ];
 const defaultSize = 'desktop';
 
 const hasTabs = files.length > 0;
+const hasToolbarStart = Astro.slots.has('toolbar-start');
+const hasToolbarEnd = Astro.slots.has('toolbar-end');
 // タブとパネルを結ぶ id。同じ url のプレビューを同一ページに複数置く想定はない
 const tabsId = 'previewTabs-' + url.replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '');
 const tabs = [
@@ -68,8 +82,9 @@ const panelAttrs = (id: string, isActive: boolean) => ({
 
 <Stack g="20" class="c--previewStage">
   {
-    (hasTabs || hasSizeSwitch) && (
-      <Flex jc={hasTabs ? 'between' : 'center'} ai="center" g="10 20" fxw="wrap" class="c--previewToolbar">
+    (hasTabs || hasSizeSwitch || hasToolbarStart || hasToolbarEnd) && (
+      <Cluster g="10 20" class="c--previewToolbar">
+        <slot name="toolbar-start" />
         {hasTabs && (
           <Flex role="tablist" aria-label={previewText.tabsAriaLabel} p="5" g="5" bgc="base-2" bdrs="20" set="bdrsInner" class="c--previewTabs">
             {tabs.map((tab, i) => (
@@ -139,27 +154,15 @@ const panelAttrs = (id: string, isActive: boolean) => ({
             </Lism>
           )}
         </Flex>
-      </Flex>
+        <slot name="toolbar-end" />
+      </Cluster>
     )
   }
 
   <div {...hasTabs ? panelAttrs('preview', true) : {}}>
     {/* ar は高さ通知が届くまで（または JS 無効時）のフォールバック。通知後は iframe に height を直接指定する */}
-    <Frame
-      id="preview-iframe"
-      class="c--previewFrame"
-      bxsh="10"
-      bdrs="20"
-      bd
-      bdw="2px"
-      mx="auto"
-      w="100%"
-      max-w="100%"
-      ar
-      style={{ '--ar': '3/2' }}
-      {...props}
-    >
-      <iframe src={url} width="800" height="600" style="border:0"></iframe>
+    <Frame class="c--previewFrame" bxsh="10" bdrs="20" bd bdw="2px" mx="auto" w="100%" max-w="100%" ar style={{ '--ar': '3/2' }} {...props}>
+      <iframe src={url} width="800" height="600" loading={loading} title={title ?? previewText.previewTab} style="border:0"></iframe>
     </Frame>
   </div>
   {
@@ -276,6 +279,10 @@ const panelAttrs = (id: string, isActive: boolean) => ({
         frame.style.width = button.dataset.size ?? '';
         frame.style.setProperty('--ar', button.dataset.ar ?? '');
         sizeButtons.forEach((b) => b.setAttribute('aria-pressed', b === button ? 'true' : 'false'));
+        // svh/vh を使う中身を、切替後の比率で測り直す。
+        contentHeight = null;
+        frame.style.removeProperty('aspect-ratio');
+        iframe.style.removeProperty('height');
         requestSize();
       });
     });

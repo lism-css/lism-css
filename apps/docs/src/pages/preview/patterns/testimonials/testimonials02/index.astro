@@ -1,0 +1,34 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Heading, Inline, Media, Box, Stack, Text, WithSide } from 'lism-css/astro';
+---
+
+<DemoLayout title="02 - 導入成果と担当者の声">
+  <Container as="section" isWrapper="l" hasGutter bgc="base-2" py="50">
+    <WithSide cg="45" rg="40" ai="center" sideW="300px" mainW="xs">
+      <Frame isSide as="figure" ar="4/5" bdrs="40" max-sz="60%" mx="auto">
+        <Media
+          src="https://cdn.lism-css.com/random/img?category=ceo"
+          alt="導入企業の担当者"
+          width="1024"
+          height="1024"
+          style={{ objectPosition: '50% 30%' }}
+        />
+      </Frame>
+      <Box>
+        <Stack class="u--trimAll">
+          <Inline fz="s" c="text-2" o="p" pbe="20">ご利用者の声</Inline>
+          <Heading level="3" fz="xl">月次レポート作成時間を42%削減</Heading>
+          <Text fs="italic" pbs="30">
+            「数字を集める作業が減り、店舗ごとの改善策を話す時間に変わりました。導入初月から全員が同じ画面を見て判断できています。」
+          </Text>
+        </Stack>
+        <Stack class="u--trimAll" g="15" bd-bs mbs="30" pbs="30">
+          <Inline fw="bold">佐藤美咲</Inline>
+          <Inline fz="xs" c="text-2">株式会社アオバ食 経営企画部 マネージャー</Inline>
+        </Stack>
+      </Box>
+    </WithSide>
+  </Container>
+</DemoLayout>
