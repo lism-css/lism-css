@@ -113,8 +113,8 @@ const patterns = {
         id: 'feature03',
         title: 'Feature03',
         description: {
-          ja: '特徴・注目コンテンツ用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
-          en: 'A pattern for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+          ja: '統一感のあるグラフィックと説明文を添えた6枚のカード。画面幅に応じて1列・2列・3列に切り替わりつつ、内部のテキストと画像は、テキストが読みやすい長さを最低限維持するように自動で横並びと縦並びが切り替わります。',
+          en: 'Six cards pairing cohesive illustrations with feature descriptions. The grid adapts to one, two, or three columns based on screen width. Within each card, the text and image automatically switch between side-by-side and stacked layouts to keep the text wide enough for comfortable reading.',
         },
       },
       {

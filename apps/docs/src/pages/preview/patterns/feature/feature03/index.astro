@@ -1,77 +1,70 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, Grid, TileGrid, Media, Stack, Layer, Center, Text, Inline, Heading } from 'lism-css/astro';
+import { Columns, Container, Frame, Heading, Media, Stack, Text, WithSide } from 'lism-css/astro';
+
+const features = [
+  {
+    image: 'tasks-green-person.webp',
+    title: 'タスクをまとめて管理',
+    description: '担当者や期限を決めて、やることを整理。ボードや一覧で、次に取り組む仕事を確認できます。',
+  },
+  {
+    image: 'progress-green-person.webp',
+    title: 'プロジェクトの進捗を把握',
+    description: '完了したタスクや残りの作業をひと目で確認。チームの状況を見ながら、計画を調整できます。',
+  },
+  {
+    image: 'sharing-green-person.webp',
+    title: 'チームの情報を共有',
+    description: 'ドキュメントや日々の更新をひとつの場所に。必要な情報を共有し、認識のずれを減らします。',
+  },
+  {
+    image: 'calendar-green-person.webp',
+    title: '予定をひと目で確認',
+    description: 'タスクの期限やスプリントの予定をカレンダーに集約。先の予定を見渡して、無理なく仕事を進められます。',
+  },
+  {
+    image: 'files-green-person.webp',
+    title: 'ファイルをひとつの場所に',
+    description: '資料やデザインをプロジェクトごとに整理。必要なファイルがすぐに見つかり、探す手間を減らせます。',
+  },
+  {
+    image: 'automation-green-person.webp',
+    title: '繰り返す作業を自動化',
+    description: '定期的なタスクの作成や担当者への通知を自動化。毎日の細かな作業を減らし、大切な仕事に集中できます。',
+  },
+];
 ---
 
-<DemoLayout title="Feature03">
-  <Container isWrapper="m" bgc="base" py="50" hasGutter>
-    <Heading level="2" ta="center">ここに特徴が並びます</Heading>
-    <TileGrid cols={['1', null, '2']} rows={['1', null, '3']} mbs="40" g={['30', '40']}>
-      <Grid as="a" isBoxLink href="#" gr="1 / span 3" gtr="1fr auto" bxsh="20" set="hov" hasTransition hov="-bxsh">
-        <Frame as="figure" pos="relative">
-          <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" hasTransition hov="in:zoom" />
-          <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-            <Center h="100%" c="white">
-              <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
-            </Center>
-          </Layer>
-        </Frame>
-        <Stack g="30" p="30">
-          <Text class="u--trim" fz="l" fw="bold">衣類をいたわる</Text>
-          <Text class="u--trim" fz="m" o="p">繊維の奥の汚れを落とし、衣類の傷みを抑えながら、ふんわりと優しく洗い上げます。</Text>
-        </Stack>
-      </Grid>
-      <Grid as="a" isBoxLink href="#" gtc="1fr 2fr" bxsh="20" set="hov" hasTransition hov="-bxsh">
-        <Frame as="figure" pos="relative">
-          <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" hasTransition hov="in:zoom" />
-          <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-            <Center h="100%" c="white">
-              <Inline fz="s" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
-            </Center>
-          </Layer>
-        </Frame>
-        <Stack g="30" p="30">
-          <Text class="u--trim" fz="m" fw="bold">空気をデザインする</Text>
-          <Text class="u--trim" fz="s" o="p">快適な室温はもちろん、空気清浄機能でウイルスや花粉の活動を抑制します。</Text>
-        </Stack>
-      </Grid>
-      <Grid as="a" isBoxLink href="#" gtc="1fr 2fr" bxsh="20" set="hov" hasTransition hov="-bxsh">
-        <Frame as="figure" pos="relative">
-          <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" hasTransition hov="in:zoom" />
-          <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-            <Center h="100%" c="white">
-              <Inline fz="s" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
-            </Center>
-          </Layer>
-        </Frame>
-        <Stack g="30" p="30">
-          <Text class="u--trim" fz="m" fw="bold">毎日ごちそうを</Text>
-          <Text class="u--trim" fz="s" o="p">過熱水蒸気の力で、本格的なオーブン料理が誰でも簡単においしく作れます。</Text>
-        </Stack>
-      </Grid>
-      <Grid as="a" isBoxLink href="#" gtc="1fr 2fr" bxsh="20" set="hov" hasTransition hov="-bxsh">
-        <Frame as="figure" pos="relative">
-          <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" hasTransition hov="in:zoom" />
-          <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-            <Center h="100%" c="white">
-              <Inline fz="s" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
-            </Center>
-          </Layer>
-        </Frame>
-        <Stack g="30" p="30">
-          <Text class="u--trim" fz="m" fw="bold">深呼吸したくなる空間へ</Text>
-          <Text class="u--trim" fz="s" o="p">高性能フィルターが微細な粒子を99%捕集。静かな運転音で寝室にも最適。</Text>
-        </Stack>
-      </Grid>
-    </TileGrid>
+<DemoLayout title="03 - グラフィックを添えた6つの特徴">
+  <Container as="section" isWrapper="xl" hasGutter bgc="base-2:green:1%" lang="ja">
+    <Stack py={['50', null, '60']} g={['40', null, '50']}>
+      <Stack class="u--trim" g="20" max-sz="s" mx="auto" ta="center">
+        <Text fz="s" c="text-2" o="p" fw="bold" lts="l" tt="upper" c="text:green:50%">Features</Text>
+        <Heading fz={['2xl', null, '3xl']} lh="xs">チームの今が、<br />ひと目でわかる</Heading>
+        <Text fz={['s', 'm']} c="text-2" max-sz="xs" mx="auto"
+          >タスクも、進捗も、チームの情報も。DevFlowが毎日のプロジェクト管理をすっきりまとめます。</Text
+        >
+      </Stack>
+
+      <Columns cols={[1, null, 2, 3]} g="15">
+        {
+          features.map((feature) => (
+            <WithSide as="article" mainW="12rem" sideW="clamp(200px, 40%, 240px)" ai="center" g="30" p={['30', '35']} bgc="base" bdrs="20" bxsh="10">
+              <Stack g="20">
+                <Heading level="3" fz="l">
+                  {feature.title}
+                </Heading>
+                <Text c="text-2">{feature.description}</Text>
+              </Stack>
+              <Frame isSide ar="1/1" bdrs="30">
+                <Media src={`/img/devflow/${feature.image}`} alt="" width="1254" height="1254" loading="lazy" />
+              </Frame>
+            </WithSide>
+          ))
+        }
+      </Columns>
+    </Stack>
   </Container>
 </DemoLayout>
-
-<style>
-  @media (any-hover: hover) {
-    .-hov\:in\:zoom {
-      scale: var(--_isHov, 1.1);
-    }
-  }
-</style>
