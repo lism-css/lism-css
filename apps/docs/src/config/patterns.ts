@@ -91,23 +91,23 @@ const patterns = {
     items: [
       {
         id: 'feature01',
-        title: '01 - アイコンで伝える3つの強み',
+        title: '01 - アイコンを添えた2列の特徴',
         draft: true,
         description: {
-          ja: 'アイコン・見出し・短い説明文で、サービスの強みを3つに整理するセクションです。',
-          en: 'A section presenting three service strengths with icons, headings and short descriptions.',
+          ja: '中央の見出しの下に、アイコン・見出し・説明文を2列で配置するセクションです。',
+          en: 'A section with a centered introduction and two columns of features, each pairing an icon with a heading and description.',
         },
-        titleEn: '01 - Three strengths with icons',
+        titleEn: '01 - Two-column features with icons',
       },
       {
         id: 'feature02',
-        title: '02 - 写真と説明で伝える強み',
+        title: '02 - 罫線で区切る3列の特徴',
         draft: true,
         description: {
-          ja: '写真と説明を交互に配置し、サービスの強みを順に紹介するセクションです。',
-          en: 'A section presenting service strengths with alternating photos and descriptions.',
+          ja: 'アイコン・見出し・説明文と控えめなリンクを3列で並べ、カラム間を罫線で区切るセクションです。',
+          en: 'A section with three columns of icons, headings, descriptions and subtle links, separated by dividers.',
         },
-        titleEn: '02 - Strengths shown through photos',
+        titleEn: '02 - Three-column features with dividers',
       },
       {
         id: 'feature03',

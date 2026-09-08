@@ -1,47 +1,59 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Columns, Container, Heading, Icon, Inline, Stack, Text } from 'lism-css/astro';
+import { Center, Columns, Container, Flex, Heading, Icon, Stack, Text } from 'lism-css/astro';
+
+const features = [
+  {
+    icon: 'check-circle',
+    title: 'タスクをまとめて管理',
+    description: '担当者や期限を決めて、やることを整理。ボードや一覧で、次に取り組む仕事を確認できます。',
+  },
+  {
+    icon: 'clockwise',
+    title: 'プロジェクトの進捗を把握',
+    description: '完了したタスクや残りの作業をひと目で確認。チームの状況を見ながら、計画を調整できます。',
+  },
+  {
+    icon: 'book',
+    title: 'チームの情報を共有',
+    description: 'ドキュメントや日々の更新をひとつの場所に。必要な情報を共有し、認識のずれを減らします。',
+  },
+  {
+    icon: 'calendar',
+    title: '予定をひと目で確認',
+    description: 'タスクの期限やスプリントの予定をカレンダーに集約。先の予定を見渡して、無理なく仕事を進められます。',
+  },
+] as const;
 ---
 
-<DemoLayout title="01 - アイコンで伝える3つの強み">
-  <Container as="section" isWrapper="l" hasGutter bgc="base" py="50">
-    <Stack g="40">
-      <Stack g="30" max-sz="s">
-        <Inline fz="s" c="text-2">予約管理サービス</Inline>
-        <Heading level="2" class="u--trim" fz="2xl" fw="bold">予約も連絡も、<Inline d="inline-block">ひとつの画面で。</Inline></Heading>
-        <Text fz="m" c="text-2">
-          Reserve Noteは、小さなサロンや教室のための予約管理サービスです。受付から来店後の案内まで、毎日のやり取りをすっきりまとめます。
-        </Text>
+<DemoLayout title="01 - アイコンを添えた2列の特徴">
+  <Container as="section" isWrapper="m" hasGutter bgc="base">
+    <Stack py={['50', null, '60']} g={['40', null, '50']}>
+      <Stack class="u--trim" g="20" max-sz="s" mx="auto" ta="center">
+        <Text fz="s" c="brand" fw="bold" lts="l" tt="upper">Features</Text>
+        <Heading fz={['2xl', null, '3xl']}>チームの今が、ひと目でわかる</Heading>
+        <Text fz={['s', 'm']} c="text-2" max-sz="xs">タスクも、進捗も、チームの情報も。DevFlowが毎日のプロジェクト管理をすっきりまとめます。 </Text>
       </Stack>
 
-      <Columns cols={[1, null, 3]} g="30">
-        <Stack as="article" g="30" py="30" bd-bs>
-          <Icon icon="calendar" fz="l" c="brand" />
-          <Stack g="15">
-            <Heading level="3" fz="l">空き枠を自動で反映</Heading>
-            <Text fz="base">予約が入るたびに空き状況を更新。電話とWebの予定を同じカレンダーで確認できます。</Text>
-          </Stack>
-          <Text fz="s" c="text-2">24時間いつでも受付</Text>
-        </Stack>
-
-        <Stack as="article" g="30" py="30" bd-bs>
-          <Icon icon="clock" fz="l" c="brand" />
-          <Stack g="15">
-            <Heading level="3" fz="l">一日の予定がすぐ分かる</Heading>
-            <Text fz="base">担当者ごとの予約と準備時間を一覧表示。重なりや見落としを防ぎ、受付を迷わせません。</Text>
-          </Stack>
-          <Text fz="s" c="text-2">担当者別の表示に対応</Text>
-        </Stack>
-
-        <Stack as="article" g="30" py="30" bd-bs>
-          <Icon icon="chat" fz="l" c="brand" />
-          <Stack g="15">
-            <Heading level="3" fz="l">お客様への連絡も簡単</Heading>
-            <Text fz="base">予約前日の確認や来店後のお礼を自動送信。大切な案内を、ちょうどよい時に届けます。</Text>
-          </Stack>
-          <Text fz="s" c="text-2">送信内容は自由に編集</Text>
-        </Stack>
+      <Columns cols={[1, null, 2]} cg="50" rg={['40', null, '50']}>
+        {
+          features.map((feature) => (
+            <Flex as="article" ai="start" g={['20', null, '25']}>
+              <Center as="span" ar="1/1" fz="xl" p=".25em" fxsh="0" bgc="brand" c="white" bdrs="20">
+                <Icon icon={feature.icon} size="1em" />
+              </Center>
+              <Stack g="10">
+                <Heading level="3" fz="m">
+                  {feature.title}
+                </Heading>
+                <Text c="text-2" fz="s">
+                  {feature.description}
+                </Text>
+              </Stack>
+            </Flex>
+          ))
+        }
       </Columns>
     </Stack>
   </Container>
