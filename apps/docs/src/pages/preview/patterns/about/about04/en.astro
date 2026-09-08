@@ -5,24 +5,26 @@ import { Stack, Container, Frame, Grid, Media, Flow, Text, Heading } from 'lism-
 ---
 
 <DemoLayout title="About04">
-  <Container isWrapper="m" bgc="base" py="50" hasGutter>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  </Fragment>
+  <Container isWrapper="m" bgc="base" py="50" hasGutter style={{ '--ff--accent': "'Playfair Display', Georgia, serif" }}>
     <Stack g="50">
-      <Heading level="2" class="u--trim" fz="3xl" fw="bold" ff="accent" ta="center">Our History</Heading>
+      <Heading level="2" class="u--trim" fz="3xl" fw="bold" ff="accent" ta="center">History of the Workshop</Heading>
       <Stack bd-bs>
         <Grid gtc={['auto', null, '16rem 1fr']} g="50 40" bd-be py="40">
-          <Text class="u--trim" fz="2xl" fs="i">2025</Text>
+          <Text class="u--trim" ff="accent" fz="5xl" fs="i" lh="1">1968</Text>
           <Flow ps={['30', null, '0']}>
-            <Text fz="l" fw="bold">Lism Inc. Founded</Text>
-            <p>"We want to deliver travel that truly connects with each individual's heart"</p>
+            <Text fz="l" fw="bold">Founded as a woodworking shop</Text>
             <p>
-              Driven by this singular passion, founders Sato and Suzuki established "Journeyful Inc." in a small apartment room in Tokyo. Questioning
-              conventional package tours, they set out to develop a service that would enable anyone to design a journey that weaves their own story,
-              powered by technology. Travel specialists and engineers gathered, and with just five members, they took the first step toward a grand
-              dream.
+              Our founder, Matsuo Yamada, started in a small workshop on the edge of town. He took orders from local furniture stores and made chairs
+              and desks one at a time, by hand.
             </p>
             <Frame as="figure" ar="16/9" bdrs="10">
               <Media
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=max&w=1920&q=80"
+                src="https://images.pexels.com/photos/30907888/pexels-photo-30907888.jpeg?auto=compress&cs=tinysrgb&w=1920"
                 alt=""
                 width="960"
                 height="640"
@@ -31,35 +33,51 @@ import { Stack, Container, Frame, Grid, Media, Flow, Text, Heading } from 'lism-
           </Flow>
         </Grid>
         <Grid gtc={['auto', null, '16rem 1fr']} g="50 40" bd-be py="40">
-          <Text class="u--trim" fz="2xl" fs="i">2026</Text>
+          <Text class="u--trim" ff="accent" fz="5xl" fs="i" lh="1">1994</Text>
           <Flow ps={['30', null, '0']}>
-            <Text fz="l" fw="bold">"Journeyful" Launched</Text>
-            <p>After approximately 18 months of development, the travel web service "Journeyful" was officially launched.</p>
+            <Text fz="l" fw="bold">Launched our own brand "MATSUO"</Text>
             <p>
-              At launch, the service started with dedicated concierges providing online consultations, proposing custom-made travel plans tailored to
-              each user's preferences. The personalized travel experiences, far from generic tours, became a hot topic on social media and gained
-              support from travel enthusiasts. It presented a new option for those seeking their own special journey.
+              The second generation took over and shifted from wholesale work to an in-house brand. Our solid-wood chairs drew attention at trade
+              shows and reached furniture stores across the country.
             </p>
             <Frame as="figure" ar="16/9" bdrs="10">
-              <Media src="https://cdn.lism-css.com/random/img?category=japan" alt="" width="960" height="640" />
+              <Media
+                src="https://images.unsplash.com/photo-1704751513218-4a03217ff91e?auto=format&fit=max&w=1920&q=80"
+                alt=""
+                width="960"
+                height="640"
+              />
             </Frame>
           </Flow>
         </Grid>
         <Grid gtc={['auto', null, '16rem 1fr']} g="50 40" bd-be py="40">
-          <Text class="u--trim" fz="2xl" fs="i">2027</Text>
+          <Text class="u--trim" ff="accent" fz="5xl" fs="i" lh="1">2012</Text>
           <Flow ps={['30', null, '0']}>
-            <Text fz="l" fw="bold">New Brand "Journeyful Earth" Launched</Text>
+            <Text fz="l" fw="bold">Opened our own showroom</Text>
             <p>
-              Under the philosophy of "contributing to local communities and the environment through travel," we launched "Journeyful Earth," a new
-              brand specializing in sustainable tourism.
-            </p>
-            <p>
-              We introduced a system that selects environmentally-friendly transportation and accommodation, and donates a portion of travel revenue
-              to local environmental organizations. This initiative was recognized with the Sustainability Award at the "Japan Travel Awards 2025." We
-              will continue to pursue a form of travel that enriches travelers, the communities that welcome them, and the planet as a whole.
+              We built a showroom next to the workshop, a place where the makers can talk with customers directly. Repairs and reupholstery requests
+              started here as well.
             </p>
             <Frame as="figure" ar="16/9" bdrs="10">
-              <Media src="https://cdn.lism-css.com/random/img?category=room" alt="" width="960" height="640" />
+              <Media
+                src="https://images.unsplash.com/photo-1613906800797-d5d4fb2f7bbb?auto=format&fit=max&w=1920&q=80"
+                alt=""
+                width="960"
+                height="640"
+              />
+            </Frame>
+          </Flow>
+        </Grid>
+        <Grid gtc={['auto', null, '16rem 1fr']} g="50 40" bd-be py="40">
+          <Text class="u--trim" ff="accent" fz="5xl" fs="i" lh="1">2023</Text>
+          <Flow ps={['30', null, '0']}>
+            <Text fz="l" fw="bold">Third generation takes over, going abroad</Text>
+            <p>
+              Under the third generation, we exhibited overseas for the first time. We aim to spread the culture of repairing furniture and using it
+              for a long time, at home and abroad.
+            </p>
+            <Frame as="figure" ar="16/9" bdrs="10">
+              <Media src="https://cdn.lism-css.com/img/room/nFsD8915rqe6.webp" alt="" width="960" height="640" />
             </Frame>
           </Flow>
         </Grid>
