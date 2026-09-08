@@ -38,8 +38,7 @@ const CONFIG = {
   // 比較用ベースライン（CDNランダム画像をグレーに差し替え）の保存先
   // ※ compare-screenshots.ts / update-screenshots.ts と同じパス
   baselineDir: join(ROOT_DIR, '_screenshots', 'baseline'),
-  // ビューポートサイズ（3:2比率）
-  viewport: { width: 1200, height: 800 },
+  viewport: { width: 1400, height: 800 },
   // プレビューサーバーのポート
   port: 4000,
   // ページ読み込み後の待機時間（ミリ秒）

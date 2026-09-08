@@ -31,7 +31,7 @@ const CONFIG = {
   baselineDir: join(ROOT_DIR, '_screenshots', 'baseline'),
   tempDir: join(ROOT_DIR, '_screenshots', 'temp'),
   diffDir: join(ROOT_DIR, '_screenshots', 'diff'),
-  viewport: { width: 1200, height: 800 },
+  viewport: { width: 1400, height: 800 },
   port: 4000,
   waitAfterLoad: 500,
 };
