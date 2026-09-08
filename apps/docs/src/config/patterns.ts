@@ -616,6 +616,15 @@ const patterns = {
         },
         titleEn: '01 - Three steps to get started',
       },
+      {
+        id: 'process02',
+        draft: true,
+        title: 'Process02',
+        description: {
+          ja: '番号付きのカードを縦に並べた、手順紹介用のパターンです。',
+          en: 'A process pattern with numbered cards arranged vertically.',
+        },
+      },
     ],
   },
   stats: {
