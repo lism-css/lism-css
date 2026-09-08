@@ -125,6 +125,16 @@ const patterns = {
           en: 'A pattern for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
         },
       },
+      {
+        id: 'feature05',
+        title: '05 - 見出しと3つの特徴を並べるグリッド',
+        draft: true,
+        description: {
+          ja: '左上の見出しと3つの特徴を、罫線で区切った2列のグリッドに配置するセクションです。狭い画面では1列に切り替わります。',
+          en: 'A two-column grid pairing a heading in the top-left cell with three features, separated by fine borders. It stacks into one column on narrow screens.',
+        },
+        titleEn: '05 - A heading and three features in a grid',
+      },
     ],
   },
   pricetable: {
