@@ -5,6 +5,9 @@ import { Container, Divider, Flex, Heading, Icon, Link, Stack, Text } from 'lism
 
 const features = [
   {
+    title: 'Branding',
+    description:
+      'We clarify the values you hold dear and the strengths of your business, then express what makes your brand distinct through words, logos and color.',
     icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M10.4512 15.5982L6.05396 17.7307L6.21569 12.6863L7.87754 12.2303L9.65703 13.4951L10.4512 15.5982Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
       </path> <path d="M5.69019 17.9641L10.4065 15.606" stroke="currentColor">
       </path> <path d="M15.5 22.8346V13L22 10V19.6669L15.5 22.8346Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
@@ -12,11 +15,11 @@ const features = [
       </path> <path d="M15.5001 22.9999V12.9999L8.68273 3.96344L8.4571 3.66569" stroke="currentColor">
       </path> <path d="M2 7.2643V15.713C2 16.0936 2.21603 16.4412 2.55729 16.6097L5.27864 17.9533C5.61094 18.1174 6 17.8756 6 17.505V13.8651C6 12.4844 6.99729 11.8732 8.22752 12.5001C9.45774 13.1269 10.455 14.7543 10.455 16.135V19.8876C10.455 20.2682 10.6711 20.6158 11.0123 20.7843L14.8347 22.6715C15.254 22.8785 15.7458 22.8782 16.1648 22.6706L21.444 20.0548C21.7845 19.8861 22 19.5388 22 19.1588V10.4172C22 10.2041 21.9319 9.99654 21.8057 9.82483L16.0013 1.93008C15.5982 1.38181 14.8765 1.1736 14.2433 1.42287L2.95053 5.86856C2.37703 6.09434 2 6.64795 2 7.2643Z" stroke="currentColor">
       </path> </g>`,
-    title: 'Branding',
-    description:
-      'We clarify the values you hold dear and the strengths of your business, then express what makes your brand distinct through words, logos and color.',
   },
   {
+    title: 'Web Design',
+    description:
+      'We clarify who you want to reach and what you want to say. From information architecture to visual design, we build websites that serve their purpose.',
     icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M22 18V14.4301L12 19.4148V23L22 18Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
       </path> <path d="M16 13.5V10.5L14.0358 11.4832L12 11.7574V15L14.0358 14.6434L16 13.5Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
       </path> <path d="M12 19.4148V22.801" stroke="currentColor">
@@ -28,11 +31,11 @@ const features = [
       </path> <path d="M16 9.5V12.8546C16 14.0394 14.2091 15 12 15C9.79086 15 8 14.0394 8 12.8546V9.5" stroke="currentColor">
       </path> <path d="M16 9.49994C16 10.6848 14.2091 11.6454 12 11.6454C9.79086 11.6454 8 10.6848 8 9.49994C8 8.31504 9.79086 7.35449 12 7.35449C14.2091 7.35449 16 8.31504 16 9.49994Z" stroke="currentColor">
       </path> </g>`,
-    title: 'Web Design',
-    description:
-      'We clarify who you want to reach and what you want to say. From information architecture to visual design, we build websites that serve their purpose.',
   },
   {
+    title: 'Maintenance',
+    description:
+      'We review how your website performs and identify areas to improve. From regular updates to refinements in content and design, we provide ongoing support.',
     icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M12 22.5612C15.3137 22.5612 18 21.4099 18 19.9898V17.4183L16.9189 19.0102L13.8131 19.9898H10.8023L7.04547 19.0374L6 17.4183V19.9898C6 21.4099 8.68629 22.5612 12 22.5612Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
       </path> <path d="M18 17.4184C18 18.8385 15.3137 19.9898 12 19.9898C8.68629 19.9898 6 18.8385 6 17.4184C6 15.9982 8.68629 14.8469 12 14.8469C12.4449 14.8469 12.8786 14.8677 13.2959 14.9071C15.5766 15.1223 17.3706 15.8936 17.8645 16.8723C17.9532 17.0483 18 17.231 18 17.4184Z" stroke="currentColor">
       </path> <path d="M6 17.4183V19.9898C6 21.4099 8.68629 22.5612 12 22.5612C15.3137 22.5612 18 21.4099 18 19.9898V17.4183" stroke="currentColor" >
@@ -44,56 +47,53 @@ const features = [
       </path> <path d="M12.0014 9.54758L13.5489 8.7657C14.1134 8.48048 14.7796 8.47909 15.3453 8.76194L18.4462 10.3124" stroke="currentColor" stroke-linecap="round">
       </path> <path d="M12.0001 7.28928L10.4525 6.5074C9.88802 6.22218 9.22188 6.22079 8.65619 6.50363L5.5553 8.05408" stroke="currentColor" stroke-linecap="round">
       </path> </g>`,
-    title: 'Maintenance',
-    description:
-      'We review how your website performs and identify areas to improve. From regular updates to refinements in content and design, we provide ongoing support.',
   },
 ] as const;
 ---
 
 <DemoLayout title="02 - Three-column features with dividers">
   <Container as="section" isWrapper="l" hasGutter bgc="base">
-    <Stack py={['40', null, '50']} g={['50', null, '60']}>
+    <Stack py="60" g={['40', null, '50']}>
       <Stack max-sz="m" g="20">
-        <Heading fz={['3xl', null, '4xl']} lh="xs">Find what makes you unique, and make it clear.</Heading>
-        <Text fz="l" lh="m" c="text-2"
+        <Text bd-s bdw="2px" bdc="current" ps="15" fz="s" c="brand" fw="bold" lts="l" hl="s" tt="upper">Features</Text>
+        <Heading fz={['2xl', null, '3xl']}>Find what makes you unique, and make it clear.</Heading>
+        <Text fz="m" c="text-2"
           >From defining your brand to building and maintaining your website, we support your business through cohesive design and ongoing
           conversation.</Text
         >
       </Stack>
 
-      <Flex fxd={['column', null, 'row']} g="40">
+      <Flex fxd={['column', null, 'row']} g={['30', null, '40']}>
         {
           features.map((feature, index) => (
             <>
               {index > 0 && <Divider bd bdw={['1px 0 0', null, '0 0 0 1px']} fxsh="0" />}
-              <Stack as="article" g="30" fx={{ md: '1' }}>
-                <Icon size="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={feature.icon} />
-                <Stack g="10">
+              <Stack as="article" g="30" p="5" fx={{ md: '1' }}>
+                <Icon size="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={feature.icon} />
+                <Stack g="inherit" class="u--trimAll">
                   <Heading level="3" fz="m">
                     {feature.title}
                   </Heading>
-                  <Text c="text-2" lh="m">
+                  <Text c="text-2" fz="s">
                     {feature.description}
                   </Text>
                 </Stack>
-                <Link
-                  layout="flex"
-                  ai="center"
-                  g="10"
-                  aslf="start"
-                  mbs="auto"
-                  fz="s"
-                  fw="bold"
-                  c="brand"
-                  td="none"
-                  hov="underline"
-                  href="#"
-                  aria-label={`Learn more about ${feature.title}`}
-                >
-                  Learn more
-                  <Icon icon="arrow-right" fz="s" />
-                </Link>
+                <Flex jc="end" mbs="auto">
+                  <Link
+                    class="u--trim"
+                    ai="center"
+                    g="10"
+                    fz="s"
+                    c="brand"
+                    td="none"
+                    hov="underline"
+                    href="#"
+                    aria-label={`Learn more about ${feature.title}`}
+                  >
+                    Learn more
+                    <Icon icon="arrow-right" fz="s" />
+                  </Link>
+                </Flex>
               </Stack>
             </>
           ))
