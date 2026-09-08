@@ -72,7 +72,10 @@ export default defineConfig({
   site: 'https://lism-css.com/',
   image: {
     // domains: ['cdn.lism-css.com'],
-    remotePatterns: [{ hostname: 'cdn.lism-css.com', pathname: '/img/**' }],
+    remotePatterns: [
+      { hostname: 'cdn.lism-css.com', pathname: '/img/**' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+    ],
   },
   // 開発サーバーのポート番号
   server: {
