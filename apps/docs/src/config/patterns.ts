@@ -162,32 +162,6 @@ const patterns = {
       },
     ],
   },
-  testimonials: {
-    label: 'Testimonials',
-    description: {
-      ja: '利用者の声やレビューを紹介するセクション。',
-      en: 'Sections that showcase customer voices and reviews.',
-    },
-    items: [
-      {
-        id: 'testimonials01',
-        title: 'Testimonials01',
-        description: {
-          ja: 'お客様の声用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A testimonials pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-      {
-        id: 'testimonials02',
-        title: '02 - 導入成果と担当者の声',
-        description: {
-          ja: '成果を伝える見出しに、担当者の写真と声を組み合わせたセクションです。',
-          en: 'A customer story highlighting measurable results and feedback from a company representative.',
-        },
-        titleEn: '02 - Customer results and feedback',
-      },
-    ],
-  },
   posts: {
     label: 'Posts',
     description: {
@@ -356,6 +330,32 @@ const patterns = {
           ja: 'メンバー一覧用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
           en: 'A team member list pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
         },
+      },
+    ],
+  },
+  testimonials: {
+    label: 'Testimonials',
+    description: {
+      ja: '利用者の声やレビューを紹介するセクション。',
+      en: 'Sections that showcase customer voices and reviews.',
+    },
+    items: [
+      {
+        id: 'testimonials01',
+        title: 'Testimonials01',
+        description: {
+          ja: 'お客様の声用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A testimonials pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
+      },
+      {
+        id: 'testimonials02',
+        title: '02 - 導入成果と担当者の声',
+        description: {
+          ja: '成果を伝える見出しに、担当者の写真と声を組み合わせたセクションです。',
+          en: 'A customer story highlighting measurable results and feedback from a company representative.',
+        },
+        titleEn: '02 - Customer results and feedback',
       },
     ],
   },
@@ -693,10 +693,10 @@ export const categoryIds: PatternCategoryId[] = [
   'hero',
   'feature',
   'pricetable',
-  'testimonials',
   'posts',
   'about',
   'member',
+  'testimonials',
   'faq',
   'cta',
   'page-links',
