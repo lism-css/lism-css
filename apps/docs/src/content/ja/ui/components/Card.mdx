@@ -353,28 +353,6 @@ export const ExampleCard = (props) => {
 
 以下の例では、`-hov\:in\:slide`クラスを別途用意する必要があります。
 
-
-    <BoxLink href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
-      <Frame ar="1/1">
-        <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-      </Frame>
-      <Layer bgc="rgba(0 0 0 / 10%)" />
-      <Stack pos="absolute" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
-        <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
-        <Box pos="relative" z="1" c="white" hl="s">
-          <h3 util="trim" className="-fz:l">Card Title</h3>
-          <Grid hasTransition hov="in:slide" my="15">
-            <Box ov="hidden">
-              <DummyText lang="ja" length="xs" py="5" fz="s" hl="xs" />
-            </Box>
-          </Grid>
-          <Group util="trim" fz="xs" o="p">
-            <Fragment>2000.01.01 / Author</Fragment>
-          </Group>
-        </Box>
-      </Stack>
-    </BoxLink>
-    
 {/* Note: PreviewAreaにresize つけると Filterの挙動変わることに注意。 */}
 <Preview css={`
 .-hov\\:in\\:slide {
