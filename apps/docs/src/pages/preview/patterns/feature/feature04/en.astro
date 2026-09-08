@@ -1,8 +1,55 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, Box, Flex, Center, Icon, Text, Inline } from 'lism-css/astro';
+import { Container, Grid, Box, Flex, Center, Icon, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
+
+const features = [
+  {
+    title: 'Branding',
+    description:
+      'We clarify the values you hold dear and the strengths of your business, then express what makes your brand distinct through words, logos and color.',
+    icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M10.4512 15.5982L6.05396 17.7307L6.21569 12.6863L7.87754 12.2303L9.65703 13.4951L10.4512 15.5982Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
+      </path> <path d="M5.69019 17.9641L10.4065 15.606" stroke="currentColor">
+      </path> <path d="M15.5 22.8346V13L22 10V19.6669L15.5 22.8346Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
+      </path> <path d="M22 9.92639L15.5 13.1764" stroke="currentColor">
+      </path> <path d="M15.5001 22.9999V12.9999L8.68273 3.96344L8.4571 3.66569" stroke="currentColor">
+      </path> <path d="M2 7.2643V15.713C2 16.0936 2.21603 16.4412 2.55729 16.6097L5.27864 17.9533C5.61094 18.1174 6 17.8756 6 17.505V13.8651C6 12.4844 6.99729 11.8732 8.22752 12.5001C9.45774 13.1269 10.455 14.7543 10.455 16.135V19.8876C10.455 20.2682 10.6711 20.6158 11.0123 20.7843L14.8347 22.6715C15.254 22.8785 15.7458 22.8782 16.1648 22.6706L21.444 20.0548C21.7845 19.8861 22 19.5388 22 19.1588V10.4172C22 10.2041 21.9319 9.99654 21.8057 9.82483L16.0013 1.93008C15.5982 1.38181 14.8765 1.1736 14.2433 1.42287L2.95053 5.86856C2.37703 6.09434 2 6.64795 2 7.2643Z" stroke="currentColor">
+      </path> </g>`,
+  },
+  {
+    title: 'Web Design',
+    description:
+      'We clarify who you want to reach and what you want to say. From information architecture to visual design, we build websites that serve their purpose.',
+    icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M22 18V14.4301L12 19.4148V23L22 18Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
+      </path> <path d="M16 13.5V10.5L14.0358 11.4832L12 11.7574V15L14.0358 14.6434L16 13.5Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
+      </path> <path d="M12 19.4148V22.801" stroke="currentColor">
+      </path> <path d="M2 14.5L11.5528 19.2764C11.8343 19.4172 12.1657 19.4172 12.4472 19.2764L22 14.5" stroke="currentColor">
+      </path> <path d="M20 7L22 6" stroke="currentColor" stroke-linecap="round">
+      </path> <path d="M4 7L2 6" stroke="currentColor" stroke-linecap="round">
+      </path> <path d="M12 3V1" stroke="currentColor" stroke-linecap="round">
+      </path> <path d="M8 11L2.55279 13.7236C2.214 13.893 2 14.2393 2 14.618V17.382C2 17.7607 2.214 18.107 2.55279 18.2764L11.3292 22.6646C11.7515 22.8757 12.2485 22.8757 12.6708 22.6646L21.4472 18.2764C21.786 18.107 22 17.7607 22 17.382V14.618C22 14.2393 21.786 13.893 21.4472 13.7236L16 11" stroke="currentColor">
+      </path> <path d="M16 9.5V12.8546C16 14.0394 14.2091 15 12 15C9.79086 15 8 14.0394 8 12.8546V9.5" stroke="currentColor">
+      </path> <path d="M16 9.49994C16 10.6848 14.2091 11.6454 12 11.6454C9.79086 11.6454 8 10.6848 8 9.49994C8 8.31504 9.79086 7.35449 12 7.35449C14.2091 7.35449 16 8.31504 16 9.49994Z" stroke="currentColor">
+      </path> </g>`,
+  },
+  {
+    title: 'Maintenance',
+    description:
+      'We review how your website performs and identify areas to improve. From regular updates to refinements in content and design, we provide ongoing support.',
+    icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M12 22.5612C15.3137 22.5612 18 21.4099 18 19.9898V17.4183L16.9189 19.0102L13.8131 19.9898H10.8023L7.04547 19.0374L6 17.4183V19.9898C6 21.4099 8.68629 22.5612 12 22.5612Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
+      </path> <path d="M18 17.4184C18 18.8385 15.3137 19.9898 12 19.9898C8.68629 19.9898 6 18.8385 6 17.4184C6 15.9982 8.68629 14.8469 12 14.8469C12.4449 14.8469 12.8786 14.8677 13.2959 14.9071C15.5766 15.1223 17.3706 15.8936 17.8645 16.8723C17.9532 17.0483 18 17.231 18 17.4184Z" stroke="currentColor">
+      </path> <path d="M6 17.4183V19.9898C6 21.4099 8.68629 22.5612 12 22.5612C15.3137 22.5612 18 21.4099 18 19.9898V17.4183" stroke="currentColor" >
+      </path> <path d="M12 17.1809V6.95525C12 6.62603 12.162 6.31791 12.4333 6.13134L12.9439 5.78012" stroke="currentColor" stroke-linecap="round" >
+      </path> <path d="M10 17.1809H14" stroke="currentColor" stroke-linecap="round">
+      </path> <path d="M17.676 2.24207C15.4389 2.64268 12.6687 2.73451 12.026 4.58081C11.9022 4.93638 12.1027 5.31282 12.4327 5.49409C16.4136 7.68083 16.5546 4.04422 17.7844 2.42969C17.8443 2.35098 17.7734 2.22463 17.676 2.24207Z" stroke="currentColor">
+      </path> <path d="M22.4614 13.6509C21.9387 7.38565 18.9957 7.01982 16.1747 8.66534C10.4042 12.0314 20.5262 13.0941 22.3055 13.7682C22.3814 13.7969 22.4681 13.7317 22.4614 13.6509Z" stroke="currentColor">
+      </path> <path d="M1.98466 11.5529C2.5073 5.28763 5.45035 4.92179 8.27133 6.56731C14.0419 9.93338 3.91983 10.996 2.1405 11.6701C2.06469 11.6989 1.97793 11.6336 1.98466 11.5529Z" stroke="currentColor">
+      </path> <path d="M12.0014 9.54758L13.5489 8.7657C14.1134 8.48048 14.7796 8.47909 15.3453 8.76194L18.4462 10.3124" stroke="currentColor" stroke-linecap="round">
+      </path> <path d="M12.0001 7.28928L10.4525 6.5074C9.88802 6.22218 9.22188 6.22079 8.65619 6.50363L5.5553 8.05408" stroke="currentColor" stroke-linecap="round">
+      </path> </g>`,
+  },
+] as const;
 ---
 
 <DemoLayout title="Feature04">
@@ -12,107 +59,51 @@ import { Button } from '@lism-css/ui/astro/Button';
         '"title" "body" "link" / 1fr',
         null,
         `"title link"
-				 "body body" / auto 1fr`,
+        "body body" / auto 1fr`,
       ]}
       g="40"
     >
-      <Box ga="title">
+      <Box ga="title" aslf="center">
         <h2 class="u--trim">Service Features</h2>
       </Box>
       <Grid ga="body" gtc={['1fr auto', null, 'auto 1fr auto']} g="30">
-        <Grid
-          as="a"
-          isBoxLink
-          href="#"
-          gtc="subgrid"
-          gc="1 / -1"
-          g={['20', '30', '40']}
-          bgc="base"
-          p={['20', '30']}
-          bdrs="10"
-          set="hov"
-          hasTransition
-          ai="center"
-          hov="-bxsh"
-        >
-          <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
-            <Flex g={['20', null, '30']} ai="center">
-              <Inline layout="center" fxsh="0" fz="xs" hl="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 1</Inline>
-              <Text fz="m" fw="bold">Build wealth while having fun</Text>
-            </Flex>
-            <Flex ai="center" c="text" td="none" g="30">
-              <Text
-                >Introducing "Goal-Based Savings" where you can save by setting target amounts. Plan your wealth building in an enjoyable way.</Text
-              >
-            </Flex>
-          </Grid>
-          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
-            <Icon icon="arrow-right" fz="s" />
-          </Center>
-        </Grid>
-        <Grid
-          as="a"
-          isBoxLink
-          href="#"
-          gtc="subgrid"
-          gc="1 / -1"
-          g={['20', null, '40']}
-          bgc="base"
-          p={['20', '30']}
-          bdrs="10"
-          set="hov"
-          hasTransition
-          ai="center"
-          hov="-bxsh"
-        >
-          <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
-            <Flex g={['20', null, '30']} ai="center">
-              <Inline layout="center" fxsh="0" fz="xs" hl="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 2</Inline>
-              <Text fz="m" fw="bold">Reliable security measures</Text>
-            </Flex>
-            <Flex ai="center" c="text" td="none" g="30">
-              <Text
-                >With encrypted communications and two-factor authentication, we rigorously protect your valuable assets and personal information.</Text
-              >
-            </Flex>
-          </Grid>
-          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
-            <Icon icon="arrow-right" fz="s" />
-          </Center>
-        </Grid>
-        <Grid
-          as="a"
-          isBoxLink
-          href="#"
-          gtc="subgrid"
-          gc="1 / -1"
-          g={['20', null, '40']}
-          bgc="base"
-          p={['20', '30']}
-          bdrs="10"
-          set="hov"
-          hasTransition
-          ai="center"
-          hov="-bxsh"
-        >
-          <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
-            <Flex g={['20', null, '30']} ai="center">
-              <Inline layout="center" fxsh="0" fz="xs" hl="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 3</Inline>
-              <Text fz="m" fw="bold">All you need is your smartphone!</Text>
-            </Flex>
-            <Flex ai="center" c="text" td="none" g="30">
-              <Text
-                >From account opening to checking your portfolio, everything is completed in the smartphone app. Check your assets anytime, anywhere.</Text
-              >
-            </Flex>
-          </Grid>
-          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
-            <Icon icon="arrow-right" fz="s" />
-          </Center>
-        </Grid>
+        {
+          features.map((feature) => (
+            <Grid
+              as="a"
+              isBoxLink
+              href="#"
+              gtc="subgrid"
+              gc="1 / -1"
+              bgc="base"
+              g={['20', '30', '40']}
+              p={['25', '30', '35']}
+              bdrs="10"
+              set="hov"
+              hasTransition
+              ai="center"
+              hov="-bxsh"
+            >
+              <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
+                <Flex g="inherit" ai="center">
+                  <Icon size="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={feature.icon} />
+                  <Text fz="m" fw="bold">
+                    {feature.title}
+                  </Text>
+                </Flex>
+                <Flex ai="center" c="text" g="30" fz="s">
+                  <Text>{feature.description}</Text>
+                </Flex>
+              </Grid>
+              <Center w="fit" bd p={['10', '15']} bdrs="99" hasTransition hov="in:reverse">
+                <Icon icon="arrow-right" fz="s" />
+              </Center>
+            </Grid>
+          ))
+        }
       </Grid>
-      <Flex ga="link" ai="flex-end" jc="flex-end">
-        <Button href="#" variant="outline" w={['stretch', null, 'auto']} min-w="8rem" fz="s" bd bdc="text" py="15" bdrs="10">View Detail</Button>
+      <Flex ga="link" ai="center" jc="flex-end">
+        <Button href="#" variant="outline" w={['stretch', null, 'auto']} min-w="8rem" fz="s" bd bdc="text" py="15" bdrs="10">Learn more</Button>
       </Flex>
     </Grid>
   </Container>
