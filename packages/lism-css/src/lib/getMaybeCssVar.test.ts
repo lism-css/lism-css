@@ -175,39 +175,25 @@ describe('getMaybeColorVar', () => {
   });
 
   describe('color-mix 記法（2色混合）', () => {
-    test('COLOR1:COLOR2:ALPHA% 形式で color-mix が生成される', () => {
-      const result = getMaybeColorVar('red:blue:50%');
-      expect(result).toContain('color-mix');
-      expect(result).toContain('in srgb');
-      expect(result).toContain('var(--red)');
-      expect(result).toContain('var(--blue)');
-      expect(result).toContain('50%');
+    test('COLOR1:COLOR2:ALPHA% の割合は2色目に適用される', () => {
+      expect(getMaybeColorVar('red:blue:30%')).toBe('color-mix(in srgb, var(--red), var(--blue) 30%)');
     });
 
     test('トークンに存在しないカラーでも処理される', () => {
       const result = getMaybeColorVar('custom1:custom2:30%');
-      expect(result).toContain('color-mix');
-      expect(result).toContain('custom1');
-      expect(result).toContain('custom2');
-      expect(result).toContain('30%');
+      expect(result).toBe('color-mix(in srgb, custom1, custom2 30%)');
     });
 
     test('c と palette の混合も処理される', () => {
-      const result = getMaybeColorVar('base:red:70%');
-      expect(result).toContain('var(--base)');
-      expect(result).toContain('var(--red)');
-      expect(result).toContain('70%');
+      const result = getMaybeColorVar('base-2:green:99%');
+      expect(result).toBe('color-mix(in srgb, var(--base-2), var(--green) 99%)');
     });
   });
 
   describe('color-mix 記法（透明度指定）', () => {
     test('COLOR:ALPHA% 形式で color-mix が生成される', () => {
       const result = getMaybeColorVar('red:50%');
-      expect(result).toContain('color-mix');
-      expect(result).toContain('in srgb');
-      expect(result).toContain('var(--red)');
-      expect(result).toContain('50%');
-      expect(result).toContain('transparent');
+      expect(result).toBe('color-mix(in srgb, var(--red) 50%, transparent)');
     });
 
     test('異なる透明度で処理される', () => {

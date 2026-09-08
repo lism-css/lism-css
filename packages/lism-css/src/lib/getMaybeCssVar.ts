@@ -62,7 +62,7 @@ export function getMaybeColorVar(value: CssValue): string {
     const mixColors = value.split(':');
     if (mixColors.length === 3) {
       const [color1, color2, alpha] = mixColors;
-      return `color-mix(in srgb, ${getMaybeTokenValue('color', color1, TOKENS)} ${alpha}, ${getMaybeTokenValue('color', color2, TOKENS)})`;
+      return `color-mix(in srgb, ${getMaybeTokenValue('color', color1, TOKENS)}, ${getMaybeTokenValue('color', color2, TOKENS)} ${alpha})`;
     } else if (mixColors.length === 2) {
       const [color, alpha] = mixColors;
       return `color-mix(in srgb, ${getMaybeTokenValue('color', color, TOKENS)} ${alpha}, transparent)`;

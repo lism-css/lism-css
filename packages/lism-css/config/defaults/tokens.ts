@@ -33,11 +33,11 @@ export default {
     // divider: 境界線の色
     divider: 'hsl(220 4% 88%)',
     link: 'oklch(50% 0.3 240)', // ≒ hsl(220, 90%, 48%)
-    brand: '#1e5f8c',
-    accent: '#d94a6a',
+    brand: 'hsl(212, 88%, 50%)',
+    accent: 'hsl(347, 65%, 57%)',
     // ライトモード・ダークモードのどちらでもブレンドして使えるようなニュートラルカラー。
     //  Memo: 黒からの変化の方がわかりづらいため、明るめにする。
-    neutral: 'hsl(220, 2%, 80%)',
+    neutral: 'hsl(220, 2%, 75%)',
     // shadow: 影の色。--shc（手書き SCSS）はこの変数の別名で、.set--bxsh から上書きされる。
     shadow: 'hsl(220 2% 4% / 8%)',
   },
