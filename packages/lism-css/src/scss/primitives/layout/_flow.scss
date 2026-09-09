@@ -19,9 +19,11 @@
   --flow: inherit;
 }
 
-// 見出しの上部の余白は広くする.
-.l--flow > :where(h1, h2, h3, h4, h5, h6) {
-  margin-block-start: calc(var(--flow) * 2 + 0.5em);
+// 見出し上部の余白は広くする.
+// em だけの加算だと --flow が小さい時に余白が過大になるため、--flow にも比例させる.
+// h5, h6 はレイアウト上の区切りとして弱いので対象外.
+.l--flow > :where(h1, h2, h3, h4) {
+  margin-block-start: calc(var(--flow) * 1.5 + 0.5em);
 }
 
 // 打ち消し
