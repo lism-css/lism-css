@@ -1,6 +1,6 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
-import { Container, Columns, Layer, Frame, Media, Heading, Icon, Stack, Text } from 'lism-css/astro';
+import { Container, Center, Columns, Layer, Frame, Media, Heading, Icon, Stack, Text } from 'lism-css/astro';
 
 const features = [
   {
@@ -126,7 +126,7 @@ const features = [
 <DemoLayout title="Feature05">
   <Container as="section" aria-label="Webデザインスタジオのサービス" isWrapper="l" hasGutter bgc="base" c="text" py="40">
     <Columns cols={[1, null, 2]} ai="stretch" bd bdc="divider" g="1px" bgc="divider">
-      <Frame ar={[null, null, '2/1']} w="100%" bgc="base" p={['30', '35', '40']} pos="relative">
+      <Frame d="grid" ar={[null, null, '2/1']} w="100%" bgc="base" p={['30', '35', '40']} pos="relative">
         <Media
           isLayer
           src="https://images.unsplash.com/photo-1669295384050-a1d4357bd1d7?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -136,14 +136,16 @@ const features = [
           loading="lazy"
         />
         <Layer bgc="black:50%" />
-        <Heading class="u--trim" pos="relative" c="white" fz={['2xl']} lts="xl" fw="normal" pb="0">Features</Heading>
+        <Heading class="u--trim" pos="relative" c="white" fz={['l', 'xl']} lts="l" fw="normal" my="auto" py="20">私たちにできること</Heading>
       </Frame>
       {
         features.map((feature) => (
-          <Stack as="article" ar={[null, null, '2/1']} w="100%" bgc="base" p={['30', '35', '40']} g="40">
-            <Icon fz="2.5rem" c="text" viewBox="0 0 24 24" set:html={feature.icon} />
+          <Stack as="article" ar={[null, null, '2/1']} w="100%" bgc="base" p={['30', '35', '40']} g="30">
+            <Center p=".25em" fz={['xl', '2xl']} w="fit-content" ar="1/1" bd bdrs="20">
+              <Icon viewBox="0 0 24 24" set:html={feature.icon} />
+            </Center>
             <Stack g="15" mbs="auto">
-              <Heading level="3" fz="xl" fw="normal">
+              <Heading level="3" fz={['m', 'l']}>
                 {feature.title}
               </Heading>
               <Text fz="s" c="text-2">

@@ -54,13 +54,9 @@ const features = [
 <DemoLayout title="02 - Three-column features with dividers">
   <Container as="section" isWrapper="l" hasGutter bgc="base">
     <Stack py="60" g={['40', null, '50']}>
-      <Stack max-sz="m" g="20">
-        <Text bd-s bdw="2px" bdc="current" ps="15" fz="s" c="brand" fw="bold" lts="l" hl="s" tt="upper">Features</Text>
-        <Heading fz={['2xl', null, '3xl']}>Find what makes you unique, and make it clear.</Heading>
-        <Text fz="m" c="text-2"
-          >From defining your brand to building and maintaining your website, we support your business through cohesive design and ongoing
-          conversation.</Text
-        >
+      <Stack max-sz="m">
+        <Text bd-t bdw="1px" bdc="current" p="5" fz="xs" c="brand" fw="bold" lts="l" hl="s" tt="upper" w="fit-content">Features</Text>
+        <Heading fz={['2xl', '3xl', '4xl']}>What We Can Do</Heading>
       </Stack>
 
       <Flex fxd={['column', null, 'row']} g={['30', null, '40']}>
@@ -68,32 +64,34 @@ const features = [
           features.map((feature, index) => (
             <>
               {index > 0 && <Divider bd bdw={['1px 0 0', null, '0 0 0 1px']} fxsh="0" />}
-              <Stack as="article" g="30" p="5" fx={{ md: '1' }}>
-                <Icon size="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={feature.icon} />
-                <Stack g="inherit" class="u--trimAll">
+              <Stack as="article" g={['30', null, '35']} p="5" fx={{ md: '1' }}>
+                <Flex fxd={{ md: 'column' }} ai={['center', null, 'start']} g="25">
+                  <Icon size="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={feature.icon} />
                   <Heading level="3" fz="m">
                     {feature.title}
                   </Heading>
+                </Flex>
+                <Stack g="20">
                   <Text c="text-2" fz="s">
                     {feature.description}
                   </Text>
+                  <Flex jc="end" mbs="auto">
+                    <Link
+                      class="u--trim"
+                      ai="center"
+                      g="10"
+                      fz="s"
+                      c="brand"
+                      td="none"
+                      hov="underline"
+                      href="#"
+                      aria-label={`Learn more about ${feature.title}`}
+                    >
+                      Learn more
+                      <Icon icon="arrow-right" fz="s" />
+                    </Link>
+                  </Flex>
                 </Stack>
-                <Flex jc="end" mbs="auto">
-                  <Link
-                    class="u--trim"
-                    ai="center"
-                    g="10"
-                    fz="s"
-                    c="brand"
-                    td="none"
-                    hov="underline"
-                    href="#"
-                    aria-label={`Learn more about ${feature.title}`}
-                  >
-                    Learn more
-                    <Icon icon="arrow-right" fz="s" />
-                  </Link>
-                </Flex>
               </Stack>
             </>
           ))

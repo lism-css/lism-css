@@ -5,32 +5,32 @@ import { Columns, Container, Frame, Heading, Media, Stack, Text, WithSide } from
 
 const features = [
   {
-    image: 'tasks-green-person.webp',
+    image: 'http://cdn.lism-css.com/img/graphics/GGdr02TFE30n.webp',
     title: 'Keep tasks organized',
     description: 'Assign owners and due dates, then use boards and lists to see what needs to happen next.',
   },
   {
-    image: 'progress-green-person.webp',
+    image: 'http://cdn.lism-css.com/img/graphics/LgC2ipzXSWy8.webp',
     title: 'See project progress',
     description: 'See completed tasks and remaining work at a glance. Adjust your plans as your team moves forward.',
   },
   {
-    image: 'sharing-green-person.webp',
+    image: 'http://cdn.lism-css.com/img/graphics/4nR8oc9E5L3f.webp',
     title: 'Keep everyone in sync',
     description: 'Bring documents and daily updates together. Share the context your team needs to stay on the same page.',
   },
   {
-    image: 'calendar-green-person.webp',
+    image: 'http://cdn.lism-css.com/img/graphics/DNqeX8I1NYnS.webp',
     title: 'Plan your days ahead',
     description: 'Bring deadlines and sprint schedules into one calendar. See what is coming and keep workloads manageable.',
   },
   {
-    image: 'files-green-person.webp',
+    image: 'http://cdn.lism-css.com/img/graphics/fGFiCx3tRJb1.webp',
     title: 'Give every file a home',
     description: 'Organize documents and designs by project. Find the files you need without searching across tools.',
   },
   {
-    image: 'automation-green-person.webp',
+    image: 'http://cdn.lism-css.com/img/graphics/5oERD2W67GKO.webp',
     title: 'Automate routine work',
     description: 'Automate recurring tasks and notifications. Spend less time on small chores and more on work that matters.',
   },
@@ -42,9 +42,9 @@ const features = [
     <Stack py={['50', null, '60']} g={['40', null, '50']}>
       <Stack class="u--trim" g="20" max-sz="s" mx="auto" ta="center">
         <Text fz="s" c="blue" fw="bold" lts="l" tt="upper">Features</Text>
-        <Heading fz={['2xl', null, '3xl']} lh="xs">Your team’s work,<br />all in one place.</Heading>
+        <Heading fz={['2xl', null, '3xl']} lh="xs">See what to do next<br />at a glance</Heading>
         <Text fz={['s', 'm']} c="text-2" max-sz="xs" mx="auto"
-          >Tasks, progress, and team knowledge. DevFlow brings your everyday project management together.</Text
+          >Your team’s tasks and status, all in one place. DevFlow keeps everyday project management simple and organized.</Text
         >
       </Stack>
 
@@ -59,7 +59,7 @@ const features = [
                 <Text c="text-2">{feature.description}</Text>
               </Stack>
               <Frame isSide ar="1/1" bdrs="30">
-                <Media src={`/img/devflow/${feature.image}`} alt="" width="1254" height="1254" loading="lazy" />
+                <Media src={feature.image} alt="" width="1254" height="1254" loading="lazy" />
               </Frame>
             </WithSide>
           ))
