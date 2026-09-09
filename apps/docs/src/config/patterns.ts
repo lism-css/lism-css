@@ -135,30 +135,39 @@ const patterns = {
       },
     ],
   },
-  pricetable: {
-    label: 'Price Table',
+  pricing: {
+    label: 'Pricing',
     description: {
       ja: '料金プランを比較できる形で並べるセクション。',
       en: 'Sections that lay out pricing plans for comparison.',
     },
     items: [
       {
-        id: 'pricetable01',
-        title: 'PriceTable01',
+        id: 'pricing01',
+        title: 'Pricing01',
         description: {
           ja: '価格表用のパターンです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
           en: 'A pricing table pattern. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
         },
       },
       {
-        id: 'pricetable02',
-        title: '02 - 機能で選ぶ料金比較',
+        id: 'pricing02',
+        title: '02 - カードで選ぶ料金プラン',
+        description: {
+          ja: 'プラン名・短い説明・料金・購入ボタン・特徴リストを3枚のカードにまとめた料金表です。中央のプランの右上に「人気」バッジを表示し、狭い画面では1列に並びます。',
+          en: 'Three pricing cards with a plan name, short description, price, purchase button, and feature list. The middle plan has a Popular badge at the top right, and the cards stack on narrow screens.',
+        },
+        titleEn: '02 - Choose a pricing card',
+      },
+      {
+        id: 'pricing03',
+        title: '03 - 機能で選ぶ料金比較',
         draft: true,
         description: {
           ja: '機能を行、プランを列に並べた料金比較表です。狭い幅では表だけを横にスクロールできます。',
           en: 'A pricing comparison section that helps visitors choose a plan by comparing its features.',
         },
-        titleEn: '02 - Compare plans by feature',
+        titleEn: '03 - Compare plans by feature',
       },
     ],
   },
@@ -692,7 +701,7 @@ export { patterns };
 export const categoryIds: PatternCategoryId[] = [
   'hero',
   'feature',
-  'pricetable',
+  'pricing',
   'posts',
   'about',
   'member',

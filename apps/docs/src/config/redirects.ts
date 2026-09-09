@@ -123,6 +123,11 @@ export const astroRedirects: AstroRedirects = {
   '/en/ui/components/hero/': '/en/patterns/hero/',
   '/en/ui/examples/faq/': '/en/patterns/faq/',
   '/en/ui/examples/hero/': '/en/patterns/hero/',
+  // patterns の pricetable カテゴリを pricing にリネーム
+  '/patterns/pricetable/': '/patterns/pricing/',
+  '/patterns/pricetable/pricetable01/': '/patterns/pricing/pricing01/',
+  '/en/patterns/pricetable/': '/en/patterns/pricing/',
+  '/en/patterns/pricetable/pricetable01/': '/en/patterns/pricing/pricing01/',
   // tokens/spacing ページを廃止し、tokens ページの SPACE セクションへ統合
   '/docs/tokens/spacing/': '/docs/tokens/#space',
   '/en/docs/tokens/spacing/': '/en/docs/tokens/#space',
