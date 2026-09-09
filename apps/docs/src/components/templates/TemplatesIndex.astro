@@ -3,13 +3,13 @@
  * Templates 一覧ページ本体（ja / en 共通）
  *
  * URL: /templates/  または  /{lang}/templates/
- * 導入文・クイックスタートと、カテゴリごとの軽いカード（サムネ・stack・タイトル・短い説明）だけを載せる。
+ * クイックスタートと、カテゴリごとの軽いカード（サムネ・タイトル・短い説明）だけを載せる。
  * 長い説明・機能比較・生成コマンドはカテゴリページ（TemplateCategoryDetail）に置く。
  */
-import { Stack, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, Inline } from 'lism-css/astro';
+import { Stack, AutoColumns, Text, Heading, Link, Frame, Lism, Inline } from 'lism-css/astro';
 import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, groupByCategory, getAggregateRepresentative, getThumb } from '@/config/templates';
+import { groupByCategory, getAggregateRepresentative, getThumb } from '@/config/templates';
 import { Preview, PreviewCode } from '@/components/Preview';
 import SectionHeader from '@parts/SectionHeader.astro';
 import PageHeader from '@parts/PageHeader.astro';
@@ -23,52 +23,31 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      title: 'Project Templates',
+      title: 'Lism Templates',
       lead: 'Lism CSSでプロジェクトを始めるためのテンプレートをCLIコマンド1つで手元に生成できます。',
-      intro: {
-        before: 'Lism CSSを組み込んだ、プロジェクト一式型のテンプレートをいくつか用意しています。',
-        after: 'を実行すると、設定ファイルやページを含むプロジェクトファイルがまるごとローカル環境にコピーされ、そのまま開発を始められます。',
-        second:
-          'テンプレートはブログ・LP・最小構成といったプロジェクトの種類ごとにカテゴリ分けされており、同じカテゴリの中でもデザインや機能の異なるバリエーションから選べます。テンプレートによっては、Astro / Vite + React / Next.jsなどのスタックも選択できます。生成時には日本語・英語のどちらかを選べます。',
-      },
       quickStart: 'クイックスタート',
+      quickStartLead: 'Lism CSSを組み込んだ、プロジェクト一式型のテンプレートをコマンド一つでローカル環境にコピーできます。',
       available: 'テンプレートプレビュー',
-      availableLead: '各テンプレートのサムネイルと概要です。詳しい説明・機能の比較・生成コマンドは各カテゴリのページで確認できます。',
+      availableLead:
+        'テンプレートはブログ・LP・最小構成といったプロジェクトの種類ごとにカテゴリ分けされており、同じカテゴリの中でもデザインや機能の異なるバリエーションから選べます。詳しい説明・機能の比較・生成コマンドは各カテゴリのページで確認できます。',
       commandLead: '対話形式でカテゴリ、スタック、バリアントを選んで生成します。',
-      fullFormLead: '引数を渡すと選択UIをスキップして直接生成できます。',
-      termTitle: 'TemplatesとPatternsの違い',
-      termBody: 'Templatesはプロジェクト一式を生成する雛形です。Patternsは既存サイトへコピーして使うセクション単位・パーツ単位のパターン集です。',
-      patternsLink: 'Patternsを見る',
       viewAll: 'すべて見る',
-      details: '詳細を見る',
       thumbAlt: (title: string) => `${title} のサムネイル`,
     }
   : {
-      title: 'Project Templates',
+      title: 'Lism Templates',
       lead: 'Generate a Lism CSS project template locally with a single CLI command.',
-      intro: {
-        before: 'We provide several full-project templates with Lism CSS already set up. Running ',
-        after: ' copies the whole project, including config files and pages, to your local machine so you can start building right away.',
-        second:
-          'Templates are grouped by project type, such as blog, landing page, and minimal setup, and each category offers several variants with different designs and features. Some templates also let you choose a stack, such as Astro, Vite + React, or Next.js. You can generate any template in Japanese or English.',
-      },
       quickStart: 'Quick start',
+      quickStartLead: 'Copy a full-project template with Lism CSS already set up to your local machine with a single command.',
       available: 'Template previews',
       availableLead:
-        'Thumbnails and a short overview of each template. See each category page for full descriptions, feature comparisons, and install commands.',
+        'Templates are grouped by project type, such as blog, landing page, and minimal setup, and each category offers several variants with different designs and features. See each category page for full descriptions, feature comparisons, and install commands.',
       commandLead: 'Start the interactive flow and choose category, stack, and variant in order.',
-      fullFormLead: 'Pass arguments to skip the selection UI and generate directly.',
-      termTitle: 'Templates vs. Patterns',
-      termBody: 'Templates generate a full project. Patterns are copy-and-paste section patterns for an existing site.',
-      patternsLink: 'View Patterns',
       viewAll: 'View all',
-      details: 'View details',
       thumbAlt: (title: string) => `${title} thumbnail`,
     };
 
 const grouped = groupByCategory();
-
-const patternsUrl = getLocalizedUrl('/patterns/', lang);
 
 const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/templates/${category}/${slug}/`, lang);
 const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${category}/`, lang);
@@ -78,48 +57,26 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
   {/* ===== ヘッダー ===== */}
   <PageHeader title={copy.title} description={copy.lead} />
 
-  {/* ===== 導入文 ===== */}
-  <Stack g="20">
-    <Text hl="s">{copy.intro.before}<code>npm create lism</code>{copy.intro.after}</Text>
-    <Text hl="s">{copy.intro.second}</Text>
-  </Stack>
-
   {/* ===== クイックスタート ===== */}
   <Stack as="section" g="30">
-    <Heading level="2">{copy.quickStart}</Heading>
-    <Stack g="40" p="30" bd bdrs="20" bgc="base">
-      {/* 対話形式 */}
-      <Stack>
-        <Text util="trim" c="text-2" fz="s" hl="s">{copy.commandLead}</Text>
-        <Preview>
-          <PreviewCode slot="tab" label="npm">
-            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
-              <code>npm create lism@latest</code>
-            </Lism>
-          </PreviewCode>
-          <PreviewCode slot="tab" label="pnpm">
-            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
-              <code>pnpm create lism</code>
-            </Lism>
-          </PreviewCode>
-        </Preview>
-      </Stack>
-      {/* 引数指定 */}
-      <Stack>
-        <Text util="trim" c="text-2" fz="s" hl="s">{copy.fullFormLead}</Text>
-        <Preview>
-          <PreviewCode slot="tab" label="npm">
-            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
-              <code>npm create lism@latest {'{targetDir}'} -- --template {'{slug}'}</code>
-            </Lism>
-          </PreviewCode>
-          <PreviewCode slot="tab" label="pnpm">
-            <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
-              <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
-            </Lism>
-          </PreviewCode>
-        </Preview>
-      </Stack>
+    <Stack g="20">
+      <Heading level="2">{copy.quickStart}</Heading>
+      <Text hl="s">{copy.quickStartLead}</Text>
+    </Stack>
+    <Stack p="30" bd bdrs="20" bgc="base">
+      <Text util="trim" c="text-2" fz="s" hl="s">{copy.commandLead}</Text>
+      <Preview>
+        <PreviewCode slot="tab" label="npm">
+          <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+            <code>npm create lism@latest</code>
+          </Lism>
+        </PreviewCode>
+        <PreviewCode slot="tab" label="pnpm">
+          <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+            <code>pnpm create lism</code>
+          </Lism>
+        </PreviewCode>
+      </Preview>
     </Stack>
   </Stack>
 
@@ -144,7 +101,6 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
                   title: category.label,
                   description: category.description[lang],
                   thumb: getThumb(rep, lang),
-                  stacks: items.map((tpl) => tpl.stack),
                   href: categoryUrl,
                   draft: false,
                 },
@@ -155,7 +111,6 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
               title: tpl.title[lang],
               description: tpl.description[lang],
               thumb: getThumb(tpl, lang),
-              stacks: [tpl.stack],
               href: buildDetailUrl(tpl.category, tpl.slug),
               draft: tpl.draft,
             }));
@@ -173,36 +128,13 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
               <Text>{category.description[lang]}</Text>
             </SectionHeader>
 
-            <AutoColumns cols="18em" g="30">
+            <AutoColumns cols="20em" g="15">
               {cards.map((card) => (
-                <Stack as="article" id={card.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="c--templatesCard">
-                  <BoxLink
-                    layout="frame"
-                    href={card.href}
-                    aria-label={card.title}
-                    class="c--templatesCard_thumbLink"
-                    ar="16/9"
-                    ov="hidden"
-                    bd-b
-                    fxsh="0"
-                  >
-                    <Image
-                      src={card.thumb}
-                      alt={copy.thumbAlt(card.title)}
-                      widths={[400, 800]}
-                      sizes="(max-width: 600px) 100vw, 33vw"
-                      loading="lazy"
-                    />
-                  </BoxLink>
-
-                  <Stack p="20" g="15" fxg="1">
-                    <Cluster g="10">
-                      {card.stacks.map((stack) => (
-                        <Inline d="inline-flex" px="5px" fz="11px" hl="s" ff="mono" c="text-2" bd bdc="current" bdrs="10">
-                          {stackLabels[stack]}
-                        </Inline>
-                      ))}
-                    </Cluster>
+                <Stack as="article" id={card.id} g="0" bgc="base" ov="hidden" class="c--templatesCard">
+                  <Frame isBoxLink as="a" href={card.href} class="c--templatesCard_thumbLink" aria-label={card.title} ar="16/9" bdrs="10" bd>
+                    <Image src={card.thumb} alt={copy.thumbAlt(card.title)} loading="lazy" />
+                  </Frame>
+                  <Stack py="20" px="10" g="20" fxg="1">
                     <Heading level="4" fz="l" util="trim">
                       <Link href={card.href} set="plain" hov="underline">
                         {card.title}
@@ -213,12 +145,9 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
                         </Inline>
                       )}
                     </Heading>
-                    <Text c="text-2" fz="s" hl="s" util="trim">
+                    <Text c="text-2" o="p" fz="s" util="trim">
                       {card.description}
                     </Text>
-                    <Link href={card.href} fz="xs" w="fit" mt="auto" pt="5">
-                      {copy.details} →
-                    </Link>
                   </Stack>
                 </Stack>
               ))}
@@ -227,13 +156,6 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
         );
       })
     }
-  </Stack>
-
-  {/* ===== Templates vs Patterns ===== */}
-  <Stack as="section" g="20">
-    <Heading level="2" fz="xl">{copy.termTitle}</Heading>
-    <Text c="text-2" hl="s">{copy.termBody}</Text>
-    <Link href={patternsUrl}>{copy.patternsLink}</Link>
   </Stack>
 
   <style>
