@@ -3,7 +3,8 @@
 
   > * + * {
     --flow: var(--flow--base);
-    margin-block-start: var(--flow);
+    --mbs: var(--flow);
+    margin-block-start: var(--mbs);
   }
 
   // flow 直下のメディア要素は block に初期リセット
@@ -19,13 +20,16 @@
   --flow: inherit;
 }
 
-// 見出しの上部の余白は広くする.
-.l--flow > :where(h1, h2, h3, h4, h5, h6) {
-  margin-block-start: calc(var(--flow) * 2 + 0.5em);
+// 見出し上部の余白は広くする.
+// em だけの加算だと --flow が小さい時に余白が過大になるため、--flow にも比例させる.
+// h5, h6 はレイアウト上の区切りとして弱いので対象外.
+.l--flow > :where(h1, h2, h3, h4) {
+  --mbs: calc(var(--flow) * 1.5 + 0.5em);
+  margin-block-start: var(--mbs);
 }
 
-// 打ち消し
+// 打ち消し. 見出しは em の定数加算があるため、--flow ではなく --mbs を 0 にする.
 .is--skipFlow + *,
 .l--flow > :first-child {
-  --flow: 0px;
+  --mbs: 0px;
 }

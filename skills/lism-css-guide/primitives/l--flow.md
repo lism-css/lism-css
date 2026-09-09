@@ -6,7 +6,7 @@
 
 ## 余白の仕組み
 
-`l--flow` 直下の子要素は、`--flow` 変数と `margin-block-start` で間隔が管理されます。見出しタグ（`h1`〜`h6`）のみ余白が大きくなり、`calc(var(--flow) * 2 + 0.5em)` で計算されます。
+`l--flow`直下の子要素は、`--flow`をもとに`--mbs`で上余白を決め、`margin-block-start`に適用します。見出しタグの`h1`〜`h4`は`calc(var(--flow) * 1.5 + 0.5em)`で余白を大きくします。
 
 | クラス | 余白量 |
 | --- | --- |
@@ -19,8 +19,8 @@
 ## 既定の挙動
 
 - `display:flow-root`。
-- 直下の`* + *`へ`margin-block-start:var(--flow)`を付与し、`--flow`は`--flow--base`を初期値にします。
-- 直下の見出しは上余白を広めにし、先頭要素と`is--skipFlow + *`は余白を打ち消します。
+- 直下の`* + *`へ`--flow:var(--flow--base)`、`--mbs:var(--flow)`、`margin-block-start:var(--mbs)`を付与します。
+- 先頭要素と`is--skipFlow + *`は`--mbs:0px`で上余白を打ち消します。
 - 直下の`img`/`video`/`iframe`は`display:block`へ初期化します。
 
 ## 専用Props
