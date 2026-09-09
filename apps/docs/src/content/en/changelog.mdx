@@ -8,6 +8,18 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v0.28.2 (2026.09.10)
+
+- Changed the top margin of headings directly inside `l--flow` from `calc(var(--flow) * 2 + 0.5em)` to `calc(var(--flow) * 1.5 + 0.5em)` and limited it to `h1`–`h4` (`h5` / `h6` now use the regular `--flow`). Also fixed a leftover `0.5em` margin on the first heading and on headings right after `is--skipFlow` (#608).
+- The top margin is now applied via the `--mbs` variable. To cancel it on a specific element, set `--mbs: 0px` instead of `--flow`.
+- Added the `dots-vertical` and `menu-2` icon presets.
+
+**`@lism-css/plugin` v0.4.5 (2026.09.10)**
+
+- Updated to follow `lism-css` v0.28.2. No code changes.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.28.1 (2026.09.08)
 
 - Fixed the `COLOR1:COLOR2:PERCENT` color syntax so the percentage applies to the second color.
