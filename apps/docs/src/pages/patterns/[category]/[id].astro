@@ -35,8 +35,11 @@ const hasStyle = existsSync(resolve(process.cwd(), stylePath));
       title={pattern.title}
       description={pattern.description.ja}
       draft={pattern.draft}
-      backHref={`/patterns/${categoryData.id}/`}
-      backLabel={`${categoryData.label} 一覧へ`}
+      breadcrumbs={[
+        { label: 'Patterns', href: '/patterns/' },
+        { label: `${categoryData.label}一覧`, href: `/patterns/${categoryData.id}/` },
+        { label: pattern.id.match(/\d+$/)?.[0] ?? pattern.id },
+      ]}
     >
       <Text slot="eyebrow" tt="uppercase" lts="l">
         {categoryData.label}

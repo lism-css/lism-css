@@ -8,7 +8,7 @@ import PageHeader from '@parts/PageHeader.astro';
 import { patterns, type PatternCategory, type PatternCategoryId } from '@/config/patterns';
 import { getAllPatternPaths, getPattern } from '@/lib/patterns';
 import { siteConfig } from '@/config/site';
-import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
+import { getLocalizedUrl, isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 
 export function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
@@ -57,8 +57,12 @@ const hasStyle = existsSync(resolve(process.cwd(), stylePath));
       title={pattern.title}
       description={pattern.description[lang]}
       draft={pattern.draft}
-      backHref={`/${lang}/patterns/${category}/`}
-      backLabel={`Back to ${categoryData.label}`}
+      lang={lang}
+      breadcrumbs={[
+        { label: 'Patterns', href: getLocalizedUrl('/patterns/', lang) },
+        { label: categoryData.label, href: getLocalizedUrl(`/patterns/${category}/`, lang) },
+        { label: pattern.id.match(/\d+$/)?.[0] ?? pattern.id },
+      ]}
     >
       <Text slot="eyebrow" tt="uppercase" lts="l">
         {categoryData.label}

@@ -1,0 +1,37 @@
+---
+import { Cluster, Flex, Inline, Link, Icon } from 'lism-css/astro';
+import { getRootLang, type LangCode } from '@/lib/i18n';
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  lang?: LangCode;
+}
+
+const { items, lang = getRootLang() } = Astro.props;
+---
+
+<nav class="u--trim" aria-label={lang === 'ja' ? 'パンくず' : 'Breadcrumb'} data-pagefind-ignore>
+  <Cluster as="ol" role="list" g="10" fz="s" c="text-2" mt="-15">
+    {
+      items.map((item, index) => (
+        <Flex as="li" ai="center" g="inherit">
+          {index > 0 && (
+            <span class="l--center" aria-hidden="true">
+              <Icon icon="caret-right" c="text-2" />
+            </span>
+          )}
+          {item.href && index < items.length - 1 ? (
+            <Link href={item.href}>{item.label}</Link>
+          ) : (
+            <Inline aria-current={index === items.length - 1 ? 'page' : undefined}>{item.label}</Inline>
+          )}
+        </Flex>
+      ))
+    }
+  </Cluster>
+</nav>

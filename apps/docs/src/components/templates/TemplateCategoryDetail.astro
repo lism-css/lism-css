@@ -38,7 +38,6 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      backToList: 'Templates 一覧へ',
       install: 'インストールコマンド',
       installCategoryLead: '対話形式で stack を選んで生成します。',
       installStackLead: 'stack を直接指定する場合：',
@@ -51,7 +50,6 @@ const copy = isJa
       thumbAlt: (title: string) => `${title} のサムネイル`,
     }
   : {
-      backToList: 'Back to Templates',
       install: 'Install command',
       installCategoryLead: 'Pick a stack through the interactive flow.',
       installStackLead: 'Or specify a stack directly:',
@@ -79,8 +77,8 @@ const representativePreviewUrl = representative ? getPreviewUrl(representative, 
     title={category.label}
     count={category.aggregateView ? undefined : templates.length}
     description={getCategoryIntro(category, lang)}
-    backHref={templatesUrl}
-    backLabel={copy.backToList}
+    lang={lang}
+    breadcrumbs={[{ label: 'Templates', href: templatesUrl }, { label: isJa ? `${category.label}一覧` : category.label }]}
   />
 
   {

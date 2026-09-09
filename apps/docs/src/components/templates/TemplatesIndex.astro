@@ -3,7 +3,7 @@
  * Templates 一覧ページ本体（ja / en 共通）
  *
  * URL: /templates/  または  /{lang}/templates/
- * クイックスタートと、カテゴリごとの軽いカード（サムネ・stack・タイトル・短い説明）だけを載せる。
+ * 導入文・クイックスタートと、カテゴリごとの軽いカード（サムネ・stack・タイトル・短い説明）だけを載せる。
  * 長い説明・機能比較・生成コマンドはカテゴリページ（TemplateCategoryDetail）に置く。
  */
 import { Stack, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, Inline } from 'lism-css/astro';
@@ -24,10 +24,16 @@ const isJa = lang === 'ja';
 const copy = isJa
   ? {
       title: 'Project Templates',
-      lead: 'Lism CSSで新しいプロジェクトを始めるための雛形です。CLIの対話選択、またはテンプレートslugの直接指定で生成できます。',
+      lead: 'Lism CSSでプロジェクトを始めるためのテンプレートをCLIコマンド1つで手元に生成できます。',
+      intro: {
+        before: 'Lism CSSを組み込んだ、プロジェクト一式型のテンプレートをいくつか用意しています。',
+        after: 'を実行すると、設定ファイルやページを含むプロジェクトファイルがまるごとローカル環境にコピーされ、そのまま開発を始められます。',
+        second:
+          'テンプレートはブログ・LP・最小構成といったプロジェクトの種類ごとにカテゴリ分けされており、同じカテゴリの中でもデザインや機能の異なるバリエーションから選べます。テンプレートによっては、Astro / Vite + React / Next.jsなどのスタックも選択できます。生成時には日本語・英語のどちらかを選べます。',
+      },
       quickStart: 'クイックスタート',
-      available: '利用できるテンプレート',
-      availableLead: 'CLIから直接生成できるテンプレートの一覧です。詳しい説明・機能の比較・生成コマンドは各カテゴリのページで確認できます。',
+      available: 'テンプレートプレビュー',
+      availableLead: '各テンプレートのサムネイルと概要です。詳しい説明・機能の比較・生成コマンドは各カテゴリのページで確認できます。',
       commandLead: '対話形式でカテゴリ、スタック、バリアントを選んで生成します。',
       fullFormLead: '引数を渡すと選択UIをスキップして直接生成できます。',
       termTitle: 'TemplatesとPatternsの違い',
@@ -39,11 +45,17 @@ const copy = isJa
     }
   : {
       title: 'Project Templates',
-      lead: 'Project starters for building new sites with Lism CSS. Generate them through the interactive CLI flow or by passing a template slug directly.',
+      lead: 'Generate a Lism CSS project template locally with a single CLI command.',
+      intro: {
+        before: 'We provide several full-project templates with Lism CSS already set up. Running ',
+        after: ' copies the whole project, including config files and pages, to your local machine so you can start building right away.',
+        second:
+          'Templates are grouped by project type, such as blog, landing page, and minimal setup, and each category offers several variants with different designs and features. Some templates also let you choose a stack, such as Astro, Vite + React, or Next.js. You can generate any template in Japanese or English.',
+      },
       quickStart: 'Quick start',
-      available: 'Available templates',
+      available: 'Template previews',
       availableLead:
-        'Templates you can generate directly from the CLI. See each category page for full descriptions, feature comparisons, and install commands.',
+        'Thumbnails and a short overview of each template. See each category page for full descriptions, feature comparisons, and install commands.',
       commandLead: 'Start the interactive flow and choose category, stack, and variant in order.',
       fullFormLead: 'Pass arguments to skip the selection UI and generate directly.',
       termTitle: 'Templates vs. Patterns',
@@ -65,6 +77,12 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
 <Stack g="50" data-pagefind-body>
   {/* ===== ヘッダー ===== */}
   <PageHeader title={copy.title} description={copy.lead} />
+
+  {/* ===== 導入文 ===== */}
+  <Stack g="20">
+    <Text hl="s">{copy.intro.before}<code>npm create lism</code>{copy.intro.after}</Text>
+    <Text hl="s">{copy.intro.second}</Text>
+  </Stack>
 
   {/* ===== クイックスタート ===== */}
   <Stack as="section" g="30">

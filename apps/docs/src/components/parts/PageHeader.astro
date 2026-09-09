@@ -1,9 +1,11 @@
 ---
 import { Stack, Flex, Cluster, Inline, Heading, Link, Text } from 'lism-css/astro';
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs.astro';
+import type { LangCode } from '@/lib/i18n';
 
 /**
  * 一覧・詳細ページ共通の h1 まわり。
- * - backHref: 1階層上へ戻るリンク（指定時のみ表示）
+ * - breadcrumbs: 現在地までのパンくず（backHrefより優先）
  * - slot "eyebrow": h1 の上の行（カテゴリ名・stack バッジなど）
  * - description または slot "description": 説明文
  * - default slot: 説明文の下（関連リンクなど）
@@ -11,13 +13,15 @@ import { Stack, Flex, Cluster, Inline, Heading, Link, Text } from 'lism-css/astr
 interface Props {
   title: string;
   description?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  lang?: LangCode;
   backHref?: string;
   backLabel?: string;
   count?: number;
   draft?: boolean;
 }
 
-const { title, description, backHref, backLabel = 'Back', count, draft = false } = Astro.props;
+const { title, description, breadcrumbs, lang, backHref, backLabel = 'Back', count, draft = false } = Astro.props;
 const hasEyebrow = Astro.slots.has('eyebrow');
 const hasDescription = !!description || Astro.slots.has('description');
 const hasExtra = Astro.slots.has('default');
@@ -25,13 +29,17 @@ const hasExtra = Astro.slots.has('default');
 
 <Stack as="header" class="c--pageHeader" g="30">
   {
-    backHref && (
-      <Link href={backHref} fz="s" w="fit" util="trim">
-        ← {backLabel}
-      </Link>
+    breadcrumbs?.length ? (
+      <Breadcrumbs items={breadcrumbs} lang={lang} />
+    ) : (
+      backHref && (
+        <Link href={backHref} fz="s" w="fit" util="trim">
+          ← {backLabel}
+        </Link>
+      )
     )
   }
-  <Stack g="10">
+  <Stack g="15">
     {
       hasEyebrow && (
         <Cluster ai="center" g="10" fz="xs" c="text-2">
