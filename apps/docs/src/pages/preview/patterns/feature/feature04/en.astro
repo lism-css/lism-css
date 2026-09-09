@@ -7,6 +7,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 const features = [
   {
     title: 'Branding',
+    color: 'blue',
     description:
       'We clarify the values you hold dear and the strengths of your business, then express what makes your brand distinct through words, logos and color.',
     icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M10.4512 15.5982L6.05396 17.7307L6.21569 12.6863L7.87754 12.2303L9.65703 13.4951L10.4512 15.5982Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
@@ -19,6 +20,7 @@ const features = [
   },
   {
     title: 'Web Design',
+    color: 'orange',
     description:
       'We clarify who you want to reach and what you want to say. From information architecture to visual design, we build websites that serve their purpose.',
     icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M22 18V14.4301L12 19.4148V23L22 18Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
@@ -35,6 +37,7 @@ const features = [
   },
   {
     title: 'Maintenance',
+    color: 'green',
     description:
       'We review how your website performs and identify areas to improve. From regular updates to refinements in content and design, we provide ongoing support.',
     icon: `<g fill="none" class="nc-icon-wrapper"> <path d="M12 22.5612C15.3137 22.5612 18 21.4099 18 19.9898V17.4183L16.9189 19.0102L13.8131 19.9898H10.8023L7.04547 19.0374L6 17.4183V19.9898C6 21.4099 8.68629 22.5612 12 22.5612Z" fill="currentColor" fill-opacity=".3" data-color="color-2">
@@ -86,7 +89,7 @@ const features = [
             >
               <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
                 <Flex g="inherit" ai="center">
-                  <Icon size="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={feature.icon} />
+                  <Icon size="2em" viewBox="0 0 24 24" c={feature.color} xmlns="http://www.w3.org/2000/svg" set:html={feature.icon} />
                   <Text fz="m" fw="bold">
                     {feature.title}
                   </Text>

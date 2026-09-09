@@ -29,18 +29,20 @@ const features = [
 
 <DemoLayout title="01 - アイコンを添えた2列の特徴">
   <Container as="section" isWrapper="m" hasGutter bgc="base">
-    <Stack py={['50', null, '60']} g={['40', null, '50']}>
-      <Stack class="u--trim" g="20" max-sz="s" mx="auto" ta="center">
+    <Stack py={['50', null, '60']}>
+      <Stack class="u--trimAll" g="30" max-sz="s" mx="auto" ta="center">
         <Text fz="s" c="brand" fw="bold" lts="l" tt="upper">Features</Text>
-        <Heading fz={['2xl', null, '3xl']}>チームの今が、ひと目でわかる</Heading>
-        <Text fz={['s', 'm']} c="text-2" max-sz="xs">タスクも、進捗も、チームの情報も。DevFlowが毎日のプロジェクト管理をすっきりまとめます。 </Text>
+        <Heading fz={['2xl', null, '3xl']}>次にやることが、すぐわかる</Heading>
+        <Text fz={['xs', 's']} c="text-2" max-sz="xs"
+          >チームのタスクと現状を、一つの場所に。DevFlowが毎日のプロジェクト管理をすっきりまとめます。</Text
+        >
       </Stack>
 
-      <Columns cols={[1, null, 2]} cg="50" rg={['40', null, '50']}>
+      <Columns cols={[1, null, 2]} cg="50" rg={['40', null, '50']} mbs={['40', null, '50']}>
         {
           features.map((feature) => (
             <Flex as="article" ai="start" g={['20', null, '25']}>
-              <Center as="span" ar="1/1" fz="xl" p=".25em" fxsh="0" bgc="brand" c="white" bdrs="20">
+              <Center as="span" ar="1/1" fz="2xl" p=".25em" fxsh="0" bgc="brand" c="white" bdrs="30">
                 <Icon icon={feature.icon} size="1em" />
               </Center>
               <Stack g="10">

@@ -225,8 +225,7 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
    - `dig NS lism-css.com`がCloudflareのNSを返す
    - `https://lism-css.com/`が表示され、応答ヘッダに`server: Vercel`が残っている（配信元が変わっていないこと）
    - `https://www.lism-css.com/`がapexへリダイレクトされる
-   - `https://templates.lism-css.com/`・`https://wp.lism-css.com/`が表示され、`https://cdn.lism-css.com/img/a-1.jpg`のような画像が返る。Cloudflare Pagesのカスタムドメイン画面で`templates.lism-css.com`・`cdn.lism-css.com`がActiveのままであること
-   - メールを使っている場合、`@lism-css.com`宛のテストメールが届く
+   - `https://templates.lism-css.com/`がされる。Cloudflare Pagesのカスタムドメイン画面で`templates.lism-css.com`・`cdn.lism-css.com`がActiveのままであること
    - Search Consoleのプロパティが「確認済み」のまま
 8. [ ] 数日そのまま置き、問題が無ければPhase 5へ
 

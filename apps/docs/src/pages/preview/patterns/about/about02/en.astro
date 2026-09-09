@@ -5,13 +5,27 @@ import { Wrapper, Grid, Flex, Frame, Media, Stack, Flow, Inline, Heading } from 
 ---
 
 <DemoLayout title="About02">
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400&display=swap" rel="stylesheet" />
+  </Fragment>
   <Wrapper contentSize="l" py="50" bgc="base" hasGutter>
     <Stack g="50">
       <Stack class="u--trimAll" g="40">
-        <Inline fz="min(22vw, 10rem)" fw="bold" ff="accent" ms="-.5rem" c="gray" o="ppp" whs="nowrap">Greeting</Inline>
+        <Inline
+          fz="min(16vw, 10rem)"
+          fw="normal"
+          ff="accent"
+          ms="-.5rem"
+          c="gray"
+          o="ppp"
+          whs="nowrap"
+          style={{ '--ff--accent': "'Libre Baskerville', Georgia, serif" }}>Greeting</Inline
+        >
         <Heading level="2" fz="3xl" fw="bold" ff="accent">Message from the CEO</Heading>
       </Stack>
-      <Flow fz="l" hl="l">
+      <Flow hl="l">
         <p>
           In today's world where everything is connected to the internet and vast amounts of data are generated, how to safely and effectively utilize
           that data has become a key source of competitive advantage for businesses.
