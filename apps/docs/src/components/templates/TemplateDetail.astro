@@ -25,7 +25,6 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      backToCategory: `${category.label} 一覧へ`,
       install: 'インストールコマンド',
       installLead: '対話なしで生成する場合：',
       viewDemo: 'デモページへ ↗',
@@ -35,7 +34,6 @@ const copy = isJa
       thumbAlt: (title: string) => `${title} のサムネイル`,
     }
   : {
-      backToCategory: `Back to ${category.label}`,
       install: 'Install command',
       installLead: 'Skip the interactive flow:',
       viewDemo: 'View demo ↗',
@@ -56,8 +54,12 @@ const features = template.features?.[lang];
     title={template.title[lang]}
     description={getIntro(template, lang)}
     draft={template.draft}
-    backHref={categoryUrl}
-    backLabel={copy.backToCategory}
+    lang={lang}
+    breadcrumbs={[
+      { label: 'Templates', href: getLocalizedUrl('/templates/', lang) },
+      { label: isJa ? `${category.label}一覧` : category.label, href: categoryUrl },
+      { label: template.title[lang] },
+    ]}
   >
     <Text slot="eyebrow" tt="uppercase" lts="l">
       {category.label}

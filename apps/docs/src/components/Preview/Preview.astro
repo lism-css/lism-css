@@ -9,7 +9,7 @@ const { css, ...props } = Astro.props;
 // カスタムCSSをプレビュー単位へ閉じ込める
 const scopeId = css ? `demo-${Math.random().toString(36).slice(2, 9)}` : '';
 
-const scopedCss = `.${scopeId}{ ${css} }`;
+const scopedCss = css ? `.${scopeId}{ ${css} }` : '';
 ---
 
 <Lism class:list={['c--preview', scopeId]} {...props}>

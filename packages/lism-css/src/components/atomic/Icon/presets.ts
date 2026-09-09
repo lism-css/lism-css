@@ -168,6 +168,11 @@ export const phIcons = {
     path: 'M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z',
   },
 
+  'dots-vertical': {
+    viewBox: '0 0 256 256',
+    path: 'M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM128,72a12,12,0,1,0-12-12A12,12,0,0,0,128,72Zm0,112a12,12,0,1,0,12,12A12,12,0,0,0,128,184Z',
+  },
+
   // Memo: caretは細すぎないように Boldで。
   'caret-down': {
     viewBox: '0 0 256 256',
@@ -257,7 +262,15 @@ export const logoIcons = {
   },
 };
 
+export const originalIcons = {
+  'menu-2': {
+    viewBox: '0 0 24 24',
+    path: 'M2 7.2h20a.8.8 0 0 1 0 1.6H2a.8.8 0 0 1 0-1.6Zm0 8h20a.8.8 0 0 1 0 1.6H2a.8.8 0 0 1 0-1.6Z',
+  },
+};
+
 export default {
   ...phIcons,
+  ...originalIcons,
   ...logoIcons,
 };

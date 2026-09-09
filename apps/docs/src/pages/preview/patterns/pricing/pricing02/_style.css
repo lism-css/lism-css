@@ -1,0 +1,27 @@
+@layer lism-custom {
+  .c--pricingRibbon {
+    filter: drop-shadow(0 2px 2px var(--shadow));
+  }
+
+  .c--pricingRibbon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--brand);
+    border-radius: inherit;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--s10) 50%);
+  }
+
+  .c--pricingRibbon::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-end: 0;
+    width: var(--s10);
+    height: var(--s10);
+    background-color: var(--brand);
+    filter: brightness(var(--o--p));
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+}

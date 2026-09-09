@@ -2,12 +2,13 @@
 // 非root言語の記事を表示し、未翻訳ならroot言語へフォールバックする
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
-import { Icon, Lism, Flow } from 'lism-css/astro';
+import { Icon, Lism, Flow, Stack } from 'lism-css/astro';
 import PostNavigation from '@parts/PostNavigation.astro';
 import ArticleTitle from '@parts/ArticleTitle.astro';
+import Breadcrumbs from '@parts/Breadcrumbs.astro';
 import TranslationNotice from '@/components/TranslationNotice.astro';
 import { siteConfig } from '@/config/site';
-import { isRootLang, isValidLang, getRootLang, type LangCode } from '@/lib/i18n';
+import { getLocalizedUrl, isRootLang, isValidLang, getRootLang, type LangCode } from '@/lib/i18n';
 import { getUiPostsByLang, getPostWithFallback } from '@/lib/content';
 import { render } from 'astro:content';
 
@@ -68,7 +69,10 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
   <Lism as="article" class="c--article set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
     {isFallback && <TranslationNotice lang={lang} />}
 
-    <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
+    <Stack g="30">
+      <Breadcrumbs items={[{ label: 'UI', href: getLocalizedUrl('/ui/', lang) }, { label: entry.data.title }]} lang={lang} />
+      <ArticleTitle title={entry.data.title} eyebrow={entry.data.eyebrow} />
+    </Stack>
 
     <Lism class="u--cbox" keycolor="yellow" p="20" my="40" bdrs="10" bd>
       <Lism layout="flex" ai="center" g="10" fw="bold">

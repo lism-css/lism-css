@@ -15,18 +15,18 @@ const isJa = lang === 'ja';
 
 const copy = isJa
   ? {
-      title: 'Web Patterns',
+      title: 'Lism Patterns',
       lead: 'コピペで簡単に利用できる、Lism CSSを使ったWebサイトパターン集です。',
       viewAll: 'すべて見る',
     }
   : {
-      title: 'Web Patterns',
+      title: 'Lism Patterns',
       lead: 'A collection of copy-and-paste ready web site patterns built with Lism CSS.',
       viewAll: 'View all',
     };
 ---
 
-<Stack g="40">
+<Stack g="40" class="c--patternPage">
   <PageHeader title={copy.title} description={copy.lead} />
 
   <Stack g="40">

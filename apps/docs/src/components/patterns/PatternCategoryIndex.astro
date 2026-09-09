@@ -14,16 +14,19 @@ const { lang, categoryId } = Astro.props as Props;
 const category = getPatternCategory(categoryId, lang)!;
 const items = category.items;
 
-const copy = lang === 'ja' ? { back: 'Patterns 一覧へ', details: '詳細を見る' } : { back: 'Back to Patterns', details: 'View details' };
+const copy = lang === 'ja' ? { details: '詳細を見る' } : { details: 'View details' };
 ---
 
-<Stack g="40">
+<Stack g="40" class="c--patternPage">
   <PageHeader
     title={category.label}
     count={items.length}
     description={category.description[lang]}
-    backHref={getLocalizedUrl('/patterns/', lang)}
-    backLabel={copy.back}
+    lang={lang}
+    breadcrumbs={[
+      { label: 'Patterns', href: getLocalizedUrl('/patterns/', lang) },
+      { label: lang === 'ja' ? `${category.label}一覧` : category.label },
+    ]}
   >
     {
       category.related && (
