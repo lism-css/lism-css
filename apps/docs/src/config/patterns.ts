@@ -171,47 +171,6 @@ const patterns = {
       },
     ],
   },
-  posts: {
-    label: 'Posts',
-    description: {
-      ja: 'ニュース・ブログ記事・制作実績など、投稿を一覧で紹介するセクション。',
-      en: 'Sections that showcase news, blog posts, portfolio works and other entries.',
-    },
-    items: [
-      {
-        id: 'posts01',
-        title: 'Posts01',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "sm" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'posts02',
-        title: 'Posts02',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'posts03',
-        title: 'Posts03',
-        description: {
-          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
-          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
-        },
-      },
-      {
-        id: 'posts04',
-        title: 'Posts04',
-        description: {
-          ja: '実績用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
-          en: 'A portfolio/works pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
-        },
-      },
-    ],
-  },
   about: {
     label: 'About',
     description: {
@@ -365,6 +324,47 @@ const patterns = {
           en: 'A customer story highlighting measurable results and feedback from a company representative.',
         },
         titleEn: '02 - Customer results and feedback',
+      },
+    ],
+  },
+  posts: {
+    label: 'Posts',
+    description: {
+      ja: 'ニュース・ブログ記事・制作実績など、投稿を一覧で紹介するセクション。',
+      en: 'Sections that showcase news, blog posts, portfolio works and other entries.',
+    },
+    items: [
+      {
+        id: 'posts01',
+        title: 'Posts01',
+        description: {
+          ja: 'お知らせ用のパターンです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements pattern. Below the "sm" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+      },
+      {
+        id: 'posts02',
+        title: 'Posts02',
+        description: {
+          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+      },
+      {
+        id: 'posts03',
+        title: 'Posts03',
+        description: {
+          ja: 'お知らせ用のパターンです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements pattern. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
+      },
+      {
+        id: 'posts04',
+        title: 'Posts04',
+        description: {
+          ja: '実績用のパターンです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A portfolio/works pattern. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
     ],
   },
@@ -702,10 +702,10 @@ export const categoryIds: PatternCategoryId[] = [
   'hero',
   'feature',
   'pricing',
-  'posts',
   'about',
   'member',
   'testimonials',
+  'posts',
   'faq',
   'cta',
   'page-links',
