@@ -7,43 +7,46 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 <DemoLayout title="Hero01">
   <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/all.css" rel="stylesheet" />
   </Fragment>
-  {/* 画面高いっぱいのヒーロー。ヘッダー・中央コンテンツを背景の上に重ねる */}
-  <Stack isContainer pos="relative" min-h="100svh" c="white" ff="'Gen Interface JP', 'Hiragino Sans', sans-serif">
+
+  <!-- header -->
+  <Container as="header" isWrapper="xl" hasGutter pos="fixed" t="0" w="100%" py="25" t="0" z="99">
+    <Flex ai="center" jc="between" g="30" c="white">
+      <Inline lts="l">Lism</Inline>
+      <Flex ai="center">
+        <Icon icon="menu-2" fz="2xl" label="メニューを開く" />
+      </Flex>
+    </Flex>
+  </Container>
+
+  <!-- Hero -->
+  <Stack isContainer hasGutter pos="relative" z="0" min-h="100svh" c="white" style={{ '--ff--accent': "'IBM Plex Mono', monospace" }}>
     {/* 背景画像と暗いオーバーレイ */}
     <Frame isLayer>
-      <Media isLayer src="https://cdn.lism-css.com/img/BObC4emORTNt.webp" alt="" width="960" height="640" style={{ objectPosition: '40% center' }} />
-      <Layer bgc="black:50%" style={{ backdropFilter: 'blur(4px)' }} />
+      <Media
+        isLayer
+        src="https://cdn.lism-css.com/img/dark/1m6evtRv6FvY.webp"
+        alt=""
+        width="960"
+        height="640"
+        style={{ scale: 1.1, transformOrigin: 'center 25%', objectPosition: '40% center' }}
+      />
+      <Layer bgc="black:25%" style={{ backdropFilter: 'grayscale(0.5) contrast(0.9) blur(4px)' }} />
+      <!-- <Media isLayer src="https://cdn.lism-css.com/img/kpwuzP15GeSP.webp" alt="" width="960" height="640" style={{ scale: 1.1, transformOrigin: "75% 25%", objectPosition: '55% 40%' }} />
+      <Layer bgc="black:30%" style={{ backdropFilter: 'blur(6px)' }} /> -->
     </Frame>
-    {/* 上部ヘッダー */}
-    <Container as="header" isWrapper="xl" hasGutter py="25" t="0" z="2">
-      <Flex ai="center" jc="between" g="30">
-        <Inline lts="l" tt="upper">Lism Resort</Inline>
-        <Flex as="nav" ai="center" g="30" fz="s" fw="light" d={['none', null, 'flex']}>
-          <Link href="#" set="plain" hasTransition hov="-o">客室</Link>
-          <Link href="#" set="plain" hasTransition hov="-o">プラン</Link>
-          <Link href="#" set="plain" hasTransition hov="-o">アクセス</Link>
-        </Flex>
-        <Flex ai="center" d={['flex', null, 'none']}>
-          <Icon icon="menu-2" fz="2xl" label="メニューを開く" />
-        </Flex>
+    <Stack isWrapper="s" fx="1" z="1" ff="accent" py="40" g="35">
+      <Heading level="1" class="u--trim" fz={['3xl', '4xl']} lts="xl" fw="400" ta="center" tt="upper" my="auto">lorem ipsum</Heading>
+      <Text class="u--trim" fz="s" lh="l" ta="center">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+      </Text>
+      <Flex g="20 30" fxw="wrap" jc="center">
+        <Button href="#" variant="outline" c="white" px="40" py="10" hl="xs" hasTransition hov={{ bgc: 'base', c: 'text' }}>Button</Button>
       </Flex>
-    </Container>
-    {/* 中央に重ねるコンテンツ */}
-    <Container isWrapper="s" hasGutter my="auto" py="50" z="1">
-      <Stack ai="center" g="40">
-        <Stack ai="center" g="40">
-          <Heading level="1" class="u--trim" fz={['3xl', '4xl']} lh="s" fw="100" ta="center">そこにあるのは<br />海と空だけ</Heading>
-          <Text class="u--trim" fz="s" lh="l" fw="light" ta="center">
-            波の音で目を覚まし、水平線に沈む夕日を眺める。<br />何もしない贅沢を味わうための、小さな宿です。
-          </Text>
-        </Stack>
-        <Flex g="20 30" fxw="wrap" jc="center">
-          <Button href="#" variant="outline" c="white" bdrs="99" px="35" py="10" hasTransition hov={{ bgc: 'base', c: 'text' }}> 客室を見る </Button>
-        </Flex>
-      </Stack>
-    </Container>
+    </Stack>
   </Stack>
 </DemoLayout>
