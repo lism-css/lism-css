@@ -6,7 +6,7 @@ description: 'a--icon は、アイコン要素を表示するためのクラス�
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
 import { Cat, SmileyIcon } from "@phosphor-icons/react";
-import {phIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
+import {phIcons, originalIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
 import { Home } from 'lucide-react';
 
 export const PresetIcons = ({icons}) => {
@@ -106,15 +106,9 @@ import { Icon } from 'lism-css/react';
   </PreviewCode>
 </Preview>
 
+### as, exProps を icon にまとめて指定する方法
 
-
-<Spacer h="10"/>
-
-
-#### as, exProps を icon にまとめて指定する
-
-:::point
-::title[Point]
+:::info
 `<Icon>`では、以下のような形式で`as`, `exProps`を一括指定することもできます。
 
 ```jsx
@@ -158,16 +152,39 @@ import { Icon } from 'lism-css/react';
 </Preview> */}
 
 
-
-<h3 id="preset-icons">プリセットアイコンを呼び出す方法</h3>
+### プリセットアイコンを呼び出す方法
 
 Lismパッケージ（`lism-css`）内にはいくつかsvgアイコンを内包しています。
 
 `icon='icon-name'`と文字列でその名前を指定することで、プリセットアイコンを呼び出すことができます。  
 （[Phosphor Icons](https://phosphoricons.com/) を使わせていただいています。）
 
+<Preview>
+  <PreviewTitle>プリセットアイコン呼び出し例</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="15">
+      <Icon icon="lightbulb" size="40px" />
+      <Icon icon="warning" fz="2xl" c="blue" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Cluster g="15">
+      <Icon icon="lightbulb" size="40px" />
+      <Icon icon="warning" fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+<h4 id="preset-icons">プリセットアイコン一覧</h4>
+
 <PreviewTitle>Phosphorアイコン一覧</PreviewTitle>
 <PresetIcons icons={phIcons} />
+
+<PreviewTitle>オリジナルアイコン一覧</PreviewTitle>
+<PresetIcons icons={originalIcons} />
 
 <PreviewTitle>ロゴアイコン一覧</PreviewTitle>
 <PresetIcons icons={logoIcons} />
@@ -188,24 +205,6 @@ Lismパッケージ（`lism-css`）内にはいくつかsvgアイコンを内包
   <Icon icon="logo-instagram" size="32px" />
   <Icon icon="logo-tiktok" size="32px" />
 </Cluster> */}
-
-<Preview>
-  <PreviewTitle>プリセットアイコン呼び出し例</PreviewTitle>
-  <PreviewArea p="20">
-    <Cluster g="15">
-      <Icon icon="lightbulb" size="40px" />
-      <Icon icon="warning" fz="2xl" c="blue" />
-    </Cluster>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Cluster g="15">
-      <Icon icon="lightbulb" size="40px" />
-      <Icon icon="warning" fz="2xl" c="blue" />
-    </Cluster>
-    ```
-  </PreviewCode>
-</Preview>
 
 
 ### svgを直接記述する方法

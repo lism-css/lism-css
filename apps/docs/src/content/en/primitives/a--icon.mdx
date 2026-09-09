@@ -6,7 +6,7 @@ description: 'a--icon is a class for displaying icon elements.'
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
 import { Cat, SmileyIcon } from "@phosphor-icons/react";
-import {phIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
+import {phIcons, originalIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
 import { Home } from 'lucide-react';
 
 export const PresetIcons = ({icons}) => {
@@ -107,14 +107,9 @@ To pass props specific to the external component (such as `SmileyIcon`), use `ex
 </Preview>
 
 
-
-<Spacer h="10"/>
-
-
 #### Combining `as` and `exProps` into `icon`
 
-:::point
-::title[Point]
+:::info
 In `<Icon>`, you can also pass `as` and `exProps` together in the following format:
 
 ```jsx
@@ -159,15 +154,39 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
 
 
 
-<h3 id="preset-icons">Using preset icons</h3>
+### Using preset icons
 
 The Lism package (`lism-css`) includes several built-in SVG icons.
 
 You can call a preset icon by specifying its name as a string via `icon='icon-name'`.
 ([Phosphor Icons](https://phosphoricons.com/) are used.)
 
+<Preview>
+  <PreviewTitle>Example of calling a preset icon</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="15">
+      <Icon icon="lightbulb" size="40px" />
+      <Icon icon="warning" fz="2xl" c="blue" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Cluster g="15">
+      <Icon icon="lightbulb" size="40px" />
+      <Icon icon="warning" fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+<h4 id="preset-icons">Preset icon list</h4>
+
 <PreviewTitle>Phosphor icon list</PreviewTitle>
 <PresetIcons icons={phIcons} />
+
+<PreviewTitle>Original icon list</PreviewTitle>
+<PresetIcons icons={originalIcons} />
 
 <PreviewTitle>Logo icon list</PreviewTitle>
 <PresetIcons icons={logoIcons} />
@@ -188,24 +207,6 @@ You can call a preset icon by specifying its name as a string via `icon='icon-na
   <Icon icon="logo-instagram" size="32px" />
   <Icon icon="logo-tiktok" size="32px" />
 </Cluster> */}
-
-<Preview>
-  <PreviewTitle>Example of calling a preset icon</PreviewTitle>
-  <PreviewArea p="20">
-    <Cluster g="15">
-      <Icon icon="lightbulb" size="40px" />
-      <Icon icon="warning" fz="2xl" c="blue" />
-    </Cluster>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Cluster g="15">
-      <Icon icon="lightbulb" size="40px" />
-      <Icon icon="warning" fz="2xl" c="blue" />
-    </Cluster>
-    ```
-  </PreviewCode>
-</Preview>
 
 
 ### Writing SVG directly
