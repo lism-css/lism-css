@@ -26,7 +26,7 @@ const copy = isJa
       title: 'Lism Templates',
       lead: 'Lism CSSでプロジェクトを始めるためのテンプレートをCLIコマンド1つで手元に生成できます。',
       quickStart: 'クイックスタート',
-      quickStartLead: 'Lism CSSを組み込んだ、プロジェクト一式型のテンプレートをコマンド一つでローカル環境にコピーできます。',
+      quickStartLead: 'Lism CSSを組み込んだプロジェクト一式型のテンプレートを、コマンド一つでローカル環境にコピーできます。',
       available: 'テンプレートプレビュー',
       availableLead:
         'テンプレートはブログ・LP・最小構成といったプロジェクトの種類ごとにカテゴリ分けされており、同じカテゴリの中でもデザインや機能の異なるバリエーションから選べます。詳しい説明・機能の比較・生成コマンドは各カテゴリのページで確認できます。',
@@ -59,30 +59,26 @@ const buildCategoryUrl = (category: string) => getLocalizedUrl(`/templates/${cat
 
   {/* ===== クイックスタート ===== */}
   <Stack as="section" g="30">
-    <Stack g="20">
-      <Heading level="2">{copy.quickStart}</Heading>
-      <Text hl="s">{copy.quickStartLead}</Text>
-    </Stack>
-    <Stack p="30" bd bdrs="20" bgc="base">
-      <Text util="trim" c="text-2" fz="s" hl="s">{copy.commandLead}</Text>
-      <Preview>
-        <PreviewCode slot="tab" label="npm">
-          <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
-            <code>npm create lism@latest</code>
-          </Lism>
-        </PreviewCode>
-        <PreviewCode slot="tab" label="pnpm">
-          <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
-            <code>pnpm create lism</code>
-          </Lism>
-        </PreviewCode>
-      </Preview>
-    </Stack>
+    <Heading level="2">{copy.quickStart}</Heading>
+    <Text hl="s">{copy.quickStartLead}</Text>
+    <Preview>
+      <PreviewCode slot="tab" label="npm">
+        <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+          <code>npm create lism@latest</code>
+        </Lism>
+      </PreviewCode>
+      <PreviewCode slot="tab" label="pnpm">
+        <Lism as="pre" class="c--templatesCode" p="15" bdrs="10" bgc="base-2" fz="xs" hl="s">
+          <code>pnpm create lism</code>
+        </Lism>
+      </PreviewCode>
+    </Preview>
+    <Text util="trim" c="text-2" fz="s" hl="s">{copy.commandLead}</Text>
   </Stack>
 
   {/* ===== テンプレート一覧 ===== */}
   <Stack as="section" g="40" aria-labelledby="templates-list-title">
-    <Stack g="20">
+    <Stack g="30">
       <Heading id="templates-list-title" level="2">{copy.available}</Heading>
       <Text c="text-2" hl="s">{copy.availableLead}</Text>
     </Stack>
