@@ -17,7 +17,6 @@ import {
   stackOrder,
   getAggregateRepresentative,
   getThumb,
-  getIntro,
   getCategoryIntro,
   getPreviewUrl,
   type TemplateItem,
@@ -41,7 +40,7 @@ const copy = isJa
       install: 'インストールコマンド',
       installCategoryLead: '対話形式で stack を選んで生成します。',
       installStackLead: 'stack を直接指定する場合：',
-      commandLead: 'このテンプレートを生成する：',
+      commandLead: 'テンプレートをコピー:',
       details: '詳細を見る',
       viewDemo: 'デモページへ ↗',
       previewMissing: 'このテンプレートはまだプレビューURLが設定されていません。',
@@ -53,7 +52,7 @@ const copy = isJa
       install: 'Install command',
       installCategoryLead: 'Pick a stack through the interactive flow.',
       installStackLead: 'Or specify a stack directly:',
-      commandLead: 'Generate this template:',
+      commandLead: 'Copy this template:',
       details: 'View details',
       viewDemo: 'View demo ↗',
       previewMissing: 'A preview URL is not configured for this template yet.',
@@ -162,34 +161,25 @@ const representativePreviewUrl = representative ? getPreviewUrl(representative, 
                 )}
               </Cluster>
 
-              <Columns cols={{ base: 1, md: 2 }} g="30" ai="start">
-                <BoxLink layout="frame" href={detailUrl} aria-label={title} class="c--templateSection_thumbLink" ar="16/9" bd bdrs="20" ov="hidden">
-                  <Image
-                    src={getThumb(tpl, lang)}
-                    alt={copy.thumbAlt(title)}
-                    widths={[400, 800, 1200]}
-                    sizes="(max-width: 800px) 100vw, 50vw"
-                    loading="lazy"
-                  />
+              <Columns cols="1" g="30" max-sz="m">
+                <BoxLink layout="frame" href={detailUrl} aria-label={title} class="c--templateSection_thumbLink" ar="16/9" bd bdrs="20">
+                  <Image src={getThumb(tpl, lang)} alt={copy.thumbAlt(title)} loading="lazy" />
                 </BoxLink>
-
-                <Stack g="20">
-                  <Text c="text-2" hl="s">
-                    {getIntro(tpl, lang)}
-                  </Text>
+                <Stack g="30" p="5">
+                  <Text util="trim">{tpl.description[lang]}</Text>
                   {features && features.length > 0 && <TemplateFeatures features={features} />}
-                  <Stack g="10">
-                    <Text util="trim" c="text-2" fz="xs" hl="s">
+                  <Stack g="15">
+                    <Text util="trim" c="text-2" fz="s" hl="s">
                       {copy.commandLead}
                     </Text>
                     <CopyCommand bdrs="10" command={buildCommand(tpl.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
                   </Stack>
                   <Flex g="15" fxw="wrap">
-                    <Button as="a" href={detailUrl} variant="outline" bdrs="10" fz="xs">
+                    <Button href={detailUrl} bdrs="10" fz="m" px="20" hov="-bgc">
                       {copy.details}
                     </Button>
                     {previewUrl && (
-                      <Button as="a" href={previewUrl} target="_blank" rel="noopener noreferrer" variant="fill" bdrs="10" fz="xs">
+                      <Button href={previewUrl} variant="outline" target="_blank" rel="noopener noreferrer" bdrs="10" fz="m" px="20" hov="-bgc">
                         {copy.viewDemo}
                       </Button>
                     )}

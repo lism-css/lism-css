@@ -32,7 +32,7 @@ export interface TemplateItem {
   title: Record<LangCode, string>;
   /** 短い説明（一覧カードの抜粋） */
   description: Record<LangCode, string>;
-  /** 長い説明（カテゴリページ・詳細ページ）。未指定なら description を使う（getIntro） */
+  /** 長い説明（詳細ページ）。未指定なら description を使う（getIntro） */
   intro?: Record<LangCode, string>;
   thumb: ImageMetadata;
   /** en 用 thumb（`screenshots/en/` に撮影済みの場合のみ）。無い場合は thumb にフォールバック */
