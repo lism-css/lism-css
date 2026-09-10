@@ -47,7 +47,7 @@ function Section({ title, children }) {
 function Sample({ label, children }) {
   return (
     <Stack g="10">
-      <Text fz="xs" fw="bold" c="text-2" tt="upper" lts="l">
+      <Text fz="xs" fw="bold" c="text-2" tt="uppercase" lts="l">
         {label}
       </Text>
       {children}

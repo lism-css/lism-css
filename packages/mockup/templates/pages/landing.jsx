@@ -126,7 +126,7 @@ export default function LandingPage() {
               {plans.map(({ name, price, featured, items }) => (
                 <Stack key={name} className="c--planCard" g="25" p="30" bgc="base" bdrs="20" bxsh="10">
                   <Stack g="5">
-                    <Text fz="xs" fw="bold" c="text-2" tt="upper" lts="l">
+                    <Text fz="xs" fw="bold" c="text-2" tt="uppercase" lts="l">
                       {name}
                     </Text>
                     <Cluster g="5" ai="end">

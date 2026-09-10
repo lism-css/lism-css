@@ -39,7 +39,7 @@ export default function GalleryView({ groups, onOpenPage }: GalleryViewProps) {
     <Stack p="30" g="40">
       {groups.map((group) => (
         <Stack key={group.key} as="section" g="20">
-          <Heading level="2" fz="xs" fw="bold" c="text-2" tt="upper" lts="l">
+          <Heading level="2" fz="xs" fw="bold" c="text-2" tt="uppercase" lts="l">
             {group.label}
           </Heading>
           {/* Breakpoint-free grid: the sidebar can be toggled, so the space the

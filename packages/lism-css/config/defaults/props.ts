@@ -52,7 +52,12 @@ export default {
   lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
   ta: { prop: 'textAlign', presets: ['center', 'left', 'right'] },
   td: { prop: 'textDecoration', utils: { none: 'none' } },
-  tt: { prop: 'textTransform', utils: { upper: 'uppercase', lower: 'lowercase' } },
+  tt: {
+    prop: 'textTransform',
+    presets: ['uppercase', 'lowercase'],
+    // 旧クラス名 -tt:upper / -tt:lower との互換。props の upper / lower を -tt:uppercase / -tt:lowercase に解決する。
+    shorthands: { upper: 'uppercase', lower: 'lowercase' },
+  },
   // te: { prop: 'textEmphasis', presets: ['filled'] },
   // tsh: { prop: 'textShadow' },
 

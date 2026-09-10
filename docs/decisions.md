@@ -1,6 +1,15 @@
-基準日: 2026-09-05・コミット 292b1f3d＋作業ツリー
+基準日: 2026-09-10・作業ツリー
 
 # 意思決定の記録
+
+## 2026-09-10: text-transform のクラス値は省略せず uppercase / lowercase にする
+
+Property Class の値名は「6文字以上で意味が通るものは省略可」として `-tt:upper` / `-tt:lower` を使っていた。ただし `uppercase` は Tailwind 等でも省略されずに使われる語で、CSSを知っている人ほど `-tt:uppercase` と書いてしまう。実際に自前スキルの例文でも存在しない `-tt:uppercase` を書いていた。実装は `config/defaults/props.ts` の `tt` を参照する。
+
+- 決定: クラス名は `-tt:uppercase` / `-tt:lowercase` に変更し、`-tt:upper` / `-tt:lower` はCSSから削除する。
+- 決定: props の `tt="upper"` / `tt="lower"` は互換として残し、`shorthands` で `-tt:uppercase` / `-tt:lowercase` に解決する。
+- 決定: このリポジトリで管理する docs・templates・patterns・mockup は props も `uppercase` / `lowercase` に揃える。
+- 対象外: `fit` / `between` / `current` は Tailwind と同じ略し方で定着しており、`currentColor` はキャメルケースが扱いづらいため維持する。
 
 ## 2026-09-05: OG画像の余白は文字とロゴの見える端を実測して整える
 

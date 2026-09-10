@@ -595,6 +595,12 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-td:none');
     });
 
+    test('tt: uppercase と旧略称 upper / lower がフル名称のクラスになる', () => {
+      expect(getLismProps({ tt: 'uppercase' }).className).toContain('-tt:uppercase');
+      expect(getLismProps({ tt: 'upper' }).className).toContain('-tt:uppercase');
+      expect(getLismProps({ tt: 'lower' }).className).toContain('-tt:lowercase');
+    });
+
     test('bgc: current / currentColor がユーティリティクラスになる', () => {
       expect(getLismProps({ bgc: 'current' }).className).toContain('-bgc:current');
       expect(getLismProps({ bgc: 'currentColor' }).className).toContain('-bgc:current');

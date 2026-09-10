@@ -120,8 +120,6 @@ Property Class の値名は基本的に CSS の実値と同じですが、以下
 
 | クラス例 | 実際の CSS 値 | 対象 Prop |
 | --- | --- | --- |
-| `-tt:upper` | `text-transform: uppercase` | `tt` |
-| `-tt:lower` | `text-transform: lowercase` | `tt` |
 | `-w:fit` | `width: fit-content` | `w`, `h` |
 | `-ac:between` | `align-content: space-between` | `ac`, `jc` |
 | `-bdc:current` | `border-color: currentColor` | `bdc` |
