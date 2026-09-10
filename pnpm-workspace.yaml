@@ -4,6 +4,10 @@ packages:
   - 'templates/*/*'
   - 'templates/*/*/*'
 
+# mockup は Lism 系依存を `*` で直書きしている（publish 後も範囲を固定しないため）。
+# 既定の false だとレジストリから解決されるので、workspace 版をリンクさせる
+linkWorkspacePackages: true
+
 overrides:
   '@vitest/expect': $vitest
   '@vitest/spy': $vitest

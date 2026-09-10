@@ -8,6 +8,14 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 <Divider bds="dashed" my="40" />
 
+## Unreleased
+
+**`@lism-css/plugin`**
+
+- Moved `lism-css` from `dependencies` to `peerDependencies` (`*`) so CSS is generated from the `lism-css` installed in your project. The plugin no longer bundles its own copy of `lism-css`, so install `lism-css` alongside it (#609).
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.28.2 (2026.09.10)
 
 - Changed the top margin of headings directly inside `l--flow` from `calc(var(--flow) * 2 + 0.5em)` to `calc(var(--flow) * 1.5 + 0.5em)` and limited it to `h1`–`h4` (`h5` / `h6` now use the regular `--flow`). Also fixed a leftover `0.5em` margin on the first heading and on headings right after `is--skipFlow` (#608).
