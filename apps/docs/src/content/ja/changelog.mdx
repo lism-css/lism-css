@@ -8,6 +8,14 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 <Divider bds="dashed" my="40" />
 
+## 未リリース
+
+**`@lism-css/plugin`**
+
+- `lism-css`を`dependencies`から`peerDependencies`（`*`）へ移し、利用側にインストールされている`lism-css`からCSSを生成するようにしました。pluginが`lism-css`を同梱しなくなるため、`lism-css`は利用側で導入してください（#609）。
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.28.2 (2026.09.10)
 
 - `l--flow`直下の見出しの上余白を`calc(var(--flow) * 2 + 0.5em)`から`calc(var(--flow) * 1.5 + 0.5em)`へ変更し、対象を`h1`〜`h4`に絞りました（`h5` / `h6`は通常の`--flow`）。先頭の見出しや`is--skipFlow`直後の見出しに`0.5em`の余白が残る問題も修正しました（#608）。

@@ -37,7 +37,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 ### plugin の特別ルール
 
 - `lism-css` のバージョン更新だけでは plugin を再リリースしない。peer の `*` は非互換な変更も拒否しないため、core のリリース時に plugin が使用する内部 API・SCSS 構成への影響を確認し、plugin の修正が必要な場合に対応する
-- mockup は公開済みの `^` 範囲外になる依存更新、実装修正、または必要な依存の下限更新がある場合だけリリースする
+- mockup の `lism-css` / `@lism-css/plugin` / `@lism-css/ui` 依存は `*`（workspace プロトコルではなく直書き。開発時のリンクは `pnpm-workspace.yaml` の `linkWorkspacePackages`）。新規インストール時は常に公開最新版を使うため、依存の更新だけでは mockup をリリースしない。mockup 自身の実装修正がある場合だけリリースする。core / plugin / ui のリリース時は mockup（viewer・`check`）への影響を確認し、非互換があれば mockup を修正してリリースする
 
 
 ## 現在の状態
