@@ -1,0 +1,25 @@
+---
+// 自動生成: scripts/generate.mjs（編集元: src/svg/）
+import type { HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'svg'> & { strokeWidth?: number | string };
+const { strokeWidth, 'stroke-width': nativeStrokeWidth, ...props } = Astro.props;
+const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  width="1em"
+  height="1em"
+  focusable="false"
+  aria-hidden={labelled ? undefined : true}
+  role={labelled ? 'img' : undefined}
+  stroke-width={nativeStrokeWidth ?? strokeWidth ?? '1.5'}
+  {...props}
+  ><line x1="2.25" y1="12" x2="12.75" y2="12"></line><polyline points="9 8.25 12.75 12 9 15.75"></polyline><polyline
+    points="12.75 3.75 18.75 3.75 18.75 20.25 12.75 20.25"></polyline><slot /></svg
+>

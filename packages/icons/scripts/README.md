@@ -1,10 +1,26 @@
-基準日: 2026-09-10・コミットd8b6ba43
+基準日: 2026-09-10・コミットb8a6133e（作業ツリーの変更を含む）
 
 # 制作データ用スクリプト
 
 以下のコマンドは、リポジトリのルートディレクトリから実行してください。Illustratorを操作する手順では、macOS上でIllustratorを起動しておく必要があります。
 
 `mapping.json`にはPhosphor Iconsとの対応を、`config.mjs`には対象アイコン・配置・点の設定を定義しています。`gen-jsx.mjs`は、`ai/`のテンプレートからIllustratorで実行するJSXファイルを生成します。生成したファイルには実行環境の絶対パスが含まれるため、Gitにはコミットしないでください。
+
+アートボードは、コアの収録候補を上段に、追加パッケージ専用のアイコンを下段に配置します。下段では線を使うアイコンと塗りだけのアイコンの間にも余白を設けています。コア候補の一覧は`config.mjs`の`coreIconNames`で管理しています。
+
+線と塗りを組み合わせるアイコンは`config.mjs`で`mixed: true`を指定します。検証では、線と塗りの両方が存在することを確認します。
+
+## アートボードを並べ替える
+
+Illustratorで編集元を開き、変更を保存してから実行してください。`config.mjs`の区分と配置に合わせて、アートボードと対応する絵を一緒に移動します。形状は作り直しません。
+
+```bash
+icons_work_dir=$(mktemp -d)
+na exec node packages/icons/scripts/gen-jsx.mjs "$icons_work_dir/scripts"
+bash packages/icons/scripts/run-ai.sh "$icons_work_dir/scripts/06-relayout.jsx"
+```
+
+移動前に名前・グループ・線幅・点を検証し、同じ一時フォルダに`before-relayout.ai`を保存します。移動後も検証を行い、編集元を保存します。バックアップの上書きを防ぐため、実行ごとに新しい一時フォルダを使ってください。
 
 ## IllustratorファイルからSVGを書き出す
 
@@ -19,6 +35,24 @@ na exec node packages/icons/scripts/verify-export.mjs "$icons_work_dir/scripts/e
 ```
 
 検証スクリプトは、ファイル一覧・viewBox・名前・線幅・点・角丸を確認します。不一致があればエラーを表示し、終了コード1を返します。書き出し処理でIllustratorファイルが変更されることはありません。
+
+検証に成功したSVGを`packages/icons/src/svg/`へコピーします。アイコンを削除・改名した場合は、コピー先に残っている旧ファイルも削除してください。コピー後も同じ検証スクリプトで確認できます。
+
+## コンポーネントを生成する
+
+`generate.mjs`は`src/svg/`を正規化し、React・Astroコンポーネントと共通データを生成します。
+
+```bash
+na exec node packages/icons/scripts/generate.mjs
+na exec node packages/icons/scripts/generate.mjs --check
+nr build:icons
+```
+
+生成先は`src/react/`、`packages/astro/`、`src/data.ts`です。これらはGitで管理します。`--check`は書き込みを行わず、入力と生成物の不一致を検出します。全入力の検証と整形が成功してから書き込み、削除されたアイコンの古い生成ファイルも取り除きます。
+
+`normalize-svg.mjs`は背景・ID・グループを除き、継承属性を反映して色を`currentColor`へ、線幅をルートへ集約します。円や角丸などの形状と描画順は維持します。線の結合方法などの例外と、混合アイコンの塗り指定は各要素に残します。24グリッド以外や、style・transform・外部参照など非対応の入力はエラーにします。
+
+パッケージディレクトリで`nr test`、`nr typecheck`、`nr lint`を実行できます。テストでは生成の再現性、Reactでの描画、Astroでのビルド、属性の上書き、tree-shakingを確認します。ビルドとテストにIllustratorやGit LFSは不要です。
 
 ## 元のSVGから初期形状を再作成する
 

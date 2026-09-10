@@ -6,7 +6,7 @@ interface Props {
   viewBox?: string;
   path?: string;
   __html?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 let { size = '1em', fill = 'currentColor', viewBox = '0 0 24 24', path, __html, ...props } = Astro.props || {};
 ---

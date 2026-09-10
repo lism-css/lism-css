@@ -34,31 +34,36 @@ function verify(directory) {
   if (missing.length) errors.push(`missing: ${list(missing)}`);
   if (extra.length) errors.push(`unexpected: ${list(extra)}`);
 
-  for (const { id, fill } of icons) {
+  for (const { id, fill, mixed } of icons) {
     if (!actualSet.has(id)) continue;
 
     const svg = readFileSync(`${directory}/${id}.svg`, 'utf8');
     const elements = parseElements(svg);
     const root = elements.find(({ name }) => name === 'svg');
     const groups = elements.filter(({ name }) => name === 'g');
-    const strokes = elements.filter(({ attributes }) => hasStroke(attributes));
+    const shapes = elements.filter(({ name }) => isDrawableShape(name));
+    const strokes = shapes.filter(({ attributes }) => hasStroke(attributes));
+    const fills = shapes.filter(({ name, attributes }) => hasFill(name, attributes));
 
     if (!isViewBox24(root?.attributes.viewBox)) errors.push(`${id}: viewBox`);
     if (!groups.some(({ attributes }) => attributes['data-name'] === id)) {
       errors.push(`${id}: group data-name`);
     }
 
-    if (fill) {
-      if (strokes.length) errors.push(`${id}: fill icon has stroke`);
+    if (mixed) {
+      if (!strokes.length || !fills.length) errors.push(`${id}: mixed icon needs fill and stroke`);
+      if (strokes.some(({ attributes }) => !isNumber(attributes['stroke-width'], 1.5))) {
+        errors.push(`${id}: stroke-width`);
+      }
+    } else if (fill) {
+      if (strokes.length || !fills.length) errors.push(`${id}: fill icon needs fill only`);
     } else {
       if (!strokes.length) {
         errors.push(`${id}: missing stroke`);
       } else if (strokes.some(({ attributes }) => !isNumber(attributes['stroke-width'], 1.5))) {
         errors.push(`${id}: stroke-width`);
       }
-
-      const filledDots = elements.filter(({ name, attributes }) => name === 'circle' && attributes.fill !== 'none');
-      if (filledDots.length) errors.push(`${id}: filled circle`);
+      if (fills.length) errors.push(`${id}: line icon has fill`);
     }
 
     const dotCount = expectedDots[id];
@@ -115,6 +120,15 @@ function parseAttributes(tag) {
 
 function hasStroke(attributes) {
   return attributes.stroke !== undefined && attributes.stroke.toLowerCase() !== 'none';
+}
+
+function isDrawableShape(name) {
+  return ['circle', 'ellipse', 'line', 'path', 'polygon', 'polyline', 'rect'].includes(name);
+}
+
+function hasFill(name, attributes) {
+  if (name === 'line') return false;
+  return attributes.fill === undefined || attributes.fill.toLowerCase() !== 'none';
 }
 
 function isViewBox24(value) {

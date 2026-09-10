@@ -163,7 +163,15 @@ function verifyDocument(document, allowOriginalDots) {
       if (paths[p].filled && !(allowOriginalDots && !paths[p].stroked && isCircle(paths[p], 2.25))) fills++;
     }
     var hasLineData = strokes > 0 || (allowOriginalDots && dots.original.length > 0);
-    if ((icon.fill && (strokes > 0 || fills === 0)) || (!icon.fill && (!hasLineData || fills > 0))) {
+    var invalidFillStroke = false;
+    if (icon.mixed) {
+      invalidFillStroke = strokes === 0 || fills === 0;
+    } else if (icon.fill) {
+      invalidFillStroke = strokes > 0 || fills === 0;
+    } else {
+      invalidFillStroke = !hasLineData || fills > 0;
+    }
+    if (invalidFillStroke) {
       throw new Error(
         'Unexpected fill/stroke: ' + icon.id + ' (strokes=' + strokes + ', fills=' + fills + ', originalDots=' + dots.original.length + ')'
       );

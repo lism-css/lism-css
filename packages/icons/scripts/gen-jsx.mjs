@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { packageDir, rawDir, icons, layout, expectedDots } from './config.mjs';
+import { packageDir, rawDir, icons, layout, expectedDots, getArtboardRect } from './config.mjs';
 
 const args = process.argv.slice(2);
 if (!args[0] || args[0].startsWith('--') || (args.length !== 1 && (args.length !== 3 || args[1] !== '--ai-path' || !args[2]))) {
@@ -21,16 +21,11 @@ function canonicalPath(filePath) {
   }
 }
 
-const rectOf = (index) => {
-  const left = (index % layout.columns) * (layout.size + layout.gap);
-  const top = layout.size - Math.floor(index / layout.columns) * (layout.size + layout.gap);
-  return [left, top, left + layout.size, top - layout.size];
-};
 const config = {
   aiPath: canonicalPath(requestedAiPath),
   rawDir: canonicalPath(rawDir),
   exportDir: canonicalPath(path.join(outputDir, 'export')),
-  icons: icons.map((icon, index) => ({ ...icon, index, rect: rectOf(index) })),
+  icons: icons.map((icon, index) => ({ ...icon, index, rect: getArtboardRect(index) })),
   size: layout.size,
   expectedDots,
 };
@@ -57,4 +52,5 @@ for (let start = 0; start < icons.length; start += layout.batchSize) {
 generate('03-convert-dots', template('convert-dots'));
 generate('04-verify', template('verify'));
 generate('05-export', template('export'));
-console.log(`Generated ${batches + 4} JSX files for ${icons.length} icons in ${outputDir}`);
+generate('06-relayout', template('relayout'), { backupPath: canonicalPath(path.join(outputDir, 'before-relayout.ai')) });
+console.log(`Generated ${batches + 5} JSX files for ${icons.length} icons in ${outputDir}`);

@@ -61,7 +61,7 @@ export const WithSide: Story = {
 export const CustomIcon: Story = {
   name: 'カスタムアイコン',
   args: {
-    icon: 'star',
+    icon: 'check',
     keycolor: 'purple',
     children: 'カスタムアイコンとカラー指定。',
   },
