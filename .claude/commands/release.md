@@ -35,6 +35,18 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin|icons} {バージョン}"
 - publish 前に `packages/lism-cli/src/constants.ts` の `DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF` が `'main'` であることを確認する（`'dev'` や PR ブランチのままだと公開版 CLI が壊れる）
 - `create-lism` は `lism-cli` を bundle で内包するため、`dependencies` の追従は不要
 
+### テンプレートに新しい公開パッケージを追加する場合
+
+`lism-cli create`は既定で`main`のテンプレートを取得する。`workspace:*`依存の追加時は、`packages/lism-cli/tsup.config.ts`の`packageVersions`にも対象を追加する。
+
+`@lism-css/icons`を追加するLPテンプレートの初回公開は、次の順序で行う。手順10のデプロイは、両方のpublishが完了するまで進めない。
+
+1. `@lism-css/icons`をnpmへ公開する。
+2. アイコンのバージョン解決に対応した`lism-cli`と`create-lism`を再公開する。
+3. テンプレートを`main`へ反映してデプロイする。
+
+旧CLIは追加依存を解決できないため、このLPテンプレートの生成には更新後のCLIを使う。
+
 ### plugin の特別ルール
 
 - `lism-css` のバージョン更新だけでは plugin を再リリースしない。peer の `*` は非互換な変更も拒否しないため、core のリリース時に plugin が使用する内部 API・SCSS 構成への影響を確認し、plugin の修正が必要な場合に対応する

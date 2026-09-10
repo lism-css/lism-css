@@ -24,6 +24,7 @@ vi.mock('../version.js', () => ({
     'lism-css': '1.2.3',
     '@lism-css/ui': '2.3.4',
     '@lism-css/plugin': '3.4.5',
+    '@lism-css/icons': '0.1.0',
   },
 }));
 
@@ -85,7 +86,7 @@ function fetchResponse(ok: boolean, body: unknown): Response {
   return { ok, status: ok ? 200 : 404, json: () => Promise.resolve(body) } as unknown as Response;
 }
 
-/** lism-css / @lism-css/ui（deps）+ @lism-css/plugin（devDeps）を workspace:* で持つテンプレ */
+/** 公開Lismパッケージを workspace:* で持つテンプレ */
 function mockTemplateWithWorkspaceDeps(): void {
   vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
     const dir = (options as { dir: string }).dir;
@@ -95,6 +96,7 @@ function mockTemplateWithWorkspaceDeps(): void {
       dependencies: {
         'lism-css': 'workspace:*',
         '@lism-css/ui': 'workspace:*',
+        '@lism-css/icons': 'workspace:*',
       },
       devDependencies: {
         '@lism-css/plugin': 'workspace:*',
@@ -167,6 +169,7 @@ describe('runCreate', () => {
       'lism-css': '9.1.0',
       '@lism-css/ui': '9.2.0',
       '@lism-css/plugin': '9.3.0',
+      '@lism-css/icons': '0.2.0',
     };
     // dist-tag latest（= 安定版）を引くので prerelease は誤って選ばれない
     const fetchMock = vi.fn((url: string | URL) => {
@@ -183,9 +186,11 @@ describe('runCreate', () => {
     };
     expect(pkg.dependencies['lism-css']).toBe('^9.1.0');
     expect(pkg.dependencies['@lism-css/ui']).toBe('^9.2.0');
+    expect(pkg.dependencies['@lism-css/icons']).toBe('^0.2.0');
     expect(pkg.devDependencies['@lism-css/plugin']).toBe('^9.3.0');
     // スコープ付きはスラッシュのみ %2F にエンコードして /latest を引く
     expect(fetchMock).toHaveBeenCalledWith('https://registry.npmjs.org/@lism-css%2Fui/latest', expect.anything());
+    expect(fetchMock).toHaveBeenCalledWith('https://registry.npmjs.org/@lism-css%2Ficons/latest', expect.anything());
   });
 
   it('レジストリ到達不可時はCLI焼き込み版へフォールバックする', async () => {
@@ -200,13 +205,14 @@ describe('runCreate', () => {
     };
     expect(pkg.dependencies['lism-css']).toBe('^1.2.3');
     expect(pkg.dependencies['@lism-css/ui']).toBe('^2.3.4');
+    expect(pkg.dependencies['@lism-css/icons']).toBe('^0.1.0');
     expect(pkg.devDependencies['@lism-css/plugin']).toBe('^3.4.5');
   });
 
   it('一部依存がレジストリで取得できない場合、その依存だけ焼き込み版へフォールバックする', async () => {
     mockTemplateWithWorkspaceDeps();
     const fetchMock = vi.fn((url: string | URL) => {
-      // lism-css は取得成功、それ以外（ui / plugin）は 404
+      // lism-css は取得成功、それ以外は 404
       if (String(url) === registryLatestUrl('lism-css')) return Promise.resolve(fetchResponse(true, { version: '9.9.9' }));
       return Promise.resolve(fetchResponse(false, {}));
     });
@@ -220,6 +226,7 @@ describe('runCreate', () => {
     };
     expect(pkg.dependencies['lism-css']).toBe('^9.9.9'); // registry latest
     expect(pkg.dependencies['@lism-css/ui']).toBe('^2.3.4'); // 404 → 焼き込み値
+    expect(pkg.dependencies['@lism-css/icons']).toBe('^0.1.0');
     expect(pkg.devDependencies['@lism-css/plugin']).toBe('^3.4.5'); // 404 → 焼き込み値
   });
 
