@@ -77,21 +77,10 @@ export function formatTags(post: Post): string {
 
 ```css
 /* CSS のサンプル */
-.c--articleBody {
-  font-size: var(--fz--s);
-  line-height: 1.95;
-
-  & h2 {
-    font-size: var(--fz--xl);
-    border-block-end: 1px solid var(--divider);
-  }
+.c--example {
+  padding: 1rem;
+  border-radius: 8px;
 }
-```
-
-```bash
-# シェルコマンドのサンプル
-pnpm install
-pnpm dev
 ```
 
 ## テーブル

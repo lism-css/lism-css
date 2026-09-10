@@ -38,12 +38,14 @@ const ogImage = buildOgImageUrl({
         {post.data.title}
       </Heading>
       <Cluster mbs="30" g="20" ai="center">
-        <Date>{post.data.date}</Date>
+        <Date fz="xs">{post.data.date}</Date>
         {
           post.data.tags.length > 0 && (
             <Cluster g="10">
               {post.data.tags.map((tag) => (
-                <Tag href={getTagHref(tag)}>{tag}</Tag>
+                <Tag href={getTagHref(tag)} fz="xs">
+                  {tag}
+                </Tag>
               ))}
             </Cluster>
           )
@@ -51,7 +53,7 @@ const ogImage = buildOgImageUrl({
       </Cluster>
     </Group>
 
-    <Flow class="c--articleBody" mbs="50">
+    <Flow class="c--content" mbs="50">
       <Content />
     </Flow>
 

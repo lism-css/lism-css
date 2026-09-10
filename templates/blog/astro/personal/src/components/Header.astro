@@ -25,44 +25,44 @@ import { siteConfig } from '@/config/site';
       <Inline d="none" id="menu-open-label">{siteConfig.uiText.nav.openMenu}</Inline>
     </Modal.OpenBtn>
   </Flex>
-
-  {/* モバイル用モーダルナビ */}
-  <Modal.Root id="site-nav" isContainer isWrapper="xs" hasGutter py="40">
-    <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" p="30" bdrs="20" bxsh="40" bgc="base">
-      <Flex ai="center" jc="between" mt="-5">
-        <Inline fz="xs" lts="l" c="text-2" tt="upper">Menu</Inline>
-        <Modal.CloseBtn modalId="site-nav" autofocus p="0.4em" me="-0.4em" bdrs="10" hov={{ bgc: 'base-2' }} aria-labelledby="menu-close-label">
-          <Icon
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            aria-hidden="true"
-            style={{ scale: '1.15' }}
-          >
-            <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-          </Icon>
-          <Inline d="none" id="menu-close-label">{siteConfig.uiText.nav.closeMenu}</Inline>
-        </Modal.CloseBtn>
-      </Flex>
-      <Modal.Body layout="stack" g="20" ov-y="auto">
-        <Stack as="nav" aria-label={siteConfig.uiText.nav.aria} fz="s" bd-be>
-          {
-            siteConfig.nav.map((item) => (
-              <Link href={item.href} set="plain" bd-bs hl="s" py="15" px="5" hov={{ c: 'brand' }}>
-                {item.label}
-              </Link>
-            ))
-          }
-        </Stack>
-      </Modal.Body>
-      <Center my="-5">
-        <SnsLinks />
-      </Center>
-    </Modal.Inner>
-  </Modal.Root>
 </Container>
+
+{/* モバイル用モーダルナビ */}
+<Modal.Root id="site-nav" isContainer isWrapper="xs" hasGutter py="40">
+  <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" p="30" bdrs="20" bxsh="40" bgc="base">
+    <Flex ai="center" jc="between" mt="-5">
+      <Inline fz="xs" lts="l" c="text-2" tt="upper">Menu</Inline>
+      <Modal.CloseBtn modalId="site-nav" autofocus p="0.4em" me="-0.4em" bdrs="10" hov={{ bgc: 'base-2' }} aria-labelledby="menu-close-label">
+        <Icon
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+          style={{ scale: '1.15' }}
+        >
+          <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+        </Icon>
+        <Inline d="none" id="menu-close-label">{siteConfig.uiText.nav.closeMenu}</Inline>
+      </Modal.CloseBtn>
+    </Flex>
+    <Modal.Body layout="stack" g="20" ov-y="auto">
+      <Stack as="nav" aria-label={siteConfig.uiText.nav.aria} fz="s" bd-be>
+        {
+          siteConfig.nav.map((item) => (
+            <Link href={item.href} set="plain" bd-bs hl="s" py="15" px="5" hov={{ c: 'brand' }}>
+              {item.label}
+            </Link>
+          ))
+        }
+      </Stack>
+    </Modal.Body>
+    <Center my="-5">
+      <SnsLinks />
+    </Center>
+  </Modal.Inner>
+</Modal.Root>
 
 <style>
   @layer lism-custom {

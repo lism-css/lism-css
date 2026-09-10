@@ -31,12 +31,14 @@ const { Content } = await render(post);
         {post.data.title}
       </Heading>
       <Cluster g="15" mbs="30">
-        <Date>{post.data.date}</Date>
+        <Date fz="xs">{post.data.date}</Date>
         {
           post.data.tags.length > 0 && (
             <Cluster g="5" ai="center">
               {post.data.tags.map((tag) => (
-                <Tag href={`/tags/${tag}/`}>{tag}</Tag>
+                <Tag href={`/tags/${tag}/`} fz="xs">
+                  {tag}
+                </Tag>
               ))}
             </Cluster>
           )
@@ -44,7 +46,7 @@ const { Content } = await render(post);
       </Cluster>
     </Group>
 
-    <Flow class="c--articleBody" mbs="50">
+    <Flow class="c--content" mbs="50">
       <Content />
     </Flow>
 

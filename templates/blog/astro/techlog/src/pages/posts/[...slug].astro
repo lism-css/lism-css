@@ -60,18 +60,20 @@ const ogImage = buildOgImageUrl({
   <Stack as="article" g="50">
     <Group as="header" isWrapper="l" hasGutter>
       <Cluster>
-        <Cat href={categoryHref}>{meta.label}</Cat>
+        <Cat href={categoryHref} fz="xs">{meta.label}</Cat>
       </Cluster>
       <Heading level="1" mbs="10">
         {post.data.title}
       </Heading>
       <Cluster g="10" mbs="30">
-        <Date date={post.data.date} />
+        <Date date={post.data.date} fz="xs" />
         {
           post.data.tags.length > 0 && (
             <Cluster g="5" ai="center">
               {post.data.tags.map((tag) => (
-                <Tag href={getTagHref(tag)}>{tag}</Tag>
+                <Tag href={getTagHref(tag)} fz="xs">
+                  {tag}
+                </Tag>
               ))}
             </Cluster>
           )
@@ -91,7 +93,7 @@ const ogImage = buildOgImageUrl({
             <TableOfContents toc={toc} labelId="toc-label-modal" />
           </FixedToc>
         </Group>
-        <Flow class="c--articleBody" data-pagefind-body>
+        <Flow class="c--content" data-pagefind-body>
           <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
         </Flow>
       </Grid>

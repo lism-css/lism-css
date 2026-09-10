@@ -3,18 +3,17 @@
   :root {
     --base: hsl(220, 0%, 98%);
     --base-2: hsl(220 4% 94%);
-
     --brand: hsl(204, 64%, 30%);
     --link: hsl(212, 80%, 50%);
 
-    /* Gen Interface JP → see: https://gen.typesetting.jp/ */
-    --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
-
-    /* 字間 */
+    /* font : Gen Interface JP → see: https://gen.typesetting.jp/ */
+    --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif;
+    /* 800px ~ 1000px で変化*/
+    --fz--base: clamp(1rem, 0.8rem + 0.4vw, 1.05rem);
     --lts--base: 0.02em;
-
-    /* ウェイト */
     --headings-fw: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
     /* コンテンツサイズ */
     --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
@@ -31,7 +30,6 @@
 
   /* === リンクスタイル === */
   a {
-    /* color: inherit; */
     text-decoration-thickness: 1.5px;
     text-decoration-color: var(--link);
     text-underline-offset: 0.2em;
@@ -48,27 +46,22 @@
 
     --base: hsl(204, 6%, 15%);
     --base-2: hsl(204, 4%, 12%);
-
     --text: hsl(204, 2%, 94%);
     --text-2: hsl(204, 6%, 80%);
     --divider: hsl(204, 6%, 30%);
-
     --brand: hsl(204, 64%, 64%);
     --link: hsl(212, 88%, 64%);
 
     /* shadow color */
     --shc: hsl(204 4% 10% / 90%);
-    /* --sh-inset: inset; */
 
     /* color mix */
     --cbox-cPct: 4%;
     --cbox-bgPct: 6%;
   }
-}
 
-/* === ブログコンテンツのスタイリング === */
-@layer lism-base {
-  .c--articleBody {
+  /* === ブログコンテンツのスタイリング === */
+  .c--content {
     > h2 {
       padding-block: var(--s5);
       padding-inline-start: calc(4px + 0.375em);
@@ -128,6 +121,7 @@
     }
   }
 }
+
 /* === Expressive Code（```ブロック）最小スタイリング === */
 /* Expressive Codeのレイヤー外CSSより優先するためレイヤー外 */
 .expressive-code:not(#_) {

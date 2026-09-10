@@ -85,7 +85,7 @@ const displayFavicon = ogp?.favicon || '';
   href={href}
   target="_blank"
   rel="noopener noreferrer"
-  class="c--linkCard c--linkCard--external"
+  class="c--linkCard"
   bdrs="20"
   p="20"
   bd
@@ -102,7 +102,7 @@ const displayFavicon = ogp?.favicon || '';
           </Inline>
         )
       }
-      <Flex class="c--linkCard_meta" g="5" ai="center" mbs="auto" pbs="10" fz="2xs" c="text-2">
+      <Flex g="5" ai="center" mbs="auto" pbs="10" fz="2xs" c="text-2">
         {displayFavicon && <img src={displayFavicon} alt="" width="16" height="16" class="c--linkCard_favicon" loading="lazy" />}
         <Inline class="c--linkCard_site" hl="0">{displaySiteName}</Inline>
       </Flex>

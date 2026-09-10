@@ -70,10 +70,10 @@ updated: '2026-05-25'
 
 - `Layout.astro` — OGP メタタグ・Web フォント（Noto Serif JP）を `<head>` で読み込み、`<Container>` の中に `<Stack min-h="100svh">` で Header / Main / Footer を縦積み。
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter><Stack g="50">` で囲んだ一覧用レイアウト。
-- 記事詳細（`posts/[slug].astro`）は `<Group as="article" isWrapper isContainer hasGutter>` の中に「記事ヘッダー（Date・Heading・タグ）」「本文（`Flow.c--articleBody`）」「フッター（`ShareButtons` + `ArticleNav`）」を並べる。
+- 記事詳細（`posts/[slug].astro`）は `<Group as="article" isWrapper isContainer hasGutter>` の中に「記事ヘッダー（Date・Heading・タグ）」「本文（`Flow.c--content`）」「フッター（`ShareButtons` + `ArticleNav`）」を並べる。
 
 ## カスタマイズの入口
 
 - `src/config/site.ts` — サイト名・キャッチコピー・ナビ（`Home` / `Archive` / `Tags` / `About`）・OG画像デフォルト（`{ type: '1-5', frame: true, bg: 'fill' }`）・SNS・コピーライト等
 - `src/styles/global.css` — 紙面のような淡いクリーム色と明朝体（Noto Serif JP）を基調にしたトーン。Lism CSS のトークン上書きは `@layer lism-base`
-- 記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダー等）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書く（Markdown から生成される要素にはクラスを直接付けられないため）
+- 記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダー等）は `.c--content` 配下の子孫セレクタとして `@layer lism-base` に書く（Markdown から生成される要素にはクラスを直接付けられないため）
