@@ -36,7 +36,8 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 ### plugin の特別ルール
 
-`@lism-css/mockup` は `@lism-css/plugin` に依存し、publish 時に `workspace:*` が固定バージョンへ置換される。plugin に mockup が使う API の変更（`@lism-css/plugin/vite` の export 追加・変更等）を含む場合は、plugin の publish 後に `nr publish:mockup` で追従させる（判断はステップ4、案内はステップ9）。追従しないと npm 経由の利用者だけが古い plugin を掴んで壊れ、workspace のテストでは検出できない。
+- `lism-css` のバージョン更新だけでは plugin を再リリースしない。peer の `*` は非互換な変更も拒否しないため、core のリリース時に plugin が使用する内部 API・SCSS 構成への影響を確認し、plugin の修正が必要な場合に対応する
+- mockup は公開済みの `^` 範囲外になる依存更新、実装修正、または必要な依存の下限更新がある場合だけリリースする
 
 
 ## 現在の状態
@@ -82,7 +83,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 | `apps/docs/` | Documentation（各パッケージ共通） |
 | その他 | Other |
 
-対象パッケージのコード変更を伴うコミットだけをリリースノートの対象にする。`apps/docs/` のみの変更（docs 修正・翻訳同期等）は含めない。`plugin` は mockup が使う API の変更を含むかもここで判断する（plugin の特別ルール）。
+対象パッケージのコード変更を伴うコミットだけをリリースノートの対象にする。`apps/docs/` のみの変更（docs 修正・翻訳同期等）は含めない。`lism-css` をリリースする際は、plugin が使用する内部 API・SCSS への影響を確認する。mockup は「plugin の特別ルール」の条件に当てはまる場合だけリリース対象とする。
 
 ### 5. リリースノートと changelog エントリの生成
 
@@ -187,7 +188,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 ### 9. npm publish（ユーザー手動）
 
-`lism-cli` は案内前に「lism-cli の特別ルール」の `constants.ts` 確認を行う。`plugin` で mockup の追従が要る場合は `nr publish:mockup` も続けて案内する。案内して完了を待つ。
+`lism-cli` は案内前に「lism-cli の特別ルール」の `constants.ts` 確認を行う。mockup がステップ4でリリース対象になった場合は、依存パッケージの publish 後に `nr publish:mockup` も続けて案内する。案内して完了を待つ。
 
 ```
 pnpm publish を実行してください:
