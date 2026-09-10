@@ -24,7 +24,8 @@ const { item, ...rest } = Astro.props;
     py="5"
     hl="s"
     bd-s
-    hasTransition
+    hasTransition="color"
+    style={{ '--duration': '0.2s' }}
     hov={{ c: 'brand', bgc: 'base-2' }}
     {...rest}
   >
@@ -40,12 +41,3 @@ const { item, ...rest } = Astro.props;
     ) : null
   }
 </li>
-
-<style>
-  @layer lism-custom {
-    .c--toc_item > a {
-      --duration: 0.2s;
-      --transitionProps: color;
-    }
-  }
-</style>

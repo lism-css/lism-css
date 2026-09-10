@@ -76,4 +76,4 @@ updated: '2026-05-25'
 
 - `src/config/site.ts` — サイト名・キャッチコピー・ナビ（`Home` / `Archive` / `Tags` / `About`）・OG画像デフォルト（`{ type: '1-5', frame: true, bg: 'fill' }`）・SNS・コピーライト等
 - `src/styles/global.css` — 紙面のような淡いクリーム色と明朝体（Noto Serif JP）を基調にしたトーン。Lism CSS のトークン上書きは `@layer lism-base`
-- 記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダー等）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-custom` に書く（Markdown から生成される要素にはクラスを直接付けられないため）
+- 記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダー等）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書く（Markdown から生成される要素にはクラスを直接付けられないため）

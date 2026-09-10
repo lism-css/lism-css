@@ -76,4 +76,4 @@ If `updated` is present it's used for the sitemap's `lastmod`; otherwise `date` 
 
 - `src/config/site.ts` — site name, tagline, navigation (`Home` / `Archive` / `Tags` / `About`), default OG image settings (`{ type: '1-5', frame: true, bg: 'fill' }`), social links, copyright, and so on
 - `src/styles/global.css` — a tone built around a soft, paper-like cream background and a serif typeface (Noto Serif JP). Lism CSS token overrides go in `@layer lism-base`.
-- Typography for the post body (the underline under `h2`, the left border on `blockquote`, etc.) is written as descendant selectors under `.c--articleBody` in `@layer lism-custom`, because you can't attach classes directly to elements generated from Markdown.
+- Typography for the post body (the underline under `h2`, the left border on `blockquote`, etc.) is written as descendant selectors under `.c--articleBody` in `@layer lism-base`, because you can't attach classes directly to elements generated from Markdown.

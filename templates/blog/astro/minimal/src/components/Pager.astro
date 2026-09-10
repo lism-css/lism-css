@@ -31,7 +31,17 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
   <Cluster g="5" jc="center">
     {
       prevHref ? (
-        <Center as="a" href={prevHref} class="c--pager_nav" c="text" td="none" hasTransition rel="prev" aria-label={siteConfig.uiText.pager.prev}>
+        <Center
+          as="a"
+          href={prevHref}
+          class="c--pager_nav"
+          c="text"
+          td="none"
+          hasTransition
+          hov={{ c: 'brand', bgc: 'base-2' }}
+          rel="prev"
+          aria-label={siteConfig.uiText.pager.prev}
+        >
           <span aria-hidden="true">←</span>
         </Center>
       ) : (
@@ -49,11 +59,20 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
               …
             </Center>
           ) : page === currentPage ? (
-            <Center as="span" class="c--pager_num" px="5" c="text-2" hasTransition aria-current="page">
+            <Center as="span" class="c--pager_num" px="5" c="text" hasTransition aria-current="page">
               {page}
             </Center>
           ) : (
-            <Center as="a" href={getPageHref(page)} class="c--pager_num" px="5" c="text-2" td="none" hasTransition>
+            <Center
+              as="a"
+              href={getPageHref(page)}
+              class="c--pager_num"
+              px="5"
+              c="text-2"
+              td="none"
+              hasTransition
+              hov={{ c: 'brand', bgc: 'base-2' }}
+            >
               {page}
             </Center>
           )
@@ -63,7 +82,17 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
 
     {
       nextHref ? (
-        <Center as="a" href={nextHref} class="c--pager_nav" c="text" td="none" hasTransition rel="next" aria-label={siteConfig.uiText.pager.next}>
+        <Center
+          as="a"
+          href={nextHref}
+          class="c--pager_nav"
+          c="text"
+          td="none"
+          hasTransition
+          hov={{ c: 'brand', bgc: 'base-2' }}
+          rel="next"
+          aria-label={siteConfig.uiText.pager.next}
+        >
           <span aria-hidden="true">→</span>
         </Center>
       ) : (
@@ -78,28 +107,15 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
   @layer lism-custom {
     .c--pager_nav,
     .c--pager_num {
-      min-width: 28px;
-      height: 28px;
+      min-inline-size: var(--s35);
+      block-size: var(--s35);
     }
     .c--pager_num {
       border-block-end: 1px solid transparent;
       margin-block-end: -1px;
     }
-  }
-  :is(a.c--pager_nav, a.c--pager_num) {
-    &:hover {
-      color: var(--brand);
-      background-color: var(--base-2);
+    .c--pager_num[aria-current] {
+      border-block-end-color: var(--brand);
     }
-
-    &[aria-disabled='true'] {
-      color: var(--text-2);
-      opacity: 0.4;
-      pointer-events: none;
-    }
-  }
-  .c--pager_num[aria-current] {
-    color: var(--text);
-    border-block-end-color: var(--brand);
   }
 </style>

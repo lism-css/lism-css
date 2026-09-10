@@ -63,5 +63,5 @@ The post filename (without extension) is used directly as the URL slug. The numb
 ## Where to customize
 
 - `src/config/site.ts` — site name, tagline, navigation, social links, copyright, and so on
-- `src/styles/global.css` — overrides for Lism CSS tokens. By default only `--base` and `--lts--xl` are enabled; the rest are left as commented-out candidates.
-- Typography for the post body (`blockquote`, `pre`, `table`, etc.) is written as descendant selectors under `.c--articleBody` in `@layer lism-custom`, because you can't attach classes directly to elements generated from Markdown.
+- `src/styles/global.css` — a place for Lism CSS token overrides. It is empty by default; when you override tokens, write them as `@layer lism-base { :root { ... } }`.
+- Typography for the post body (`blockquote`, `pre`, `table`, etc.) is written as descendant selectors under `.c--articleBody` in `@layer lism-base`, because you can't attach classes directly to elements generated from Markdown.
