@@ -103,7 +103,7 @@ export default {
 
   // line-height: unitless比率。fz に比例した行送りを維持したい場合に使う（既定の行間管理は hl）。
   //  hl と違い body 等で base 値としてセットしないため、中央キーは base ではなく m。
-  lh: { xs: '1.25', s: '1.5', m: '1.75', l: '2', xl: '2.25' },
+  lh: { xs: '1.125', s: '1.25', m: '1.5', l: '1.75', xl: '2' },
 
   // letter-spacing: xs〜xl は base からの相対値。base は calc() に入るため長さで指定する（normal 不可）。
   //  Memo: var() は :root で置換されるため、base の上書きは :root で行う（子孫要素での上書きは xs〜xl に伝わらない）。
