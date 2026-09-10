@@ -36,7 +36,7 @@ describe('言語ごとのパターン公開', () => {
       'footer',
     ]);
     expect(Object.keys(patterns)).toEqual(categoryIds);
-    expect(Object.values(patterns).flatMap(({ items }) => items)).toHaveLength(60);
+    expect(Object.values(patterns).flatMap(({ items }) => items)).toHaveLength(62);
     for (const category of categoryIds) {
       const { items } = patterns[category];
       expect(items.map(({ id }) => id)).toEqual(items.map((_, index) => `${category}${String(index + 1).padStart(2, '0')}`));
@@ -99,11 +99,11 @@ describe('言語ごとのパターン公開', () => {
     expect(catalog.getPatternCategory('page-links', 'en')?.items).toHaveLength(7);
     for (const lang of ['ja', 'en'] as const) {
       expect(catalog.getPattern('page-links', 'page-links07', lang)?.title).toBe('PageLinks07');
-      expect(catalog.getPatternCategory('feature', lang)?.items.map(({ id }) => id)).toEqual(['feature03', 'feature04']);
+      expect(catalog.getPatternCategory('feature', lang)?.items.map(({ id }) => id)).toEqual(['feature01', 'feature02', 'feature03', 'feature04']);
       expect(catalog.getPattern('feature', 'feature03', lang)?.title).toBe('Feature03');
       expect(catalog.getPattern('feature', 'feature04', lang)?.title).toBe('Feature04');
-      expect(catalog.getPatternCategory('cta', lang)?.items.map(({ id }) => id)).toEqual(['cta01', 'cta02', 'cta03', 'cta04']);
-      expect(catalog.getPattern('cta', 'cta04', lang)?.title).toBe('CTA04');
+      expect(catalog.getPatternCategory('cta', lang)?.items.map(({ id }) => id)).toEqual(['cta01', 'cta02']);
+      expect(catalog.getPattern('cta', 'cta01', lang)?.title).toBe('CTA01');
       expect(catalog.getPattern('cta', 'cta05', lang)).toBeUndefined();
       expect(catalog.getPattern('section', 'section01', lang)).toBeUndefined();
     }
@@ -134,14 +134,16 @@ describe('言語ごとのパターン公開', () => {
     }
   });
 
-  it('下書き9件は本番で除外し、開発時には同じ番号で日英とも表示する', async () => {
+  it('下書き11件は本番で除外し、開発時には同じ番号で日英とも表示する', async () => {
     const drafts = [
       ['hero', 'hero04'],
       ['hero', 'hero05'],
-      ['feature', 'feature01'],
-      ['feature', 'feature02'],
-      ['process', 'process01'],
+      ['feature', 'feature05'],
       ['pricing', 'pricing03'],
+      ['cta', 'cta03'],
+      ['cta', 'cta04'],
+      ['process', 'process01'],
+      ['process', 'process02'],
       ['stats', 'stats01'],
       ['logos', 'logos01'],
       ['footer', 'footer01'],
@@ -191,7 +193,7 @@ describe('言語ごとのパターン公開', () => {
     }
     expect(alternates('/patterns/news/news001/')).toEqual([]);
     expect(alternates('/patterns/testimonials/testimonials02/')).toEqual(['ja', 'en']);
-    expect(alternates('/patterns/cta/cta04/')).toEqual(['ja', 'en']);
+    expect(alternates('/patterns/cta/cta01/')).toEqual(['ja', 'en']);
     expect(alternates('/patterns/')).toEqual(['ja', 'en']);
     expect(alternates('/docs/overview/')).toEqual(['ja', 'en']);
   });
