@@ -41,10 +41,38 @@ const footerPrimaryNavItems = [
 ];
 
 const footerSnsLinks = [
-  { href: '#', icon: 'logo-x' as const, label: 'X' },
-  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
-  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
-  { href: '#', icon: 'logo-line' as const, label: 'LINE' },
+  {
+    href: '#',
+    icon: {
+      viewBox: '0 0 32 32',
+      path: 'M18.42,13.99L27.88,3h-2.25l-8.21,9.57L10.86,3H3.3l9.93,14.48L3.3,29h2.25l8.69-10.1L21.14,29h7.56 L18.42,13.99L18.42,13.99z M15.35,17.6l-1-1.42L6.31,4.71h3.43l6.44,9.22l1,1.42l8.39,12h-3.43L15.35,17.6L15.35,17.6z',
+    },
+    label: 'X',
+  },
+  {
+    href: '#',
+    icon: {
+      viewBox: '0 0 32 32',
+      path: 'M16.01,8.83c-3.95,0-7.17,3.16-7.17,7.17s3.16,7.17,7.17,7.17s7.17-3.16,7.17-7.17S19.96,8.83,16.01,8.83z M16.01,20.62 c-2.55,0-4.62-2.07-4.62-4.62s2.07-4.62,4.62-4.62s4.62,2.07,4.62,4.62S18.56,20.62,16.01,20.62L16.01,20.62z M25.12,8.59 c0,0.97-0.79,1.64-1.64,1.64c-0.97,0-1.64-0.79-1.64-1.64c0-0.85,0.79-1.64,1.64-1.64C24.33,6.95,25.12,7.62,25.12,8.59z  M29.86,10.23c-0.12-2.25-0.61-4.19-2.31-5.83c-1.7-1.64-3.65-2.13-5.83-2.31c-2.31-0.06-9.12-0.06-11.49,0.06 C7.99,2.27,6.04,2.76,4.4,4.4s-2.13,3.59-2.31,5.83c-0.12,2.31-0.12,9.18,0,11.49c0.12,2.25,0.61,4.19,2.31,5.83 c1.7,1.64,3.59,2.13,5.83,2.31c2.31,0.12,9.18,0.12,11.49,0c2.25-0.12,4.19-0.61,5.83-2.31c1.64-1.64,2.13-3.59,2.31-5.83 C30.05,19.41,30.05,12.6,29.86,10.23L29.86,10.23z M26.95,24.27c-0.49,1.22-1.4,2.13-2.67,2.67c-1.82,0.67-6.2,0.55-8.26,0.55 s-6.38,0.18-8.26-0.55c-1.22-0.49-2.13-1.4-2.67-2.67C4.4,22.45,4.58,18.07,4.58,16S4.4,9.62,5.19,7.74 c0.43-1.22,1.4-2.13,2.61-2.61c1.82-0.79,6.2-0.55,8.26-0.55s6.38-0.18,8.26,0.55c1.22,0.49,2.13,1.4,2.67,2.67 c0.67,1.82,0.55,6.2,0.55,8.26S27.61,22.39,26.95,24.27z',
+    },
+    label: 'Instagram',
+  },
+  {
+    href: '#',
+    icon: {
+      viewBox: '0 0 32 32',
+      path: 'M29.93,9c-0.32-1.26-1.32-2.27-2.58-2.58C25.08,5.79,16,5.79,16,5.79s-9.08,0-11.35,0.57 C3.39,6.67,2.38,7.68,2.07,8.94C1.5,11.27,1.5,16,1.5,16s0,4.73,0.57,7.06c0.32,1.26,1.32,2.21,2.58,2.58 C6.92,26.21,16,26.21,16,26.21s9.08,0,11.35-0.57c1.26-0.32,2.27-1.26,2.58-2.58C30.5,20.73,30.5,16,30.5,16S30.5,11.27,29.93,9z M13.04,20.35v-8.64L20.6,16L13.04,20.35L13.04,20.35z',
+    },
+    label: 'YouTube',
+  },
+  {
+    href: '#',
+    icon: {
+      viewBox: '0 0 32 32',
+      path: 'M13.6,25.58c1.7,0.38,1.51,1.01,1.13,3.28c-0.06,0.38-0.25,1.45,1.26,0.82c1.58-0.63,8.38-4.92,11.41-8.45 c2.08-2.33,3.09-4.67,3.09-7.25c0-6.56-6.56-11.85-14.5-11.85S1.5,7.42,1.5,13.98C1.5,19.78,6.67,24.63,13.6,25.58z M21.36,11.08 c0-0.13,0.13-0.25,0.25-0.25h4.1c0.13,0,0.25,0.13,0.25,0.25v1.01c0,0.13-0.13,0.25-0.25,0.25h-2.77v1.07h2.77 c0.13,0,0.25,0.13,0.25,0.25v1.07c0,0.13-0.13,0.25-0.25,0.25h-2.77V16h2.77c0.13,0,0.25,0.13,0.25,0.25v1.01 c0,0.13-0.13,0.25-0.25,0.25h-4.1c-0.13,0-0.25-0.13-0.25-0.25V11.08z M14.36,11.14c0-0.13,0.13-0.25,0.25-0.25h1.01 c0.06,0,0.19,0.06,0.25,0.13l2.9,3.91v-3.78c0-0.13,0.13-0.25,0.25-0.25h1.01c0.13,0,0.25,0.13,0.25,0.25v6.3 c0,0.13-0.13,0.25-0.25,0.25h-1.01c-0.06,0-0.19-0.06-0.25-0.13l-2.9-3.91v3.78c0,0.13-0.13,0.25-0.25,0.25h-1.01 c-0.13,0-0.25-0.13-0.25-0.25V11.14z M11.71,11.08c0-0.13,0.13-0.25,0.25-0.25h1.01c0.13,0,0.25,0.13,0.25,0.25v6.3 c0,0.13-0.13,0.25-0.25,0.25h-0.95c-0.13,0-0.25-0.13-0.25-0.25v-6.3H11.71z M6.23,11.08c0-0.13,0.13-0.25,0.25-0.25h1.01 c0.13,0,0.25,0.13,0.25,0.25v4.98h2.77c0.13,0,0.25,0.13,0.25,0.25v1.01c0,0.13-0.13,0.25-0.25,0.25H6.48 c-0.06,0-0.13-0.06-0.19-0.06c-0.06-0.06-0.06-0.13-0.06-0.19L6.23,11.08z',
+    },
+    label: 'LINE',
+  },
 ];
 
 const mvImage = {
@@ -73,7 +101,7 @@ const featureCards = [
     body: 'We consider your lease term, floor plan, and whether you have children or pets. From mixing off-the-shelf furniture to making the most of a compact space, we work through it with you.',
   },
   {
-    icon: 'heart' as const,
+    icon: 'chat' as const,
     title: 'From first questions to full coordination',
     body: 'We help you sort through scattered ideas, define a direction for colors and materials, and narrow down specific pieces — at whatever depth you need. Advice-only sessions and full sourcing and setup are both welcome.',
   },
@@ -83,7 +111,7 @@ const featureCards = [
     body: 'We work with a broad range of brands to match your lifestyle, and also introduce our own original furniture and accessories. We help you compare options across price ranges and design preferences.',
   },
   {
-    icon: 'book' as const,
+    icon: 'note' as const,
     title: 'A realistic plan for your budget and goals',
     body: 'Start with the one area that matters most, or build up gradually over time — either approach is welcome. We help you get a rough sense of costs and talk through what to prioritize.',
   },
@@ -464,7 +492,7 @@ const contactFields = [
                   <>
                     {i > 0 && (
                       <Center fxsh="0">
-                        <Icon icon="caret-down-fill" fz="2xl" o="ppp" />
+                        <Icon icon="caret-down" fz="2xl" o="ppp" />
                       </Center>
                     )}
                     <Stack g="30" p="30" bdrs="20" bxsh="20">
@@ -625,7 +653,9 @@ const contactFields = [
           {
             footerSnsLinks.map(({ href, icon, label }) => (
               <Link href={href} td="none" layout="center" c="text-2" hov="-o" hasTransition aria-label={label}>
-                <Icon icon={icon} fz="xl" />
+                <Icon viewBox={icon.viewBox} fill="currentColor" focusable="false" fz="xl">
+                  <path d={icon.path} />
+                </Icon>
               </Link>
             ))
           }

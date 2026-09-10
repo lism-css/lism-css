@@ -1,0 +1,26 @@
+// 自動生成: scripts/generate.mjs（編集元: src/svg/）
+import { forwardRef, type SVGProps } from 'react';
+
+const StarHalfFill = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function StarHalfFill({ children, ...props }, ref) {
+  const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="none"
+      width="1em"
+      height="1em"
+      focusable="false"
+      aria-hidden={labelled ? undefined : true}
+      role={labelled ? 'img' : undefined}
+      {...props}
+      ref={ref}
+    >
+      <path d="M22.423,9.118c-.192-.589-.719-1.006-1.337-1.056l-5.531-.446-2.136-5.165c-.322-.784-1.218-1.158-2.001-.837-.38.156-.681.457-.837.837l-2.134,5.164-5.534.447c-.849.072-1.479.818-1.408,1.668.034.402.224.774.529,1.038l4.219,3.64-1.285,5.443c-.198.826.311,1.656,1.136,1.854.396.095.813.029,1.161-.183l4.734-2.914,4.737,2.914c.726.441,1.671.21,2.112-.515.21-.346.276-.761.182-1.155l-1.29-5.444,4.219-3.64c.474-.405.657-1.056.463-1.649ZM20.985,9.631l-4.566,3.938c-.212.183-.305.469-.24.742l1.395,5.888c.007.017,0,.037-.016.045-.017.013-.022.01-.036,0l-5.13-3.155c-.118-.072-.254-.11-.393-.11V3c.023,0,.025.008.033.024l2.311,5.588c.108.26.352.439.633.461l5.992.484c.015,0,.023,0,.032.027s0,.037-.015.047Z" />
+      {children}
+    </svg>
+  );
+});
+
+export default StarHalfFill;

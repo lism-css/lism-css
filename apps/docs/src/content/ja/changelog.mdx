@@ -12,6 +12,8 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 **`lism-css`**
 
+- **破壊的変更:** Iconプリセットを24グリッドの線描画に切り替え、`weight`（light 1 / regular 1.5 / bold 2）と`strokeWidth`に対応しました。色は`c`で指定してください。従来太字だったcaret・arrowも既定をregularへ揃え、太く表示する場合は`weight="bold"`を指定します。
+- コアのプリセットから`book`・`cart`・`star`・`star-half`・`heart`・`lock`・`lock-open`・塗りアイコンを外しました。必要な場合は`@lism-css/icons`のコンポーネントを利用してください。`dot`は廃止しました。`menu-2`は既定の線幅が1.5になるため、細く表示する場合は`weight="light"`を指定してください。
 - `sz` / `min-sz` / `max-sz`をブレイクポイント対応（`bp: 1`）にしました。`w`系と同じく`-{prop}_{bp}`クラスで画面幅ごとに値を切り替えられます。`-max-sz:full` / `-max-sz:bleed`はブレイクポイント値としては使えません。単一値指定の出力は`style`属性への直書きから`-sz`クラス＋`--sz`変数のセットへ変わります（`max-sz`のトークン値と`full` / `bleed`は従来どおりクラス出力）（#613）。
 
 **`@lism-css/plugin`**

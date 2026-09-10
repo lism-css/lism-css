@@ -18,7 +18,7 @@
     "vitest": "vitest run",
     "typecheck": "tsc --noEmit && astro check --tsconfig packages/astro/tsconfig.json",
     "build": "pnpm build:js && pnpm build:css:only",
-    "build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",
+    "build:js": "pnpm gen:icons && vite build && pnpm exec tsc -p config/tsconfig.json",
     "build:css": "pnpm build:js && pnpm build:css:only",
     "build:css:only": "tsx bin/script-build-css.js",
     "format": "prettier --write . --ignore-path ../../.prettierignore",
@@ -26,14 +26,18 @@
     "lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro}'",
     "lint:style": "stylelint '**/*.{css,scss}'",
     "preview": "vite preview",
-    "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
+    "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac",
+    "gen:icons": "node bin/generate-icon-presets.mjs",
+    "gen:icons:check": "node bin/generate-icon-presets.mjs --check",
+    "test:icon:astro": "node bin/verify-icon-astro.mjs"
   },
   "files": [
     "dist",
     "config.js",
     "config.d.ts",
     "packages",
-    "src/scss"
+    "src/scss",
+    "THIRD_PARTY_LICENSES"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -117,7 +121,8 @@
     "typescript": "^5.9.3",
     "unplugin-dts": "1.0.0-beta.6",
     "vite": "^7.3.6",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "@lism-css/icons": "workspace:*"
   },
   "dependencies": {
     "csstype": "^3.2.3"

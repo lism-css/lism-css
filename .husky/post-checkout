@@ -1,0 +1,3 @@
+#!/bin/sh
+command -v git-lfs >/dev/null 2>&1 || { echo >&2 "git-lfs not found; skipping LFS hook. Install git-lfs before editing .ai files."; exit 0; }
+git lfs post-checkout "$@"
