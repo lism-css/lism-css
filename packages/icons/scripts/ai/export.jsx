@@ -1,0 +1,16 @@
+var doc = findDocument();
+verifyDocument(doc);
+var folder = new Folder(config.exportDir);
+if (!folder.exists && !folder.create()) throw new Error('Cannot create export directory: ' + folder.error);
+var options = new ExportForScreensOptionsWebOptimizedSVG();
+options.cssProperties = SVGCSSPropertyLocation.PRESENTATIONATTRIBUTES;
+options.coordinatePrecision = 3;
+options.svgId = SVGIdType.SVGIDMINIMAL;
+options.svgMinify = false;
+options.svgResponsive = false;
+options.fontType = SVGFontType.OUTLINEFONT;
+var selection = new ExportForScreensItemToExport();
+selection.artboards = '1-' + doc.artboards.length;
+selection.document = false;
+doc.exportForScreens(folder, ExportForScreensType.SE_SVG, options, selection, '');
+log.push('Exported ' + doc.artboards.length + ' SVGs to ' + config.exportDir + '/SVG');

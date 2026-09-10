@@ -30,7 +30,7 @@ type Story = StoryObj<typeof Icon>;
 
 export const Default: Story = {
   args: {
-    icon: 'star',
+    icon: 'check',
     fz: '2rem',
   },
 };
@@ -40,14 +40,6 @@ export const WithLabel: Story = {
   args: {
     icon: 'info',
     label: 'Information',
-    fz: '2rem',
-  },
-};
-
-export const LogoIcon: Story = {
-  name: 'ロゴアイコン',
-  args: {
-    icon: 'logo-github',
     fz: '2rem',
   },
 };

@@ -16,7 +16,7 @@ type Props<Tag extends HTMLTag = 'svg'> = Omit<Polymorphic<{ as: Tag }>, 'as'> &
 // let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
 // if (IconTag === '_SVG_') IconTag = SVG;
 
-let { Component, lismProps, exProps = {}, content } = getProps(Astro.props as unknown as IconProps);
+let { Component, lismProps, exProps = {}, content } = getProps(Astro.props as unknown as IconProps, { svgAttributes: true });
 
 if (Component === '_SVG_') {
   Component = SVG;

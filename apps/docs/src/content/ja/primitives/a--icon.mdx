@@ -6,7 +6,7 @@ description: 'a--icon は、アイコン要素を表示するためのクラス�
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
 import { Cat, SmileyIcon } from "@phosphor-icons/react";
-import {phIcons, originalIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
+import {phIcons, originalIcons} from 'lism-css/react/atomic/Icon/presets';
 import { Home } from 'lucide-react';
 
 export const PresetIcons = ({icons}) => {
@@ -56,7 +56,9 @@ svg.a--icon[aria-label="..."][role="img"]
 | プロパティ | 説明 |
 |---|---|
 | `icon` | アイコンを指定できます。指定した内容によって出力処理が変わります。 |
-| `size` | SVG として描画される場合に有効。`width`, `height`として出力されます。|
+| `size` | SVGの幅・高さの既定値。明示した`width`・`height`を優先します。 |
+| `weight` | 線幅を`light`（1）・`regular`（1.5）・`bold`（2）から選びます。プリセットの既定は`regular`です。 |
+| `strokeWidth` / `stroke-width` | 線幅を直接指定します。`weight`より優先します。 |
 | `label` | `aria-label`として出力します。指定があれば`role="img"`が同時に出力され、指定がない場合は`aria-hidden="true"`が出力されます。 |
 
 
@@ -154,7 +156,7 @@ import { Icon } from 'lism-css/react';
 
 ### プリセットアイコンを呼び出す方法
 
-Lismパッケージ（`lism-css`）内にはいくつかsvgアイコンを内包しています。
+`lism-css`には、一般的なWebサイトで使う34個の線アイコンを内包しています。追加のアイコンパッケージなしで利用できます。
 
 `icon='icon-name'`と文字列でその名前を指定することで、プリセットアイコンを呼び出すことができます。  
 （[Phosphor Icons](https://phosphoricons.com/) を使わせていただいています。）
@@ -178,6 +180,34 @@ Lismパッケージ（`lism-css`）内にはいくつかsvgアイコンを内包
 </Preview>
 
 
+#### 線の太さを変える
+
+プリセットは24グリッドの線描画です。`weight`で線幅を変えられ、内部の小さな点も太さに追従します。色は`c`で指定してください。
+
+<Preview>
+  <PreviewTitle>light・regular・bold</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="20" fz="3xl">
+      <Icon icon="info" weight="light" label="light" />
+      <Icon icon="info" weight="regular" label="regular" />
+      <Icon icon="info" weight="bold" label="bold" />
+      <Icon icon="home" weight="bold" strokeWidth={1.25} label="線幅1.25" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Icon icon="info" weight="light" />
+    <Icon icon="info" weight="regular" />
+    <Icon icon="info" weight="bold" />
+    <Icon icon="home" weight="bold" strokeWidth={1.25} />
+    ```
+  </PreviewCode>
+</Preview>
+
+`strokeWidth`（Astroでは`stroke-width`も可）を指定すると、`weight`より優先します。外部の線アイコンにも`weight`を渡せます。指定しなければ、外部アイコン自身の線幅を維持します。外部パッケージ独自の`weight`は、前述の`exProps`または`icon`オブジェクトで指定してください。
+
+塗りアイコンや`book`・`cart`・`star`・`star-half`・`heart`・`lock`・`lock-open`は`@lism-css/icons`で提供します。`dot`は廃止し、ロゴはどちらのパッケージにも含めません。
+
 <h4 id="preset-icons">プリセットアイコン一覧</h4>
 
 <PreviewTitle>Phosphorアイコン一覧</PreviewTitle>
@@ -185,26 +215,6 @@ Lismパッケージ（`lism-css`）内にはいくつかsvgアイコンを内包
 
 <PreviewTitle>オリジナルアイコン一覧</PreviewTitle>
 <PresetIcons icons={originalIcons} />
-
-<PreviewTitle>ロゴアイコン一覧</PreviewTitle>
-<PresetIcons icons={logoIcons} />
-
-{/* 確認用 */}
-{/* <Cluster g="10">
-  <Icon icon="logo-discord" size="32px" />
-  <Icon icon="logo-facebook" size="32px" />
-  <Icon icon="logo-pinterest" size="32px" />
-  <Icon icon="logo-line" size="32px" />
-  <Icon icon="logo-github" size="32px" />
-  <Icon icon="logo-linkedin" size="32px" />
-  <Icon icon="logo-reddit" size="32px" />
-  <Icon icon="logo-threads" size="32px" />
-  <Icon icon="logo-amazon" size="32px" />
-  <Icon icon="logo-x" size="32px" />
-  <Icon icon="logo-youtube" size="32px" />
-  <Icon icon="logo-instagram" size="32px" />
-  <Icon icon="logo-tiktok" size="32px" />
-</Cluster> */}
 
 
 ### svgを直接記述する方法

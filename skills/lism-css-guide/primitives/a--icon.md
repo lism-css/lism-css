@@ -22,7 +22,11 @@
 | --- | --- |
 | `icon` | アイコンを指定。文字列（プリセット名）・オブジェクト（`{as, ...exProps}`）のどちらでも可 |
 | `size` | プリセットアイコン使用時の `width` / `height`（通常は `fz` で指定するほうが推奨） |
+| `weight` | 線幅: `light`（1）・`regular`（1.5）・`bold`（2）。プリセットの既定は`regular`。外部アイコンは未指定なら自身の線幅を維持 |
+| `strokeWidth` / `stroke-width` | 線幅の直接指定。`weight`より優先 |
 | `label` | `aria-label` として出力。指定があれば `role="img"`、なければ `aria-hidden="true"` |
+
+プリセットは24グリッドの線描画で、色は`c`で指定します。基本の線アイコンは`lism-css`内蔵です。塗りアイコン・`book`・`cart`・`star`・`star-half`・`heart`・`lock`・`lock-open`は追加パッケージ`@lism-css/icons`を使います。`dot`とロゴのプリセットはありません。
 
 ## 関連プリミティブ
 
