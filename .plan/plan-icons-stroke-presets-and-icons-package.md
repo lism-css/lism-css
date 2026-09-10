@@ -47,13 +47,13 @@
 
 ### 手元にある正本と試作
 
-Phase 0 の成果物（2026-09-10 時点）。正本はリポジトリ内へ移動済み。raw・スクリプト・バックアップはリポジトリ外の `~/Downloads/lism-icons/` にある。
+Phase 0 の成果物は`packages/icons/`へ移行済み。旧データ一式はリポジトリ外の`~/Downloads/lism-icons-phase0-archive/`に保管している。
 
-正本から`dot`を削除済みで、収録対象は46件。リポジトリ外のraw・配置スクリプトは削除前の47件のままなので、取り込み時に対象を揃える。
-
-- `packages/icons/design/lism-icons.ai`: 正本。46アートボード（`dot`を除く`phIcons`順 → `menu-2`、10列・間隔12pt）。点は線描画円へ変換済み。`calendar`・`lock`・`lock-open`の角丸を修正済み（原因と再発防止は[Illustrator自動化の注意点](../documents/illustrator-automation.md)を参照）。PDF互換オフ・未使用パネル項目削除済み。移動前のバックアップは `lism-icons.backup-47-filled-dots.ai`（点の変換前）と `lism-icons.backup-4icons.ai`（4アイコン試作）。
-- `raw/<Lism名>.svg`: 47 件。Phosphor raw（256グリッド、点は塗り円のまま）45件＋24グリッドで自作した `menu-2`（2本線）と `dot`（塗り円 r=4.8）。自作の2つは bounds 合わせ用に背景 `<rect width="24" height="24" fill="none"/>` を含む（正規化で除去する前提）。raw から `.ai` を作り直す場合は、配置後に点の変換スクリプトを再実行する。
-- `scripts-phase0/`: Phase 0 で使ったスクリプト一式（ワーカーの一時ディレクトリから退避したもの）。`ai/01-create.jsx`（新規ドキュメント）、`ai/02-place-0{1..5}.jsx`（10個ずつ配置）、`ai/03-verify.jsx`、`ai/04-cleanup.jsx`（未使用パネル項目削除）、`ai/05-export.jsx`（一括書き出し）、`ai/convert-dots.jsx`（点の線描画円化。対象アートボード名と期待件数を先頭の定数で持ち、件数一致時だけ保存）、`gen-jsx.mjs`（配置 jsx の生成）、`match.mjs` / `mapping.json`（対応表の照合結果）、`download.mjs`（raw 取得）、`normalize24.mjs`（24グリッド正規化の試作）、`verify-*.mjs`。リポジトリに入れるときは `packages/icons/scripts/` 配下に書き直す。
+- `design/lism-icons.ai`: 正本。46アートボード（`dot`を除く`phIcons`順 → `menu-2`、10列・間隔12pt）。点は線描画円へ変換済み。`calendar`・`lock`・`lock-open`の角丸も修正済み。PDF互換オフ・未使用パネル項目削除済み。
+- `design/raw/*.svg`: 初期形状の復元用の46件。Phosphor raw45件と自作の`menu-2`。正本の編集は逆反映せず、ビルド入力には使わない。役割と取得元は[制作データの説明](../packages/icons/README.md)を参照。
+- `scripts/`: 対応表・共通設定・実行用JSXの生成・役割別テンプレート・実行ラッパー・SVG検証。旧パスや`dot`を除き、現在の間隔と角丸補正に対応した。[スクリプトの使い方](../packages/icons/scripts/README.md)を参照。
+- 旧スクリプトの取得・照合・正規化の試作、全パネル項目削除、実行ログ、バックアップは保管用フォルダに残す。移行版を使い、旧版は実行しない。
+- 移行版をIllustratorで検証済み。新しい一時ファイルへの作成・5回の配置・点の変換・検証・書き出しを実行し、46SVGが修正済み正本の出力とバイト単位で一致した。既存の正本は変更していない。
 - 書き出し検証済み（角丸修正・再配置後）: 46件すべて`viewBox="0 0 24 24"`、線幅はすべて`1.5`、小さな点は21個の`<circle r=".375">`。修正した3つの角丸は`rx=".75" ry=".75"`。その他のパスはアートボードに対する座標が修正前と一致し、PNGでも形状を確認済み。
 
 ## 実装プラン（ざっくり）
@@ -62,19 +62,19 @@ Phase 0 の成果物（2026-09-10 時点）。正本はリポジトリ内へ移�
 
 1. 済: Lism 名 → Phosphor 名の対応表（末尾の「対応表」セクション）。`logoIcons` は Phosphor 外で対象外（ユーザーが別の `.ai` で管理中。後で `packages/icons/` へ移す）。
 2. 済: 対応表に沿って `raw/regular/*.svg`（fill 系は `raw/fill/`）を取得し、Illustrator で 24×24pt アートボードへ配置（9.375%、線幅込み）、アートボード名を Lism 名にした。`menu-2` と `dot` は 24 グリッドで自作。
-3. 済: 点（直径 2.25pt の塗り円 21 個）を半径 0.375pt の線描画円へ変換した（`scripts-phase0/ai/convert-dots.jsx`）。
-4. 正本からの`dot`削除と46件の書き出し検証は済。残り: リポジトリへ取り込む生成入力・配置スクリプトからも`dot`を外す。書き出しSVGのリポジトリ配置はPhase 1で行う。
+3. 済: 点（直径 2.25pt の塗り円 21 個）を半径 0.375pt の線描画円へ変換した（`packages/icons/scripts/ai/convert-dots.jsx`）。
+4. 済: 正本・元SVG・配置スクリプトから`dot`を除外し、46件の再作成と書き出しを検証した。書き出しSVGのリポジトリ配置はPhase 1で行う。
 5. 済: 正本を`packages/icons/design/lism-icons.ai`へ移動し、`.gitattributes`で`.ai`をLFS対象に設定。`git -c core.hooksPath=.husky lfs install --local`で初期化し、`.husky/`にLFSフックを追加した。既存の`core.hooksPath=.husky/_`は維持。ポインタ変換を確認済み。
-6. 正本・LFS設定・関連文書を本プランと同じコミットに含める。Phase 1 の PR に含めてよい。
+6. 正本・LFS設定・関連文書は`d8b6ba43`でコミット済み。Phase 1 の PR に含めてよい。
 
 ### Phase 1: `packages/icons/` 新設（PR 1）
 
-1. `packages/icons/` を作成。`src/svg/*.svg`（Illustrator の一括書き出し先。手で編集しない）、`scripts/`（正規化・生成）、`THIRD_PARTY_LICENSES`（Phosphor の著作権行＋MIT 本文）、README。
+1. `packages/icons/src/svg/*.svg`を正本から一括書き出しする（手で編集しない）。パッケージ用READMEと、SVG正規化・コンポーネント生成のスクリプトを追加する。制作データ・自動化スクリプト・`THIRD_PARTY_LICENSES`は配置済み。
 2. 正規化スクリプト: 24 グリッド以外はエラー。背景 `<rect>`・`id`・`data-name`・`<g>` の除去、`stroke="#000"` → `currentColor`、線幅・キャップ・ジョインをルート属性へ寄せ、`stroke-linejoin="miter"` / `stroke-miterlimit` のような例外だけ要素に残す。fill系はルートの `fill="currentColor"` を継承させる。
 3. 生成物: アイコンごとの React コンポーネント（`strokeWidth` 既定 1.5 を受ける素の SVG）、Astro コンポーネント（`.astro` をそのまま配布）、データ（`{ viewBox, body }` の名前マップ。コアの生成に使う）。
 4. `package.json`: exports を `lism-css` と同じ形で `/react` / `/react/*` / `/astro` / `/astro/*`。`files` に `THIRD_PARTY_LICENSES` を含める。
 5. ルートの publish スクリプトと `.claude/commands/release.md` のパッケージ表に `icons` を追加。
-6. Illustrator 側の手順（アートボード追加、raw の配置、点の変換、一括書き出し）と自動化の知見（前面化、バッチ分割、`app.doScript` 禁止、`name` 衝突、`ellipse` → `<circle>`）を `documents/illustrator-automation.md`（仮）に書く。`scripts-phase0/` の jsx を `packages/icons/scripts/` へ整理して入れる。
+6. 済: Illustrator側の手順と自動化の知見を文書化し、制作データ用スクリプトを`packages/icons/scripts/`へ移行した。操作方法は同ディレクトリのREADME、固有の制約は`documents/illustrator-automation.md`を参照。
 
 ### Phase 2: `lism-css` の切り替え（PR 2）
 
@@ -111,7 +111,7 @@ Phase 0 の成果物（2026-09-10 時点）。正本はリポジトリ内へ移�
 - Astro 側をアイコンごとの `.astro` にするか、名前を受ける1コンポーネントにするか。
 - `presets.ts` の生成をコミット運用にするか、ビルド時生成にするか（コミット運用が有力）。
 - templates が `@lism-css/icons` に依存することの是非（生成されるプロジェクトの依存が1つ増える）。
-- `.ai`の配置とLFS初期化は完了（Phase 0参照）。正本・設定は本プランと同じコミットに含める。
+- `.ai`の配置とLFS初期化は完了（Phase 0参照）。正本・設定は`d8b6ba43`でコミット済み。
 - 事前準備: Illustrator の自動化権限（Phase 0で動作済み）。
 
 ## 完了条件（暫定）
@@ -123,7 +123,7 @@ Phase 0 の成果物（2026-09-10 時点）。正本はリポジトリ内へ移�
 
 ## Lism 名 → Phosphor 名 対応表
 
-基準: `presets.ts` の `phIcons` 全キー（`logoIcons` は対象外）を `@phosphor-icons/core` 2.1.1 の `assets/{regular,bold,fill}` のパスと突き合わせた。取得元は `phosphor-icons/core` main の `raw/`。取得した raw は `~/Downloads/lism-icons/raw/<Lism 名>.svg`、配置済みの正本は `packages/icons/design/lism-icons.ai`（`dot`削除済みの46アートボード）。
+基準: `presets.ts` の `phIcons` 全キー（`logoIcons` は対象外）を `@phosphor-icons/core` 2.1.1 の `assets/{regular,bold,fill}` のパスと突き合わせた。取得元は `phosphor-icons/core` main の `raw/`。取得した raw は `packages/icons/design/raw/<Lism 名>.svg`、配置済みの正本は `packages/icons/design/lism-icons.ai`（`dot`削除済みの46アートボード）。
 
 | Lism 名 | Phosphor 名 | 取得元 | 一致 | 備考 |
 | --- | --- | --- | --- | --- |
@@ -172,7 +172,7 @@ Phase 0 の成果物（2026-09-10 時点）。正本はリポジトリ内へ移�
 | caret-right-fill | caret-right | raw/fill | 完全一致 |  |
 | arrow-down | arrow-down | raw/regular | 完全一致 | 現行は bold |
 | arrow-right | arrow-right | raw/regular | 完全一致 | 現行は bold |
-| dot | - | 自作（24グリッド） | 対象外 | 正本から削除済み。生成入力・コアからの削除は残作業 |
+| dot | - | 自作（24グリッド） | 対象外 | 正本・元SVG・配置スクリプトから除外済み。コアからの削除は残作業 |
 | menu-2 | - | 自作（24グリッド） | - | `originalIcons`。2本線を線描画（`stroke-width` 1.5）で作り直した。現行の塗りパス（太さ 0.8）より太くなる |
 
 - 一致の内訳: 完全一致 44（うち v2.0.2 の assets とのみ一致 4）、正規化一致 1。自作の`menu-2`を加えた46件を収録し、`dot`は対象外。

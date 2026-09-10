@@ -1,4 +1,4 @@
-基準日: 2026-09-10・コミット0dd0cee2（作業ツリーの変更を含む）
+基準日: 2026-09-10・コミットd8b6ba43（作業ツリーの変更を含む）
 
 # Illustrator（.ai）をエージェントから操作するときの注意点
 
@@ -9,13 +9,7 @@
 
 ## 実行方法
 
-Illustrator 2026（30.7.0）を起動した状態で、ExtendScript の `.jsx` をファイルに書き、次で流す。
-
-```bash
-osascript -e "tell application id \"com.adobe.illustrator\" to do javascript (POSIX file \"/絶対パス/script.jsx\")"
-```
-
-スクリプトの最後の式の値が標準出力に返る。
+Illustrator 2026（30.7.0）を起動し、[制作データ用スクリプト](../packages/icons/scripts/README.md)の手順で実行する。`run-ai.sh`が前面化と実行を行い、失敗を終了コードへ反映する。
 
 | 制約 | 回避策 |
 | --- | --- |
@@ -23,7 +17,9 @@ osascript -e "tell application id \"com.adobe.illustrator\" to do javascript (PO
 | Illustrator が背面にいると App Nap で処理が止まる。CPU ほぼ0%、ダイアログなし、`activate` すら応答しない | 各呼び出しの直前に `tell application "System Events" to set frontmost of (first process whose bundle identifier is "com.adobe.illustrator") to true` で前面化する。AppleEvent が詰まっていてもアクセシビリティ経由なので効く。前面化した瞬間に処理が再開する |
 | `app.doScript`（アクション実行）はモーダルが出て止まる | 使わない。「未使用パネル項目を削除」もコレクションをループで `remove()` する |
 | 変数名 `name` は ExtendScript のグローバルと衝突し、アートボード名が "Adobe Illustrator" になる | 変数名に `name` を使わない（`ab.name` のようなプロパティ参照は問題ない） |
-| `app.activeDocument` は別ドキュメントを指していることがある | `app.documents[i].name === "lism-icons.ai"` で探して `app.activeDocument = doc` にする。新規ドキュメントは作ってすぐ `saveAs` し、名前を確定させる |
+| 三項演算子を連鎖すると、Node.jsと異なる順序で評価される場合がある。円の上下左右判定で確認済み | 分岐を`if` / `else`で明示する。Node.jsの模擬検証だけで完了にしない |
+| AppleScript変数の`POSIX file`参照をそのまま渡すと`File/Folder expected`になる場合がある | `tell`の外で`alias`へ変換し、その変数を`do javascript`へ渡す |
+| `app.activeDocument`や同名のドキュメントが別ファイルを指していることがある | `fullName.fsName`と対象ファイルの完全パスを照合して選ぶ。新規ドキュメントは作ってすぐ`saveAs`する |
 
 止まったように見えたら、まず前面化を試す。ダイアログの有無は System Events の `windows` で見られるが、Illustrator のウィンドウは別 Space にあると列挙されないので、前面化してから調べる。
 
