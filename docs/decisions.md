@@ -1,6 +1,46 @@
-基準日: 2026-09-05・コミット 292b1f3d＋作業ツリー
+基準日: 2026-09-10・コミット 0dd0cee2＋作業ツリー
 
 # 意思決定の記録
+
+## 2026-09-10: `dot`を廃止し、iconsパッケージにも移さない
+
+`dot`はdocs・templates・packagesに利用箇所がなく、塗り専用で`weight`にも追従しないため、残す必要がない。
+
+- 決定: `dot`をコアのプリセットから削除する。`@lism-css/icons`にも収録しない。
+- 決定: 正本の`dot`アートボードと生成入力からも削除する。
+- 却下: コアに残す案と、iconsパッケージへ移す案。
+- 対象外: `info`や`dots`などの内部にある小さな点。これらは決定済みの線描画円を維持する。
+
+## 2026-09-10: コアのアイコンは厳選した線アイコンだけにし、残りは `@lism-css/icons` としてモノレポ内で公開する
+
+`lism-css` の Icon プリセットは1つのオブジェクトにまとめてバンドルされ、tree-shaking が効かない。fill 系や用途の限られるアイコンまで含めるとコアが肥大する一方、`@lism-css/ui` は Alert / Callout / Modal / Popover で8個のプリセットを名前で参照しているため、コアからプリセットを全廃はできない。
+
+- 決定: `lism-css` のプリセットは厳選した線アイコンだけにする。下限は `@lism-css/ui` が参照する `lightbulb` / `alert` / `warning` / `check-circle` / `question` / `info` / `note` / `x` に、ナビ系（caret・arrow・menu・dots・search・check）を足したもの。fill 系はコアから外す（現在の利用は templates の interior `caret-down-fill` と docs の Badge `star-fill` のみ）。
+- 決定: 残りは `@lism-css/icons` として `packages/icons/` に置く。exports は `lism-css` と同じ形（`/react` は dist、`/astro` は生成した `.astro` をそのまま配布）。コンポーネントは `lism-css` に依存しない素の SVG で、`strokeWidth`（既定 1.5）を受ける。`<Icon icon={X} weight="bold">` はコアが `weight` を `strokeWidth` へ変換して渡す。
+- 決定: コアのプリセットも同じ SVG 源から生成する（厳選リスト＋生成物）。Phosphor Icons の著作権表示と MIT 本文は `THIRD_PARTY_LICENSES` のようなファイルで両パッケージに同梱し、`files` に含める。
+- 却下: 別リポジトリで管理する。プリセット・`@lism-css/ui` の参照名・docs の一覧・templates・スキルが全部このリポジトリにあり、別リポジトリだと「公開→こちらで再生成」の二段階が毎回発生する。iconsパッケージがコアに依存しない設計なら、外部からアイコンだけの貢献を受けたい・独立した見せ方をしたい・`.ai` が増えて重い、のいずれかが起きた時点で `git subtree split` で切り出せる。
+- 対象外: `thin` ウェイトと、`weight` 以外の名前付き API。要望が出るまで足さない。
+
+## 2026-09-10: アイコンの正本は Illustrator ファイル1つにし、書き出した SVG をリポジトリのビルド入力にする
+
+Phosphor 由来もオリジナルも1か所で管理したい。Figma は `<circle>` と円弧を3次ベジェへ展開して書き出すため、svgo で円弧を戻してもドットが残り、Phosphor raw の2〜3倍のデータになる。Illustrator の「スクリーン用に書き出し」は `<circle>` / `<polyline>` / `<line>` と線属性を保つことを実際の書き出しで確認した。
+
+- 決定: 正本は `lism-icons.ai` 1ファイル。24×24pt のアートボード1枚＝アイコン1個、アートボード名＝アイコン名。線は中央揃え・1.5pt・round cap / join。Phosphor raw（256グリッド）は線幅ごと 9.375% に縮小して配置する。
+- 決定: 「スクリーン用に書き出し」（SVG、プレゼンテーション属性、小数3桁、オブジェクトID最小、レスポンシブ無し）で全アートボードを一括書き出しし、そのSVGをリポジトリに置いてビルド入力にする。書き出したSVGは手で編集しない（直すなら `.ai` を直して出し直す）。正規化（背景 `<rect>`・`id`・`data-name`・`<g>` の除去、`currentColor` 化、線幅とキャップのルート `<svg>` への寄せ、`stroke-linejoin="miter"` 等の例外だけ要素に残す）と `presets.ts` / コンポーネントの生成はスクリプトが行う。
+- 決定: `.ai` は git LFS で管理し、PDF互換オフで保存する（4アイコンで PDF互換オン 602KB → オフ 244KB → 未使用パネル項目の削除後 142KB）。ビルド入力はSVGなので CI に LFS は不要。
+- 却下: Figma を正本にする（データ肥大に加え、取り込みに API トークンと座席が要る）。書き出しSVGを直接編集する運用（`.ai` と乖離する）。
+- 受容: Phosphor 由来のアイコンは `.ai` を経由すると円弧 `a` が `c` になり、raw より数%大きくなる（chat-teardrop-dots で 305 → 316 バイト）。LFS 未導入の共同作業者の手元では `.ai` がポインタファイルになる（SVG とコードには影響しない）。
+
+## 2026-09-10: Icon プリセットを線データに切り替え、太さは `weight` / `strokeWidth` で変える（24グリッド）
+
+現行のプリセットは Phosphor v2 の塗りアウトラインパスで、`caret-down` / `caret-right` / `arrow-down` / `arrow-right` の4つだけ bold 相当、他は regular のため、混ぜると太さが揃わない。太さ違いを名前で増やすとパスが丸ごと重複する。Phosphor v2 のウェイトは別パスだが、公式サイトの raw ダウンロードと `phosphor-icons/core` の `raw/` には線描画の元データがあり、線幅で太さを変えられる。
+
+- 決定: プリセットは線描画（`fill="none" stroke="currentColor"`）の内部マークアップとし、線幅・キャップ・ジョインはルート `<svg>` の属性に持たせる。太さは `weight` の3段階（light 1 / regular 1.5 / bold 2）と、`strokeWidth` / `stroke-width` の素通しで変える。明示の `strokeWidth` が `weight` より優先。描画は React / Astro 両方に既にある `__html` 経路を使う。
+- 決定: viewBox は `0 0 24 24`。Phosphor regular（256グリッドで16）は 1.5 になり、heroicons outline や lucide（24グリッド・stroke 2）と同じ土俵で数値を比べられる。既存の `menu-2` も 24 グリッド。
+- 決定: `getProps.ts` のマージ順を「プリセットの既定 → 利用側の値」に直す。現在は `exProps = { ...exProps, ...presetIconData }` でプリセットが後勝ちなので、利用側の `strokeWidth` が上書きされる。`_icon.scss` に `stroke-width` の既定は入れない。`.a--icon` は lucide 等の外部アイコンにも付き、CSS は属性より強いため 24 グリッドの `stroke-width="2"` を壊す。
+- 決定: 点（ドット）は塗り円ではなく半径 0.375 の線描画円（線幅 1.5）で描く。lucide / heroicons と同じ方式で、regular では Phosphor と同じ直径 2.25 になり、`weight` に追従して 1.75 〜 2.75 に変わる。半径が最小線幅の半分以下なので穴は開かない。塗りのままにするのは `dot`（箇条書き用の大きな点）と fill 系だけ。
+- 却下: `caret-down-bold` のようなウェイト別の名前分割（塗りパスの複製で、thin / light に広がらない）。viewBox 16 / 32 / 48（数字はきれいだが他ライブラリと数値互換がない）。Phosphor 忠実の bold 2.25（lucide の 2 との差は 16px 表示で 0.2px 未満なので丸める）。
+- 受容: プリセットに `fill` 属性で色を付ける使い方は効かなくなり、`c` で指定する（リポジトリ内に該当なし、docs でも案内していない）。既存の太字4種は 2.25 相当から 2 へわずかに細くなる。ドット付きアイコンの bold は、Phosphor 公式 bold（ドット半径も拡大）と完全には一致しない。
 
 ## 2026-09-05: OG画像の余白は文字とロゴの見える端を実測して整える
 
