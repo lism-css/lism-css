@@ -4,22 +4,21 @@ import { Stack, AutoColumns, Box } from 'lism-css/astro';
 import PatternCard from '@/components/patterns/PatternCard.astro';
 import SectionHeader from '@parts/SectionHeader.astro';
 import PageHeader from '@parts/PageHeader.astro';
-import { pageLayouts, categoryIds, type PageLayoutCategoryId } from '@/config/page-layouts';
-import { filterDraftItems } from '@/lib/page-layouts';
+import { layoutDemos, categoryIds, type LayoutDemoCategoryId } from '@/config/layout-demos';
+import { filterDraftItems } from '@/lib/layout-demos';
+
+const title = 'Layout Demos';
+const description = 'ページやセクションの骨格レベルのレイアウトデモ集。Lism CSS のレイアウトプリミティブを使った構造の組み方を紹介します。';
 ---
 
-<BaseLayout
-  title="Page Layouts"
-  description="ページ骨格レベルでのレイアウトサンプル集。Lism CSS を活用したページ全体の組み方を紹介します。"
-  excludeFromSearch
->
+<BaseLayout title={title} description={description} excludeFromSearch>
   <Stack g="40">
-    <PageHeader title="Page Layouts" description="ページ骨格レベルでのレイアウトサンプル集。Lism CSS を活用したページ全体の組み方を紹介します。" />
+    <PageHeader title={title} description={description} />
 
     <Stack g="40">
       {
-        categoryIds.map((categoryId: PageLayoutCategoryId) => {
-          const category = pageLayouts[categoryId];
+        categoryIds.map((categoryId: LayoutDemoCategoryId) => {
+          const category = layoutDemos[categoryId];
           const items = filterDraftItems(category.items);
           if (items.length === 0) return null;
           return (
@@ -29,8 +28,8 @@ import { filterDraftItems } from '@/lib/page-layouts';
               <AutoColumns cols="24rem" g="20" mbs="20">
                 {items.map((item) => (
                   <PatternCard
-                    href={`/page-layouts/${categoryId}/${item.id}`}
-                    thumbSrc={`/screenshots/page-layouts/${categoryId}/${item.id}.png`}
+                    href={`/docs/layout-demos/${categoryId}/${item.id}`}
+                    thumbSrc={`/screenshots/layout-demos/${categoryId}/${item.id}.png`}
                     title={item.title}
                     draft={item.draft}
                   />

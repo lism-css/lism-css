@@ -1,4 +1,4 @@
-基準日: 2026-09-03・コミット105422df
+基準日: 2026-09-10・コミットb6b5a4fc
 
 # docs-md integration 処理フロー
 
@@ -14,7 +14,7 @@
 | `astro:config:done` | `config.site`を`siteUrl`として保持（絶対URL化用）。`content/en`の絶対パスも保持 |
 | `astro:build:done` | `pages`を走査してHTML→MD変換。続けてUI一覧`.md`、最後に`llms.txt`を生成 |
 
-- 対象は`INCLUDE_PREFIXES`（`docs/` `ui/` `en/docs/` `en/ui/`）に当たるパスだけ。`patterns/` `page-layouts/` `templates/` `_demo/` `preview/` `og/`等は対象外。
+- 対象は`INCLUDE_PREFIXES`（`docs/` `ui/` `en/docs/` `en/ui/`）に当たり、かつ`EXCLUDE_PREFIXES`（`docs/layout-demos/` `en/docs/layout-demos/`：記事本文を持たない設定データ駆動ページ）に当たらないパスだけ。`patterns/` `templates/` `_demo/` `preview/` `og/`等は対象外。
 - `article[data-pagefind-body]`が無いページは`ArticleNotFoundError`として警告ログを出しスキップする。それ以外の例外（rehypeのTypeError、I/O失敗、HTMLパス不整合等）はrethrowしてbuildを失敗させる。`llms.txt`が指す`.md`だけが静かに欠ける事故を防ぐため。
 
 

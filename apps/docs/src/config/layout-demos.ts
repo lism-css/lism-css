@@ -1,27 +1,27 @@
-// ページ全体のレイアウト集。プレビュー実体はsrc/pages/preview/page-layouts配下に置く
+// 骨格だけのレイアウトデモ集。プレビュー実体はsrc/pages/preview/layout-demos配下に置く
 import type { LangCode } from '@/config/site';
 
 // 関連ページへのリンク（言語プレフィックスなしのパスで保持し、表示時に言語を付与する）
-export interface PageLayoutRelatedLink {
+export interface LayoutDemoRelatedLink {
   label: string;
   path: string;
 }
 
-export interface PageLayoutItem {
+export interface LayoutDemoItem {
   id: string;
   title: string;
   description: Record<LangCode, string>;
-  related?: PageLayoutRelatedLink[];
+  related?: LayoutDemoRelatedLink[];
   draft?: boolean;
 }
 
-export interface PageLayoutCategory {
+export interface LayoutDemoCategory {
   label: string;
   description: Record<LangCode, string>;
-  items: PageLayoutItem[];
+  items: LayoutDemoItem[];
 }
 
-const pageLayouts = {
+const layoutDemos = {
   page: {
     label: 'Page',
     description: {
@@ -122,10 +122,10 @@ const pageLayouts = {
       },
     ],
   },
-} satisfies Record<string, PageLayoutCategory>;
+} satisfies Record<string, LayoutDemoCategory>;
 
-export type PageLayoutCategoryId = keyof typeof pageLayouts;
+export type LayoutDemoCategoryId = keyof typeof layoutDemos;
 
-export { pageLayouts };
+export { layoutDemos };
 
-export const categoryIds = Object.keys(pageLayouts) as PageLayoutCategoryId[];
+export const categoryIds = Object.keys(layoutDemos) as LayoutDemoCategoryId[];

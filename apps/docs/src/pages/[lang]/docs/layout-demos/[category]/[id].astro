@@ -3,19 +3,19 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Flow, Text, Group, Cluster, Link } from 'lism-css/astro';
 import { PreviewFrame } from '@/components/Preview';
 import PageHeader from '@parts/PageHeader.astro';
-import { pageLayouts, type PageLayoutCategoryId } from '@/config/page-layouts';
-import { getAllPageLayoutPaths, getPageLayout } from '@/lib/page-layouts';
+import { layoutDemos, type LayoutDemoCategoryId } from '@/config/layout-demos';
+import { getAllLayoutDemoPaths, getLayoutDemo } from '@/lib/layout-demos';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 
 export function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
-  const layoutPaths = getAllPageLayoutPaths();
+  const demoPaths = getAllLayoutDemoPaths();
 
   const paths = [];
   for (const lang of nonRootLangs) {
-    for (const { category, id } of layoutPaths) {
+    for (const { category, id } of demoPaths) {
       paths.push({
         params: { lang, category, id },
         props: { lang },
@@ -36,35 +36,35 @@ if (!isValidLang(lang)) {
   return Astro.redirect('/404');
 }
 
-const layout = getPageLayout(category!, id!);
+const demo = getLayoutDemo(category!, id!);
 
-if (!layout) {
+if (!demo) {
   return Astro.redirect('/404');
 }
 
-const categoryData = pageLayouts[category as PageLayoutCategoryId];
+const categoryData = layoutDemos[category as LayoutDemoCategoryId];
 
 // preview に en.astro は無いため共通の index.astro を参照する
-const previewUrl = `/preview/page-layouts/${category}/${id}/`;
-const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
+const previewUrl = `/preview/layout-demos/${category}/${id}/`;
+const demoPath = `src/pages/preview/layout-demos/${category}/${id}`;
 ---
 
-<BaseLayout title={`${layout.title} - Page Layouts`} description={layout.description[lang]} lang={lang} excludeFromSearch noindex>
-  <Flow g="30" class="c--pageLayoutPage">
+<BaseLayout title={`${demo.title} - Layout Demos`} description={demo.description[lang]} lang={lang} excludeFromSearch noindex>
+  <Flow g="30">
     <PageHeader
-      title={layout.title}
-      description={layout.description[lang]}
-      draft={layout.draft}
-      backHref={`/${lang}/page-layouts/`}
-      backLabel="Back to Page Layouts"
+      title={demo.title}
+      description={demo.description[lang]}
+      draft={demo.draft}
+      backHref={`/${lang}/docs/layout-demos/`}
+      backLabel="Back to Layout Demos"
     >
       <Text slot="eyebrow" tt="uppercase" lts="l">
         {categoryData.label}
       </Text>
       {
-        layout.related && (
+        demo.related && (
           <Cluster g="15" fz="xs">
-            {layout.related.map((related) => (
+            {demo.related.map((related) => (
               <Link href={`/${lang}${related.path}`}>{related.label}</Link>
             ))}
           </Cluster>
@@ -72,12 +72,7 @@ const layoutPath = `src/pages/preview/page-layouts/${category}/${id}`;
       }
     </PageHeader>
     <Group layout="flow" mbs="50">
-      <PreviewFrame url={previewUrl} hasSizeSwitch files={[{ path: `${layoutPath}/index.astro`, title: 'index.astro' }]} />
+      <PreviewFrame url={previewUrl} hasSizeSwitch files={[{ path: `${demoPath}/index.astro`, title: 'index.astro' }]} />
     </Group>
   </Flow>
 </BaseLayout>
-
-<style>
-  .c--pageLayoutPage {
-  }
-</style>

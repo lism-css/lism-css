@@ -56,7 +56,7 @@ src/
 │   ├── site.ts               # サイト全体設定・言語設定
 │   ├── sidebar.ts            # サイドバーナビ設定
 │   ├── patterns.ts           # パターンカテゴリ設定
-│   ├── page-layouts.ts       # ページレイアウトカテゴリ設定
+│   ├── layout-demos.ts       # レイアウトデモカテゴリ設定
 │   ├── templates.ts          # テンプレートカテゴリ設定
 │   ├── redirects.ts          # リダイレクト設定
 │   └── translations.ts       # UI翻訳テキスト
@@ -82,7 +82,7 @@ src/
 │   ├── jsonLd.ts             # 構造化データ生成
 │   ├── sitemap-lastmod.ts    # サイトマップ用更新日付
 │   ├── patterns.ts           # パターン取得
-│   ├── page-layouts.ts       # ページレイアウト取得
+│   ├── layout-demos.ts       # レイアウトデモ取得
 │   ├── templates.ts          # テンプレート取得
 │   ├── remark-directive.ts   # :::記法変換（remark）
 │   ├── rehype-blockquote-cite.ts # blockquote 拡張（rehype）
@@ -92,14 +92,14 @@ src/
 │   ├── 404.astro
 │   ├── docs/[...slug].astro  # docs セクション
 │   ├── docs/og/[...slug].png.ts # docs 用 OG画像
+│   ├── docs/layout-demos/    # レイアウトデモ一覧／詳細（docs 配下・設定データ駆動）
 │   ├── ui/index.astro        # ui セクションのトップ
 │   ├── ui/[...slug].astro    # ui セクション
 │   ├── ui/og/[...slug].png.ts # ui 用 OG画像
 │   ├── patterns/             # パターン一覧／詳細
-│   ├── page-layouts/         # ページレイアウト一覧／詳細
 │   ├── templates/            # テンプレート一覧／詳細
 │   ├── preview/patterns/     # パターンのプレビュー
-│   ├── preview/page-layouts/ # ページレイアウトのプレビュー
+│   ├── preview/layout-demos/ # レイアウトデモのプレビュー
 │   ├── demo/                 # 各種デモページ
 │   └── [lang]/               # 非root言語用ページ（docs・ui 以外の各セクションを含む）
 ├── styles/
@@ -126,18 +126,18 @@ src/
 
 ## セクション構造
 
-サイトは `docs` / `ui` / `patterns` / `page-layouts` / `templates` / `demo` の複数セクションで構成されています。`docs` と `ui` はコンテンツコレクション（MDX）を、それ以外は `src/config/` の設定データをコンテンツソースとします。日本語（root言語）はプレフィックス無し、英語は `/en/` 配下で提供されます。
+サイトは `docs` / `ui` / `patterns` / `templates` / `demo` の複数セクションで構成されています。`docs` と `ui` はコンテンツコレクション（MDX）を、それ以外は `src/config/` の設定データをコンテンツソースとします。例外として `docs` 配下の `layout-demos` は設定データ駆動です。日本語（root言語）はプレフィックス無し、英語は `/en/` 配下で提供されます。
 
 | セクション | URL（ja） | コンテンツソース | ページファイル |
 |------------|-----------|-------------------|----------------|
 | docs | `/docs/xxx/` | `content/{lang}/xxx.mdx` | `src/pages/docs/[...slug].astro` |
+| docs（layout-demos） | `/docs/layout-demos/{category}/{id}/` | `src/config/layout-demos.ts` | `src/pages/docs/layout-demos/` |
 | ui | `/ui/xxx/` | `content/{lang}/ui/xxx.mdx` | `src/pages/ui/[...slug].astro` |
 | patterns | `/patterns/{category}/` | `src/config/patterns.ts` | `src/pages/patterns/` |
-| page-layouts | `/page-layouts/{category}/` | `src/config/page-layouts.ts` | `src/pages/page-layouts/` |
 | templates | `/templates/` | `src/config/templates.ts` | `src/pages/templates/` |
 | demo | `/demo/xxx/` | 各ページ内に直接記述 | `src/pages/demo/` |
 
-英語版（`docs` / `ui` / `patterns` / `page-layouts` / `templates`）は `src/pages/[lang]/` 配下にまとめて実装されています。
+英語版（`docs` / `ui` / `patterns` / `templates`）は `src/pages/[lang]/` 配下にまとめて実装されています。
 
 
 ## docs-md integration

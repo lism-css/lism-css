@@ -13,11 +13,14 @@ import { ArticleNotFoundError, convertHtmlToMd } from './convert-html-to-md';
 import { buildLlmsTxt } from './build-llms-txt';
 import { buildUiIndexMd } from './build-ui-index-md';
 
-// 変換対象のパスプレフィックス。patterns / demo / preview / page-layouts / og 等は対象外
+// 変換対象のパスプレフィックス。patterns / demo / preview / og 等は対象外
 const INCLUDE_PREFIXES = ['docs/', 'ui/', 'en/docs/', 'en/ui/'];
+// docs 配下でも記事本文を持たない設定データ駆動のページは対象外（毎ビルドの skip 警告を避ける）
+const EXCLUDE_PREFIXES = ['docs/layout-demos/', 'en/docs/layout-demos/'];
 
 function isTargetPage(pathname: string): boolean {
   const trimmed = pathname.replace(/^\/+/, '');
+  if (EXCLUDE_PREFIXES.some((prefix) => trimmed.startsWith(prefix))) return false;
   return INCLUDE_PREFIXES.some((prefix) => trimmed.startsWith(prefix));
 }
 

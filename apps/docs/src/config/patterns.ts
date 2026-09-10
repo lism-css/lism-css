@@ -28,13 +28,13 @@ const patterns = {
   hero: {
     label: 'Hero',
     description: {
-      ja: 'ページ冒頭に置く、見た目まで作り込んだヒーローセクション。骨格だけのレイアウトが必要な場合はPage Layoutsを参照してください。',
-      en: 'Fully styled hero sections placed at the top of a page. See Page Layouts when you need the bare structure instead.',
+      ja: 'ページ冒頭に置く、見た目まで作り込んだヒーローセクション。骨格だけのレイアウトが必要な場合はLayout Demosを参照してください。',
+      en: 'Fully styled hero sections placed at the top of a page. See Layout Demos when you need the bare structure instead.',
     },
     related: [
       {
-        label: 'Page Layouts: Hero Fullscreen',
-        path: '/page-layouts/sections/hero-fullscreen/',
+        label: 'Layout Demos: Hero Fullscreen',
+        path: '/docs/layout-demos/sections/hero-fullscreen/',
       },
     ],
     items: [
