@@ -197,6 +197,11 @@ const docsSidebar: SidebarSection[] = [
     ],
   },
   layoutDemosSidebar,
+  {
+    label: '関連パッケージ',
+    translate: { en: 'Related Packages' },
+    items: ['/docs/packages/icons/'],
+  },
 ];
 
 const uiSidebar: SidebarSection[] = [
