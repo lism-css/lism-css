@@ -29,6 +29,25 @@ In addition, `-max-sz` provides the following special preset classes:
 | <span class="-whs:nowrap">`-max-sz:bleed`</span> | Expands to the width of the **outermost `is--container`**, breaking through both content widths and nested containers to provide a page-wide full-bleed layout. When no `is--container` ancestor exists, it falls back to the viewport width (`100svi`). |
 
 
+## Breakpoints
+
+`max-sz` supports breakpoints. Like `w` and `max-w`, you can switch the value per screen width using the array or object form. In plain HTML, use the `-max-sz_{bp}` class together with the `--max-sz_{bp}` variable.
+
+```jsx
+<Box max-sz={['s', 'm', 'l']} />
+<Box max-sz={{ base: 's', md: '720px' }} />
+```
+
+```html
+<div class="-max-sz:s -max-sz_sm -max-sz_md" style="--max-sz_sm:var(--sz--m);--max-sz_md:var(--sz--l)"></div>
+```
+
+Breakpoint values can be size tokens (`xs` to `xl`) or any length value. `full` and `bleed` cannot be switched per breakpoint, because they are special classes that also rewrite `inline-size` and `margin-inline`, not just `max-inline-size`.
+
+- Passing `full` / `bleed` as a breakpoint value has no effect.
+- Adding breakpoint values to an element whose base value is `full` / `bleed` changes only the width while `margin-inline` and other declarations remain, which breaks the layout.
+
+
 ## Demo Page
 
 You can see these `-max-sz` classes in action on a separate demo page.

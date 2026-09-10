@@ -55,6 +55,19 @@
 
 `margin-inline` で中央配置されるので、`is--wrapper` の内側にあっても最外側 container 基準の幅に広げつつ中央に揃う。`inline-size: auto` も同じく、`is--wrapper > *` で当たる `inline-size: 100%` を打ち消すためのリセット。
 
+## ブレイクポイント指定
+
+`sz` / `min-sz` / `max-sz` は BP 対応（`-max-sz_{bp}` クラス + `--max-sz_{bp}` 変数）。配列・オブジェクト形式で切り替えられる。
+
+```jsx
+<Box max-sz={['s', 'm', 'l']} />
+```
+
+BP 値に使えるのはサイズトークン（`xs`〜`xl`）と任意の長さ値のみ。`full` / `bleed` は `inline-size` / `margin-inline` も書き換える複合ルールなので、BP で切り替えられない。
+
+- BP 値に `full` / `bleed` を渡しても効かない（`--max-sz_sm: full` は無効値になる）。
+- base が `full` / `bleed` の要素に BP 値を重ねると、`margin-inline` 等が残ったまま幅だけ変わって崩れる。
+
 ## DEMO
 
 `-max-sz:*` の挙動確認用デモ:

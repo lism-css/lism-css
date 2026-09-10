@@ -56,9 +56,9 @@
 | `max-w` | `max-width` | `-max-w:100%` | ✔ |
 | `min-h` | `min-height` | `-min-h:100%` | ✔ |
 | `max-h` | `max-height` | `-max-h:100%` | ✔ |
-| `sz` | `inline-size` | — | — |
-| `min-sz` | `min-inline-size` | — | — |
-| `max-sz` | `max-inline-size` | `-max-sz:xs`, `-max-sz:s`, `-max-sz:m`, `-max-sz:l`, `-max-sz:xl`, `-max-sz:full`, `-max-sz:bleed` | — |
+| `sz` | `inline-size` | — | ✔ |
+| `min-sz` | `min-inline-size` | — | ✔ |
+| `max-sz` | `max-inline-size` | `-max-sz:xs`, `-max-sz:s`, `-max-sz:m`, `-max-sz:l`, `-max-sz:xl`, `-max-sz:full`, `-max-sz:bleed` | ✔ |
 | `bsz` | `block-size` | — | — |
 | `min-bsz` | `min-block-size` | — | — |
 | `max-bsz` | `max-block-size` | — | — |
