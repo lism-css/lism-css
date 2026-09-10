@@ -168,6 +168,7 @@ export default function getProps({ as, icon, label, weight, exProps: inputExProp
     if (_rest[key] !== undefined) exProps[key] = _rest[key];
   }
   exProps = { ...exProps, ...explicitProps };
+  // exProps / iconオブジェクト経由のweightは外部コンポーネント向け。svg等のネイティブ要素には属性として出さない。
   if (typeof Component === 'string') delete exProps.weight;
 
   // labelの有無に合わせてアクセシビリティ属性を付ける。

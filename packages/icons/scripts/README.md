@@ -54,6 +54,21 @@ nr build:icons
 
 パッケージディレクトリで`nr test`、`nr typecheck`、`nr lint`を実行できます。テストでは生成の再現性、Reactでの描画、Astroでのビルド、属性の上書き、tree-shakingを確認します。ビルドとテストにIllustratorやGit LFSは不要です。
 
+## コアのプリセットへ反映する
+
+`lism-css`のIconプリセット（`src/components/atomic/Icon/presets.ts`）と`THIRD_PARTY_LICENSES`は、`bin/generate-icon-presets.mjs`が`@lism-css/icons/data`から生成します。`nr build:core`のビルド中に自動で実行されるため、`nr build:icons`のあとにビルドすれば反映されます。
+
+```bash
+nr build:core
+```
+
+反映後は`packages/lism-css`で次を実行し、生成物の鮮度とAstroでの描画を確認します。`test:icon:astro`はCIに含めていない手動の検証で、コア34種の線描画・`weight`と線幅指定・外部SVG・`@lism-css/ui`のAlert / Calloutを実際に`astro build`して確認します。
+
+```bash
+nr gen:icons:check
+nr test:icon:astro
+```
+
 ## 元のSVGから初期形状を再作成する
 
 `design/raw/`のSVGから、新しいIllustratorファイルを作成できます。制作開始後に加えた変更は含まれないため、現在編集中のファイルとは別の保存先を指定してください。
