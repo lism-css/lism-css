@@ -208,12 +208,12 @@ describe('Lism', () => {
 
       test('tt（text-transform）を指定できる', () => {
         render(
-          <Lism tt="upper" data-testid="lism">
+          <Lism tt="uppercase" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-tt:upper');
+        expect(element).toHaveClass('-tt:uppercase');
       });
     });
 

@@ -192,4 +192,4 @@ opacity トークンもそのままクラス化される（`.-o:p` → `opacity:
 
 ### 長いキーワード値の省略
 
-6文字以上かつ省略しても意味が通るものは省略可（`uppercase` → `-tt:upper` 等）。一覧は [property-class.md](./property-class.md#値の省略形例外一覧) を参照。
+6文字以上かつ省略しても意味が通るものは省略可（`fit-content` → `-w:fit` 等）。一覧は [property-class.md](./property-class.md#値の省略形例外一覧) を参照。
