@@ -14,6 +14,10 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 - Moved `lism-css` from `dependencies` to `peerDependencies` (`*`) so CSS is generated from the `lism-css` installed in your project. The plugin no longer bundles its own copy of `lism-css`, so install `lism-css` alongside it (#609).
 
+**`@lism-css/ui`**
+
+- Changed the border color (`--bdc`) of the default `fill` `Button` from `var(--bgc)` to `transparent`, so changing only the background (e.g. `hov="-bgc"`) no longer leaves a border in the original color. Set `--bdc: var(--bgc)` if you want a visible border on hover (see the `hov="reverse"` example).
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v0.28.2 (2026.09.10)

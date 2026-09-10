@@ -2,7 +2,8 @@
   .b--button {
     --c: var(--base);
     --bgc: var(--text);
-    --bdc: var(--bgc);
+    /* var(--bgc) にすると -hov:-bgc 等で背景だけ変えた時にボーダーが元の色で縁として残る */
+    --bdc: transparent;
     --bdw: 1px;
     --hl: var(--hl--s);
 
