@@ -10,6 +10,10 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 ## 未リリース
 
+**`lism-css`**
+
+- `sz` / `min-sz` / `max-sz`をブレイクポイント対応（`bp: 1`）にしました。`w`系と同じく`-{prop}_{bp}`クラスで画面幅ごとに値を切り替えられます。`-max-sz:full` / `-max-sz:bleed`はブレイクポイント値としては使えません。単一値指定の出力は`style`属性への直書きから`-sz`クラス＋`--sz`変数のセットへ変わります（`max-sz`のトークン値と`full` / `bleed`は従来どおりクラス出力）（#613）。
+
 **`@lism-css/plugin`**
 
 - `lism-css`を`dependencies`から`peerDependencies`（`*`）へ移し、利用側にインストールされている`lism-css`からCSSを生成するようにしました。pluginが`lism-css`を同梱しなくなるため、`lism-css`は利用側で導入してください（#609）。

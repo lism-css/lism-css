@@ -207,6 +207,8 @@ describe('ResponsivePropValueTypes', () => {
     type CgExists = 'cg' extends keyof Props ? true : false;
     type RgExists = 'rg' extends keyof Props ? true : false;
     type PlExists = 'pl' extends keyof Props ? true : false;
+    type MaxSzExists = 'max-sz' extends keyof Props ? true : false;
+    type SzExists = 'sz' extends keyof Props ? true : false;
 
     expectTypeOf<FzExists>().toEqualTypeOf<true>();
     expectTypeOf<DExists>().toEqualTypeOf<true>();
@@ -217,6 +219,8 @@ describe('ResponsivePropValueTypes', () => {
     expectTypeOf<CgExists>().toEqualTypeOf<true>();
     expectTypeOf<RgExists>().toEqualTypeOf<true>();
     expectTypeOf<PlExists>().toEqualTypeOf<true>();
+    expectTypeOf<MaxSzExists>().toEqualTypeOf<true>();
+    expectTypeOf<SzExists>().toEqualTypeOf<true>();
 
     // bp: 1 が設定されていないプロパティ（含まれないはず）
     type FwExists = 'fw' extends keyof Props ? true : false;

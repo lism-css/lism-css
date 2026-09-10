@@ -176,6 +176,14 @@ describe('getLismProps', () => {
       expect(result.style?.['--h']).toBe('100px');
     });
 
+    test('sz / min-sz: カスタム値・トークン値は変数として出力される (bp:1なので)', () => {
+      const result = getLismProps({ sz: '600px', 'min-sz': 's' });
+      expect(result.className).toContain('-sz');
+      expect(result.className).toContain('-min-sz');
+      expect(result.style?.['--sz']).toBe('600px');
+      expect(result.style?.['--min-sz']).toBe('var(--sz--s)');
+    });
+
     test('c: カスタム値は変数として出力される', () => {
       const result = getLismProps({ c: 'blue' });
       expect(result.style?.['--c']).toBe('var(--blue)');
@@ -311,6 +319,23 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-d:block');
       expect(result.className).toContain('-d_sm');
       expect(result.style?.['--d_sm']).toBe('none');
+    });
+
+    test('max-sz: base のトークン値はクラス化され、BP 値は --max-sz_{bp} 変数になる (bp:1)', () => {
+      const result = getLismProps({ 'max-sz': ['s', 'm', '720px'] });
+      expect(result.className).toContain('-max-sz:s');
+      expect(result.className).toContain('-max-sz_sm');
+      expect(result.className).toContain('-max-sz_md');
+      expect(result.style?.['--max-sz_sm']).toBe('var(--sz--m)');
+      expect(result.style?.['--max-sz_md']).toBe('720px');
+    });
+
+    test('sz: オブジェクト形式でブレイクポイント指定できる (bp:1)', () => {
+      const result = getLismProps({ sz: { base: '100%', md: 's' } });
+      expect(result.className).toContain('-sz');
+      expect(result.className).toContain('-sz_md');
+      expect(result.style?.['--sz']).toBe('100%');
+      expect(result.style?.['--sz_md']).toBe('var(--sz--s)');
     });
 
     test('xs はオブジェクト記法で指定でき、-{prop}_xs クラスと --{prop}_xs 変数を出力する', () => {

@@ -84,12 +84,14 @@ export default {
   'max-h': { prop: 'maxHeight', presets: ['100%'], token: 'sz', bp: 1 },
 
   contentSize: { isVar: 1, presets: ['s', 'm', 'l', 'xl'], token: 'sz' },
-  sz: { prop: 'inlineSize', token: 'sz' },
-  'min-sz': { prop: 'minInlineSize', token: 'sz' },
+  sz: { prop: 'inlineSize', token: 'sz', bp: 1 },
+  'min-sz': { prop: 'minInlineSize', token: 'sz', bp: 1 },
   'max-sz': {
     prop: 'maxInlineSize',
     token: 'sz',
     tokenClass: 1,
+    // full / bleed は inline-size / margin-inline も書き換える複合ルール（_size.scss）なので、BP 値（--max-sz_{bp}）としては使えない。
+    bp: 1,
     presets: ['full', 'bleed'],
     exUtility: {
       full: '',
