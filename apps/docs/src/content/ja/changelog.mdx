@@ -18,6 +18,10 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 - `lism-css`を`dependencies`から`peerDependencies`（`*`）へ移し、利用側にインストールされている`lism-css`からCSSを生成するようにしました。pluginが`lism-css`を同梱しなくなるため、`lism-css`は利用側で導入してください（#609）。
 
+**`@lism-css/ui`**
+
+- `Button`の`fill`（既定）のボーダー色`--bdc`を`var(--bgc)`から`transparent`へ変更しました。`hov="-bgc"`などで背景色だけを変えたときに、ボーダーが元の色で縁として残らなくなります。ホバー時に枠線を残したい場合は`--bdc: var(--bgc)`を指定してください（`hov="reverse"`の例を参照）。
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v0.28.2 (2026.09.10)

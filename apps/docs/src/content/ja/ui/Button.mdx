@@ -398,6 +398,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
   --hov-bgc: var(--c);
 }
 .-hov\\:reverse:where(.b--button--fill) {
+  --bdc: var(--bgc);
   --hov-bgc: transparent;
 }
 .-hov\\:reverse:where(.b--button--outline) {
@@ -427,6 +428,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
     --hov-c: var(--bgc);
     --hov-bgc: var(--c);
     &:where(.b--button--fill) {
+      --bdc: var(--bgc);
       --hov-bgc: transparent;
     }
     &:where(.b--button--outline) {
