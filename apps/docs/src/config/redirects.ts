@@ -134,6 +134,25 @@ export const astroRedirects: AstroRedirects = {
   // half-leading を tokens/ 配下から CSS設計の独立ページへ移動
   '/docs/tokens/half-leading/': '/docs/half-leading/',
   '/en/docs/tokens/half-leading/': '/en/docs/half-leading/',
+  // page-layouts セクションを docs 配下の layout-demos へ移設（公開済みだった一覧と8件だけを登録）
+  '/page-layouts/': '/docs/layout-demos/',
+  '/page-layouts/article/one-column/': '/docs/layout-demos/article/one-column/',
+  '/page-layouts/article/two-columns/': '/docs/layout-demos/article/two-columns/',
+  '/page-layouts/article/one-column-bleed-title/': '/docs/layout-demos/article/one-column-bleed-title/',
+  '/page-layouts/article/two-columns-bleed-title/': '/docs/layout-demos/article/two-columns-bleed-title/',
+  '/page-layouts/sections/hero-fullscreen/': '/docs/layout-demos/sections/hero-fullscreen/',
+  '/page-layouts/sections/one-side-bleed/': '/docs/layout-demos/sections/one-side-bleed/',
+  '/page-layouts/sections/fullwide-sections/': '/docs/layout-demos/sections/fullwide-sections/',
+  '/page-layouts/others/404/': '/docs/layout-demos/others/404/',
+  '/en/page-layouts/': '/en/docs/layout-demos/',
+  '/en/page-layouts/article/one-column/': '/en/docs/layout-demos/article/one-column/',
+  '/en/page-layouts/article/two-columns/': '/en/docs/layout-demos/article/two-columns/',
+  '/en/page-layouts/article/one-column-bleed-title/': '/en/docs/layout-demos/article/one-column-bleed-title/',
+  '/en/page-layouts/article/two-columns-bleed-title/': '/en/docs/layout-demos/article/two-columns-bleed-title/',
+  '/en/page-layouts/sections/hero-fullscreen/': '/en/docs/layout-demos/sections/hero-fullscreen/',
+  '/en/page-layouts/sections/one-side-bleed/': '/en/docs/layout-demos/sections/one-side-bleed/',
+  '/en/page-layouts/sections/fullwide-sections/': '/en/docs/layout-demos/sections/fullwide-sections/',
+  '/en/page-layouts/others/404/': '/en/docs/layout-demos/others/404/',
 };
 
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。

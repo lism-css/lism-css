@@ -1,19 +1,19 @@
 /**
- * Page Layouts のスクリーンショット自動生成スクリプト
+ * Layout Demos のスクリーンショット自動生成スクリプト
  *
  * ビルド後の dist ディレクトリからプレビューサーバーを起動し、
- * 各 page-layout プレビューページのスクリーンショットを撮影して保存します。
+ * 各 layout-demo プレビューページのスクリーンショットを撮影して保存します。
  *
  * - ビューポートは 1600x900 固定
  * - 多言語別の出力は行わない（ja/en で同じ画像を使う想定）
- * - 出力パスは public/screenshots/page-layouts/{category}/{id}.png
+ * - 出力パスは public/screenshots/layout-demos/{category}/{id}.png
  *
  * 使い方:
- *   pnpm screenshot:page-layouts                            # 新規のみ生成（ビルド後に実行）
- *   pnpm screenshot:page-layouts:force                      # 既存も含めて全て再生成
- *   npx tsx scripts/page-layout-screenshots.ts article                 # カテゴリ指定
- *   npx tsx scripts/page-layout-screenshots.ts article/one-column      # カテゴリ/ID 指定
- *   npx tsx scripts/page-layout-screenshots.ts article others
+ *   pnpm screenshot:layout-demos                            # 新規のみ生成（ビルド後に実行）
+ *   pnpm screenshot:layout-demos:force                      # 既存も含めて全て再生成
+ *   npx tsx scripts/layout-demo-screenshots.ts article                 # カテゴリ指定
+ *   npx tsx scripts/layout-demo-screenshots.ts article/one-column      # カテゴリ/ID 指定
+ *   npx tsx scripts/layout-demo-screenshots.ts article others
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -30,7 +30,7 @@ const ROOT_DIR = join(__dirname, '..');
 // 設定
 const CONFIG = {
   // スクリーンショットの保存先（{category}/{id}.png 階層）
-  outputDir: join(ROOT_DIR, 'public', 'screenshots', 'page-layouts'),
+  outputDir: join(ROOT_DIR, 'public', 'screenshots', 'layout-demos'),
   // ビューポートサイズ（16:9）
   viewport: { width: 1600, height: 900 },
   // プレビューサーバーのポート（patterns 用の 4000 と衝突しないよう別ポート）
@@ -46,12 +46,12 @@ const forceRegenerate = args.includes('--force');
 const filters = args.filter((a) => !a.startsWith('--'));
 
 /**
- * Page Layouts 設定からパス一覧を取得（draft 除外）
+ * Layout Demos 設定からパス一覧を取得（draft 除外）
  */
 async function getLayoutPaths(): Promise<Array<{ category: string; id: string }>> {
-  const { pageLayouts } = await import('../src/config/page-layouts.ts');
+  const { layoutDemos } = await import('../src/config/layout-demos.ts');
   const paths: Array<{ category: string; id: string }> = [];
-  for (const [categoryId, category] of Object.entries(pageLayouts)) {
+  for (const [categoryId, category] of Object.entries(layoutDemos)) {
     for (const item of category.items as Array<{ id: string; draft?: boolean }>) {
       if (!item.draft) {
         paths.push({ category: categoryId, id: item.id });
@@ -154,7 +154,7 @@ async function takeScreenshot(page: Page, category: string, id: string): Promise
     return { success: true, skipped: true };
   }
 
-  const url = `http://localhost:${CONFIG.port}/preview/page-layouts/${category}/${id}/`;
+  const url = `http://localhost:${CONFIG.port}/preview/layout-demos/${category}/${id}/`;
 
   try {
     const outDir = dirname(outputPath);
@@ -175,7 +175,7 @@ async function takeScreenshot(page: Page, category: string, id: string): Promise
  * メイン処理
  */
 async function main() {
-  console.log('🖼️  Page Layouts スクリーンショット生成');
+  console.log('🖼️  Layout Demos スクリーンショット生成');
   console.log(`   モード: ${forceRegenerate ? '全て再生成' : '新規のみ'}`);
   console.log('');
 

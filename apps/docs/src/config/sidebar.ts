@@ -1,8 +1,9 @@
 import type { LangCode } from '@/config/site';
-import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, LayoutIcon, BrowsersIcon } from '@phosphor-icons/react';
+import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, BrowsersIcon } from '@phosphor-icons/react';
 import { getPatternCategories } from '@/lib/patterns';
 import { visibleTemplates, categories as templateCategories } from './templates';
-import { pageLayouts, categoryIds as pageLayoutCategoryIds, type PageLayoutCategoryId, type PageLayoutItem } from './page-layouts';
+import { layoutDemos, categoryIds as layoutDemoCategoryIds, type LayoutDemoCategoryId } from './layout-demos';
+import { filterDraftItems } from '@/lib/layout-demos';
 
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
 
@@ -57,7 +58,7 @@ export function getTranslatedLabel(label: string, translate: TranslateLabels | u
   return translate[lang as Exclude<LangCode, 'ja'>] || label;
 }
 
-export type SiteSection = 'docs' | 'ui' | 'patterns' | 'templates' | 'page-layouts';
+export type SiteSection = 'docs' | 'ui' | 'patterns' | 'templates';
 
 export interface SidebarConfig {
   topLevelLinks: TopLevelLinkItem[];
@@ -85,17 +86,25 @@ const topLevelLinks: TopLevelLinkItem[] = [
   },
   {
     type: 'toplink',
-    label: 'Page Layouts',
-    link: '/page-layouts/',
-    icon: LayoutIcon,
-  },
-  {
-    type: 'toplink',
     label: 'Templates',
     link: '/templates/',
     icon: BrowsersIcon,
   },
 ];
+
+// Layout Demos は docs 配下だが MDX ではなく設定データ駆動なので、一覧と各デモを明示リンクで並べる
+const layoutDemosSidebar: SidebarSection = {
+  label: 'Layout Demos',
+  items: [
+    { label: 'デモ一覧', translate: { en: 'All demos' }, link: '/docs/layout-demos/' },
+    ...layoutDemoCategoryIds.flatMap((categoryId: LayoutDemoCategoryId) =>
+      filterDraftItems(layoutDemos[categoryId].items).map((item) => ({
+        label: item.title,
+        link: `/docs/layout-demos/${categoryId}/${item.id}/`,
+      }))
+    ),
+  ],
+};
 
 const docsSidebar: SidebarSection[] = [
   {
@@ -187,6 +196,7 @@ const docsSidebar: SidebarSection[] = [
       { label: 'CSS Purge', link: '/docs/customize/purge/' },
     ],
   },
+  layoutDemosSidebar,
 ];
 
 const uiSidebar: SidebarSection[] = [
@@ -203,8 +213,6 @@ const uiSidebar: SidebarSection[] = [
     dir: 'ui/components', // 独自CSSなしで組み立てる実装例（#557）
   },
 ];
-
-const isProd = import.meta.env.PROD;
 
 export function getPatternsSidebar(lang: LangCode): SidebarSection[] {
   return getPatternCategories(lang).map((category) => ({
@@ -253,21 +261,6 @@ const templatesSidebar: SidebarSection[] = [
     })),
 ];
 
-const pageLayoutsSidebar: SidebarSection[] = pageLayoutCategoryIds
-  .map((categoryId: PageLayoutCategoryId) => {
-    const category = pageLayouts[categoryId];
-    const items = isProd ? (category.items as PageLayoutItem[]).filter((item) => !item.draft) : category.items;
-    return { categoryId, category, items };
-  })
-  .filter(({ items }) => items.length > 0)
-  .map<SidebarSection>(({ categoryId, category, items }) => ({
-    label: category.label,
-    items: items.map((item) => ({
-      label: item.title,
-      link: `/page-layouts/${categoryId}/${item.id}/`,
-    })),
-  }));
-
 const sidebarConfig: SidebarConfig = {
   topLevelLinks,
   sections: {
@@ -275,7 +268,6 @@ const sidebarConfig: SidebarConfig = {
     ui: uiSidebar,
     patterns: getPatternsSidebar('ja'),
     templates: templatesSidebar,
-    'page-layouts': pageLayoutsSidebar,
   },
 };
 
@@ -288,10 +280,6 @@ export function getSiteSection(pathname: string): SiteSection {
   }
   if (pathWithoutLang.startsWith('/templates/') || pathWithoutLang === '/templates') {
     return 'templates';
-  }
-  // page-layouts は patterns より先に判定（startsWith の取り違いを防ぐため）
-  if (pathWithoutLang.startsWith('/page-layouts/') || pathWithoutLang === '/page-layouts') {
-    return 'page-layouts';
   }
   if (pathWithoutLang.startsWith('/patterns/') || pathWithoutLang === '/patterns') {
     return 'patterns';
@@ -309,9 +297,6 @@ export function extractSlugFromUrl(url: string): string {
   }
   if (url.startsWith('/templates/')) {
     return 'templates/' + url.replace(/^\/templates\//, '').replace(/^\/|\/$/g, '');
-  }
-  if (url.startsWith('/page-layouts/')) {
-    return 'page-layouts/' + url.replace(/^\/page-layouts\//, '').replace(/^\/|\/$/g, '');
   }
   if (url.startsWith('/patterns/')) {
     return 'patterns/' + url.replace(/^\/patterns\//, '').replace(/^\/|\/$/g, '');

@@ -4,8 +4,8 @@ import { Stack, AutoColumns, Box } from 'lism-css/astro';
 import PatternCard from '@/components/patterns/PatternCard.astro';
 import SectionHeader from '@parts/SectionHeader.astro';
 import PageHeader from '@parts/PageHeader.astro';
-import { pageLayouts, categoryIds, type PageLayoutCategoryId } from '@/config/page-layouts';
-import { filterDraftItems } from '@/lib/page-layouts';
+import { layoutDemos, categoryIds, type LayoutDemoCategoryId } from '@/config/layout-demos';
+import { filterDraftItems } from '@/lib/layout-demos';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 
@@ -27,16 +27,19 @@ const { lang } = Astro.props as Props;
 if (!isValidLang(lang)) {
   return Astro.redirect('/404');
 }
+
+const title = 'Layout Demos';
+const description = 'Structure-only layout demos for pages and sections, built with Lism CSS layout primitives.';
 ---
 
-<BaseLayout title="Page Layouts" description="Full-page layout examples built with Lism CSS layout primitives." lang={lang} excludeFromSearch>
+<BaseLayout title={title} description={description} lang={lang} excludeFromSearch>
   <Stack g="40">
-    <PageHeader title="Page Layouts" description="Full-page layout examples built with Lism CSS layout primitives." />
+    <PageHeader title={title} description={description} />
 
     <Stack g="40">
       {
-        categoryIds.map((categoryId: PageLayoutCategoryId) => {
-          const category = pageLayouts[categoryId];
+        categoryIds.map((categoryId: LayoutDemoCategoryId) => {
+          const category = layoutDemos[categoryId];
           const items = filterDraftItems(category.items);
           if (items.length === 0) return null;
           return (
@@ -46,8 +49,8 @@ if (!isValidLang(lang)) {
               <AutoColumns cols="24rem" g="20" mbs="20">
                 {items.map((item) => (
                   <PatternCard
-                    href={`/${lang}/page-layouts/${categoryId}/${item.id}`}
-                    thumbSrc={`/screenshots/page-layouts/${categoryId}/${item.id}.png`}
+                    href={`/${lang}/docs/layout-demos/${categoryId}/${item.id}`}
+                    thumbSrc={`/screenshots/layout-demos/${categoryId}/${item.id}.png`}
                     title={item.title}
                     draft={item.draft}
                   />

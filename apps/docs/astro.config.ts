@@ -127,9 +127,12 @@ export default defineConfig({
     }),
     sitemap({
       // noindex のページは sitemap からも除外する
-      // - /patterns/{category}/{id}/ : noindex,follow（一覧トップは index のため除外しない）
-      // - /preview/patterns/...      : noindex,nofollow（iframe プレビュー）
-      filter: (page) => !/\/patterns\/[^/]+\/[^/]+\/?$/.test(page) && !/\/preview\/patterns\//.test(page),
+      // - /patterns/{category}/{id}/ と /docs/layout-demos/{category}/{id}/ : noindex,follow（一覧トップは index のため除外しない）
+      // - /preview/patterns/... と /preview/layout-demos/...                : noindex,nofollow（iframe プレビュー）
+      filter: (page) =>
+        !/\/patterns\/[^/]+\/[^/]+\/?$/.test(page) &&
+        !/\/docs\/layout-demos\/[^/]+\/[^/]+\/?$/.test(page) &&
+        !/\/preview\/(patterns|layout-demos)\//.test(page),
       serialize(item) {
         const lastmod = lastmodMap.get(item.url);
         if (lastmod) {
