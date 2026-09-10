@@ -1,0 +1,59 @@
+---
+title: '@lism-css/icons'
+description: 'React・Astroで使えるSVGアイコン集の導入方法と基本的な使い方を紹介します。'
+---
+
+`@lism-css/icons`は、React・Astroで使えるSVGアイコン集です。Lism CSSのコアに含まれるアイコンに加え、`Book`・`Cart`・`Heart`や塗りアイコンなど、全47種類を収録しています。Lism CSSを導入していないプロジェクトでも使えます。
+
+## インストール
+
+```bash frame="none"
+pnpm add @lism-css/icons
+```
+
+## 基本的な使い方
+
+Reactでは`/react`から読み込みます。
+
+```tsx
+import { Book, HeartFill } from '@lism-css/icons/react';
+
+export function Example() {
+  return (
+    <>
+      <Book width={24} height={24} strokeWidth={2} aria-label="本" />
+      <HeartFill width={24} height={24} aria-label="お気に入り" />
+    </>
+  );
+}
+```
+
+Astroでは`/astro`から読み込みます。
+
+```astro
+---
+import { Book, HeartFill } from '@lism-css/icons/astro';
+---
+
+<Book width={24} height={24} stroke-width={2} aria-label="本" />
+<HeartFill width={24} height={24} aria-label="お気に入り" />
+```
+
+大きさの既定は`1em`、色は周囲の文字色を引き継ぎます。線幅の既定は`1.5`です。Reactでは`strokeWidth`、Astroでは`stroke-width`で変更できます。`HeartFill`などの塗りアイコンは線幅では太さが変わりません。
+
+装飾用のアイコンは、既定で読み上げの対象から外れます。アイコン単体で意味を伝える場合は、上の例のように`aria-label`を指定してください。
+
+## Lism CSSと組み合わせる
+
+Lism CSSの[Iconコンポーネント](/docs/primitives/a--icon/)へ渡すと、`c`・`fz`などのLism Propsや`weight`を使えます。Reactでも同じ書き方で、import先をそれぞれ`/react`に変えて利用できます。
+
+```astro
+---
+import { Icon } from 'lism-css/astro';
+import { Book } from '@lism-css/icons/astro';
+---
+
+<Icon icon={Book} fz="2xl" c="blue" weight="bold" />
+```
+
+アイコンは[Phosphor Icons](https://phosphoricons.com/)を元に、一部を調整し、オリジナルのアイコンも追加しています。ライセンスはMITです。詳しくは[パッケージのREADME](https://github.com/lism-css/lism-css/tree/main/packages/icons)をご覧ください。

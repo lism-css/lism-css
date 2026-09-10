@@ -1,0 +1,59 @@
+---
+title: '@lism-css/icons'
+description: 'Learn how to install and use SVG icons in React and Astro.'
+---
+
+`@lism-css/icons` is a collection of SVG icons for React and Astro. It includes all 47 icons: the icons bundled with Lism CSS, plus `Book`, `Cart`, `Heart`, fill icons, and more. It also works in projects that do not use Lism CSS.
+
+## Installation
+
+```bash frame="none"
+pnpm add @lism-css/icons
+```
+
+## Basic usage
+
+In React, import icons from `/react`.
+
+```tsx
+import { Book, HeartFill } from '@lism-css/icons/react';
+
+export function Example() {
+  return (
+    <>
+      <Book width={24} height={24} strokeWidth={2} aria-label="Book" />
+      <HeartFill width={24} height={24} aria-label="Favorite" />
+    </>
+  );
+}
+```
+
+In Astro, import icons from `/astro`.
+
+```astro
+---
+import { Book, HeartFill } from '@lism-css/icons/astro';
+---
+
+<Book width={24} height={24} stroke-width={2} aria-label="Book" />
+<HeartFill width={24} height={24} aria-label="Favorite" />
+```
+
+Icons default to `1em` in size and inherit the surrounding text color. The default stroke width is `1.5`. Change it with `strokeWidth` in React or `stroke-width` in Astro. Stroke width does not affect fill icons such as `HeartFill`.
+
+Icons are hidden from screen readers by default. When an icon conveys meaning on its own, provide an `aria-label` as shown above.
+
+## Using icons with Lism CSS
+
+Pass an icon to the Lism CSS [Icon component](/en/docs/primitives/a--icon/) to use Lism Props such as `c` and `fz`, along with `weight`. The same example works in React by changing both import paths to `/react`.
+
+```astro
+---
+import { Icon } from 'lism-css/astro';
+import { Book } from '@lism-css/icons/astro';
+---
+
+<Icon icon={Book} fz="2xl" c="blue" weight="bold" />
+```
+
+The collection is based on [Phosphor Icons](https://phosphoricons.com/), with adjustments and original additions. It is released under the MIT license. See the [package README](https://github.com/lism-css/lism-css/tree/main/packages/icons) for details.

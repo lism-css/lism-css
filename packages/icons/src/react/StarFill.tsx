@@ -1,0 +1,26 @@
+// 自動生成: scripts/generate.mjs（編集元: src/svg/）
+import { forwardRef, type SVGProps } from 'react';
+
+const StarFill = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function StarFill({ children, ...props }, ref) {
+  const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="none"
+      width="1em"
+      height="1em"
+      focusable="false"
+      aria-hidden={labelled ? undefined : true}
+      role={labelled ? 'img' : undefined}
+      {...props}
+      ref={ref}
+    >
+      <path d="M21.965,10.767l-4.219,3.64,1.285,5.444c.198.826-.311,1.656-1.136,1.854-.396.095-.813.029-1.161-.183l-4.734-2.914-4.737,2.914c-.726.441-1.671.21-2.112-.515-.21-.346-.276-.761-.182-1.155l1.29-5.444-4.219-3.64c-.645-.557-.716-1.532-.158-2.177.262-.304.633-.493,1.032-.528l5.531-.446,2.134-5.164c.322-.784,1.218-1.158,2.001-.837.38.156.681.457.837.837l2.133,5.164,5.531.446c.849.072,1.479.818,1.408,1.668-.034.402-.224.774-.529,1.038h.006Z" />
+      {children}
+    </svg>
+  );
+});
+
+export default StarFill;

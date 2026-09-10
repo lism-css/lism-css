@@ -6,7 +6,7 @@ description: 'a--icon is a class for displaying icon elements.'
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
 import { Cat, SmileyIcon } from "@phosphor-icons/react";
-import {phIcons, originalIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
+import {phIcons, originalIcons} from 'lism-css/react/atomic/Icon/presets';
 import { Home } from 'lucide-react';
 
 export const PresetIcons = ({icons}) => {
@@ -56,7 +56,9 @@ svg.a--icon[aria-label="..."][role="img"]
 | Prop | Description |
 |---|---|
 | `icon` | Specifies the icon. The rendering behavior varies depending on the value provided. |
-| `size` | Effective when rendered as an SVG. Output as `width` and `height`. |
+| `size` | Default SVG width and height. Explicit `width` and `height` take precedence. |
+| `weight` | Selects the stroke width: `light` (1), `regular` (1.5), or `bold` (2). Presets default to `regular`. |
+| `strokeWidth` / `stroke-width` | Sets the stroke width directly, overriding `weight`. |
 | `label` | Output as `aria-label`. When specified, `role="img"` is also added; when omitted, `aria-hidden="true"` is output instead. |
 
 
@@ -156,7 +158,7 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
 
 ### Using preset icons
 
-The Lism package (`lism-css`) includes several built-in SVG icons.
+`lism-css` includes 34 stroke icons for common website interfaces. No additional icon package is required.
 
 You can call a preset icon by specifying its name as a string via `icon='icon-name'`.
 ([Phosphor Icons](https://phosphoricons.com/) are used.)
@@ -180,6 +182,34 @@ You can call a preset icon by specifying its name as a string via `icon='icon-na
 </Preview>
 
 
+#### Changing stroke width
+
+Presets use strokes on a 24-unit grid. Use `weight` to change their thickness, including the small dots inside icons. Use `c` to set the color.
+
+<Preview>
+  <PreviewTitle>light, regular, and bold</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="20" fz="3xl">
+      <Icon icon="info" weight="light" label="light" />
+      <Icon icon="info" weight="regular" label="regular" />
+      <Icon icon="info" weight="bold" label="bold" />
+      <Icon icon="home" weight="bold" strokeWidth={1.25} label="Stroke width 1.25" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Icon icon="info" weight="light" />
+    <Icon icon="info" weight="regular" />
+    <Icon icon="info" weight="bold" />
+    <Icon icon="home" weight="bold" strokeWidth={1.25} />
+    ```
+  </PreviewCode>
+</Preview>
+
+An explicit `strokeWidth` (or `stroke-width` in Astro) overrides `weight`. You can also pass `weight` to external stroke icons. When omitted, the external icon retains its own stroke width. Pass a package-specific `weight` through `exProps` or the `icon` object as shown above.
+
+Fill icons, `book`, `cart`, `star`, `star-half`, `heart`, `lock`, and `lock-open` are available from `@lism-css/icons`. `dot` has been removed, and neither package includes logos.
+
 <h4 id="preset-icons">Preset icon list</h4>
 
 <PreviewTitle>Phosphor icon list</PreviewTitle>
@@ -187,26 +217,6 @@ You can call a preset icon by specifying its name as a string via `icon='icon-na
 
 <PreviewTitle>Original icon list</PreviewTitle>
 <PresetIcons icons={originalIcons} />
-
-<PreviewTitle>Logo icon list</PreviewTitle>
-<PresetIcons icons={logoIcons} />
-
-{/* For verification */}
-{/* <Cluster g="10">
-  <Icon icon="logo-discord" size="32px" />
-  <Icon icon="logo-facebook" size="32px" />
-  <Icon icon="logo-pinterest" size="32px" />
-  <Icon icon="logo-line" size="32px" />
-  <Icon icon="logo-github" size="32px" />
-  <Icon icon="logo-linkedin" size="32px" />
-  <Icon icon="logo-reddit" size="32px" />
-  <Icon icon="logo-threads" size="32px" />
-  <Icon icon="logo-amazon" size="32px" />
-  <Icon icon="logo-x" size="32px" />
-  <Icon icon="logo-youtube" size="32px" />
-  <Icon icon="logo-instagram" size="32px" />
-  <Icon icon="logo-tiktok" size="32px" />
-</Cluster> */}
 
 
 ### Writing SVG directly

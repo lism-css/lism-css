@@ -1,6 +1,6 @@
 ---
 description: 指定パッケージのバージョン更新・changelog 追記・タグ付け・GitHub リリース作成を一貫して行う。npm publish とデプロイはユーザー手動
-argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
+argument-hint: "{lism-css|lism-ui|lism-cli|plugin|icons} {バージョン}"
 ---
 
 # Release
@@ -12,7 +12,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 `$ARGUMENTS` をスペース区切りで解釈する。不足していればユーザーに確認する。
 
-1. パッケージ識別子: `lism-css` / `lism-ui` / `lism-cli` / `plugin`
+1. パッケージ識別子: `lism-css` / `lism-ui` / `lism-cli` / `plugin` / `icons`
 2. リリースバージョン（例: `0.10.0`）
 
 
@@ -24,6 +24,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 | `lism-ui` | `@lism-css/ui` | `packages/lism-ui/` | `lism-ui@v` | `nr publish:ui` |
 | `lism-cli` | `lism-cli` + `create-lism` | `packages/lism-cli/` + `packages/create-lism/` | `lism-cli@v` | `nr publish:cli` |
 | `plugin` | `@lism-css/plugin` | `packages/plugin/` | `lism-plugin@v` | `nr publish:plugin` |
+| `icons` | `@lism-css/icons` | `packages/icons/` | `lism-icons@v` | `nr publish:icons` |
 
 `@lism-css/mcp` と `@lism-css/mockup` は対象外。タグ・GitHub リリースを運用していないため、バージョンを上げて `nr publish:mcp` / `nr publish:mockup` を実行するだけでよい。
 
@@ -33,6 +34,18 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 - 変更ファイルの振り分けでは `packages/create-lism/` も `lism-cli` として扱う
 - publish 前に `packages/lism-cli/src/constants.ts` の `DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF` が `'main'` であることを確認する（`'dev'` や PR ブランチのままだと公開版 CLI が壊れる）
 - `create-lism` は `lism-cli` を bundle で内包するため、`dependencies` の追従は不要
+
+### テンプレートに新しい公開パッケージを追加する場合
+
+`lism-cli create`は既定で`main`のテンプレートを取得する。`workspace:*`依存の追加時は、`packages/lism-cli/tsup.config.ts`の`packageVersions`にも対象を追加する。
+
+`@lism-css/icons`を追加するLPテンプレートの初回公開は、次の順序で行う。手順10のデプロイは、両方のpublishが完了するまで進めない。
+
+1. `@lism-css/icons`をnpmへ公開する。
+2. アイコンのバージョン解決に対応した`lism-cli`と`create-lism`を再公開する。
+3. テンプレートを`main`へ反映してデプロイする。
+
+旧CLIは追加依存を解決できないため、このLPテンプレートの生成には更新後のCLIを使う。
 
 ### plugin の特別ルール
 
@@ -47,6 +60,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 - lism-css の現在バージョン: !`node -p "require('./packages/lism-css/package.json').version"`
 - lism-ui の現在バージョン: !`node -p "require('./packages/lism-ui/package.json').version"`
 - lism-cli の現在バージョン: !`node -p "require('./packages/lism-cli/package.json').version"`
+- icons の現在バージョン: !`node -p "require('./packages/icons/package.json').version"`
 - plugin の現在バージョン: !`node -p "require('./packages/plugin/package.json').version"`
 
 
@@ -80,6 +94,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 | `packages/lism-ui/` | lism-ui |
 | `packages/lism-cli/` `packages/create-lism/` | lism-cli |
 | `packages/plugin/` | plugin |
+| `packages/icons/` | icons |
 | `apps/docs/` | Documentation（各パッケージ共通） |
 | その他 | Other |
 
@@ -113,7 +128,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 #### 5-B. changelog エントリ
 
-`lism-css` / `lism-ui` / `plugin` のみ。`lism-cli` は 5-B・7・8 を省略する。
+`lism-css` / `lism-ui` / `plugin` のみ。`lism-cli`と`icons`は5-B・7・8を省略する。
 
 リリースノートをもとに日本語・英語の両方で生成する。
 

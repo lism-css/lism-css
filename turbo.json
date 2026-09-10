@@ -8,7 +8,8 @@
         "$TURBO_DEFAULT$",
         "!src/scss/_prop-config.gen.scss",
         "!src/scss/_prop-config-full.gen.scss",
-        "!src/scss/base/tokens/_tokens.gen.scss"
+        "!src/scss/base/tokens/_tokens.gen.scss",
+        "!src/components/atomic/Icon/presets.ts"
       ],
       "outputs": [
         ".next/**",
@@ -16,7 +17,9 @@
         "dist/**",
         "src/scss/_prop-config.gen.scss",
         "src/scss/_prop-config-full.gen.scss",
-        "src/scss/base/tokens/_tokens.gen.scss"
+        "src/scss/base/tokens/_tokens.gen.scss",
+        "src/components/atomic/Icon/presets.ts",
+        "THIRD_PARTY_LICENSES"
       ]
     },
     "@lism-css/mcp#build": {
@@ -80,6 +83,18 @@
         "packages/lism-css/src/scss/_prop-config-full.gen.scss",
         "packages/lism-css/src/scss/base/tokens/_tokens.gen.scss"
       ]
+    },
+    "@lism-css/icons#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/.prettierrc*",
+        "!src/react/**",
+        "!src/data.ts",
+        "!packages/astro/*.astro",
+        "!packages/astro/index.ts"
+      ],
+      "outputs": ["dist/**", "src/react/**", "src/data.ts", "packages/astro/*.astro", "packages/astro/index.ts"]
     }
   }
 }
