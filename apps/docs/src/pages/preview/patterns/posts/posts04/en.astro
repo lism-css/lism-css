@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, AutoColumns, Grid, Media, Flex, Layer, Center, Cluster, Text, Inline, Heading } from 'lism-css/astro';
+import { Stack, Container, Frame, AutoColumns, Grid, Media, Flex, Layer, Center, Cluster, Text, Inline, Heading, Link } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 ---
 
@@ -20,144 +20,120 @@ import { Button } from '@lism-css/ui/astro/Button';
         <Button href="####" bgc="base" c="text" px="20" py="10" bdrs="99">Branding</Button>
         <Button href="####" bgc="base" c="text" px="20" py="10" bdrs="99">Music</Button>
       </Cluster>
-      <AutoColumns cols="20rem" g="30">
-        <Grid class="set--bdrsInner" gtr="subgrid" gr="span 2" g="20" bgc="base" bdrs="20" ai="start" hasTransition hov="-bxsh">
-          <Stack as="a" isBoxLink href="#" g="30" set="hov" p="20">
-            <Frame as="figure" ar="16/9" pos="relative" bdrs="inner">
-              <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
-              <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-                <Center h="100%" c="white">
-                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
-                </Center>
-              </Layer>
-            </Frame>
-            <Stack g="30">
-              <Text class="u--trim" fz="m" fw="bold">Making Everyday Cooking an Exciting Experience</Text>
-              <Stack class="u--trimAll" as="dl" g="15" fz="s" o="pp">
-                <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
-                <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
-              </Stack>
-            </Stack>
+      <AutoColumns cols="20rem" g="25">
+        <Grid isBoxLink gtr="subgrid" gr="span 4" g="30" bgc="base" bdrs="30" p="15" ai="start" set="hov" hasTransition hov="-bxsh">
+          <Frame as="figure" ar="16/9" pos="relative" bdrs="20">
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
+            <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Text class="u--trim" fz="m" fw="bold"><Link isCoverLink href="#">Making Everyday Cooking an Exciting Experience</Link></Text>
+          <Stack class="u--trimAll" as="dl" g="10" fz="s" o="pp">
+            <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
+            <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
           </Stack>
-          <Cluster g="15" px="20" pb="20">
+          <Cluster g="15">
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Web</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Branding</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Video</Button>
           </Cluster>
         </Grid>
-        <Grid class="set--bdrsInner" gtr="subgrid" gr="span 2" g="20" bgc="base" bdrs="20" ai="start" hasTransition hov="-bxsh">
-          <Stack as="a" isBoxLink href="#" g="30" set="hov" p="20">
-            <Frame as="figure" ar="16/9" pos="relative" bdrs="inner">
-              <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" />
-              <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-                <Center h="100%" c="white">
-                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
-                </Center>
-              </Layer>
-            </Frame>
-            <Stack g="30">
-              <Text class="u--trim" fz="m" fw="bold">Items That Elevate the Quality of Daily Life</Text>
-              <Stack class="u--trimAll" as="dl" g="15" fz="s" o="pp">
-                <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
-                <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
-              </Stack>
-            </Stack>
+        <Grid isBoxLink gtr="subgrid" gr="span 4" g="30" bgc="base" bdrs="30" p="15" ai="start" set="hov" hasTransition hov="-bxsh">
+          <Frame as="figure" ar="16/9" pos="relative" bdrs="20">
+            <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" />
+            <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Text class="u--trim" fz="m" fw="bold"><Link isCoverLink href="#">Items That Elevate the Quality of Daily Life</Link></Text>
+          <Stack class="u--trimAll" as="dl" g="10" fz="s" o="pp">
+            <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
+            <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
           </Stack>
-          <Cluster g="15" px="20" pb="20">
+          <Cluster g="15">
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Design</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Video</Button>
           </Cluster>
         </Grid>
-        <Grid class="set--bdrsInner" gtr="subgrid" gr="span 2" g="20" bgc="base" bdrs="20" ai="start" hasTransition hov="-bxsh">
-          <Stack as="a" isBoxLink href="#" g="30" set="hov" p="20">
-            <Frame as="figure" ar="16/9" pos="relative" bdrs="inner">
-              <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" />
-              <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-                <Center h="100%" c="white">
-                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
-                </Center>
-              </Layer>
-            </Frame>
-            <Stack g="30">
-              <Text class="u--trim" fz="m" fw="bold">An Object-like Presence</Text>
-              <Stack class="u--trimAll" as="dl" g="15" fz="s" o="pp">
-                <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
-                <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
-              </Stack>
-            </Stack>
+        <Grid isBoxLink gtr="subgrid" gr="span 4" g="30" bgc="base" bdrs="30" p="15" ai="start" set="hov" hasTransition hov="-bxsh">
+          <Frame as="figure" ar="16/9" pos="relative" bdrs="20">
+            <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" />
+            <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Text class="u--trim" fz="m" fw="bold"><Link isCoverLink href="#">An Object-like Presence</Link></Text>
+          <Stack class="u--trimAll" as="dl" g="10" fz="s" o="pp">
+            <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
+            <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
           </Stack>
-          <Cluster g="15" px="20" pb="20">
+          <Cluster g="15">
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Branding</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Video</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Music</Button>
           </Cluster>
         </Grid>
-        <Grid class="set--bdrsInner" gtr="subgrid" gr="span 2" g="20" bgc="base" bdrs="20" ai="start" hasTransition hov="-bxsh">
-          <Stack as="a" isBoxLink href="#" g="30" set="hov" p="20">
-            <Frame as="figure" ar="16/9" pos="relative" bdrs="inner">
-              <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" />
-              <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-                <Center h="100%" c="white">
-                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
-                </Center>
-              </Layer>
-            </Frame>
-            <Stack g="30">
-              <Text class="u--trim" fz="m" fw="bold">Quiet and Clean Design</Text>
-              <Stack class="u--trimAll" as="dl" g="15" fz="s" o="pp">
-                <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
-                <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
-              </Stack>
-            </Stack>
+        <Grid isBoxLink gtr="subgrid" gr="span 4" g="30" bgc="base" bdrs="30" p="15" ai="start" set="hov" hasTransition hov="-bxsh">
+          <Frame as="figure" ar="16/9" pos="relative" bdrs="20">
+            <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" />
+            <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Text class="u--trim" fz="m" fw="bold"><Link isCoverLink href="#">Quiet and Clean Design</Link></Text>
+          <Stack class="u--trimAll" as="dl" g="10" fz="s" o="pp">
+            <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
+            <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
           </Stack>
-          <Cluster g="15" px="20" pb="20">
+          <Cluster g="15">
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Web</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Design</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Music</Button>
           </Cluster>
         </Grid>
-        <Grid class="set--bdrsInner" gtr="subgrid" gr="span 2" g="20" bgc="base" bdrs="20" ai="start" hasTransition hov="-bxsh">
-          <Stack as="a" isBoxLink href="#" g="30" set="hov" p="20">
-            <Frame as="figure" ar="16/9" pos="relative" bdrs="inner">
-              <Media src="https://cdn.lism-css.com/random/img?r=5" alt="" width="960" height="640" />
-              <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-                <Center h="100%" c="white">
-                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
-                </Center>
-              </Layer>
-            </Frame>
-            <Stack g="30">
-              <Text class="u--trim" fz="m" fw="bold">Audio That Displays Music as Art in Your Space</Text>
-              <Stack class="u--trimAll" as="dl" g="15" fz="s" o="pp">
-                <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
-                <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
-              </Stack>
-            </Stack>
+        <Grid isBoxLink gtr="subgrid" gr="span 4" g="30" bgc="base" bdrs="30" p="15" ai="start" set="hov" hasTransition hov="-bxsh">
+          <Frame as="figure" ar="16/9" pos="relative" bdrs="20">
+            <Media src="https://cdn.lism-css.com/random/img?r=5" alt="" width="960" height="640" />
+            <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Text class="u--trim" fz="m" fw="bold"><Link isCoverLink href="#">Audio That Displays Music as Art in Your Space</Link></Text>
+          <Stack class="u--trimAll" as="dl" g="10" fz="s" o="pp">
+            <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
+            <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
           </Stack>
-          <Cluster g="15" px="20" pb="20">
+          <Cluster g="15">
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Design</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Branding</Button>
           </Cluster>
         </Grid>
-        <Grid class="set--bdrsInner" gtr="subgrid" gr="span 2" g="20" bgc="base" bdrs="20" ai="start" hasTransition hov="-bxsh">
-          <Stack as="a" isBoxLink href="#" g="30" set="hov" p="20">
-            <Frame as="figure" ar="16/9" pos="relative" bdrs="inner">
-              <Media src="https://cdn.lism-css.com/random/img?r=6" alt="" width="960" height="640" />
-              <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
-                <Center h="100%" c="white">
-                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
-                </Center>
-              </Layer>
-            </Frame>
-            <Stack g="30">
-              <Text class="u--trim" fz="m" fw="bold">Dramatically Staging Your Space</Text>
-              <Stack class="u--trimAll" as="dl" g="15" fz="s" o="pp">
-                <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
-                <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
-              </Stack>
-            </Stack>
+        <Grid isBoxLink gtr="subgrid" gr="span 4" g="30" bgc="base" bdrs="30" p="15" ai="start" set="hov" hasTransition hov="-bxsh">
+          <Frame as="figure" ar="16/9" pos="relative" bdrs="20">
+            <Media src="https://cdn.lism-css.com/random/img?r=6" alt="" width="960" height="640" />
+            <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Text class="u--trim" fz="m" fw="bold"><Link isCoverLink href="#">Dramatically Staging Your Space</Link></Text>
+          <Stack class="u--trimAll" as="dl" g="10" fz="s" o="pp">
+            <Flex g="5"><dt>Director:</dt><dd>Takahashi Kenta</dd></Flex>
+            <Flex g="5"><dt>Designer:</dt><dd>Sato Misaki</dd></Flex>
           </Stack>
-          <Cluster g="15" px="20" pb="20">
+          <Cluster g="15">
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Design</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Video</Button>
             <Button href="####" bgc="base-2" c="text" fz="s" px="15" py="5" bdrs="99">Music</Button>
