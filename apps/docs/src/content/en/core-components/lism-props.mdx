@@ -281,6 +281,42 @@ If you pass just `:` without any string after it, only the `-{prop}` class is ou
 This is handy when you want to enable a prop like `bd` (one that can be toggled on with `true`) from a path that cannot pass a boolean, such as text input.
 
 
+<div id="color-mix"></div>
+### Color transparency and mixing
+
+Color props such as `c`, `bgc`, and `bdc` accept `:`-separated values to set transparency or mix two colors. The value is converted into `color-mix()` and output as a CSS variable.
+
+| Syntax | Output | Meaning |
+| --- | --- | --- |
+| `{color}:{alpha}%` | `color-mix(in srgb, var(--{color}) {alpha}%, transparent)` | `{color}` at `{alpha}%` opacity |
+| `{color1}:{color2}:{ratio}%` | `color-mix(in srgb, var(--{color1}), var(--{color2}) {ratio}%)` | Mix `{ratio}%` of `{color2}` into `{color1}` |
+
+<Preview>
+<PreviewTitle>Transparency</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism bgc="black:50%">...</Lism>
+// → <div class="-bgc" style="--bgc:color-mix(in srgb, var(--black) 50%, transparent)">...</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>Mixing two colors</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism c="text:blue:5%">...</Lism>
+// → <div class="-c" style="--c:color-mix(in srgb, var(--text), var(--blue) 5%)">...</div>
+```
+</PreviewCode>
+</Preview>
+
+:::note[Notes]
+- Values that are not tokens are passed to `color-mix()` as-is. (e.g., `bgc="currentColor:10%"` → `color-mix(in srgb, currentColor 10%, transparent)`)
+- This conversion is specific to Lism Props. To get the same result with Property Classes (HTML), write the value directly, such as `style="--bgc: color-mix(in srgb, var(--black) 50%, transparent)"`.
+:::
+
+
 ### Responsive syntax
 
 BP-supported properties can specify values per breakpoint (`sm`, `md`) using arrays or objects.

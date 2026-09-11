@@ -303,6 +303,7 @@ OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩
 
 - `c`, `bgc` 等のカラー系 Props では、セマンティックカラー → パレットカラーの順で検索される
 - どちらも最終的に `var(--{name})` に変換される
+- `bgc="black:50%"`（透過）や `c="text:blue:5%"`（混色）のような `:` 記法も使える。詳細は [components-core.md の CSS Props](./components-core.md#css-props)
 - `main.css` でクラス化されるのは厳選したセマンティックカラーと `keycolor` のみ（`-c:brand` / `-c:keycolor` など）。それ以外のカラートークン（`red` などのパレットカラー）は `style` 属性の CSS 変数として出力される
 - `full.css` + `isFullMode` では、`c` / `bgc` / `bdc` の全カラートークンがクラス化される（`-bgc:red` など）
 

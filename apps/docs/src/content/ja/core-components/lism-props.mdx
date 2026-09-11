@@ -282,6 +282,42 @@ CSS側で変数の中身を記述したい場合や、**親と同じ変数を継
 `bd` のようにそのまま値を渡せる（`true` で有効化できる）プロパティに対して、テキスト入力など boolean を渡せない経路から `true` 相当を指定したい場合に便利です。
 
 
+<div id="color-mix"></div>
+### カラーの透過・混色
+
+`c`, `bgc`, `bdc` などのカラー系 Props では、値を `:` で区切ることで透明度や混色を指定できます。値は `color-mix()` に変換され、CSS変数として出力されます。
+
+| 書き方 | 出力 | 意味 |
+| --- | --- | --- |
+| `{color}:{alpha}%` | `color-mix(in srgb, var(--{color}) {alpha}%, transparent)` | `{color}` を不透明度 `{alpha}%` にする |
+| `{color1}:{color2}:{ratio}%` | `color-mix(in srgb, var(--{color1}), var(--{color2}) {ratio}%)` | `{color1}` に `{color2}` を `{ratio}%` 混ぜる |
+
+<Preview>
+<PreviewTitle>透明度の指定</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism bgc="black:50%">...</Lism>
+// → <div class="-bgc" style="--bgc:color-mix(in srgb, var(--black) 50%, transparent)">...</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>2色の混色</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism c="text:blue:5%">...</Lism>
+// → <div class="-c" style="--c:color-mix(in srgb, var(--text), var(--blue) 5%)">...</div>
+```
+</PreviewCode>
+</Preview>
+
+:::note[補足]
+- トークンに無い値はそのまま `color-mix()` に渡されます。（例: `bgc="currentColor:10%"` → `color-mix(in srgb, currentColor 10%, transparent)`）
+- この変換は Lism Props 専用です。Property Class（HTML）で同じ表現をする場合は、`style="--bgc: color-mix(in srgb, var(--black) 50%, transparent)"` のように直接指定してください。
+:::
+
+
 ### レスポンシブ指定
 
 BP対応プロパティは、配列またはオブジェクトでブレイクポイント（`sm`, `md`）ごとの値を指定できます。

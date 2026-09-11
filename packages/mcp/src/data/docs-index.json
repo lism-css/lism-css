@@ -831,6 +831,7 @@
       "コード例",
       ": でクラスとして強制的に出力",
       ": 単体を指定した場合",
+      "カラーの透過・混色",
       "レスポンシブ指定",
       "exProps",
       "クラスの出力順"
@@ -863,9 +864,14 @@
       "レスポンシブ",
       "shorthand",
       "省略記法",
-      "contentSize"
+      "contentSize",
+      "color-mix",
+      "透過",
+      "透明度",
+      "混色",
+      "alpha"
     ],
-    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で b-- / c-- クラス（Block Class / Custom Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
+    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で b-- / c-- クラス（Block Class / Custom Class）や任意クラスを直接指定（以前の lismClass/variant を一本化）、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isCoverLink, isContainer, isSide, isSkipFlow, hasTransition, hasGutter, hasSnap, hasMask などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。カラー系Props（c / bgc / bdc）は black:50%（透過）や text:blue:5%（混色）の : 区切り記法で color-mix() に変換される。"
   },
   {
     "sourcePath": "core-components/Text.mdx",
