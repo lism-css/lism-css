@@ -42,11 +42,13 @@ export type SidebarSection =
   | {
       label: string;
       translate?: TranslateLabels;
+      link?: string;
       dir: string;
     }
   | {
       label: string;
       translate?: TranslateLabels;
+      link?: string;
       rootPath?: string; // ネスト深度判定用のルートパス（例: '/docs/'）
       items: Array<SidebarNavItem>;
     };
@@ -220,13 +222,21 @@ const uiSidebar: SidebarSection[] = [
 ];
 
 export function getPatternsSidebar(lang: LangCode): SidebarSection[] {
-  return getPatternCategories(lang).map((category) => ({
-    label: category.label,
-    items: category.items.map((item) => ({
-      label: item.title,
-      link: `/patterns/${item.categoryId}/${item.id}`,
+  const categories = getPatternCategories(lang);
+  return [
+    {
+      label: 'Patterns',
+      items: [{ label: 'すべてのパターン', translate: { en: 'All patterns' }, link: '/patterns/' }],
+    },
+    ...categories.map<SidebarSection>((category) => ({
+      label: category.label,
+      link: `/patterns/${category.id}/`,
+      items: category.items.map((item) => ({
+        label: item.title,
+        link: `/patterns/${item.categoryId}/${item.id}`,
+      })),
     })),
-  }));
+  ];
 }
 
 // 集約カテゴリはカテゴリリンク、通常カテゴリは各テンプレートへのリンクにする

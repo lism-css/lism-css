@@ -89,6 +89,9 @@ function getDirNestedDepth(postId: string, dir: string): number {
         {
           sectionItems.map((section) => {
             const sectionLabel = getTranslatedLabel(section.label, section.translate, currentLang);
+            const sectionUrl = section.link ? `${section.link.replace(/\/$/, '')}/` : undefined;
+            const isSectionActive =
+              !!sectionUrl && (currentPathWithoutLang === sectionUrl || currentPathWithoutLang === sectionUrl.replace(/\/$/, ''));
 
             if (hasDirProperty(section)) {
               const posts = postsByCategory[section.dir];
@@ -100,9 +103,27 @@ function getDirNestedDepth(postId: string, dir: string): number {
             // dir指定は記事を自動取得し、items指定は定義順で表示する
             return (
               <Stack class="c--siteNav_group" g="5">
-                <Heading level="3" class="c--siteNav_title b--eyebrow" tt="uppercase">
-                  {sectionLabel}
-                </Heading>
+                {sectionUrl ? (
+                  <Heading level="3" class="c--siteNav_title" fz="xs" fw="500" hl="xs">
+                    <Link
+                      href={getLocalizedUrl(sectionUrl, currentLang)}
+                      layout="flex"
+                      ai="center"
+                      g="10"
+                      c={isSectionActive ? 'brand' : 'text-2'}
+                      td="none"
+                      hov={{ c: 'brand' }}
+                      aria-current={isSectionActive ? 'page' : undefined}
+                    >
+                      {sectionLabel}
+                      <Icon icon="arrow-right" fz="2xs" />
+                    </Link>
+                  </Heading>
+                ) : (
+                  <Heading level="3" class="c--siteNav_title b--eyebrow" tt="uppercase">
+                    {sectionLabel}
+                  </Heading>
+                )}
 
                 <List class="c--siteNav_list" mbs="10" bd-s>
                   {hasDirProperty(section)

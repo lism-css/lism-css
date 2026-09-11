@@ -18,5 +18,7 @@ import SiteNav from './SiteNav.astro';
 
 <script>
   // アクティブなナビリンクまでサイドバーをスクロール（instant: ページ読み込み時にアニメーションさせない）
-  document.querySelector('.c--siteSidebar_nav .c--navLink._active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+  document
+    .querySelector('.c--siteSidebar_nav :is(.c--navLink._active, [aria-current="page"])')
+    ?.scrollIntoView({ block: 'center', behavior: 'instant' });
 </script>

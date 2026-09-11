@@ -121,7 +121,11 @@ describe('言語ごとのパターン公開', () => {
   it('サイドバーのURL・タイトル・カテゴリ順と生成対象ページが一致する', async () => {
     const { getPatternsSidebar } = await import('@/config/sidebar');
     for (const lang of ['ja', 'en'] as const) {
-      const sidebar = getPatternsSidebar(lang);
+      const [overview, ...sidebar] = getPatternsSidebar(lang);
+      expect(overview).toEqual({
+        label: 'Patterns',
+        items: [{ label: 'すべてのパターン', translate: { en: 'All patterns' }, link: '/patterns/' }],
+      });
       const links = sidebar.flatMap((section) =>
         'items' in section ? section.items.flatMap((item) => (typeof item === 'object' && 'link' in item ? [item] : [])) : []
       );
@@ -130,7 +134,9 @@ describe('言語ごとのパターン公開', () => {
         label: catalog.getPattern(category, id, lang)?.title,
       }));
       expect(links).toEqual(routes);
-      expect(sidebar.map(({ label }) => label)).toEqual(catalog.getPatternCategories(lang).map(({ label }) => label));
+      expect(sidebar.map(({ label, link }) => ({ label, link }))).toEqual(
+        catalog.getPatternCategories(lang).map(({ id, label }) => ({ label, link: `/patterns/${id}/` }))
+      );
     }
   });
 
