@@ -23,25 +23,27 @@ function reactSource(name, normalized) {
   const body = normalized.body.replace(/([\w-]+)=/g, (_, key) => `${reactAttribute(key)}=`);
   return `${header}import { forwardRef, type SVGProps } from 'react';
 
-const ${name} = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function ${name}({ children, ...props }, ref) {
+export type ${name}Props = SVGProps<SVGSVGElement> & { size?: number | string };
+const ${name} = /* @__PURE__ */ forwardRef<SVGSVGElement, ${name}Props>(function ${name}({ children, size = '1em', width = size, height = size, ...props }, ref) {
   const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
-  return <svg ${defaults} width="1em" height="1em" focusable="false" aria-hidden={labelled ? undefined : true} role={labelled ? 'img' : undefined} {...props} ref={ref}>${body}{children}</svg>;
+  return <svg ${defaults} width={width} height={height} focusable="false" aria-hidden={labelled ? undefined : true} role={labelled ? 'img' : undefined} {...props} ref={ref}>${body}{children}</svg>;
 });
 
 export default ${name};
 `;
 }
 
+// Astroのスプレッドは明示属性を上書きせず両方出力するため、利用側が上書きできる属性は分割代入で取り出してから出力する。
 function astroSource(normalized) {
   const { 'stroke-width': strokeWidth, ...attributes } = normalized.attributes;
   const defaults = attributesText({ xmlns: 'http://www.w3.org/2000/svg', viewBox: normalized.viewBox, ...attributes });
   return `---
 ${header}import type { HTMLAttributes } from 'astro/types';
-type Props = HTMLAttributes<'svg'> & { strokeWidth?: number | string };
-const { strokeWidth, 'stroke-width': nativeStrokeWidth, ...props } = Astro.props;
+type Props = HTMLAttributes<'svg'> & { size?: number | string; strokeWidth?: number | string };
+const { strokeWidth, 'stroke-width': nativeStrokeWidth, size = '1em', width = size, height = size, focusable = 'false', 'aria-hidden': ariaHidden, role, ...props } = Astro.props;
 const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
 ---
-<svg ${defaults} width="1em" height="1em" focusable="false" aria-hidden={labelled ? undefined : true} role={labelled ? 'img' : undefined} stroke-width={nativeStrokeWidth ?? strokeWidth${strokeWidth ? ` ?? ${JSON.stringify(strokeWidth)}` : ''}} {...props}>${normalized.body}<slot /></svg>
+<svg ${defaults} width={width} height={height} focusable={focusable} aria-hidden={ariaHidden ?? (labelled ? undefined : true)} role={role ?? (labelled ? 'img' : undefined)} stroke-width={nativeStrokeWidth ?? strokeWidth${strokeWidth ? ` ?? ${JSON.stringify(strokeWidth)}` : ''}} {...props}>${normalized.body}<slot /></svg>
 `;
 }
 

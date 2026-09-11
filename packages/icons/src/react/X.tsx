@@ -1,7 +1,8 @@
 // 自動生成: scripts/generate.mjs（編集元: src/svg/）
 import { forwardRef, type SVGProps } from 'react';
 
-const X = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function X({ children, ...props }, ref) {
+export type XProps = SVGProps<SVGSVGElement> & { size?: number | string };
+const X = /* @__PURE__ */ forwardRef<SVGSVGElement, XProps>(function X({ children, size = '1em', width = size, height = size, ...props }, ref) {
   const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   return (
     <svg
@@ -12,8 +13,8 @@ const X = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(fun
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      width="1em"
-      height="1em"
+      width={width}
+      height={height}
       focusable="false"
       aria-hidden={labelled ? undefined : true}
       role={labelled ? 'img' : undefined}

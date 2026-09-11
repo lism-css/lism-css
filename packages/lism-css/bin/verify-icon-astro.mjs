@@ -10,6 +10,10 @@ const cacheDir = join(packageDir, '.cache');
 await mkdir(cacheDir, { recursive: true });
 const fixtureDir = await mkdtemp(join(cacheDir, 'verify-icon-'));
 const rootTag = (svg) => svg.match(/<svg\b[^>]*>/)?.[0] ?? '';
+const assertNoDuplicateAttributes = (root, label) => {
+  const names = [...root.matchAll(/\s([\w:-]+)(?:=|\s|>)/g)].map(([, name]) => name);
+  assert.equal(new Set(names).size, names.length, `${label}: 属性が重複 ${root}`);
+};
 
 try {
   const page = join(fixtureDir, 'src/pages/index.astro');
@@ -40,6 +44,7 @@ import Callout from ${JSON.stringify(calloutPath)};
 <Icon icon="home" weight="bold" strokeWidth={0.5} stroke-width={0.75} data-case="native" />
 <Icon icon="home" weight="bold" strokeWidth={0.5} exProps={{ 'stroke-width': 3 }} data-case="exProps" />
 <Icon icon="home" size="2em" width="3em" height="4em" data-case="size" />
+<Icon icon="home" size="2em" data-case="size-only" />
 <Icon icon={External} label="外部アイコン" class="consumer-icon" data-case="external" />
 <Icon icon={External} weight="light" data-case="external-light" />
 <Icon icon={'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 0L24 24" /></svg>'} data-case="raw" />
@@ -64,6 +69,7 @@ import Callout from ${JSON.stringify(calloutPath)};
       assert.ok(root.includes(attribute), `${icon}: ${attribute}`);
     }
     assert.doesNotMatch(root, /\b(?:body|weight|strokeWidth|strokeLinecap|strokeLinejoin)=/);
+    assertNoDuplicateAttributes(root, icon);
     assert.match(svg, /<(?:path|circle|rect|line|polyline|polygon|ellipse)\b/);
   }
   for (const [name, width] of Object.entries({
@@ -84,6 +90,11 @@ import Callout from ${JSON.stringify(calloutPath)};
   const size = rootTag(find('data-case', 'size'));
   assert.match(size, /width="3em"/);
   assert.match(size, /height="4em"/);
+  assertNoDuplicateAttributes(size, 'size');
+  const sizeOnly = rootTag(find('data-case', 'size-only'));
+  assert.match(sizeOnly, /width="2em"/);
+  assert.match(sizeOnly, /height="2em"/);
+  assertNoDuplicateAttributes(sizeOnly, 'size-only');
   const external = rootTag(find('data-case', 'external'));
   assert.match(external, /aria-label="外部アイコン"/);
   assert.match(external, /role="img"/);

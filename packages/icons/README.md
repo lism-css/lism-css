@@ -14,7 +14,7 @@ Reactでは`/react`から読み込みます。
 ```tsx
 import { Home, StarHalf } from '@lism-css/icons/react';
 
-<Home aria-label="ホーム" width={24} height={24} />
+<Home aria-label="ホーム" size={24} />
 <StarHalf strokeWidth={2} aria-label="半分の星" />
 ```
 
@@ -25,13 +25,13 @@ Astroでは`/astro`から読み込みます。
 import { Home, StarHalf } from '@lism-css/icons/astro';
 ---
 
-<Home aria-label="ホーム" width={24} height={24} />
+<Home aria-label="ホーム" size={24} />
 <StarHalf stroke-width={2} aria-label="半分の星" />
 ```
 
 `@lism-css/icons/react/Home`や`@lism-css/icons/astro/Home`からdefault importすることもできます。名前は`star-half`→`StarHalf`、`menu-2`→`Menu2`のように変換しています。
 
-大きさの既定は`1em`です。色は`currentColor`で周囲の文字色を引き継ぎます。線幅の既定は`1.5`で、Reactでは`strokeWidth`、Astroでは`stroke-width`で指定できます。Astroでは`strokeWidth`も受け付け、両方あれば`stroke-width`を優先します。
+大きさは`size`で幅・高さをまとめて指定でき、既定は`1em`です。`width`・`height`を個別に指定した場合はそちらを優先します。色は`currentColor`で周囲の文字色を引き継ぎます。線幅の既定は`1.5`で、Reactでは`strokeWidth`、Astroでは`stroke-width`で指定できます。Astroでは`strokeWidth`も受け付け、両方あれば`stroke-width`を優先します。
 
 `StarHalf`は左半分の塗りと外周の線を組み合わせており、線幅の変更は外周に反映されます。`StarHalfFill`など名前が`Fill`で終わるアイコンは塗りだけで描かれ、線幅では太さが変わりません。
 

@@ -1,7 +1,11 @@
 // 自動生成: scripts/generate.mjs（編集元: src/svg/）
 import { forwardRef, type SVGProps } from 'react';
 
-const SignIn = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function SignIn({ children, ...props }, ref) {
+export type SignInProps = SVGProps<SVGSVGElement> & { size?: number | string };
+const SignIn = /* @__PURE__ */ forwardRef<SVGSVGElement, SignInProps>(function SignIn(
+  { children, size = '1em', width = size, height = size, ...props },
+  ref
+) {
   const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   return (
     <svg
@@ -12,8 +16,8 @@ const SignIn = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      width="1em"
-      height="1em"
+      width={width}
+      height={height}
       focusable="false"
       aria-hidden={labelled ? undefined : true}
       role={labelled ? 'img' : undefined}

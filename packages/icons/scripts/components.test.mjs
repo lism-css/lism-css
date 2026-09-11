@@ -20,6 +20,10 @@ const componentName = (id) =>
 const render = (Component, props, children) => renderToStaticMarkup(createElement(Component, props, children));
 const svgRoot = (html) => html.match(/<svg\b[^>]*>/)?.[0] ?? '';
 const dotsCount = (html) => [...html.matchAll(/<circle\b[^>]*\br="\.375"/g)].length;
+const assertNoDuplicateAttributes = (root, label) => {
+  const names = [...root.matchAll(/\s([\w:-]+)(?:=|\s|>)/g)].map(([, name]) => name);
+  assert.equal(new Set(names).size, names.length, `${label}: 属性が重複 ${root}`);
+};
 
 function checkMixed(html) {
   assert.match(svgRoot(html), /fill="none"/);
@@ -63,6 +67,10 @@ test('Reactの個別importで利用者の属性・title・アクセシビリテ�
   assert.doesNotMatch(root, /aria-hidden=/);
   assert.match(html, /<title id="home-title">ホーム<\/title>/);
   assert.match(svgRoot(render(Home, { 'aria-hidden': false })), /aria-hidden="false"/);
+  const sized = svgRoot(render(Home, { size: 32 }));
+  assert.match(sized, /width="32" height="32"/);
+  assert.doesNotMatch(sized, /\bsize=/);
+  assert.match(svgRoot(render(Home, { size: 32, height: '2em' })), /width="32" height="2em"/);
   assert.match(svgRoot(render(Home, { 'aria-label': 'ホーム' })), /role="img"/);
 });
 
@@ -111,17 +119,20 @@ import Home from '@lism-css/icons/astro/Home';
 <Home data-case="alias" strokeWidth={2} width={32} class="icon" aria-labelledby="home-title"><title id="home-title">ホーム</title></Home>
 <Home data-case="native" stroke-width={1} strokeWidth={2} aria-label="ホーム" />
 <Home data-case="visible" aria-hidden={false} />
+<Home data-case="sized" width="2.5em" height="2.5em" focusable="true" role="presentation" />
+<Home data-case="size" size="2em" height="3em" />
 </body></html>`
     );
     await buildAstro({ root: pathToFileURL(`${fixtureDir}/`), configFile: false, logLevel: 'silent' });
     const html = await readFile(join(fixtureDir, 'dist/index.html'), 'utf8');
     const svgs = [...html.matchAll(/<svg\b[^>]*>[\s\S]*?<\/svg>/g)].map(([svg]) => svg);
-    assert.equal(svgs.length, 50);
+    assert.equal(svgs.length, 52);
     for (const icon of icons) {
       const svg = svgs.find((value) => svgRoot(value).includes(`data-icon="${componentName(icon.id)}"`));
       assert.ok(svg, icon.id);
       assert.equal(dotsCount(svg), expectedDots[icon.id] ?? 0, icon.id);
       assert.match(svgRoot(svg), /aria-hidden="true"/);
+      assertNoDuplicateAttributes(svgRoot(svg), icon.id);
       if (!icon.fill) assert.match(svgRoot(svg), /stroke-width="1.5"/);
       else assert.match(svgRoot(svg), /fill="currentColor" stroke="none"/);
     }
@@ -136,6 +147,16 @@ import Home from '@lism-css/icons/astro/Home';
     assert.match(svgRoot(native), /role="img"/);
     assert.doesNotMatch(svgRoot(native), /aria-hidden=|strokeWidth=/);
     assert.match(svgRoot(svgs.find((svg) => svgRoot(svg).includes('data-case="visible"'))), /aria-hidden="false"/);
+    const sizeCase = svgRoot(svgs.find((svg) => svgRoot(svg).includes('data-case="size"')));
+    assert.match(sizeCase, /width="2em"/);
+    assert.match(sizeCase, /height="3em"/);
+    assert.doesNotMatch(sizeCase, /\bsize=/);
+    for (const name of ['alias', 'native', 'visible', 'sized', 'size']) {
+      assertNoDuplicateAttributes(svgRoot(svgs.find((svg) => svgRoot(svg).includes(`data-case="${name}"`))), name);
+    }
+    const sized = svgRoot(svgs.find((svg) => svgRoot(svg).includes('data-case="sized"')));
+    for (const attribute of ['width="2.5em"', 'height="2.5em"', 'focusable="true"', 'role="presentation"'])
+      assert.ok(sized.includes(attribute), attribute);
   } finally {
     await rm(fixtureDir, { recursive: true, force: true });
   }

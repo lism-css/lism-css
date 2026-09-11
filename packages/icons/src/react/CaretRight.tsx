@@ -1,7 +1,11 @@
 // 自動生成: scripts/generate.mjs（編集元: src/svg/）
 import { forwardRef, type SVGProps } from 'react';
 
-const CaretRight = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function CaretRight({ children, ...props }, ref) {
+export type CaretRightProps = SVGProps<SVGSVGElement> & { size?: number | string };
+const CaretRight = /* @__PURE__ */ forwardRef<SVGSVGElement, CaretRightProps>(function CaretRight(
+  { children, size = '1em', width = size, height = size, ...props },
+  ref
+) {
   const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   return (
     <svg
@@ -12,8 +16,8 @@ const CaretRight = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElem
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      width="1em"
-      height="1em"
+      width={width}
+      height={height}
       focusable="false"
       aria-hidden={labelled ? undefined : true}
       role={labelled ? 'img' : undefined}

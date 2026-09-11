@@ -21,8 +21,8 @@ import { Book, HeartFill } from '@lism-css/icons/react';
 export function Example() {
   return (
     <>
-      <Book width={24} height={24} strokeWidth={2} aria-label="Book" />
-      <HeartFill width={24} height={24} aria-label="Favorite" />
+      <Book size={24} strokeWidth={2} aria-label="Book" />
+      <HeartFill size={24} aria-label="Favorite" />
     </>
   );
 }
@@ -35,11 +35,11 @@ In Astro, import icons from `/astro`.
 import { Book, HeartFill } from '@lism-css/icons/astro';
 ---
 
-<Book width={24} height={24} stroke-width={2} aria-label="Book" />
-<HeartFill width={24} height={24} aria-label="Favorite" />
+<Book size={24} stroke-width={2} aria-label="Book" />
+<HeartFill size={24} aria-label="Favorite" />
 ```
 
-Icons default to `1em` in size and inherit the surrounding text color. The default stroke width is `1.5`. Change it with `strokeWidth` in React or `stroke-width` in Astro. Stroke width does not affect fill icons such as `HeartFill`.
+Set the width and height together with `size` (default `1em`); explicit `width` or `height` takes precedence. Icons inherit the surrounding text color. The default stroke width is `1.5`. Change it with `strokeWidth` in React or `stroke-width` in Astro. Stroke width does not affect fill icons such as `HeartFill`.
 
 Icons are hidden from screen readers by default. When an icon conveys meaning on its own, provide an `aria-label` as shown above.
 

@@ -1,8 +1,18 @@
 ---
 // 自動生成: scripts/generate.mjs（編集元: src/svg/）
 import type { HTMLAttributes } from 'astro/types';
-type Props = HTMLAttributes<'svg'> & { strokeWidth?: number | string };
-const { strokeWidth, 'stroke-width': nativeStrokeWidth, ...props } = Astro.props;
+type Props = HTMLAttributes<'svg'> & { size?: number | string; strokeWidth?: number | string };
+const {
+  strokeWidth,
+  'stroke-width': nativeStrokeWidth,
+  size = '1em',
+  width = size,
+  height = size,
+  focusable = 'false',
+  'aria-hidden': ariaHidden,
+  role,
+  ...props
+} = Astro.props;
 const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
 ---
 
@@ -13,11 +23,11 @@ const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   stroke="currentColor"
   stroke-linecap="round"
   stroke-linejoin="round"
-  width="1em"
-  height="1em"
-  focusable="false"
-  aria-hidden={labelled ? undefined : true}
-  role={labelled ? 'img' : undefined}
+  width={width}
+  height={height}
+  focusable={focusable}
+  aria-hidden={ariaHidden ?? (labelled ? undefined : true)}
+  role={role ?? (labelled ? 'img' : undefined)}
   stroke-width={nativeStrokeWidth ?? strokeWidth ?? '1.5'}
   {...props}
   ><path d="M17.625,17.25h-9.078c-.725,0-1.346-.519-1.476-1.232L4.568,2.25h-2.318"></path><circle cx="8.625" cy="19.125" r="1.875"></circle><circle

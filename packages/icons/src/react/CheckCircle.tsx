@@ -1,7 +1,11 @@
 // 自動生成: scripts/generate.mjs（編集元: src/svg/）
 import { forwardRef, type SVGProps } from 'react';
 
-const CheckCircle = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function CheckCircle({ children, ...props }, ref) {
+export type CheckCircleProps = SVGProps<SVGSVGElement> & { size?: number | string };
+const CheckCircle = /* @__PURE__ */ forwardRef<SVGSVGElement, CheckCircleProps>(function CheckCircle(
+  { children, size = '1em', width = size, height = size, ...props },
+  ref
+) {
   const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   return (
     <svg
@@ -12,8 +16,8 @@ const CheckCircle = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGEle
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      width="1em"
-      height="1em"
+      width={width}
+      height={height}
       focusable="false"
       aria-hidden={labelled ? undefined : true}
       role={labelled ? 'img' : undefined}
