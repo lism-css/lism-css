@@ -99,6 +99,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
     {
       toc && (
         <FixedToc>
+          {/* スクロールするので、左右の余白(px)は目次側に付ける。上下(py)は親(Modal.Body) */}
           <TableOfContents toc={toc} px="30" />
           {/* <ShareBtns url={canonicalUrl} title={title} px="30" /> */}
         </FixedToc>
