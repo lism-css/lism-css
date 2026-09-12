@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { PatternCategory } from '@/config/patterns';
 import { getAlternateUrls } from './i18n';
 
 let catalog: typeof import('./patterns');
@@ -109,12 +110,9 @@ describe('言語ごとのパターン公開', () => {
 
   it('下書きは本番で除外し、開発時には同じ番号で日英とも表示する', async () => {
     const { patterns } = await import('@/config/patterns');
-    const drafts = Object.entries(patterns).flatMap(([category, { items }]) =>
-      items.filter((item) => item.draft).map((item) => [category, item.id] as const)
-    );
-    const draftOnlyCategories = Object.entries(patterns)
-      .filter(([, { items }]) => items.every((item) => item.draft))
-      .map(([category]) => category);
+    const categories = Object.entries(patterns) as [string, PatternCategory][];
+    const drafts = categories.flatMap(([category, { items }]) => items.filter((item) => item.draft).map((item) => [category, item.id] as const));
+    const draftOnlyCategories = categories.filter(([, { items }]) => items.every((item) => item.draft)).map(([category]) => category);
     expect(drafts.length).toBeGreaterThan(0);
     for (const lang of ['ja', 'en'] as const) {
       for (const [category, id] of drafts) {
