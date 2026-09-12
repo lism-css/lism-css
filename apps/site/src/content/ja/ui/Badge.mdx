@@ -2,6 +2,7 @@
 title: 'Badge'
 description: '短いラベルや状態をバッジで表示するUIコンポーネントです。'
 ---
+import { Check, Tag } from '@lism-css/icons/astro';
 import { Lism, Cluster, Flex, Icon, Spacer } from 'lism-css/astro';
 import { Badge } from '@lism-css/ui/astro/Badge';
 
@@ -301,22 +302,24 @@ paddingをem単位で定義しているため、`fz`でフォントサイズを�
   <PreviewArea p="20" bg=":stripe">
     <Cluster g="15" ai="center">
       <Badge ai="center">
-        <Icon icon="check" />
+        <Icon icon={Check} />
         <Fragment>Badge</Fragment>
       </Badge>
       <Badge variant="outline" ai="center">
-        <Icon icon="tag" />
+        <Icon icon={Tag} />
         <Fragment>Badge</Fragment>
       </Badge>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { Check, Tag } from '@lism-css/icons/react';
+
     <Cluster g="15" ai="center">
       <Badge ai="center">
-        <Icon icon="check" />Badge</Badge>
+        <Icon icon={Check} />Badge</Badge>
       <Badge variant="outline" ai="center">
-        <Icon icon="tag" />Badge</Badge>
+        <Icon icon={Tag} />Badge</Badge>
     </Cluster>
     ```
   </PreviewCode>

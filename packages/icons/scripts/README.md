@@ -1,4 +1,4 @@
-基準日: 2026-09-12・コミットe76345fc（作業ツリーの変更を含む）
+基準日: 2026-09-13・コミットbef7eb48b（作業ツリーを含む）
 
 # 制作データの同期と書き出し
 
@@ -22,7 +22,7 @@ Illustratorで設計用.aiの編集を保存してから、`packages/icons/`で�
 nr sync:design
 ```
 
-書き出し後、リポジトリのルートでビルドします。アイコンパッケージ、コアの組み込みプリセット、コアの配布ファイルまで依存順に更新します。
+書き出し後、リポジトリのルートでビルドします。アイコンパッケージと、UIに同梱する既定アイコン・配布ファイルを依存順に更新します。
 
 ```bash
 nr build:icons
@@ -67,17 +67,14 @@ nr build:icons
 
 パッケージディレクトリで`nr test`、`nr typecheck`、`nr lint`を実行できます。テストでは追加・削除、異常時の非破壊性、生成の再現性、React/Astroでの描画、属性の上書き、tree-shakingを確認します。
 
-## Lism CSSのプリセットへ反映する
+## UIの既定アイコンへ反映する
 
-コアへ同梱するアイコンは`config.mjs`の`coreIconNames`で選びます。これはパッケージ全体の収録一覧ではありません。SVGが存在する名前だけが共通データのコア一覧へ出力されます。
+`lism-css`はSVGデータを同梱しません。UIに必要な既定アイコンは、`packages/lism-ui/scripts/generate-icons.mjs`が`@lism-css/icons/data`から選び、`src/helper/icons.ts`へSVG文字列として生成します。React/Astroで共有し、CLIによるコンポーネントのコピー時にもhelperとして配信します。
 
-`lism-css`のIconプリセットは、コアのビルド時に`bin/generate-icon-presets.mjs`が`@lism-css/icons/data`から生成します。[設計からパッケージへ同期する手順](#設計からパッケージへ同期する)のビルドには、この更新も含まれます。
-
-反映後の確認は`packages/lism-css/`で行います。
+[設計からパッケージへ同期する手順](#設計からパッケージへ同期する)のビルドには、この更新も含まれます。生成結果の確認は`packages/lism-ui/`で行います。
 
 ```bash
 nr gen:icons:check
-nr test:icon:astro
 ```
 
 Illustrator固有の制約は[自動化の注意点](../../../documents/illustrator-automation.md)を参照してください。

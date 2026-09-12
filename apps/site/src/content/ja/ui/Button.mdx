@@ -3,6 +3,7 @@ title: 'Button'
 description: 'ボタンのように見せるリンクを表示するUIコンポーネントです。'
 ---
 
+import { ArrowRight } from '@lism-css/icons/astro';
 import { Box, Flex, Grid, Lism, Frame, Media, Icon, Spacer, Center, Layer, Cluster, Stack, Link } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
@@ -91,7 +92,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
         <Fragment>Button</Fragment>
       </Button>
       <Button href="###" bgc="#d13d5e" bdrs="99">
-        <Icon icon="arrow-right" />
+        <Icon icon={ArrowRight} />
         <Fragment>Button</Fragment>
       </Button>
     </Flex>
@@ -99,11 +100,13 @@ Button のベーススタイルは、以下のCSSで定義されています。
 
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { ArrowRight } from '@lism-css/icons/react';
+
     <Flex g="15">
       <Button href="###">Button</Button>
       <Button href="###" bgc="brand" bdrs="10">Button</Button>
       <Button href="###" bgc="#d13d5e" bdrs="99">
-        <Icon icon="arrow-right" />Button
+        <Icon icon={ArrowRight} />Button
       </Button>
     </Flex>
     ```
@@ -131,7 +134,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
         <Fragment>Button</Fragment>
       </Button>
       <Button href="###" variant="outline" c="#d13d5e" bdrs="99">
-        <Icon icon="arrow-right" />
+        <Icon icon={ArrowRight} />
         <Fragment>Button</Fragment>
       </Button>
     </Flex>
@@ -139,11 +142,13 @@ Button のベーススタイルは、以下のCSSで定義されています。
 
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { ArrowRight } from '@lism-css/icons/react';
+
     <Flex g="15">
       <Button href="###">Button</Button>
       <Button href="###" variant="outline" c="brand" bdrs="10">Button</Button>
       <Button href="###" variant="outline" c="#d13d5e" bdrs="99">
-        <Icon icon="arrow-right" />Button
+        <Icon icon={ArrowRight} />Button
       </Button>
     </Flex>
     ```
@@ -167,7 +172,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
   <PreviewArea p="20" bg=":stripe" layout="">
     <Cluster g="15">
       <Button href="###" g="5" bdrs="10">
-        <Icon icon="arrow-right" style={{ translate: '-25% 0' }} />
+        <Icon icon={ArrowRight} style={{ translate: '-25% 0' }} />
         <span>Button</span>
       </Button>
       <Button href="###" variant="outline" g="5" bdrs="10">
@@ -181,9 +186,11 @@ Button のベーススタイルは、以下のCSSで定義されています。
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { ArrowRight } from '@lism-css/icons/react';
+
     <Cluster g="15">
       <Button href="###" g="5" bdrs="10">
-        <Icon icon="arrow-right" style={{ translate: '-25% 0' }} />
+        <Icon icon={ArrowRight} style={{ translate: '-25% 0' }} />
         <span>Button</span>
       </Button>
       <Button href="###" variant="outline" g="5" bdrs="10">
@@ -252,7 +259,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
   <PreviewArea p="20" flow="20">
     <Stack max-w="20em" g="15">
       <Button href="###" layout="grid" bdrs="10" hov="-bgc">
-        <Icon icon="arrow-right" />
+        <Icon icon={ArrowRight} />
         <span>Button</span>
       </Button>
       <Button href="###" layout="grid" bdrs="10" hov="-bgc">
@@ -260,7 +267,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
         <Icon icon={ArrowRightIcon} />
       </Button>
       <Button href="###" layout="grid" bdrs="10" hov="-bgc">
-        <Icon icon="arrow-right" />
+        <Icon icon={ArrowRight} />
         <span>Button</span>
         <Icon icon={ArrowRightIcon} />
       </Button>
@@ -268,8 +275,10 @@ Button のベーススタイルは、以下のCSSで定義されています。
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'layout="grid"'
+    import { ArrowRight } from '@lism-css/icons/react';
+
     <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
-      <Icon icon="arrow-right" />
+      <Icon icon={ArrowRight} />
       <span>Button</span>
     </Button>
     <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
@@ -277,7 +286,7 @@ Button のベーススタイルは、以下のCSSで定義されています。
       <Icon icon={ArrowRightIcon} />
     </Button>
     <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
-      <Icon icon="arrow-right" />
+      <Icon icon={ArrowRight} />
       <span>Button</span>
       <Icon icon={ArrowRightIcon} />
     </Button>

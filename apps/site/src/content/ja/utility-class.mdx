@@ -3,6 +3,7 @@ title: 'Utility Class( u--* )'
 navtitle: 'Utility Class'
 description: 'スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。'
 ---
+import { Alert as AlertIcon } from '@lism-css/icons/astro';
 import { Lism, Flow, Grid, AutoColumns, Columns, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { Dog, Cat } from "@phosphor-icons/react";
@@ -343,7 +344,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="20">
     <p>
-      <Icon util="inlineCenter" icon="alert" c="red" fz="xl" /> Lorem ipsum dolor sit amet.
+      <Icon util="inlineCenter" icon={AlertIcon} c="red" fz="xl" /> Lorem ipsum dolor sit amet.
     </p>
     <p>
       <Icon util="inlineCenter" as={Dog} fz="l" />
@@ -359,7 +360,9 @@ import { Dog, Cat } from "@phosphor-icons/react";
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "u--inlineCenter"
-    <p><Icon util="inlineCenter" icon="alert" c="red" fz="xl" /> Lorem ipsum dolor sit amet.</p>
+    import { Alert as AlertIcon } from '@lism-css/icons/react';
+
+    <p><Icon util="inlineCenter" icon={AlertIcon} c="red" fz="xl" /> Lorem ipsum dolor sit amet.</p>
     <p><Icon util="inlineCenter" as={Dog} fz="l" />Dog, and <Icon util="inlineCenter" as={Cat} fz="l"/>Cat.</p>
     <p><span class="u--inlineCenter -fz:xl">🚀</span> Emoji.</p>
     <p><Icon fz="2xl" util="inlineCenter" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>

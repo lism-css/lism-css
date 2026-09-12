@@ -1,4 +1,5 @@
 ---
+import { ArrowRight, CaretDown, Chat, Home, Note } from '@lism-css/icons/astro';
 import Layout from '@/layouts/Layout.astro';
 import {
   Lism,
@@ -96,27 +97,27 @@ const featureImage = {
 /** カードごとの表示内容（タイトル・本文・アイコンを独立して管理） */
 const featureCards = [
   {
-    icon: 'home' as const,
+    icon: Home,
     title: '賃貸でも戸建てでも、住まいの形に合わせる',
     body: '入居期間や間取り、子どもやペットの有無に応じたご提案を心がけています。既製の家具同士の組み合わせから、小さなスペースの活かし方まで、状況に合わせて一緒に考えます。',
   },
   {
-    icon: 'chat' as const,
+    icon: Chat,
     title: '悩み相談から、コーディネートまで一貫して',
     body: '雑多な要望の整理、色や素材の方向性づくり、具体的な品の候補づくりまで、必要な深さに合わせて伴走します。相談だけのご利用と、手配・設置のお願いまで、幅のある対応が可能です。',
   },
   {
-    icon: 'arrow-right' as const,
+    icon: ArrowRight,
     title: '多様な取り扱いと、自社アイテムのご案内',
     body: '暮らし方に合わせ、多様なブランドを扱い、自社企画の家具や小物のご紹介も行っています。価帯やデザインの好みに応じ、選び方の比較もお手伝いします。',
   },
   {
-    icon: 'note' as const,
+    icon: Note,
     title: '予算と目的に合わせた、無理のない段取り',
     body: 'まず手を入れたい場所から整える、将来に備え徐々に揃えるといった段階のご相談も歓迎です。想定おおよその費用感の整理や、優先度の相談にもお答えします。',
   },
   {
-    icon: 'chat' as const,
+    icon: Chat,
     title: '打ち合わせは来店、オンライン、お電話のいずれも可',
     body: '日々の予定に合わせ、ヒアリングの仕方を選べます。写真や図面をお持ちの場合は共有いただくと、打ち合わせが円滑です。遠方の方も、まずは内容を伺うところから始められます。',
   },
@@ -487,7 +488,7 @@ const contactFields = [
                   <>
                     {i > 0 && (
                       <Center fxsh="0">
-                        <Icon icon="caret-down" weight="bold" fz="2xl" o="ppp" />
+                        <Icon icon={CaretDown} weight="bold" fz="2xl" o="ppp" />
                       </Center>
                     )}
                     <Stack g="30" p="30" bdrs="20" bxsh="20" bd bdc="base-2">

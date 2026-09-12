@@ -2,7 +2,7 @@ import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { format, resolveConfig } from 'prettier';
-import { readSvgIcons, coreIconNames, packageDir } from './config.mjs';
+import { readSvgIcons, packageDir } from './config.mjs';
 import { normalizeSvg } from './normalize-svg.mjs';
 
 const header = '// 自動生成: scripts/generate.mjs（編集元: src/svg/）\n';
@@ -71,10 +71,7 @@ export async function generate({ root = packageDir, sourceDir = join(root, 'src/
     'packages/astro/index.ts',
     header + normalized.map(({ id }) => `export { default as ${componentName(id)} } from './${componentName(id)}.astro';`).join('\n') + '\n'
   );
-  files.set(
-    'src/data.ts',
-    `${header}export const icons = ${JSON.stringify(data)} as const;\nexport type IconName = keyof typeof icons;\nexport const coreIconNames = ${JSON.stringify(coreIconNames.filter((id) => Object.hasOwn(data, id)))} as const;\n`
-  );
+  files.set('src/data.ts', `${header}export const icons = ${JSON.stringify(data)} as const;\nexport type IconName = keyof typeof icons;\n`);
 
   const options = await resolveConfig(join(packageDir, 'src/data.ts'));
   for (const [path, source] of files) {

@@ -2,6 +2,7 @@
 title: 'Alert'
 description: '短いメッセージを目立たせて表示するUIコンポーネントです。'
 ---
+import { Alert as AlertIcon, Good } from '@lism-css/icons/astro';
 import { Box, Flow, Flex, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
 import { Alert } from '@lism-css/ui/astro/Alert';
 import { Button } from '@lism-css/ui/astro/Button';
@@ -67,7 +68,7 @@ Alert のベーススタイルは、以下のCSSで定義されています。
 | プロパティ | 説明 |
 |---|---|
 |`type`|`keycolor`と`icon`の組み合わせのプリセット値を指定できます。初期値:`"alert"`|
-|`icon`|`Icon`コンポーネントに渡すアイコンを指定できます。[プリセットアイコン](/docs/primitives/a--icon/#preset-icons)であれば文字列だけでアイコンを指定できます。|
+|`icon`|`Icon`コンポーネントに渡すアイコンを指定できます。アイコンコンポーネントやSVG文字列を渡せます。既定のアイコンは`@lism-css/ui`に同梱されています。|
 |`keycolor`| キーカラーを指定します。|
 |`flow`|コンテンツを囲む`Flow`要素の`flow`プロパティに渡されます。初期値:`"s"`|
 |`layout`|レイアウトプリミティブを切り替えます。初期値:`"flex"`|
@@ -82,14 +83,16 @@ Alert のベーススタイルは、以下のCSSで定義されています。
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p="20">
-    <Alert icon="good" keycolor="green">
-      <p>icon="good" keycolor="green"</p>
+    <Alert icon={Good} keycolor="green">
+      <p>Good / green</p>
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Alert icon="good" keycolor="green">
-      <p>icon="good" keycolor="green"</p>
+    import { Good } from '@lism-css/icons/react';
+
+    <Alert icon={Good} keycolor="green">
+      <p>Good / green</p>
     </Alert>
     ```
   </PreviewCode>
@@ -98,7 +101,7 @@ Alert のベーススタイルは、以下のCSSで定義されています。
     <div class="b--alert l--flex u--cbox" style="--keycolor:var(--green)">
       <svg class="a--icon"...>...</svg>
       <div class="l--flow -flow:s">
-        <p>icon="good" keycolor="green"</p>
+        <p>Good / green</p>
       </div>
     </div>
     ```
@@ -229,14 +232,14 @@ Alert のベーススタイルは、以下のCSSで定義されています。
 
 ## Without @lism-css/ui
 
-@lism-css/uiを使用せずに、lism-css のみで Alert を構築するコード例を紹介します。
+@lism-css/uiを使用せずに、Lism のプリミティブと`@lism-css/icons`で Alert を構築するコード例を紹介します。
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30" resize>
     <WithSide util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
-        <Icon icon="alert" />
+        <Icon icon={AlertIcon} />
       </Center>
       <Flow flow="s">
         <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
@@ -245,9 +248,11 @@ Alert のベーススタイルは、以下のCSSで定義されています。
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { Alert as AlertIcon } from '@lism-css/icons/react';
+
     <WithSide util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
-        <Icon icon="alert" />
+        <Icon icon={AlertIcon} />
       </Center>
       <Flow flow="s">
         <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>

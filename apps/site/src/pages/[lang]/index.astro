@@ -1,4 +1,5 @@
 ---
+import { CaretRight } from '@lism-css/icons/astro';
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import KvEditor from '@/components/KvEditor/KvEditor.astro';
 import { Stack, Lism, Flex, Heading, Text, Link, Columns, Grid, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
@@ -315,7 +316,7 @@ const presets = [
       </Box>
       <Button class="c--lpButton" href={getLocalizedUrl('/templates/', lang)} fz={['s', 'm']} hov={{ bgc: 'var(--link)' }} mt="40">
         <span>View More</span>
-        <Icon icon="caret-right" />
+        <Icon icon={CaretRight} />
       </Button>
     </Stack>
   </Lism>
@@ -333,7 +334,7 @@ const presets = [
         </Text>
         <Button class="c--lpButton" href={getLocalizedUrl('/docs/installation/', lang)} fz={['s', 'm']} hov={{ bgc: 'var(--link)' }} mt="40">
           <span>Get Started</span>
-          <Icon icon="caret-right" />
+          <Icon icon={CaretRight} />
         </Button>
       </Center>
     </Stack>

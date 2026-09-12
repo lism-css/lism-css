@@ -2,6 +2,7 @@
 title: 'Callout'
 description: '記事内の重要なポイントを強調表示するUIコンポーネントです。'
 ---
+import { ArrowRight, Note } from '@lism-css/icons/astro';
 import { Icon, Box, Flex, Center, Lism, Stack } from 'lism-css/astro';
 import { Callout } from '@lism-css/ui/astro/Callout';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
@@ -71,7 +72,7 @@ Callout のベーススタイルは、以下のCSSで定義されています。
 | プロパティ | 説明 |
 |---|---|
 |`keycolor`| キーカラーを指定します。|
-|`icon`|`Icon`コンポーネントに渡すアイコンを指定できます。[プリセットアイコン](/docs/primitives/a--icon/#preset-icons)であれば文字列だけでアイコンを指定できます。|
+|`icon`|`Icon`コンポーネントに渡すアイコンを指定できます。アイコンコンポーネントやSVG文字列を渡せます。既定のアイコンは`@lism-css/ui`に同梱されています。|
 |`type`|`keycolor`と`icon`の組み合わせのプリセット値を指定できます。初期値:`"note"`|
 |`title`|タイトルテキストを指定します。|
 |`flow`|コンテンツを囲む`Flow`要素の`flow`プロパティに渡されます|
@@ -145,13 +146,15 @@ Callout のベーススタイルは、以下のCSSで定義されています。
 <Preview>
   <PreviewTitle>`icon`、`keycolor`を指定</PreviewTitle>
   <PreviewArea p="30">
-    <Callout title="Heading text..." icon="arrow-right" keycolor="pink">
+    <Callout title="Heading text..." icon={ArrowRight} keycolor="pink">
       <DummyText lang="ja" />
     </Callout>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Callout title="Heading text..." icon="arrow-right" keycolor="pink">
+    import { ArrowRight } from '@lism-css/icons/react';
+
+    <Callout title="Heading text..." icon={ArrowRight} keycolor="pink">
       <DummyText lang="ja" />
     </Callout>
     ```
@@ -214,7 +217,7 @@ Callout のベーススタイルは、以下のCSSで定義されています。
     <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center>
-          <Icon icon="note" size="1.25em" />
+          <Icon icon={Note} size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>
@@ -225,10 +228,12 @@ Callout のベーススタイルは、以下のCSSで定義されています。
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { Note } from '@lism-css/icons/react';
+
     <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center>
-          <Icon icon="note" size="1.25em" />
+          <Icon icon={Note} size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>

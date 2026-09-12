@@ -1,4 +1,5 @@
 ---
+import { ArrowRight, CaretDown } from '@lism-css/icons/astro';
 import Layout from '@/layouts/Layout.astro';
 import {
   AutoColumns,
@@ -283,7 +284,7 @@ const footerSnsLinks = [
         </Layer>
         <BoxLink layout="center" href="#about" class="c--scrollDown" pos="absolute" l="0" b="30" g="5" c="white" w="100%">
           <Inline fz="xs" fs="italic" lts="l">SCROLL DOWN</Inline>
-          <Icon icon="caret-down" weight="bold" fz="m" />
+          <Icon icon={CaretDown} weight="bold" fz="m" />
         </BoxLink>
       </Box>
 
@@ -515,7 +516,7 @@ const footerSnsLinks = [
               hov={{ bgc: 'rgb(25 25 25)' }}
             >
               <Inline gc="2" ps="10" tt="uppercase" lts="l">Contact us</Inline>
-              <Icon icon="arrow-right" weight="bold" />
+              <Icon icon={ArrowRight} weight="bold" />
             </Link>
           </Cluster>
         </Container>

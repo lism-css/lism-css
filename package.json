@@ -25,7 +25,7 @@
     "build:core:css": "turbo run build:css --filter=./packages/lism-css",
     "build:plugin": "turbo run build --filter=./packages/plugin",
     "build:ui": "turbo run build --filter=./packages/lism-ui",
-    "build:icons": "turbo run build --filter=./packages/icons --filter=./packages/lism-css",
+    "build:icons": "turbo run build --filter=./packages/icons --filter=./packages/lism-ui",
     "build:mcp": "turbo run build --filter=./packages/mcp",
     "build:mockup": "turbo run build --filter=./packages/mockup",
     "init:mockup": "pnpm build:mockup && (test -f packages/mockup/__test__/mockup.config.json || pnpm --dir packages/mockup exec node bin/lism-mockup.mjs init __test__)",

@@ -1,4 +1,5 @@
 ---
+import { CaretRight, Menu2 } from '@lism-css/icons/astro';
 import { BoxLink, Center, Container, Flex, Icon, Inline, Link, ListItem, Stack } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 
@@ -36,7 +37,7 @@ const headerNavItems = [
       </Flex>
       <Modal.OpenBtn modalId="menu" d={['block', null, 'none']}>
         <Center p="5">
-          <Icon icon="menu-2" weight="light" fz="2xl" aria-hidden="true" />
+          <Icon icon={Menu2} weight="light" fz="2xl" aria-hidden="true" />
         </Center>
       </Modal.OpenBtn>
     </Flex>
@@ -58,7 +59,7 @@ const headerNavItems = [
                     {en}
                   </Inline>
                 </Stack>
-                <Icon icon="caret-right" weight="bold" fz="s" o="pp" />
+                <Icon icon={CaretRight} weight="bold" fz="s" o="pp" />
               </BoxLink>
             </ListItem>
           ))
@@ -69,7 +70,7 @@ const headerNavItems = [
               <Inline>ご予約はこちら</Inline>
               <Inline class="b--enEyebrow" lang="en" fz="s" o="pp">Reservation</Inline>
             </Stack>
-            <Icon icon="caret-right" weight="bold" fz="s" o="pp" />
+            <Icon icon={CaretRight} weight="bold" fz="s" o="pp" />
           </BoxLink>
         </ListItem>
       </Stack>

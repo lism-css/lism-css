@@ -3,6 +3,7 @@ title: 'Breadcrumb'
 description: 'Lism CSS で実装するパンくずリストナビゲーションの実装例です。'
 ---
 
+import { CaretRight } from '@lism-css/icons/astro';
 import { Cluster, Icon, Decorator, Link, ListItem } from 'lism-css/astro';
 
 
@@ -82,19 +83,21 @@ import { Cluster, Icon, Decorator, Link, ListItem } from 'lism-css/astro';
         </a>
       </ListItem>
       <ListItem d="inline-flex" ai="center" g="15">
-        <Icon icon="caret-right" c="text-2" />
+        <Icon icon={CaretRight} c="text-2" />
         <a class="-c:inherit" href="#menu-2">
           <Fragment>Menu item 2</Fragment>
         </a>
       </ListItem>
       <ListItem d="inline-flex" ai="center" g="15">
-        <Icon icon="caret-right" c="text-2" />
+        <Icon icon={CaretRight} c="text-2" />
         <span class="-c:text-2">Current page titile...</span>
       </ListItem>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { CaretRight } from '@lism-css/icons/react';
+
     <Cluster as="ol" g="15">
       <ListItem d="inline-flex" ai="center" g="15">
         <a class="set--plain" href="#menu-1">
@@ -102,13 +105,13 @@ import { Cluster, Icon, Decorator, Link, ListItem } from 'lism-css/astro';
         </a>
       </ListItem>
       <ListItem d="inline-flex" ai="center" g="15">
-        <Icon icon="caret-right" c="text-2" />
+        <Icon icon={CaretRight} c="text-2" />
         <a class="set--plain" href="#menu-2">
           Menu item 2
         </a>
       </ListItem>
       <ListItem d="inline-flex" ai="center" g="15">
-        <Icon icon="caret-right" c="text-2" />
+        <Icon icon={CaretRight} c="text-2" />
         <span class="-c:text-2">Current page titile...</span>
       </ListItem>
     </Cluster>

@@ -4,22 +4,9 @@ navtitle: 'a--icon'
 description: 'a--icon は、アイコン要素を表示するためのクラスです。'
 ---
 
+import { Home, Info, Lightbulb, Warning } from '@lism-css/icons/astro';
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
 import { Cat, SmileyIcon } from "@phosphor-icons/react";
-import { originalIcons } from 'lism-css/react/atomic/Icon/presets';
-
-export const PresetIcons = ({icons}) => {
-  return <Grid layout="autoColumns" cols="10rem" g="15">
-      {Object.keys(icons).map((iconName) => {
-        return (
-          <Stack key={iconName} g="10" ai="center" bgc="base-2" bdrs="10" p="15">
-            <Icon icon={iconName} fz="xl" />
-            <span class="u--trim -fz:xs -ff:mono -d:b">{iconName}</span>
-          </Stack>
-        );
-      })}
-  </Grid>;
-}
 
 
 `a--icon`は、アイコン要素を表示するためのクラスです。
@@ -54,9 +41,9 @@ svg.a--icon[aria-label="..."][role="img"]
 
 | プロパティ | 説明 |
 |---|---|
-| `icon` | アイコンを指定できます。指定した内容によって出力処理が変わります。 |
+| `icon` | アイコンコンポーネント・SVG文字列・`{as, ...exProps}`形式のオブジェクトを指定します。 |
 | `size` | SVGの幅・高さの既定値。明示した`width`・`height`を優先します。 |
-| `weight` | 線幅を`light`（1）・`regular`（1.5）・`bold`（2）から選びます。プリセットの既定は`regular`です。 |
+| `weight` | 線幅を`light`（1）・`regular`（1.5）・`bold`（2）から選びます。未指定ならアイコン自身の線幅を維持します。 |
 | `strokeWidth` / `stroke-width` | 線幅を直接指定します。`weight`より優先します。 |
 | `label` | `aria-label`として出力します。指定があれば`role="img"`が同時に出力され、指定がない場合は`aria-hidden="true"`が出力されます。 |
 
@@ -150,25 +137,27 @@ import { Icon } from 'lism-css/react';
   </PreviewCode>
 </Preview> */}
 
-### プリセットアイコンを呼び出す方法
+### `@lism-css/icons`を利用する方法
 
-`lism-css`には、一般的なWebサイトで使うオリジナルのプリセットアイコンを内包しています。追加のアイコンパッケージなしで利用できます。
+`lism-css`はアイコンのSVGデータを内包しません。`@lism-css/icons`をインストールし、必要なコンポーネントを`icon`に渡します。
 
-`icon='icon-name'`と文字列でその名前を指定すると、プリセットアイコンを呼び出せます。
+Reactでは`@lism-css/icons/react`、Astroでは`@lism-css/icons/astro`からimportします。
 
 <Preview>
-  <PreviewTitle>プリセットアイコン呼び出し例</PreviewTitle>
+  <PreviewTitle>アイコンコンポーネントの指定例</PreviewTitle>
   <PreviewArea p="20">
     <Cluster g="15">
-      <Icon icon="lightbulb" size="40px" />
-      <Icon icon="warning" fz="2xl" c="blue" />
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
     </Cluster>
   </PreviewArea>
   <PreviewCode>
     ```jsx
+    import { Lightbulb, Warning } from '@lism-css/icons/react';
+
     <Cluster g="15">
-      <Icon icon="lightbulb" size="40px" />
-      <Icon icon="warning" fz="2xl" c="blue" />
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
     </Cluster>
     ```
   </PreviewCode>
@@ -177,36 +166,42 @@ import { Icon } from 'lism-css/react';
 
 #### 線の太さを変える
 
-プリセットは24グリッドの線描画です。`weight`で線幅を変えられ、内部の小さな点も太さに追従します。色は`c`で指定してください。
+`@lism-css/icons`の線アイコンは24グリッドで描画されます。`weight`で線幅を変えられ、内部の小さな点も太さに追従します。色は`c`で指定してください。
 
 <Preview>
   <PreviewTitle>light・regular・bold</PreviewTitle>
   <PreviewArea p="20">
     <Cluster g="20" fz="3xl">
-      <Icon icon="info" weight="light" label="light" />
-      <Icon icon="info" weight="regular" label="regular" />
-      <Icon icon="info" weight="bold" label="bold" />
-      <Icon icon="home" weight="bold" strokeWidth={1.25} label="線幅1.25" />
+      <Icon icon={Info} weight="light" label="light" />
+      <Icon icon={Info} weight="regular" label="regular" />
+      <Icon icon={Info} weight="bold" label="bold" />
+      <Icon icon={Home} weight="bold" strokeWidth={1.25} label="線幅1.25" />
     </Cluster>
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Icon icon="info" weight="light" />
-    <Icon icon="info" weight="regular" />
-    <Icon icon="info" weight="bold" />
-    <Icon icon="home" weight="bold" strokeWidth={1.25} />
+    import { Home, Info } from '@lism-css/icons/react';
+
+    <Icon icon={Info} weight="light" />
+    <Icon icon={Info} weight="regular" />
+    <Icon icon={Info} weight="bold" />
+    <Icon icon={Home} weight="bold" strokeWidth={1.25} />
     ```
   </PreviewCode>
 </Preview>
 
 `strokeWidth`（Astroでは`stroke-width`も可）を指定すると、`weight`より優先します。外部の線アイコンにも`weight`を渡せます。指定しなければ、外部アイコン自身の線幅を維持します。外部パッケージ独自の`weight`は、前述の`exProps`または`icon`オブジェクトで指定してください。
 
-`@lism-css/icons`では、プリセット以外のアイコンや、塗りと線を組み合わせたアイコンを提供します。
+`@lism-css/icons`には線アイコンのほか、塗りアイコンや塗りと線を組み合わせたアイコンもあります。
 
-<h4 id="preset-icons">プリセットアイコン一覧</h4>
 
-<PresetIcons icons={originalIcons} />
+### SVG文字列を渡す方法
 
+`icon`には`<svg`で始まるSVG全体の文字列も渡せます。`viewBox`・線幅などのSVG属性を含めて指定します。
+
+```jsx
+<Icon icon={'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m5 12 4 4L19 6" /></svg>'} c="green" />
+```
 
 ### svgを直接記述する方法
 

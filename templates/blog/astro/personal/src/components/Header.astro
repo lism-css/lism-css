@@ -1,4 +1,5 @@
 ---
+import { Menu2 } from '@lism-css/icons/astro';
 import { Flex, Stack, Link, Container, Inline, Icon, Center } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 import SnsLinks from '@/components/SnsLinks.astro';
@@ -21,7 +22,7 @@ import { siteConfig } from '@/config/site';
       hov={{ bgc: 'base-2' }}
       aria-labelledby="menu-open-label"
     >
-      <Icon icon="menu-2" weight="light" />
+      <Icon icon={Menu2} weight="light" />
       <Inline d="none" id="menu-open-label">{siteConfig.uiText.nav.openMenu}</Inline>
     </Modal.OpenBtn>
   </Flex>
