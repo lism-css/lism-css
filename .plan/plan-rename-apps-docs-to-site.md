@@ -1,6 +1,6 @@
 # Plan: apps/docs を apps/site へリネームする
 
-基準日: 2026-09-05・8a881efc
+基準日: 2026-09-12・25b4e745
 状態: Ready
 関連: [plan-511-docs-to-cloudflare-workers.md](./plan-511-docs-to-cloudflare-workers.md)（このリネームを先に済ませてから#511のPhase 1に入る）
 
@@ -23,9 +23,10 @@
 ### コードで裏取り済みの事実
 
 - `pnpm-workspace.yaml`は`apps/*`のglobなのでワークスペース定義の変更は不要。`pnpm-lock.yaml`の`importers`キー`apps/docs`は`pnpm install`で更新される。
-- `apps/docs/package.json`は`"name": "lism-docs"`。`private`フラグなし。
+- `apps/docs/package.json`は`"name": "lism-docs"`。
 - `apps/docs`配下には`node_modules`・`dist`・`.astro`・`.cache`・`.turbo`・`.claude`・`_screenshots/{diff,temp}`など、未追跡またはignore対象のディレクトリがある。
 - `apps/docs/scripts/generate-lastmod-map.ts`は`git log --name-only -- 'apps/docs/src/content' ...`でファイル別の最終コミット日時を集め、`^apps\/docs\/src\/...`の正規表現でURLへ変換する。パスを単純に置換すると、リネームコミットより前の履歴が見えなくなり、全URLのlastmodがリネーム日になる。
+- 保存済みの`apps/docs/lastmod-map.json`は`nr deploy`時にしか更新されず、基準日時点で履歴より古い（例: posts01は9月7日と記録されているが最終コミットは9月12日）。手順6の比較基準には使えない。
 - `packages/mcp/src/tests/docs-index.test.ts`は`apps/docs/src/content/ja`の存在を`describe.skipIf`で判定する。パスを直し忘れてもテストは失敗せずスキップされる。
 - `packages/mcp/src/data/docs-index.json`の`sourcePath`は`content/ja`相対（例: `overview.mdx`）で`apps/docs`を含まない。再生成は不要。
 - Vercel はダッシュボードの Root Directory を`apps/docs`にして`apps/docs/vercel.ts`（`buildCommand: 'cd ../.. && pnpm build:docs'`）を読んでいる。この設定はリポジトリ外。
@@ -36,8 +37,8 @@
 
 | 文字列 | 箇所 |
 | --- | --- |
-| `apps/docs` | 31ファイル。`.claude/`11、`documents/`6、`packages/mcp/`3、`apps/docs/`内3、`docs/decisions.md`、`.plan/plan-511-*`、`CLAUDE.md`、`.gitignore`、`turbo.json`、`package.json`、`scripts/sync-cdn-versions.mjs`、`templates/manifest.ts` |
-| `lism-docs` | `package.json`10行、`apps/docs/package.json`、`apps/docs/src/lib/pageHelpers.ts`、`apps/docs/src/components/KvEditor/README.md`、`documents/`2、`docs/decisions.md`、`.plan/plan-511-*`4行 |
+| `apps/docs` | 34ファイル。`.claude/`11、`documents/`7、`packages/mcp/`3、`apps/docs/`内3、`docs/decisions.md`、`.plan/plan-511-*`、`.plan/plan-rename-github-repository-to-core.md`、`CLAUDE.md`、`.gitignore`、`turbo.json`、`package.json`、`scripts/sync-cdn-versions.mjs`、`templates/manifest.ts` |
+| `lism-docs`（パッケージ名） | `package.json`10行、`apps/docs/package.json`、`apps/docs/src/lib/pageHelpers.ts`、`apps/docs/src/components/KvEditor/README.md`、`documents/`2、`docs/decisions.md`、`.plan/plan-511-*`4行。エージェント名`lism-docs-editor`・`lism-docs-translator`とスキル名`lism-docs-translation`は別物で置換しない |
 | `dev:docs`・`build:docs`・`format:docs`・`check:docs` | `package.json`、`CLAUDE.md`、`apps/docs/vercel.ts`、`.claude/commands/docs-translation.md`、`documents/docs-update.md`、`.plan/plan-511-*` |
 
 ## 実装プラン
@@ -46,8 +47,9 @@
 
 ### 1. 事前準備
 
-- 作業ツリーをクリーンにする。基準日時点で`apps/docs/src/content/*/changelog.mdx`等に未コミット変更があり、そのままだとリネームコミットに混ざる。先にコミットするかstashする。
+- 作業ツリーをクリーンにする。未コミット変更があるとリネームコミットに混ざるので、先にコミットするかstashする。
 - `nr dev:docs`が起動中なら止める。
+- 手順6の比較基準を作る。`pnpm --filter lism-docs generate:lastmod`を現行スクリプトで実行し、出力した`apps/docs/lastmod-map.json`をリポジトリ外（作業用の一時ディレクトリ）に退避する。保存済みのJSONは履歴より古いので基準にしない。
 
 ### 2. ディレクトリ移動とロックファイル
 
@@ -85,13 +87,14 @@
 - 上記以外の`R`は、`R100`も含めて`new`側のパスを使う。過去のコンテンツ移動は現行どおり更新日時の対象とする。
 - 得たパスが`apps/docs/`で始まれば`apps/site/`に読み替えてから、既存の`existsSync`判定と「最初に見つかった日時が最新」のロジックに渡す。
 - `filePathToSiteUrls`の正規表現3箇所とdocコメントの例を`apps/site`にする。
-- 検証: `pnpm --filter lism-site generate:lastmod`をリネームコミット前とコミット後の両方で実行し、生成した`apps/site/lastmod-map.json`がリネーム前のJSONと一致することを確認する。コミット後の実行で、今回の移動履歴を読み飛ばしても既存の日時を保持できることを確かめる。日本語・英語の`DividerLabel.mdx`に対応する3URLも日時を保持し、JSON全体の差分ゼロを完了条件とする。
+- 検証: `pnpm --filter lism-site generate:lastmod`をリネームコミット前（`git mv`後・未コミット）とコミット後の両方で実行し、生成した`apps/site/lastmod-map.json`が手順1で退避した基準JSONと一致することを確認する。コミット後の実行で、今回の移動履歴を読み飛ばしても既存の日時を保持できることを確かめる。日本語・英語の`DividerLabel.mdx`に対応する3URLも日時を保持し、JSON全体の差分ゼロを完了条件とする。検証後の`apps/site/lastmod-map.json`は`git checkout`でコミット済みの内容に戻す（更新は`nr deploy`が行う）。
 
 ### 7. ドキュメント・エージェント定義の置換
 
-対象: `CLAUDE.md`、`.claude/agents/*`3件、`.claude/commands/*`7件、`.claude/skills/lism-docs-translation/SKILL.md`、`documents/*`6件、`docs/decisions.md`、`.plan/plan-511-docs-to-cloudflare-workers.md`。
+対象: `CLAUDE.md`、`.claude/agents/*`3件、`.claude/commands/*`7件、`.claude/skills/lism-docs-translation/SKILL.md`、`documents/*`7件、`docs/decisions.md`、`.plan/plan-511-docs-to-cloudflare-workers.md`、`.plan/plan-rename-github-repository-to-core.md`。
 
-- `apps/docs`→`apps/site`、`lism-docs`→`lism-site`、`*:docs`→`*:site`を機械的に置換する。エージェント名・コマンド名・ファイル名（`lism-docs-editor`、`docs-update`、`documents/docs-update.md`等）は変えない。
+- `apps/docs`→`apps/site`、`lism-docs`→`lism-site`、`*:docs`→`*:site`を機械的に置換する。エージェント名・コマンド名・ファイル名（`lism-docs-editor`、`docs-update`、`documents/docs-update.md`等）は変えない。`lism-docs`の置換は`lism-docs(?![a-z-])`のようにハイフン続きの識別子（`lism-docs-editor`・`lism-docs-translator`・`lism-docs-translation`）を除外して行う。
+- `.plan/plan-rename-github-repository-to-core.md`はパスを置換したうえで、冒頭の「先に改名が完了していたら`apps/site`へ読み替える」旨の注記を削る。
 - `CLAUDE.md`は加えて、「apps」節のリンク先、「主要コマンド」、「公式ドキュメントサイト(`apps/docs`)のURL」見出しを直し、「`docs/`はプロジェクト文書、サイト本体は`apps/site`」という1行を足す。
 - `.plan/plan-511-*`は`wrangler.jsonc`の`"name"`も`lism-site`にし、`*.workers.dev`のURL例も追従させる。
 - `documents/*`の基準日行は更新しない。パス置換のみで内容の再確認はしていないため。
@@ -106,7 +109,10 @@
 
 ### 9. 検証
 
-- `rg -n 'apps/docs|lism-docs|(dev|build|format|check):docs' --hidden -g '!node_modules' -g '!dist' -g '!.git'`のヒットが、このプランと`docs/decisions.md`の新エントリだけになる
+- `rg -nP 'apps/docs|lism-docs(?![a-z-])|(dev|build|format|check):docs' --hidden -g '!node_modules' -g '!dist' -g '!.git'`のヒットが次だけになる。エージェント名・スキル名（`lism-docs-editor`等）は負の先読みで除外済み。
+  - このプラン
+  - `docs/decisions.md`の新エントリ
+  - `apps/site/scripts/generate-lastmod-map.ts`の`LEGACY_SITE_DIR = 'apps/docs'`とその説明コメント
 - `pnpm install --frozen-lockfile`が通る（ロックファイル更新漏れの検出）
 - `nr build:site`・`nr typecheck`・`nr lint`が通る
 - `pnpm --filter @lism-css/mcp test`で「docs-index.json の構造検証」がスキップではなく実行され、通る
@@ -115,9 +121,9 @@
 
 ### 10. Vercel 側の設定（リポジトリ外・手作業）
 
-- Vercel ダッシュボードの Root Directory を`apps/docs`から`apps/site`に変える。ダッシュボード変更だけでは本番は再ビルドされないので、`main`に到達する前に変えてよい。
-- タイミングはこのPRを`dev`にマージした直後。Vercel が`dev`のプレビューをビルドしている場合、変えるまで`dev`のビルドは失敗する（本番には影響しない）。
-- 次の`nr deploy`（`dev`→`main`）で`apps/site`のままビルドされることを Vercel のデプロイログで確認する。
+- Vercel ダッシュボードの Root Directory を`apps/docs`から`apps/site`に変える。プロジェクト単位の設定なので、1回の変更で本番（`main`）とプレビュー（`dev`）の両方に効く。ダッシュボード変更だけでは本番は再ビルドされない。
+- タイミングはこのPRを`dev`にマージした直後。Vercel は`dev`のプレビューもビルドしているので、変えるまで`dev`のプレビュービルドは失敗する（本番には影響しない）。変更後に`dev`のプレビューを再デプロイし、リネーム後の構成でビルドが通ることを確認する。
+- `nr deploy`（`dev`→`main`）を実行し、`apps/site`のままビルドされることを Vercel のデプロイログで確認する。
 
 ## 設計判断の根拠
 
@@ -127,12 +133,6 @@
 - lastmodスクリプトを直す（リセットを受容しない）: 全URLのlastmodがリネーム日になると、sitemap経由で検索エンジンへ「全ページ更新」を誤って伝える。すべての`R100`を除外すると、過去に移動した日本語・英語の`DividerLabel.mdx`（`7001c377`）の日時を取得できず、対応する3URLのlastmodが欠落する。そのため、除外は手順6のワークスペース移動に限定する。コンテンツ個別の移動は現行の扱いを維持し、ファイルごとに`--follow`を回す案は遅いので却下。
 - エージェント名・コマンド名・`documents/docs-*.md`は据え置き: それらの「docs」はMDXコンテンツ（URL`/docs/`配下）を指す。`apps/site`との衝突はこのリネームで解消される。
 - 1PR: 移動と参照の更新を分けるとどの時点でもビルドが壊れる。
-
-## 未決事項・要確認・事前準備
-
-- Vercel が`dev`ブランチのプレビューをビルドしているか未確認。している場合は手順10のタイミングに従う。
-- `apps/site/package.json`に`"private": true`を足すか。スコープ外だが、公開予定のないワークスペースなので同じPRで足してよい。
-- #511プランの`wrangler.jsonc`の`name`は`lism-site`にする前提。別の Worker 名にしたい場合は手順7で指定する。
 
 ## 対象外
 
