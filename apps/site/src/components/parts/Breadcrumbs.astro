@@ -1,4 +1,5 @@
 ---
+import { CaretRight } from '@lism-css/icons/astro';
 import { Cluster, Flex, Inline, Link, Icon } from 'lism-css/astro';
 import { getRootLang, type LangCode } from '@/lib/i18n';
 
@@ -22,7 +23,7 @@ const { items, lang = getRootLang() } = Astro.props;
         <Flex as="li" ai="center" g="inherit">
           {index > 0 && (
             <span class="l--center" aria-hidden="true">
-              <Icon icon="caret-right" c="text-2" />
+              <Icon icon={CaretRight} c="text-2" />
             </span>
           )}
           {item.href && index < items.length - 1 ? (

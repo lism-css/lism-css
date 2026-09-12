@@ -1,3 +1,4 @@
+import { Check as CheckIcon } from '@lism-css/icons/react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert } from './react/Alert';
 import PRESETS from './presets';
@@ -61,7 +62,7 @@ export const WithSide: Story = {
 export const CustomIcon: Story = {
   name: 'カスタムアイコン',
   args: {
-    icon: 'check',
+    icon: CheckIcon,
     keycolor: 'purple',
     children: 'カスタムアイコンとカラー指定。',
   },

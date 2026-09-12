@@ -2,6 +2,7 @@
 title: 'Alert'
 description: 'A UI component that emphasizes short messages.'
 ---
+import { Alert as AlertIcon, Good } from '@lism-css/icons/astro';
 import { Box, Flow, Flex, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
 import { Alert } from '@lism-css/ui/astro/Alert';
 import { Button } from '@lism-css/ui/astro/Button';
@@ -67,7 +68,7 @@ Provided as `Alert` from the `@lism-css/ui` package.
 | Prop | Description |
 |---|---|
 |`type`| Specifies a preset value combining `keycolor` and `icon`. Default: `"alert"` |
-|`icon`| Specifies the icon to pass to the `Icon` component. [Preset icons](/en/docs/primitives/a--icon/#preset-icons) can be specified with just a string. |
+|`icon`| Specifies the icon to pass to the `Icon` component. Pass an icon component or an SVG string. Default icons are bundled with `@lism-css/ui`. |
 |`keycolor`| Specifies the key color. |
 |`flow`| Passed to the `flow` prop of the `Flow` element that wraps the content. Default: `"s"` |
 |`layout`| Switches the layout primitive. Default: `"flex"` |
@@ -82,14 +83,16 @@ Provided as `Alert` from the `@lism-css/ui` package.
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20">
-    <Alert icon="good" keycolor="green">
-      <p>icon="good" keycolor="green"</p>
+    <Alert icon={Good} keycolor="green">
+      <p>Good / green</p>
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Alert icon="good" keycolor="green">
-      <p>icon="good" keycolor="green"</p>
+    import { Good } from '@lism-css/icons/react';
+
+    <Alert icon={Good} keycolor="green">
+      <p>Good / green</p>
     </Alert>
     ```
   </PreviewCode>
@@ -98,7 +101,7 @@ Provided as `Alert` from the `@lism-css/ui` package.
     <div class="b--alert l--flex u--cbox" style="--keycolor:var(--green)">
       <svg class="a--icon"...>...</svg>
       <div class="l--flow -flow:s">
-        <p>icon="good" keycolor="green"</p>
+        <p>Good / green</p>
       </div>
     </div>
     ```
@@ -236,7 +239,7 @@ This example builds the Alert with lism-css primitives only, without `@lism-css/
   <PreviewArea p="30" resize>
     <WithSide util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
-        <Icon icon="alert" />
+        <Icon icon={AlertIcon} />
       </Center>
       <Flow flow="s">
         <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
@@ -245,9 +248,11 @@ This example builds the Alert with lism-css primitives only, without `@lism-css/
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { Alert as AlertIcon } from '@lism-css/icons/react';
+
     <WithSide util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
-        <Icon icon="alert" />
+        <Icon icon={AlertIcon} />
       </Center>
       <Flow flow="s">
         <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>

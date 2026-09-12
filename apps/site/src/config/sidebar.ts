@@ -25,7 +25,7 @@ export type TopLevelLinkItem = {
   label: string;
   translate?: TranslateLabels;
   link: string;
-  icon?: React.ElementType;
+  icon?: Exclude<React.ElementType, string>;
 };
 
 export function isSeparator(item: SidebarNavItem): item is SeparatorItem {

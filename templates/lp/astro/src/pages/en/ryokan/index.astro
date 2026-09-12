@@ -1,10 +1,10 @@
 ---
+import { Book, CaretRight, Cart, Clock, Home } from '@lism-css/icons/astro';
 import Layout from '@/layouts/Layout.astro';
 import { Box, Cluster, Columns, Container, Flex, Frame, Grid, Heading, Icon, Inline, Layer, Link, Lism, Media, Stack, Text } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
-import { Book, Cart } from '@lism-css/icons/astro';
 import Header from '@/components/en/ryokan/Header.astro';
 import SectionHeading from '@/components/en/ryokan/SectionHeading.astro';
 import '@/pages/ryokan/_style.css';
@@ -195,24 +195,21 @@ const plans = [
   },
 ] as const satisfies readonly Plan[];
 
-/** Lism プリセットアイコン名（ https://lism-css.com/docs/primitives/a--icon/ ） */
-type InformationIcon = 'home' | 'clock';
-
 type InformationItem = {
-  icon: InformationIcon | typeof Book | typeof Cart;
+  icon: typeof Home | typeof Clock | typeof Book | typeof Cart;
   title: string;
   description: string;
 };
 
 const informationItems = [
   {
-    icon: 'home',
+    icon: Home,
     title: 'Lobby and Lounge',
     description:
       'From the moment you arrive to the quiet hours after your evening bath. Help yourself to coffee and tea sweets, and settle into the garden-side tatami seating.',
   },
   {
-    icon: 'clock',
+    icon: Clock,
     title: 'Front Desk, Open 24 Hours',
     description: 'Check-in guidance, walking routes nearby, taxis and shuttle arrangements. Whenever something comes up, just say the word.',
   },
@@ -789,7 +786,7 @@ const reservationSites: readonly SiteCard[] = [
                         </Inline>
                       </Stack>
                       <Box d={['block', null, 'none']}>
-                        <Icon icon="caret-right" weight="bold" fz="s" o="pp" />
+                        <Icon icon={CaretRight} weight="bold" fz="s" o="pp" />
                       </Box>
                     </NavMenu.Link>
                   </NavMenu.Item>

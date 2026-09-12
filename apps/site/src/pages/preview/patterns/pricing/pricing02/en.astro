@@ -1,4 +1,5 @@
 ---
+import { Check } from '@lism-css/icons/astro';
 import DemoLayout from '@/layouts/DemoLayout.astro';
 import { AutoColumns, Divider, Container, Flex, Grid, Heading, Icon, Inline, Stack, Text } from 'lism-css/astro';
 import { Badge } from '@lism-css/ui/astro/Badge';
@@ -105,7 +106,7 @@ const billingPeriods = [
                     <Stack as="ul" class="u--trim" hl="s" g="15">
                       {plan.features.map((feature) => (
                         <Flex as="li" ai="center" g="10">
-                          <Icon icon="check" c="brand" />
+                          <Icon icon={Check} c="brand" />
                           <Inline fz="s" c="text-2">
                             {feature}
                           </Inline>

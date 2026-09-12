@@ -1,38 +1,40 @@
+import { alertIcon, warningIcon, checkCircleIcon, questionIcon, infoIcon, noteIcon, lightbulbIcon } from '../../helper/icons';
+
 type PresetData = {
-  icon: string;
+  icon: `<svg${string}`;
   color: string;
 };
 
 const POINT_PRESET: PresetData = {
-  icon: 'lightbulb',
+  icon: lightbulbIcon,
   color: 'orange',
 };
 
 const PRESETS: Record<string, PresetData> = {
   alert: {
-    icon: 'alert',
+    icon: alertIcon,
     color: 'red',
   },
   point: POINT_PRESET,
   tip: POINT_PRESET,
   warning: {
-    icon: 'warning',
+    icon: warningIcon,
     color: 'yellow',
   },
   check: {
-    icon: 'check-circle',
+    icon: checkCircleIcon,
     color: 'green',
   },
   help: {
-    icon: 'question',
+    icon: questionIcon,
     color: 'purple',
   },
   info: {
-    icon: 'info',
+    icon: infoIcon,
     color: 'blue',
   },
   note: {
-    icon: 'note',
+    icon: noteIcon,
     color: 'gray',
   },
 };

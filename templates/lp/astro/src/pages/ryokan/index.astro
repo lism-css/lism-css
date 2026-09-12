@@ -1,10 +1,10 @@
 ---
+import { Book, CaretRight, Cart, Clock, Home } from '@lism-css/icons/astro';
 import Layout from '@/layouts/Layout.astro';
 import { Box, Cluster, Columns, Container, Flex, Frame, Grid, Heading, Icon, Inline, Layer, Link, Lism, Media, Stack, Text } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
-import { Book, Cart } from '@lism-css/icons/astro';
 import Header from '@/components/ryokan/Header.astro';
 import SectionHeading from '@/components/ryokan/SectionHeading.astro';
 import './_style.css';
@@ -192,23 +192,20 @@ const plans = [
   },
 ] as const satisfies readonly Plan[];
 
-/** Lism プリセットアイコン名（ https://lism-css.com/docs/primitives/a--icon/ ） */
-type InformationIcon = 'home' | 'clock';
-
 type InformationItem = {
-  icon: InformationIcon | typeof Book | typeof Cart;
+  icon: typeof Home | typeof Clock | typeof Book | typeof Cart;
   title: string;
   description: string;
 };
 
 const informationItems = [
   {
-    icon: 'home',
+    icon: Home,
     title: 'ロビー・ラウンジ',
     description: '到着直後のひとときから夜の湯上がりまで。珈琲や茶菓のセルフサービスとともに、庭側の座敷席で静かにお過ごしいただけます。',
   },
   {
-    icon: 'clock',
+    icon: Clock,
     title: '24時間対応のフロント',
     description: 'チェックインのご案内、周辺の散策コース、タクシーや送迎の手配まで。お困りごとがあれば、いつでもお声がけください。',
   },
@@ -775,7 +772,7 @@ const reservationSites: readonly SiteCard[] = [
                         </Inline>
                       </Stack>
                       <Box d={['block', null, 'none']}>
-                        <Icon icon="caret-right" weight="bold" fz="s" o="pp" />
+                        <Icon icon={CaretRight} weight="bold" fz="s" o="pp" />
                       </Box>
                     </NavMenu.Link>
                   </NavMenu.Item>

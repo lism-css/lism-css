@@ -1,4 +1,5 @@
 'use client';
+import { xIcon } from '../../../helper/icons';
 import { useContext } from 'react';
 import type { ElementType } from 'react';
 import atts from 'lism-css/lib/helper/atts';
@@ -33,7 +34,7 @@ export default function Close<T extends ElementType = 'button'>({ children, clas
         children
       ) : (
         <>
-          <Icon icon={icon || 'x'} />
+          <Icon icon={icon || xIcon} />
           <span className="u--srOnly">{srText || 'Close'}</span>
         </>
       )}

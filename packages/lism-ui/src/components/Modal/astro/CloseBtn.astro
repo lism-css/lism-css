@@ -1,4 +1,5 @@
 ---
+import { xIcon } from '../../../helper/icons';
 import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
 import type { IconOwnProps } from 'lism-css/react/atomic/Icon/getProps';
@@ -22,7 +23,7 @@ const { class: className, modalId = '', icon, srText = 'Close', ...props } = Ast
     </Lism>
   ) : (
     <Lism as="button" type="button" class={atts(className, 'b--modal_closeBtn')} set="plain" hov="-o" data-modal-close={modalId} {...props}>
-      <Icon icon={icon || 'x'} />
+      <Icon icon={icon || xIcon} />
       <span class="u--srOnly">{srText || 'Close'}</span>
     </Lism>
   )

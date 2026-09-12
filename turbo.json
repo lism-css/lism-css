@@ -8,8 +8,7 @@
         "$TURBO_DEFAULT$",
         "!src/scss/_prop-config.gen.scss",
         "!src/scss/_prop-config-full.gen.scss",
-        "!src/scss/base/tokens/_tokens.gen.scss",
-        "!src/components/atomic/Icon/presets.ts"
+        "!src/scss/base/tokens/_tokens.gen.scss"
       ],
       "outputs": [
         ".next/**",
@@ -17,8 +16,7 @@
         "dist/**",
         "src/scss/_prop-config.gen.scss",
         "src/scss/_prop-config-full.gen.scss",
-        "src/scss/base/tokens/_tokens.gen.scss",
-        "src/components/atomic/Icon/presets.ts"
+        "src/scss/base/tokens/_tokens.gen.scss"
       ]
     },
     "@lism-css/mcp#build": {
@@ -94,6 +92,11 @@
         "!packages/astro/index.ts"
       ],
       "outputs": ["dist/**", "src/react/**", "src/data.ts", "packages/astro/*.astro", "packages/astro/index.ts"]
+    },
+    "@lism-css/ui#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.prettierrc*", "!src/helper/icons.ts"],
+      "outputs": ["dist/**", "src/helper/icons.ts", "registry-index.json", "package.json"]
     }
   }
 }

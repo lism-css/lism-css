@@ -2,6 +2,7 @@
 title: 'Callout'
 description: 'A UI component that highlights important points within an article.'
 ---
+import { ArrowRight, Note } from '@lism-css/icons/astro';
 import { Icon, Box, Flex, Center, Lism, Stack } from 'lism-css/astro';
 import { Callout } from '@lism-css/ui/astro/Callout';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
@@ -71,7 +72,7 @@ Provided as `Callout` from the `@lism-css/ui` package.
 | Prop | Description |
 |---|---|
 |`keycolor`| Specifies the key color. |
-|`icon`| Specifies the icon to pass to the `Icon` component. [Preset icons](/en/docs/primitives/a--icon/#preset-icons) can be specified with just a string. |
+|`icon`| Specifies the icon to pass to the `Icon` component. Pass an icon component or an SVG string. Default icons are bundled with `@lism-css/ui`. |
 |`type`| Specifies a preset value combining `keycolor` and `icon`. Default: `"note"` |
 |`title`| Specifies the title text. |
 |`flow`| Passed to the `flow` prop of the `Flow` element that wraps the content. |
@@ -145,13 +146,15 @@ Provided as `Callout` from the `@lism-css/ui` package.
 <Preview>
   <PreviewTitle>Specifying `icon` and `keycolor`</PreviewTitle>
   <PreviewArea p="30">
-    <Callout title="Heading text..." icon="arrow-right" keycolor="pink">
+    <Callout title="Heading text..." icon={ArrowRight} keycolor="pink">
       <DummyText lang="en" />
     </Callout>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Callout title="Heading text..." icon="arrow-right" keycolor="pink">
+    import { ArrowRight } from '@lism-css/icons/react';
+
+    <Callout title="Heading text..." icon={ArrowRight} keycolor="pink">
       <DummyText lang="en" />
     </Callout>
     ```
@@ -206,7 +209,7 @@ When `title` is omitted, the title row (`b--callout_title`) is not rendered, lea
 
 ## Without @lism-css/ui
 
-This example builds the same UI using only lism-css core elements, without a dedicated component.
+This example builds the same UI using Lism primitives and `@lism-css/icons` core elements, without a dedicated component.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -214,7 +217,7 @@ This example builds the same UI using only lism-css core elements, without a ded
     <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center>
-          <Icon icon="note" size="1.25em" />
+          <Icon icon={Note} size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>
@@ -225,10 +228,12 @@ This example builds the same UI using only lism-css core elements, without a ded
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
+    import { Note } from '@lism-css/icons/react';
+
     <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center>
-          <Icon icon="note" size="1.25em" />
+          <Icon icon={Note} size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>

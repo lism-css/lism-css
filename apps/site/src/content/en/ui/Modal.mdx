@@ -3,6 +3,7 @@ title: 'Modal'
 description: 'A UI component that displays modals using the dialog element.'
 ---
 
+import { Menu } from '@lism-css/icons/astro';
 import { Grid, Flex, Center, Icon, Inline, Box } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
@@ -223,7 +224,7 @@ Clicking a same-page link (such as `#id`) inside the modal jumps to the target a
   <PreviewTitle>Drawer menu example</PreviewTitle>
   <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-03" g="5" fz="s">
-      <Icon icon="menu" fz="l" />
+      <Icon icon={Menu} fz="l" />
       <span>MENU</span>
     </Modal.OpenBtn>
 
@@ -256,8 +257,10 @@ Clicking a same-page link (such as `#id`) inside the modal jumps to the target a
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx '"modal-03"'
+    import { Menu } from '@lism-css/icons/react';
+
     <Modal.OpenBtn modalId="modal-03" g="5" fz="s">
-      <Icon icon="menu" fz="l" /><span>MENU</span>
+      <Icon icon={Menu} fz="l" /><span>MENU</span>
     </Modal.OpenBtn>
 
     <Modal.Root id="modal-03" aria-label="Menu">

@@ -1,15 +1,12 @@
-import presets from './presets';
 import type { LismProps } from '../../../lib/getLismProps';
 import type { ElementType, CSSProperties } from 'react';
-
-export type PresetIconName = keyof typeof presets;
 
 export interface IconObject {
   as: ElementType;
   [key: string]: unknown;
 }
 
-type IconProp = PresetIconName | ElementType | IconObject | `<svg${string}`;
+type IconProp = Exclude<ElementType, string> | IconObject | `<svg${string}`;
 
 export interface IconOwnProps {
   as?: ElementType;
@@ -63,13 +60,6 @@ function parseSvgString(svgString: string): Partial<ParsedSvg> {
   return {};
 }
 
-/*
-Icon の出力パターン
-  - icon = 文字列の場合→preset で登録されたsvgアイコンを呼び出す
-  - icon = それ以外の場合、extends として振る舞う
-  - as=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
-  - as が指定された場合 → asで渡されるコンポーネントまたは要素を呼び出す
-*/
 const svgAttributeNames: Record<string, string> = {
   'stroke-width': 'strokeWidth',
   'stroke-linecap': 'strokeLinecap',
@@ -145,14 +135,6 @@ export default function getProps({ as, icon, label, weight, exProps: inputExProp
 
         exProps = normalizeSvgAttributes(svgAttrs);
         content = svgContent;
-      } else {
-        const presetIconData = presets[icon as keyof typeof presets] || null;
-        if (null != presetIconData) {
-          Component = '_SVG_';
-          const { body, ...attributes } = presetIconData as Record<string, unknown>;
-          exProps = attributes;
-          content = typeof body === 'string' ? body : '';
-        }
       }
     } else if (typeof icon === 'object' && icon.as) {
       const { as: _as, ..._exProps } = icon;

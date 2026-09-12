@@ -15,7 +15,7 @@
   "scripts": {
     "format": "prettier --write . --ignore-path ../../.prettierignore",
     "dev": "vite",
-    "build": "pnpm gen:registry && vite build && pnpm gen:exports && pnpm build:css",
+    "build": "pnpm gen:icons && pnpm gen:registry && vite build && pnpm gen:exports && pnpm build:css",
     "build:css": "node build-css.js",
     "gen:registry": "tsx scripts/generate-registry-index.ts && prettier --write registry-index.json --log-level warn",
     "gen:exports": "tsx scripts/generate-exports.ts && prettier --write package.json --log-level warn",
@@ -25,7 +25,10 @@
     "lint": "pnpm lint:eslint && pnpm lint:style",
     "lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro}'",
     "lint:style": "stylelint '**/*.{css,scss}'",
-    "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
+    "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac",
+    "gen:icons": "node scripts/generate-icons.mjs",
+    "gen:icons:check": "node scripts/generate-icons.mjs --check",
+    "test:icons:astro": "node scripts/verify-icons-astro.mjs"
   },
   "files": [
     "dist",
@@ -183,7 +186,8 @@
     "unplugin-dts": "1.0.0-beta.6",
     "vite": "^7.3.6",
     "vite-plugin-lib-inject-css": "^2.2.2",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "@lism-css/icons": "workspace:*"
   },
   "peerDependencies": {
     "@types/react": "*",

@@ -1,4 +1,5 @@
 ---
+import { CaretDown } from '@lism-css/icons/astro';
 /**
  * 言語切り替えセレクトコンポーネント
  * 現在のページの他言語バージョンへのリンクを表示
@@ -40,7 +41,7 @@ const langSelectText = t(currentLang, 'langSelect');
       ></path>
     </Icon>
     <Inline class="c--langSelect_current" fz="xs" hl="xs" c="text-2">{getLangLabel(currentLang)}</Inline>
-    <Icon icon="caret-down" fz="xs" class="c--langSelect_arrow" />
+    <Icon icon={CaretDown} fz="xs" class="c--langSelect_arrow" />
   </Lism>
 
   <Lism as="ul" class="c--langSelect_menu" bgc="base" bdrs="10" bxsh="10" role="listbox" aria-label={langSelectText.menuAriaLabel}>

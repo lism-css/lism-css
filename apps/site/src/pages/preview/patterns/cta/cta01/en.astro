@@ -1,4 +1,5 @@
 ---
+import { Chat, User } from '@lism-css/icons/astro';
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
 import { Stack, Grid, Container, Frame, Columns, Media, Layer, Icon, Text, Heading } from 'lism-css/astro';
@@ -17,7 +18,7 @@ import { Button } from '@lism-css/ui/astro/Button';
         <Text class="u--trim" fz="m" hl="l" c="white" ta="center">Feel free to reach out to us<br />Our team will respond promptly</Text>
         <Columns cols={[1, null, 2]} g="25">
           <Button href="#" g="15" variant="outline" jc="center" c="white" bdrs="10" py="15" fw="500" hasTransition hov={{ bgc: 'text', bdc: 'text' }}>
-            <Icon icon="chat" fz="1.4em" />
+            <Icon icon={Chat} fz="1.4em" />
             <span>Chat with us</span>
           </Button>
           <Button
@@ -33,7 +34,7 @@ import { Button } from '@lism-css/ui/astro/Button';
             hasTransition
             hov={{ bgc: 'text', c: 'base' }}
           >
-            <Icon icon="user" fz="1.4em" />
+            <Icon icon={User} fz="1.4em" />
             <span>Contact us</span>
           </Button>
         </Columns>

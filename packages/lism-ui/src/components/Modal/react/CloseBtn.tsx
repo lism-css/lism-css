@@ -1,3 +1,4 @@
+import { xIcon } from '../../../helper/icons';
 import type { ElementType } from 'react';
 import { Lism, Icon, type LismComponentProps, type IconProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
@@ -30,7 +31,7 @@ export default function CloseBtn<T extends ElementType = 'button'>({
         children
       ) : (
         <>
-          <Icon icon={icon || 'x'} />
+          <Icon icon={icon || xIcon} />
           <span className="u--srOnly">{srText || 'Close'}</span>
         </>
       )}

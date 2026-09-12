@@ -1,4 +1,5 @@
 ---
+import { ArrowRight } from '@lism-css/icons/astro';
 /**
  * 前後記事ナビゲーションコンポーネント
  * sidebar.ts の順序に従って前後の記事へのリンクを表示
@@ -52,7 +53,7 @@ const label = t(lang, 'postNav');
         <Lism class="c--postNav_item -prev" fx="1">
           {prevPost ? (
             <Link href={getLocalizedUrl(getPostUrl(prevPost.id), lang)} class="c--postNav_link" set="plain" layout="flex" g="15" p="20" ps="0">
-              <Icon icon="arrow-right" size="1.25em" class="c--postNav_icon" o="mp" my="auto" />
+              <Icon icon={ArrowRight} size="1.25em" class="c--postNav_icon" o="mp" my="auto" />
               <Stack>
                 <Inline class="c--postNav_label b--eyebrow" hl="s">
                   {label.prev}
@@ -79,7 +80,7 @@ const label = t(lang, 'postNav');
                   {nextPost.data.navtitle || nextPost.data.title}
                 </Inline>
               </Stack>
-              <Icon icon="arrow-right" size="1.25em" class="c--postNav_icon" o="mp" my="auto" />
+              <Icon icon={ArrowRight} size="1.25em" class="c--postNav_icon" o="mp" my="auto" />
             </Link>
           ) : (
             <Lism class="c--postNav_empty" />

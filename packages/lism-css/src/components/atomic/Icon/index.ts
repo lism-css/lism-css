@@ -1,2 +1,2 @@
 export { default as Icon } from './Icon';
-export type { PresetIconName, IconProps, IconObject } from './getProps';
+export type { IconProps, IconObject } from './getProps';

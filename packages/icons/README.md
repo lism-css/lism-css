@@ -39,7 +39,7 @@ import { Home, StarHalf } from '@lism-css/icons/astro';
 
 ## SVGデータ
 
-`@lism-css/icons/data`から、全アイコンの`icons`、名前の型`IconName`、コア候補の名前一覧`coreIconNames`を読み込めます。各アイコンは`viewBox`、ルート属性の`attributes`、内部マークアップの`body`を持ちます。属性名は`stroke-width`などSVGの表記です。
+`@lism-css/icons/data`から、全アイコンの`icons`、名前の型`IconName`を読み込めます。各アイコンは`viewBox`、ルート属性の`attributes`、内部マークアップの`body`を持ちます。属性名は`stroke-width`などSVGの表記です。
 
 ## 制作データとライセンス
 

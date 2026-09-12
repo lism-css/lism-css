@@ -1,4 +1,5 @@
 ---
+import { ArrowRight, CaretDown, Chat, Home, Note } from '@lism-css/icons/astro';
 import Layout from '@/layouts/Layout.astro';
 import {
   Lism,
@@ -96,27 +97,27 @@ const featureImage = {
 /** カードごとの表示内容（タイトル・本文・アイコンを独立して管理） */
 const featureCards = [
   {
-    icon: 'home' as const,
+    icon: Home,
     title: 'Tailored to your home, rental or owned',
     body: 'We consider your lease term, floor plan, and whether you have children or pets. From mixing off-the-shelf furniture to making the most of a compact space, we work through it with you.',
   },
   {
-    icon: 'chat' as const,
+    icon: Chat,
     title: 'From first questions to full coordination',
     body: 'We help you sort through scattered ideas, define a direction for colors and materials, and narrow down specific pieces — at whatever depth you need. Advice-only sessions and full sourcing and setup are both welcome.',
   },
   {
-    icon: 'arrow-right' as const,
+    icon: ArrowRight,
     title: 'Wide selection, including our own line',
     body: 'We work with a broad range of brands to match your lifestyle, and also introduce our own original furniture and accessories. We help you compare options across price ranges and design preferences.',
   },
   {
-    icon: 'note' as const,
+    icon: Note,
     title: 'A realistic plan for your budget and goals',
     body: 'Start with the one area that matters most, or build up gradually over time — either approach is welcome. We help you get a rough sense of costs and talk through what to prioritize.',
   },
   {
-    icon: 'chat' as const,
+    icon: Chat,
     title: 'Meet in-store, online, or by phone',
     body: "Choose whichever format fits your schedule. Sharing photos or floor plans beforehand helps the session go smoothly. If you're far away, we can start with a simple conversation online.",
   },
@@ -492,7 +493,7 @@ const contactFields = [
                   <>
                     {i > 0 && (
                       <Center fxsh="0">
-                        <Icon icon="caret-down" weight="bold" fz="2xl" o="ppp" />
+                        <Icon icon={CaretDown} weight="bold" fz="2xl" o="ppp" />
                       </Center>
                     )}
                     <Stack g="30" p="30" bdrs="20" bxsh="20">
