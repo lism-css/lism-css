@@ -1,5 +1,5 @@
 ---
-import { CaretDown, CaretRight, Menu2 } from '@lism-css/icons/astro';
+import { CaretDownIcon, CaretRightIcon, Menu2Icon } from '@lism-css/icons/astro';
 import { BoxLink, Center, Container, Flex, Grid, Icon, Inline, Link, Lism, List, ListItem, Stack } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Modal } from '@lism-css/ui/astro/Modal';
@@ -42,7 +42,7 @@ const headerOthersNavItems = [
         <ListItem set="hov" pos="relative" data-has-submenu>
           <Link class="c--headerNav_link" href="#others" set="plain" hasTransition d="inline-flex" g="10" ai="center" o="mp" px="0" py="10" hov="-o">
             Others
-            <Icon icon={CaretDown} weight="bold" fz="s" o="p" />
+            <Icon icon={CaretDownIcon} weight="bold" fz="s" o="p" />
           </Link>
           <Lism id="others-child" class="c--header_subMenu" hasTransition pos="absolute" pbs="5" t="100%" r="calc(0px - var(--s40))">
             <List bgc="base" c="text" min-w="14rem" p="20" py="15" bxsh="30" bdrs="20">
@@ -61,7 +61,7 @@ const headerOthersNavItems = [
       </List>
       <Modal.OpenBtn modalId="menu" d={['block', null, 'none']}>
         <Center p="5" bdrs="10">
-          <Icon class="c--header_subMenu_buttonIcon" icon={Menu2} weight="light" size="1.25rem" />
+          <Icon class="c--header_subMenu_buttonIcon" icon={Menu2Icon} weight="light" size="1.25rem" />
         </Center>
       </Modal.OpenBtn>
     </Flex>
@@ -74,7 +74,7 @@ const headerOthersNavItems = [
               headerNavItems.map(({ href, en }) => (
                 <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" bd-bs fz="l" td="none" py="15" px="5">
                   <Inline>{en}</Inline>
-                  <Icon icon={CaretRight} weight="bold" />
+                  <Icon icon={CaretRightIcon} weight="bold" />
                 </BoxLink>
               ))
             }
@@ -91,7 +91,7 @@ const headerOthersNavItems = [
                       headerOthersNavItems.map(({ href, en }) => (
                         <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" bd-bs fz="l" td="none" py="15" px="5">
                           <Inline>{en}</Inline>
-                          <Icon icon={CaretRight} weight="bold" />
+                          <Icon icon={CaretRightIcon} weight="bold" />
                         </BoxLink>
                       ))
                     }

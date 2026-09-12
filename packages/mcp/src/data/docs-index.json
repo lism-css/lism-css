@@ -61,7 +61,7 @@
     "title": "@lism-css/icons",
     "description": "React・Astroで使えるSVGアイコン集の導入方法と基本的な使い方を紹介します。",
     "category": "guide",
-    "headings": ["インストール", "基本的な使い方", "Lism CSSと組み合わせる"],
+    "headings": ["インストール", "基本的な使い方", "線の太さ", "Lism CSSと組み合わせる", "収録アイコン一覧"],
     "keywords": [
       "@lism-css/icons",
       "アイコン",
@@ -78,7 +78,7 @@
       "aria-label",
       "オリジナル"
     ],
-    "snippet": "@lism-css/iconsはLism CSS用に設計されたReact・Astro向けのオリジナルSVGアイコン集で、Lism CSSを導入していないプロジェクトでも利用可能。/react・/astroから読み込み、大きさの既定は1em、色は周囲の文字色を継承し、線アイコンの線幅はstrokeWidth・stroke-widthで変更できる。Lism CSSのIconへ渡すとLism Propsやweightを使え、意味を持つアイコンにはaria-labelを指定する。"
+    "snippet": "@lism-css/iconsはReact・Astro向けのオリジナルSVGアイコン集で、Lism CSSなしでも利用可能。/react・/astroからCheckIconやAlertIconなどIcon接尾辞付きのコンポーネントを読み込む。weightで線幅をlight・regular・boldから選べ、明示したstrokeWidth・stroke-widthを優先する。Lism CSSのIconへ渡すとc・fzなどのLism Propsを使える。"
   },
   {
     "sourcePath": "css-methodology.mdx",
@@ -1270,10 +1270,9 @@
       "出力されるHTML構造",
       "専用Props",
       "Usage",
-      "外部のパッケージを利用する方法",
-      "as, exProps を icon にまとめて指定する方法",
       "`@lism-css/icons`を利用する方法",
-      "線の太さを変える",
+      "`as`・`exProps`で指定する方法",
+      "`as`・`exProps`を`icon`にまとめて指定する方法",
       "SVG文字列を渡す方法",
       "svgを直接記述する方法",
       "src でimgを指定する方法"
@@ -1293,7 +1292,7 @@
       "viewBox",
       "aria-label"
     ],
-    "snippet": "アイコンコンポーネント・SVG文字列・SVG子要素・imgを描画し、labelに応じてアクセシビリティ属性を付与するIcon。lism-cssはSVGデータを内包せず、@lism-css/icons/react・@lism-css/icons/astroなどから読み込んだコンポーネントをiconに渡す。weightとstrokeWidthで線幅を指定できる。"
+    "snippet": "アイコンコンポーネント・SVG文字列・SVG子要素・imgを描画し、labelに応じてアクセシビリティ属性を付与するIcon。lism-cssはSVGデータを内包せず、@lism-css/iconsなどから読み込んだコンポーネントをiconに渡す。c・fzなどのLism Propsで色や大きさを指定できる。"
   },
   {
     "sourcePath": "primitives/a--divider.mdx",

@@ -2,7 +2,7 @@
 title: 'NavMenu'
 description: 'ナビゲーションメニューのリストを作成するUIコンポーネントです。'
 ---
-import { CaretDown, CaretRight } from '@lism-css/icons/astro';
+import { CaretDownIcon, CaretRightIcon } from '@lism-css/icons/astro';
 import { Lism, Icon, Box, Flex, Stack, Frame } from 'lism-css/astro'
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { NavMenu } from '@lism-css/ui/astro/NavMenu';
@@ -181,26 +181,26 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
           <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
             <Fragment>New</Fragment>
           </Lism>
-          <Icon icon={CaretRight} ms="auto" />
+          <Icon icon={CaretRightIcon} ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
         <NavMenu.Link href="#menu2" bgc="text" c="base">
           <span>Menu item</span>
-          <Icon icon={CaretRight} ms="auto" />
+          <Icon icon={CaretRightIcon} ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
         <NavMenu.Link href="#menu3" bgc="text" c="base">
           <span>Menu item</span>
-          <Icon icon={CaretRight} ms="auto" />
+          <Icon icon={CaretRightIcon} ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { CaretRight } from '@lism-css/icons/react';
+    import { CaretRightIcon } from '@lism-css/icons/react';
 
     <NavMenu.Root>
       <NavMenu.Item>
@@ -209,19 +209,19 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
           <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
             New
           </Lism>
-          <Icon icon={CaretRight} ms="auto" />
+          <Icon icon={CaretRightIcon} ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
         <NavMenu.Link href="#menu2" bgc="text" c="base">
           <span>Menu item</span>
-          <Icon icon={CaretRight} ms="auto" />
+          <Icon icon={CaretRightIcon} ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
         <NavMenu.Link href="#menu3" bgc="text" c="base">
           <span>Menu item</span>
-          <Icon icon={CaretRight} ms="auto" />
+          <Icon icon={CaretRightIcon} ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
@@ -506,7 +506,7 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
         <NavMenu.Item set="hov" pos="relative">
           <NavMenu.Link href="#menu3">
             <Fragment>
-              Parent Item <Icon icon={CaretDown} />
+              Parent Item <Icon icon={CaretDownIcon} />
             </Fragment>
           </NavMenu.Link>
           <Box hov="in:show" pos="absolute" t="100%" l="50%" w="12rem" pt="5" style={{ translate: '-50% 0' }}>
@@ -525,7 +525,7 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
         <NavMenu.Item set="hov" pos="static">
           <NavMenu.Link href="#menu3">
             <Fragment>
-              Parent Item <Icon icon={CaretDown} />
+              Parent Item <Icon icon={CaretDownIcon} />
             </Fragment>
           </NavMenu.Link>
           <Box hov="in:show" pos="absolute" t="100%" l="0" w="100%" pt="5">
@@ -584,13 +584,13 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'layout="flex"'
-    import { CaretDown } from '@lism-css/icons/react';
+    import { CaretDownIcon } from '@lism-css/icons/react';
 
     <Box min-h="15rem">
       <NavMenu.Root layout="flex" hl="s" itemP="0.5em .75em" pos="relative">
         <NavMenu.Item set="hov" pos="relative">
           <NavMenu.Link href="#menu3">
-              Parent Item <Icon icon={CaretDown} />
+              Parent Item <Icon icon={CaretDownIcon} />
           </NavMenu.Link>
           <Box hov="in:show" pos="absolute" t="100%" l="50%" w="12rem" pt="5" style={{ translate: '-50% 0' }}>
             <Box fz="s" hl="s" bgc="base" bxsh="30" bd ov="hidden" p="5">
@@ -607,7 +607,7 @@ NavMenu のベーススタイルは、以下のCSSで定義されています。
         </NavMenu.Item>
         <NavMenu.Item set="hov" pos="static">
           <NavMenu.Link href="#menu3">
-            Parent Item <Icon icon={CaretDown} />
+            Parent Item <Icon icon={CaretDownIcon} />
           </NavMenu.Link>
           <Box hov="in:show" pos="absolute" t="100%" l="0" w="100%" pt="5">
             <Box fz="s" hl="s" bgc="base" bxsh="30" bd ov="hidden" p="5">

@@ -1,5 +1,5 @@
 ---
-import { CaretRight, Menu2 } from '@lism-css/icons/astro';
+import { CaretRightIcon, Menu2Icon } from '@lism-css/icons/astro';
 import { BoxLink, Center, Container, Flex, Icon, Inline, Link, ListItem, Stack } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 
@@ -37,7 +37,7 @@ const headerNavItems = [
       </Flex>
       <Modal.OpenBtn modalId="menu" d={['block', null, 'none']}>
         <Center p="5">
-          <Icon icon={Menu2} weight="light" fz="2xl" aria-hidden="true" />
+          <Icon icon={Menu2Icon} weight="light" fz="2xl" aria-hidden="true" />
         </Center>
       </Modal.OpenBtn>
     </Flex>
@@ -59,7 +59,7 @@ const headerNavItems = [
                     {ja}
                   </Inline>
                 </Stack>
-                <Icon icon={CaretRight} weight="bold" fz="s" o="pp" />
+                <Icon icon={CaretRightIcon} weight="bold" fz="s" o="pp" />
               </BoxLink>
             </ListItem>
           ))
@@ -70,7 +70,7 @@ const headerNavItems = [
               <Inline>Book Your Stay</Inline>
               <Inline class="b--enEyebrow" lang="ja" fz="s" o="pp">ご予約</Inline>
             </Stack>
-            <Icon icon={CaretRight} weight="bold" fz="s" o="pp" />
+            <Icon icon={CaretRightIcon} weight="bold" fz="s" o="pp" />
           </BoxLink>
         </ListItem>
       </Stack>

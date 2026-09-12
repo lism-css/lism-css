@@ -1,5 +1,5 @@
 ---
-import { Menu2, Search } from '@lism-css/icons/astro';
+import { Menu2Icon, SearchIcon } from '@lism-css/icons/astro';
 import { Flex, Cluster, Stack, Link, Container, Inline, Icon, Center } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 import Eyebrow from '@/components/Eyebrow.astro';
@@ -21,7 +21,7 @@ import { siteConfig } from '@/config/site';
 
       {/* 検索トリガー */}
       <Modal.OpenBtn modalId="search-modal" class="l--center" bdrs="10" p="0.4em" hov={{ bgc: 'base-2' }} aria-label={siteConfig.uiText.search.aria}>
-        <Icon icon={Search} fz="l" />
+        <Icon icon={SearchIcon} fz="l" />
       </Modal.OpenBtn>
 
       {/* メニューボタン（全幅で常時表示・PCナビと併設） */}
@@ -33,7 +33,7 @@ import { siteConfig } from '@/config/site';
         hov={{ bgc: 'base-2' }}
         aria-labelledby="menu-open-label"
       >
-        <Icon icon={Menu2} weight="light" style={{ scale: '1.1' }} />
+        <Icon icon={Menu2Icon} weight="light" style={{ scale: '1.1' }} />
         <Inline d="none" id="menu-open-label">{siteConfig.uiText.nav.openMenu}</Inline>
       </Modal.OpenBtn>
     </Cluster>

@@ -4,7 +4,7 @@ navtitle: 'a--icon'
 description: 'a--icon is a class for displaying icon elements.'
 ---
 
-import { Home, Info, Lightbulb, Warning } from '@lism-css/icons/astro';
+import { HomeIcon, LightbulbIcon, WarningIcon } from '@lism-css/icons/astro';
 import { Flex, Cluster, Icon } from 'lism-css/astro';
 
 
@@ -42,8 +42,6 @@ svg.a--icon[aria-label="..."][role="img"]
 |---|---|
 | `icon` | An icon component, an SVG string, or an object in the form `{as, ...exProps}`. |
 | `size` | Default SVG width and height. Explicit `width` and `height` take precedence. |
-| `weight` | Selects the stroke width: `light` (1), `regular` (1.5), or `bold` (2). When omitted, the icon retains its own stroke width. |
-| `strokeWidth` / `stroke-width` | Sets the stroke width directly, overriding `weight`. |
 | `label` | Output as `aria-label`. When specified, `role="img"` is also added; when omitted, `aria-hidden="true"` is output instead. |
 
 
@@ -62,18 +60,18 @@ Import from `@lism-css/icons/react` for React or `@lism-css/icons/astro` for Ast
   <PreviewTitle>Specifying icon components</PreviewTitle>
   <PreviewArea p="20">
     <Cluster g="15">
-      <Icon icon={Lightbulb} size="40px" />
-      <Icon icon={Warning} fz="2xl" c="blue" />
+      <Icon icon={LightbulbIcon} size="40px" />
+      <Icon icon={WarningIcon} fz="2xl" c="blue" />
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="React">
     ```jsx
     import { Cluster, Icon } from 'lism-css/react';
-    import { Lightbulb, Warning } from '@lism-css/icons/react';
+    import { LightbulbIcon, WarningIcon } from '@lism-css/icons/react';
 
     <Cluster g="15">
-      <Icon icon={Lightbulb} size="40px" />
-      <Icon icon={Warning} fz="2xl" c="blue" />
+      <Icon icon={LightbulbIcon} size="40px" />
+      <Icon icon={WarningIcon} fz="2xl" c="blue" />
     </Cluster>
     ```
   </PreviewCode>
@@ -81,64 +79,36 @@ Import from `@lism-css/icons/react` for React or `@lism-css/icons/astro` for Ast
     ```astro
     ---
     import { Cluster, Icon } from 'lism-css/astro';
-    import { Lightbulb, Warning } from '@lism-css/icons/astro';
+    import { LightbulbIcon, WarningIcon } from '@lism-css/icons/astro';
     ---
 
     <Cluster g="15">
-      <Icon icon={Lightbulb} size="40px" />
-      <Icon icon={Warning} fz="2xl" c="blue" />
+      <Icon icon={LightbulbIcon} size="40px" />
+      <Icon icon={WarningIcon} fz="2xl" c="blue" />
     </Cluster>
     ```
   </PreviewCode>
 </Preview>
 
 
-#### Changing stroke width
-
-Stroke icons in `@lism-css/icons` use a 24-unit grid. Use `weight` to change their thickness, including the small dots inside icons. Use `c` to set the color.
-
-<Preview>
-  <PreviewTitle>light, regular, and bold</PreviewTitle>
-  <PreviewArea p="20">
-    <Cluster g="20" fz="3xl">
-      <Icon icon={Info} weight="light" label="light" />
-      <Icon icon={Info} weight="regular" label="regular" />
-      <Icon icon={Info} weight="bold" label="bold" />
-      <Icon icon={Home} weight="bold" strokeWidth={1.25} label="Stroke width 1.25" />
-    </Cluster>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    import { Home, Info } from '@lism-css/icons/react';
-
-    <Icon icon={Info} weight="light" />
-    <Icon icon={Info} weight="regular" />
-    <Icon icon={Info} weight="bold" />
-    <Icon icon={Home} weight="bold" strokeWidth={1.25} />
-    ```
-  </PreviewCode>
-</Preview>
-
-An explicit `strokeWidth` (or `stroke-width` in Astro) overrides `weight`. You can also pass `weight` to external stroke icons. When omitted, the external icon retains its own stroke width. Pass a package-specific `weight` through `exProps` or the `icon` object as shown below.
-
-`@lism-css/icons` also provides fill icons and icons that combine fills and strokes.
+Use `c` to set the color. See [the `@lism-css/icons` guide](/en/docs/packages/icons/#stroke-width) for stroke width and `weight` options.
 
 
 ### Using `as` and `exProps`
 
-You can also use the standard Lism component prop `as` instead of `icon={Home}`.
+You can also use the standard Lism component prop `as` instead of `icon={HomeIcon}`.
 
 <Preview>
   <PreviewTitle>Specifying an icon component via `as`</PreviewTitle>
   <PreviewArea p="20">
-    <Icon as={Home} size="2em" />
+    <Icon as={HomeIcon} size="2em" />
   </PreviewArea>
   <PreviewCode>
-```jsx "as={Home}"
-import { Home } from '@lism-css/icons/react';
+```jsx "as={HomeIcon}"
+import { HomeIcon } from '@lism-css/icons/react';
 import { Icon } from 'lism-css/react';
 
-<Icon as={Home} size="2em" />
+<Icon as={HomeIcon} size="2em" />
 ```
   </PreviewCode>
 </Preview>
@@ -147,13 +117,13 @@ import { Icon } from 'lism-css/react';
 Use `exProps` to group props passed to the imported icon component. The following example sets its stroke width and size.
 
 <Preview>
-  <PreviewTitle>Specifying props for `Home`</PreviewTitle>
+  <PreviewTitle>Specifying props for `HomeIcon`</PreviewTitle>
   <PreviewArea p="20">
-    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    <Icon as={HomeIcon} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
   </PreviewArea>
   <PreviewCode>
     ```jsx "as=" "exProps="
-    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    <Icon as={HomeIcon} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
     ```
   </PreviewCode>
 </Preview>
@@ -173,16 +143,16 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
 <Preview>
   <PreviewTitle>Example of specifying `as` and `exProps` together via `icon`</PreviewTitle>
   <PreviewArea p="20">
-    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+    <Icon icon={{ as: HomeIcon, strokeWidth: 2, size: '3em' }} c="blue" />
   </PreviewArea>
     <PreviewCode slot="tab" label="Combined">
-    ```jsx "strokeWidth:2, size:'3em'" "as:Home"
-    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+    ```jsx "strokeWidth:2, size:'3em'" "as:HomeIcon"
+    <Icon icon={{ as: HomeIcon, strokeWidth: 2, size: '3em' }} c="blue" />
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="Separate">
     ```jsx "as=" "exProps="
-    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    <Icon as={HomeIcon} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
     ```
   </PreviewCode>
 

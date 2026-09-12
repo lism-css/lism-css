@@ -1,5 +1,5 @@
 ---
-import { Menu, Search } from '@lism-css/icons/astro';
+import { MenuIcon, SearchIcon } from '@lism-css/icons/astro';
 import { Flex, Cluster, Container, Icon, Lism, Group, Link, Inline } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro/Modal';
 import { siteConfig } from '@/config/site';
@@ -67,7 +67,7 @@ const headerText = t(currentLang, 'header');
       aria-label={searchText.title}
       data-modal-open="search-modal"
     >
-      <Icon icon={Search} fz={{ base: '1.25rem', md: 'm' }} />
+      <Icon icon={SearchIcon} fz={{ base: '1.25rem', md: 'm' }} />
       <Lism
         as="kbd"
         class="c--searchTrigger_shortcut"
@@ -99,10 +99,10 @@ const headerText = t(currentLang, 'header');
           hov={{ bgc: 'base-2' }}
           aria-labelledby="menu-open-label"
         >
-          {/* <Icon icon={Menu} fz={['xl', null, 'l']} viewBox="0 0 256 256">
+          {/* <Icon icon={MenuIcon} fz={['xl', null, 'l']} viewBox="0 0 256 256">
             <path d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z" />
           </Icon> */}
-          <Icon icon={Menu} fz={['xl', null, 'l']} />
+          <Icon icon={MenuIcon} fz={['xl', null, 'l']} />
           <Inline d="none" id="menu-open-label">
             {headerText.openMenu}
           </Inline>

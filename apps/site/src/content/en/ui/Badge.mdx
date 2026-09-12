@@ -2,7 +2,7 @@
 title: 'Badge'
 description: 'A UI component that displays short labels or status badges.'
 ---
-import { Check, Tag } from '@lism-css/icons/astro';
+import { CheckIcon, TagIcon } from '@lism-css/icons/astro';
 import { Lism, Cluster, Flex, Icon, Spacer } from 'lism-css/astro';
 import { Badge } from '@lism-css/ui/astro/Badge';
 
@@ -302,24 +302,24 @@ Since the padding is defined in em units, changing the font size with `fz` scale
   <PreviewArea p="20" bg=":stripe">
     <Cluster g="15" ai="center">
       <Badge ai="center">
-        <Icon icon={Check} />
+        <Icon icon={CheckIcon} />
         <Fragment>Badge</Fragment>
       </Badge>
       <Badge variant="outline" ai="center">
-        <Icon icon={Tag} />
+        <Icon icon={TagIcon} />
         <Fragment>Badge</Fragment>
       </Badge>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { Check, Tag } from '@lism-css/icons/react';
+    import { CheckIcon, TagIcon } from '@lism-css/icons/react';
 
     <Cluster g="15" ai="center">
       <Badge ai="center">
-        <Icon icon={Check} />Badge</Badge>
+        <Icon icon={CheckIcon} />Badge</Badge>
       <Badge variant="outline" ai="center">
-        <Icon icon={Tag} />Badge</Badge>
+        <Icon icon={TagIcon} />Badge</Badge>
     </Cluster>
     ```
   </PreviewCode>

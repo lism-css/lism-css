@@ -2,7 +2,7 @@
 title: 'Callout'
 description: 'A UI component that highlights important points within an article.'
 ---
-import { ArrowRight, Note } from '@lism-css/icons/astro';
+import { ArrowRightIcon, NoteIcon } from '@lism-css/icons/astro';
 import { Icon, Box, Flex, Center, Lism, Stack } from 'lism-css/astro';
 import { Callout } from '@lism-css/ui/astro/Callout';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
@@ -146,15 +146,15 @@ Provided as `Callout` from the `@lism-css/ui` package.
 <Preview>
   <PreviewTitle>Specifying `icon` and `keycolor`</PreviewTitle>
   <PreviewArea p="30">
-    <Callout title="Heading text..." icon={ArrowRight} keycolor="pink">
+    <Callout title="Heading text..." icon={ArrowRightIcon} keycolor="pink">
       <DummyText lang="en" />
     </Callout>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { ArrowRight } from '@lism-css/icons/react';
+    import { ArrowRightIcon } from '@lism-css/icons/react';
 
-    <Callout title="Heading text..." icon={ArrowRight} keycolor="pink">
+    <Callout title="Heading text..." icon={ArrowRightIcon} keycolor="pink">
       <DummyText lang="en" />
     </Callout>
     ```
@@ -217,7 +217,7 @@ This example builds the same UI using Lism primitives and `@lism-css/icons` core
     <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center>
-          <Icon icon={Note} size="1.25em" />
+          <Icon icon={NoteIcon} size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>
@@ -228,12 +228,12 @@ This example builds the same UI using Lism primitives and `@lism-css/icons` core
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { Note } from '@lism-css/icons/react';
+    import { NoteIcon } from '@lism-css/icons/react';
 
     <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center>
-          <Icon icon={Note} size="1.25em" />
+          <Icon icon={NoteIcon} size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>

@@ -1,5 +1,5 @@
 ---
-import { ArrowRight } from '@lism-css/icons/react';
+import { ArrowRightIcon } from '@lism-css/icons/react';
 import { Stack, Inline, Heading, Link, List, ListItem } from 'lism-css/astro';
 import { Icon } from 'lism-css/react';
 import NavLink from '@parts/NavLink.astro';
@@ -117,7 +117,7 @@ function getDirNestedDepth(postId: string, dir: string): number {
                       aria-current={isSectionActive ? 'page' : undefined}
                     >
                       {sectionLabel}
-                      <Icon icon={ArrowRight} fz="2xs" />
+                      <Icon icon={ArrowRightIcon} fz="2xs" />
                     </Link>
                   </Heading>
                 ) : (
