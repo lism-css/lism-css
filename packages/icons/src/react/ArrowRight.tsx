@@ -24,8 +24,8 @@ const ArrowRight = /* @__PURE__ */ forwardRef<SVGSVGElement, ArrowRightProps>(fu
       {...props}
       ref={ref}
     >
-      <line x1="3.75" y1="12" x2="20.25" y2="12" />
-      <polyline points="13.5 5.25 20.25 12 13.5 18.75" />
+      <path d="M2.5,12h19" />
+      <path d="M15.167,5.667l6.333,6.333-6.333,6.333" />
       {children}
     </svg>
   );

@@ -242,10 +242,6 @@ claude mcp add lism-css -- npx -y @lism-css/mcp
 
 フィードバックや質問は、[Lism CSS Discordサーバー](https://discord.gg/6PMcFHvc4h)までお気軽にどうぞ。
 
-## クレジット
-
-- [Phosphor Icons](https://phosphoricons.com/) — MIT License ([source](https://github.com/phosphor-icons))
-
 ## ライセンス
 
 MIT

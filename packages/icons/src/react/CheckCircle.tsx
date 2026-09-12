@@ -24,8 +24,8 @@ const CheckCircle = /* @__PURE__ */ forwardRef<SVGSVGElement, CheckCircleProps>(
       {...props}
       ref={ref}
     >
-      <polyline points="8.25 12.75 10.5 15 15.75 9.75" />
-      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="10" />
+      <path d="M7.25,12l2.636,2.636c.141.141.331.22.53.22s.39-.079.53-.22l5.803-5.803" />
       {children}
     </svg>
   );

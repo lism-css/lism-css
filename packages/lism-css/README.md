@@ -241,10 +241,6 @@ For full documentation, visit [lism-css.com/en](https://lism-css.com/en/).
 
 For feedback or questions, [join the Lism CSS Discord server](https://discord.gg/6PMcFHvc4h).
 
-## Credits
-
-- [Phosphor Icons](https://phosphoricons.com/) — MIT License ([source](https://github.com/phosphor-icons))
-
 ## License
 
 MIT

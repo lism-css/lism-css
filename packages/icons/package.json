@@ -9,8 +9,7 @@
     "dist",
     "packages/astro/*.astro",
     "packages/astro/index.ts",
-    "LICENSE",
-    "THIRD_PARTY_LICENSES"
+    "LICENSE"
   ],
   "exports": {
     "./react": {
@@ -31,6 +30,7 @@
     }
   },
   "scripts": {
+    "sync:design": "node scripts/sync-design.mjs",
     "generate": "node scripts/generate.mjs",
     "generate:check": "node scripts/generate.mjs --check",
     "build": "pnpm generate && pnpm clean && tsc -p tsconfig.build.json",

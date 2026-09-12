@@ -24,7 +24,7 @@ const CaretDown = /* @__PURE__ */ forwardRef<SVGSVGElement, CaretDownProps>(func
       {...props}
       ref={ref}
     >
-      <polyline points="19.5 9 12 16.5 4.5 9" />
+      <path d="M4.5,8.25l6.97,6.97c.141.141.331.22.53.22s.39-.079.53-.22l6.97-6.97" />
       {children}
     </svg>
   );

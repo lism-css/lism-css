@@ -24,9 +24,9 @@ const Lock = /* @__PURE__ */ forwardRef<SVGSVGElement, LockProps>(function Lock(
       {...props}
       ref={ref}
     >
-      <rect x="3.75" y="8.25" width="16.5" height="12" rx=".75" ry=".75" />
-      <circle cx="12" cy="14.25" r=".375" />
-      <path d="M8.25,8.25v-3c0-2.071,1.679-3.75,3.75-3.75s3.75,1.679,3.75,3.75v3" />
+      <rect x="4" y="10.083" width="16" height="10.667" rx="2.25" ry="2.25" />
+      <path d="M7,10.083v-3.333c0-2.761,2.239-5,5-5s5,2.239,5,5v3.333" />
+      <circle cx="12" cy="15.417" r=".375" />
       {children}
     </svg>
   );

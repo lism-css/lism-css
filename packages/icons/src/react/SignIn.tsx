@@ -24,9 +24,9 @@ const SignIn = /* @__PURE__ */ forwardRef<SVGSVGElement, SignInProps>(function S
       {...props}
       ref={ref}
     >
-      <line x1="2.25" y1="12" x2="12.75" y2="12" />
-      <polyline points="9 8.25 12.75 12 9 15.75" />
-      <polyline points="12.75 3.75 18.75 3.75 18.75 20.25 12.75 20.25" />
+      <path d="M12,3h6.75c1.243,0,2.25,1.007,2.25,2.25v13.5c0,1.243-1.007,2.25-2.25,2.25h-6.75" />
+      <path d="M3,12h12" />
+      <path d="M11,8l4,4-4,4" />
       {children}
     </svg>
   );

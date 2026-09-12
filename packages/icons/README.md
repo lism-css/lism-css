@@ -1,6 +1,6 @@
 # Lism Icons
 
-ReactとAstroで使えるSVGアイコン集です。Lism CSSへの依存はありません。
+ReactとAstroで使えるオリジナルのSVGアイコン集です。Lism CSSへの依存はありません。
 
 
 ## 使い方
@@ -33,7 +33,7 @@ import { Home, StarHalf } from '@lism-css/icons/astro';
 
 大きさは`size`で幅・高さをまとめて指定でき、既定は`1em`です。`width`・`height`を個別に指定した場合はそちらを優先します。色は`currentColor`で周囲の文字色を引き継ぎます。線幅の既定は`1.5`で、Reactでは`strokeWidth`、Astroでは`stroke-width`で指定できます。Astroでは`strokeWidth`も受け付け、両方あれば`stroke-width`を優先します。
 
-`StarHalf`は左半分の塗りと外周の線を組み合わせており、線幅の変更は外周に反映されます。`StarHalfFill`など名前が`Fill`で終わるアイコンは塗りだけで描かれ、線幅では太さが変わりません。
+`StarHalf`は左半分の塗りと外周の線を組み合わせており、線幅の変更は外周に反映されます。`HeartFill`など塗りだけのアイコンは線幅で太さが変わりません。`NoteFill`など、塗り版でも線を残すアイコンでは、その線に線幅指定が適用されます。
 
 通常は装飾として読み上げ対象から外します。アイコン単体に意味を持たせる場合は`aria-label`か`aria-labelledby`を指定してください。標準のSVG属性を渡せるほか、Reactでは`ref`と子要素、Astroではslotも使用できます。
 
@@ -43,14 +43,10 @@ import { Home, StarHalf } from '@lism-css/icons/astro';
 
 ## 制作データとライセンス
 
-収録アイコンの多くは、[Phosphor Iconsの制作データ](https://github.com/phosphor-icons/core/tree/main/raw)をコピーし、Lism CSS向けにサイズや点の描画方法などを調整したものです。また、`menu-2`などのオリジナルアイコンも追加しています。
+収録アイコンは、円・直線・共通の寸法から設計したオリジナルです。MITライセンスで提供します。ライセンス本文は[LICENSE](./LICENSE)を参照してください。
 
-Phosphor Icons由来のデータはMITライセンスに基づいて使用しています。アイコン名とウェイトの対応は[Phosphor Iconsとの対応表](https://github.com/lism-css/lism-css/blob/main/packages/icons/scripts/mapping.json)、著作権表示とライセンス全文は[THIRD_PARTY_LICENSES](./THIRD_PARTY_LICENSES)をご覧ください。
+編集元は`design/original/lism-icons-geometric-study.ai`です。regular・fill一覧に配置した原寸マスターから、出力専用の`design/lism-icons.ai`を生成します。設計方針は[設計文書](./design/original/design.md)、同期・SVG書き出し・パッケージ生成の操作は[制作スクリプトの使い方](./scripts/README.md)を参照してください。
 
-アイコンの編集元は`design/lism-icons.ai`です。追加や修正はIllustratorで行い、SVGを書き出してください。書き出したSVGを変更する場合も、Illustratorファイルを編集してから再度書き出します。
+`src/svg/`には出力用.aiから書き出したSVGを保存し、アイコンデータとReact/Astroコンポーネントの生成入力にします。ビルドでは.aiを読みません。アイコンの追加・削除はSVGの一覧から自動で反映されます。
 
-`src/svg/`には、Illustratorから書き出したSVGをそのまま保存しています。アイコンデータやコンポーネントを生成する際の入力に使用します。
-
-`design/raw/`には、各アイコンの制作開始時に使用した元のSVGを保存しています。`star-half`は、Phosphor Icons由来の`star`に左半分の塗りを加えて作成したデータです。これらは初期形状を再現するための資料で、その後Illustratorで加えた変更は含まれません。パッケージのビルドには、編集元のIllustratorファイルから書き出したSVGを使用します。
-
-書き出しや初期形状の再作成については[スクリプトの使い方](https://github.com/lism-css/lism-css/blob/main/packages/icons/scripts/README.md)、Illustratorの自動操作については[自動化の注意点](https://github.com/lism-css/lism-css/blob/main/documents/illustrator-automation.md)で説明しています。
+`design/raw/`と`scripts/mapping.json`は、以前のPhosphor Icons版の制作資料として残しています。現在の生成入力や公開パッケージには含みません。これらの資料の著作権表示とライセンスは[THIRD_PARTY_LICENSES](./THIRD_PARTY_LICENSES)に記載しています。

@@ -21,20 +21,22 @@ const defaults = {
 };
 const number = /^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i;
 
-export function normalizeSvg(source, { id, fill = false, mixed = false } = {}) {
+export function normalizeSvg(source, { id } = {}) {
   const fail = (message) => {
     throw new Error(`${id ?? 'SVG'}: ${message}`);
   };
-  if (fill && mixed) fail('fillとmixedは同時に指定できません');
   if (/<!DOCTYPE|<!ENTITY/i.test(source)) fail('DOCTYPEとENTITYは非対応です');
-  const attributes = fill
-    ? { fill: 'currentColor', stroke: 'none' }
-    : { fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+  let attributes;
   let hasFill = false;
   let hasStroke = false;
   const paint = (value) => {
     if (value === 'none') return 'none';
-    if (['black', '#000', '#000000', 'currentColor'].includes(value)) return 'currentColor';
+    if (
+      ['black', 'currentColor'].includes(value) ||
+      /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(value) ||
+      /^rgb\(\s*[\d.]+(?:%?\s*,\s*[\d.]+){2}%?\s*\)$/i.test(value)
+    )
+      return 'currentColor';
     return fail(`非対応の色: ${value}`);
   };
   const validate = (node) => {
@@ -43,7 +45,7 @@ export function normalizeSvg(source, { id, fill = false, mixed = false } = {}) {
     for (const [key, value] of Object.entries(node.attributes)) {
       if (!allowed.has(key)) fail(`非対応の属性: ${node.name}.${key}`);
       if (key === 'fill' || key === 'stroke') paint(value);
-      if (key === 'stroke-width' && (!number.test(value) || Number(value) !== 1.5)) fail('線幅は1.5のみ対応しています');
+      if (key === 'stroke-width' && (!number.test(value) || !Number.isFinite(Number(value)) || Number(value) <= 0)) fail('線幅は正の数が必要です');
       if (key === 'stroke-linecap' && !['butt', 'round', 'square'].includes(value)) fail('非対応のstroke-linecap');
       if (key === 'stroke-linejoin' && !['miter', 'round', 'bevel'].includes(value)) fail('非対応のstroke-linejoin');
       if (key === 'stroke-miterlimit' && (!number.test(value) || Number(value) < 1)) fail('不正なstroke-miterlimit');
@@ -100,30 +102,37 @@ export function normalizeSvg(source, { id, fill = false, mixed = false } = {}) {
               )
                 return [];
               if (sourceFill === 'none' && sourceStroke === 'none') fail('背景以外の非表示図形は非対応です');
-              if (sourceStroke !== 'none' && Number(effective['stroke-width']) !== 1.5) fail('線幅は1.5のみ対応しています');
               hasFill ||= sourceFill !== 'none';
               hasStroke ||= sourceStroke !== 'none';
               const output = Object.fromEntries(Object.entries(a).filter(([key]) => geometry[node.name].includes(key)));
-              if (sourceFill !== attributes.fill) output.fill = sourceFill;
-              if (sourceStroke !== attributes.stroke) output.stroke = sourceStroke;
+              output.fill = sourceFill;
+              output.stroke = sourceStroke;
               if (sourceStroke !== 'none') {
-                for (const key of ['stroke-linecap', 'stroke-linejoin']) if (effective[key] !== attributes[key]) output[key] = effective[key];
-                if (effective['stroke-miterlimit'] !== '4') output['stroke-miterlimit'] = effective['stroke-miterlimit'];
+                for (const key of ['stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit']) output[key] = effective[key];
               }
               if (sourceFill !== 'none' && effective['fill-rule'] !== 'nonzero') output['fill-rule'] = effective['fill-rule'];
-              // 混合アイコンの塗りは、ルートの線属性を継承させない。
-              if (mixed && sourceFill !== 'none') {
-                output.fill = sourceFill;
-                output.stroke = sourceStroke;
-              }
               return [{ ...node, attributes: output }];
             });
           svg.children = flatten(svg.children, {
             ...defaults,
             ...Object.fromEntries(Object.entries(svg.attributes).filter(([key]) => presentation.has(key))),
           });
-          if (mixed ? !(hasFill && hasStroke) : fill ? !hasFill || hasStroke : !hasStroke || hasFill)
-            fail('指定されたfill/mixed分類と図形が一致しません');
+          if (!hasFill && !hasStroke) fail('描画する図形がありません');
+          const firstStroke = svg.children.find((node) => node.attributes.stroke !== 'none');
+          attributes = hasStroke
+            ? {
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': firstStroke.attributes['stroke-width'],
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round',
+              }
+            : { fill: 'currentColor', stroke: 'none' };
+          for (const node of svg.children) {
+            for (const [key, value] of Object.entries(node.attributes)) {
+              if (value === (attributes[key] ?? defaults[key])) delete node.attributes[key];
+            }
+          }
           svg.attributes = { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24', ...attributes };
           root.children = [svg];
         },
@@ -132,5 +141,5 @@ export function normalizeSvg(source, { id, fill = false, mixed = false } = {}) {
   });
   const svg = result.data;
   const body = svg.slice(svg.indexOf('>') + 1, svg.lastIndexOf('</svg>'));
-  return { viewBox: '0 0 24 24', attributes, body, svg };
+  return { viewBox: '0 0 24 24', attributes, body, svg, kind: hasStroke ? (hasFill ? 'mixed' : 'stroke') : 'fill' };
 }

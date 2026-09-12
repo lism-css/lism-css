@@ -29,5 +29,5 @@ const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   aria-hidden={ariaHidden ?? (labelled ? undefined : true)}
   role={role ?? (labelled ? 'img' : undefined)}
   stroke-width={nativeStrokeWidth ?? strokeWidth ?? '1.5'}
-  {...props}><circle cx="12" cy="12" r="9"></circle><polyline points="12 6.75 12 12 17.25 12"></polyline><slot /></svg
+  {...props}><circle cx="12" cy="12" r="10"></circle><path d="M12,6v6l3.354,1.677"></path><slot /></svg
 >

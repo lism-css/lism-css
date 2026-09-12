@@ -21,8 +21,8 @@ const X = /* @__PURE__ */ forwardRef<SVGSVGElement, XProps>(function X({ childre
       {...props}
       ref={ref}
     >
-      <line x1="18.75" y1="5.25" x2="5.25" y2="18.75" />
-      <line x1="18.75" y1="18.75" x2="5.25" y2="5.25" />
+      <path d="M4.929,4.929l14.142,14.142" />
+      <path d="M19.071,4.929l-14.142,14.142" />
       {children}
     </svg>
   );

@@ -24,7 +24,7 @@ const Check = /* @__PURE__ */ forwardRef<SVGSVGElement, CheckProps>(function Che
       {...props}
       ref={ref}
     >
-      <polyline points="3.75 13.5 9 18.75 21 6.75" />
+      <path d="M2.5,12l6.333,6.333,12.667-12.667" />
       {children}
     </svg>
   );

@@ -24,9 +24,10 @@ const Info = /* @__PURE__ */ forwardRef<SVGSVGElement, InfoProps>(function Info(
       {...props}
       ref={ref}
     >
-      <circle cx="12" cy="12" r="9" />
-      <path d="M11.25,11.25c.414,0,.75.336.75.75v3.75c0,.414.336.75.75.75" />
-      <circle cx="11.625" cy="7.875" r=".375" />
+      <path d="M9.5,16.25h5" />
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="11.875" cy="7.375" r=".375" />
+      <path d="M10.125,10.681h1.125c.414,0,.75.336.75.75v4.819" />
       {children}
     </svg>
   );

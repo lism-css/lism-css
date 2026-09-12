@@ -25,7 +25,7 @@ const Search = /* @__PURE__ */ forwardRef<SVGSVGElement, SearchProps>(function S
       ref={ref}
     >
       <circle cx="10.5" cy="10.5" r="7.5" />
-      <line x1="15.803" y1="15.803" x2="21" y2="21" />
+      <path d="M15.803,15.803l5.197,5.197" />
       {children}
     </svg>
   );

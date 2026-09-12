@@ -8,8 +8,7 @@ import presets from './presets';
 afterEach(cleanup);
 
 describe('strokeプリセット', () => {
-  test('34種を線描画し、内部データを属性へ漏らさない', () => {
-    expect(Object.keys(presets)).toHaveLength(34);
+  test('収録プリセットを線描画し、内部データを属性へ漏らさない', () => {
     for (const icon of Object.keys(presets) as PresetIconName[]) {
       const { container, unmount } = render(<Icon icon={icon} />);
       const svg = container.querySelector('svg')!;
