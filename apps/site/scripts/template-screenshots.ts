@@ -8,15 +8,15 @@
  * `build:template:en`（.lang/<lang> を src へマージして再ビルド）で言語別に再撮影し、
  * `screenshots/<lang>/<name>.png` に保存します（blog の overlay 方式 en 用）。
  *
- * 使い方（リポジトリルートまたは apps/docs で実行）:
- *   npx tsx apps/docs/scripts/template-screenshots.ts                    # 新規のみ撮影
- *   npx tsx apps/docs/scripts/template-screenshots.ts --force            # 全テンプレ再撮影
- *   npx tsx apps/docs/scripts/template-screenshots.ts --compare          # ベースライン比較（初回はベースライン生成）
- *   npx tsx apps/docs/scripts/template-screenshots.ts --update           # 差分テンプレのベースライン更新
- *   npx tsx apps/docs/scripts/template-screenshots.ts --target=minimal-astro
- *   npx tsx apps/docs/scripts/template-screenshots.ts --target=blog/astro/minimal
- *   npx tsx apps/docs/scripts/template-screenshots.ts --no-build         # 既存 dist を使う（ビルドをスキップ）
- *   npx tsx apps/docs/scripts/template-screenshots.ts --threshold=0.5    # compare のしきい値（%）
+ * 使い方（リポジトリルートまたは apps/site で実行）:
+ *   npx tsx apps/site/scripts/template-screenshots.ts                    # 新規のみ撮影
+ *   npx tsx apps/site/scripts/template-screenshots.ts --force            # 全テンプレ再撮影
+ *   npx tsx apps/site/scripts/template-screenshots.ts --compare          # ベースライン比較（初回はベースライン生成）
+ *   npx tsx apps/site/scripts/template-screenshots.ts --update           # 差分テンプレのベースライン更新
+ *   npx tsx apps/site/scripts/template-screenshots.ts --target=minimal-astro
+ *   npx tsx apps/site/scripts/template-screenshots.ts --target=blog/astro/minimal
+ *   npx tsx apps/site/scripts/template-screenshots.ts --no-build         # 既存 dist を使う（ビルドをスキップ）
+ *   npx tsx apps/site/scripts/template-screenshots.ts --threshold=0.5    # compare のしきい値（%）
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -30,7 +30,7 @@ import { PNG } from 'pngjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-// apps/docs/scripts → リポジトリルートまで3階層遡る
+// apps/site/scripts → リポジトリルートまで3階層遡る
 const REPO_ROOT = join(__dirname, '..', '..', '..');
 const TEMPLATES_ROOT = join(REPO_ROOT, 'templates');
 
@@ -307,7 +307,7 @@ function stopServer(server: ChildProcess | null) {
 
 function shotsOutputDir(entry: TemplateEntry, kind: 'public' | 'baseline' | 'diff' | 'temp') {
   // すべて screenshots/ 配下に集約。比較系は _baseline / _diff / _temp として
-  // アンダースコア接頭辞のサブディレクトリに退避させる（apps/docs の glob で除外しやすい）。
+  // アンダースコア接頭辞のサブディレクトリに退避させる（apps/site の glob で除外しやすい）。
   if (kind === 'public') return join(entry.absPath, 'screenshots');
   return join(entry.absPath, 'screenshots', `_${kind}`);
 }

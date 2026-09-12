@@ -2,7 +2,7 @@
 
 # docs-md integration 処理フロー
 
-`apps/docs/src/integrations/docs-md/`のAstro integration。ビルド時にMDXレンダリング後のHTMLから、AI向けの`.md`と`llms.txt`を生成する。共通処理は`util.ts`。
+`apps/site/src/integrations/docs-md/`のAstro integration。ビルド時にMDXレンダリング後のHTMLから、AI向けの`.md`と`llms.txt`を生成する。共通処理は`util.ts`。
 
 `data-pagefind-body`はPagefind検索の索引対象を示す属性で、レイアウトの`excludeFromSearch`で外れる。このintegrationはこれを「本文のある記事ページ」の目印に使い、持たないページ（一覧・リダイレクト先等）は変換しない。
 
@@ -69,7 +69,7 @@
 
 ## `vercel.ts`
 
-`apps/docs/vercel.ts`で`*.md`に2つのヘッダーを付ける。
+`apps/site/vercel.ts`で`*.md`に2つのヘッダーを付ける。
 
 - `X-Robots-Tag: noindex`: 検索結果には載せない（AI向けクロールは許容）。
 - `Content-Type: text/markdown; charset=utf-8`

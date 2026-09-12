@@ -3,7 +3,7 @@
  *
  * このファイルから:
  * - `packages/lism-cli/src/commands/create.ts` の TEMPLATES
- * - `apps/docs/src/config/templates.ts` の templates
+ * - `apps/site/src/config/templates.ts` の templates
  * の両方を組み立てる。CLI 側からも import されるため Astro / Vite 専用の型
  * （ImageMetadata 等）には依存しない。サムネ画像（ImageMetadata）は docs 側で
  * `templates/{sourcePath}/screenshots/{top または variant}.png` の規約から解決する。

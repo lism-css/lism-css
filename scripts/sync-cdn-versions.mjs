@@ -16,12 +16,12 @@ const { version } = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
 
 // CDN URL を含むファイル一覧
 const targets = [
-  'apps/docs/src/content/ja/installation.mdx',
-  'apps/docs/src/content/ja/base-styles.mdx',
-  'apps/docs/src/content/ja/overview.mdx',
-  'apps/docs/src/content/en/installation.mdx',
-  'apps/docs/src/content/en/base-styles.mdx',
-  'apps/docs/src/content/en/overview.mdx',
+  'apps/site/src/content/ja/installation.mdx',
+  'apps/site/src/content/ja/base-styles.mdx',
+  'apps/site/src/content/ja/overview.mdx',
+  'apps/site/src/content/en/installation.mdx',
+  'apps/site/src/content/en/base-styles.mdx',
+  'apps/site/src/content/en/overview.mdx',
   'README.md',
   'README.ja.md',
   'packages/lism-css/README.md',

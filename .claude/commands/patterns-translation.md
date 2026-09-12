@@ -1,12 +1,12 @@
 ---
-description: apps/docs のパターンプレビュー（index.astro）を英語版（en.astro）へ翻訳同期し、patterns.ts の英語説明文も更新する
+description: apps/site のパターンプレビュー（index.astro）を英語版（en.astro）へ翻訳同期し、patterns.ts の英語説明文も更新する
 argument-hint: "[カテゴリ...]"
 ---
 
 # Patterns Translation Sync
 
-`apps/docs/src/pages/preview/patterns/{category}/{id}/` の `index.astro`（日本語）を正として `en.astro` へ翻訳同期する。
-`apps/docs/src/config/patterns.ts` の `description.en`（カテゴリと各アイテム）も同期対象。
+`apps/site/src/pages/preview/patterns/{category}/{id}/` の `index.astro`（日本語）を正として `en.astro` へ翻訳同期する。
+`apps/site/src/config/patterns.ts` の `description.en`（カテゴリと各アイテム）も同期対象。
 
 `en.astro` は `/en/patterns/...` ページにソースコードとしてそのまま表示される。コメントも含めて英語読者向けの完成品として扱う。
 `preview/page-layouts/` は `index.astro` を共用し英語版を持たないため対象外。
@@ -68,7 +68,7 @@ argument-hint: "[カテゴリ...]"
 全サブエージェント完了後、リポジトリルートで実行する:
 
 ```bash
-rg -n '[一-龥ぁ-んァ-ヶー々]' apps/docs/src/pages/preview/patterns --glob 'en.astro'
+rg -n '[一-龥ぁ-んァ-ヶー々]' apps/site/src/pages/preview/patterns --glob 'en.astro'
 ```
 
 コメントも英訳対象のため、コメント行を除外しない。残っていれば担当サブエージェントに差し戻し、ゼロ件になってから完了報告する。

@@ -260,7 +260,7 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
   if (uncovered.length > 0) {
     throw new Error(
       `[OG] フォントに未収録の文字があります: ${uncovered.join('')} (${lang}/${slug})\n` +
-        'pnpm --filter lism-docs og:font を実行してフォントと文字一覧を再生成し、コミットしてください'
+        'pnpm --filter lism-site og:font を実行してフォントと文字一覧を再生成し、コミットしてください'
     );
   }
 

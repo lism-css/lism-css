@@ -4,7 +4,7 @@ description: MCP の docs-index.json をファイル構成の差分（移動・�
 
 # MCP Server URL / 構成更新（軽量版）
 
-`packages/mcp/src/data/docs-index.json` の `sourcePath`・`category` を `apps/docs/src/content/ja/` の実ファイル構成に合わせる。既存エントリの `title`・`description`・`headings`・`keywords`・`snippet` は移動・リネーム時も変えない。新規エントリだけ生成する。
+`packages/mcp/src/data/docs-index.json` の `sourcePath`・`category` を `apps/site/src/content/ja/` の実ファイル構成に合わせる。既存エントリの `title`・`description`・`headings`・`keywords`・`snippet` は移動・リネーム時も変えない。新規エントリだけ生成する。
 
 メインエージェントが直接処理する（サブエージェントは手順 9 の `runner` だけ可）。`en/` は参照しない。
 
@@ -12,12 +12,12 @@ description: MCP の docs-index.json をファイル構成の差分（移動・�
 ## 手順
 
 1. `git rev-parse --short HEAD` でコミットハッシュを取る
-2. 実在ファイル集合を作る: `apps/docs/src/content/ja/**/*.mdx` を Glob し、`_` 始まりのファイル・ディレクトリと `test.mdx`（この名前だけ）を除く（定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正）。パスは `ja/` からの相対
+2. 実在ファイル集合を作る: `apps/site/src/content/ja/**/*.mdx` を Glob し、`_` 始まりのファイル・ディレクトリと `test.mdx`（この名前だけ）を除く（定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正）。パスは `ja/` からの相対
 3. `docs-index.json` の各エントリを分類する
    - 一致: 実ファイルあり。同一 `sourcePath` の分割エントリは 1 つでもあれば全て一致
    - 不一致: 実ファイルなし → 手順 4
    - 未登録: 実在ファイル集合にあるが `sourcePath` に無い → 手順 5
-4. 不一致エントリごとに basename で `apps/docs/src/content/ja/**/{basename}` を Glob する
+4. 不一致エントリごとに basename で `apps/site/src/content/ja/**/{basename}` を Glob する
    - 単一マッチ: 移動候補。そのパスを新 `sourcePath` にする
    - 複数マッチ: 保留。手順 6 でユーザーに選んでもらう
    - マッチなし: 未登録ファイルの frontmatter（`title`・`description`）とエントリの `title` 等を突き合わせ、同一ページならリネーム候補（そのパスを新 `sourcePath` にし、その未登録ファイルは手順 5 から外す）。対応が無いものだけ削除候補

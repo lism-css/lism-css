@@ -19,13 +19,14 @@ Lism CSS は軽量なCSS設計フレームワーク。レイアウトプリミ�
 
 ### apps
 
-- `apps/docs/`: Astro 製ドキュメントサイト — [CLAUDE.md](apps/docs/CLAUDE.md)
+- `apps/site/`: Astro 製ドキュメントサイト — [CLAUDE.md](apps/site/CLAUDE.md)
 - `apps/catalog/`: コンポーネントカタログ
 
 ### その他
 
 - `skills/lism-css-guide/`: `lism-cli skill add` と skills.sh の配信元
 - `templates/`: `lism-cli create` のテンプレート
+- `docs/*.md`: プロジェクト文書（`docs/decisions.md`等）。サイト本体は`apps/site`、`/docs/`はサイトのURLパス。
 - `documents/*.md`: 運営者向け現行文書。
 - `.plan/*.md`: 実装プラン文書。
 
@@ -49,18 +50,18 @@ GitHubへ書く内容（issue・PR・コミットメッセージ・コードコ�
 ## 主要コマンド
 
 ```bash
-nr dev:docs # ドキュメントサイトをlocalhostで起動
+nr dev:site # ドキュメントサイトをlocalhostで起動
 nr build # 全ワークスペースをTurboでビルド
 nr build:core # packages/lism-css のみ
 nr build:ui # packages/lism-ui のみ
 nr build:cli # packages/lism-cli + packages/create-lism（^build依存で順序保証）
-nr build:docs # apps/docs のみ
+nr build:site # apps/site のみ
 nr lint
 nr typecheck
 nr test
 ```
 
-## 公式ドキュメントサイト(`apps/docs`)のURL
+## 公式ドキュメントサイト(`apps/site`)のURL
 
 ルート言語は日本語。READMEやドキュメントでリンクするときは言語に合うパスを使う。
 

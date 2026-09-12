@@ -1,5 +1,5 @@
 /**
- * 英語ドキュメント (`apps/docs/src/content/en/**`) の frontmatter を集計して
+ * 英語ドキュメント (`apps/site/src/content/en/**`) の frontmatter を集計して
  * dist/llms.txt を生成する。
  *
  * セクション分類:

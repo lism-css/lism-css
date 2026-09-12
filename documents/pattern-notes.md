@@ -2,7 +2,7 @@
 
 # パターン運用メモ
 
-`apps/docs`のパターンに関する共通文言と、本文の翻訳以外の日英差分をまとめる。
+`apps/site`のパターンに関する共通文言と、本文の翻訳以外の日英差分をまとめる。
 
 ## 本文の翻訳以外の日英差分
 
@@ -15,7 +15,7 @@
 | Pricing01・Pricing02 | 円表記。金額に桁区切りを入れ、単位は`円/月`・`円/年` | ドル表記。金額の先頭に`$`を付け、単位は`/mo`・`/yr` |
 | Pricing03 | 円の金額と`円/月` | 日本語版と同じ円の金額と`JPY/month` |
 
-具体的な金額は[Pricing01](../apps/docs/src/pages/preview/patterns/pricing/pricing01/)、[Pricing02](../apps/docs/src/pages/preview/patterns/pricing/pricing02/)、[Pricing03](../apps/docs/src/pages/preview/patterns/pricing/pricing03/)の`index.astro`・`en.astro`を参照する。
+具体的な金額は[Pricing01](../apps/site/src/pages/preview/patterns/pricing/pricing01/)、[Pricing02](../apps/site/src/pages/preview/patterns/pricing/pricing02/)、[Pricing03](../apps/site/src/pages/preview/patterns/pricing/pricing03/)の`index.astro`・`en.astro`を参照する。
 
 ### Pricing02の表示調整
 
@@ -23,7 +23,7 @@
 
 ## 共通ダミーテキスト
 
-`apps/docs`のパターンで使う日本語のダミー文言と対応する英語コピーを、カテゴリごとにまとめる。見出し・説明文・リンク文言を揃え、レイアウトの違いを比べやすくする。
+`apps/site`のパターンで使う日本語のダミー文言と対応する英語コピーを、カテゴリごとにまとめる。見出し・説明文・リンク文言を揃え、レイアウトの違いを比べやすくする。
 
 ### Feature
 

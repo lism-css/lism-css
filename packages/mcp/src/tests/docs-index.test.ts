@@ -7,11 +7,11 @@ import { sourcePathToUrlSlug } from '../lib/search.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const docsIndexPath = resolve(__dirname, '..', 'data', 'docs-index.json');
-const docsContentDir = resolve(__dirname, '..', '..', '..', '..', 'apps', 'docs', 'src', 'content', 'ja');
+const docsContentDir = resolve(__dirname, '..', '..', '..', '..', 'apps', 'site', 'src', 'content', 'ja');
 
-// apps/docs 依存のモジュールを static import すると、apps/docs がない環境では
+// apps/site 依存のモジュールを static import すると、apps/site がない環境では
 // describe.skipIf の評価前にモジュールロードで落ちるため、存在確認後に動的 import する
-const toContentSlug = existsSync(docsContentDir) ? (await import('../../../../apps/docs/src/lib/contentSlug.js')).toContentSlug : null;
+const toContentSlug = existsSync(docsContentDir) ? (await import('../../../../apps/site/src/lib/contentSlug.js')).toContentSlug : null;
 
 type IndexEntry = { sourcePath: string };
 
@@ -34,9 +34,9 @@ function listIndexableMdxFiles(dir: string, baseDir: string = dir): string[] {
 
 // docs-index.json は LLM ベースの /mcp-update で手動更新されるため、
 // 実 MDX ファイルとの構造的な整合性をここで機械的に検証する（#465）。
-// apps/docs が存在しない環境（npm 配布物単体など）ではスキップする。
+// apps/site が存在しない環境（npm 配布物単体など）ではスキップする。
 describe.skipIf(!existsSync(docsContentDir))('docs-index.json の構造検証', () => {
-  it('全エントリの sourcePath が apps/docs/src/content/ja/ の実ファイルを指している', () => {
+  it('全エントリの sourcePath が apps/site/src/content/ja/ の実ファイルを指している', () => {
     const missing = entries.map((e) => e.sourcePath).filter((p) => !existsSync(resolve(docsContentDir, p)));
     expect(missing).toEqual([]);
   });
@@ -47,9 +47,9 @@ describe.skipIf(!existsSync(docsContentDir))('docs-index.json の構造検証', 
     expect(notIndexed).toEqual([]);
   });
 
-  // sourcePathToUrlSlug は apps/docs 側の toContentSlug と手動同期の複製実装のため、
+  // sourcePathToUrlSlug は apps/site 側の toContentSlug と手動同期の複製実装のため、
   // 全 sourcePath について両者の変換結果が一致することを検証してドリフトを検出する
-  it('URL スラッグ変換が apps/docs の toContentSlug と一致する', () => {
+  it('URL スラッグ変換が apps/site の toContentSlug と一致する', () => {
     for (const sourcePath of new Set(entries.map((e) => e.sourcePath))) {
       const rawSlug = sourcePath.replace(/\.mdx$/, '');
       expect(sourcePathToUrlSlug(sourcePath), sourcePath).toBe(toContentSlug!(rawSlug));

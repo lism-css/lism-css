@@ -1,7 +1,7 @@
 import { vercelRedirects } from './src/config/redirects';
 
 const config = {
-  buildCommand: 'cd ../.. && pnpm build:docs',
+  buildCommand: 'cd ../.. && pnpm build:site',
   redirects: vercelRedirects,
   headers: [
     {

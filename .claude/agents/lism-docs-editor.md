@@ -1,6 +1,6 @@
 ---
 name: lism-docs-editor
-description: Lism CSSのドキュメントサイト（apps/docs）のmdxファイルを最新ソースと照合し、古い記述や誤りを検出・修正する
+description: Lism CSSのドキュメントサイト（apps/site）のmdxファイルを最新ソースと照合し、古い記述や誤りを検出・修正する
 tools: Read, Edit, Glob, Grep
 model: sonnet
 effort: xhigh
@@ -42,9 +42,9 @@ effort: xhigh
 - import パス: 各パッケージの `package.json` の `exports` にある。`@lism-css/ui` は `@lism-css/ui/{react,astro}/{Component}` の deep path が正（`@lism-css/ui/react` 等の barrel は `installation.mdx` の注釈だけ）
 - 説明文: ソースの挙動と一致する。ソースに無い機能や古い挙動を書いていない
 - 内部リンク: 参照先が存在する。Glob で確かめる
-  - `/docs/foo/bar/` → `apps/docs/src/content/ja/foo/bar.mdx`
-  - `/ui/foo/` → `apps/docs/src/content/ja/ui/foo.mdx`
-  - `/demo/foo/` → `apps/docs/src/pages/demo/foo/`
+  - `/docs/foo/bar/` → `apps/site/src/content/ja/foo/bar.mdx`
+  - `/ui/foo/` → `apps/site/src/content/ja/ui/foo.mdx`
+  - `/demo/foo/` → `apps/site/src/pages/demo/foo/`
 - ダミーコンポーネント: `ui/` 配下以外では `<PreviewCode>` 内のコードブロックに `<DummyText>` を使わず、実際のテキスト・HTML 要素を書く（`<PreviewArea>` 内は可）。文面は `packages/lism-ui/src/components/DummyText/texts.ts`
 - `<PreviewArea>` 内のテキスト独立行: JSX の子としてテキストだけの行があると Astro の MDX 解釈で `<p>` が生成されるため、`<Fragment>` で囲う。自己閉じコンポーネントと JSX タグの開始・終了行は対象外
   - NG: `<Hoge>\n  テキスト\n</Hoge>`

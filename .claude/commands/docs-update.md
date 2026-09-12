@@ -1,11 +1,11 @@
 ---
-description: apps/docs の MDX を最新ソースと照合して修正し、英語版（en/）へも翻訳同期する
+description: apps/site の MDX を最新ソースと照合して修正し、英語版（en/）へも翻訳同期する
 argument-hint: "[対象ファイル/ディレクトリ... | root]"
 ---
 
 # Docs Update
 
-`apps/docs/src/content/ja/` の MDX を最新ソースと照合して修正し（フェーズ1）、修正後の `ja/` を正として `en/` へ翻訳同期する（フェーズ2）。
+`apps/site/src/content/ja/` の MDX を最新ソースと照合して修正し（フェーズ1）、修正後の `ja/` を正として `en/` へ翻訳同期する（フェーズ2）。
 優先順位: パッケージソース（`packages/lism-css/`, `packages/lism-ui/`）> `ja/` > `en/`。
 
 
