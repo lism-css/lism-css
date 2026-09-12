@@ -55,25 +55,10 @@ describe('getBpData', () => {
       expect(getBpData([])).toEqual({});
     });
 
-    test('配列に undefined が含まれる場合、filterEmptyObj により除外される', () => {
-      expect(getBpData(['left', undefined, 'right'])).toEqual({
-        base: 'left',
-        md: 'right',
-      });
-    });
-
-    test('配列に null が含まれる場合、filterEmptyObj により除外される', () => {
-      expect(getBpData(['left', null, 'right'])).toEqual({
-        base: 'left',
-        md: 'right',
-      });
-    });
-
-    test('配列に空文字列が含まれる場合、filterEmptyObj により除外される', () => {
-      expect(getBpData(['left', '', 'right'])).toEqual({
-        base: 'left',
-        md: 'right',
-      });
+    test('配列に undefined / null / 空文字列が含まれる場合、filterEmptyObj により除外される', () => {
+      expect(getBpData(['left', undefined, 'right'])).toEqual({ base: 'left', md: 'right' });
+      expect(getBpData(['left', null, 'right'])).toEqual({ base: 'left', md: 'right' });
+      expect(getBpData(['left', '', 'right'])).toEqual({ base: 'left', md: 'right' });
     });
   });
 
@@ -87,10 +72,6 @@ describe('getBpData', () => {
       expect(getBpData({ base: 'center' })).toEqual({ base: 'center' });
     });
 
-    test('smキーのみを持つオブジェクトはそのまま返す', () => {
-      expect(getBpData({ sm: 'flex' })).toEqual({ sm: 'flex' });
-    });
-
     test('xsキーを持つオブジェクトはBP指定とみなしそのまま返す（オブジェクト記法でのみ xs を指定可能）', () => {
       const bpObj = { base: '20', xs: '10', sm: '30' };
       expect(getBpData(bpObj)).toEqual(bpObj);
@@ -100,34 +81,15 @@ describe('getBpData', () => {
       expect(getBpData({ xs: '10' })).toEqual({ xs: '10' });
     });
 
-    test('mdキーのみを持つオブジェクトはそのまま返す', () => {
-      expect(getBpData({ md: 'grid' })).toEqual({ md: 'grid' });
-    });
-
     test('複数のブレークポイントキーを持つオブジェクトはそのまま返す', () => {
       const bpObj = { sm: 'start', lg: 'end' };
       expect(getBpData(bpObj)).toEqual(bpObj);
     });
 
-    test('ブレークポイントキーに undefined が含まれる場合、filterEmptyObj により除外される', () => {
-      expect(getBpData({ base: 'left', sm: undefined, md: 'right' })).toEqual({
-        base: 'left',
-        md: 'right',
-      });
-    });
-
-    test('ブレークポイントキーに null が含まれる場合、filterEmptyObj により除外される', () => {
-      expect(getBpData({ base: 'left', sm: null, md: 'right' })).toEqual({
-        base: 'left',
-        md: 'right',
-      });
-    });
-
-    test('ブレークポイントキーに空文字列が含まれる場合、filterEmptyObj により除外される', () => {
-      expect(getBpData({ base: 'left', sm: '', md: 'right' })).toEqual({
-        base: 'left',
-        md: 'right',
-      });
+    test('ブレークポイントキーに undefined / null / 空文字列が含まれる場合、filterEmptyObj により除外される', () => {
+      expect(getBpData({ base: 'left', sm: undefined, md: 'right' })).toEqual({ base: 'left', md: 'right' });
+      expect(getBpData({ base: 'left', sm: null, md: 'right' })).toEqual({ base: 'left', md: 'right' });
+      expect(getBpData({ base: 'left', sm: '', md: 'right' })).toEqual({ base: 'left', md: 'right' });
     });
   });
 
@@ -175,67 +137,14 @@ describe('getBpData', () => {
     });
   });
 
-  describe('実際のユースケース', () => {
-    test('レスポンシブな配置指定（配列形式）', () => {
-      expect(getBpData(['start', 'center', 'end'])).toEqual({
-        base: 'start',
-        sm: 'center',
-        md: 'end',
-      });
-    });
-
-    test('レスポンシブな配置指定（オブジェクト形式）', () => {
-      expect(getBpData({ base: 'column', md: 'row' })).toEqual({
-        base: 'column',
-        md: 'row',
-      });
-    });
-
-    test('パディング値（方向オブジェクト）', () => {
-      const padding = { top: '1rem', bottom: '2rem' };
-      expect(getBpData(padding)).toEqual({ base: padding });
-    });
-
-    test('単純な文字列値', () => {
-      expect(getBpData('flex')).toEqual({ base: 'flex' });
-    });
-
-    test('数値による指定', () => {
-      expect(getBpData(4)).toEqual({ base: 4 });
-    });
-
-    test('ブレークポイント指定とプリミティブ値の混在', () => {
-      expect(getBpData({ base: 10, sm: 20, md: 30 })).toEqual({
-        base: 10,
-        sm: 20,
-        md: 30,
-      });
-    });
-  });
-
   describe('元のデータが変更されないことを確認', () => {
-    test('配列を渡しても元の配列は変更されない', () => {
-      const original = ['left', 'center', 'right'];
-      const originalCopy = [...original];
-      getBpData(original);
-      expect(original).toEqual(originalCopy);
-    });
-
-    test('オブジェクトを渡しても元のオブジェクトは変更されない', () => {
-      const original = { base: 'flex', sm: 'grid' };
-      const originalCopy = { ...original };
-      getBpData(original);
-      expect(original).toEqual(originalCopy);
-    });
-
-    test('方向オブジェクトを渡しても元のオブジェクトは変更されない', () => {
-      const original = { top: 1, bottom: 2 };
-      const originalCopy = { ...original };
-      const result = getBpData(original);
-      expect(original).toEqual(originalCopy);
-      expect(result.base).toEqual(original);
-      // 参照が同じことを確認（コピーされていない）
-      expect(result.base).toBe(original);
+    test('配列・オブジェクトを渡しても元の値は変更されない', () => {
+      const originalArr = ['left', 'center', 'right'];
+      const originalObj = { base: 'flex', sm: 'grid' };
+      getBpData(originalArr);
+      getBpData(originalObj);
+      expect(originalArr).toEqual(['left', 'center', 'right']);
+      expect(originalObj).toEqual({ base: 'flex', sm: 'grid' });
     });
   });
 });

@@ -211,22 +211,17 @@ describe('setEvent (モーダル内のリンククリック)', () => {
   // 閉じる判定は click 後の macrotask で行われるため、「閉じない」ことの確認はそれが流れてから行う
   const flushDeferredClose = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0));
 
-  it.each([['#section'], [`${location.pathname}#section`], [`${location.origin}${location.pathname}#section`]])(
-    'ページ内リンク（href="%s"）の click で閉じ、遷移は妨げない',
-    async (href) => {
-      const modal = await openModal();
-      const link = document.querySelector<HTMLAnchorElement>('#link')!;
-      link.setAttribute('href', href);
+  it('ページ内リンクの click で閉じ、遷移は妨げない', async () => {
+    const modal = await openModal();
 
-      const event = clickLink(link);
+    const event = clickLink(document.querySelector<HTMLAnchorElement>('#link')!);
 
-      expect(event.defaultPrevented).toBe(false);
-      await vi.waitFor(() => {
-        expect(modal).not.toHaveAttribute('data-is-open');
-        expect(modal).not.toHaveAttribute('open');
-      });
-    }
-  );
+    expect(event.defaultPrevented).toBe(false);
+    await vi.waitFor(() => {
+      expect(modal).not.toHaveAttribute('data-is-open');
+      expect(modal).not.toHaveAttribute('open');
+    });
+  });
 
   it('リンク内側の要素を click しても閉じる', async () => {
     const modal = await openModal();

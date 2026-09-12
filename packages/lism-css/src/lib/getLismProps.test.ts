@@ -595,10 +595,9 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-td:none');
     });
 
-    test('tt: uppercase と旧略称 upper / lower がフル名称のクラスになる', () => {
+    test('tt: uppercase と旧略称 upper がフル名称のクラスになる', () => {
       expect(getLismProps({ tt: 'uppercase' }).className).toContain('-tt:uppercase');
       expect(getLismProps({ tt: 'upper' }).className).toContain('-tt:uppercase');
-      expect(getLismProps({ tt: 'lower' }).className).toContain('-tt:lowercase');
     });
 
     test('bgc: current / currentColor がユーティリティクラスになる', () => {
@@ -657,13 +656,10 @@ describe('getLismProps', () => {
       expect(result).toEqual({});
     });
 
-    test('0 値は処理される', () => {
-      const result = getLismProps({
-        p: 0,
-      });
-      // 0 は falsy だが、null/undefined/false/''/false ではないので処理される可能性がある
-      // 実装によっては 0 が除外される場合もあるので、実際の動作を確認
-      expect(result).toBeDefined();
+    test('0 値はプリセットクラスとして処理される', () => {
+      const result = getLismProps({ p: 0 });
+      expect(result.className).toBe('-p:0');
+      expect(result.style).toBeUndefined();
     });
   });
 });

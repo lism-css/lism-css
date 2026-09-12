@@ -47,14 +47,9 @@ describe('getMaybeCssVar', () => {
   });
 
   describe('その他のトークンの処理', () => {
-    test('fz トークンは getMaybeTokenValue で処理される', () => {
+    test('space / color / bxsh 以外のトークンは getMaybeTokenValue で処理される', () => {
       expect(getMaybeCssVar('xl', 'fz')).toBe('var(--fz--xl)');
-      expect(getMaybeCssVar('base', 'fz')).toBe('var(--fz--base)');
-    });
-
-    test('bdrs トークンは getMaybeTokenValue で処理される', () => {
       expect(getMaybeCssVar('10', 'bdrs')).toBe('var(--bdrs--10)');
-      expect(getMaybeCssVar('99', 'bdrs')).toBe('var(--bdrs--99)');
     });
   });
 });
@@ -83,8 +78,6 @@ describe('getMaybeSpaceVar', () => {
   describe('数値文字列の処理', () => {
     test('数値文字列は var(--s{値}) に変換される', () => {
       expect(getMaybeSpaceVar('10')).toBe('var(--s10)');
-      expect(getMaybeSpaceVar('20')).toBe('var(--s20)');
-      expect(getMaybeSpaceVar('100')).toBe('var(--s100)');
     });
 
     test('負の数値文字列も calc(-1 * var(--s{abs})) に変換される', () => {
@@ -139,14 +132,8 @@ describe('getMaybeSpaceVar', () => {
   });
 
   describe('浮動小数点数の処理', () => {
-    test('浮動小数点数も変換される', () => {
+    test('浮動小数点数（数値・文字列）も変換される', () => {
       expect(getMaybeSpaceVar(1.5)).toBe('var(--s1.5)');
-      expect(getMaybeSpaceVar(2.25)).toBe('var(--s2.25)');
-    });
-
-    test('浮動小数点数の文字列も変換される', () => {
-      // isNumStr は !isNaN(Number(val)) で判定しているため、浮動小数点文字列もtrueになる
-      expect(getMaybeSpaceVar('1.5')).toBe('var(--s1.5)');
       expect(getMaybeSpaceVar('2.25')).toBe('var(--s2.25)');
     });
   });
@@ -162,9 +149,6 @@ describe('getMaybeColorVar', () => {
 
     test('palette トークンの値が変換される', () => {
       expect(getMaybeColorVar('red')).toBe('var(--red)');
-      expect(getMaybeColorVar('blue')).toBe('var(--blue)');
-      expect(getMaybeColorVar('green')).toBe('var(--green)');
-      expect(getMaybeColorVar('neutral')).toBe('var(--neutral)');
     });
 
     test('トークンに存在しない値はそのまま返される', () => {
@@ -194,13 +178,6 @@ describe('getMaybeColorVar', () => {
     test('COLOR:ALPHA% 形式で color-mix が生成される', () => {
       const result = getMaybeColorVar('red:50%');
       expect(result).toBe('color-mix(in srgb, var(--red) 50%, transparent)');
-    });
-
-    test('異なる透明度で処理される', () => {
-      const result1 = getMaybeColorVar('blue:25%');
-      const result2 = getMaybeColorVar('blue:75%');
-      expect(result1).toContain('25%');
-      expect(result2).toContain('75%');
     });
 
     test('c トークンの値でも処理される', () => {

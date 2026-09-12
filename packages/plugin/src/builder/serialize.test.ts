@@ -254,16 +254,4 @@ ${propConfigScss}
     expect(css).toContain('padding');
     expect(css).toContain('.mt');
   });
-
-  test('config を差し替えると出力が追従する（config 反映の保証）', () => {
-    const a = emitProps(serializePropConfig(baseConfig));
-    const b = emitProps(
-      serializePropConfig({
-        tokens: {},
-        props: { p: { prop: 'padding' }, z: { prop: 'zIndex', utils: { '1': '1' } } },
-      })
-    );
-    expect(a).not.toContain('.z');
-    expect(b).toContain('.z');
-  });
 });

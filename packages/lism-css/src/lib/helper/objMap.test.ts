@@ -26,14 +26,6 @@ describe('objMap', () => {
     expect(result).toEqual({ a: 2, b: 2 });
   });
 
-  test('callbackが値とキーを受け取る場合（拡張）', () => {
-    // 現在の実装では callback は値のみを受け取るが、
-    // 一般的な array_map 的な実装ではキーも渡すことがある
-    const input = { a: 1, b: 2 };
-    const result = objMap(input, (val: number) => val * 10);
-    expect(result).toEqual({ a: 10, b: 20 });
-  });
-
   test('異なる型の値が混在するオブジェクト', () => {
     const input = { num: 42, str: 'test', bool: true };
     const result = objMap(input, (val: unknown) => String(val));

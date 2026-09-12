@@ -119,7 +119,19 @@ describe('setEvent', () => {
     cleanup();
   });
 
-  it('hidden 属性値を保存・復元する（until-found）', async () => {
+  it('初期の hidden 属性値を保存し、閉じる時に同じ値で復元する', async () => {
+    document.body.innerHTML = `
+      <div>
+        <div class="b--accordion_item">
+          <div class="b--accordion_heading">
+            <button class="b--accordion_button" aria-expanded="false"></button>
+          </div>
+          <div class="b--accordion_panel" hidden="">
+            <div class="b--accordion_content"></div>
+          </div>
+        </div>
+      </div>
+    `;
     const item = document.querySelector<HTMLElement>('.b--accordion_item')!;
     const button = item.querySelector<HTMLElement>('.b--accordion_button')!;
     const panel = item.querySelector<HTMLElement>('.b--accordion_panel')!;
@@ -133,7 +145,7 @@ describe('setEvent', () => {
 
     button.click();
     await vi.waitFor(() => {
-      expect(panel.getAttribute('hidden')).toBe('until-found');
+      expect(panel.getAttribute('hidden')).toBe('');
     });
 
     cleanup();

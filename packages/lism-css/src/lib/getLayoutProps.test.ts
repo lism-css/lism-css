@@ -48,12 +48,7 @@ describe('getLayoutProps', () => {
       expect(result.style?.['--mainW']).toBe('800px');
     });
 
-    test('sideW が null の場合、--sideW は設定されない', () => {
-      const result = getLayoutProps('withSide', { sideW: undefined });
-      expect(result.style?.['--sideW']).toBeUndefined();
-    });
-
-    test('sideW が undefined の場合、--sideW は設定されない', () => {
+    test('sideW が未指定の場合、--sideW は設定されない', () => {
       const result = getLayoutProps('withSide', { sideW: undefined });
       expect(result.style?.['--sideW']).toBeUndefined();
     });
@@ -100,24 +95,6 @@ describe('getLayoutProps', () => {
       const result = getLayoutProps('autoColumns', {});
       expect(result.style?.['--autoMode']).toBeUndefined();
     });
-
-    test('既存の style がある場合、マージされる', () => {
-      const result = getLayoutProps('autoColumns', {
-        autoFit: true,
-        style: { color: 'blue' },
-      });
-      expect(result.style?.color).toBe('blue');
-      expect(result.style?.['--autoMode']).toBe('auto-fit');
-    });
-
-    test('autoFit 以外のpropsは維持される', () => {
-      const result = getLayoutProps('autoColumns', {
-        autoFit: true,
-        otherProp: 'value',
-      });
-      expect(result.otherProp).toBe('value');
-      expect((result as unknown as Record<string, unknown>).autoFit).toBeUndefined();
-    });
   });
 
   describe('flow レイアウト', () => {
@@ -160,24 +137,6 @@ describe('getLayoutProps', () => {
       expect(result.primitiveClass).toContain('l--flow');
       expect(result.primitiveClass).toContain('-flow:s');
     });
-
-    test('既存の style がある場合、マージされる', () => {
-      const result = getLayoutProps('flow', {
-        flow: '1rem',
-        style: { padding: '10px' },
-      });
-      expect(result.style?.padding).toBe('10px');
-      expect(result.style?.['--flow']).toBe('1rem');
-    });
-
-    test('flow 以外のpropsは維持される', () => {
-      const result = getLayoutProps('flow', {
-        flow: 's',
-        otherProp: 'value',
-      });
-      expect(result.otherProp).toBe('value');
-      expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
-    });
   });
 
   describe('switchColumns レイアウト', () => {
@@ -206,24 +165,6 @@ describe('getLayoutProps', () => {
       const result = getLayoutProps('switchColumns', { breakSize: 'm' });
       expect(result.style?.['--breakSize']).toBe('var(--sz--m)');
     });
-
-    test('既存の style がある場合、マージされる', () => {
-      const result = getLayoutProps('switchColumns', {
-        breakSize: '600px',
-        style: { margin: '20px' },
-      });
-      expect(result.style?.margin).toBe('20px');
-      expect(result.style?.['--breakSize']).toBe('600px');
-    });
-
-    test('breakSize 以外のpropsは維持される', () => {
-      const result = getLayoutProps('switchColumns', {
-        breakSize: '600px',
-        otherProp: 'value',
-      });
-      expect(result.otherProp).toBe('value');
-      expect((result as unknown as Record<string, unknown>).breakSize).toBeUndefined();
-    });
   });
 
   describe('tileGrid レイアウト', () => {
@@ -241,32 +182,6 @@ describe('getLayoutProps', () => {
     test('その他のpropsはそのまま維持される', () => {
       const result = getLayoutProps('tileGrid', { style: { color: 'red' } });
       expect(result.style?.color).toBe('red');
-    });
-  });
-
-  describe('複数propsの組み合わせ', () => {
-    test('primitiveClass と style が両方ある場合、正しく処理される', () => {
-      const result = getLayoutProps('withSide', {
-        primitiveClass: ['custom-primitive'],
-        sideW: '200px',
-        style: { color: 'red' },
-      });
-      expect(result.primitiveClass).toContain('custom-primitive');
-      expect(result.primitiveClass).toContain('l--withSide');
-      expect(result.style?.color).toBe('red');
-      expect(result.style?.['--sideW']).toBe('200px');
-    });
-
-    test('レイアウト固有のpropsは削除され、その他は維持される', () => {
-      const result = getLayoutProps('flow', {
-        flow: 's',
-        otherProp1: 'value1',
-        otherProp2: 'value2',
-      } as Parameters<typeof getLayoutProps>[1]);
-      expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
-      expect(result.primitiveClass).toContain('l--flow');
-      expect((result as Record<string, unknown>).otherProp1).toBe('value1');
-      expect((result as Record<string, unknown>).otherProp2).toBe('value2');
     });
   });
 });

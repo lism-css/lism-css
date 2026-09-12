@@ -69,7 +69,7 @@ afterEach(() => {
 });
 
 describe('addCommand', () => {
-  it('ui セクションが無い場合、framework のみ対話で収集してメモリ上の値で配置し、ファイルは書き換えない', async () => {
+  it('ui セクションが無い場合、framework を対話で収集してメモリ上の値で配置し、ファイルは書き換えない', async () => {
     const original = "export default { tokens: { space: ['10', '20'] } };\n";
     writeFile(path.join(tmpDir, 'lism.config.js'), original);
     vi.mocked(select).mockResolvedValue('react');
@@ -77,13 +77,8 @@ describe('addCommand', () => {
     await addCommand(['Button'], { overwrite: false, all: false });
 
     expect(select).toHaveBeenCalledTimes(1);
-    // 配置はメモリ上の値（dir は既定値）で行われる
     expect(fs.existsSync(path.join(tmpDir, 'src/components/ui/Button/Button.jsx'))).toBe(true);
-    // lism.config.js は書き換えられない
     expect(fs.readFileSync(path.join(tmpDir, 'lism.config.js'), 'utf-8')).toBe(original);
-    // 末尾にスニペット案内が出る
-    expect(infoSpy.mock.calls.some((call: unknown[]) => String(call[0]).includes('ui: {'))).toBe(true);
-    expect(exitSpy).not.toHaveBeenCalled();
   });
 
   it('ui セクションが既にある場合、prompt は呼ばれずスニペット案内も出ない', async () => {

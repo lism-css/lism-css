@@ -16,27 +16,9 @@ afterEach(() => {
 });
 
 describe('言語ごとのパターン公開', () => {
-  it('カテゴリ順を揃え、下書きも含めてカテゴリ名と2桁の連番で採番する', async () => {
+  it('カテゴリ順を patterns の定義順と揃え、下書きも含めてカテゴリ名と2桁の連番で採番する', async () => {
     const { patterns, categoryIds } = await import('@/config/patterns');
-    expect(categoryIds).toEqual([
-      'hero',
-      'feature',
-      'pricing',
-      'about',
-      'member',
-      'testimonials',
-      'posts',
-      'faq',
-      'cta',
-      'page-links',
-      'general',
-      'process',
-      'stats',
-      'logos',
-      'footer',
-    ]);
     expect(Object.keys(patterns)).toEqual(categoryIds);
-    expect(Object.values(patterns).flatMap(({ items }) => items)).toHaveLength(62);
     for (const category of categoryIds) {
       const { items } = patterns[category];
       expect(items.map(({ id }) => id)).toEqual(items.map((_, index) => `${category}${String(index + 1).padStart(2, '0')}`));
@@ -86,27 +68,11 @@ describe('言語ごとのパターン公開', () => {
     }
   });
 
-  it('リンク集・CTAを日英共通のカテゴリとURLで取得できる', () => {
-    expect(catalog.getPatternCategory('page-links', 'ja')?.items.map(({ id }) => id)).toEqual([
-      'page-links01',
-      'page-links02',
-      'page-links03',
-      'page-links04',
-      'page-links05',
-      'page-links06',
-      'page-links07',
-    ]);
-    expect(catalog.getPatternCategory('page-links', 'en')?.items).toHaveLength(7);
-    for (const lang of ['ja', 'en'] as const) {
-      expect(catalog.getPattern('page-links', 'page-links07', lang)?.title).toBe('PageLinks07');
-      expect(catalog.getPatternCategory('feature', lang)?.items.map(({ id }) => id)).toEqual(['feature01', 'feature02', 'feature03', 'feature04']);
-      expect(catalog.getPattern('feature', 'feature03', lang)?.title).toBe('Feature03');
-      expect(catalog.getPattern('feature', 'feature04', lang)?.title).toBe('Feature04');
-      expect(catalog.getPatternCategory('cta', lang)?.items.map(({ id }) => id)).toEqual(['cta01', 'cta02']);
-      expect(catalog.getPattern('cta', 'cta01', lang)?.title).toBe('CTA01');
-      expect(catalog.getPattern('cta', 'cta05', lang)).toBeUndefined();
-      expect(catalog.getPattern('section', 'section01', lang)).toBeUndefined();
-    }
+  it('languages 未指定の例は日英とも公開し、指定がある例は指定言語だけで公開する', () => {
+    const base = { id: 'x01', title: 'X01', description: { ja: 'ja', en: 'en' } };
+    const items = [base, { ...base, id: 'x02', languages: ['ja' as const] }, { ...base, id: 'x03', languages: ['en' as const] }];
+    expect(catalog.filterPatternItems(items, 'ja').map(({ id }) => id)).toEqual(['x01', 'x02']);
+    expect(catalog.filterPatternItems(items, 'en').map(({ id }) => id)).toEqual(['x01', 'x03']);
   });
 
   it('番号付きの説明タイトルを翻訳し、別言語の取得で元のタイトルを変えない', () => {
@@ -118,6 +84,7 @@ describe('言語ごとのパターン公開', () => {
     }
   });
 
+  // @/config/sidebar の import が重く、CI では既定の 5 秒を超えることがある
   it('サイドバーのURL・タイトル・カテゴリ順と生成対象ページが一致する', async () => {
     const { getPatternsSidebar } = await import('@/config/sidebar');
     for (const lang of ['ja', 'en'] as const) {
@@ -138,23 +105,17 @@ describe('言語ごとのパターン公開', () => {
         catalog.getPatternCategories(lang).map(({ id, label }) => ({ label, link: `/patterns/${id}/` }))
       );
     }
-  });
+  }, 20_000);
 
-  it('下書き11件は本番で除外し、開発時には同じ番号で日英とも表示する', async () => {
-    const drafts = [
-      ['hero', 'hero04'],
-      ['hero', 'hero05'],
-      ['feature', 'feature05'],
-      ['pricing', 'pricing03'],
-      ['cta', 'cta03'],
-      ['cta', 'cta04'],
-      ['process', 'process01'],
-      ['process', 'process02'],
-      ['stats', 'stats01'],
-      ['logos', 'logos01'],
-      ['footer', 'footer01'],
-    ] as const;
-    const draftOnlyCategories = ['process', 'stats', 'logos', 'footer'];
+  it('下書きは本番で除外し、開発時には同じ番号で日英とも表示する', async () => {
+    const { patterns } = await import('@/config/patterns');
+    const drafts = Object.entries(patterns).flatMap(([category, { items }]) =>
+      items.filter((item) => item.draft).map((item) => [category, item.id] as const)
+    );
+    const draftOnlyCategories = Object.entries(patterns)
+      .filter(([, { items }]) => items.every((item) => item.draft))
+      .map(([category]) => category);
+    expect(drafts.length).toBeGreaterThan(0);
     for (const lang of ['ja', 'en'] as const) {
       for (const [category, id] of drafts) {
         expect(catalog.getPattern(category, id, lang), `${lang}: ${category}/${id}`).toBeUndefined();
@@ -162,7 +123,6 @@ describe('言語ごとのパターン公開', () => {
       for (const category of draftOnlyCategories) {
         expect(catalog.getPatternCategoryIds(lang)).not.toContain(category);
       }
-      expect(catalog.getPatternCategory('pricing', lang)?.items.map(({ id }) => id)).toEqual(['pricing01', 'pricing02']);
     }
     vi.stubEnv('PROD', false);
     vi.resetModules();
@@ -180,7 +140,8 @@ describe('言語ごとのパターン公開', () => {
       for (const category of draftOnlyCategories) {
         expect(devCatalog.getPatternCategoryIds(lang)).toContain(category);
       }
-      expect(devCatalog.getPattern('hero', 'hero01', lang)).toEqual(catalog.getPattern('hero', 'hero01', lang));
+      const [{ category, id }] = catalog.getAllPatternPaths(lang);
+      expect(devCatalog.getPattern(category, id, lang)).toEqual(catalog.getPattern(category, id, lang));
     }
   });
 

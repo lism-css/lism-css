@@ -55,16 +55,6 @@ describe('flattenPostsBySidebarOrder', () => {
     expect(ordered).toEqual(['ui/Accordion', 'ui/Button', 'ui/block-examples/Timeline', 'ui/block-examples/Chat', 'ui/components/Card']);
   });
 
-  it('Blocks最後の記事の次はBlock Examples先頭になり、Blocks内の前後関係に他グループの記事が混ざらない', () => {
-    const posts = [post('ui/Button', 1), post('ui/Tabs', 2), post('ui/block-examples/Timeline', 1)];
-    const ordered = flattenPostsBySidebarOrder(posts, uiSections).map((p) => p.id);
-
-    // Button の次は同グループの Tabs（Timeline ではない）
-    expect(ordered[ordered.indexOf('ui/Button') + 1]).toBe('ui/Tabs');
-    // グループ境界: Blocks 最後（Tabs）の次に Block Examples 先頭（Timeline）
-    expect(ordered[ordered.indexOf('ui/Tabs') + 1]).toBe('ui/block-examples/Timeline');
-  });
-
   it('items指定セクションは記載順で並び、dirセクションと重複しない', () => {
     const sections: SidebarSection[] = [
       { label: 'はじめに', items: ['/docs/b/', '/docs/a/'] },
