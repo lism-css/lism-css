@@ -1,17 +1,17 @@
 ---
 import { Flow, Center, Icon } from 'lism-css/astro';
-import { Lightbulb } from '@lism-css/icons/astro';
+import { LightbulbIcon } from '@lism-css/icons/astro';
 
 type Preset = {
   color: string;
-  icon?: typeof Lightbulb;
+  icon?: typeof LightbulbIcon;
   viewBox?: string;
   path?: string;
 };
 
 const PRESETS: Record<string, Preset> = {
   point: {
-    icon: Lightbulb,
+    icon: LightbulbIcon,
     color: 'orange',
   },
   alert: {

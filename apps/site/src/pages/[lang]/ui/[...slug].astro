@@ -1,5 +1,5 @@
 ---
-import { Warning } from '@lism-css/icons/astro';
+import { WarningIcon } from '@lism-css/icons/astro';
 // 非root言語の記事を表示し、未翻訳ならroot言語へフォールバックする
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
@@ -77,7 +77,7 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
 
     <Lism class="u--cbox" keycolor="yellow" p="20" my="40" bdrs="10" bd>
       <Lism layout="flex" ai="center" g="10" fw="bold">
-        <Icon icon={Warning} fz="l" c="keycolor" />
+        <Icon icon={WarningIcon} fz="l" c="keycolor" />
         This page is currently under construction
       </Lism>
       <Lism fz="s" mbs="5">Lism UI (@lism-css/ui) is still in preparation.</Lism>

@@ -1,5 +1,5 @@
 ---
-import { Book, CaretRight, Cart, Clock, Home } from '@lism-css/icons/astro';
+import { BookIcon, CaretRightIcon, CartIcon, ClockIcon, HomeIcon } from '@lism-css/icons/astro';
 import Layout from '@/layouts/Layout.astro';
 import { Box, Cluster, Columns, Container, Flex, Frame, Grid, Heading, Icon, Inline, Layer, Link, Lism, Media, Stack, Text } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
@@ -196,30 +196,30 @@ const plans = [
 ] as const satisfies readonly Plan[];
 
 type InformationItem = {
-  icon: typeof Home | typeof Clock | typeof Book | typeof Cart;
+  icon: typeof HomeIcon | typeof ClockIcon | typeof BookIcon | typeof CartIcon;
   title: string;
   description: string;
 };
 
 const informationItems = [
   {
-    icon: Home,
+    icon: HomeIcon,
     title: 'Lobby and Lounge',
     description:
       'From the moment you arrive to the quiet hours after your evening bath. Help yourself to coffee and tea sweets, and settle into the garden-side tatami seating.',
   },
   {
-    icon: Clock,
+    icon: ClockIcon,
     title: 'Front Desk, Open 24 Hours',
     description: 'Check-in guidance, walking routes nearby, taxis and shuttle arrangements. Whenever something comes up, just say the word.',
   },
   {
-    icon: Cart,
+    icon: CartIcon,
     title: 'Shop and Souvenir Corner',
     description: 'Local sake and confections, original towels and bath amenities. Stop by for small travel essentials or for gifts to take home.',
   },
   {
-    icon: Book,
+    icon: BookIcon,
     title: 'Reading Room and Study Corner',
     description: 'Guidebooks and photo collections on ryokan and hot-spring towns. Turn a few pages after your bath and plan tomorrow at leisure.',
   },
@@ -786,7 +786,7 @@ const reservationSites: readonly SiteCard[] = [
                         </Inline>
                       </Stack>
                       <Box d={['block', null, 'none']}>
-                        <Icon icon={CaretRight} weight="bold" fz="s" o="pp" />
+                        <Icon icon={CaretRightIcon} weight="bold" fz="s" o="pp" />
                       </Box>
                     </NavMenu.Link>
                   </NavMenu.Item>

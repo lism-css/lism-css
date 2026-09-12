@@ -15,16 +15,18 @@ pnpm add @lism-css/icons
 
 ## Basic usage
 
+Component names end in `Icon`, such as `BookIcon` and `HeartFillIcon`.
+
 In React, import icons from `/react`.
 
 ```tsx
-import { Book, HeartFill } from '@lism-css/icons/react';
+import { BookIcon, HeartFillIcon } from '@lism-css/icons/react';
 
 export function Example() {
   return (
     <>
-      <Book size={24} strokeWidth={2} aria-label="Book" />
-      <HeartFill size="1.5em" aria-label="Favorite" />
+      <BookIcon size={24} strokeWidth={2} aria-label="Book" />
+      <HeartFillIcon size="1.5em" aria-label="Favorite" />
     </>
   );
 }
@@ -34,28 +36,51 @@ In Astro, import icons from `/astro`.
 
 ```astro
 ---
-import { Book, HeartFill } from '@lism-css/icons/astro';
+import { BookIcon, HeartFillIcon } from '@lism-css/icons/astro';
 ---
 
-<Book size={24} stroke-width={2} aria-label="Book" />
-<HeartFill size="1.5em" aria-label="Favorite" />
+<BookIcon size={24} stroke-width={2} aria-label="Book" />
+<HeartFillIcon size="1.5em" aria-label="Favorite" />
 ```
 
-Set the width and height together with `size` (default `1em`); explicit `width` or `height` takes precedence. Icons inherit the surrounding text color. The default stroke width is `1.5`. Change it with `strokeWidth` in React or `stroke-width` in Astro. Stroke width does not affect icons drawn only with fills, such as `HeartFill`. It does apply to the stroke in icons that combine fills and strokes, such as `NoteFill`.
+Set the width and height together with `size` (default `1em`); explicit `width` or `height` takes precedence. Icons inherit the surrounding text color.
 
 Icons are hidden from screen readers by default. When an icon conveys meaning on its own, provide an `aria-label` as shown above.
 
+## Stroke width
+
+Stroke icons use a 24-unit grid and default to a stroke width of `1.5`. Use `weight` to select their thickness.
+
+| weight | Stroke width |
+| --- | --- |
+| `light` | 1 |
+| `regular` | 1.5 |
+| `bold` | 2 |
+
+```tsx
+import { InfoIcon } from '@lism-css/icons/react';
+
+<InfoIcon weight="light" />
+<InfoIcon weight="regular" />
+<InfoIcon weight="bold" />
+<InfoIcon weight="bold" strokeWidth={1.25} />
+```
+
+Astro supports the same `weight` values. To set a stroke width directly, use `strokeWidth` in React, or `stroke-width` or `strokeWidth` in Astro. An explicit stroke width overrides `weight`; in Astro, `stroke-width` takes precedence when both spellings are supplied.
+
+`weight` does not switch between stroke and fill icons. Stroke width does not change the thickness of fill-only icons such as `HeartFillIcon`. For icons that combine fills and strokes, such as `NoteFillIcon`, it applies to the stroke.
+
 ## Using icons with Lism CSS
 
-Pass an icon to the Lism CSS [Icon component](/en/docs/primitives/a--icon/) to use Lism Props such as `c` and `fz`, along with `weight`. The same example works in React by changing both import paths to `/react`.
+Pass an icon to the Lism CSS [Icon component](/en/docs/primitives/a--icon/) to use Lism Props such as `c` and `fz`. The same example works in React by changing both import paths to `/react`.
 
 ```astro
 ---
 import { Icon } from 'lism-css/astro';
-import { Book } from '@lism-css/icons/astro';
+import { BookIcon } from '@lism-css/icons/astro';
 ---
 
-<Icon icon={Book} fz="2xl" c="blue" weight="bold" />
+<Icon icon={BookIcon} fz="2xl" c="blue" weight="bold" />
 ```
 
 All icons are original works and released under the MIT license. See the [package README](https://github.com/lism-css/icons) for details.

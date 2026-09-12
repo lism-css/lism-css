@@ -13,7 +13,7 @@ export interface IconOwnProps {
   icon?: IconProp;
   label?: string;
   size?: string;
-  weight?: 'light' | 'regular' | 'bold';
+  weight?: string;
   strokeWidth?: string | number;
   'stroke-width'?: string | number;
   exProps?: Record<string, unknown>;
@@ -145,12 +145,12 @@ export default function getProps({ as, icon, label, weight, exProps: inputExProp
     }
   }
 
-  if (weight) exProps.strokeWidth = { light: 1, regular: 1.5, bold: 2 }[weight];
+  if (weight !== undefined) exProps.weight = weight;
   for (const key of Object.keys(exProps)) {
     if (_rest[key] !== undefined) exProps[key] = _rest[key];
   }
   exProps = { ...exProps, ...explicitProps };
-  // exProps / iconオブジェクト経由のweightは外部コンポーネント向け。svg等のネイティブ要素には属性として出さない。
+  // weightの解釈は外部コンポーネントに委ね、ネイティブ要素には出力しない。
   if (typeof Component === 'string') delete exProps.weight;
 
   // labelの有無に合わせてアクセシビリティ属性を付ける。

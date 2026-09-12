@@ -3,11 +3,11 @@ title: 'Button'
 description: 'A UI component that displays links styled as buttons.'
 ---
 
-import { ArrowRight } from '@lism-css/icons/astro';
+import { ArrowRightIcon } from '@lism-css/icons/astro';
 import { Box, Flex, Grid, Lism, Frame, Media, Icon, Spacer, Center, Layer, Cluster, Stack, Link } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
-import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon as PhosphorArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 
 A component for displaying button-style links.
@@ -92,7 +92,7 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
         <Fragment>Button</Fragment>
       </Button>
       <Button href="###" bgc="#d13d5e" bdrs="99">
-        <Icon icon={ArrowRight} />
+        <Icon icon={ArrowRightIcon} />
         <Fragment>Button</Fragment>
       </Button>
     </Flex>
@@ -100,13 +100,13 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
 
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { ArrowRight } from '@lism-css/icons/react';
+    import { ArrowRightIcon } from '@lism-css/icons/react';
 
     <Flex g="15">
       <Button href="###">Button</Button>
       <Button href="###" bgc="brand" bdrs="10">Button</Button>
       <Button href="###" bgc="#d13d5e" bdrs="99">
-        <Icon icon={ArrowRight} />Button
+        <Icon icon={ArrowRightIcon} />Button
       </Button>
     </Flex>
     ```
@@ -134,7 +134,7 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
         <Fragment>Button</Fragment>
       </Button>
       <Button href="###" variant="outline" c="#d13d5e" bdrs="99">
-        <Icon icon={ArrowRight} />
+        <Icon icon={ArrowRightIcon} />
         <Fragment>Button</Fragment>
       </Button>
     </Flex>
@@ -142,13 +142,13 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
 
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { ArrowRight } from '@lism-css/icons/react';
+    import { ArrowRightIcon } from '@lism-css/icons/react';
 
     <Flex g="15">
       <Button href="###">Button</Button>
       <Button href="###" variant="outline" c="brand" bdrs="10">Button</Button>
       <Button href="###" variant="outline" c="#d13d5e" bdrs="99">
-        <Icon icon={ArrowRight} />Button
+        <Icon icon={ArrowRightIcon} />Button
       </Button>
     </Flex>
     ```
@@ -172,12 +172,12 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
   <PreviewArea p="20" bg=":stripe" layout="">
     <Cluster g="15">
       <Button href="###" g="5" bdrs="10">
-        <Icon icon={ArrowRight} style={{ translate: '-25% 0' }} />
+        <Icon icon={ArrowRightIcon} style={{ translate: '-25% 0' }} />
         <span>Button</span>
       </Button>
       <Button href="###" variant="outline" g="5" bdrs="10">
         <span>Button</span>
-        <Icon icon={ArrowRightIcon} style={{ translate: '25% 0' }} />
+        <Icon icon={PhosphorArrowRightIcon} style={{ translate: '25% 0' }} />
       </Button>
       <Button href="###" w="fit" px="10" py="10" hl="0" bdrs="10">
         <Icon icon={{ as: ShoppingCartSimpleIcon, weight: 'fill' }} fz="l" />
@@ -186,11 +186,11 @@ Provided as `Button` (`b--button`) from the `@lism-css/ui` package.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { ArrowRight } from '@lism-css/icons/react';
+    import { ArrowRightIcon } from '@lism-css/icons/react';
 
     <Cluster g="15">
       <Button href="###" g="5" bdrs="10">
-        <Icon icon={ArrowRight} style={{ translate: '-25% 0' }} />
+        <Icon icon={ArrowRightIcon} style={{ translate: '-25% 0' }} />
         <span>Button</span>
       </Button>
       <Button href="###" variant="outline" g="5" bdrs="10">
@@ -258,26 +258,26 @@ Specifying `layout='grid'` applies the `l--grid` class, enabling a grid layout w
   <PreviewArea p="20" flow="20">
     <Stack max-w="20em" g="15">
       <Button href="###" layout="grid" bdrs="10" hov="-bgc">
-        <Icon icon={ArrowRight} />
+        <Icon icon={ArrowRightIcon} />
         <span>Button</span>
       </Button>
       <Button href="###" layout="grid" bdrs="10" hov="-bgc">
         <span>Button</span>
-        <Icon icon={ArrowRightIcon} />
+        <Icon icon={PhosphorArrowRightIcon} />
       </Button>
       <Button href="###" layout="grid" bdrs="10" hov="-bgc">
-        <Icon icon={ArrowRight} />
-        <span>Button</span>
         <Icon icon={ArrowRightIcon} />
+        <span>Button</span>
+        <Icon icon={PhosphorArrowRightIcon} />
       </Button>
     </Stack>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'layout="grid"'
-    import { ArrowRight } from '@lism-css/icons/react';
+    import { ArrowRightIcon } from '@lism-css/icons/react';
 
     <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
-      <Icon icon={ArrowRight} />
+      <Icon icon={ArrowRightIcon} />
       <span>Button</span>
     </Button>
     <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
@@ -285,7 +285,7 @@ Specifying `layout='grid'` applies the `l--grid` class, enabling a grid layout w
       <Icon icon={ArrowRightIcon} />
     </Button>
     <Button href="###" layout="grid" max-w="20em" bdrs="10" hov="-bgc">
-      <Icon icon={ArrowRight} />
+      <Icon icon={ArrowRightIcon} />
       <span>Button</span>
       <Icon icon={ArrowRightIcon} />
     </Button>
@@ -356,7 +356,7 @@ This example builds a Button with lism-css primitives only, without `@lism-css/u
       hov="-bgc"
     >
       <Lism as="span" gc="2">Button</Lism>
-      <Icon icon={ArrowRightIcon} />
+      <Icon icon={PhosphorArrowRightIcon} />
     </Grid>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">

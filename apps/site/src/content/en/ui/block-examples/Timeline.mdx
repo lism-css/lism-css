@@ -3,7 +3,7 @@ title: 'Timeline'
 description: 'An example of a timeline UI (b--timeline) built with Lism CSS.'
 ---
 
-import { Check } from '@lism-css/icons/astro';
+import { CheckIcon } from '@lism-css/icons/astro';
 import { Lism, Grid, Center, Decorator, Icon } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import '@/components/ex/Timeline/style.css';
@@ -217,7 +217,7 @@ Add `_hasIcon` to the shape and place an `<Icon>` (`a--icon`) inside it to displ
       <Grid class="b--timeline_item" ai="center" cg="20">
         <Decorator class="b--timeline_line" bgc="divider" jslf="center" gr="1/-1" gc="1" />
         <Center class="b--timeline_shape _hasIcon" pos="relative" z="1" c="base" ar="1/1" bdrs="99" jslf="center" bgc="text" gr="2" gc="1">
-          <Icon icon={Check} style={{ scale: '0.625' }} />
+          <Icon icon={CheckIcon} style={{ scale: '0.625' }} />
         </Center>
         <Lism class="b--timeline_time" fz="xs" fw="bold" gr="2" gc="2">Month dd, 20yy</Lism>
         <Lism class="b--timeline_text" fz="s" mbs="15" gr="4" gc="2">
@@ -238,7 +238,7 @@ Add `_hasIcon` to the shape and place an `<Icon>` (`a--icon`) inside it to displ
         <Decorator class="b--timeline_line" bgc="divider" jslf="center" gr="1/-1" gc="1" />
         <Center class="b--timeline_shape _hasIcon" pos="relative" z="1" c="base" ar="1/1" bdrs="99" jslf="center" bgc="red" gr="2" gc="1">
           <Decorator class="b--timeline_highlight" as="span" pos="absolute" z="-1" bgc="inherit" bdrs="99" o="ppp" />
-          <Icon icon={Check} style={{ scale: '0.625' }} />
+          <Icon icon={CheckIcon} style={{ scale: '0.625' }} />
         </Center>
         <Lism class="b--timeline_time" fz="xs" fw="bold" gr="2" gc="2">Month dd, 20yy</Lism>
         <Lism class="b--timeline_text" fz="s" mbs="15" gr="4" gc="2">
@@ -250,12 +250,12 @@ Add `_hasIcon` to the shape and place an `<Icon>` (`a--icon`) inside it to displ
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx '_hasIcon'
-    import { Check } from '@lism-css/icons/react';
+    import { CheckIcon } from '@lism-css/icons/react';
 
     <Grid class="b--timeline_item" ai="center" cg="20">
       <Decorator class="b--timeline_line" bgc="divider" jslf="center" gr="1/-1" gc="1" />
       <Center class="b--timeline_shape _hasIcon" pos="relative" z="1" c="base" ar="1/1" bdrs="99" jslf="center" bgc="text" gr="2" gc="1">
-        <Icon icon={Check} style={{ scale: '0.625' }} />
+        <Icon icon={CheckIcon} style={{ scale: '0.625' }} />
       </Center>
       <Lism class="b--timeline_time" fz="xs" fw="bold" gr="2" gc="2">Month dd, 20yy</Lism>
       <Lism class="b--timeline_text" fz="s" mbs="15" gr="4" gc="2">

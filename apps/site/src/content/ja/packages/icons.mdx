@@ -15,16 +15,18 @@ pnpm add @lism-css/icons
 
 ## 基本的な使い方
 
+コンポーネント名は`BookIcon`・`HeartFillIcon`のように、末尾に`Icon`が付きます。
+
 Reactでは`/react`から読み込みます。
 
 ```tsx
-import { Book, HeartFill } from '@lism-css/icons/react';
+import { BookIcon, HeartFillIcon } from '@lism-css/icons/react';
 
 export function Example() {
   return (
     <>
-      <Book size={24} strokeWidth={2} aria-label="本" />
-      <HeartFill size="1.5em" aria-label="お気に入り" />
+      <BookIcon size={24} strokeWidth={2} aria-label="本" />
+      <HeartFillIcon size="1.5em" aria-label="お気に入り" />
     </>
   );
 }
@@ -34,28 +36,51 @@ Astroでは`/astro`から読み込みます。
 
 ```astro
 ---
-import { Book, HeartFill } from '@lism-css/icons/astro';
+import { BookIcon, HeartFillIcon } from '@lism-css/icons/astro';
 ---
 
-<Book size={24} stroke-width={2} aria-label="本" />
-<HeartFill size="1.5em" aria-label="お気に入り" />
+<BookIcon size={24} stroke-width={2} aria-label="本" />
+<HeartFillIcon size="1.5em" aria-label="お気に入り" />
 ```
 
-大きさは`size`で幅・高さをまとめて指定でき、既定は`1em`です。`width`・`height`を個別に指定した場合はそちらを優先します。色は周囲の文字色を引き継ぎます。線幅の既定は`1.5`です。Reactでは`strokeWidth`、Astroでは`stroke-width`で変更できます。`HeartFill`のように塗りだけで描画されるアイコンは線幅では太さが変わりません。`NoteFill`のように塗りと線を併用するアイコンには線幅が適用されます。
+大きさは`size`で幅・高さをまとめて指定でき、既定は`1em`です。`width`・`height`を個別に指定した場合はそちらを優先します。色は周囲の文字色を引き継ぎます。
 
 装飾用のアイコンは、既定で読み上げの対象から外れます。アイコン単体で意味を伝える場合は、上の例のように`aria-label`を指定してください。
 
+## 線の太さ
+
+線アイコンは24グリッドで描画され、既定の線幅は`1.5`です。`weight`で線の太さを選べます。
+
+| weight | 線幅 |
+| --- | --- |
+| `light` | 1 |
+| `regular` | 1.5 |
+| `bold` | 2 |
+
+```tsx
+import { InfoIcon } from '@lism-css/icons/react';
+
+<InfoIcon weight="light" />
+<InfoIcon weight="regular" />
+<InfoIcon weight="bold" />
+<InfoIcon weight="bold" strokeWidth={1.25} />
+```
+
+Astroでも同じ`weight`を使えます。線幅を直接指定する場合は、Reactでは`strokeWidth`、Astroでは`stroke-width`または`strokeWidth`を使います。明示した線幅は`weight`より優先され、Astroで両表記を指定した場合は`stroke-width`が優先されます。
+
+`weight`は線と塗りを切り替える指定ではありません。`HeartFillIcon`のような塗りだけのアイコンは線幅で太さが変わりません。`NoteFillIcon`のように塗りと線を併用するアイコンでは、線の部分に適用されます。
+
 ## Lism CSSと組み合わせる
 
-Lism CSSの[Iconコンポーネント](/docs/primitives/a--icon/)へ渡すと、`c`・`fz`などのLism Propsや`weight`を使えます。Reactでも同じ書き方で、import先をそれぞれ`/react`に変えて利用できます。
+Lism CSSの[Iconコンポーネント](/docs/primitives/a--icon/)へ渡すと、`c`・`fz`などのLism Propsを使えます。Reactでも同じ書き方で、import先をそれぞれ`/react`に変えて利用できます。
 
 ```astro
 ---
 import { Icon } from 'lism-css/astro';
-import { Book } from '@lism-css/icons/astro';
+import { BookIcon } from '@lism-css/icons/astro';
 ---
 
-<Icon icon={Book} fz="2xl" c="blue" weight="bold" />
+<Icon icon={BookIcon} fz="2xl" c="blue" weight="bold" />
 ```
 
 アイコンはすべてオリジナルです。ライセンスはMITです。詳しくは[パッケージのREADME](https://github.com/lism-css/icons)をご覧ください。

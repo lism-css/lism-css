@@ -20,9 +20,9 @@ try {
   await writeFile(
     join(fixtureDir, 'src/External.astro'),
     `---
-const { strokeWidth = 7, ...props } = Astro.props;
+const { strokeWidth = 7, weight, ...props } = Astro.props;
 ---
-<svg stroke-width={strokeWidth} {...props}><path d="M0 0L24 24" /></svg>
+<svg stroke-width={strokeWidth} data-weight={weight} {...props}><path d="M0 0L24 24" /></svg>
 `
   );
   await writeFile(
@@ -34,7 +34,7 @@ const svgInput = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 ---
 <html><body>
 <Icon icon={svgInput} data-case="svg-input" />
-{['light', 'regular', 'bold'].map((weight) => <Icon icon={svgInput} weight={weight} data-case={weight} />)}
+<Icon icon={svgInput} weight="bold" data-case="bold" />
 <Icon icon={svgInput} weight="bold" strokeWidth={0.5} data-case="camel" />
 <Icon icon={svgInput} weight="bold" strokeWidth={0.5} stroke-width={0.75} data-case="native" />
 <Icon icon={svgInput} weight="bold" strokeWidth={0.5} exProps={{ 'stroke-width': 3 }} data-case="exProps" />
@@ -42,6 +42,8 @@ const svgInput = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 <Icon icon={svgInput} size="2em" data-case="size-only" />
 <Icon icon={External} label="外部アイコン" class="consumer-icon" data-case="external" />
 <Icon icon={External} weight="light" data-case="external-light" />
+<Icon as={External} weight="duotone" data-case="external-duotone" />
+<Icon icon={{ as: External, weight: 'fill' }} weight="light" exProps={{ weight: 'duotone' }} data-case="external-exProps" />
 <Icon icon={'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 0L24 24" /></svg>'} data-case="raw" />
 </body></html>
 `
@@ -63,19 +65,22 @@ const svgInput = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
   assertNoDuplicateAttributes(inputRoot, 'svg-input');
   assert.match(inputSvg, /<path\b/);
   for (const [name, width] of Object.entries({
-    light: '1',
-    regular: '1.5',
-    bold: '2',
+    bold: '1.5',
     camel: '0.5',
     native: '0.75',
     exProps: '3',
     external: '7',
-    'external-light': '1',
+    'external-light': '7',
+    'external-duotone': '7',
+    'external-exProps': '7',
     raw: '2',
   })) {
     const root = rootTag(find('data-case', name));
     assert.ok(root.includes(`stroke-width="${width}"`), `${name}: ${root}`);
-    assert.doesNotMatch(root, /\b(?:weight|strokeWidth)=/);
+    assert.doesNotMatch(root, /\s(?:weight|strokeWidth)=/);
+  }
+  for (const [name, weight] of Object.entries({ 'external-light': 'light', 'external-duotone': 'duotone', 'external-exProps': 'duotone' })) {
+    assert.ok(rootTag(find('data-case', name)).includes(`data-weight="${weight}"`), name);
   }
   const size = rootTag(find('data-case', 'size'));
   assert.match(size, /width="3em"/);

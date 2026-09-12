@@ -2,7 +2,7 @@
 title: 'Alert'
 description: '短いメッセージを目立たせて表示するUIコンポーネントです。'
 ---
-import { Alert as AlertIcon, Good } from '@lism-css/icons/astro';
+import { AlertIcon, GoodIcon } from '@lism-css/icons/astro';
 import { Box, Flow, Flex, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
 import { Alert } from '@lism-css/ui/astro/Alert';
 import { Button } from '@lism-css/ui/astro/Button';
@@ -83,15 +83,15 @@ Alert のベーススタイルは、以下のCSSで定義されています。
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p="20">
-    <Alert icon={Good} keycolor="green">
+    <Alert icon={GoodIcon} keycolor="green">
       <p>Good / green</p>
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { Good } from '@lism-css/icons/react';
+    import { GoodIcon } from '@lism-css/icons/react';
 
-    <Alert icon={Good} keycolor="green">
+    <Alert icon={GoodIcon} keycolor="green">
       <p>Good / green</p>
     </Alert>
     ```
@@ -248,7 +248,7 @@ Alert のベーススタイルは、以下のCSSで定義されています。
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    import { Alert as AlertIcon } from '@lism-css/icons/react';
+    import { AlertIcon } from '@lism-css/icons/react';
 
     <WithSide util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
