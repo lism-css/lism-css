@@ -24,9 +24,9 @@ const Dots = /* @__PURE__ */ forwardRef<SVGSVGElement, DotsProps>(function Dots(
       {...props}
       ref={ref}
     >
+      <circle cx="6" cy="12" r=".375" />
       <circle cx="12" cy="12" r=".375" />
-      <circle cx="18.375" cy="12" r=".375" />
-      <circle cx="5.625" cy="12" r=".375" />
+      <circle cx="18" cy="12" r=".375" />
       {children}
     </svg>
   );

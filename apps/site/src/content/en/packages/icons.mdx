@@ -3,7 +3,7 @@ title: '@lism-css/icons'
 description: 'Learn how to install and use SVG icons in React and Astro.'
 ---
 
-`@lism-css/icons` is a collection of SVG icons for React and Astro. It includes all 47 icons: the icons bundled with Lism CSS, plus `Book`, `Cart`, `Heart`, fill icons, and more. It also works in projects that do not use Lism CSS.
+`@lism-css/icons` is a collection of SVG icons designed for Lism CSS and available in React and Astro. It includes stroke and fill icons, and also works in projects that do not use Lism CSS.
 
 ## Installation
 
@@ -39,7 +39,7 @@ import { Book, HeartFill } from '@lism-css/icons/astro';
 <HeartFill size={24} aria-label="Favorite" />
 ```
 
-Set the width and height together with `size` (default `1em`); explicit `width` or `height` takes precedence. Icons inherit the surrounding text color. The default stroke width is `1.5`. Change it with `strokeWidth` in React or `stroke-width` in Astro. Stroke width does not affect fill icons such as `HeartFill`.
+Set the width and height together with `size` (default `1em`); explicit `width` or `height` takes precedence. Icons inherit the surrounding text color. The default stroke width is `1.5`. Change it with `strokeWidth` in React or `stroke-width` in Astro. Stroke width does not affect icons drawn only with fills, such as `HeartFill`. It does apply to the stroke in icons that combine fills and strokes, such as `NoteFill`.
 
 Icons are hidden from screen readers by default. When an icon conveys meaning on its own, provide an `aria-label` as shown above.
 
@@ -56,4 +56,4 @@ import { Book } from '@lism-css/icons/astro';
 <Icon icon={Book} fz="2xl" c="blue" weight="bold" />
 ```
 
-The collection is based on [Phosphor Icons](https://phosphoricons.com/), with adjustments and original additions. It is released under the MIT license. See the [package README](https://github.com/lism-css/lism-css/tree/main/packages/icons) for details.
+All icons are original works and released under the MIT license. See the [package README](https://github.com/lism-css/lism-css/tree/main/packages/icons) for details.

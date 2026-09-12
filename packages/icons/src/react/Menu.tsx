@@ -24,9 +24,9 @@ const Menu = /* @__PURE__ */ forwardRef<SVGSVGElement, MenuProps>(function Menu(
       {...props}
       ref={ref}
     >
-      <line x1="3.75" y1="12" x2="20.25" y2="12" />
-      <line x1="3.75" y1="6" x2="20.25" y2="6" />
-      <line x1="3.75" y1="18" x2="20.25" y2="18" />
+      <path d="M2.5,5.667h19" />
+      <path d="M2.5,12h19" />
+      <path d="M2.5,18.333h19" />
       {children}
     </svg>
   );

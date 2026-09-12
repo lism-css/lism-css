@@ -16,14 +16,10 @@ for (const id of coreIconNames) {
 }
 const entries = (names) => names.map((id) => `${JSON.stringify(id)}: { ...defaults, body: ${JSON.stringify(icons[id].body)} }`).join(',\n');
 const source = await format(
-  `// 自動生成: bin/generate-icon-presets.mjs（入力: @lism-css/icons/data）\n// Phosphor Icons由来。著作権表示とMIT本文はTHIRD_PARTY_LICENSESを参照。\nconst defaults = ${JSON.stringify(defaults)} as const;\nexport const phIcons = {${entries(coreIconNames.filter((id) => id !== 'menu-2'))}};\nexport const originalIcons = {${entries(coreIconNames.filter((id) => id === 'menu-2'))}};\nexport default { ...phIcons, ...originalIcons };\n`,
+  `// 自動生成: bin/generate-icon-presets.mjs（入力: @lism-css/icons/data）\nconst defaults = ${JSON.stringify(defaults)} as const;\nexport const originalIcons = {${entries(coreIconNames)}};\n/** @deprecated Use originalIcons. */\nexport const phIcons = originalIcons;\nexport default originalIcons;\n`,
   { ...options, filepath: fileURLToPath(target) }
 );
-const license = await readFile(new URL('../../icons/THIRD_PARTY_LICENSES', import.meta.url), 'utf8');
-const outputs = [
-  [target, source],
-  [new URL('../THIRD_PARTY_LICENSES', import.meta.url), license],
-];
+const outputs = [[target, source]];
 const args = process.argv.slice(2);
 if (args.some((arg) => arg !== '--check')) throw new Error('Usage: generate-icon-presets.mjs [--check]');
 for (const [file, contents] of outputs) {

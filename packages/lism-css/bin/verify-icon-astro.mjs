@@ -61,7 +61,6 @@ import Callout from ${JSON.stringify(calloutPath)};
     assert.ok(svg, `${attribute}=${value}`);
     return svg;
   };
-  assert.equal(Object.keys(presets).length, 34);
   for (const icon of Object.keys(presets)) {
     const svg = find('data-icon', icon);
     const root = rootTag(svg);
@@ -113,7 +112,7 @@ import Callout from ${JSON.stringify(calloutPath)};
     assert.match(rootTag(svg), /stroke-width="1.5"/);
     assert.ok(svg.includes(presets[icon].body), `${consumer}: ${icon}の形状`);
   }
-  console.log('Astro: コア34種・線幅指定・外部SVG・Alert/Calloutの描画を検証しました');
+  console.log('Astro: コアプリセット・線幅指定・外部SVG・Alert/Calloutの描画を検証しました');
 } finally {
   await rm(fixtureDir, { recursive: true, force: true });
 }

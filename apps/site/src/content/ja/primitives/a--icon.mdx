@@ -6,8 +6,7 @@ description: 'a--icon は、アイコン要素を表示するためのクラス�
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
 import { Cat, SmileyIcon } from "@phosphor-icons/react";
-import {phIcons, originalIcons} from 'lism-css/react/atomic/Icon/presets';
-import { Home } from 'lucide-react';
+import { originalIcons } from 'lism-css/react/atomic/Icon/presets';
 
 export const PresetIcons = ({icons}) => {
   return <Grid layout="autoColumns" cols="10rem" g="15">
@@ -137,8 +136,6 @@ import { Icon } from 'lism-css/react';
 
 </Preview>
 
-
-
 {/* ※ `weight="thin"`は、`@phosphor-icons`側で利用できるプロパティです。 */}
 
 {/* <Preview>
@@ -153,13 +150,11 @@ import { Icon } from 'lism-css/react';
   </PreviewCode>
 </Preview> */}
 
-
 ### プリセットアイコンを呼び出す方法
 
-`lism-css`には、一般的なWebサイトで使う34個の線アイコンを内包しています。追加のアイコンパッケージなしで利用できます。
+`lism-css`には、一般的なWebサイトで使うオリジナルのプリセットアイコンを内包しています。追加のアイコンパッケージなしで利用できます。
 
-`icon='icon-name'`と文字列でその名前を指定することで、プリセットアイコンを呼び出すことができます。  
-（[Phosphor Icons](https://phosphoricons.com/) を使わせていただいています。）
+`icon='icon-name'`と文字列でその名前を指定すると、プリセットアイコンを呼び出せます。
 
 <Preview>
   <PreviewTitle>プリセットアイコン呼び出し例</PreviewTitle>
@@ -206,14 +201,10 @@ import { Icon } from 'lism-css/react';
 
 `strokeWidth`（Astroでは`stroke-width`も可）を指定すると、`weight`より優先します。外部の線アイコンにも`weight`を渡せます。指定しなければ、外部アイコン自身の線幅を維持します。外部パッケージ独自の`weight`は、前述の`exProps`または`icon`オブジェクトで指定してください。
 
-塗りアイコンや`book`・`cart`・`star`・`star-half`・`heart`・`lock`・`lock-open`は`@lism-css/icons`で提供します。`dot`は廃止し、ロゴはどちらのパッケージにも含めません。
+`@lism-css/icons`では、プリセット以外のアイコンや、塗りと線を組み合わせたアイコンを提供します。
 
 <h4 id="preset-icons">プリセットアイコン一覧</h4>
 
-<PreviewTitle>Phosphorアイコン一覧</PreviewTitle>
-<PresetIcons icons={phIcons} />
-
-<PreviewTitle>オリジナルアイコン一覧</PreviewTitle>
 <PresetIcons icons={originalIcons} />
 
 

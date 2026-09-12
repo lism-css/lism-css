@@ -24,15 +24,15 @@ const Calendar = /* @__PURE__ */ forwardRef<SVGSVGElement, CalendarProps>(functi
       {...props}
       ref={ref}
     >
-      <rect x="3.75" y="3.75" width="16.5" height="16.5" rx=".75" ry=".75" />
-      <line x1="16.5" y1="2.25" x2="16.5" y2="5.25" />
-      <line x1="7.5" y1="2.25" x2="7.5" y2="5.25" />
-      <line x1="3.75" y1="8.25" x2="20.25" y2="8.25" />
-      <circle cx="12" cy="12.375" r=".375" />
-      <circle cx="16.125" cy="12.375" r=".375" />
-      <circle cx="7.875" cy="16.125" r=".375" />
-      <circle cx="12" cy="16.125" r=".375" />
-      <circle cx="16.125" cy="16.125" r=".375" />
+      <rect x="3" y="4.75" width="18" height="16.5" rx="2.25" ry="2.25" />
+      <path d="M7.5,2.75v3.25" />
+      <path d="M16.5,2.75v3.25" />
+      <path d="M3,9.25h18" />
+      <circle cx="7.5" cy="13.25" r=".375" />
+      <circle cx="12" cy="13.25" r=".375" />
+      <circle cx="16.5" cy="13.25" r=".375" />
+      <circle cx="7.5" cy="17.25" r=".375" />
+      <circle cx="12" cy="17.25" r=".375" />
       {children}
     </svg>
   );

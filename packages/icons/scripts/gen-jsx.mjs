@@ -1,17 +1,8 @@
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { packageDir, rawDir, icons, layout, expectedDots, getArtboardRect } from './config.mjs';
+import { fileURLToPath } from 'node:url';
+import { packageDir } from './config.mjs';
 
-const args = process.argv.slice(2);
-if (!args[0] || args[0].startsWith('--') || (args.length !== 1 && (args.length !== 3 || args[1] !== '--ai-path' || !args[2]))) {
-  console.error('Usage: node gen-jsx.mjs {outputDir} [--ai-path {path}]');
-  process.exit(1);
-}
-
-const outputDir = path.resolve(args[0]);
-const requestedAiPath = path.resolve(args[2] ?? path.join(packageDir, 'design/lism-icons.ai'));
-if (path.extname(requestedAiPath).toLowerCase() !== '.ai') throw new Error('--ai-path must end in .ai');
-// Resolve existing ancestors too, so /tmp and its real path identify the same document.
 function canonicalPath(filePath) {
   try {
     return realpathSync(filePath);
@@ -21,36 +12,57 @@ function canonicalPath(filePath) {
   }
 }
 
-const config = {
-  aiPath: canonicalPath(requestedAiPath),
-  rawDir: canonicalPath(rawDir),
-  exportDir: canonicalPath(path.join(outputDir, 'export')),
-  icons: icons.map((icon, index) => ({ ...icon, index, rect: getArtboardRect(index) })),
-  size: layout.size,
-  expectedDots,
-};
-const template = (file) => readFileSync(new URL(`./ai/${file}.jsx`, import.meta.url), 'utf8');
-const common = template('common');
-const literal = (value) =>
-  JSON.stringify(value)
-    .replace(/\u2028/g, '\\u2028')
-    .replace(/\u2029/g, '\\u2029');
-mkdirSync(outputDir, { recursive: true });
-
-function generate(label, body, extra = {}) {
-  const settings = { ...config, ...extra, logPath: canonicalPath(path.join(outputDir, `${label}.log`)) };
-  const source = `(function () {\nvar config = ${literal(settings)};\nvar log = [];\n${common}\ntry {\n${body}\nwriteLog("LISM_OK: ${label}\\n" + log.join("\\n"));\nreturn "LISM_OK: ${label}\\n" + log.join("\\n");\n} catch (error) {\nvar failure = "LISM_ERROR: ${label}: " + error;\ntry { writeLog(failure + "\\n" + log.join("\\n")); } catch (logError) { failure += "\\nLog: " + logError; }\nreturn failure;\n}\n}());\n`;
-  writeFileSync(path.join(outputDir, `${label}.jsx`), source);
+export function generateJsx(
+  outputDir,
+  { sourcePath = path.join(packageDir, 'design/original/lism-icons-geometric-study.ai'), aiPath = path.join(packageDir, 'design/lism-icons.ai') } = {}
+) {
+  outputDir = path.resolve(outputDir);
+  sourcePath = canonicalPath(path.resolve(sourcePath));
+  aiPath = canonicalPath(path.resolve(aiPath));
+  if (![sourcePath, aiPath].every((file) => path.extname(file).toLowerCase() === '.ai')) throw new Error('Source and output must be .ai files');
+  if (sourcePath === aiPath) throw new Error('Source and output must be different files');
+  mkdirSync(outputDir, { recursive: true });
+  const config = {
+    sourcePath,
+    aiPath,
+    masterLayer: '01 Editable masters - 24px',
+    size: 24,
+    columns: 10,
+    gap: 12,
+    stagingPath: canonicalPath(path.join(outputDir, 'output-staging.ai')),
+    backupPath: canonicalPath(path.join(outputDir, 'before-output.ai')),
+    exportDir: canonicalPath(path.join(outputDir, 'export')),
+  };
+  const template = (file) => readFileSync(new URL(`./ai/${file}.jsx`, import.meta.url), 'utf8');
+  for (const [label, body] of [
+    ['01-sync', 'sync'],
+    ['02-export', 'export'],
+  ]) {
+    const settings = { ...config, logPath: canonicalPath(path.join(outputDir, `${label}.log`)) };
+    const literal = JSON.stringify(settings)
+      .replace(/\u2028/g, '\\u2028')
+      .replace(/\u2029/g, '\\u2029');
+    const source = `(function () {\nvar config = ${literal};\nvar log = [];\n${template('common')}\ntry {\n${template(body)}\nvar result = "LISM_OK: ${label}\\n" + log.join("\\n");\nwriteLog(result);\nreturn result;\n} catch (error) {\nvar failure = "LISM_ERROR: ${label}: " + error;\ntry { writeLog(failure + "\\n" + log.join("\\n")); } catch (logError) {}\nreturn failure;\n}\n}());\n`;
+    writeFileSync(path.join(outputDir, `${label}.jsx`), source);
+  }
+  return config;
 }
 
-generate('01-create', template('create'));
-let batches = 0;
-for (let start = 0; start < icons.length; start += layout.batchSize) {
-  batches++;
-  generate(`02-place-${String(batches).padStart(2, '0')}`, template('place'), { items: config.icons.slice(start, start + layout.batchSize) });
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try {
+    const [outputDir, ...args] = process.argv.slice(2);
+    if (!outputDir || outputDir.startsWith('--') || args.length % 2)
+      throw new Error('Usage: gen-jsx.mjs {outputDir} [--source-path {path}] [--ai-path {path}]');
+    const options = {};
+    for (let i = 0; i < args.length; i += 2) {
+      const key = { '--source-path': 'sourcePath', '--ai-path': 'aiPath' }[args[i]];
+      if (!key || options[key] || !args[i + 1]) throw new Error('Invalid option');
+      options[key] = args[i + 1];
+    }
+    generateJsx(outputDir, options);
+    console.log('Generated 01-sync.jsx and 02-export.jsx');
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
+  }
 }
-generate('03-convert-dots', template('convert-dots'));
-generate('04-verify', template('verify'));
-generate('05-export', template('export'));
-generate('06-relayout', template('relayout'), { backupPath: canonicalPath(path.join(outputDir, 'before-relayout.ai')) });
-console.log(`Generated ${batches + 5} JSX files for ${icons.length} icons in ${outputDir}`);

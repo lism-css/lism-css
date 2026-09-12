@@ -24,9 +24,9 @@ const SignOut = /* @__PURE__ */ forwardRef<SVGSVGElement, SignOutProps>(function
       {...props}
       ref={ref}
     >
-      <polyline points="10.5 3.75 4.5 3.75 4.5 20.25 10.5 20.25" />
-      <line x1="10.5" y1="12" x2="21" y2="12" />
-      <polyline points="17.25 8.25 21 12 17.25 15.75" />
+      <path d="M12,3h-6.75c-1.243,0-2.25,1.007-2.25,2.25v13.5c0,1.243,1.007,2.25,2.25,2.25h6.75" />
+      <path d="M9,12h12" />
+      <path d="M17,8l4,4-4,4" />
       {children}
     </svg>
   );

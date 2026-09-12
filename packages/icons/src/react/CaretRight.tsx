@@ -24,7 +24,7 @@ const CaretRight = /* @__PURE__ */ forwardRef<SVGSVGElement, CaretRightProps>(fu
       {...props}
       ref={ref}
     >
-      <polyline points="9 4.5 16.5 12 9 19.5" />
+      <path d="M8.25,19.5l6.97-6.97c.141-.141.22-.331.22-.53s-.079-.39-.22-.53l-6.97-6.97" />
       {children}
     </svg>
   );

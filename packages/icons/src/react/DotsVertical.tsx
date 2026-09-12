@@ -24,9 +24,9 @@ const DotsVertical = /* @__PURE__ */ forwardRef<SVGSVGElement, DotsVerticalProps
       {...props}
       ref={ref}
     >
+      <circle cx="12" cy="6" r=".375" />
       <circle cx="12" cy="12" r=".375" />
-      <circle cx="12" cy="5.625" r=".375" />
-      <circle cx="12" cy="18.375" r=".375" />
+      <circle cx="12" cy="18" r=".375" />
       {children}
     </svg>
   );

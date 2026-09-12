@@ -30,8 +30,6 @@ const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   role={role ?? (labelled ? 'img' : undefined)}
   stroke-width={nativeStrokeWidth ?? strokeWidth ?? '1.5'}
   {...props}
-  ><circle cx="12" cy="12" r="9"></circle><path d="M11.25,11.25c.414,0,.75.336.75.75v3.75c0,.414.336.75.75.75"></path><circle
-    cx="11.625"
-    cy="7.875"
-    r=".375"></circle><slot /></svg
+  ><path d="M9.5,16.25h5"></path><circle cx="12" cy="12" r="10"></circle><circle cx="11.875" cy="7.375" r=".375"></circle><path
+    d="M10.125,10.681h1.125c.414,0,.75.336.75.75v4.819"></path><slot /></svg
 >

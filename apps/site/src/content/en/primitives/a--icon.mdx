@@ -6,8 +6,7 @@ description: 'a--icon is a class for displaying icon elements.'
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
 import { Cat, SmileyIcon } from "@phosphor-icons/react";
-import {phIcons, originalIcons} from 'lism-css/react/atomic/Icon/presets';
-import { Home } from 'lucide-react';
+import { originalIcons } from 'lism-css/react/atomic/Icon/presets';
 
 export const PresetIcons = ({icons}) => {
   return <Grid layout="autoColumns" cols="10rem" g="15">
@@ -138,8 +137,6 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
 
 </Preview>
 
-
-
 {/* ※ `weight="thin"` is a property available on the `@phosphor-icons` side. */}
 
 {/* <Preview>
@@ -154,14 +151,11 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
   </PreviewCode>
 </Preview> */}
 
-
-
 ### Using preset icons
 
-`lism-css` includes 34 stroke icons for common website interfaces. No additional icon package is required.
+`lism-css` includes original preset icons for common website interfaces. No additional icon package is required.
 
 You can call a preset icon by specifying its name as a string via `icon='icon-name'`.
-([Phosphor Icons](https://phosphoricons.com/) are used.)
 
 <Preview>
   <PreviewTitle>Example of calling a preset icon</PreviewTitle>
@@ -208,14 +202,10 @@ Presets use strokes on a 24-unit grid. Use `weight` to change their thickness, i
 
 An explicit `strokeWidth` (or `stroke-width` in Astro) overrides `weight`. You can also pass `weight` to external stroke icons. When omitted, the external icon retains its own stroke width. Pass a package-specific `weight` through `exProps` or the `icon` object as shown above.
 
-Fill icons, `book`, `cart`, `star`, `star-half`, `heart`, `lock`, and `lock-open` are available from `@lism-css/icons`. `dot` has been removed, and neither package includes logos.
+`@lism-css/icons` provides icons beyond the presets, including icons that combine fills and strokes.
 
 <h4 id="preset-icons">Preset icon list</h4>
 
-<PreviewTitle>Phosphor icon list</PreviewTitle>
-<PresetIcons icons={phIcons} />
-
-<PreviewTitle>Original icon list</PreviewTitle>
 <PresetIcons icons={originalIcons} />
 
 

@@ -24,8 +24,8 @@ const User = /* @__PURE__ */ forwardRef<SVGSVGElement, UserProps>(function User(
       {...props}
       ref={ref}
     >
-      <circle cx="12" cy="9" r="6" />
-      <path d="M3,20.25c1.816-3.138,5.114-5.25,9-5.25s7.184,2.112,9,5.25" />
+      <circle cx="12" cy="7.5" r="5" />
+      <path d="M2.835,21.5c1.59-3.644,5.189-6,9.165-6s7.575,2.356,9.165,6" />
       {children}
     </svg>
   );

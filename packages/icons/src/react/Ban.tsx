@@ -21,8 +21,8 @@ const Ban = /* @__PURE__ */ forwardRef<SVGSVGElement, BanProps>(function Ban({ c
       {...props}
       ref={ref}
     >
-      <line x1="18.364" y1="18.364" x2="5.636" y2="5.636" />
-      <circle cx="12" cy="12" r="9" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" />
+      <circle cx="12" cy="12" r="10" />
+      <path d="M4.929,4.929l14.142,14.142" />
       {children}
     </svg>
   );

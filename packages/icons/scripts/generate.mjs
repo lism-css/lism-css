@@ -2,7 +2,7 @@ import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { format, resolveConfig } from 'prettier';
-import { icons, coreIconNames, packageDir } from './config.mjs';
+import { readSvgIcons, coreIconNames, packageDir } from './config.mjs';
 import { normalizeSvg } from './normalize-svg.mjs';
 
 const header = '// 自動生成: scripts/generate.mjs（編集元: src/svg/）\n';
@@ -48,11 +48,7 @@ const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
 }
 
 export async function generate({ root = packageDir, sourceDir = join(root, 'src/svg'), check = false } = {}) {
-  const expectedNames = icons.map(({ id }) => `${id}.svg`).sort();
-  const actualNames = (await readdir(sourceDir)).sort();
-  if (JSON.stringify(actualNames) !== JSON.stringify(expectedNames)) {
-    throw new Error('src/svgのファイル名がconfig.mjsと一致しません');
-  }
+  const icons = await readSvgIcons(sourceDir);
   const normalized = await Promise.all(
     icons.map(async (icon) => ({
       id: icon.id,
@@ -77,7 +73,7 @@ export async function generate({ root = packageDir, sourceDir = join(root, 'src/
   );
   files.set(
     'src/data.ts',
-    `${header}export const icons = ${JSON.stringify(data)} as const;\nexport type IconName = keyof typeof icons;\nexport const coreIconNames = ${JSON.stringify(coreIconNames)} as const;\n`
+    `${header}export const icons = ${JSON.stringify(data)} as const;\nexport type IconName = keyof typeof icons;\nexport const coreIconNames = ${JSON.stringify(coreIconNames.filter((id) => Object.hasOwn(data, id)))} as const;\n`
   );
 
   const options = await resolveConfig(join(packageDir, 'src/data.ts'));

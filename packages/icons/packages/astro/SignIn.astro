@@ -30,6 +30,6 @@ const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   role={role ?? (labelled ? 'img' : undefined)}
   stroke-width={nativeStrokeWidth ?? strokeWidth ?? '1.5'}
   {...props}
-  ><line x1="2.25" y1="12" x2="12.75" y2="12"></line><polyline points="9 8.25 12.75 12 9 15.75"></polyline><polyline
-    points="12.75 3.75 18.75 3.75 18.75 20.25 12.75 20.25"></polyline><slot /></svg
+  ><path d="M12,3h6.75c1.243,0,2.25,1.007,2.25,2.25v13.5c0,1.243-1.007,2.25-2.25,2.25h-6.75"></path><path d="M3,12h12"></path><path d="M11,8l4,4-4,4"
+  ></path><slot /></svg
 >

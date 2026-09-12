@@ -24,8 +24,8 @@ const Clock = /* @__PURE__ */ forwardRef<SVGSVGElement, ClockProps>(function Clo
       {...props}
       ref={ref}
     >
-      <circle cx="12" cy="12" r="9" />
-      <polyline points="12 6.75 12 12 17.25 12" />
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12,6v6l3.354,1.677" />
       {children}
     </svg>
   );

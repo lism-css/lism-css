@@ -24,8 +24,8 @@ const ArrowDown = /* @__PURE__ */ forwardRef<SVGSVGElement, ArrowDownProps>(func
       {...props}
       ref={ref}
     >
-      <line x1="12" y1="3.75" x2="12" y2="20.25" />
-      <polyline points="5.25 13.5 12 20.25 18.75 13.5" />
+      <path d="M12,2.5v19" />
+      <path d="M18.333,15.167l-6.333,6.333-6.333-6.333" />
       {children}
     </svg>
   );

@@ -1,9 +1,8 @@
 import assert from 'node:assert/strict';
-import { cp, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { packageDir } from './config.mjs';
 import { generate } from './generate.mjs';
 
 async function snapshot(root) {
@@ -17,9 +16,12 @@ async function snapshot(root) {
 test('生成、check、余剰ファイル整理と不正入力時の非破壊性', async () => {
   const root = await mkdtemp(join(tmpdir(), 'lism-icons-generate-'));
   try {
-    await cp(join(packageDir, 'src/svg'), join(root, 'src/svg'), { recursive: true });
-    assert.equal(await generate({ root }), 97);
-    assert.equal(await generate({ root, check: true }), 97);
+    await mkdir(join(root, 'src/svg'), { recursive: true });
+    const svg = '<svg viewBox="0 0 24 24"><path d="M1 2L3 4" fill="none" stroke="black" stroke-width="1.5"/></svg>';
+    await writeFile(join(root, 'src/svg/home.svg'), svg);
+    assert.equal(await generate({ root }), 5);
+    assert.equal(await generate({ root, check: true }), 5);
+    assert.match(await readFile(join(root, 'src/data.ts'), 'utf8'), /coreIconNames = \['home'\]/);
     const stale = join(root, 'src/react/OldIcon.tsx');
     await cp(join(root, 'src/react/Home.tsx'), stale);
     const withStale = await snapshot(root);
@@ -37,9 +39,21 @@ test('生成、check、余剰ファイル整理と不正入力時の非破壊性
     await writeFile(source, valid);
 
     await writeFile(join(root, 'src/svg/unknown.svg'), valid);
-    const unknown = await snapshot(root);
+    assert.equal(await generate({ root }), 7);
+    await rm(source);
+    assert.equal(await generate({ root }), 5);
+    await assert.rejects(readFile(join(root, 'src/react/Home.tsx')), { code: 'ENOENT' });
+    await assert.rejects(readFile(join(root, 'packages/astro/Home.astro')), { code: 'ENOENT' });
+    assert.match(await readFile(join(root, 'src/data.ts'), 'utf8'), /coreIconNames = \[\]/);
+    const generated = await snapshot(root);
+    await generate({ root });
+    assert.deepEqual(await snapshot(root), generated);
+    await generate({ root, check: true });
+
+    await writeFile(join(root, 'src/svg/Invalid.svg'), valid);
+    const invalidName = await snapshot(root);
     await assert.rejects(generate({ root }), /ファイル名/);
-    assert.deepEqual(await snapshot(root), unknown);
+    assert.deepEqual(await snapshot(root), invalidName);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
