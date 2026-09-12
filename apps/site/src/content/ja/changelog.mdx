@@ -10,10 +10,6 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 ## 未リリース
 
-**`@lism-css/plugin`**
-
-- `lism-css`を`dependencies`から`peerDependencies`（`*`）へ移し、利用側にインストールされている`lism-css`からCSSを生成するようにしました。pluginが`lism-css`を同梱しなくなるため、`lism-css`は利用側で導入してください（#609）。
-
 **`@lism-css/ui`**
 
 - Alert・Calloutの既定アイコンとModal・Popoverの閉じるアイコンのSVGデータを同梱しました。既定アイコンの利用に追加importは不要です。
@@ -36,6 +32,12 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 - `sz` / `min-sz` / `max-sz`をブレイクポイント対応（`bp: 1`）にしました。`w`系と同じく`-{prop}_{bp}`クラスで画面幅ごとに値を切り替えられます。`-max-sz:full` / `-max-sz:bleed`はブレイクポイント値としては使えません。単一値指定の出力は`style`属性への直書きから`-sz`クラス＋`--sz`変数のセットへ変わります（`max-sz`のトークン値と`full` / `bleed`は従来どおりクラス出力）（#613）。
 - **破壊的変更:** `lh`トークンを`xs: 1.125` / `s: 1.25` / `m: 1.5` / `l: 1.75` / `xl: 2`へ変更しました（旧: `1.25` / `1.5` / `1.75` / `2` / `2.25`）。`m`を`1.5`に据えた0.25刻みのスケールになります（#614）。
 - **破壊的変更:** `text-transform`のクラス名を`-tt:upper` / `-tt:lower`から`-tt:uppercase` / `-tt:lowercase`へ変更しました。propsの`tt="upper"` / `tt="lower"`は互換として維持し、新しいクラスへ解決します（#615）。
+
+### `@lism-css/plugin` v0.5.0 (2026.09.13)
+
+**破壊的変更**を含むリリースです。
+
+- `lism-css`を`dependencies`から`peerDependencies`（`*`）へ移し、利用側にインストールされている`lism-css`からCSSを生成するようにしました。pluginが`lism-css`を同梱しなくなるため、`lism-css`は利用側で導入してください（#609）。
 
 <Divider bds="dashed" my="40" />
 
