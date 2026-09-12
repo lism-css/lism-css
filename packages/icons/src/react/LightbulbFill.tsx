@@ -1,7 +1,11 @@
 // 自動生成: scripts/generate.mjs（編集元: src/svg/）
 import { forwardRef, type SVGProps } from 'react';
 
-const LightbulbFill = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(function LightbulbFill({ children, ...props }, ref) {
+export type LightbulbFillProps = SVGProps<SVGSVGElement> & { size?: number | string };
+const LightbulbFill = /* @__PURE__ */ forwardRef<SVGSVGElement, LightbulbFillProps>(function LightbulbFill(
+  { children, size = '1em', width = size, height = size, ...props },
+  ref
+) {
   const labelled = Boolean(props['aria-label'] || props['aria-labelledby']);
   return (
     <svg
@@ -9,8 +13,8 @@ const LightbulbFill = /* @__PURE__ */ forwardRef<SVGSVGElement, SVGProps<SVGSVGE
       viewBox="0 0 24 24"
       fill="currentColor"
       stroke="none"
-      width="1em"
-      height="1em"
+      width={width}
+      height={height}
       focusable="false"
       aria-hidden={labelled ? undefined : true}
       role={labelled ? 'img' : undefined}
