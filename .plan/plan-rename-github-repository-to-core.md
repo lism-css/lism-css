@@ -27,7 +27,6 @@ GitHubはリネーム時に既存のWeb参照とGit操作を転送する。旧�
 
 ### 別プランとの関係
 
-- [apps/docsをapps/siteへ改名するプラン](./plan-rename-apps-docs-to-site.md)は別作業。このプラン内のサイトのパスは基準日時点の`apps/docs`を使う。先に改名が完了していたら、作業時に`apps/site`へ読み替え、変更対象一覧を取り直す。
 - [Cloudflare Workers移行プラン](./plan-511-docs-to-cloudflare-workers.md)も別作業。GitHubのリネームを先に終える場合は新名でGit連携を登録する。Workers移行が先なら、確認対象をVercelから実際に稼働しているWorkers Buildsへ変更する。
 - Workers移行プランの却下案に「ドメイン・GitHub・npmすべて`lism-css`のまま維持する」とあるが、これは`lismcss`表記への変更を退けた判断であり、本プランと矛盾しない。本プランはOrganization名`lism-css`を維持し、リポジトリ名だけを`core`へ変える。あの記述を改名を戻す根拠にしない。
 - GitHubの改名とホスティング・DNSの切り替えを同時に行わない。どちらかの配信確認を終えてから次に進む。先後に機能上の必須依存はない。
@@ -77,9 +76,9 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 | `packages/lism-cli/src/commands/create.test.ts` | 取得URLの期待値9か所を新名に変更。main/dev、base/overlay、言語差分の既存ケースを維持 |
 | `packages/{lism-css,lism-ui,lism-cli,create-lism,mcp,mockup,plugin}/package.json` | `repository.url`と、存在する`bugs.url`を変更。フィールド構造や各パッケージのnameは変えない |
 | `packages/mockup/src/vite/lucide-icons.ts` | `generateLucideModule`のエラーメッセージにあるIssue URLを変更 |
-| `apps/docs/src/config/site.ts` | `siteConfig.author.github`を変更 |
-| `apps/docs/src/integrations/docs-md/build-llms-txt.ts` | 生成するGitHubリンクを変更 |
-| `apps/docs/src/content/{ja,en}/` | skills、mcp、responsive、UIコンポーネント記事の旧URL・導入例を変更 |
+| `apps/site/src/config/site.ts` | `siteConfig.author.github`を変更 |
+| `apps/site/src/integrations/docs-md/build-llms-txt.ts` | 生成するGitHubリンクを変更 |
+| `apps/site/src/content/{ja,en}/` | skills、mcp、responsive、UIコンポーネント記事の旧URL・導入例を変更 |
 | ルートとpackages配下のREADME | ライセンス、ソース、導入例などの旧URLを変更 |
 | `skills/lism-css-guide/` | 参照リンクを持つ8ファイルを変更。raw/blob/treeの形式は維持 |
 | `templates/blog/astro/{minimal,personal,techlog}/` | `about.astro`、`src/config/site.ts`、techlogの`mdx-extensions.mdx`。`.lang/en`側も対象 |
@@ -96,7 +95,7 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 ### 3. 改名前の確認
 
 - 旧名を再検索し、本プランや意図的な履歴記録以外に現行の取得先・導入例が残っていないことを確認する。ignore対象・生成物・依存ディレクトリは読まない。
-- `lism-css/lism-css`の文字列検索では拾えない、リポジトリ名を表す表示文言・ラベルも目視で確認する。例として`apps/docs/src/content/{ja,en}/skills.mdx`のGitHubリンクは、リンク文字列が`lism-css/skills/lism-css-guide/`のようにリポジトリ名を省略した形になっている。URLと表示文言の両方を新名に揃える。
+- `lism-css/lism-css`の文字列検索では拾えない、リポジトリ名を表す表示文言・ラベルも目視で確認する。例として`apps/site/src/content/{ja,en}/skills.mdx`のGitHubリンクは、リンク文字列が`lism-css/skills/lism-css-guide/`のようにリポジトリ名を省略した形になっている。URLと表示文言の両方を新名に揃える。
 - `packages/lism-cli`の既存テストを実行し、URLの期待値を含む既存ケースが通ることを確認する。
 - [CLIガイドのpublish前チェック](../documents/cli-guide.md#publish前チェック)を満たし、2つのCLIをビルドする。PRの既存CIも通す。
 - 既存の`create.test.ts`はgigetを、`ui/add.test.ts`はfetcherをモックする。CI成功だけでは新URLや旧URLの転送を保証できないため、次工程の実取得確認を省略しない。
@@ -175,6 +174,6 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 | `--ref dev` | 代表的な取得経路でdevを取得でき、既定のmain取得も維持される |
 
 - 公開したCLI2パッケージのバージョンが揃い、新名を参照している。
-- 本番サイトのGit連携が動作し、対象mainのデプロイが成功する。サイトと`llms.txt`のGitHubリンク、および`apps/docs/src/lib/jsonLd.ts`が`siteConfig.author.github`から出力するJSON-LDの`codeRepository`が新名で、サイトURLは変わっていない。デザイン変更はないため、ブラウザによるUI確認は検証に含めない。
+- 本番サイトのGit連携が動作し、対象mainのデプロイが成功する。サイトと`llms.txt`のGitHubリンク、および`apps/site/src/lib/jsonLd.ts`が`siteConfig.author.github`から出力するJSON-LDの`codeRepository`が新名で、サイトURLは変わっていない。デザイン変更はないため、ブラウザによるUI確認は検証に含めない。
 - スキルの新しい導入例が動作し、skills.shの掲載・集計が事前に決めた条件を満たす。別リポジトリの既知のlockfile参照も対応を終えている。
 - 実装前に`plan-review`でこのプランをレビューし、合格後に状態を`Ready`へ変更する。

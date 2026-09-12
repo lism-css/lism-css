@@ -1,8 +1,8 @@
 基準日: 2026-09-03・コミット105422df
 
-# apps/docs 更新作業の入口
+# apps/site 更新作業の入口
 
-この文書が持つもの: `apps/docs`を更新するときに、どのコマンド・スクリプトを使うかの入口と委譲先。
+この文書が持つもの: `apps/site`を更新するときに、どのコマンド・スクリプトを使うかの入口と委譲先。
 持たないもの: 各処理の中身（`docs-md` integrationは[docs-md.md](./docs-md.md)、コマンドの手順は`.claude/commands/`配下）。
 
 
@@ -29,9 +29,9 @@
 
 ## llms.txt
 
-個別に更新するコマンドは無い。`nr build:docs`時に`docs-md` integrationが`content/en/`のフロントマターから`dist/llms.txt`を生成する。詳細は[docs-md.md](./docs-md.md)。
+個別に更新するコマンドは無い。`nr build:site`時に`docs-md` integrationが`content/en/`のフロントマターから`dist/llms.txt`を生成する。詳細は[docs-md.md](./docs-md.md)。
 
 
 ## sitemapのlastmod
 
-`apps/docs/lastmod-map.json`（コミット対象）を`src/lib/sitemap-lastmod.ts`が読む。CI環境はgit履歴が浅く正確な日時を取れないため、全履歴のあるローカルで`pnpm --filter lism-docs generate:lastmod`を実行してコミットする。ルートの`nr deploy`がmainへのマージ前にこれを行うので、通常は任せる。手でmainへマージする場合は再生成を忘れない。
+`apps/site/lastmod-map.json`（コミット対象）を`src/lib/sitemap-lastmod.ts`が読む。CI環境はgit履歴が浅く正確な日時を取れないため、全履歴のあるローカルで`pnpm --filter lism-site generate:lastmod`を実行してコミットする。ルートの`nr deploy`がmainへのマージ前にこれを行うので、通常は任せる。手でmainへマージする場合は再生成を忘れない。

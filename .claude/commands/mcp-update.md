@@ -1,10 +1,10 @@
 ---
-description: MCP の docs-index.json を apps/docs の日本語 MDX 全件と照合し、既存エントリの内容も含めて更新する。ファイル構成の差分だけなら /mcp-update-urls
+description: MCP の docs-index.json を apps/site の日本語 MDX 全件と照合し、既存エントリの内容も含めて更新する。ファイル構成の差分だけなら /mcp-update-urls
 ---
 
 # MCP Server データ更新
 
-`packages/mcp/src/data/docs-index.json` を `apps/docs/src/content/ja/` の MDX 全件と照合して更新する。エントリのルール・除外対象は `.claude/agents/lism-mcp-editor.md` が正本。参照系ツール（get_overview 等）の正本は `skills/lism-css-guide/` で、その更新は `/update-skills`。
+`packages/mcp/src/data/docs-index.json` を `apps/site/src/content/ja/` の MDX 全件と照合して更新する。エントリのルール・除外対象は `.claude/agents/lism-mcp-editor.md` が正本。参照系ツール（get_overview 等）の正本は `skills/lism-css-guide/` で、その更新は `/update-skills`。
 
 
 ## 手順

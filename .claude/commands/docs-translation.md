@@ -1,11 +1,11 @@
 ---
-description: apps/docs の日本語 MDX（ja/）を英語版（en/）へ翻訳同期する
+description: apps/site の日本語 MDX（ja/）を英語版（en/）へ翻訳同期する
 argument-hint: "[対象ファイル/ディレクトリ... | root]"
 ---
 
 # Translation Sync
 
-`apps/docs/src/content/ja/` の MDX を正として `apps/docs/src/content/en/` へ翻訳同期する。
+`apps/site/src/content/ja/` の MDX を正として `apps/site/src/content/en/` へ翻訳同期する。
 翻訳ルールは `lism-docs-translator` サブエージェント（`.claude/agents/lism-docs-translator.md`）に集約されている。コマンド側で再掲しない。
 
 
@@ -67,11 +67,11 @@ argument-hint: "[対象ファイル/ディレクトリ... | root]"
 1. 日本語残留チェック。リポジトリルートで実行する:
 
    ```bash
-   rg -n '[一-龥ぁ-んァ-ヶー々]' apps/docs/src/content/en --glob '*.mdx'
+   rg -n '[一-龥ぁ-んァ-ヶー々]' apps/site/src/content/en --glob '*.mdx'
    ```
 
    `<DummyText lang="ja"` の残留も確認する。フォント見本のように `ja/` 側でも同じ位置に表示用の日本語を置いている箇所だけ例外とし、それ以外は担当サブエージェントに差し戻す。
-2. ビルド確認。`runner` サブエージェントで `nr build:docs` を実行し、MDX が壊れていないことを確認する。`nr dev:docs` 起動中はビルドせず、その旨を報告する（dev 側のコンテンツストアが壊れる）。失敗時はエラーの要点を報告し、修正せずユーザーの判断を仰ぐ。
+2. ビルド確認。`runner` サブエージェントで `nr build:site` を実行し、MDX が壊れていないことを確認する。`nr dev:site` 起動中はビルドせず、その旨を報告する（dev 側のコンテンツストアが壊れる）。失敗時はエラーの要点を報告し、修正せずユーザーの判断を仰ぐ。
 
 ### 5. 結果の報告
 

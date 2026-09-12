@@ -95,10 +95,10 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin|icons} {バージョン}"
 | `packages/lism-cli/` `packages/create-lism/` | lism-cli |
 | `packages/plugin/` | plugin |
 | `packages/icons/` | icons |
-| `apps/docs/` | Documentation（各パッケージ共通） |
+| `apps/site/` | Documentation（各パッケージ共通） |
 | その他 | Other |
 
-対象パッケージのコード変更を伴うコミットだけをリリースノートの対象にする。`apps/docs/` のみの変更（docs 修正・翻訳同期等）は含めない。`lism-css` をリリースする際は、plugin が使用する内部 API・SCSS への影響を確認する。mockup は「plugin の特別ルール」の条件に当てはまる場合だけリリース対象とする。
+対象パッケージのコード変更を伴うコミットだけをリリースノートの対象にする。`apps/site/` のみの変更（docs 修正・翻訳同期等）は含めない。`lism-css` をリリースする際は、plugin が使用する内部 API・SCSS への影響を確認する。mockup は「plugin の特別ルール」の条件に当てはまる場合だけリリース対象とする。
 
 ### 5. リリースノートと changelog エントリの生成
 
@@ -192,7 +192,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin|icons} {バージョン}"
 
 ### 8. changelog.mdx の更新
 
-`apps/docs/src/content/ja/changelog.mdx` と `apps/docs/src/content/en/changelog.mdx` にエントリを追記する。
+`apps/site/src/content/ja/changelog.mdx` と `apps/site/src/content/en/changelog.mdx` にエントリを追記する。
 
 - 未リリースのセクションから、新エントリへ取り込んだ項目を削除する。対象外の項目は先頭に残し、空になったセクションは見出しと末尾の `<Divider>` を削除する
 - 追記位置: 未リリースのセクションが残る場合はその直後、それ以外は冒頭の `<Divider bds="dashed" my="40" />` の直後。挿入後、H2エントリ間に `<Divider>` があることを確認する

@@ -292,7 +292,7 @@ outputSchema: {
 - `parsePropClassName(input)`: Property Class 記法（`"-g:5"`, `".-p"`）から prop 名を抽出
 - `expandQuery(query, cssPropertyMap)`: CSS プロパティ名や Property Class 記法を Lism prop 名に自動展開
 - `searchDocs(entries, query, options)`: トークナイズ → スコアリング → ソート → 上位 N 件返却（各結果に `nextTool` を付与）
-- `sourcePathToUrlSlug(sourcePath)`: 公開 URL スラッグへの変換（apps/docs の `toContentSlug` と同一ロジック。一致は docs-index.test.ts で検証）
+- `sourcePathToUrlSlug(sourcePath)`: 公開 URL スラッグへの変換（apps/site の `toContentSlug` と同一ロジック。一致は docs-index.test.ts で検証）
 
 
 ## 使い方

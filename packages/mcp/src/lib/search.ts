@@ -103,7 +103,7 @@ const SITE_BASE_URL = 'https://lism-css.com';
 /**
  * URL スラッグを公開ページの URL に変換する。
  * `ui/` 配下はサイト直下（`/ui/...`）、それ以外は `/docs/` 配下で公開される
- * （apps/docs の `getPostUrl` と同じルーティング規則）。
+ * （apps/site の `getPostUrl` と同じルーティング規則）。
  */
 function slugToPageUrl(slug: string): string {
   return slug.startsWith('ui/') ? `${SITE_BASE_URL}/${slug}/` : `${SITE_BASE_URL}/docs/${slug}/`;
@@ -158,9 +158,9 @@ function getNextTool(entry: DocsEntry, guideTopics?: ReadonlySet<string>): strin
  *   （CSS クラス名と URL を一致させるための例外）
  * - それ以外は全て小文字化（Astro content collections の `generateId` と揃える）
  *
- * IMPORTANT: `apps/docs/src/lib/contentSlug.ts` の `toContentSlug` と必ず同じロジックに保つこと。
- * 別ワークスペース（apps/docs）なので直接 import できず、ローカル実装で複製している。
- * apps/docs 側を変更した場合は必ずここも合わせて更新する。
+ * IMPORTANT: `apps/site/src/lib/contentSlug.ts` の `toContentSlug` と必ず同じロジックに保つこと。
+ * 別ワークスペース（apps/site）なので直接 import できず、ローカル実装で複製している。
+ * apps/site 側を変更した場合は必ずここも合わせて更新する。
  */
 const PRESERVE_CASE_PREFIXES = ['primitives/', 'trait-class/'];
 

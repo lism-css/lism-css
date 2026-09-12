@@ -1,11 +1,11 @@
 ---
 name: lism-docs-translation
-description: apps/docs の日本語ドキュメントを英語へ翻訳する作業の進め方。日本語ドキュメントをもとに英語版を作成・更新する、ja/ を en/ に翻訳する、英訳する、といった翻訳作業の指示を受けたら読み込む。
+description: apps/site の日本語ドキュメントを英語へ翻訳する作業の進め方。日本語ドキュメントをもとに英語版を作成・更新する、ja/ を en/ に翻訳する、英訳する、といった翻訳作業の指示を受けたら読み込む。
 metadata:
   internal: true
 ---
 
-apps/docs の日本語ドキュメントを英語へ翻訳する作業は、**メインエージェントが自分で翻訳せず、`lism-docs-translator` サブエージェントに委譲する**こと。
+apps/site の日本語ドキュメントを英語へ翻訳する作業は、**メインエージェントが自分で翻訳せず、`lism-docs-translator` サブエージェントに委譲する**こと。
 
 翻訳ルール・用語対応表・直訳回避パターン・セルフチェックリストは、すべて `lism-docs-translator` のエージェント定義（`.claude/agents/lism-docs-translator.md`）に集約されている。メインエージェント側でガイドラインを読み込んだり再掲したりする必要はない。
 

@@ -1,6 +1,6 @@
 ---
 name: lism-docs-translator
-description: apps/docs の日本語ドキュメント（MDX やパターンプレビュー）を英語に翻訳し、en/ ディレクトリ等に作成・更新する
+description: apps/site の日本語ドキュメント（MDX やパターンプレビュー）を英語に翻訳し、en/ ディレクトリ等に作成・更新する
 tools: Read, Edit, Write, Glob, Grep
 model: sonnet
 effort: xhigh

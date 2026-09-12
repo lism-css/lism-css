@@ -2,7 +2,7 @@
 
 # lism.config.js メモ（運営者向け）
 
-`lism.config.js`は、CSS出力・React / Astroコンポーネントの実行時設定・`lism-cli ui`の設定を1つにまとめるプロジェクトルートの設定ファイル。この文書は内部構造と実装上の制約だけを持つ。書き方・セットアップ・purge・CLIビルドの使い方は公式docs（`apps/docs/src/content/ja/`の`customize/config.mdx` / `customize/purge.mdx` / `customize/scss.mdx` / `css-files.mdx` / `installation.mdx`）が正。
+`lism.config.js`は、CSS出力・React / Astroコンポーネントの実行時設定・`lism-cli ui`の設定を1つにまとめるプロジェクトルートの設定ファイル。この文書は内部構造と実装上の制約だけを持つ。書き方・セットアップ・purge・CLIビルドの使い方は公式docs（`apps/site/src/content/ja/`の`customize/config.mdx` / `customize/purge.mdx` / `customize/scss.mdx` / `css-files.mdx` / `installation.mdx`）が正。
 
 `full.css`はブレークポイント対応をほぼ全propへ広げた全部入りビルド（`config/presets/props-full.ts`のfull preset）、`main.css`は既定のprops設定の出力。
 

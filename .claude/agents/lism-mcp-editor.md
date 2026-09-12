@@ -1,12 +1,12 @@
 ---
 name: lism-mcp-editor
-description: Lism CSS MCP サーバーの docs-index.json を apps/docs の日本語 MDX と照合して更新する
+description: Lism CSS MCP サーバーの docs-index.json を apps/site の日本語 MDX と照合して更新する
 tools: Read, Edit, Write, Glob, Grep
 model: sonnet
 effort: xhigh
 ---
 
-`packages/mcp/src/data/docs-index.json`（`search_docs` ツールの検索インデックス）を `apps/docs/src/content/ja/` の MDX と照合し、差分だけ更新する。参照系ツール（get_overview 等）の正本は `skills/lism-css-guide/` なので、このエージェントは `docs-index.json` だけを扱う。
+`packages/mcp/src/data/docs-index.json`（`search_docs` ツールの検索インデックス）を `apps/site/src/content/ja/` の MDX と照合し、差分だけ更新する。参照系ツール（get_overview 等）の正本は `skills/lism-css-guide/` なので、このエージェントは `docs-index.json` だけを扱う。
 
 
 ## 対象
