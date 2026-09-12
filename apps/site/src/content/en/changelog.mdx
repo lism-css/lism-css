@@ -10,12 +10,6 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 ## Unreleased
 
-**`lism-css`**
-
-- **Breaking:** Removed named `Icon` presets and SVG data from core. Import the components you need from `@lism-css/icons/react` or `@lism-css/icons/astro` and pass them as `icon={Check}`.
-- `Icon` supports `weight` (light 1 / regular 1.5 / bold 2) and `strokeWidth`. Stroke icons in `@lism-css/icons` use a 24-unit grid and default to a stroke width of 1.5; set their color with `c`. Use `weight="bold"` for previously bold caret and arrow icons, or `weight="light"` for a thinner `menu-2`. Removed `dot`.
-- `sz` / `min-sz` / `max-sz` now support breakpoints (`bp: 1`). As with the `w` family, use `-{prop}_{bp}` classes to switch values per screen width. `-max-sz:full` / `-max-sz:bleed` cannot be used as breakpoint values. Single-value output changes from an inline `style` declaration to the `-sz` class plus `--sz` variable pair (token values and `full` / `bleed` for `max-sz` are still output as classes) (#613).
-
 **`@lism-css/plugin`**
 
 - Moved `lism-css` from `dependencies` to `peerDependencies` (`*`) so CSS is generated from the `lism-css` installed in your project. The plugin no longer bundles its own copy of `lism-css`, so install `lism-css` alongside it (#609).
@@ -24,6 +18,24 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 - Bundled SVG data for default Alert and Callout icons and the Modal and Popover close icons. Default icons require no additional imports.
 - Changed the border color (`--bdc`) of the default `fill` `Button` from `var(--bgc)` to `transparent`, so changing only the background (e.g. `hov="-bgc"`) no longer leaves a border in the original color. Set `--bdc: var(--bgc)` if you want a visible border on hover (see the `hov="reverse"` example).
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.29.0 (2026.09.13)
+
+This release contains **breaking changes**.
+
+### Icon and the icons package (#616, #618, #619)
+
+- **Breaking:** Removed named `Icon` presets and SVG data from core. Import the components you need from `@lism-css/icons/react` or `@lism-css/icons/astro` and pass them as `icon={Check}`.
+- `Icon` supports `weight` (light 1 / regular 1.5 / bold 2) and `strokeWidth`. Stroke icons in `@lism-css/icons` use a 24-unit grid and default to a stroke width of 1.5; set their color with `c`. Use `weight="bold"` for previously bold caret and arrow icons. Removed `dot`.
+- All icons are now original designs published as `@lism-css/icons` from the separate [lism-css/icons](https://github.com/lism-css/icons) repository. See the [`@lism-css/icons` page](/en/docs/packages/icons/) for the full list.
+
+### Other
+
+- `sz` / `min-sz` / `max-sz` now support breakpoints (`bp: 1`). As with the `w` family, use `-{prop}_{bp}` classes to switch values per screen width. `-max-sz:full` / `-max-sz:bleed` cannot be used as breakpoint values. Single-value output changes from an inline `style` declaration to the `-sz` class plus `--sz` variable pair (token values and `full` / `bleed` for `max-sz` are still output as classes) (#613).
+- **Breaking:** Changed the `lh` tokens to `xs: 1.125` / `s: 1.25` / `m: 1.5` / `l: 1.75` / `xl: 2` (previously `1.25` / `1.5` / `1.75` / `2` / `2.25`), a 0.25 scale centered on `m: 1.5` (#614).
+- **Breaking:** Renamed the `text-transform` classes from `-tt:upper` / `-tt:lower` to `-tt:uppercase` / `-tt:lowercase`. The `tt="upper"` / `tt="lower"` props remain as aliases and resolve to the new classes (#615).
 
 <Divider bds="dashed" my="40" />
 

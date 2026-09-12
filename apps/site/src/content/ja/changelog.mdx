@@ -10,12 +10,6 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 ## 未リリース
 
-**`lism-css`**
-
-- **破壊的変更:** `Icon`の名前指定プリセットとコアのSVGデータを廃止しました。`@lism-css/icons/react`または`@lism-css/icons/astro`から必要なコンポーネントをimportし、`icon={Check}`のように指定してください。
-- `Icon`は`weight`（light 1 / regular 1.5 / bold 2）と`strokeWidth`に対応します。`@lism-css/icons`の線アイコンは24グリッド・既定の線幅1.5で描画され、色は`c`で指定できます。従来の太字caret・arrowは`weight="bold"`、細い`menu-2`は`weight="light"`で再現できます。`dot`は廃止しました。
-- `sz` / `min-sz` / `max-sz`をブレイクポイント対応（`bp: 1`）にしました。`w`系と同じく`-{prop}_{bp}`クラスで画面幅ごとに値を切り替えられます。`-max-sz:full` / `-max-sz:bleed`はブレイクポイント値としては使えません。単一値指定の出力は`style`属性への直書きから`-sz`クラス＋`--sz`変数のセットへ変わります（`max-sz`のトークン値と`full` / `bleed`は従来どおりクラス出力）（#613）。
-
 **`@lism-css/plugin`**
 
 - `lism-css`を`dependencies`から`peerDependencies`（`*`）へ移し、利用側にインストールされている`lism-css`からCSSを生成するようにしました。pluginが`lism-css`を同梱しなくなるため、`lism-css`は利用側で導入してください（#609）。
@@ -24,6 +18,24 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 - Alert・Calloutの既定アイコンとModal・Popoverの閉じるアイコンのSVGデータを同梱しました。既定アイコンの利用に追加importは不要です。
 - `Button`の`fill`（既定）のボーダー色`--bdc`を`var(--bgc)`から`transparent`へ変更しました。`hov="-bgc"`などで背景色だけを変えたときに、ボーダーが元の色で縁として残らなくなります。ホバー時に枠線を残したい場合は`--bdc: var(--bgc)`を指定してください（`hov="reverse"`の例を参照）。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.29.0 (2026.09.13)
+
+**破壊的変更**を含むリリースです。
+
+### Iconとアイコンパッケージ (#616, #618, #619)
+
+- **破壊的変更:** `Icon`の名前指定プリセットとコアのSVGデータを廃止しました。`@lism-css/icons/react`または`@lism-css/icons/astro`から必要なコンポーネントをimportし、`icon={Check}`のように指定してください。
+- `Icon`は`weight`（light 1 / regular 1.5 / bold 2）と`strokeWidth`に対応します。`@lism-css/icons`の線アイコンは24グリッド・既定の線幅1.5で描画され、色は`c`で指定できます。従来の太字caret・arrowは`weight="bold"`で再現できます。`dot`は廃止しました。
+- アイコンは全てオリジナル設計の`@lism-css/icons`として、別リポジトリ[lism-css/icons](https://github.com/lism-css/icons)から公開します。収録アイコンは[`@lism-css/icons`のページ](/docs/packages/icons/)を参照してください。
+
+### その他
+
+- `sz` / `min-sz` / `max-sz`をブレイクポイント対応（`bp: 1`）にしました。`w`系と同じく`-{prop}_{bp}`クラスで画面幅ごとに値を切り替えられます。`-max-sz:full` / `-max-sz:bleed`はブレイクポイント値としては使えません。単一値指定の出力は`style`属性への直書きから`-sz`クラス＋`--sz`変数のセットへ変わります（`max-sz`のトークン値と`full` / `bleed`は従来どおりクラス出力）（#613）。
+- **破壊的変更:** `lh`トークンを`xs: 1.125` / `s: 1.25` / `m: 1.5` / `l: 1.75` / `xl: 2`へ変更しました（旧: `1.25` / `1.5` / `1.75` / `2` / `2.25`）。`m`を`1.5`に据えた0.25刻みのスケールになります（#614）。
+- **破壊的変更:** `text-transform`のクラス名を`-tt:upper` / `-tt:lower`から`-tt:uppercase` / `-tt:lowercase`へ変更しました。propsの`tt="upper"` / `tt="lower"`は互換として維持し、新しいクラスへ解決します（#615）。
 
 <Divider bds="dashed" my="40" />
 
