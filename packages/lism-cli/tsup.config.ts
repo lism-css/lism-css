@@ -16,7 +16,7 @@ function readPackageMeta(packageJsonPath: string): PackageMeta {
 
 // `lism-cli create` の workspace:* 置換用に、公開パッケージごとの現在バージョンを埋め込む
 const packageVersions = Object.fromEntries(
-  ['../lism-css/package.json', '../lism-ui/package.json', '../plugin/package.json', '../icons/package.json'].map((packageJsonPath) => {
+  ['../lism-css/package.json', '../lism-ui/package.json', '../plugin/package.json'].map((packageJsonPath) => {
     const pkg = readPackageMeta(packageJsonPath);
     return [pkg.name, pkg.version];
   })

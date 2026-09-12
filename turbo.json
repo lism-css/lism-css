@@ -81,22 +81,10 @@
         "packages/lism-css/src/scss/base/tokens/_tokens.gen.scss"
       ]
     },
-    "@lism-css/icons#build": {
-      "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/.prettierrc*",
-        "!src/react/**",
-        "!src/data.ts",
-        "!packages/astro/*.astro",
-        "!packages/astro/index.ts"
-      ],
-      "outputs": ["dist/**", "src/react/**", "src/data.ts", "packages/astro/*.astro", "packages/astro/index.ts"]
-    },
     "@lism-css/ui#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.prettierrc*", "!src/helper/icons.ts"],
-      "outputs": ["dist/**", "src/helper/icons.ts", "registry-index.json", "package.json"]
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.prettierrc*"],
+      "outputs": ["dist/**", "registry-index.json", "package.json"]
     }
   }
 }

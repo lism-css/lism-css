@@ -1,12 +1,42 @@
+import { existsSync } from 'node:fs';
 import { readFile, writeFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { format, resolveConfig } from 'prettier';
-import { icons } from '@lism-css/icons/data';
 
+const usage = 'Usage: generate-icons.mjs --source <lism-css/icons のリポジトリパス> [--check]';
 const names = ['alert', 'warning', 'check-circle', 'question', 'info', 'note', 'lightbulb', 'x'];
 const target = new URL('../src/helper/icons.ts', import.meta.url);
+
 const args = process.argv.slice(2);
-if (args.some((arg) => arg !== '--check')) throw new Error('Usage: generate-icons.mjs [--check]');
+let sourceDir;
+let check = false;
+for (let i = 0; i < args.length; i++) {
+  const arg = args[i];
+  // pnpm run 経由では `--` がそのまま渡るので読み飛ばす
+  if (arg === '--') continue;
+  if (arg === '--check') {
+    check = true;
+  } else if (arg === '--source') {
+    sourceDir = args[++i];
+  } else if (arg.startsWith('--source=')) {
+    sourceDir = arg.slice('--source='.length);
+  } else {
+    console.error(usage);
+    process.exit(1);
+  }
+}
+if (!sourceDir) {
+  console.error(usage);
+  process.exit(1);
+}
+
+const dataPath = path.resolve(sourceDir, 'dist/data.js');
+if (!existsSync(dataPath)) {
+  console.error(`Not found: ${dataPath}\niconsリポジトリで \`pnpm build\` を実行してください`);
+  process.exit(1);
+}
+const { icons } = await import(pathToFileURL(dataPath).href);
 
 const entries = names.map((name) => {
   const icon = icons[name];
@@ -18,12 +48,15 @@ const entries = names.map((name) => {
   const exportName = name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()) + 'Icon';
   return `export const ${exportName} = ${JSON.stringify(svg)};`;
 });
-const source = await format('// 自動生成: scripts/generate-icons.mjs（入力: @lism-css/icons/data）\n' + entries.join('\n') + '\n', {
-  ...(await resolveConfig(fileURLToPath(target))),
-  filepath: fileURLToPath(target),
-});
+const source = await format(
+  '// 自動生成: scripts/generate-icons.mjs（入力: lism-css/icons リポジトリの dist/data.js）\n' + entries.join('\n') + '\n',
+  {
+    ...(await resolveConfig(fileURLToPath(target))),
+    filepath: fileURLToPath(target),
+  }
+);
 
-if (args.includes('--check')) {
+if (check) {
   if ((await readFile(target, 'utf8')) !== source) throw new Error('UI icons are out of date');
 } else {
   await writeFile(target, source);

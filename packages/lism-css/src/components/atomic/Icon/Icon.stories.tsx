@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Loader2, Play } from 'lucide-react';
+import { Check, CircleCheck as CheckCircleIcon, Info, Lightbulb, Loader2, Play, TriangleAlert as Warning } from 'lucide-react';
 
 import { Icon } from './index';
-import { Check, Info, CheckCircle as CheckCircleIcon, Warning, Lightbulb } from '@lism-css/icons/react';
 
 const meta: Meta = {
   title: 'Atomic/Icon',

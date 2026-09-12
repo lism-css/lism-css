@@ -70,7 +70,7 @@ nr test
 
 ## 注意事項
 
-- `packages/icons/`の独自アイコンの追加・調整・復元・書き出しでは、ローカルスキル[edit-icons](.claude/skills/edit-icons/SKILL.md)に従う。
+- アイコンパッケージ（`@lism-css/icons`）は[lism-css/icons](https://github.com/lism-css/icons)リポジトリで管理する。UIの既定アイコン（`packages/lism-ui/src/helper/icons.ts`）を更新するときは、iconsリポジトリを`pnpm build`したうえで`pnpm --filter @lism-css/ui gen:icons -- --source {iconsリポジトリのパス}`を実行し、差分をコミットする。確認は同じ引数に`--check`を付ける。
 - `lism-css` パッケージ本体の編集中は、明示的な指示がない限り `lism-css-guide` スキルを読まない。
 - `templates/*`を編集するときは、先に`templates/README.md`の保守ルールと意図的な言語差分を確認する。
 - `templates/*` の新規追加時は `package.json` に `"private": true` を付ける（npmへの誤公開防止）。

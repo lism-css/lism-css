@@ -189,8 +189,8 @@ importers:
         specifier: ^0.44.1
         version: 0.44.1
       '@lism-css/icons':
-        specifier: workspace:*
-        version: link:../../packages/icons
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@19.2.17)(astro@6.4.8(@types/node@26.1.0)(jiti@2.7.0)(rollup@4.62.2)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0))(react@19.2.7)
       '@lism-css/plugin':
         specifier: workspace:*
         version: link:../../packages/plugin
@@ -343,33 +343,6 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/icons:
-    devDependencies:
-      '@types/node':
-        specifier: ^25.9.4
-        version: 25.9.4
-      '@types/react':
-        specifier: ^19.2.17
-        version: 19.2.17
-      astro:
-        specifier: ^6.4.8
-        version: 6.4.8(@types/node@25.9.4)(jiti@2.7.0)(rollup@4.62.2)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0)
-      esbuild:
-        specifier: ^0.28.1
-        version: 0.28.1
-      react:
-        specifier: ^19.2.7
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.7
-        version: 19.2.7(react@19.2.7)
-      svgo:
-        specifier: 4.0.2
-        version: 4.0.2
-      typescript:
-        specifier: ~5.9.3
-        version: 5.9.3
-
   packages/lism-cli:
     dependencies:
       '@inquirer/prompts':
@@ -428,9 +401,6 @@ importers:
       '@babel/preset-react':
         specifier: ^7.29.7
         version: 7.29.7(@babel/core@7.29.7)
-      '@lism-css/icons':
-        specifier: workspace:*
-        version: link:../icons
       '@rollup/plugin-babel':
         specifier: ^6.1.0
         version: 6.1.0(@babel/core@7.29.7)(@types/babel__core@7.20.5)(rollup@4.62.2)
@@ -516,9 +486,6 @@ importers:
       '@babel/preset-react':
         specifier: ^7.29.7
         version: 7.29.7(@babel/core@7.29.7)
-      '@lism-css/icons':
-        specifier: workspace:*
-        version: link:../icons
       '@lism-css/plugin':
         specifier: workspace:*
         version: link:../plugin
@@ -718,8 +685,8 @@ importers:
         specifier: ^3.7.3
         version: 3.7.3
       '@lism-css/icons':
-        specifier: workspace:*
-        version: link:../../../../packages/icons
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@19.2.17)(astro@6.4.8(@types/node@26.1.0)(jiti@2.7.0)(rollup@4.62.2)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0))(react@19.2.7)
       '@lism-css/ui':
         specifier: workspace:*
         version: link:../../../../packages/lism-ui
@@ -742,8 +709,8 @@ importers:
         specifier: ^3.7.3
         version: 3.7.3
       '@lism-css/icons':
-        specifier: workspace:*
-        version: link:../../../../packages/icons
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@19.2.17)(astro@6.4.8(@types/node@26.1.0)(jiti@2.7.0)(rollup@4.62.2)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0))(react@19.2.7)
       '@lism-css/plugin':
         specifier: workspace:*
         version: link:../../../../packages/plugin
@@ -779,8 +746,8 @@ importers:
   templates/lp/astro:
     dependencies:
       '@lism-css/icons':
-        specifier: workspace:*
-        version: link:../../../packages/icons
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@19.2.17)(astro@6.4.8(@types/node@26.1.0)(jiti@2.7.0)(rollup@4.62.2)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0))(react@19.2.7)
       '@lism-css/plugin':
         specifier: workspace:*
         version: link:../../../packages/plugin
@@ -2641,6 +2608,20 @@ packages:
 
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
+
+  '@lism-css/icons@0.1.0':
+    resolution: {integrity: sha512-1wHoBTNNVgrH3CiWzDFSoFg1BslyWWYY63HRVfrTv89cpQ127JNGDayZE8CxLib0AWNd4zowFurgc4KXO5CgUQ==}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      astro: ^5 || ^6
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      astro:
+        optional: true
+      react:
+        optional: true
 
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
@@ -9826,6 +9807,12 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
+  '@lism-css/icons@0.1.0(@types/react@19.2.17)(astro@6.4.8(@types/node@26.1.0)(jiti@2.7.0)(rollup@4.62.2)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0))(react@19.2.7)':
+    optionalDependencies:
+      '@types/react': 19.2.17
+      astro: 6.4.8(@types/node@26.1.0)(jiti@2.7.0)(rollup@4.62.2)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0)
+      react: 19.2.7
+
   '@mdx-js/mdx@3.1.1':
     dependencies:
       '@types/estree': 1.0.9
@@ -11278,7 +11265,7 @@ snapshots:
       unstorage: 1.17.5
       vfile: 6.0.3
       vite: 7.3.6(@types/node@25.9.4)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0)
-      vitefu: 1.1.3(vite@7.3.6(@types/node@26.1.0)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0))
+      vitefu: 1.1.3(vite@7.3.6(@types/node@25.9.4)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0))
       xxhash-wasm: 1.1.0
       yargs-parser: 22.0.0
       zod: 4.4.3
@@ -15979,6 +15966,10 @@ snapshots:
       sass-embedded: 1.100.0
       tsx: 4.22.5
       yaml: 2.9.0
+
+  vitefu@1.1.3(vite@7.3.6(@types/node@25.9.4)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0)):
+    optionalDependencies:
+      vite: 7.3.6(@types/node@25.9.4)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0)
 
   vitefu@1.1.3(vite@7.3.6(@types/node@26.1.0)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.101.0)(tsx@4.22.5)(yaml@2.9.0)):
     optionalDependencies:
