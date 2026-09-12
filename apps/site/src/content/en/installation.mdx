@@ -1,0 +1,318 @@
+---
+title: 'Installation'
+description: 'Learn how to install Lism CSS and get started with the basics.'
+---
+
+This guide walks you through setting up and using Lism CSS.
+
+
+## CSS-only setup
+
+For simple HTML sites or other cases where you only need the CSS file, you can use it via CDN.
+
+
+<PreviewTitle>Load via CDN</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.29.0/dist/css/main.css" rel="stylesheet" />
+```
+
+You can also download the CSS file and load it locally.
+
+
+## Quick start
+
+The fastest way to start from scratch is using `create lism`. The template and output directory can be chosen through interactive prompts.
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm create lism@latest
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm create lism@latest
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn create lism
+  ```
+  </PreviewCode>
+</Preview>
+
+This is equivalent to `lism-cli create`.
+
+
+### Specify a template
+
+Pass `--template` to skip the interactive prompt and choose a template directly.
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm create lism@latest --template minimal-astro
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm create lism@latest -- --template minimal-astro
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn create lism --template minimal-astro
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### Available templates
+
+| Template | Description |
+|---|---|
+| `minimal-astro` | Minimal Astro-based setup |
+| `minimal-vite` | Minimal Vite + React setup |
+| `blog-astro-minimal` | Minimal Astro blog with post listing, detail pages, and Tags only |
+| `blog-astro-personal` | Astro blog for personal writing and essays, with year/month archives |
+| `blog-astro-techlog` | Astro blog for tech content, with syntax highlighting, categories, tags, TOC, year/month archives, and search |
+| `lp-astro-corporate` | Astro landing page for corporate sites |
+| `lp-astro-interior` | Astro landing page for interior design and lifestyle services |
+| `lp-astro-ryokan` | Astro landing page for ryokan / lodging |
+
+
+## Use React/Astro components
+
+React (.tsx) and Astro (.astro) components are distributed as an npm package.
+
+### 1. Install the package
+
+<Preview>
+  <PreviewTitle>Install the package</PreviewTitle>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm i lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm add lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn add lism-css
+  ```
+  </PreviewCode>
+</Preview>
+
+
+
+
+### 2. Import the CSS
+
+<PreviewTitle>Import as a global style</PreviewTitle>
+```js
+import 'lism-css/main.css';
+```
+
+In Next.js (16 or later), import it in your root layout (`app/layout.tsx` for App Router). If you also want to apply `lism.config.js` settings and generate types, set up `@lism-css/plugin` as described in [Setting up with Next.js](#setting-up-with-nextjs) below.
+
+:::info
+Besides `main.css`, Lism also provides `main_no_layer.css` (without `@layer`) and `full.css`, a full build intended for use with CSS Purge. See [CSS File Types](/en/docs/css-files/) for details.
+:::
+
+
+
+### 3. Import components
+
+<Preview>
+<PreviewTitle>Import individual components</PreviewTitle>
+<PreviewCode slot="tab" label=".jsx">
+```jsx
+import { Box, Flex, ... } from 'lism-css/react';
+```
+</PreviewCode>
+<PreviewCode slot="tab" label=".astro">
+```jsx
+import { Box, Flex, ... } from 'lism-css/astro';
+```
+</PreviewCode>
+</Preview>
+
+
+
+## Setting up with Next.js
+
+In Next.js, wrapping your config with `withLism()` from `@lism-css/plugin` lets you set up CSS generation, type generation, and CSS loading — all reflecting your `lism.config.js` — in one step.
+
+:::info
+Requires **Next.js 16 or later**. Next.js 16 uses Turbopack by default (webpack fallback via `next dev --webpack` / `next build --webpack` is also supported).
+:::
+
+### 1. Install the packages
+
+In addition to `lism-css` itself, install `@lism-css/plugin` for the build integration.
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm add lism-css
+  pnpm add -D @lism-css/plugin
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm i lism-css
+  npm i -D @lism-css/plugin
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn add lism-css
+  yarn add -D @lism-css/plugin
+  ```
+  </PreviewCode>
+</Preview>
+
+### 2. Wrap `next.config.mjs` with `withLism()`
+
+```js
+// next.config.mjs
+import { withLism } from '@lism-css/plugin/next';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default withLism(nextConfig);
+```
+
+`withLism()` reads `lism.config.js` and pre-generates CSS reflecting your settings under `.lism-css/css/`. It then replaces (aliases) imports such as `lism-css/main.css` with the pre-generated CSS. This approach is necessary because Next.js does not have a mechanism to transform imports on the fly like Vite or Astro. Your existing `nextConfig` is merged without modification.
+
+### 3. Load the CSS and components
+
+Import `main.css` globally in your root layout (`app/layout.tsx` for App Router).
+
+```tsx
+// app/layout.tsx
+import 'lism-css/main.css';
+```
+
+Import components from `lism-css/react`.
+
+```tsx
+import { Box, Flex } from 'lism-css/react';
+```
+
+### 4. Customize with `lism.config.js` (optional)
+
+Placing a `lism.config.js` at the root of your project lets you add or override props and tokens. Saving this file while `next dev` is running automatically regenerates the CSS and types, so no server restart is needed.
+
+```js
+// lism.config.js
+export default {
+  tokens: {
+    color: {
+      // Example: outputs `--success` and makes it available as `-c:success` / `-bgc:success`, etc.
+      success: 'oklch(0.6 0.15 150)',
+    },
+  },
+};
+```
+
+See the [Customize page](/en/docs/customize/config/) for the full list of available options.
+
+### 5. Handling generated files
+
+`withLism()` automatically generates `lism-env.d.ts` at the project root, reflecting enabled breakpoints and any added props/traits. Add it to the `include` array in `tsconfig.json` and commit it to git so type completion works correctly.
+
+```json
+// tsconfig.json
+{
+  "include": ["next-env.d.ts", "lism-env.d.ts", "**/*.ts", "**/*.tsx"]
+}
+```
+
+On the other hand, `.lism-css/` (the generated CSS) is build output and should be added to `.gitignore`.
+
+```bash frame="none"
+# .gitignore
+.lism-css/
+```
+
+:::info
+**CSS Purge (removing unused classes) is not yet supported for Next.js** (Vite and Astro only). In Next.js, the CSS reflecting your `lism.config.js` is loaded as-is.
+:::
+
+
+## Installing Lism UI
+
+**UI components** such as accordions, tabs, and modals are provided as a separate package, `@lism-css/ui`.
+
+### Use as a package
+
+<Preview>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm i @lism-css/ui
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm add @lism-css/ui
+  ```
+  </PreviewCode>
+</Preview>
+
+
+```js frame="none"
+// Example: importing React components
+import { Accordion } from '@lism-css/ui/react/Accordion';
+import { Tabs } from '@lism-css/ui/react/Tabs';
+import { Button } from '@lism-css/ui/react/Button';
+
+// Example: importing in .astro
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Tabs } from '@lism-css/ui/astro/Tabs';
+import { Button } from '@lism-css/ui/astro/Button';
+```
+
+:::tip[Per-component imports are recommended]
+You can also import multiple components at once from `@lism-css/ui/react` / `@lism-css/ui/astro`, but depending on your build environment, code and CSS for unused components may end up bundled. **For production builds, we recommend importing each component from its per-component path as shown above.**
+
+```jsx
+// Bulk import works, but is not recommended
+import { Accordion, Tabs, Button } from '@lism-css/ui/react';
+```
+:::
+
+
+### Copy to your project with the CLI
+
+With `lism-cli ui add`, you can copy UI component source code directly into your project and customize it freely. We recommend specifying component names in PascalCase — the same form you use when importing.
+
+```bash frame="none"
+# Add a component (interactive setup on first run)
+npx lism-cli ui add Accordion
+
+# Add multiple components at once
+npx lism-cli ui add Accordion Modal Tabs NavMenu
+
+# Add all components
+npx lism-cli ui add --all
+```
+
+Name resolution is case-insensitive and ignores hyphens and underscores, so `NavMenu` / `navmenu` / `nav-menu` / `nav_menu` all resolve to the same component.
+
+
+## Strip unused CSS (CSS Purge)
+
+CSS Purge — which removes unused Lism CSS classes from your production build to keep the CSS lightweight — is provided by `@lism-css/plugin`. Just pass `purge: true` to the Vite / Astro integrated plugin (`lismCss()`) to enable it. See [CSS Purge](/en/docs/customize/purge/) for the full setup steps, options, and how to configure `safelist`.
+
+
+## AI tool integration
+
+Set up AI coding tools (Claude Code, Cursor, Codex, etc.) to work effectively with Lism CSS.
+
+- [Skills](/en/docs/skills/) — Place a file in your project to communicate design rules to AI agents
+- [MCP Server](/en/docs/mcp/) — AI tools can reference component, Props, and token information in real time

@@ -1,4 +1,4 @@
-# Plan: apps/docs のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
+# Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
 基準日: 2026-09-05・ab6512d4
 状態: Review required
@@ -6,7 +6,7 @@
 
 ## 概要 / ゴール
 
-apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ先をVercelからCloudflare Workers（静的アセット配信）+ Workers Builds（Git連携）へ移行する。あわせて `lism-css.com` のDNSゾーンをVercel DNSからCloudflareへ移管する（WorkersのCustom Domainに必要なため）。
+apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ先をVercelからCloudflare Workers（静的アセット配信）+ Workers Builds（Git連携）へ移行する。あわせて `lism-css.com` のDNSゾーンをVercel DNSからCloudflareへ移管する（WorkersのCustom Domainに必要なため）。
 
 完了時の状態：
 
@@ -20,17 +20,17 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
 ### リポジトリ側（コードで裏取り済み）
 
-- apps/docsは完全な静的サイト（`apps/docs/astro.config.ts`にアダプター設定なし・SSRなし）。OG画像・Pagefind検索・sitemap・llms.txtはすべてビルド時生成でホスティング先に依存しない
-- Vercel固有の依存は`apps/docs/vercel.ts`の1ファイルのみ。中身は次の3点：
-  - `buildCommand: 'cd ../.. && pnpm build:docs'`
-  - `redirects: vercelRedirects`（`apps/docs/src/config/redirects.ts`で定義。**8件**：`/docs/`・`/en/docs/`→overview の2件と、camelCase版リダイレクト6件）
+- apps/siteは完全な静的サイト（`apps/site/astro.config.ts`にアダプター設定なし・SSRなし）。OG画像・Pagefind検索・sitemap・llms.txtはすべてビルド時生成でホスティング先に依存しない
+- Vercel固有の依存は`apps/site/vercel.ts`の1ファイルのみ。中身は次の3点：
+  - `buildCommand: 'cd ../.. && pnpm build:site'`
+  - `redirects: vercelRedirects`（`apps/site/src/config/redirects.ts`で定義。**8件**：`/docs/`・`/en/docs/`→overview の2件と、camelCase版リダイレクト6件）
   - `headers` 2種（OG画像PNGの`Cache-Control` / `*.md`への`X-Robots-Tag: noindex`+`Content-Type: text/markdown; charset=utf-8`）
 - `wrangler`はルート`package.json`のdevDependenciesに導入済み（`^4.107.0`）。`templates.lism-css.com`でCloudflare Pagesの利用実績あり
-- `apps/docs/src/pages/404.astro`が存在するため、ビルドで`dist/404.html`が生成される
+- `apps/site/src/pages/404.astro`が存在するため、ビルドで`dist/404.html`が生成される
 - `astro.config.ts`に`trailingSlash`指定なし（デフォルト`ignore`）・`build.format`指定なし（デフォルト`directory`）。全ページが`{path}/index.html`で出力されるため、Workersのデフォルト`html_handling: "auto-trailing-slash"`と整合する想定（Phase 2で実測）
 - OG画像の実際の出力先は`/docs/og/`・`/ui/og/`・`/en/docs/og/`・`/en/ui/og/`の4ディレクトリ（distで確認済み）。`public/ogimg-default.png`（ルート直下）は元のVercelパターン（`/:path*/og/:slug*.png`）でも対象外なので扱い変更なし
 - `.md`ファイルは`/ui.md`のような浅い階層と`/ui/accordion.md`のような深い階層の両方に出力される（`/*.md`パターンは複数セグメントへのマッチが必要）
-- `apps/docs/lastmod-map.json`はローカル生成してコミットする運用（`apps/docs/scripts/generate-lastmod-map.ts`）のため、CI環境の変更による影響はない
+- `apps/site/lastmod-map.json`はローカル生成してコミットする運用（`apps/site/scripts/generate-lastmod-map.ts`）のため、CI環境の変更による影響はない
 
 ### DNS・ドメイン側（2026-09-05にdigとVercel管理画面で確認済み）
 
@@ -41,7 +41,7 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
   - MX `smtp.google.com`（Google Workspaceのセカンダリドメインとして登録済み・Gmail有効。受信箱にはテストメールのみで実質未使用。送信用のSPF/DKIM/DMARCも無し。念のためコピーする）
   - TXT `google-site-verification` ×2（Search Consoleのドメイン認証。落とすと認証が切れる）
   - `templates` CNAME → `lism-templates.pages.dev`（テンプレートプレビュー。Cloudflare Pagesのカスタムドメイン）
-  - `cdn` CNAME → `lism-cdn.pages.dev`（docsの画像CDN。Cloudflare Pagesのカスタムドメイン。apps/docs内の約190ファイルが画像参照に使っており、落ちるとドキュメントの画像が全滅する）
+  - `cdn` CNAME → `lism-cdn.pages.dev`（docsの画像CDN。Cloudflare Pagesのカスタムドメイン。apps/site内の約190ファイルが画像参照に使っており、落ちるとドキュメントの画像が全滅する）
   - `wp` A → XServer系WordPressホスティング、`_acme-challenge.wp` TXT（その証明書認証用）。空のWordPressプロジェクトだが稼働中のためコピーする
   - CAA ×3（sectigo / letsencrypt / pki.goog）。Vercelの証明書発行用。**コピーしない**（CAA無し＝制限無し。Cloudflareの証明書発行にも影響しない）
   - `*`（ワイルドカード）ALIAS → Vercel（自動管理・ロック付き）。**コピーしない**（「受容済みリスク」参照）
@@ -66,11 +66,11 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
 ### Phase 1: リポジトリ側の準備（devから作業ブランチを切る → PR 1）
 
-- [ ] `apps/docs/wrangler.jsonc`を新規作成。静的アセット配信のみなので`main`（Workerスクリプト）は不要：
+- [ ] `apps/site/wrangler.jsonc`を新規作成。静的アセット配信のみなので`main`（Workerスクリプト）は不要：
 
   ```jsonc
   {
-    "name": "lism-docs",
+    "name": "lism-site",
     "compatibility_date": "{作成日}",
     // プレビューURLはworkers_dev設定に連動して無効化されるため、明示的にtrueにする
     // （Phase 5でworkers_devをfalseにしてもプレビューURLを維持するため）
@@ -84,7 +84,7 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
   `workers_dev`はこの時点では書かない（デフォルト有効のまま）。Phase 3の検証で`*.workers.dev` URLを使うためで、無効化はPhase 5で`"workers_dev": false`を設定ファイルに追記して行う（ダッシュボードだけで無効化しても次回のWranglerデプロイで再有効化されるため、必ず設定ファイルで管理する）。
 
-- [ ] `apps/docs/public/_redirects`を新規作成し、`vercelRedirects`の8件を移植（301）：
+- [ ] `apps/site/public/_redirects`を新規作成し、`vercelRedirects`の8件を移植（301）：
 
   ```
   /docs/ /docs/overview/ 301
@@ -99,7 +99,7 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
   `redirects.ts`にある経緯のコメント（`/docs/`はAstro側だとmeta refreshの中間ページが一瞬見える件、casing違いの出力先衝突をAstro側で扱えない件）は`#`コメントとして`_redirects`にも書いておく（Phase 7で`vercelRedirects`を消したときに経緯が残るように）。
 
-- [ ] `apps/docs/public/_headers`を新規作成し、`vercel.ts`のヘッダーを移植：
+- [ ] `apps/site/public/_headers`を新規作成し、`vercel.ts`のヘッダーを移植：
 
   ```
   /docs/og/*
@@ -120,13 +120,13 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
   - **`.md`の`Content-Type`は`_headers`に書かない**（理由は「設計判断の根拠」参照）
   - 最後の`workers.dev`ホスト付きルールはCloudflare公式ドキュメント記載の例そのままで、プレビューURL（`<バージョンプレフィックス>-<Worker名>.<サブドメイン>.workers.dev`）とworkers.dev route上の全ページ（HTML含む）をnoindexにする。ホストを限定しているため、本番のカスタムドメイン（`lism-css.com`）には影響しない
 - [ ] ルート`.gitignore`に`.wrangler/`を追加（Phase 2の`wrangler dev`で生成されるため。`.vercel`の削除はPhase 7）
-- [ ] `apps/docs/scripts/smoke-test.ts`を新規作成（デプロイ検証用スモークテスト）。`npx tsx scripts/smoke-test.ts --base={検証先URL}`で、Phase 2チェックリストのうちHTTPで機械的に確認できる項目（ステータス・Location・Content-Type・`X-Robots-Tag`・`Cache-Control`・404）を一括検査し、1件でも失敗したら非0で終了する。Phase 2（ローカル）・Phase 3（workers.dev）・Phase 6（本番）で同じスクリプトを`--base`違いで使い、環境間の確認漏れを防ぐ
+- [ ] `apps/site/scripts/smoke-test.ts`を新規作成（デプロイ検証用スモークテスト）。`npx tsx scripts/smoke-test.ts --base={検証先URL}`で、Phase 2チェックリストのうちHTTPで機械的に確認できる項目（ステータス・Location・Content-Type・`X-Robots-Tag`・`Cache-Control`・404）を一括検査し、1件でも失敗したら非0で終了する。Phase 2（ローカル）・Phase 3（workers.dev）・Phase 6（本番）で同じスクリプトを`--base`違いで使い、環境間の確認漏れを防ぐ
   - HTMLページへのnoindexはworkers.devホスト上だけが期待値（本番カスタムドメインには付かない）のため、`--expect-html-noindex`のようなフラグで期待値を切り替えられるようにする
   - OG画像は出力ごとにファイル名が変わるため、実在するOG画像パスを引数で渡すか、sitemapから1件解決して検査する
 
 ### Phase 2: ローカル検証
 
-`pnpm build:docs && cd apps/docs && npx wrangler dev`で以下を確認：
+`pnpm build:site && cd apps/site && npx wrangler dev`で以下を確認：
 
 - [ ] トップ・`/docs/overview/`・`/en/`の表示
 - [ ] trailing slash挙動（`/docs/overview`→`/docs/overview/`へのリダイレクト等、Astroの`directory`形式出力とWorkersの`auto-trailing-slash`の整合）
@@ -152,7 +152,7 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
   ```jsonc
   {
-    "name": "lism-docs",
+    "name": "lism-site",
     "compatibility_date": "{作成日}",
     "preview_urls": true,
     "main": "./worker/index.ts",
@@ -165,7 +165,7 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
   }
   ```
 
-- `apps/docs/worker/index.ts`を新規作成する。責務は「ASSETSが200を返した`.md`にだけヘッダーを付与する」ことに限定する：
+- `apps/site/worker/index.ts`を新規作成する。責務は「ASSETSが200を返した`.md`にだけヘッダーを付与する」ことに限定する：
 
   ```ts
   export default {
@@ -193,12 +193,12 @@ apps/docs（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
 ### Phase 3: Workers Buildsセットアップ（本番未切り替え・ダッシュボード作業）
 
-- [ ] リポジトリ接続：ルートディレクトリ`apps/docs`、ビルドコマンド`cd ../.. && pnpm build:docs`、デプロイコマンド`npx wrangler deploy`、本番ブランチ`main`
-- [ ] pnpm workspaceの依存解決がWorkers Builds環境で正しく行われるか確認（ルートでの`pnpm install`が必要。うまくいかない場合はビルドコマンドに`cd ../.. && pnpm install --frozen-lockfile && pnpm build:docs`のように明示する）
+- [ ] リポジトリ接続：ルートディレクトリ`apps/site`、ビルドコマンド`cd ../.. && pnpm build:site`、デプロイコマンド`npx wrangler deploy`、本番ブランチ`main`
+- [ ] pnpm workspaceの依存解決がWorkers Builds環境で正しく行われるか確認（ルートでの`pnpm install`が必要。うまくいかない場合はビルドコマンドに`cd ../.. && pnpm install --frozen-lockfile && pnpm build:site`のように明示する）
 - [ ] Node.jsバージョンを環境変数で指定（Phase 0で確認した値に合わせる）
 - [ ] `PNPM_VERSION`も環境変数で指定し、ルート`package.json`の`packageManager`（現在は`pnpm@10.33.0`）と合わせる（ビルドの再現性のため。`packageManager`を更新したらこの環境変数も追従させる）
-- [ ] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-docs.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）
-- [ ] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-docs.<サブドメイン>.workers.dev`）が発行されることを確認
+- [ ] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-site.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）
+- [ ] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-site.<サブドメイン>.workers.dev`）が発行されることを確認
 - [ ] プレビューURLで**HTMLと`.md`の両方**に`X-Robots-Tag: noindex`が付くことを確認（`_headers`のworkers.devホスト付きルールによる。フォールバックWorker導入時の`.md`はWorker側の付与で担保される）
 - [ ] 初回ビルドの所要時間を確認（`.cache/og/`が永続化されない可能性が高いため。許容範囲かを判断）
 
@@ -256,10 +256,10 @@ WorkerのCustom Domainは「既存のCNAMEレコードがあるホスト名に�
 
 前提：Phase 6の安定確認が完了し、Phase 5で記録したapex・wwwそれぞれの切り替え時刻から、切り替え前のTTLがすべて経過していること。Phase 4のNS移管後の待機時間で代替しない。
 
-- [ ] `apps/docs/vercel.ts`を削除
-- [ ] `apps/docs/src/config/redirects.ts`の`vercelRedirects`/`VercelRedirect`型を削除（`_redirects`に一本化）
+- [ ] `apps/site/vercel.ts`を削除
+- [ ] `apps/site/src/config/redirects.ts`の`vercelRedirects`/`VercelRedirect`型を削除（`_redirects`に一本化）
 - [ ] `documents/docs-md.md`の`vercel.json`セクション（「## 5.」）を`_headers`ベースの記述に更新
-- [ ] `apps/docs/scripts/generate-lastmod-map.ts`冒頭コメントの「Vercel等のCI環境では〜」の文言を更新
+- [ ] `apps/site/scripts/generate-lastmod-map.ts`冒頭コメントの「Vercel等のCI環境では〜」の文言を更新
 - [ ] ルート`.gitignore`の`.vercel`を削除
 - [ ] Vercelの`lism-css-docs`プロジェクトから`lism-css.com`と`www.lism-css.com`の割り当てを外す
 - [ ] Vercelチームから`lism-css.com`を削除する（Vercel DNSのゾーンが消える。以後はNSをVercelへ戻すロールバックができなくなる）

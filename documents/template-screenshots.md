@@ -7,7 +7,7 @@
 
 ## コマンド
 
-ルートで実行する。内部で`pnpm --filter lism-docs ...`を呼ぶ。
+ルートで実行する。内部で`pnpm --filter lism-site ...`を呼ぶ。
 
 | コマンド | 処理 |
 | --- | --- |
@@ -19,9 +19,9 @@
 対象の絞り込みは`--target=<slug|相対パス>`、既存`dist/`を使うなら`--no-build`。
 
 ```bash
-pnpm --filter lism-docs screenshot:templates -- --target=minimal-astro
-pnpm --filter lism-docs screenshot:templates -- --compare --target=lp-astro
-pnpm --filter lism-docs screenshot:templates -- --no-build
+pnpm --filter lism-site screenshot:templates -- --target=minimal-astro
+pnpm --filter lism-site screenshot:templates -- --compare --target=lp-astro
+pnpm --filter lism-site screenshot:templates -- --no-build
 ```
 
 
@@ -62,7 +62,7 @@ pnpm --filter lism-docs screenshot:templates -- --no-build
 
 撮影してコミットするだけでen版サムネに切り替わる。手動のimport差し替えは不要。
 
-- docsのテンプレカード: `apps/docs/src/config/templates.ts`の`getThumb(tpl, lang)`が、en表示時に`screenshots/en/{variant|top}.png`を優先し、無ければjaへフォールバックする。
+- docsのテンプレカード: `apps/site/src/config/templates.ts`の`getThumb(tpl, lang)`が、en表示時に`screenshots/en/{variant|top}.png`を優先し、無ければjaへフォールバックする。
 - LPのen一覧（`templates/lp/astro/src/pages/en/index.astro`）: `import.meta.glob`で`screenshots/en/*.png`を優先し、無いslugは`screenshots/*.png`へフォールバックする。
 
 
@@ -81,7 +81,7 @@ templates/blog/astro/minimal/
     _temp/                  # 比較時の一時ファイル（自動削除）
 ```
 
-`screenshots/`配下の`*.png`（言語別サブディレクトリ含む）が公開用サムネ。apps/docsは`import.meta.glob('.../screenshots/**/*.png')`相当（実際は相対パス）で取得し、`_baseline/` `_diff/` `_temp/`はglobの除外パターンで弾く。
+`screenshots/`配下の`*.png`（言語別サブディレクトリ含む）が公開用サムネ。apps/siteは`import.meta.glob('.../screenshots/**/*.png')`相当（実際は相対パス）で取得し、`_baseline/` `_diff/` `_temp/`はglobの除外パターンで弾く。
 
 
 ## 運用フロー
@@ -93,7 +93,7 @@ templates/blog/astro/minimal/
 5. en版を用意する: LPは`shots`に`en/*`、blogは`langShots.en`を追加し、`pnpm screenshot:templates`で`screenshots/en/`を撮影してコミットする。
 
 
-## スクリプト（`apps/docs/scripts/template-screenshots.ts`）
+## スクリプト（`apps/site/scripts/template-screenshots.ts`）
 
 - `templates/`以下を再帰走査し、`screenshots.config.json`を持つディレクトリを収集する。
 - 各テンプレを`pnpm --filter <name> build`→`pnpm --filter <name> preview`で起動する。ポートは`-- --port <port>`、`portViaEnv: true`なら`PORT`環境変数で渡す。

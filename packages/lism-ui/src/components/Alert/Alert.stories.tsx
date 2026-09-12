@@ -1,3 +1,4 @@
+import { checkCircleIcon } from '../../helper/icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert } from './react/Alert';
 import PRESETS from './presets';
@@ -61,7 +62,7 @@ export const WithSide: Story = {
 export const CustomIcon: Story = {
   name: 'カスタムアイコン',
   args: {
-    icon: 'star',
+    icon: checkCircleIcon,
     keycolor: 'purple',
     children: 'カスタムアイコンとカラー指定。',
   },

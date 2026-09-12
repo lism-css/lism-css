@@ -1,0 +1,155 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Cluster, Grid, Icon, BoxLink, Media, Stack, Text, Heading } from 'lism-css/astro';
+---
+
+<DemoLayout title="Member03">
+  <Container isWrapper="l" bgc="base" py="50" hasGutter>
+    <Stack g="50">
+      <Heading level="2" class="u--trim" fz="3xl" fw="normal" ta="center" lts="l">Staff Introduction</Heading>
+      <Grid gtc="repeat(auto-fit, minmax(14rem, 1fr))" g="40">
+        <Grid gtr="subgrid" gr="span 4" g="30">
+          <Frame as="figure" ar="1/1" w="stretch" bdrs="10">
+            <Media
+              src="https://cdn.lism-css.com/random/img?category=staff&r=1"
+              alt=""
+              width="960"
+              height="640"
+              style={{ objectPosition: '50% 20%' }}
+            />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Taro Suzuki</Text>
+            <Text class="u--trim" fz="xs" o="p">CEO / Creative Director</Text>
+          </Stack>
+          <Text class="u--trim" fz="xs" o="pp">
+            Founded the company in 2010. Solving numerous client challenges through the power of creativity. He oversees the quality of entire
+            projects and leads the team with strength. Weekend camping is his greatest joy.
+          </Text>
+          <Cluster g="20">
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M18.42,13.99L27.88,3h-2.25l-8.21,9.57L10.86,3H3.3l9.93,14.48L3.3,29h2.25l8.69-10.1L21.14,29h7.56 L18.42,13.99L18.42,13.99z M15.35,17.6l-1-1.42L6.31,4.71h3.43l6.44,9.22l1,1.42l8.39,12h-3.43L15.35,17.6L15.35,17.6z"
+                ></path></Icon
+              ></BoxLink
+            >
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M16.01,8.83c-3.95,0-7.17,3.16-7.17,7.17s3.16,7.17,7.17,7.17s7.17-3.16,7.17-7.17S19.96,8.83,16.01,8.83z M16.01,20.62 c-2.55,0-4.62-2.07-4.62-4.62s2.07-4.62,4.62-4.62s4.62,2.07,4.62,4.62S18.56,20.62,16.01,20.62L16.01,20.62z M25.12,8.59 c0,0.97-0.79,1.64-1.64,1.64c-0.97,0-1.64-0.79-1.64-1.64c0-0.85,0.79-1.64,1.64-1.64C24.33,6.95,25.12,7.62,25.12,8.59z  M29.86,10.23c-0.12-2.25-0.61-4.19-2.31-5.83c-1.7-1.64-3.65-2.13-5.83-2.31c-2.31-0.06-9.12-0.06-11.49,0.06 C7.99,2.27,6.04,2.76,4.4,4.4s-2.13,3.59-2.31,5.83c-0.12,2.31-0.12,9.18,0,11.49c0.12,2.25,0.61,4.19,2.31,5.83 c1.7,1.64,3.59,2.13,5.83,2.31c2.31,0.12,9.18,0.12,11.49,0c2.25-0.12,4.19-0.61,5.83-2.31c1.64-1.64,2.13-3.59,2.31-5.83 C30.05,19.41,30.05,12.6,29.86,10.23L29.86,10.23z M26.95,24.27c-0.49,1.22-1.4,2.13-2.67,2.67c-1.82,0.67-6.2,0.55-8.26,0.55 s-6.38,0.18-8.26-0.55c-1.22-0.49-2.13-1.4-2.67-2.67C4.4,22.45,4.58,18.07,4.58,16S4.4,9.62,5.19,7.74 c0.43-1.22,1.4-2.13,2.61-2.61c1.82-0.79,6.2-0.55,8.26-0.55s6.38-0.18,8.26,0.55c1.22,0.49,2.13,1.4,2.67,2.67 c0.67,1.82,0.55,6.2,0.55,8.26S27.61,22.39,26.95,24.27z"
+                ></path></Icon
+              ></BoxLink
+            >
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 4" g="30">
+          <Frame as="figure" ar="1/1" w="stretch" bdrs="10">
+            <Media
+              src="https://cdn.lism-css.com/random/img?category=staff&r=2"
+              alt=""
+              width="960"
+              height="640"
+              style={{ objectPosition: '50% 20%' }}
+            />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Misaki Sato</Text>
+            <Text class="u--trim" fz="xs" o="p">Art Director / UI/UX Designer</Text>
+          </Stack>
+          <Text class="u--trim" fz="xs" o="pp">
+            Specializes in intuitive and beautiful UI/UX design based on human psychology and behavior. She constantly pursues what truly valuable
+            experiences mean for users, overseeing the entire visual direction.
+          </Text>
+          <Cluster g="20">
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M18.42,13.99L27.88,3h-2.25l-8.21,9.57L10.86,3H3.3l9.93,14.48L3.3,29h2.25l8.69-10.1L21.14,29h7.56 L18.42,13.99L18.42,13.99z M15.35,17.6l-1-1.42L6.31,4.71h3.43l6.44,9.22l1,1.42l8.39,12h-3.43L15.35,17.6L15.35,17.6z"
+                ></path></Icon
+              ></BoxLink
+            >
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M16.01,8.83c-3.95,0-7.17,3.16-7.17,7.17s3.16,7.17,7.17,7.17s7.17-3.16,7.17-7.17S19.96,8.83,16.01,8.83z M16.01,20.62 c-2.55,0-4.62-2.07-4.62-4.62s2.07-4.62,4.62-4.62s4.62,2.07,4.62,4.62S18.56,20.62,16.01,20.62L16.01,20.62z M25.12,8.59 c0,0.97-0.79,1.64-1.64,1.64c-0.97,0-1.64-0.79-1.64-1.64c0-0.85,0.79-1.64,1.64-1.64C24.33,6.95,25.12,7.62,25.12,8.59z  M29.86,10.23c-0.12-2.25-0.61-4.19-2.31-5.83c-1.7-1.64-3.65-2.13-5.83-2.31c-2.31-0.06-9.12-0.06-11.49,0.06 C7.99,2.27,6.04,2.76,4.4,4.4s-2.13,3.59-2.31,5.83c-0.12,2.31-0.12,9.18,0,11.49c0.12,2.25,0.61,4.19,2.31,5.83 c1.7,1.64,3.59,2.13,5.83,2.31c2.31,0.12,9.18,0.12,11.49,0c2.25-0.12,4.19-0.61,5.83-2.31c1.64-1.64,2.13-3.59,2.31-5.83 C30.05,19.41,30.05,12.6,29.86,10.23L29.86,10.23z M26.95,24.27c-0.49,1.22-1.4,2.13-2.67,2.67c-1.82,0.67-6.2,0.55-8.26,0.55 s-6.38,0.18-8.26-0.55c-1.22-0.49-2.13-1.4-2.67-2.67C4.4,22.45,4.58,18.07,4.58,16S4.4,9.62,5.19,7.74 c0.43-1.22,1.4-2.13,2.61-2.61c1.82-0.79,6.2-0.55,8.26-0.55s6.38-0.18,8.26,0.55c1.22,0.49,2.13,1.4,2.67,2.67 c0.67,1.82,0.55,6.2,0.55,8.26S27.61,22.39,26.95,24.27z"
+                ></path></Icon
+              ></BoxLink
+            >
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 4" g="30">
+          <Frame as="figure" ar="1/1" w="stretch" bdrs="10">
+            <Media
+              src="https://cdn.lism-css.com/random/img?category=staff&r=3"
+              alt=""
+              width="960"
+              height="640"
+              style={{ objectPosition: '50% 20%' }}
+            />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Kenta Takahashi</Text>
+            <Text class="u--trim" fz="xs" o="p">Technical Director / Lead Engineer</Text>
+          </Stack>
+          <Text class="u--trim" fz="xs" o="pp">
+            His passion for the latest web technologies is his greatest weapon. Even with challenging requirements, he leads projects to success
+            through optimal technology selection and implementation. A reliable tech leader who is also passionate about mentoring junior members.
+          </Text>
+          <Cluster g="20">
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M18.42,13.99L27.88,3h-2.25l-8.21,9.57L10.86,3H3.3l9.93,14.48L3.3,29h2.25l8.69-10.1L21.14,29h7.56 L18.42,13.99L18.42,13.99z M15.35,17.6l-1-1.42L6.31,4.71h3.43l6.44,9.22l1,1.42l8.39,12h-3.43L15.35,17.6L15.35,17.6z"
+                ></path></Icon
+              ></BoxLink
+            >
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M16.01,8.83c-3.95,0-7.17,3.16-7.17,7.17s3.16,7.17,7.17,7.17s7.17-3.16,7.17-7.17S19.96,8.83,16.01,8.83z M16.01,20.62 c-2.55,0-4.62-2.07-4.62-4.62s2.07-4.62,4.62-4.62s4.62,2.07,4.62,4.62S18.56,20.62,16.01,20.62L16.01,20.62z M25.12,8.59 c0,0.97-0.79,1.64-1.64,1.64c-0.97,0-1.64-0.79-1.64-1.64c0-0.85,0.79-1.64,1.64-1.64C24.33,6.95,25.12,7.62,25.12,8.59z  M29.86,10.23c-0.12-2.25-0.61-4.19-2.31-5.83c-1.7-1.64-3.65-2.13-5.83-2.31c-2.31-0.06-9.12-0.06-11.49,0.06 C7.99,2.27,6.04,2.76,4.4,4.4s-2.13,3.59-2.31,5.83c-0.12,2.31-0.12,9.18,0,11.49c0.12,2.25,0.61,4.19,2.31,5.83 c1.7,1.64,3.59,2.13,5.83,2.31c2.31,0.12,9.18,0.12,11.49,0c2.25-0.12,4.19-0.61,5.83-2.31c1.64-1.64,2.13-3.59,2.31-5.83 C30.05,19.41,30.05,12.6,29.86,10.23L29.86,10.23z M26.95,24.27c-0.49,1.22-1.4,2.13-2.67,2.67c-1.82,0.67-6.2,0.55-8.26,0.55 s-6.38,0.18-8.26-0.55c-1.22-0.49-2.13-1.4-2.67-2.67C4.4,22.45,4.58,18.07,4.58,16S4.4,9.62,5.19,7.74 c0.43-1.22,1.4-2.13,2.61-2.61c1.82-0.79,6.2-0.55,8.26-0.55s6.38-0.18,8.26,0.55c1.22,0.49,2.13,1.4,2.67,2.67 c0.67,1.82,0.55,6.2,0.55,8.26S27.61,22.39,26.95,24.27z"
+                ></path></Icon
+              ></BoxLink
+            >
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 4" g="30">
+          <Frame as="figure" ar="1/1" w="stretch" bdrs="10">
+            <Media
+              src="https://cdn.lism-css.com/random/img?category=staff&r=4"
+              alt=""
+              width="960"
+              height="640"
+              style={{ objectPosition: '50% 20%' }}
+            />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Yudai Tanaka</Text>
+            <Text class="u--trim" fz="xs" o="p">Web Director / Manager</Text>
+          </Stack>
+          <Text class="u--trim" fz="xs" o="pp">
+            The bridge between clients and the production team, he is the commander who keeps projects running smoothly. With careful communication
+            and precise schedule management, he has earned strong trust from clients.
+          </Text>
+          <Cluster g="20">
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M18.42,13.99L27.88,3h-2.25l-8.21,9.57L10.86,3H3.3l9.93,14.48L3.3,29h2.25l8.69-10.1L21.14,29h7.56 L18.42,13.99L18.42,13.99z M15.35,17.6l-1-1.42L6.31,4.71h3.43l6.44,9.22l1,1.42l8.39,12h-3.43L15.35,17.6L15.35,17.6z"
+                ></path></Icon
+              ></BoxLink
+            >
+            <BoxLink href="#" c="text" o="pp" hov={{ o: 'inherit' }}
+              ><Icon viewBox="0 0 32 32" fill="currentColor" focusable="false" fz="m"
+                ><path
+                  d="M16.01,8.83c-3.95,0-7.17,3.16-7.17,7.17s3.16,7.17,7.17,7.17s7.17-3.16,7.17-7.17S19.96,8.83,16.01,8.83z M16.01,20.62 c-2.55,0-4.62-2.07-4.62-4.62s2.07-4.62,4.62-4.62s4.62,2.07,4.62,4.62S18.56,20.62,16.01,20.62L16.01,20.62z M25.12,8.59 c0,0.97-0.79,1.64-1.64,1.64c-0.97,0-1.64-0.79-1.64-1.64c0-0.85,0.79-1.64,1.64-1.64C24.33,6.95,25.12,7.62,25.12,8.59z  M29.86,10.23c-0.12-2.25-0.61-4.19-2.31-5.83c-1.7-1.64-3.65-2.13-5.83-2.31c-2.31-0.06-9.12-0.06-11.49,0.06 C7.99,2.27,6.04,2.76,4.4,4.4s-2.13,3.59-2.31,5.83c-0.12,2.31-0.12,9.18,0,11.49c0.12,2.25,0.61,4.19,2.31,5.83 c1.7,1.64,3.59,2.13,5.83,2.31c2.31,0.12,9.18,0.12,11.49,0c2.25-0.12,4.19-0.61,5.83-2.31c1.64-1.64,2.13-3.59,2.31-5.83 C30.05,19.41,30.05,12.6,29.86,10.23L29.86,10.23z M26.95,24.27c-0.49,1.22-1.4,2.13-2.67,2.67c-1.82,0.67-6.2,0.55-8.26,0.55 s-6.38,0.18-8.26-0.55c-1.22-0.49-2.13-1.4-2.67-2.67C4.4,22.45,4.58,18.07,4.58,16S4.4,9.62,5.19,7.74 c0.43-1.22,1.4-2.13,2.61-2.61c1.82-0.79,6.2-0.55,8.26-0.55s6.38-0.18,8.26,0.55c1.22,0.49,2.13,1.4,2.67,2.67 c0.67,1.82,0.55,6.2,0.55,8.26S27.61,22.39,26.95,24.27z"
+                ></path></Icon
+              ></BoxLink
+            >
+          </Cluster>
+        </Grid>
+      </Grid>
+    </Stack>
+  </Container>
+</DemoLayout>

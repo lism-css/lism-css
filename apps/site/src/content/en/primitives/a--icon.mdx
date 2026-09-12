@@ -1,0 +1,258 @@
+---
+title: 'Icon (a--icon)'
+navtitle: 'a--icon'
+description: 'a--icon is a class for displaying icon elements.'
+---
+
+import { Home, Info, Lightbulb, Warning } from '@lism-css/icons/astro';
+import { Flex, Cluster, Icon } from 'lism-css/astro';
+
+
+`a--icon` is a class for displaying icon elements.
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/atomic/_icon.scss" />
+
+
+## Lism Component
+
+`<Icon>` automatically adds `aria-label` and `role="img"` when `label` is specified, or `aria-hidden="true"` when it is not.
+
+### Import
+
+<ImportPackage component="Icon" />
+
+### HTML Structure
+
+The actual tag rendered varies between `svg`, `img`, and others depending on how `icon`, `viewBox`, `src`, and `as` are specified, but the rules for adding `aria-hidden`/`aria-label` are the same across all of them.
+
+```pug
+svg.a--icon[aria-hidden="true"]
+
+or
+
+svg.a--icon[aria-label="..."][role="img"]
+```
+
+### Props
+
+| Prop | Description |
+|---|---|
+| `icon` | An icon component, an SVG string, or an object in the form `{as, ...exProps}`. |
+| `size` | Default SVG width and height. Explicit `width` and `height` take precedence. |
+| `weight` | Selects the stroke width: `light` (1), `regular` (1.5), or `bold` (2). When omitted, the icon retains its own stroke width. |
+| `strokeWidth` / `stroke-width` | Sets the stroke width directly, overriding `weight`. |
+| `label` | Output as `aria-label`. When specified, `role="img"` is also added; when omitted, `aria-hidden="true"` is output instead. |
+
+
+## Usage
+
+
+### Using `@lism-css/icons`
+
+`@lism-css/icons` is a collection of SVG icons for React and Astro from the creators of Lism CSS. Since `lism-css` itself does not include icon SVG data, install the package separately and pass the components you need to `icon`.
+
+See the [`@lism-css/icons` page](/en/docs/packages/icons/) for installation instructions and the [icon list](/en/docs/packages/icons/#icon-list).
+
+Import from `@lism-css/icons/react` for React or `@lism-css/icons/astro` for Astro.
+
+<Preview>
+  <PreviewTitle>Specifying icon components</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="React">
+    ```jsx
+    import { Cluster, Icon } from 'lism-css/react';
+    import { Lightbulb, Warning } from '@lism-css/icons/react';
+
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Astro">
+    ```astro
+    ---
+    import { Cluster, Icon } from 'lism-css/astro';
+    import { Lightbulb, Warning } from '@lism-css/icons/astro';
+    ---
+
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+#### Changing stroke width
+
+Stroke icons in `@lism-css/icons` use a 24-unit grid. Use `weight` to change their thickness, including the small dots inside icons. Use `c` to set the color.
+
+<Preview>
+  <PreviewTitle>light, regular, and bold</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="20" fz="3xl">
+      <Icon icon={Info} weight="light" label="light" />
+      <Icon icon={Info} weight="regular" label="regular" />
+      <Icon icon={Info} weight="bold" label="bold" />
+      <Icon icon={Home} weight="bold" strokeWidth={1.25} label="Stroke width 1.25" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    import { Home, Info } from '@lism-css/icons/react';
+
+    <Icon icon={Info} weight="light" />
+    <Icon icon={Info} weight="regular" />
+    <Icon icon={Info} weight="bold" />
+    <Icon icon={Home} weight="bold" strokeWidth={1.25} />
+    ```
+  </PreviewCode>
+</Preview>
+
+An explicit `strokeWidth` (or `stroke-width` in Astro) overrides `weight`. You can also pass `weight` to external stroke icons. When omitted, the external icon retains its own stroke width. Pass a package-specific `weight` through `exProps` or the `icon` object as shown below.
+
+`@lism-css/icons` also provides fill icons and icons that combine fills and strokes.
+
+
+### Using `as` and `exProps`
+
+You can also use the standard Lism component prop `as` instead of `icon={Home}`.
+
+<Preview>
+  <PreviewTitle>Specifying an icon component via `as`</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} size="2em" />
+  </PreviewArea>
+  <PreviewCode>
+```jsx "as={Home}"
+import { Home } from '@lism-css/icons/react';
+import { Icon } from 'lism-css/react';
+
+<Icon as={Home} size="2em" />
+```
+  </PreviewCode>
+</Preview>
+
+
+Use `exProps` to group props passed to the imported icon component. The following example sets its stroke width and size.
+
+<Preview>
+  <PreviewTitle>Specifying props for `Home`</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+</Preview>
+
+
+#### Combining `as` and `exProps` into `icon`
+
+:::info
+In `<Icon>`, you can also pass `as` and `exProps` together in the following format:
+
+```jsx
+<Icon icon={{as:Component, exProps1, exProps2, ...}} />
+```
+:::
+
+
+<Preview>
+  <PreviewTitle>Example of specifying `as` and `exProps` together via `icon`</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+    <PreviewCode slot="tab" label="Combined">
+    ```jsx "strokeWidth:2, size:'3em'" "as:Home"
+    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Separate">
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+
+</Preview>
+
+You can use icons from third-party packages such as `react-icons` and `@phosphor-icons/react` through `icon` or `as` in the same way. To use React icons in Astro, enable the React integration in Astro.
+
+
+### Passing an SVG string
+
+You can pass a complete SVG string starting with `<svg` to `icon`, including attributes such as `viewBox` and stroke width.
+
+```jsx
+<Icon icon={'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m5 12 4 4L19 6" /></svg>'} c="green" />
+```
+
+### Writing SVG directly
+
+`<Icon>` is rendered as `<svg>` when a `viewBox` prop is specified.
+You can place `path` elements and other SVG content directly as children.
+
+
+<Preview>
+  <PreviewTitle>Passing `path` and other elements directly as children</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon viewBox="0 0 256 256" label="SmileyIcon icon" fz="4xl" c="blue">
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </Icon>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Icon viewBox="0 0 256 256" label="SmileyIcon icon" fz="4xl" c="blue">
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </Icon>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <svg
+      viewBox="0 0 256 256"
+      width="1em"
+      height="1em"
+      aria-label="SmileyIcon icon"
+      role="img"
+      class="a--icon -fz:4xl -c"
+      style="--c:var(--blue)"
+    >
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </svg>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Using `src` to specify an image
+
+<Preview>
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p="20">
+    <Flex g="10" ai="center">
+      <Icon fz="2xl" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" />
+      <span>Img icon.</span>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Flex g="10" ai="center">
+      <Icon fz="2xl" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" />
+      <span>Img icon.</span>
+    </Flex>
+    ```
+  </PreviewCode>
+</Preview>

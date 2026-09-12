@@ -167,10 +167,10 @@ function TokenGroupSection({ section }: TokenGroupSectionProps) {
     // box the rows live in and its width is the one worth querying.
     <Stack as="section" id={sectionId(id)} isContainer max-sz={isBlockPreview ? 'full' : undefined} g="15" style={{ scrollMarginBlockStart: '1rem' }}>
       <Flex ai="baseline" g="10" fxw="wrap">
-        <Heading level="3" fz="xs" fw="bold" c="text-2" tt="upper" lts="l">
+        <Heading level="3" fz="xs" fw="bold" c="text-2" tt="uppercase" lts="l">
           {label}
         </Heading>
-        {/* Outside the heading: `tt="upper"` would distort the case-sensitive
+        {/* Outside the heading: `tt="uppercase"` would distort the case-sensitive
             custom property prefix. */}
         {varPrefix && (
           <Text fz="2xs" c="text-2">

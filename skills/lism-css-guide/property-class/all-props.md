@@ -30,7 +30,7 @@
 | `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |
-| `tt` | `text-transform` | `-tt:upper`, `-tt:lower` | — |
+| `tt` | `text-transform` | `-tt:uppercase`, `-tt:lowercase` | — |
 
 **注意:** `line-height` は全要素で `var(--lh, calc(1em + var(--hl) * 2))` として管理されます。基本は `hl`（fz 非依存の固定量）を使い、fz に比例した行送りを保ちたい場合だけ `lh`（倍率）を使います。`lh` を指定した要素の子孫では `hl` は効きません。
 
@@ -56,9 +56,9 @@
 | `max-w` | `max-width` | `-max-w:100%` | ✔ |
 | `min-h` | `min-height` | `-min-h:100%` | ✔ |
 | `max-h` | `max-height` | `-max-h:100%` | ✔ |
-| `sz` | `inline-size` | — | — |
-| `min-sz` | `min-inline-size` | — | — |
-| `max-sz` | `max-inline-size` | `-max-sz:xs`, `-max-sz:s`, `-max-sz:m`, `-max-sz:l`, `-max-sz:xl`, `-max-sz:full`, `-max-sz:bleed` | — |
+| `sz` | `inline-size` | — | ✔ |
+| `min-sz` | `min-inline-size` | — | ✔ |
+| `max-sz` | `max-inline-size` | `-max-sz:xs`, `-max-sz:s`, `-max-sz:m`, `-max-sz:l`, `-max-sz:xl`, `-max-sz:full`, `-max-sz:bleed` | ✔ |
 | `bsz` | `block-size` | — | — |
 | `min-bsz` | `min-block-size` | — | — |
 | `max-bsz` | `max-block-size` | — | — |

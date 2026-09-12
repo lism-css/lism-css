@@ -1,0 +1,63 @@
+---
+import { Calendar, CheckCircle, Clockwise, Note } from '@lism-css/icons/astro';
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Center, Columns, Container, Flex, Heading, Icon, Stack, Text } from 'lism-css/astro';
+
+const features = [
+  {
+    icon: CheckCircle,
+    title: 'Manage tasks in one place',
+    description: 'Assign owners and deadlines to organize your tasks. Use boards and lists to see what to work on next.',
+  },
+  {
+    icon: Clockwise,
+    title: 'Track project progress',
+    description: 'See completed tasks and remaining work at a glance. Adjust your plans with a clear view of how your team is doing.',
+  },
+  {
+    icon: Note,
+    title: 'Keep your team informed',
+    description: 'Bring documents and daily updates together. Share the information your team needs and keep everyone on the same page.',
+  },
+  {
+    icon: Calendar,
+    title: 'See your schedule at a glance',
+    description: 'Bring task deadlines and sprint schedules into one calendar. See what is coming up and plan a manageable workload.',
+  },
+] as const;
+---
+
+<DemoLayout title="01 - Two-column features with icons">
+  <Container as="section" isWrapper="m" hasGutter bgc="base">
+    <Stack py={['50', null, '60']}>
+      <Stack class="u--trimAll" g="30" max-sz="s" mx="auto" ta="center">
+        <Text fz="s" c="brand" fw="bold" lts="l" tt="uppercase">Features</Text>
+        <Heading fz={['2xl', null, '3xl']}>See what to do next at a glance</Heading>
+        <Text fz={['xs', 's']} c="text-2" max-sz="xs">
+          Your team’s tasks and status, all in one place. DevFlow keeps everyday project management simple and organized.
+        </Text>
+      </Stack>
+
+      <Columns cols={[1, null, 2]} cg="50" rg={['40', null, '50']} mbs={['40', null, '50']}>
+        {
+          features.map((feature) => (
+            <Flex as="article" ai="start" g={['20', null, '25']}>
+              <Center as="span" ar="1/1" fz="2xl" p=".25em" fxsh="0" bgc="brand" c="white" bdrs="30">
+                <Icon icon={feature.icon} size="1em" />
+              </Center>
+              <Stack g="10">
+                <Heading level="3" fz="m">
+                  {feature.title}
+                </Heading>
+                <Text c="text-2" fz="s">
+                  {feature.description}
+                </Text>
+              </Stack>
+            </Flex>
+          ))
+        }
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>

@@ -130,7 +130,7 @@ ${cards}
 <body>
   <div class="l--stack -mx:auto -max-sz:m -g:50 -px:30 -py:50">
     <header class="l--stack -g:15">
-      <p class="-c:brand -fz:s -fw:bold -lts:xl -tt:upper">Lism CSS</p>
+      <p class="-c:brand -fz:s -fw:bold -lts:xl -tt:uppercase">Lism CSS</p>
       <h1 class="-fz:4xl -fw:bold">Templates Preview</h1>
       <p class="-c:text-2">Lism CSS で構築したテンプレートのライブプレビュー集。各テンプレートは <code class="-ff:mono -fz:s -px:5 -bdrs:10 -bgc:base-2">npm create lism@latest</code> から生成できます。</p>
     </header>

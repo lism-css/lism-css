@@ -1,0 +1,171 @@
+---
+title: '変更履歴'
+description: 'Lism CSS の各バージョンにおける変更履歴をまとめています。'
+---
+import { Divider } from 'lism-css/astro';
+
+v1.0のリリースまでは大きな変更が続く可能性があるため、変更点をこのページに記載します。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.29.0 (2026.09.13)
+
+**破壊的変更**を含むリリースです。
+
+### Iconとアイコンパッケージ (#616, #618, #619)
+
+- **破壊的変更:** `Icon`の名前指定プリセットとコアのSVGデータを廃止しました。`@lism-css/icons/react`または`@lism-css/icons/astro`から必要なコンポーネントをimportし、`icon={Check}`のように指定してください。
+- `Icon`は`weight`（light 1 / regular 1.5 / bold 2）と`strokeWidth`に対応します。`@lism-css/icons`の線アイコンは24グリッド・既定の線幅1.5で描画され、色は`c`で指定できます。従来の太字caret・arrowは`weight="bold"`で再現できます。`dot`は廃止しました。
+- アイコンは全てオリジナル設計の`@lism-css/icons`として、別リポジトリ[lism-css/icons](https://github.com/lism-css/icons)から公開します。収録アイコンは[`@lism-css/icons`のページ](/docs/packages/icons/)を参照してください。
+
+### その他
+
+- `sz` / `min-sz` / `max-sz`をブレイクポイント対応（`bp: 1`）にしました。`w`系と同じく`-{prop}_{bp}`クラスで画面幅ごとに値を切り替えられます。`-max-sz:full` / `-max-sz:bleed`はブレイクポイント値としては使えません。単一値指定の出力は`style`属性への直書きから`-sz`クラス＋`--sz`変数のセットへ変わります（`max-sz`のトークン値と`full` / `bleed`は従来どおりクラス出力）（#613）。
+- **破壊的変更:** `lh`トークンを`xs: 1.125` / `s: 1.25` / `m: 1.5` / `l: 1.75` / `xl: 2`へ変更しました（旧: `1.25` / `1.5` / `1.75` / `2` / `2.25`）。`m`を`1.5`に据えた0.25刻みのスケールになります（#614）。
+- **破壊的変更:** `text-transform`のクラス名を`-tt:upper` / `-tt:lower`から`-tt:uppercase` / `-tt:lowercase`へ変更しました。propsの`tt="upper"` / `tt="lower"`は互換として維持し、新しいクラスへ解決します（#615）。
+
+### `@lism-css/plugin` v0.5.0 (2026.09.13)
+
+**破壊的変更**を含むリリースです。
+
+- `lism-css`を`dependencies`から`peerDependencies`（`*`）へ移し、利用側にインストールされている`lism-css`からCSSを生成するようにしました。pluginが`lism-css`を同梱しなくなるため、`lism-css`は利用側で導入してください（#609）。
+
+### `@lism-css/ui` v0.29.0 (2026.09.13)
+
+- Alert・Calloutの既定アイコンとModal・Popoverの閉じるアイコンのSVGデータを同梱しました。既定アイコンの利用に追加importは不要です。
+- `Button`の`fill`（既定）のボーダー色`--bdc`を`var(--bgc)`から`transparent`へ変更しました。`hov="-bgc"`などで背景色だけを変えたときに、ボーダーが元の色で縁として残らなくなります。ホバー時に枠線を残したい場合は`--bdc: var(--bgc)`を指定してください（`hov="reverse"`の例を参照）。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.28.2 (2026.09.10)
+
+- `l--flow`直下の見出しの上余白を`calc(var(--flow) * 2 + 0.5em)`から`calc(var(--flow) * 1.5 + 0.5em)`へ変更し、対象を`h1`〜`h4`に絞りました（`h5` / `h6`は通常の`--flow`）。先頭の見出しや`is--skipFlow`直後の見出しに`0.5em`の余白が残る問題も修正しました（#608）。
+- 上余白は`--mbs`変数を経由して適用するようにしました。個別に打ち消す場合は`--flow`ではなく`--mbs: 0px`を指定してください。
+- Iconプリセットに`dots-vertical`と`menu-2`を追加しました。
+
+**`@lism-css/plugin` v0.4.5 (2026.09.10)**
+
+- `lism-css` v0.28.2に追従しました。コードの変更はありません。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.28.1 (2026.09.08)
+
+- 色指定の`COLOR1:COLOR2:割合`形式で、割合が2色目に適用されるよう修正しました。
+- `--brand` / `--accent`の既定値を`hsl(212, 88%, 50%)` / `hsl(347, 65%, 57%)`へ、`--neutral`を`hsl(220, 2%, 75%)`へ変更しました。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.28.0 (2026.09.05)
+
+**破壊的変更を含みます。**
+
+- 余白トークン`--s45`を追加し、`--s80`を削除しました。`s="80"`は`s="70"`または任意の値へ置き換えてください。
+- `u--divide` / `u--enclose`をコアと`util`のプリセット型から削除しました。引き続き使う場合は、[Utility Class](/docs/utility-class/)のOpt-in節にあるCSSを追加してください（#603）。
+- `lts`の`xs`〜`xl`を`--lts--base`からの相対値にし、基準値を`normal`から`0em`へ変更しました。基準値の上書きは`:root`で長さを指定してください。
+- ホバー時の変形用に`-hov:-transform`を追加しました（#605）。
+- opacityトークンの`p` / `pp` / `ppp`を`0.8` / `0.6` / `0.4`へ変更しました。
+
+**`@lism-css/plugin` v0.4.4 (2026.09.05)**
+
+- `lism-css` v0.28.0に追従しました。コードの変更はありません。
+
+**`@lism-css/ui` v0.28.0 (2026.09.05)**
+
+**破壊的変更を含みます。** `lism-css` v0.28.0以上が必要です。
+
+- UI・実装例の子要素用CSS変数を改名しました（`--_item-p` → `--item-p`など）。`--_gap`は`--popup-gap`、`--_panel-h` / `--_content-gtr`は`--_panelH` / `--_contentGtr`へ変更しました（#607）。
+- 旧変数名は使えません。コピー済みのCSS・ソースと、独自の変数指定・参照をまとめて更新してください。Props名は変わりません。
+- `lism-css`の同梱をやめ、外部依存へ変更しました。`lism.config`のトークン変更がUIの再ビルドなしで反映されます（#604）。
+- Accordionのボタンの既定`gap`を`--s10`から`--s15`へ変更しました。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.27.0 (2026.09.04)
+
+**破壊的変更を含みます。**
+
+- `lh`を単位なしの比率で`line-height`を指定するpropへ変更しました。従来の行間調整に使っていた`lh="s"`などは`hl="s"`へ置き換えてください。`lh="1"`の動作は変わりません（#583）。
+- `--s-unit` / `--hl-unit`を`0.5rem` / `0.125rem`へ固定し、`--fz--base`との連動をやめました。余白をフォントサイズに連動させる方法は[Tokens](/docs/tokens/)を参照してください（#581）。
+- `bdrs`のスケールを変更し、`50`を追加しました。`20`〜`40`は従来より小さくなります（#579）。
+- `has--transition`の既定の対象を`all`から色・影・変形などに限定しました。`hasTransition="color, opacity"`のような直接指定にも対応しました（#584）。
+- `no_layer`ビルドでProperty Classを`!important`化し、Utility Classのセレクタを二重化しました（#585）。
+- `u--trim` / `u--trimAll`を`hl`・`lh`の両方に対応させました（#583）。
+- `hl`に`xl`、`lts`に`xs`トークンを追加しました。
+- `bxsh`を2層の影へ変更し、影色を調整しました（#591）。`set--bdrsInner`の計算値にも`+1px`の補正を加えました（#579）。
+- `-bd`が上位レイヤーの`border`に上書きされる問題と、`Center`内の長い`pre`による横幅超過を修正しました（#589, #597）。
+- `-hov:-bgc`の既定の混色率を25%から20%へ変更しました。
+
+**`@lism-css/ui` v0.27.0 (2026.09.04)**
+
+`lism-css` v0.27.0以上が必要です。
+
+- Tooltip / Popoverを追加しました（#588）。
+- Avatarで`src`未指定時に`name`の先頭1文字を表示するようにしました（#587）。
+- Modal内のページ内リンクを通常クリックすると、モーダルを閉じるようにしました（#596）。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.26.0 (2026.08.16)
+
+- `lism-base`の直後に`lism-block`レイヤーを追加しました。旧`lism-component`の宣言は互換性のため残しています（#546, #559）。
+- 独自クラスを`b--`（Block Class）と`c--`（Custom Class）に整理し、`p--` / `z--`の規約を廃止しました（#546）。
+- 依存パッケージのセキュリティ更新を行いました。
+
+**`@lism-css/ui` v0.26.0 (2026.08.16)**
+
+**破壊的変更を含みます。** `lism-css` v0.26.0以上が必要です。
+
+- クラス名を`c--{name}`から`b--{name}`へ変更しました。上書きCSSは`lism-component`から`lism-block`または`lism-custom`へ移してください（#559）。
+- ベーススタイルの一部をPropsからCSSへ移しました。Badgeの角丸をピル型に変更し、Avatarの既定サイズはCSSの`--w: 2em`で管理します（#559）。
+- Tabsの`variant="line"`を標準スタイルにし、既定の`variant`を`default`へ変更しました（#559）。
+- Button / Accordion.Root / Details / NavMenuの既定の`l--flex` / `l--stack`を廃止しました。必要なら`layout="flex"`などを指定してください（#559）。
+- Details.Contentの`flow="s"`を廃止しました。以前の間隔に戻すには`.b--details_content { --flow--base: var(--flow--s) }`を指定してください（#559）。
+- Tabsのキーボード操作とReact版の`?lism-tab=`に対応しました。パネルを`aria-hidden`から`hidden`へ変更し、範囲外の`defaultIndex`による不具合も修正しました（#559）。
+- Modalのアクセシビリティと開閉処理を改善し、ドラッグ時に誤って閉じる問題や、閉じた後の状態復元を修正しました。`setEvent`の対象は`dialog`要素に限定しました（#563）。
+- Chatをパッケージから削除しました。[実装例](/ui/block-examples/chat/)のCSSを`@layer lism-block`ごとコピーしてください（#564）。
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v0.25.0 (2026.08.06)
+
+- `lism.config`で`--L` / `--C` / `--fz-mol` / `--hl-unit` / `--s-unit`を上書きできる`vars`グループを追加しました。影色`--shadow`は`color.shadow`へ移しました（#530）。
+- 方向指定の余白props全18種を`main.css`でもクラス化しました。gzip後のサイズは約1.5KB増えました（#531）。
+- `main.css`に`keycolor`の色・背景色・枠線色クラスを追加し、`full.css`では全カラートークンに対応しました。`-bgc:current`も追加しました（#533）。
+- `set--plain`が`input`の既定スタイルに負ける問題を修正しました（#537）。
+- 不要なベンダープレフィックスを削除しました。
+
+**`@lism-css/plugin` v0.4.2 (2026.08.06)**
+
+- `full.css`のカラークラス生成を`color`と`palette`の両方に対応させました（#533）。
+- マージ前の既定設定を読み込む`loadDefaultConfig()`を追加しました（#539）。
+
+**`@lism-css/ui` v0.25.0 (2026.08.06)**
+
+- `lism-css` v0.25.0に追従しました。コンポーネントの変更はありません。
+
+<Divider bds="dashed" my="40" />
+
+## v0.25.0 未満
+
+v0.25.0未満のリリースは、主な変更点のみ掲載しています。
+
+- **v0.24.1 (2026.08.04)**: `full.css`のborderクラスの競合と、フォーム既定スタイルのリセット漏れを修正（#513, #516）。`@lism-css/plugin/vite`から`lismConfigAlias`を公開（#521）
+- **v0.24.0 (2026.07.06)**: config由来の型補完と`lism.config.ts`に対応（#505, #461）。`pre`の既定の`background-color` / `padding`を廃止（#477）。Astro SSRのCSS Purgeに対応（#495）。AIスキルを刷新し、`lism-css-refactor`を追加（#459）
+- **v0.23.0 (2026.06.19)**: ビルド・フレームワーク統合を`@lism-css/plugin`へ分離（#439）。`tokens`を値付きのフラットマップに統合（#434）。`xs`ブレイクポイントと`full.css` / `full_no_layer.css`を追加（#428, #423, #425）
+- **v0.22.2 (2026.06.03)**: `Alert` / `Callout`のプリセットを統一し、`tip`を追加。`Alert`の`layout="withSide"`時の表示崩れを修正
+- **v0.22.1 (2026.05.30〜06.02)**: `:`単体を`true`相当として扱うよう変更。パッケージング不具合を修正。`Accordion.Item`に`isOpen`を追加し、Modalのスクロールバー由来の横ずれを修正（#413）
+- **v0.22.0 (2026.05.28)**: `AutoColumns`の既定を`auto-fit`から`auto-fill`へ変更（#408）。`u--cells`を`u--enclose`へ改名（#412）。`--gutter-size`を`--gutter` / `--gutter--base`へ整理（#409）。フォームの`border-radius`を削除し、`padding`をem単位へ変更
+- **v0.21.0 (2026.05.26)**: `set--var:xxx`を`set--xxx`へ戻し、`set` propの値も変更（#404）。`contentSize`と`set--bleed`を追加し、`Wrapper`を整理（#405）
+- **v0.20.0 (2026.05.20)**: 方向系Property Classを改名（`px-s` → `ps`、`bd-x-s` → `bd-s`など）（#378）。標準のブレイクポイント対応を見直し（#394）。ホバー背景色を`color-mix`へ変更（#381）
+- **v0.18.0 (2026.05.17)**: `--sz--*` トークンを px 単位・80px 刻みに再設計 (#364)。spacing トークンを拡充し、`--s-unit` を要素フォントサイズに追従させる `set--var:s` を新設 (#377)
+- **v0.17.0 (2026.05.09)**: `-max-sz:container` を廃止し、full-bleed 用の `-max-sz:bleed` を新設 (#360)。`--REM` を廃止し `--fz--base` を `1rem` に統一。`a` タグのリンク装飾スタイルを廃止。`@lism-css/ui` が deep path import（`@lism-css/ui/react/{Name}` 等）に対応 (#354)
+- **v0.16.x (2026.04.21〜04.29)**: ユーティリティクラスを整理（`u--trimChildren` → `u--trimAll`、`u--collapseGrid` → `u--cells`、`u--divide` を追加）(#323, #324)。opacity トークンをセマンティック命名（`-o:p` / `-o:pp` / `-o:ppp`）に変更 (#316)。Layout Primitive をリネーム（`l--sideMain` → `l--withSide`、`l--fluidCols` → `l--autoColumns`、`l--switchCols` → `l--switchColumns`）(#319)
+- **v0.15.0 (2026.04.21)**: CSSレイヤー構造を再編し、`lism-trait` レイヤーを独立 (#304)。`set--` クラスに `var:` プレフィックスを導入（`set--hov` → `set--var:hov` 等）。`-hov:` クラスを `-hov:-{prop}` 形式に整理 (#300)。シャドウトークンのスケールを1段階シフト (#311)
+- **v0.14.0 (2026.04.17)**: `lismClass` / `variant` props を削除し `className` に集約。`ysz` → `bsz` 等の Property Class をリネーム。`is--vertical` を削除し `-wm:vertical-rl` へ移行
+- **v0.13.x (2026.04.14〜04.15)**: 概念名を `Module` → `Primitive`、`State` → `Trait` に統一。`is--linkBox` → `is--boxLink`、`u--expandedLink` → `is--coverLink` にリネーム。`util` prop を追加
+- **v0.12.0 (2026.04.10)**: `TileGrid` レイアウトを追加。gap 系 shorthand を `cg` / `rg` に変更。`setXxxx` 個別 props を廃止し `set` / `unset` に統一
+- **v0.11.0 (2026.04.05)**: shadow 設計を変更し、`bdrs` / `bxsh` トークンを削減
+- **v0.10.x (2026.04.03〜04.05)**: `<HTML.xxx>` を廃止し、セマンティックラッパーコンポーネント（`Text` / `Inline` / `Group` / `Heading` / `Link` / `List` 等）に置き換え。ネガティブマージンのトークン指定（`mt="-10"` 等）に対応。`@layer` 命名を `lism-xxx` 形式に変更
+- **v0.9.x (2026.03.17〜03.31)**: React コンポーネントを TypeScript 化。クラス命名を `--` 区切りに変更（`set-xxx` → `set--xxx`、`u-xxx` → `u--xxx`）。`@lism-css/ui` / `@lism-css/mcp` の公開を開始
+- **v0.8.x**: line-height をハーフレディングで管理するシステムに変更。レイアウトモジュールを再編（`WithSide` → `SideMain`、`FluidCols` の独立、`SwitchCols` 追加）。ダイナミックモジュール（accordion / modal / tabs）を削除し `@lism-css/ui` へ移行。トークン名を多数変更（`--c--main` → `--brand`、`--c--line` → `--divider` 等）

@@ -1,21 +1,21 @@
-import presets from './presets';
 import type { LismProps } from '../../../lib/getLismProps';
 import type { ElementType, CSSProperties } from 'react';
-
-export type PresetIconName = keyof typeof presets;
 
 export interface IconObject {
   as: ElementType;
   [key: string]: unknown;
 }
 
-type IconProp = PresetIconName | ElementType | IconObject;
+type IconProp = Exclude<ElementType, string> | IconObject | `<svg${string}`;
 
 export interface IconOwnProps {
   as?: ElementType;
   icon?: IconProp;
   label?: string;
   size?: string;
+  weight?: 'light' | 'regular' | 'bold';
+  strokeWidth?: string | number;
+  'stroke-width'?: string | number;
   exProps?: Record<string, unknown>;
 }
 
@@ -60,14 +60,40 @@ function parseSvgString(svgString: string): Partial<ParsedSvg> {
   return {};
 }
 
-/*
-Icon の出力パターン
-  - icon = 文字列の場合→preset で登録されたsvgアイコンを呼び出す
-  - icon = それ以外の場合、extends として振る舞う
-  - as=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
-  - as が指定された場合 → asで渡されるコンポーネントまたは要素を呼び出す
-*/
-export default function getProps({ as, icon, label, exProps = {}, ..._props }: IconProps) {
+const svgAttributeNames: Record<string, string> = {
+  'stroke-width': 'strokeWidth',
+  'stroke-linecap': 'strokeLinecap',
+  'stroke-linejoin': 'strokeLinejoin',
+  'stroke-miterlimit': 'strokeMiterlimit',
+  'fill-rule': 'fillRule',
+  'clip-rule': 'clipRule',
+};
+
+function normalizeSvgAttributes(props: Record<string, unknown>) {
+  const result = { ...props };
+  for (const [native, camel] of Object.entries(svgAttributeNames)) {
+    if (native in result) {
+      result[camel] = result[native];
+      delete result[native];
+    }
+  }
+  return result;
+}
+
+function getSvgAttributes(props: Record<string, unknown>) {
+  const result = { ...props };
+  for (const [native, camel] of Object.entries(svgAttributeNames)) {
+    if (camel in result) {
+      result[native] = result[camel];
+      delete result[camel];
+    }
+  }
+  return result;
+}
+
+export default function getProps({ as, icon, label, weight, exProps: inputExProps = {}, ..._props }: IconProps, { svgAttributes = false } = {}) {
+  let exProps: Record<string, unknown> = {};
+  const explicitProps = normalizeSvgAttributes(inputExProps);
   // '_SVG_' は内部センチネル値として使用し、Icon.tsx で SVG コンポーネントに置換される
   let Component: ElementType | '_SVG_' = as || 'span';
   let content = '';
@@ -77,12 +103,12 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
     style: _style = {},
     className: _className = '',
     ..._rest
-  } = _props as unknown as { style: CSSProperties; className: string; [key: string]: unknown };
+  } = normalizeSvgAttributes(_props) as { style: CSSProperties; className: string; [key: string]: unknown };
   let style = _style;
   let className = _className;
 
   // 入力形式に合わせて描画要素とSVG属性を決める。
-  if (_rest.viewBox) {
+  if (_rest.viewBox && !icon) {
     Component = 'svg';
     const _size = _rest.size as string | undefined;
     if (_size) delete _rest.size;
@@ -100,30 +126,32 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
         Component = '_SVG_';
         const { svgProps = {}, svgContent = '' } = parseSvgString(icon);
 
-        // class, styleは切り分ける. fill は除去（<SVG> で currentColorセット
+        // SVG内のclassとstyleもLismの属性処理へ渡す。
         const { class: svgClass, style: svgStyle, ...svgAttrs } = svgProps;
         if (svgClass) {
           className = className ? `${className} ${svgClass as string}` : (svgClass as string);
         }
-        style = { ...style, ...(svgStyle as CSSProperties) };
+        style = { ...(svgStyle as CSSProperties), ...style };
 
-        exProps = { ...exProps, ...svgAttrs, fill: 'currentColor' };
+        exProps = normalizeSvgAttributes(svgAttrs);
         content = svgContent;
-      } else {
-        const presetIconData = presets[icon as keyof typeof presets] || null;
-        if (null != presetIconData) {
-          Component = '_SVG_';
-          exProps = { ...exProps, ...presetIconData };
-        }
       }
     } else if (typeof icon === 'object' && icon.as) {
       const { as: _as, ..._exProps } = icon;
       Component = _as;
-      exProps = { ...exProps, ..._exProps };
+      exProps = normalizeSvgAttributes(_exProps);
     } else {
       Component = icon as ElementType;
     }
   }
+
+  if (weight) exProps.strokeWidth = { light: 1, regular: 1.5, bold: 2 }[weight];
+  for (const key of Object.keys(exProps)) {
+    if (_rest[key] !== undefined) exProps[key] = _rest[key];
+  }
+  exProps = { ...exProps, ...explicitProps };
+  // exProps / iconオブジェクト経由のweightは外部コンポーネント向け。svg等のネイティブ要素には属性として出さない。
+  if (typeof Component === 'string') delete exProps.weight;
 
   // labelの有無に合わせてアクセシビリティ属性を付ける。
   if (label) {
@@ -139,5 +167,6 @@ export default function getProps({ as, icon, label, exProps = {}, ..._props }: I
   if (className) _rest.className = className;
   _rest.style = { ...style };
 
-  return { Component, lismProps: _rest, exProps, content };
+  const nativeSvg = svgAttributes && typeof Component === 'string';
+  return { Component, lismProps: nativeSvg ? getSvgAttributes(_rest) : _rest, exProps: nativeSvg ? getSvgAttributes(exProps) : exProps, content };
 }

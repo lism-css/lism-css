@@ -12,7 +12,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 ## 情報の優先順位
 
 1. **パッケージソース（絶対基軸）**: `packages/lism-css/` と `packages/lism-ui/` のソースコードが常に正
-2. **ドキュメント（補足）**: `apps/docs/src/content/ja/` の MDX は解説の参考として使うが、ソースと矛盾する場合はソースを優先
+2. **ドキュメント（補足）**: `apps/site/src/content/ja/` の MDX は解説の参考として使うが、ソースと矛盾する場合はソースを優先
 
 
 ## 対象ファイルの分類
@@ -27,7 +27,7 @@ description: skills/lism-css-guide/ の各ファイルを最新ソースと照�
 
 ## 対応規則（skill ファイル ↔ ソース）
 
-以下のパスは、特記なければ `packages/lism-css/` 基準。MDX は `apps/docs/src/content/ja/` 基準。
+以下のパスは、特記なければ `packages/lism-css/` 基準。MDX は `apps/site/src/content/ja/` 基準。
 
 ### クラス単位詳細ファイル
 

@@ -1,0 +1,125 @@
+---
+import { Check } from '@lism-css/icons/astro';
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { AutoColumns, Divider, Container, Flex, Grid, Heading, Icon, Inline, Stack, Text } from 'lism-css/astro';
+import { Badge } from '@lism-css/ui/astro/Badge';
+import { Button } from '@lism-css/ui/astro/Button';
+import { Tabs } from '@lism-css/ui/astro/Tabs';
+import './_style.css';
+
+const plans = [
+  {
+    name: 'Plus',
+    description: 'まずは気軽に試したい方へ',
+    price: '980',
+    yearlyPrice: '9,800',
+    button: 'このプランを選ぶ',
+    recommended: false,
+    features: ['メンバー1名', 'プロジェクト3件まで', 'ストレージ2GB', '基本機能をすべて利用'],
+  },
+  {
+    name: 'Pro',
+    description: '小さなチームの成長に',
+    price: '1,980',
+    yearlyPrice: '19,800',
+    button: 'このプランを選ぶ',
+    recommended: true,
+    features: ['メンバー10名まで', 'プロジェクト50件まで', 'ストレージ100GB', '外部サービス連携', 'チャットサポート'],
+  },
+  {
+    name: 'Premium',
+    description: '本格的なチーム運用に',
+    price: '9,980',
+    yearlyPrice: '99,800',
+    button: 'このプランを選ぶ',
+    recommended: false,
+    features: ['メンバー数無制限', 'プロジェクト数無制限', 'ストレージ1TB', '外部サービス連携', '詳細な権限管理', '優先サポート'],
+  },
+];
+
+const billingPeriods = [
+  { label: '月額', isYearly: false, unit: '円/月' },
+  { label: '年額', isYearly: true, unit: '円/年' },
+];
+---
+
+<DemoLayout title="02 - カードで選ぶ料金プラン">
+  <Container as="section" aria-label="料金プラン" isWrapper="l" hasGutter bgc="base-2" c="text" py="50">
+    <Tabs.Root
+      class="c--pricingBilling"
+      variant="pill"
+      g="40"
+      listProps={{ jslf: 'center', p: '3px', g: '2px', bgc: 'base', bdrs: '99', bd: true, 'aria-label': '請求期間' }}
+    >
+      {
+        billingPeriods.map((period) => (
+          <Tabs.Item>
+            <Tabs.Tab c="var(--_isSelected, var(--base))" bgc="var(--_isSelected, var(--text))" px="35" py="10" bdrs="99" fw="bold" whs="nowrap">
+              {period.label}
+            </Tabs.Tab>
+            <Tabs.Panel>
+              <AutoColumns cols="18rem" g="25" autoFit>
+                {plans.map((plan) => (
+                  <Grid as="div" gtr="subgrid" gr="span 5" g="30" p="30" bgc="base" bdrs="30" bxsh="20">
+                    <Stack g="20">
+                      <Flex class="u--trim" ai="center" jc="between" g="10">
+                        <Heading level="2" fz="xl">
+                          {plan.name}
+                        </Heading>
+                        {plan.recommended && (
+                          <Badge
+                            class="c--pricingRibbon"
+                            bgc="transparent"
+                            c="white"
+                            fw="bold"
+                            lts="l"
+                            whs="nowrap"
+                            bd="none"
+                            bdrs="0"
+                            bdrs-se="10"
+                            pos="relative"
+                            iso="isolate"
+                            px="25"
+                            py="10"
+                            me="calc(-1 * (var(--s30) + var(--s10)))"
+                          >
+                            人気
+                          </Badge>
+                        )}
+                      </Flex>
+                      <Text class="u--trim" fz="s" c="text-2">
+                        {plan.description}
+                      </Text>
+                    </Stack>
+                    <Flex class="u--trim" ai="baseline" g="10">
+                      <Inline fz={['3xl', null, null, '4xl']} fw="bold" lh="xs" whs="nowrap">
+                        {period.isYearly ? plan.yearlyPrice : plan.price}
+                      </Inline>
+                      <Inline fz="s" c="text-2" lts="xl">
+                        {period.unit}
+                      </Inline>
+                    </Flex>
+                    <Button href="#" bgc="text" c="base" py="10" bdrs="20" fw="500" aria-label={`${plan.name}：${plan.button}`}>
+                      {plan.button}
+                    </Button>
+                    <Divider />
+                    <Stack as="ul" class="u--trim" hl="s" g="15">
+                      {plan.features.map((feature) => (
+                        <Flex as="li" ai="center" g="10">
+                          <Icon icon={Check} c="brand" />
+                          <Inline fz="s" c="text-2">
+                            {feature}
+                          </Inline>
+                        </Flex>
+                      ))}
+                    </Stack>
+                  </Grid>
+                ))}
+              </AutoColumns>
+            </Tabs.Panel>
+          </Tabs.Item>
+        ))
+      }
+    </Tabs.Root>
+  </Container>
+</DemoLayout>

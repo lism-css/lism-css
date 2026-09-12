@@ -29,7 +29,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 ### CDN (no build required)
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.28.2/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.29.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -240,10 +240,6 @@ For full documentation, visit [lism-css.com/en](https://lism-css.com/en/).
 ## Community
 
 For feedback or questions, [join the Lism CSS Discord server](https://discord.gg/6PMcFHvc4h).
-
-## Credits
-
-- [Phosphor Icons](https://phosphoricons.com/) — MIT License ([source](https://github.com/phosphor-icons))
 
 ## License
 

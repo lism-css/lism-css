@@ -1,0 +1,54 @@
+---
+import { Menu2 } from '@lism-css/icons/astro';
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Stack, Box, Container, Frame, Flex, Divider, Media, Layer, Icon, Heading, Text, Inline, Link } from 'lism-css/astro';
+---
+
+<DemoLayout title="Hero02">
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+  </Fragment>
+  <Container as="header" hasGutter pos="fixed" c="white" t="0" w="100%" z="99" py="20">
+    <Flex ai="center" jc="between" g="30">
+      <Inline lts="l">Lism</Inline>
+      <Flex as="nav" ai="center" g="30" fz="s" d={['none', null, 'flex']}>
+        <Link href="#" set="plain" hasTransition hov="-o">About</Link>
+        <Link href="#" set="plain" hasTransition hov="-o">Works</Link>
+        <Link href="#" set="plain" hasTransition hov="-o">Contact</Link>
+      </Flex>
+      <Flex ai="center" d={['flex', null, 'none']}>
+        <Icon icon={Menu2} weight="light" fz="2xl" label="メニューを開く" />
+      </Flex>
+    </Flex>
+  </Container>
+  <Stack isContainer as="section" class="c--hero02" pos="relative" min-h="100svh" bgc="black" c="white">
+    <Frame isLayer>
+      <Media src="https://images.pexels.com/photos/31356866/pexels-photo-31356866.jpeg?w=2400&h=800&auto=format" alt="" width="1200" height="800" />
+      <Layer bgc="black:25%" />
+    </Frame>
+    <Stack hasGutter fz="2xl" my="auto" z="1" style={{ '--ff--accent': 'Anton, sans-serif' }}>
+      <Heading level="1" ff="accent" fz="clamp(var(--fz--3xl), 10vw, var(--fz--5xl))" fw="800" lh="1.125" lts="0.01em">
+        Lorem ipusm<br />Doler sit.
+      </Heading>
+      <Text class="u--trim" fz={'clamp(12px, 3.2vw, 1.25rem)'} pt="1.5em" lts="l" max-sz="s">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </Text>
+    </Stack>
+    <Box px="25" pos="absolute" b="0" r="0">
+      <Flex as="a" href="#" set="plain" wm="vertical-rl" ai="center" g="15" fz={['11px', '12px']} lh="1" lts="xl" tt="uppercase">
+        <Inline>Scroll</Inline>
+        <Divider sz="5em" fxsh="0" bdc="current" o="ppp" />
+      </Flex>
+    </Box>
+  </Stack>
+</DemoLayout>
+
+<style>
+  @layer lism-base {
+    :root {
+      --gutter--base: max(var(--s30), 4vw);
+    }
+  }
+</style>

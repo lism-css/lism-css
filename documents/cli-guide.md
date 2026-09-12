@@ -3,7 +3,7 @@
 # Lism CLI ガイド（運営者向け）
 
 この文書が持つもの: `lism-cli` / `create-lism`の運営手順（既定ref・build・publish・publish前チェック）と、`templates/`の規約・言語判定・プレビューデプロイ。
-持たないもの: ユーザー向けの使い方（[packages/lism-cli/README.md](../packages/lism-cli/README.md)と[apps/docsのinstallation](../apps/docs/src/content/ja/installation.mdx)）、テンプレのスクショ撮影（[template-screenshots.md](./template-screenshots.md)）。
+持たないもの: ユーザー向けの使い方（[packages/lism-cli/README.md](../packages/lism-cli/README.md)と[apps/siteのinstallation](../apps/site/src/content/ja/installation.mdx)）、テンプレのスクショ撮影（[template-screenshots.md](./template-screenshots.md)）。
 
 
 ## 構成

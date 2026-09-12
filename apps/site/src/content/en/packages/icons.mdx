@@ -1,0 +1,65 @@
+---
+title: '@lism-css/icons'
+description: 'Learn how to install and use SVG icons in React and Astro.'
+---
+
+import IconList from '@/components/mdx/IconList.astro';
+
+`@lism-css/icons` is a collection of SVG icons for React and Astro from the creators of Lism CSS. It includes stroke and fill icons, and also works in projects that do not use Lism CSS.
+
+## Installation
+
+```bash frame="none"
+pnpm add @lism-css/icons
+```
+
+## Basic usage
+
+In React, import icons from `/react`.
+
+```tsx
+import { Book, HeartFill } from '@lism-css/icons/react';
+
+export function Example() {
+  return (
+    <>
+      <Book size={24} strokeWidth={2} aria-label="Book" />
+      <HeartFill size="1.5em" aria-label="Favorite" />
+    </>
+  );
+}
+```
+
+In Astro, import icons from `/astro`.
+
+```astro
+---
+import { Book, HeartFill } from '@lism-css/icons/astro';
+---
+
+<Book size={24} stroke-width={2} aria-label="Book" />
+<HeartFill size="1.5em" aria-label="Favorite" />
+```
+
+Set the width and height together with `size` (default `1em`); explicit `width` or `height` takes precedence. Icons inherit the surrounding text color. The default stroke width is `1.5`. Change it with `strokeWidth` in React or `stroke-width` in Astro. Stroke width does not affect icons drawn only with fills, such as `HeartFill`. It does apply to the stroke in icons that combine fills and strokes, such as `NoteFill`.
+
+Icons are hidden from screen readers by default. When an icon conveys meaning on its own, provide an `aria-label` as shown above.
+
+## Using icons with Lism CSS
+
+Pass an icon to the Lism CSS [Icon component](/en/docs/primitives/a--icon/) to use Lism Props such as `c` and `fz`, along with `weight`. The same example works in React by changing both import paths to `/react`.
+
+```astro
+---
+import { Icon } from 'lism-css/astro';
+import { Book } from '@lism-css/icons/astro';
+---
+
+<Icon icon={Book} fz="2xl" c="blue" weight="bold" />
+```
+
+All icons are original works and released under the MIT license. See the [package README](https://github.com/lism-css/icons) for details.
+
+## Icon list
+
+<IconList />

@@ -1,0 +1,248 @@
+---
+import { Cluster, Icon, Lism, ListItem } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
+import { getAlternateUrls, getLangFromUrl, getLangLabel, t } from '@/lib/i18n';
+import { filterPatternAlternates } from '@/lib/patterns';
+
+type IconKey = 'x' | 'github' | 'discord' | 'lang';
+interface Props {
+  icons?: IconKey[];
+  [key: string]: unknown;
+}
+const { icons = ['x', 'github', 'discord', 'lang'], ...props } = Astro.props;
+const show = (key: IconKey) => icons.includes(key);
+
+// 言語切替ドロップダウン用
+const currentLang = getLangFromUrl(Astro.url);
+const alternateUrls = filterPatternAlternates(getAlternateUrls(Astro.url));
+const langSelectText = t(currentLang, 'langSelect');
+
+// ドロップダウン項目の共通プロップ
+const langItemProps = {
+  d: 'block',
+  p: '0.25em',
+  fz: 's',
+  fw: '500',
+  lh: '1.5',
+  td: 'none',
+  bdrs: 'calc(var(--bdrs--10) - 0.125em)',
+} as const;
+---
+
+<Cluster class="c--snsLinks" jc="center" {...props}>
+  {
+    show('x') && (
+      <a href={siteConfig.author.twitter} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Xへのリンク">
+        <Icon viewBox="0 0 32 32" fill="currentColor" focusable="false">
+          <path d="M18.42,13.99L27.88,3h-2.25l-8.21,9.57L10.86,3H3.3l9.93,14.48L3.3,29h2.25l8.69-10.1L21.14,29h7.56 L18.42,13.99L18.42,13.99z M15.35,17.6l-1-1.42L6.31,4.71h3.43l6.44,9.22l1,1.42l8.39,12h-3.43L15.35,17.6L15.35,17.6z" />
+        </Icon>
+      </a>
+    )
+  }
+  {
+    show('github') && (
+      <a href={siteConfig.author.github} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="GitHubへのリンク">
+        <Icon viewBox="0 0 32 32" fill="currentColor" focusable="false">
+          <path d="M15.73,2.32C7.93,2.32,2,8.25,2,16.05c0,6.17,3.93,11.55,9.49,13.43c0.67,0.12,0.97-0.3,0.97-0.67s0-2.3,0-3.39c0,0-3.93,0.85-4.72-1.63c0,0-0.6-1.63-1.57-2c0,0-1.27-0.91,0.06-0.91c0,0,1.39,0.12,2.18,1.45c1.21,2.18,3.27,1.51,4.11,1.21c0.12-0.91,0.48-1.51,0.91-1.87c-3.14-0.3-6.35-0.85-6.35-6.17c0-1.51,0.42-2.36,1.33-3.27c-0.12-0.36-0.6-1.87,0.12-3.81c1.21-0.36,3.87,1.51,3.87,1.51c1.15-0.3,2.36-0.48,3.57-0.48s2.42,0.18,3.57,0.48c0,0,2.72-1.87,3.87-1.51c0.79,1.94,0.3,3.39,0.12,3.81c0.91,1.03,1.45,1.75,1.45,3.27c0,5.44-3.27,5.81-6.47,6.17c0.48,0.42,0.97,1.27,0.97,2.6c0,1.87,0,4.23,0,4.66c0,0.36,0.24,0.85,0.97,0.73C26.19,27.78,30,22.4,30,16.17C29.82,8.25,23.47,2.32,15.73,2.32z" />
+        </Icon>
+      </a>
+    )
+  }
+  {
+    show('discord') && (
+      <a href={siteConfig.author.discord} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Discordへのリンク">
+        <Icon viewBox="0 0 32 32" fill="currentColor" focusable="false">
+          <path d="M26.07,6.66c-1.88-0.88-3.88-1.52-5.98-1.88c-0.26,0.47-0.56,1.09-0.77,1.59c-2.23-0.34-4.44-0.34-6.63,0 c-0.21-0.5-0.52-1.13-0.78-1.59c-2.1,0.36-4.11,1-5.99,1.88c-3.79,5.72-4.81,11.3-4.3,16.8c2.51,1.88,4.95,3.01,7.34,3.76 c0.59-0.81,1.12-1.68,1.57-2.59c-0.86-0.33-1.69-0.73-2.47-1.2c0.21-0.15,0.41-0.31,0.61-0.48c4.77,2.23,9.96,2.23,14.67,0 c0.2,0.17,0.4,0.33,0.61,0.48c-0.78,0.47-1.61,0.88-2.48,1.21c0.45,0.91,0.98,1.78,1.57,2.59c2.4-0.75,4.83-1.88,7.34-3.76 C30.98,17.09,29.35,11.56,26.07,6.66z M11.18,20.08c-1.43,0-2.61-1.34-2.61-2.97s1.15-2.97,2.61-2.97c1.46,0,2.63,1.34,2.61,2.97 C13.79,18.74,12.64,20.08,11.18,20.08z M20.82,20.08c-1.43,0-2.61-1.34-2.61-2.97s1.15-2.97,2.61-2.97c1.46,0,2.63,1.34,2.61,2.97 C23.42,18.74,22.27,20.08,20.82,20.08z" />
+        </Icon>
+      </a>
+    )
+  }
+  {
+    show('lang') && (
+      <div class="c--langMenu -pos:relative">
+        <Lism
+          as="button"
+          type="button"
+          class="c--iconBtn c--langMenu_trigger"
+          c="inherit"
+          bd="none"
+          bgc="transparent"
+          title={langSelectText.ariaLabel}
+          aria-expanded="false"
+          aria-label={langSelectText.ariaLabel}
+        >
+          <Icon viewBox="0 0 20 20" fill="none">
+            <g clip-path="url(#language-switcher-clip)">
+              <path
+                d="M1.66675 10C1.66675 14.6025 5.39758 18.3334 10.0001 18.3334C14.6026 18.3334 18.3334 14.6025 18.3334 10C18.3334 5.39752 14.6026 1.66669 10.0001 1.66669C5.39758 1.66669 1.66675 5.39752 1.66675 10Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10.8333 1.70836C10.8333 1.70836 13.3333 5.00003 13.3333 10C13.3333 15 10.8333 18.2917 10.8333 18.2917M9.16665 18.2917C9.16665 18.2917 6.66665 15 6.66665 10C6.66665 5.00003 9.16665 1.70836 9.16665 1.70836M2.19165 12.9167H17.8083M2.19165 7.08336H17.8083"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+            <defs>
+              <clipPath id="language-switcher-clip">
+                <rect width="20" height="20" fill="white" />
+              </clipPath>
+            </defs>
+          </Icon>
+        </Lism>
+        <Lism
+          as="ul"
+          class="c--langMenu_menu"
+          pos="absolute"
+          r="0"
+          z="100"
+          min-w="6rem"
+          p="0.5em"
+          bgc="base"
+          bdrs="10"
+          bxsh="30"
+          aria-label={langSelectText.menuAriaLabel}
+        >
+          {alternateUrls.map(({ lang, url }) => (
+            <ListItem>
+              {lang === currentLang ? (
+                <Lism as="span" class="c--langMenu_item -current" c="text-2" o="pp" aria-current="true" lang={lang} {...langItemProps}>
+                  {getLangLabel(lang)}
+                </Lism>
+              ) : (
+                <Lism as="a" class="c--langMenu_item" c="inherit" hov="-c" href={url} lang={lang} hreflang={lang} {...langItemProps}>
+                  {getLangLabel(lang)}
+                </Lism>
+              )}
+            </ListItem>
+          ))}
+        </Lism>
+      </div>
+    )
+  }
+</Cluster>
+
+<style>
+  /* アイコン間の間隔（インラインstyleの --snsLinks-space 指定で上書き可能） */
+  .c--snsLinks {
+    --snsLinks-space: var(--s15);
+  }
+  @container (min-width: 800px) {
+    .c--snsLinks {
+      --snsLinks-space: var(--s20);
+    }
+  }
+
+  .c--iconBtn {
+    border-radius: 0.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    /* アイコン間の間隔は gap ではなく padding で確保（アイコン間にホバーできない隙間を作らない） */
+    padding-inline: calc(var(--snsLinks-space) / 2);
+  }
+  .c--iconBtn:hover {
+    color: var(--link);
+  }
+  /* 両端の padding 分を打ち消して、gap 時代と外側の位置を揃える */
+  .c--snsLinks > :first-child {
+    margin-inline-start: calc(var(--snsLinks-space) / -2);
+  }
+  .c--snsLinks > :last-child {
+    margin-inline-end: calc(var(--snsLinks-space) / -2);
+  }
+
+  :global(.b--modal .c--snsLinks) {
+    margin-inline-end: auto;
+  }
+
+  /* 言語切替ドロップダウン（配置・状態などプロップで表現できないもののみ記述） */
+  .c--langMenu_menu {
+    top: calc(100% + 0.5em);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.25em);
+    transition:
+      opacity 0.15s,
+      visibility 0.15s,
+      transform 0.15s;
+  }
+  .c--langMenu[data-open] .c--langMenu_menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  /* PCではアイコン（グリフ左端）と左揃えで表示 */
+  @container (min-width: 800px) {
+    .c--langMenu_menu {
+      right: auto;
+      left: -0.25em;
+    }
+  }
+
+  .c--langMenu_item {
+    transition: color 0.15s;
+  }
+  /* 現在の言語（グレーアウト自体は c="text-2" o="pp" プロップで指定） */
+  .c--langMenu_item.-current {
+    cursor: default;
+  }
+
+  /* モーダル内では下端で見切れないよう上方向に展開 */
+  :global(.b--modal) .c--langMenu_menu {
+    top: auto;
+    bottom: calc(100% + 0.25em);
+    transform: translateY(0.25em);
+  }
+  :global(.b--modal) .c--langMenu[data-open] .c--langMenu_menu {
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // 言語切替ドロップダウンのトグル動作
+  document.querySelectorAll<HTMLElement>('.c--langMenu').forEach((menu) => {
+    const trigger = menu.querySelector<HTMLButtonElement>('.c--langMenu_trigger');
+    const menuList = menu.querySelector('.c--langMenu_menu');
+    if (!trigger || !menuList) return;
+
+    const close = () => {
+      const shouldRestoreFocus = menu.hasAttribute('data-open') && menuList.contains(document.activeElement);
+      menu.removeAttribute('data-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (shouldRestoreFocus) trigger.focus();
+    };
+
+    // クリックでメニュー開閉
+    trigger.addEventListener('click', () => {
+      if (menu.hasAttribute('data-open')) {
+        close();
+      } else {
+        menu.setAttribute('data-open', '');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // 外側クリックで閉じる
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target as Node)) close();
+    });
+
+    // Escキーで閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+
+    // Tab移動等でフォーカスがメニュー外へ出たら閉じる
+    // （focusout時点ではactiveElementがメニュー内に残っていないため、close()のフォーカス復元は発動しない）
+    menu.addEventListener('focusout', (e) => {
+      if (!menu.contains(e.relatedTarget as Node)) close();
+    });
+  });
+</script>

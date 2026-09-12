@@ -1,11 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Loader2, Play } from 'lucide-react';
+import { Check, CircleCheck as CheckCircleIcon, Info, Lightbulb, Loader2, Play, TriangleAlert as Warning } from 'lucide-react';
 
 import { Icon } from './index';
-import presets from './presets';
-import type { PresetIconName } from './getProps';
-
-const presetIconNames = Object.keys(presets) as PresetIconName[];
 
 const meta: Meta = {
   title: 'Atomic/Icon',
@@ -14,9 +10,8 @@ const meta: Meta = {
   argTypes: {
     children: { control: false },
     icon: {
-      control: 'select',
-      options: presetIconNames,
-      description: 'プリセットアイコン名、コンポーネント、またはSVG文字列',
+      control: false,
+      description: 'コンポーネント、SVG文字列、または描画属性のオブジェクト',
     },
     label: {
       control: 'text',
@@ -30,7 +25,7 @@ type Story = StoryObj<typeof Icon>;
 
 export const Default: Story = {
   args: {
-    icon: 'star',
+    icon: Check,
     fz: '2rem',
   },
 };
@@ -38,16 +33,8 @@ export const Default: Story = {
 export const WithLabel: Story = {
   name: 'label 指定（アクセシブル）',
   args: {
-    icon: 'info',
+    icon: Info,
     label: 'Information',
-    fz: '2rem',
-  },
-};
-
-export const LogoIcon: Story = {
-  name: 'ロゴアイコン',
-  args: {
-    icon: 'logo-github',
     fz: '2rem',
   },
 };
@@ -55,7 +42,7 @@ export const LogoIcon: Story = {
 export const CheckCircle: Story = {
   name: 'check-circle',
   args: {
-    icon: 'check-circle',
+    icon: CheckCircleIcon,
     fz: '2rem',
     c: 'green',
   },
@@ -64,7 +51,7 @@ export const CheckCircle: Story = {
 export const WarningIcon: Story = {
   name: 'warning',
   args: {
-    icon: 'warning',
+    icon: Warning,
     fz: '2rem',
     c: 'orange',
   },
@@ -105,7 +92,7 @@ export const ExternalComponentWithExProps: Story = {
 export const WithSize: Story = {
   name: 'size 指定',
   args: {
-    icon: 'lightbulb',
+    icon: Lightbulb,
     size: '40px',
   },
 };

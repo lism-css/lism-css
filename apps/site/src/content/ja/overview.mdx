@@ -1,0 +1,80 @@
+---
+title: 'Lism CSS とは'
+eyebrow: 'Introduction'
+description: 'Lism CSS の概要と特徴について解説します。'
+---
+import { Box, Center, Flex, Frame, Icon, Spacer, Text } from "lism-css/astro";
+import LismExDemo from './_demo/LismExDemo.mdx';
+
+**Lism CSS** は、**WEBサイトの骨組みをテンポ良く美しく作るための**軽量なCSS設計フレームワークです。
+
+- サイト全体に自然と心地よいリズムを生み出すタイポグラフィ設計。
+- ワイヤーフレーム作成が簡単にできるレイアウトファーストなプリミティブ設計。
+- 柔軟でレスポンシブにも対応できるCSS変数を活かしたユーティリティ設計。
+
+[Every Layout](https://every-layout.dev/) のレイアウトプリミティブやハーモニックモジュラースケーリング、[Tailwind CSS](https://tailwindcss.com/) のCSSプロパティ単位でのユーティリティファーストなアプローチから着想を得て、独自のCSS設計を組み立てました。
+
+## Why Lism CSS?
+
+- **自分でCSS設計を考えなくてよい。** — ベーススタイリング、`@layer` 階層、トークン、命名規則まで、サイト全体のCSS設計を丸ごと引き受けます。
+- **CSSを読み込むだけで使える。** — ビルドや設定は不要です。軽量なスタイルシートを一つ読み込むだけですぐに導入できます。
+- **React・Astroでは、より快適に。** — 専用コンポーネントを使えば、レスポンシブ対応やレイアウト構築をpropsで直感的に行えます。
+{/* 充実したエコシステム。 — UIライブラリとCLI、豊富なテンプレート、AI向けMCPサーバーまで、開発を加速するパッケージ群を揃えています。 */}
+
+:::info
+各特徴の詳細については「[特徴](/docs/features/)」ページで解説しています。
+:::
+
+<DocsLink path="/docs/features" />
+
+
+## ビルド不要で、どんな環境でも使えます。
+
+Lism CSS の主体はあくまでも**CSSの設計理論**であり、その設計ルールに沿ってまとめられた**CSSファイル**をコア機能として提供しています。
+
+:::check
+CSSを読み込むだけで導入できるため、**素のHTMLサイトでも利用できる**ものになっています。
+:::
+
+<PreviewTitle>たった1行のコードで、CDNから読み込むだけでも使い始めることができます。</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.29.0/dist/css/main.css" rel="stylesheet" />
+```
+
+つまり、Lism CSSの導入に特殊なビルド処理は必須ではありません。
+
+また、`lism-css`というnpmパッケージに内包されている React や Astro 向けの**専用コンポーネント**を使えば、さらに快適な開発体験が得られます。
+  
+また、SCSS設定の上書きや、`lism.config.js`の導入でより柔軟にカスタマイズして利用していただくことも可能です。
+
+
+## Lism CSS のエコシステム
+
+Lism CSS はコアのCSSライブラリだけでなく、開発をサポートするパッケージ群をOSSとして提供しています。
+
+| パッケージ | 説明 |
+|---|---|
+| `lism-css` | コアCSS + React / Astro レイアウトコンポーネント |
+| `@lism-css/ui` | アコーディオンやタブ、ボタンリンクなどのUIコンポーネント集 |
+| `lism-cli` | プロジェクトの雛形生成や、UIコンポーネントのコピーができるCLI |
+| `@lism-css/mcp` | AIコーディングツール向けのMCPサーバー |
+
+すべて無料・オープンソース（MIT）で開発されています。
+
+
+### JSXコンポーネントの使用例
+
+Lism CSS を簡単に扱えるようにした専用のコンポーネントを React, Astro 形式で配布しています。
+
+<LismExDemo />
+
+
+---
+
+## Inspirations
+
+Lism CSS は以下のプロジェクトから多くのインスピレーションを受けています。
+
+- [Every Layout](https://every-layout.dev/) — **レイアウトプリミティブ**と**ハーモニックモジュラースケーリング**の考え方を取り入れています。
+- [Tailwind CSS](https://tailwindcss.com/) — 単一のCSSプロパティに対応するクラスを用意する設計を参考にしました。
+- [Chakra UI](https://chakra-ui.com/), [MUI](https://mui.com/) — コンポーネントの使用感を参考にしました。

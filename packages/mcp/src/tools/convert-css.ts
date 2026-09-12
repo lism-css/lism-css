@@ -132,8 +132,6 @@ function buildCssPropertyMap(mappings: PropMapping[]): Map<string, PropMapping> 
 const VALUE_ALIASES: Record<string, string> = {
   'space-between': 'between',
   currentcolor: 'current',
-  uppercase: 'upper',
-  lowercase: 'lower',
 };
 
 function suggestValue(mapping: PropMapping, cssValue: string): string | null {

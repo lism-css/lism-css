@@ -187,7 +187,7 @@ export default function ViewerNav({
 /** Heading of a nav group. Its `id` labels the group's list. */
 function NavGroupLabel({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <Text as="div" id={id} px="15" fz="2xs" fw="bold" c="text-2" o="p" tt="upper" lts="l" ovw="anywhere">
+    <Text as="div" id={id} px="15" fz="2xs" fw="bold" c="text-2" o="p" tt="uppercase" lts="l" ovw="anywhere">
       {children}
     </Text>
   );

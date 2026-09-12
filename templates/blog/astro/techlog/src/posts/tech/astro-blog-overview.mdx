@@ -142,7 +142,7 @@ https://lism-css.com/
 Pagefind はデフォルトで `<body>` 全体を本文インデックスにするため、ヘッダー・パンくず・前後記事ナビなどもヒット対象になってしまう。このテンプレートでは `posts/[...slug].astro` の本文ラッパー1か所に `data-pagefind-body` を付けて、検索対象を「記事タイトル + 本文」に絞っている。
 
 ```astro
-<Flow class="c--articleBody" data-pagefind-body>
+<Flow class="c--content" data-pagefind-body>
   <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
 </Flow>
 ```
@@ -155,7 +155,7 @@ Pagefind はデフォルトで `<body>` 全体を本文インデックスにす�
 
 - `Layout.astro` — `<head>` で OGP・Web フォント（Gen Interface JP）・テーマ初期化スクリプトを読み込み、`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積み。`Header` 自体は `pos="sticky"` でスクロール追従させ、その実高さを `--header-h` として JS で公開する（TOC のスクロール位置調整に使う）
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper="l" isContainer hasGutter><Stack g="40">` で囲んだ一覧用レイアウト
-- `PageLayout.astro` — `Layout` を基盤に、ページタイトル＋`<Flow as="article" class="c--pageBody">` 本文をまとめる固定ページ用レイアウト
+- `PageLayout.astro` — `Layout` を基盤に、ページタイトル＋`<Flow as="article" class="c--content">` 本文をまとめる固定ページ用レイアウト
 
 
 ## ダークモード
@@ -169,4 +169,4 @@ Pagefind はデフォルトで `<body>` 全体を本文インデックスにす�
 - `src/config/site.ts` — サイト名・キャッチコピー・ナビ・OG画像デフォルト（`{ type: '3-4', h: 238, c: 6, l: 84 }`）・SNS・テーマデフォルト等
 - `src/config/categories.ts` — カテゴリ定義（追加するときは型・物理ディレクトリ・必要なら OG 画像上書きをここに）
 - `src/styles/global.css` — Lism CSS のトークン上書き。`:root[data-theme='dark']` でダークモード時のトークンも上書き。`--sz--toc` / `--sz--l` / `--header-h`（JS で実高さに動的更新）もここで定義
-- 記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダー等）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書く（Markdown から生成される要素にはクラスを直接付けられないため）
+- 記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダー等）は `.c--content` 配下の子孫セレクタとして `@layer lism-base` に書く（Markdown から生成される要素にはクラスを直接付けられないため）

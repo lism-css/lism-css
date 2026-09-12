@@ -56,6 +56,9 @@ next-env.d.ts
 # Turborepo
 .turbo
 
+# husky が生成するフックのラッパー（.husky/ 直下の本体は Git 管理）
+.husky/_/
+
 # cache
 .cache
 
@@ -69,8 +72,8 @@ next-env.d.ts
 # screenshot diffs / temp（公開用 screenshots/ と _baseline は Git 管理）
 templates/**/screenshots/_diff/
 templates/**/screenshots/_temp/
-apps/docs/_screenshots/diff/
-apps/docs/_screenshots/temp/
+apps/site/_screenshots/diff/
+apps/site/_screenshots/temp/
 
 storybook-static
 debug-storybook.log

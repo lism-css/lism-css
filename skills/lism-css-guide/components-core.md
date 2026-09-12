@@ -122,6 +122,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 補足:
 - **レスポンシブ対応プロパティ**かどうかは、 `props.ts`で`bp: 1`がセットされているかどうかで分かります。
 - **変数プロパティ**とは、`bds`, `bdc`, `bdw`, `keycolor`, `cols`, `rows`といった一部のプロパティ（`props.ts`で`isVar`がセットされているもの）のこと。これらはCSSプロパティがそのままstyle属性に出力されることはなく、常にCSS 変数（`--{prop}`）が使用されます。
+- カラー系 Props（`c` / `bgc` / `bdc` など）は `:` 区切りで透過・混色を指定できます。`bgc="black:50%"`（50%透過）、`c="text:blue:5%"`（`text` に `blue` を5%混ぜる）が `color-mix()` に変換され、CSS変数として出力されます。Property Class には同じ記法がないため、HTMLでは `style="--bgc: color-mix(in srgb, var(--black) 50%, transparent)"` のように直接書きます。
 
 
 

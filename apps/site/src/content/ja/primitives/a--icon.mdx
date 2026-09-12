@@ -1,0 +1,258 @@
+---
+title: 'Icon (a--icon)'
+navtitle: 'a--icon'
+description: 'a--icon は、アイコン要素を表示するためのクラスです。'
+---
+
+import { Home, Info, Lightbulb, Warning } from '@lism-css/icons/astro';
+import { Flex, Cluster, Icon } from 'lism-css/astro';
+
+
+`a--icon`は、アイコン要素を表示するためのクラスです。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/atomic/_icon.scss" />
+
+
+## Lismコンポーネント
+
+`<Icon>`は、`label`が指定されていれば`aria-label`と`role="img"`を、指定がなければ`aria-hidden="true"`を自動的に付与します。
+
+### Import
+
+<ImportPackage component="Icon" />
+
+### 出力されるHTML構造
+
+実際に出力されるタグは`icon`・`viewBox`・`src`・`as`の指定方法によって`svg`や`img`などに変わりますが、`aria-hidden`/`aria-label`の付与規則はどのタグでも共通です。
+
+```pug
+svg.a--icon[aria-hidden="true"]
+
+or
+
+svg.a--icon[aria-label="..."][role="img"]
+```
+
+### 専用Props
+
+| プロパティ | 説明 |
+|---|---|
+| `icon` | アイコンコンポーネント・SVG文字列・`{as, ...exProps}`形式のオブジェクトを指定します。 |
+| `size` | SVGの幅・高さの既定値。明示した`width`・`height`を優先します。 |
+| `weight` | 線幅を`light`（1）・`regular`（1.5）・`bold`（2）から選びます。未指定ならアイコン自身の線幅を維持します。 |
+| `strokeWidth` / `stroke-width` | 線幅を直接指定します。`weight`より優先します。 |
+| `label` | `aria-label`として出力します。指定があれば`role="img"`が同時に出力され、指定がない場合は`aria-hidden="true"`が出力されます。 |
+
+
+## Usage
+
+
+### `@lism-css/icons`を利用する方法
+
+`@lism-css/icons`は、Lism CSSと同じ開発元が提供する、React・Astro向けのSVGアイコン集です。`lism-css`本体にはアイコンのSVGデータを含まないため、別途インストールして必要なコンポーネントを`icon`に渡します。
+
+インストール方法と[収録アイコン一覧](/docs/packages/icons/#収録アイコン一覧)は、[`@lism-css/icons`の解説ページ](/docs/packages/icons/)をご覧ください。
+
+Reactでは`@lism-css/icons/react`、Astroでは`@lism-css/icons/astro`からimportします。
+
+<Preview>
+  <PreviewTitle>アイコンコンポーネントの指定例</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="React">
+    ```jsx
+    import { Cluster, Icon } from 'lism-css/react';
+    import { Lightbulb, Warning } from '@lism-css/icons/react';
+
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Astro">
+    ```astro
+    ---
+    import { Cluster, Icon } from 'lism-css/astro';
+    import { Lightbulb, Warning } from '@lism-css/icons/astro';
+    ---
+
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+#### 線の太さを変える
+
+`@lism-css/icons`の線アイコンは24グリッドで描画されます。`weight`で線幅を変えられ、内部の小さな点も太さに追従します。色は`c`で指定してください。
+
+<Preview>
+  <PreviewTitle>light・regular・bold</PreviewTitle>
+  <PreviewArea p="20">
+    <Cluster g="20" fz="3xl">
+      <Icon icon={Info} weight="light" label="light" />
+      <Icon icon={Info} weight="regular" label="regular" />
+      <Icon icon={Info} weight="bold" label="bold" />
+      <Icon icon={Home} weight="bold" strokeWidth={1.25} label="線幅1.25" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    import { Home, Info } from '@lism-css/icons/react';
+
+    <Icon icon={Info} weight="light" />
+    <Icon icon={Info} weight="regular" />
+    <Icon icon={Info} weight="bold" />
+    <Icon icon={Home} weight="bold" strokeWidth={1.25} />
+    ```
+  </PreviewCode>
+</Preview>
+
+`strokeWidth`（Astroでは`stroke-width`も可）を指定すると、`weight`より優先します。外部の線アイコンにも`weight`を渡せます。指定しなければ、外部アイコン自身の線幅を維持します。外部パッケージ独自の`weight`は、後述の`exProps`または`icon`オブジェクトで指定してください。
+
+`@lism-css/icons`には線アイコンのほか、塗りアイコンや塗りと線を組み合わせたアイコンもあります。
+
+
+### `as`・`exProps`で指定する方法
+
+`icon={Home}`の代わりに、Lismコンポーネントの共通プロパティ`as`でも指定できます。
+
+<Preview>
+  <PreviewTitle>アイコンコンポーネントを`as`に指定する</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} size="2em" />
+  </PreviewArea>
+  <PreviewCode>
+```jsx "as={Home}"
+import { Home } from '@lism-css/icons/react';
+import { Icon } from 'lism-css/react';
+
+<Icon as={Home} size="2em" />
+```
+  </PreviewCode>
+</Preview>
+
+
+`exProps`には、読み込んだアイコンコンポーネントへ渡すプロパティをまとめて指定できます。次の例では、線幅とサイズを指定しています。
+
+<Preview>
+  <PreviewTitle>`Home`用のプロパティを指定する</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+</Preview>
+
+#### `as`・`exProps`を`icon`にまとめて指定する方法
+
+:::info
+`<Icon>`では、以下のような形式で`as`, `exProps`を一括指定することもできます。
+
+```jsx
+<Icon icon={{as:Component, exProps1, exProps2, ...}} />
+```
+:::
+
+
+<Preview>
+  <PreviewTitle>`icon`に`as`, `exProps`を一括指定する例</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+    <PreviewCode slot="tab" label="一括">
+    ```jsx "strokeWidth:2, size:'3em'" "as:Home"
+    <Icon icon={{as:Home, strokeWidth:2, size:'3em'}} c="blue" />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="分割">
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{strokeWidth:2, size:'3em'}} c="blue" />
+    ```
+  </PreviewCode>
+
+</Preview>
+
+`react-icons`や`@phosphor-icons/react`などのサードパーティ製アイコンも、同じように`icon`や`as`で指定できます。AstroでReact製のアイコンを使う場合は、Astro側でReactインテグレーションを有効にしてください。
+
+
+### SVG文字列を渡す方法
+
+`icon`には`<svg`で始まるSVG全体の文字列も渡せます。`viewBox`・線幅などのSVG属性を含めて指定します。
+
+```jsx
+<Icon icon={'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m5 12 4 4L19 6" /></svg>'} c="green" />
+```
+
+### svgを直接記述する方法
+
+`<Icon>`は、`viewBox`の指定があれば`<svg>`で出力されます。  
+子要素にそのまま`path`などを配置してsvgを描画できます。
+
+
+<Preview>
+  <PreviewTitle>`path`などをそのまま子要素に渡す</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon viewBox="0 0 256 256" label="SmileyIcon icon" fz="4xl" c="blue">
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </Icon>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Icon viewBox="0 0 256 256" label="SmileyIcon icon" fz="4xl" c="blue">
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </Icon>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <svg
+      viewBox="0 0 256 256"
+      width="1em"
+      height="1em"
+      aria-label="SmileyIcon icon"
+      role="img"
+      class="a--icon -fz:4xl -c"
+      style="--c:var(--blue)"
+    >
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </svg>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### src でimgを指定する方法
+
+
+<Preview>
+  <PreviewTitle>使用例</PreviewTitle>
+  <PreviewArea p="20">
+    <Flex g="10" ai="center">
+      <Icon fz="2xl" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" />
+      <span>Img icon.</span>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Flex g="10" ai="center">
+      <Icon fz="2xl" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" />
+      <span>Img icon.</span>
+    </Flex>
+    ```
+  </PreviewCode>
+</Preview>

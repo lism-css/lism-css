@@ -1,0 +1,17 @@
+---
+import * as icons from '@lism-css/icons/astro';
+import { AutoColumns, Stack } from 'lism-css/astro';
+
+const entries = Object.entries(icons).sort(([a], [b]) => a.localeCompare(b));
+---
+
+<AutoColumns cols="10rem" g="15">
+  {
+    entries.map(([name, IconComponent]) => (
+      <Stack g="10" ai="center" bgc="base-2" bdrs="10" p="15">
+        <IconComponent class="a--icon -fz:xl" />
+        <span class="u--trim -fz:xs -ff:mono -d:block">{name}</span>
+      </Stack>
+    ))
+  }
+</AutoColumns>

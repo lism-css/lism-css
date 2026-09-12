@@ -1,0 +1,270 @@
+---
+import { ArrowRight } from '@lism-css/icons/react';
+import { Stack, Inline, Heading, Link, List, ListItem } from 'lism-css/astro';
+import { Icon } from 'lism-css/react';
+import NavLink from '@parts/NavLink.astro';
+import sidebarConfig, { getTranslatedLabel, getPatternsSidebar, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
+import { groupPostsBySidebarDirs, hasDirProperty, getPostUrl } from '@/lib/sidebarPosts';
+import { getPostsByLang, type PostEntry } from '@/lib/content';
+import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, t } from '@/lib/i18n';
+
+// 現在の言語とセクションに合わせて、固定項目と記事一覧を組み立てる
+const currentLang = getLangFromUrl(Astro.url);
+// nav ランドマークのラベル（目次・記事ナビと区別するため）
+const navText = t(currentLang, 'siteNav');
+
+const currentPathWithoutLang = getPathWithoutLang(Astro.url);
+
+const currentSection = getSiteSection(currentPathWithoutLang);
+
+const allPosts = await getPostsByLang(currentLang);
+
+// 翻訳記事がない項目は日本語タイトルへフォールバックする
+const fallbackPostsBySlug = new Map<string, PostEntry>();
+if (currentLang !== 'ja') {
+  const fallbackPosts = await getPostsByLang('ja');
+  fallbackPosts.forEach((post) => {
+    fallbackPostsBySlug.set(post.id, post);
+  });
+}
+
+const topLevelLinks = sidebarConfig.topLevelLinks;
+
+const sectionItems = currentSection === 'patterns' ? getPatternsSidebar(currentLang) : sidebarConfig.sections[currentSection];
+
+const postsBySlug = new Map<string, PostEntry>();
+allPosts.forEach((post) => {
+  postsBySlug.set(post.id, post);
+});
+
+// カテゴリーでグループ化（最長dir一致・items参照記事の除外・order順ソートは PostNavigation と共通ロジック）
+const postsByCategory = groupPostsBySidebarDirs(allPosts, sectionItems);
+
+// rootPathからの相対階層を求める
+function getNestedDepth(url: string, rootPath: string): number {
+  const normalizedUrl = url.endsWith('/') ? url.slice(0, -1) : url;
+  const normalizedRoot = rootPath.endsWith('/') ? rootPath.slice(0, -1) : rootPath;
+  if (!normalizedUrl.startsWith(normalizedRoot + '/')) return 0;
+  const relativePath = normalizedUrl.slice(normalizedRoot.length + 1);
+  const segments = relativePath.split('/').filter(Boolean);
+  return segments.length - 1;
+}
+
+// dirからの相対階層を求める
+function getDirNestedDepth(postId: string, dir: string): number {
+  const relativePath = postId.startsWith(dir + '/') ? postId.slice(dir.length + 1) : postId;
+  const segments = relativePath.split('/').filter(Boolean);
+  return segments.length - 1;
+}
+---
+
+<Stack as="nav" class="c--siteNav" g="10" fx="1" min-h="0" aria-label={navText.ariaLabel}>
+  {/* トップレベルリンク */}
+  {
+    topLevelLinks.length > 0 && (
+      <div class="c--siteNav_toplinks b--shadowBox">
+        <Stack class="c--siteNav_toplinks_inner" my="-0.3rem">
+          {topLevelLinks.map((item) => {
+            const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+            const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+            const isActive = currentPathWithoutLang.startsWith(pathForCompare) || currentPathWithoutLang === item.link.replace(/\/$/, '');
+            const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+            return (
+              <Link href={itemPath} class="c--siteNav_toplink" data-active={isActive} set="plain hov" hl="s">
+                <Inline layout="flex" g="0.5em" ai="center" py="0.375em" fz="0.9em">
+                  {item.icon && <Icon icon={item.icon} fz="1.25em" />}
+                  {itemLabel}
+                </Inline>
+              </Link>
+            );
+          })}
+        </Stack>
+      </div>
+    )
+  }
+
+  {/* 通常のナビゲーションセクション */}
+  <Stack class="b--shadowBox is--scrollPanel c--siteNav_sections" fx="1" min-h="0">
+    <Stack class="c--siteNav_sections_scroll">
+      <Stack class="c--siteNav_sections_inner" g="30">
+        {
+          sectionItems.map((section) => {
+            const sectionLabel = getTranslatedLabel(section.label, section.translate, currentLang);
+            const sectionUrl = section.link ? `${section.link.replace(/\/$/, '')}/` : undefined;
+            const isSectionActive =
+              !!sectionUrl && (currentPathWithoutLang === sectionUrl || currentPathWithoutLang === sectionUrl.replace(/\/$/, ''));
+
+            if (hasDirProperty(section)) {
+              const posts = postsByCategory[section.dir];
+              if (!posts || posts.length === 0) {
+                return null;
+              }
+            }
+
+            // dir指定は記事を自動取得し、items指定は定義順で表示する
+            return (
+              <Stack class="c--siteNav_group" g="5">
+                {sectionUrl ? (
+                  <Heading level="3" class="c--siteNav_title" fz="xs" fw="500" hl="xs">
+                    <Link
+                      href={getLocalizedUrl(sectionUrl, currentLang)}
+                      layout="flex"
+                      ai="center"
+                      g="10"
+                      c={isSectionActive ? 'brand' : 'text-2'}
+                      td="none"
+                      hov={{ c: 'brand' }}
+                      aria-current={isSectionActive ? 'page' : undefined}
+                    >
+                      {sectionLabel}
+                      <Icon icon={ArrowRight} fz="2xs" />
+                    </Link>
+                  </Heading>
+                ) : (
+                  <Heading level="3" class="c--siteNav_title b--eyebrow" tt="uppercase">
+                    {sectionLabel}
+                  </Heading>
+                )}
+
+                <List class="c--siteNav_list" mbs="10" bd-s>
+                  {hasDirProperty(section)
+                    ? postsByCategory[section.dir]?.map((post) => {
+                        const postUrl = getPostUrl(post.id);
+                        const postPath = getLocalizedUrl(postUrl, currentLang);
+                        const isActive = currentPathWithoutLang === postUrl || currentPathWithoutLang === postUrl.replace(/\/$/, '');
+                        const isDraft = post.data.draft;
+                        const navLabel = post.data.navtitle ?? post.data.title;
+                        const nestedDepth = getDirNestedDepth(post.id, section.dir);
+                        return (
+                          <ListItem
+                            class={isDraft ? '_draft' : undefined}
+                            data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                            style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                          >
+                            <NavLink href={postPath} isActive={isActive}>
+                              {navLabel}
+                            </NavLink>
+                          </ListItem>
+                        );
+                      })
+                    : section.items.map((item) => {
+                        if (isSeparator(item)) {
+                          return null;
+                        }
+
+                        if (typeof item === 'string') {
+                          const slug = extractSlugFromUrl(item);
+                          const post = postsBySlug.get(slug);
+                          const fallbackPost = fallbackPostsBySlug.get(slug);
+                          const navLabel =
+                            post?.data?.navtitle ?? post?.data?.title ?? fallbackPost?.data?.navtitle ?? fallbackPost?.data?.title ?? slug;
+                          const itemPath = getLocalizedUrl(item.endsWith('/') ? item : `${item}/`, currentLang);
+                          const pathForCompare = item.endsWith('/') ? item : `${item}/`;
+                          const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item;
+                          const isDraft = post?.data?.draft;
+                          const rootPath = 'rootPath' in section ? section.rootPath : undefined;
+                          const nestedDepth = rootPath ? getNestedDepth(item, rootPath) : 0;
+                          return (
+                            <ListItem
+                              class={isDraft ? '_draft' : undefined}
+                              data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                              style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                            >
+                              <NavLink href={itemPath} isActive={isActive}>
+                                {navLabel}
+                              </NavLink>
+                            </ListItem>
+                          );
+                        }
+
+                        const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+                        const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+                        const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
+                        const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+                        const rootPath = 'rootPath' in section ? section.rootPath : undefined;
+                        const nestedDepth = rootPath ? getNestedDepth(item.link, rootPath) : 0;
+                        return (
+                          <ListItem
+                            data-nested={nestedDepth > 0 ? nestedDepth : undefined}
+                            style={nestedDepth > 0 ? { '--nestedDepth': nestedDepth } : undefined}
+                          >
+                            <NavLink href={itemPath} isActive={isActive}>
+                              {itemLabel}
+                            </NavLink>
+                          </ListItem>
+                        );
+                      })}
+                </List>
+              </Stack>
+            );
+          })
+        }
+      </Stack>
+    </Stack>
+  </Stack>
+</Stack>
+
+<style>
+  /* サイドバーナビのトップレベルリンク（グラデーション枠でまとめた集約ボタン） */
+  .c--siteNav_toplinks {
+    padding: var(--s30) var(--s20);
+  }
+  .c--siteNav_toplink {
+    color: var(--text-2);
+
+    &:hover,
+    &[data-active='true'] {
+      color: var(--brand);
+      font-weight: 500;
+    }
+  }
+
+  .c--siteNav_sections_inner {
+    padding-block: var(--s30);
+    padding-inline: var(--s20);
+  }
+
+  /* SP モーダル: CSS Docs 含め Modal.Body 全体でスクロール。カード風の面は使わない */
+  :global(.b--modal_body) .c--siteNav {
+    flex: none;
+    min-height: auto;
+    gap: var(--s30);
+
+    .c--siteNav_toplinks,
+    .c--siteNav_sections {
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    .c--siteNav_toplinks {
+      padding: 0;
+    }
+
+    .c--siteNav_toplinks_inner {
+      background-color: transparent;
+      border-radius: 0;
+    }
+
+    .c--siteNav_sections {
+      flex: none !important;
+      min-height: auto !important;
+      overflow: visible !important;
+    }
+
+    .c--siteNav_sections_scroll {
+      flex: none !important;
+      min-height: auto !important;
+      overflow: visible !important;
+    }
+
+    .c--siteNav_sections_inner {
+      padding: 0;
+    }
+  }
+
+  .c--siteNav_list > [data-nested] {
+    /* padding-inline-start: var(--s20); */
+    padding-inline-start: calc(var(--nestedDepth, 0) * var(--s20));
+  }
+</style>

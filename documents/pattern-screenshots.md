@@ -2,7 +2,7 @@
 
 # パターン スクリーンショット
 
-`apps/docs`のパターンページのサムネイル撮影と、レイアウト差分検出の仕組み。テンプレ側は[template-screenshots.md](./template-screenshots.md)。
+`apps/site`のパターンページのサムネイル撮影と、レイアウト差分検出の仕組み。テンプレ側は[template-screenshots.md](./template-screenshots.md)。
 
 ## 撮影サイズと表示
 
@@ -19,7 +19,7 @@
 
 ## コマンド
 
-ルートからも同名コマンドで実行でき、`apps/docs`側に委譲される。
+ルートからも同名コマンドで実行でき、`apps/site`側に委譲される。
 
 | コマンド | 処理 |
 | --- | --- |
@@ -45,7 +45,7 @@ pnpm screenshot:patterns:compare cta
 プレビューは`ja`（既定）と`en`の2言語。`generate-screenshots.ts` / `compare-screenshots.ts`は`--lang=en` / `--lang=ja`で絞れる（省略時は全言語）。`update-screenshots.ts`に`--lang`は無く、`_screenshots/diff/`配下に`en/`があるかで対象言語を判定する。
 
 ```bash
-# apps/docs で実行
+# apps/site で実行
 npx tsx scripts/generate-screenshots.ts --lang=en
 npx tsx scripts/compare-screenshots.ts cta/cta01 --lang=ja
 ```
@@ -64,7 +64,7 @@ npx tsx scripts/compare-screenshots.ts cta/cta01 --lang=ja
 ## ファイル構成
 
 ```
-apps/docs/
+apps/site/
   scripts/
     generate-screenshots.ts    # 撮影（new / force）
     compare-screenshots.ts     # 比較

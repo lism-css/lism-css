@@ -34,9 +34,14 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 - publish 前に `packages/lism-cli/src/constants.ts` の `DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF` が `'main'` であることを確認する（`'dev'` や PR ブランチのままだと公開版 CLI が壊れる）
 - `create-lism` は `lism-cli` を bundle で内包するため、`dependencies` の追従は不要
 
+### テンプレートに新しい公開パッケージを追加する場合
+
+`lism-cli create`は既定で`main`のテンプレートを取得する。`workspace:*`依存の追加時は、`packages/lism-cli/tsup.config.ts`の`packageVersions`にも対象を追加する。
+
 ### plugin の特別ルール
 
-`@lism-css/mockup` は `@lism-css/plugin` に依存し、publish 時に `workspace:*` が固定バージョンへ置換される。plugin に mockup が使う API の変更（`@lism-css/plugin/vite` の export 追加・変更等）を含む場合は、plugin の publish 後に `nr publish:mockup` で追従させる（判断はステップ4、案内はステップ9）。追従しないと npm 経由の利用者だけが古い plugin を掴んで壊れ、workspace のテストでは検出できない。
+- `lism-css` のバージョン更新だけでは plugin を再リリースしない。peer の `*` は非互換な変更も拒否しないため、core のリリース時に plugin が使用する内部 API・SCSS 構成への影響を確認し、plugin の修正が必要な場合に対応する
+- mockup の `lism-css` / `@lism-css/plugin` / `@lism-css/ui` 依存は `*`（workspace プロトコルではなく直書き。開発時のリンクは `pnpm-workspace.yaml` の `linkWorkspacePackages`）。新規インストール時は常に公開最新版を使うため、依存の更新だけでは mockup をリリースしない。mockup 自身の実装修正がある場合だけリリースする。core / plugin / ui のリリース時は mockup（viewer・`check`）への影響を確認し、非互換があれば mockup を修正してリリースする
 
 
 ## 現在の状態
@@ -79,10 +84,10 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 | `packages/lism-ui/` | lism-ui |
 | `packages/lism-cli/` `packages/create-lism/` | lism-cli |
 | `packages/plugin/` | plugin |
-| `apps/docs/` | Documentation（各パッケージ共通） |
+| `apps/site/` | Documentation（各パッケージ共通） |
 | その他 | Other |
 
-対象パッケージのコード変更を伴うコミットだけをリリースノートの対象にする。`apps/docs/` のみの変更（docs 修正・翻訳同期等）は含めない。`plugin` は mockup が使う API の変更を含むかもここで判断する（plugin の特別ルール）。
+対象パッケージのコード変更を伴うコミットだけをリリースノートの対象にする。`apps/site/` のみの変更（docs 修正・翻訳同期等）は含めない。`lism-css` をリリースする際は、plugin が使用する内部 API・SCSS への影響を確認する。mockup は「plugin の特別ルール」の条件に当てはまる場合だけリリース対象とする。
 
 ### 5. リリースノートと changelog エントリの生成
 
@@ -112,7 +117,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 #### 5-B. changelog エントリ
 
-`lism-css` / `lism-ui` / `plugin` のみ。`lism-cli` は 5-B・7・8 を省略する。
+`lism-css` / `lism-ui` / `plugin` のみ。`lism-cli`は5-B・7・8を省略する。
 
 リリースノートをもとに日本語・英語の両方で生成する。
 
@@ -176,7 +181,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 ### 8. changelog.mdx の更新
 
-`apps/docs/src/content/ja/changelog.mdx` と `apps/docs/src/content/en/changelog.mdx` にエントリを追記する。
+`apps/site/src/content/ja/changelog.mdx` と `apps/site/src/content/en/changelog.mdx` にエントリを追記する。
 
 - 未リリースのセクションから、新エントリへ取り込んだ項目を削除する。対象外の項目は先頭に残し、空になったセクションは見出しと末尾の `<Divider>` を削除する
 - 追記位置: 未リリースのセクションが残る場合はその直後、それ以外は冒頭の `<Divider bds="dashed" my="40" />` の直後。挿入後、H2エントリ間に `<Divider>` があることを確認する
@@ -187,7 +192,7 @@ argument-hint: "{lism-css|lism-ui|lism-cli|plugin} {バージョン}"
 
 ### 9. npm publish（ユーザー手動）
 
-`lism-cli` は案内前に「lism-cli の特別ルール」の `constants.ts` 確認を行う。`plugin` で mockup の追従が要る場合は `nr publish:mockup` も続けて案内する。案内して完了を待つ。
+`lism-cli` は案内前に「lism-cli の特別ルール」の `constants.ts` 確認を行う。mockup がステップ4でリリース対象になった場合は、依存パッケージの publish 後に `nr publish:mockup` も続けて案内する。案内して完了を待つ。
 
 ```
 pnpm publish を実行してください:

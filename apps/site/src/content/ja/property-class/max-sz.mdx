@@ -1,0 +1,55 @@
+---
+title: '-max-sz'
+description: 'コンテンツの最大幅を制御する -max-sz クラスの使い方について解説します。'
+---
+
+import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink } from 'lism-css/astro';
+
+
+Lismには、コンテンツサイズ用のトークンとして`--sz--{sz}`（`{sz}` = `xs`, `s`, `m`, `l`, `xl`）が用意されており、それぞれに対応する`-max-sz`クラスが用意されています。
+
+| クラス名 | CSS変数 | 値 |
+|---|---|---|
+| `-max-sz:xs` | `--sz--xs` | `400px` |
+| `-max-sz:s`  | `--sz--s`  | `640px` |
+| `-max-sz:m`  | `--sz--m`  | `880px` |
+| `-max-sz:l`  | `--sz--l`  | `1200px` |
+| `-max-sz:xl` | `--sz--xl` | `1600px` |
+
+
+
+
+## full & bleed
+
+さらに、`-max-sz`クラスには以下のような特殊なプリセットクラスが用意されています。
+
+| クラス名 | 説明 |
+|---|---|
+| <span class="-whs:nowrap">`-max-sz:full`</span> | `has--gutter`の直下であれば、`100%`サイズに**その余白を追加**して、**親要素のサイズいっぱいに広がります。** |
+| <span class="-whs:nowrap">`-max-sz:bleed`</span> | **最外側の `is--container` の幅**まで広がります。本文幅やネストされた container を突き抜け、ページ全体の full-bleed 表現を実現します。`is--container` が祖先に存在しない場合は、ビューポート幅（`100svi`）まで広がる fallback として動作します。 |
+
+
+## ブレイクポイント指定
+
+`max-sz`はブレイクポイント対応のProperty Classです。`w`や`max-w`と同じく、配列またはオブジェクト形式で画面幅ごとに値を切り替えられます。HTMLで直接書く場合は`-max-sz_{bp}`クラスと`--max-sz_{bp}`変数のセットで指定します。
+
+```jsx
+<Box max-sz={['s', 'm', 'l']} />
+<Box max-sz={{ base: 's', md: '720px' }} />
+```
+
+```html
+<div class="-max-sz:s -max-sz_sm -max-sz_md" style="--max-sz_sm:var(--sz--m);--max-sz_md:var(--sz--l)"></div>
+```
+
+ブレイクポイント値として使えるのは、サイズトークン（`xs`〜`xl`）と任意の長さ値です。`full`と`bleed`は`max-inline-size`以外に`inline-size`や`margin-inline`も書き換える特殊クラスなので、ブレイクポイントで切り替えることはできません。
+
+- ブレイクポイント値に`full` / `bleed`を渡しても効きません。
+- base値が`full` / `bleed`の要素にブレイクポイント値を重ねると、`margin-inline`などが残ったまま幅だけ変わり、レイアウトが崩れます。
+
+
+## DEMOページ
+
+これらの`-max-sz`クラスの挙動について、別ページで確認できますのでぜひご覧ください。
+
+<PreviewFrame url='/demo/content-size' />

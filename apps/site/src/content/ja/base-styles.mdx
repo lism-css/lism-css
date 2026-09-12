@@ -1,0 +1,295 @@
+---
+title: 'ベーススタイル'
+description: 'lism-base レイヤーで定義される Reset CSS やHTML要素のベーススタイルについて解説します。'
+---
+import { Box, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+import { DummyText } from '@lism-css/ui/astro/DummyText';
+
+
+`lism-base`レイヤーで定義されるベーススタイルを紹介します。
+
+
+## Reset CSS
+
+Reset CSS を`lism-base.reset` レイヤーとして定義しています。
+
+<PreviewTitle>ソースコード</PreviewTitle>
+<SrcCode path="src/scss/reset.scss" />
+
+
+reset.css ではできるだけブラウザ標準スタイルに従うようにしています。
+
+非常にシンプルで、必要最低限な内容になっています。
+
+### Lism CSS の reset.css だけを読み込む方法
+
+
+<PreviewTitle>importで読み込む</PreviewTitle>
+```js
+import 'lism-css/reset.css';
+```
+
+または
+
+<PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.29.0/dist/css/reset.css" rel="stylesheet" />
+```
+
+
+
+## Base styles
+
+Reset CSS のほか、`lism-base`レイヤーでは、`:root`で定義したトークンを活用しつつHTMLタグのデフォルトベーススタイルを定義しています。
+
+
+<PreviewTitle>ソースコード</PreviewTitle>
+<SrcCode path="src/scss/base/_html.scss" />
+
+
+ここでは各要素に適用されるスタイルをグループごとに紹介します。
+
+:::info
+各スタイルで使用されているトークン変数（`--{prop}--{token}`）の詳細については、[デザイントークン](/docs/tokens/)のページを参照してください。
+:::
+
+
+### body
+
+`body` にはフォント・色・文字装飾に関する基本設定が適用されます。
+
+```scss
+body {
+  --hl: var(--hl--base);
+  font-size: var(--fz--base);
+  font-family: var(--ff--base);
+  letter-spacing: var(--lts--base);
+  background-color: var(--base);
+  color: var(--text);
+  text-underline-offset: 0.125em;
+  tab-size: 4;
+}
+```
+
+`--hl` はハーフレディング（行の上下それぞれの余白）を管理するための変数です。`body` では `--hl--base` がセットされ、子要素に継承されます。
+
+`text-underline-offset` でリンクの下線位置を、`tab-size` でタブ文字の表示幅を整えています。
+
+
+### 全要素の行間
+
+Lism CSS では、**全要素に対して**以下のスタイルが適用されています。
+
+```scss
+* {
+  line-height: var(--lh, calc(1em + var(--hl) * 2));
+}
+```
+
+これは一般的な `line-height: 1.6` のような指定とは異なり、**フォントサイズに依存しない固定量の行間**を実現する仕組みです。  
+ハーフレディング（Half-leading）の量を先に定義しておき、それを文字の高さ(≒`1em`)の上下に付与するという計算式です。`--lh` がセットされている場合はそちらが優先されます。
+
+フォントサイズが大きくなっても行間が過大にならないため、タイポグラフィにおける「**縦のリズム**」を統一することができ、見出しから本文まで調和の取れた余白でレイアウトを組むことができます。
+
+詳しくは [ハーフレディング（line-height）](/docs/half-leading/) を参照してください。
+
+
+### 見出し（h1〜h6）
+
+見出し要素にはフォントファミリー・ウェイト・サイズが設定されます。
+
+```scss
+:is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--headings-ff, inherit);
+  font-weight: var(--headings-fw, var(--fw--bold));
+}
+h1 { font-size: var(--fz--3xl); }
+h2 { font-size: var(--fz--2xl); }
+h3 { font-size: var(--fz--xl); }
+h4 { font-size: var(--fz--l); }
+h5, h6 { font-size: var(--fz--m); }
+```
+
+`--headings-ff` と `--headings-fw` を定義すれば、全見出しのフォントファミリー・ウェイトを一括でカスタマイズできます。
+
+
+### リンク（a）
+
+`a` タグにはリンクの色と下線に関するCSS変数が設定されています。
+
+```scss
+a {
+  color: var(--link-c, var(--link));
+  text-decoration: var(--link-td, underline);
+}
+```
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--link-c` | `var(--link)` | リンクテキストの色 |
+| `--link-td` | `underline` | テキスト装飾の種類 |
+
+### インラインテキスト要素
+
+```scss
+small {
+  --hl: var(--hl--s);
+  font-size: var(--fz--xs);
+}
+b, strong {
+  font-weight: var(--fw--bold);
+}
+sup, sub {
+  --hl: var(--hl--xs);
+  font-size: 80%;
+}
+code, kbd, var, samp {
+  font-family: var(--ff--mono);
+  letter-spacing: normal;
+}
+```
+
+`small` や `sup`/`sub` では `--hl` を小さめの値に変更し、フォントサイズに合った行間になるよう調整しています。
+
+
+### 引用
+
+```scss
+q, blockquote {
+  font-style: italic;
+}
+blockquote {
+  background-color: var(--base-2);
+  padding: var(--s20);
+}
+```
+
+`q` と `blockquote` にはイタリック体を、`blockquote` にはシンプルな背景色と余白を適用しています。
+
+### その他のテキスト要素
+
+```scss
+caption, figcaption {
+  font-size: var(--fz--s);
+}
+```
+
+これらのフォントサイズはデフォルトで少し小さめにセットしています。
+
+### 区切り
+
+```scss
+hr {
+  border: none;
+  block-size: 0;
+  border-block-start: 1px solid var(--divider);
+}
+```
+
+`hr`の線は`block-start`側に固定し、色には`--divider`を設定しています。
+
+
+### リスト（ul, ol）
+
+```scss
+:is(ul, ol):where(:not([class])) {
+  list-style: revert;
+  padding-inline-start: var(--list-ps, 1.75em);
+}
+```
+
+クラスを一切持たないリストはブラウザ標準スタイルを自動で復活させています。
+
+Property Class 付きの `ul` / `ol`（例: `<ul class="-fz:l">`）はリスト表示が消えた状態のままとなります。箇条書き表示を維持したい場合は [`set--revert`](/docs/set-class#set--revert) を付与してください。
+
+```html
+<ul class="-fz:l set--revert">
+  <li>item 1</li>
+  <li>item 2</li>
+</ul>
+```
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--list-ps` | `1.75em` | リストの `padding-inline-start` |
+
+
+### 定義リスト（dl）
+
+```scss
+dt {
+  font-weight: var(--fw--bold);
+}
+dd + dt {
+  margin-block-start: var(--s20);
+}
+```
+
+`dt` は太字にし、連続する `dd + dt` の間には余白を設けて項目の区切りを明確にしています。
+
+
+### テーブル
+
+`td`, `th` のパディングは `--cells-p` でカスタマイズ可能です。
+
+```scss
+td, th {
+  padding: var(--cells-p, 0.625em 0.875em);
+}
+```
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--cells-p` | `0.625em 0.875em` | セルのパディング |
+
+
+### フォーム要素
+
+フォームコントロールには、デフォルトで統一されたスタイルが適用されます。
+
+```scss
+input:where(:not([type='range'])), button, textarea, select, ::file-selector-button {
+  background-color: var(--controls-bgc, var(--base-2));
+  border: solid 1px var(--controls-bdc, var(--divider));
+  padding: var(--controls-p, 0.25em 0.5em);
+}
+```
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--controls-bgc` | `var(--base-2)` | 背景色 |
+| `--controls-bdc` | `var(--divider)` | ボーダー色 |
+| `--controls-p` | `0.25em 0.5em` | パディング |
+
+角丸はブラウザ標準スタイルに委ねています。テーマで揃えたい場合は各セレクタに `border-radius` を直接指定してください。
+
+
+### その他
+
+```scss
+:disabled {
+  opacity: var(--o--pp);
+}
+:focus-visible {
+  outline-offset: var(--focus-offset, 0px);
+}
+```
+
+`disabled` 状態の要素は不透明度を低下させ、  
+`:focus-visible` に表示されるアウトラインのオフセットを、 `--focus-offset` で調整できるようにしています。
+
+
+---
+
+## HTML基本スタイルのプレビュー
+
+上記のベーススタイルが適用されたHTML要素のプレビューです。
+
+<PreviewTitle>Preview</PreviewTitle>
+<PreviewArea>
+  <InlineIframe ar="1/1" url="/demo/html-base-style" />
+</PreviewArea>
+<Button href="/demo/html-base-style" variant="fill" target="_blank" bdrs="10" w="fit" mx="auto">
+  大きい画面で見る
+</Button>

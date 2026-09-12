@@ -14,7 +14,7 @@ type Props = LismProps & {
 const { item, ...rest } = Astro.props;
 ---
 
-<li class="c--toc_item" data-level={item.depth}>
+<li data-level={item.depth}>
   <Link
     href={'#' + item.slug}
     data-toc-link={item.slug}
@@ -24,7 +24,8 @@ const { item, ...rest } = Astro.props;
     py="5"
     hl="s"
     bd-s
-    hasTransition
+    hasTransition="color"
+    style={{ '--duration': '0.2s' }}
     hov={{ c: 'brand', bgc: 'base-2' }}
     {...rest}
   >
@@ -32,7 +33,7 @@ const { item, ...rest } = Astro.props;
   </Link>
   {
     item.children.length !== 0 ? (
-      <Lism as="ol" class="c--toc_sublist">
+      <Lism as="ol" set="plain">
         {item.children.map((child) => (
           <Self item={child} ps="30" />
         ))}
@@ -40,12 +41,3 @@ const { item, ...rest } = Astro.props;
     ) : null
   }
 </li>
-
-<style>
-  @layer lism-custom {
-    .c--toc_item > a {
-      --duration: 0.2s;
-      --transitionProps: color;
-    }
-  }
-</style>

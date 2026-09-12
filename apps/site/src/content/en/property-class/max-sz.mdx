@@ -1,0 +1,55 @@
+---
+title: '-max-sz'
+description: 'How to use the -max-sz class for controlling the maximum width of content.'
+---
+
+import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink } from 'lism-css/astro';
+
+
+Lism provides content size tokens in the form `--sz--{sz}` (where `{sz}` = `xs`, `s`, `m`, `l`, `xl`), and corresponding `-max-sz` classes are available for each.
+
+| Class | CSS Variable | Value |
+|---|---|---|
+| `-max-sz:xs` | `--sz--xs` | `400px` |
+| `-max-sz:s`  | `--sz--s`  | `640px` |
+| `-max-sz:m`  | `--sz--m`  | `880px` |
+| `-max-sz:l`  | `--sz--l`  | `1200px` |
+| `-max-sz:xl` | `--sz--xl` | `1600px` |
+
+
+
+
+## full & bleed
+
+In addition, `-max-sz` provides the following special preset classes:
+
+| Class | Description |
+|---|---|
+| <span class="-whs:nowrap">`-max-sz:full`</span> | When placed directly inside a `has--gutter` element, this class **adds the gutter spacing on top of `100%`** to expand to **the full size of the parent**. |
+| <span class="-whs:nowrap">`-max-sz:bleed`</span> | Expands to the width of the **outermost `is--container`**, breaking through both content widths and nested containers to provide a page-wide full-bleed layout. When no `is--container` ancestor exists, it falls back to the viewport width (`100svi`). |
+
+
+## Breakpoints
+
+`max-sz` supports breakpoints. Like `w` and `max-w`, you can switch the value per screen width using the array or object form. In plain HTML, use the `-max-sz_{bp}` class together with the `--max-sz_{bp}` variable.
+
+```jsx
+<Box max-sz={['s', 'm', 'l']} />
+<Box max-sz={{ base: 's', md: '720px' }} />
+```
+
+```html
+<div class="-max-sz:s -max-sz_sm -max-sz_md" style="--max-sz_sm:var(--sz--m);--max-sz_md:var(--sz--l)"></div>
+```
+
+Breakpoint values can be size tokens (`xs` to `xl`) or any length value. `full` and `bleed` cannot be switched per breakpoint, because they are special classes that also rewrite `inline-size` and `margin-inline`, not just `max-inline-size`.
+
+- Passing `full` / `bleed` as a breakpoint value has no effect.
+- Adding breakpoint values to an element whose base value is `full` / `bleed` changes only the width while `margin-inline` and other declarations remain, which breaks the layout.
+
+
+## Demo Page
+
+You can see these `-max-sz` classes in action on a separate demo page.
+
+<PreviewFrame url='/demo/content-size' />

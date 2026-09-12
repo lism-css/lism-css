@@ -1,0 +1,24 @@
+---
+import { Stack } from 'lism-css/astro';
+import SiteNav from './SiteNav.astro';
+// import ThemeSwitch from './ThemeSwitch.astro';
+// import LanguageSelect from './LanguageSelect.astro';
+---
+
+{/* 中身はサイトナビだけなので aside（補足ランドマーク）にはしない。nav は SiteNav 側 */}
+<Stack class="c--siteSidebar" isContainer g="10" {...Astro.props}>
+  <Stack class="c--siteSidebar_nav" fx="1" min-h="0">
+    <SiteNav />
+  </Stack>
+  <!-- <Flex jc="between" g="5" px="15">
+    <LanguageSelect />
+    <ThemeSwitch />
+  </Flex> -->
+</Stack>
+
+<script>
+  // アクティブなナビリンクまでサイドバーをスクロール（instant: ページ読み込み時にアニメーションさせない）
+  document
+    .querySelector('.c--siteSidebar_nav :is(.c--navLink._active, [aria-current="page"])')
+    ?.scrollIntoView({ block: 'center', behavior: 'instant' });
+</script>

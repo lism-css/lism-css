@@ -1,0 +1,201 @@
+/**
+ * lastmod-map.json 生成スクリプト
+ *
+ * git log から各コンテンツ・ページファイルの最終コミット日時を取得し、
+ * サイトURL → ISO日時文字列 のマップを JSON ファイルに書き出す。
+ *
+ * Vercel 等の CI 環境では git 履歴が浅いため正確な lastmod が取れない。
+ * そのため、ローカル（全履歴がある環境）でこのスクリプトを実行し、
+ * 生成された JSON をコミットしておく。
+ *
+ * Usage: pnpm generate:lastmod
+ */
+import { execSync } from 'node:child_process';
+import { existsSync, writeFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { toContentSlug } from '../src/lib/contentSlug';
+
+const SITE_URL = 'https://lism-css.com';
+const ROOT_LANG = 'ja';
+// NOTE: siteConfig.langs と同期すること（言語追加時に更新が必要）
+const NON_ROOT_LANGS = ['en'];
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const SITE_ROOT = resolve(__dirname, '..');
+const GIT_ROOT = resolve(SITE_ROOT, '../..');
+const OUTPUT_PATH = resolve(SITE_ROOT, 'lastmod-map.json');
+
+const SITE_DIR = 'apps/site';
+// リネーム前のワークスペースパス。リネームコミットより前の履歴はこのパスで出てくる
+const LEGACY_SITE_DIR = 'apps/docs';
+const TARGET_SUBDIRS = ['src/content', 'src/pages', 'src/components/templates'];
+
+/**
+ * git log を解析して ファイルパス→最終コミット日時 のマップを構築する
+ * git log は新しい順に出力されるので、各ファイルについて最初に見つかった日時が最新
+ *
+ * 旧パス（LEGACY_SITE_DIR）も pathspec に含め、新パスへ読み替えて集計する。
+ * ワークスペース移動（内容変更なしの LEGACY_SITE_DIR → SITE_DIR）は更新扱いにしない。
+ * それ以外のリネームは内容変更なしでも従来どおり更新扱いにする。
+ */
+function getGitLastModifiedMap(): Map<string, Date> {
+  const fileToDate = new Map<string, Date>();
+
+  const pathspecs = [SITE_DIR, LEGACY_SITE_DIR].flatMap((dir) => TARGET_SUBDIRS.map((sub) => `'${dir}/${sub}'`)).join(' ');
+  const output = execSync(`git log --pretty=format:'__COMMIT__%aI' -M --name-status -- ${pathspecs}`, {
+    encoding: 'utf-8',
+    maxBuffer: 50 * 1024 * 1024,
+    cwd: GIT_ROOT,
+  });
+
+  let currentDate: Date | null = null;
+  for (const line of output.split('\n')) {
+    if (line.startsWith('__COMMIT__')) {
+      currentDate = new Date(line.slice('__COMMIT__'.length));
+      continue;
+    }
+    if (!line.trim() || !currentDate) continue;
+
+    // 行の形式: `M\tpath` / `A\tpath` / `D\tpath` / `R{類似度}\told\tnew`
+    const [status, ...paths] = line.split('\t');
+    let filePath: string;
+    if (status.startsWith('R')) {
+      const [oldPath, newPath] = paths;
+      if (status === 'R100' && isWorkspaceMove(oldPath, newPath)) continue;
+      filePath = newPath;
+    } else {
+      filePath = paths[0];
+    }
+    filePath = toCurrentPath(filePath.trim());
+
+    // 削除済みファイルを除外（git log には過去に存在したファイルも含まれるため）
+    if (!fileToDate.has(filePath) && existsSync(resolve(GIT_ROOT, filePath))) {
+      fileToDate.set(filePath, currentDate);
+    }
+  }
+
+  return fileToDate;
+}
+
+/** 旧ワークスペースパスを現在のパスに読み替える */
+function toCurrentPath(filePath: string): string {
+  const legacyPrefix = `${LEGACY_SITE_DIR}/`;
+  return filePath.startsWith(legacyPrefix) ? `${SITE_DIR}/${filePath.slice(legacyPrefix.length)}` : filePath;
+}
+
+/** ワークスペース移動（LEGACY_SITE_DIR → SITE_DIR で相対パスが同じ）かどうか */
+function isWorkspaceMove(oldPath: string, newPath: string): boolean {
+  const legacyPrefix = `${LEGACY_SITE_DIR}/`;
+  const currentPrefix = `${SITE_DIR}/`;
+  return (
+    oldPath.startsWith(legacyPrefix) &&
+    newPath.startsWith(currentPrefix) &&
+    oldPath.slice(legacyPrefix.length) === newPath.slice(currentPrefix.length)
+  );
+}
+
+/**
+ * ファイルパス（git root 相対）をサイトのフルURL配列に変換
+ *
+ * コンテンツファイル（content.config.ts の generateId と同じ分岐で URL を組み立てる）:
+ *   - `primitives/` 配下のみファイル名の casing をそのまま ID / URL に使う（CSS クラス名と URL を一致させる）
+ *   - それ以外のコンテンツは従来通り全て小文字化する
+ *   apps/site/src/content/ja/overview.mdx               → [https://lism-css.com/docs/overview/]
+ *   apps/site/src/content/ja/ui/Accordion.mdx            → [https://lism-css.com/docs/ui/accordion/, https://lism-css.com/ui/accordion/]
+ *   apps/site/src/content/ja/primitives/l--tileGrid.mdx  → [https://lism-css.com/docs/primitives/l--tileGrid/]
+ *   apps/site/src/content/en/overview.mdx                → [https://lism-css.com/en/docs/overview/]
+ *
+ * ページファイル:
+ *   apps/site/src/pages/index.astro             → [https://lism-css.com/]
+ *   apps/site/src/pages/patterns/index.astro   → [https://lism-css.com/patterns/]
+ *   apps/site/src/pages/[lang]/templates/index.astro → [https://lism-css.com/en/templates/]
+ *
+ * テンプレート紹介コンポーネント:
+ *   apps/site/src/components/templates/*.astro → [https://lism-css.com/templates/, https://lism-css.com/en/templates/]
+ */
+function filePathToSiteUrls(filePath: string): string[] {
+  // _（アンダースコア開始）のパスは非公開ページ
+  if (filePath.includes('/_')) return [];
+
+  // コンテンツファイル
+  const contentMatch = filePath.match(/^apps\/site\/src\/content\/(\w+)\/(.+)\.mdx?$/);
+  if (contentMatch) {
+    const [, lang, rawSlug] = contentMatch;
+    // primitives/ 配下のみ casing 保持、それ以外は小文字化（content.config.ts の generateId と揃える）
+    const slug = toContentSlug(rawSlug);
+    const langPrefix = lang === ROOT_LANG ? '' : `/${lang}`;
+    const urls = [`${SITE_URL}${langPrefix}/docs/${slug}/`];
+
+    // ui/ コンテンツは /ui/{slug}/ ルートでも公開される（root言語のみ）
+    if (lang === ROOT_LANG && slug.startsWith('ui/')) {
+      urls.push(`${SITE_URL}/${slug}/`);
+    }
+    return urls;
+  }
+
+  // テンプレート紹介ページの実体コンポーネント
+  const templatesComponentMatch = filePath.match(/^apps\/site\/src\/components\/templates\/.+\.astro$/);
+  if (templatesComponentMatch) {
+    return [`${SITE_URL}/templates/`, ...NON_ROOT_LANGS.map((lang) => `${SITE_URL}/${lang}/templates/`)];
+  }
+
+  // ページファイル
+  const pageMatch = filePath.match(/^apps\/site\/src\/pages\/(.+)\.astro$/);
+  if (pageMatch) {
+    const pagePath = pageMatch[1];
+
+    // [lang]/index.astro → 非root言語のトップページ（/en/ 等）
+    if (pagePath === '[lang]/index') {
+      return NON_ROOT_LANGS.map((lang) => `${SITE_URL}/${lang}/`);
+    }
+
+    // [lang]/templates/index.astro など、非root言語の静的ページ
+    const localizedStaticPageMatch = pagePath.match(/^\[lang\]\/(.+)$/);
+    if (localizedStaticPageMatch) {
+      const localizedPagePath = localizedStaticPageMatch[1];
+      if (!localizedPagePath.includes('[')) {
+        const urlPath = localizedPagePath.replace(/(^|\/)index$/, '');
+        return NON_ROOT_LANGS.map((lang) => `${SITE_URL}/${lang}${urlPath ? `/${urlPath}/` : '/'}`);
+      }
+    }
+
+    // その他の動的ルートはコンテンツ由来なのでスキップ
+    if (pagePath.includes('[')) return [];
+
+    // preview/patterns/{cat}/{id}/index.astro → 対応するパターン詳細ページにもマップ
+    const previewMatch = pagePath.match(/^preview\/patterns\/(.+)\/index$/);
+    if (previewMatch) {
+      const patternPath = previewMatch[1];
+      return [`${SITE_URL}/preview/patterns/${patternPath}/`, `${SITE_URL}/patterns/${patternPath}/`];
+    }
+
+    // index.astro → ディレクトリURL（ルートの index も正しく処理）
+    const urlPath = pagePath.replace(/(^|\/)index$/, '');
+    return [`${SITE_URL}/${urlPath}${urlPath ? '/' : ''}`];
+  }
+
+  return [];
+}
+
+// --- メイン処理 ---
+const fileToDate = getGitLastModifiedMap();
+const urlToDate: Record<string, string> = {};
+
+for (const [filePath, date] of fileToDate) {
+  const urls = filePathToSiteUrls(filePath);
+  for (const url of urls) {
+    // 同一URLが複数ファイルにマッチする場合は最初（最新）を優先
+    if (!urlToDate[url]) {
+      urlToDate[url] = date.toISOString();
+    }
+  }
+}
+
+// URLのアルファベット順でソートして書き出し（差分を見やすくする）
+const sorted = Object.fromEntries(Object.entries(urlToDate).sort(([a], [b]) => a.localeCompare(b)));
+
+writeFileSync(OUTPUT_PATH, JSON.stringify(sorted, null, 2) + '\n', 'utf-8');
+
+const count = Object.keys(sorted).length;
+console.log(`✔ lastmod-map.json を生成しました（${count} URL）`);

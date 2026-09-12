@@ -1,0 +1,532 @@
+---
+title: 'Utility Class( u--* )'
+navtitle: 'Utility Class'
+description: 'Learn about the utility classes in Lism CSS that apply bundled styles and decorations.'
+---
+import { Alert as AlertIcon } from '@lism-css/icons/astro';
+import { Lism, Flow, Grid, AutoColumns, Columns, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
+import { DummyText } from '@lism-css/ui/astro/DummyText';
+import { Dog, Cat } from "@phosphor-icons/react";
+
+This page covers the utility classes available in Lism CSS — classes that bundle a set of styles or decorations into a single class name.
+
+
+
+## `u--cbox`
+
+Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `color-mix()`.
+
+`color` and `background-color` are set to the generated variables respectively, but `--bdc` is only defined as a variable — to display a border, use it together with the [`-bd` class](/en/docs/property-class/bd/).
+
+<SrcCode path="src/scss/utility/_cbox.scss" />
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism util="cbox" keycolor="red" p="20">
+      <DummyText length="codes" />
+    </Lism>
+    <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+      <DummyText length="codes" />
+    </Lism>
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-s bdw="4px" p="20">
+      <DummyText length="codes" />
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="u--cbox -p:20" style="--keycolor: var(--red)">
+      <p>
+        Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex
+        eos <b>doloribus aut dolore</b> nisi provident.
+      </p>
+    </div>
+    <div class="set--bxsh u--cbox -bd -bdrs:20 -bxsh:20 -p:20" style="--keycolor: var(--purple)">
+      <p>
+        Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex
+        eos <b>doloribus aut dolore</b> nisi provident.
+      </p>
+    </div>
+    <div class="u--cbox -bdc:keycolor -bd-s -p:20" style="--keycolor: var(--brand); --bdw: 4px">
+      <p>
+        Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex
+        eos <b>doloribus aut dolore</b> nisi provident.
+      </p>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Lism util="cbox" keycolor="red" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="bxsh" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-s bdw="4px" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Badge usage example and variable customization</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Lism layout="cluster" g="10">
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
+    </Lism>
+    <Lism layout="cluster" g="10" style={{ '--cbox-cPct': '76%', '--cbox-bdPct': '20%' }}>
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">
+        <Fragment>Badge</Fragment>
+      </Lism>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--cluster -g:10">
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--red)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--green)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--blue)">Badge</span>
+    </div>
+    <div class="l--cluster -g:10" style="--cbox-cPct: 76%; --cbox-bdPct: 20%">
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--red)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--green)">Badge</span>
+      <span class="u--cbox -bd -fz:s -hl:s -py:5 -px:10 -bdrs:99" style="--keycolor: var(--blue)">Badge</span>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Lism layout="cluster" g="10">
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+    </Lism>
+    <Lism layout="cluster" g="10" style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" hl="s" py="5" px="10" bdrs="99">Badge</Lism>
+    </Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+<PreviewTitle>Palette color list</PreviewTitle>
+<PreviewArea p="20" ov-y="auto" max-h="25rem">
+  <Lism util="cbox" keycolor="red" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="orange" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="yellow" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="green" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="blue" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="pink" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="gray" bd bdrs="20" bxsh="20" set="bxsh" p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <hr />
+  <Lism util="cbox" keycolor="red" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="orange" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="yellow" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="purple" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="green" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="blue" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="purple" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="pink" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+  <Lism util="cbox" keycolor="gray" bd-s bdc="keycolor" bdw="4px" bxsh="10" set="bxsh" p="20">
+    <Inline c="keycolor" fw="bold">
+      <Fragment>Title Text</Fragment>
+    </Inline>
+    <DummyText length="codes" />
+  </Lism>
+</PreviewArea>
+
+
+## `u--trim` & `u--trimAll`
+
+Classes for adjusting the half-leading spacing of text.
+
+`u--trim` adjusts only the element's own `margin-block`, while `u--trimAll` trims the block margins of all text-like direct children in one go.
+
+<Preview>
+  <PreviewTitle>`u--trim`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Box bd bds="dashed">
+      <DummyText util="trim" length="s" />
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "u--trim"
+    <div class="l--box -bd" style="--bds: dashed">
+      <p class="u--trim">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "u--trim"
+    <Box bd bds="dashed">
+      <Text util="trim">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</Text>
+    </Box>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="CSS">
+    <SrcCode path="src/scss/utility/_trim.scss" />
+  </PreviewCode>
+</Preview>
+
+
+`u--trimAll` applies margin adjustment to all direct children except the excluded elements (`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`). The `:empty` selector also excludes empty elements such as `img`, `hr`, `br`, and empty decorative `div`s (e.g. `a--divider`, `a--spacer`). To exclude other elements, add a rule like `.u--trimAll > xxx { margin-block: 0 }` on the consumer side.
+
+<Preview>
+  <PreviewTitle>`u--trimAll`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Stack util="trimAll" bd g="30" p="30" bdrs="10" max-sz="s">
+      <Media ar="og" src="https://cdn.lism-css.com/img/KRQPW50jXaLu.webp" alt="" inferSize />
+      <DummyText length="s" fw="bold" fz="l" />
+      <DummyText length="l" o="p" fz="s" />
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--stack u--trimAll -bd -g:30 -p:30 -bdrs:10">
+      <img class="-ar:og" src="https://cdn.lism-css.com/img/KRQPW50jXaLu.webp" />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Stack util="trimAll" bd g="30" p="30" bdrs="10">
+      <Media ar="og" src="https://cdn.lism-css.com/img/KRQPW50jXaLu.webp" alt="" inferSize />
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+      <p>
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut.
+      </p>
+    </Stack>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## `u--srOnly`
+
+Visually hides an element while keeping it accessible to screen readers.
+
+<SrcCode path="src/scss/utility/_srOnly.scss" />
+
+
+## `u--clipText`
+
+A class for clipping a background with text.
+
+<SrcCode path="src/scss/utility/_clipText.scss" />
+
+<Preview>
+  <PreviewTitle>Background clipped by text</PreviewTitle>
+  <PreviewArea p="20">
+    <Center>
+      <Box util="clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
+        <Text fz="5xl" fw="bold" hl="0" lts="l">TEXT</Text>
+      </Box>
+    </Center>
+  </PreviewArea>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Center>
+      <Box util="clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
+        <Text fz="5xl" fw="bold" hl="0" lts="l">
+          TEXT
+        </Text>
+      </Box>
+    </Center>
+    ```
+  </PreviewCode>
+  <PreviewCode label="HTML" slot="tab">
+    ```html
+    <div class="l--center">
+      <div class="l--box u--clipText -bgr:no-repeat" style="--bgi: linear-gradient(45deg, var(--blue), var(--pink))">
+        <p class="-fz:5xl -fw:bold -hl:0 -lts:l">TEXT</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+
+## Opt-in
+
+These utility classes are not included in the Lism CSS core stylesheet, but they are useful patterns you can add yourself.
+
+### `u--inlineCenter`
+
+A class for aligning emoji or inline icons to the vertical center of the text.
+Since `vertical-align: middle` alone can cause misalignment, `translate` compensates for it.
+
+
+<Preview css={`
+.u--inlineCenter {
+  vertical-align: middle;
+  translate: 0 calc(-1 * (0.35em - 0.5ex));
+}`}>
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p="20">
+    <p>
+      <Icon util="inlineCenter" icon={AlertIcon} c="red" fz="xl" /> Lorem ipsum dolor sit amet.
+    </p>
+    <p>
+      <Icon util="inlineCenter" as={Dog} fz="l" />
+      Dog, and <Icon util="inlineCenter" as={Cat} fz="l" />
+      Cat.
+    </p>
+    <p>
+      <span class="u--inlineCenter -fz:xl">🚀</span> Emoji.
+    </p>
+    <p>
+      <Icon fz="2xl" util="inlineCenter" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.
+    </p>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "u--inlineCenter"
+    import { Alert as AlertIcon } from '@lism-css/icons/react';
+
+    <p><Icon util="inlineCenter" icon={AlertIcon} c="red" fz="xl" /> Lorem ipsum dolor sit amet.</p>
+    <p><Icon util="inlineCenter" as={Dog} fz="l" />Dog, and <Icon util="inlineCenter" as={Cat} fz="l"/>Cat.</p>
+    <p><span class="u--inlineCenter -fz:xl">🚀</span> Emoji.</p>
+    <p><Icon fz="2xl" util="inlineCenter" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+    ```
+  </PreviewCode>
+
+  <PreviewCode slot="tab" label="**Additional CSS**">
+  ```css
+  .u--inlineCenter {
+    vertical-align: middle; /* Set baseline to middle */
+    translate: 0 calc(-1 * (0.35em - 0.5ex)); /* Fine-tune based on the middle calculation. (0.5cap - 0.5ex is ideal for Latin text.) */
+  }
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### `u--divide` / `u--enclose`
+
+`u--divide` draws dividing lines between the children of a grid or flexbox container, and `u--enclose` wraps each child in a frame so they look like table cells.
+
+Both draw their lines with `gap` and each child's `box-shadow`. Compared with `border`, the rendering is slightly rougher, and the lines can break in unexpected places when flex children wrap. For these reasons they are not part of the core. For dividers in layouts that switch direction, prefer [switching `bdw` at breakpoints](/en/docs/property-class/bd/#switching-the-border-side).
+
+If you do use them, add them to the same `@layer lism-utility` as the core utility classes.
+
+In the no-layer builds ([`main_no_layer.css` / `full_no_layer.css`](/en/docs/css-files/#disabling-layer)), the core utility classes are emitted outside `@layer` with doubled selectors (`.u--trim.u--trim`). So in those builds, remove the `@layer lism-utility { ... }` wrapper from the CSS below and replace `.u--divide` / `.u--enclose` with `.u--divide.u--divide` / `.u--enclose.u--enclose`.
+
+:::info
+- They are not `border`, so border-related properties such as `bds` (border-style) have no effect. Set the line width with the `--bdw` variable.
+- `u--divide` applies `overflow: clip`, so descendants meant to overflow the container, such as tooltips or dropdowns, will be unintentionally clipped.
+:::
+
+export const divideCss = `
+@layer lism-utility {
+  .u--divide,
+  .u--enclose {
+    --bdw: 1px;
+    --bdc: var(--divider);
+    gap: var(--bdw);
+  }
+  .u--divide > *,
+  .u--enclose > * {
+    box-shadow: 0 0 0 var(--bdw) var(--bdc);
+  }
+  .u--divide {
+    overflow: clip;
+  }
+  .u--enclose {
+    padding: var(--bdw);
+  }
+}`;
+
+<Preview css={divideCss}>
+  <PreviewTitle>Comparing `u--divide` and `u--enclose`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+    </AutoColumns>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+    </AutoColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "u--divide" "u--enclose"
+  <div class="l--autoColumns u--divide -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+  </div>
+  <div class="l--autoColumns u--enclose -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'util="divide"' 'util="enclose"'
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+    </AutoColumns>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+    </AutoColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="**Additional CSS**">
+  ```css
+  @layer lism-utility {
+    .u--divide,
+    .u--enclose {
+      --bdw: 1px;
+      --bdc: var(--divider);
+      gap: var(--bdw); /* Leave a gap as wide as the line */
+    }
+    .u--divide > *,
+    .u--enclose > * {
+      box-shadow: 0 0 0 var(--bdw) var(--bdc); /* Fill the gap with each child's shadow so it reads as a line */
+    }
+    /* Keep only the inner dividers (clip the outer shadows) */
+    .u--divide {
+      overflow: clip;
+    }
+    /* Frame every cell */
+    .u--enclose {
+      padding: var(--bdw);
+    }
+  }
+  ```
+  </PreviewCode>
+</Preview>
+
+Adding `bd` to `u--divide` produces a calendar-like layout where empty cells stay blank while the grid lines remain.
+
+<Preview css={divideCss}>
+  <PreviewTitle>With `bd`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--columns u--divide -cols_sm -bd -bdc:current -fz:s" style="--cols:4;--cols_sm:5">
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
+    ```
+  </PreviewCode>
+</Preview>

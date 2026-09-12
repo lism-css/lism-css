@@ -1,0 +1,62 @@
+---
+import { Frame, BoxLink, Lism } from 'lism-css/astro';
+
+/** サムネイル＋タイトルのカードリンク。patterns / layout-demos の一覧で共用 */
+interface Props {
+  href: string;
+  thumbSrc: string;
+  title: string;
+  draft?: boolean;
+  thumbRatio?: '16/9' | '3/2' | 'auto';
+  thumbFit?: 'cover' | 'contain';
+  [key: string]: unknown;
+}
+
+const { href, thumbSrc, title, draft = false, thumbRatio = '3/2', thumbFit = 'cover', ...props } = Astro.props as Props;
+---
+
+<BoxLink class={draft ? 'c--patternCard _draft' : 'c--patternCard'} layout="stack" href={href} g="15" set="hov" {...props}>
+  <Frame ar={thumbRatio} bg=":stripe" bd bdrs="10">
+    <Lism
+      as="img"
+      src={thumbSrc}
+      alt={title}
+      loading="lazy"
+      decoding="async"
+      class="c--patternCard_thumb"
+      w="calc(100% + 2px)"
+      max-sz="none"
+      h={thumbRatio === 'auto' ? 'auto' : 'calc(100% + 2px)'}
+      m="-1px"
+      style={{ objectFit: thumbFit, objectPosition: thumbFit === 'contain' ? 'center' : 'top' }}
+      data-fit={thumbFit}
+    />
+  </Frame>
+  <Lism class="u--trim -ff:mono -fz:2xs -c:text-2 -px:5" pb="10">
+    {title}
+  </Lism>
+</BoxLink>
+
+<style>
+  @layer lism-custom {
+    .c--patternCard > .l--frame {
+      /* --bdw: 2px; */
+      transition: box-shadow 0.2s;
+      box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--0));
+    }
+
+    .c--patternCard_thumb {
+      transition: transform 0.3s ease;
+    }
+
+    .c--patternCard:hover .c--patternCard_thumb[data-fit='cover'] {
+      transform: scale(1.02);
+    }
+
+    .-bg\:stripe {
+      background-color: var(--divider);
+      background-image: repeating-linear-gradient(50deg, color-mix(in srgb, var(--base-2), transparent 50%) 0 3px, transparent 3px 5px) !important;
+      background-position: center !important;
+    }
+  }
+</style>

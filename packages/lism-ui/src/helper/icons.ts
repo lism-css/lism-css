@@ -1,0 +1,17 @@
+// 自動生成: scripts/generate-icons.mjs（入力: lism-css/icons リポジトリの dist/data.js）
+export const alertIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.052,3.22c.141-.141.331-.22.53-.22h6.835c.199,0,.39.079.53.22l4.833,4.833c.141.141.22.331.22.53v6.835c0,.199-.079.39-.22.53l-4.833,4.833c-.141.141-.331.22-.53.22h-6.835c-.199,0-.39-.079-.53-.22l-4.833-4.833c-.141-.141-.22-.331-.22-.53v-6.835c0-.199.079-.39.22-.53l4.833-4.833Z"/><path d="M12,7v6.25"/><circle cx="12" cy="16.625" r=".375"/></svg>';
+export const warningIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.051,4.125c.402-.696,1.145-1.125,1.949-1.125s1.547.429,1.949,1.125l7.794,13.5c.402.696.402,1.554,0,2.25s-1.145,1.125-1.949,1.125H4.206c-.804,0-1.547-.429-1.949-1.125s-.402-1.554,0-2.25l7.794-13.5Z"/><path d="M12,7.75v6.25"/><circle cx="12" cy="17.375" r=".375"/></svg>';
+export const checkCircleIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.25,12l2.636,2.636c.141.141.331.22.53.22s.39-.079.53-.22l5.803-5.803"/></svg>';
+export const questionIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5,9.5c0-1.381,1.119-2.5,2.5-2.5s2.5,1.119,2.5,2.5c0,1.158-.796,2.165-1.923,2.433-.338.08-.577.382-.577.73v.588"/><circle cx="12" cy="16.625" r=".375"/></svg>';
+export const infoIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5,16.25h5"/><circle cx="12" cy="12" r="10"/><circle cx="11.875" cy="7.375" r=".375"/><path d="M10.125,10.681h1.125c.414,0,.75.336.75.75v4.819"/></svg>';
+export const noteIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25,3h-6c-1.243,0-2.25,1.007-2.25,2.25v13.5c0,1.243,1.007,2.25,2.25,2.25h13.5c1.243,0,2.25-1.007,2.25-2.25v-6"/><path d="M9.353,15.529c-.246.049-.5-.028-.677-.205s-.254-.432-.205-.677l.485-2.424c.029-.145.1-.279.205-.383L17.47,3.53c.141-.141.331-.22.53-.22s.39.079.53.22l1.939,1.939c.293.293.293.768,0,1.061l-8.309,8.309c-.105.105-.238.176-.383.205l-2.424.485Z"/><path d="M15.75,5.25l3,3"/></svg>';
+export const lightbulbIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.505,13.75c-1.82-3.152-1.114-7.156,1.674-9.495s6.854-2.34,9.642,0c2.788,2.34,3.494,6.343,1.674,9.495-1.75,3.031-2.745,3.25-2.745,4.75h-7.5c0-1.5-.995-1.719-2.745-4.75Z"/><path d="M9,21.5h6"/><path d="M12.544,5.92c1.725.462,3.073,1.81,3.536,3.536"/></svg>';
+export const xIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.929,4.929l14.142,14.142"/><path d="M19.071,4.929l-14.142,14.142"/></svg>';

@@ -1,0 +1,72 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Columns, Container, Frame, Heading, Media, Stack, Text, WithSide } from 'lism-css/astro';
+
+const features = [
+  {
+    image: 'http://cdn.lism-css.com/img/graphics/GGdr02TFE30n.webp',
+    title: 'Keep tasks organized',
+    description: 'Assign owners and due dates, then use boards and lists to see what needs to happen next.',
+  },
+  {
+    image: 'http://cdn.lism-css.com/img/graphics/LgC2ipzXSWy8.webp',
+    title: 'See project progress',
+    description: 'See completed tasks and remaining work at a glance. Adjust your plans as your team moves forward.',
+  },
+  {
+    image: 'http://cdn.lism-css.com/img/graphics/4nR8oc9E5L3f.webp',
+    title: 'Keep everyone in sync',
+    description: 'Bring documents and daily updates together. Share the context your team needs to stay on the same page.',
+  },
+  {
+    image: 'http://cdn.lism-css.com/img/graphics/DNqeX8I1NYnS.webp',
+    title: 'Plan your days ahead',
+    description: 'Bring deadlines and sprint schedules into one calendar. See what is coming and keep workloads manageable.',
+  },
+  {
+    image: 'http://cdn.lism-css.com/img/graphics/fGFiCx3tRJb1.webp',
+    title: 'Give every file a home',
+    description: 'Organize documents and designs by project. Find the files you need without searching across tools.',
+  },
+  {
+    image: 'http://cdn.lism-css.com/img/graphics/5oERD2W67GKO.webp',
+    title: 'Automate routine work',
+    description: 'Automate recurring tasks and notifications. Spend less time on small chores and more on work that matters.',
+  },
+];
+---
+
+<DemoLayout title="03 - Six features with illustrations">
+  <Container as="section" isWrapper="xl" hasGutter bgc="base-2" lang="en">
+    <Stack py={['50', null, '60']} g={['40', null, '50']}>
+      <Stack class="u--trim" g="20" max-sz="s" mx="auto" ta="center">
+        <Text fz="s" c="text:green:50%" o="p" fw="bold" lts="l" tt="uppercase">Features</Text>
+        <Heading fz={['2xl', '3xl', '4xl']} lh="xs">See what to do next<br />at a glance</Heading>
+        <Text fz="s" c="text-2" o="p" max-sz="xs" mx="auto"
+          >Your team’s tasks and status, all in one place. DevFlow keeps everyday project management simple and organized.</Text
+        >
+      </Stack>
+
+      <Columns isContainer cols={[1, null, 2, 3]} g="15">
+        {
+          features.map((feature) => (
+            <WithSide as="article" mainW="12rem" sideW="max(120px, 32%)" ai="center" cg="4%" rg="30" p={['30', '35']} bgc="base" bdrs="20" bxsh="10">
+              <Stack g="20">
+                <Heading level="3" fz="l">
+                  {feature.title}
+                </Heading>
+                <Text c="text-2" fz="s">
+                  {feature.description}
+                </Text>
+              </Stack>
+              <Frame isSide ar="1/1" bdrs="30">
+                <Media src={feature.image} alt="" width="1254" height="1254" loading="lazy" />
+              </Frame>
+            </WithSide>
+          ))
+        }
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>

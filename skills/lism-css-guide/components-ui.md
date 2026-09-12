@@ -72,13 +72,14 @@ import { Button } from '@lism-css/ui/astro/Button';
 ソース: [Alert/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert)
 
 短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。`b--alert` クラスが付与される。
+既定アイコンは`@lism-css/ui`に同梱され、利用側でのアイコンimportは不要です。カスタムアイコンの指定方法は[Icon](./primitives/a--icon.md)を参照してください。
 プリセット: `alert`=alert/red, `point`=lightbulb/orange（`tip`も同じ）, `warning`=warning/yellow, `check`=check-circle/green, `help`=question/purple, `info`=info/blue, `note`=note/gray。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
 | `type` | `'alert' \| 'point' \| 'tip' \| 'warning' \| 'check' \| 'help' \| 'info' \| 'note'` | `'alert'` | アラートタイプ。keycolor と icon の組み合わせプリセット |
 | `keycolor` | `string` | — | キーカラー |
-| `icon` | `ReactNode \| string` | — | カスタムアイコン |
+| `icon` | `Icon`の`icon`と同じ | — | カスタムアイコン。コンポーネント・SVG文字列・`{as, ...exProps}` |
 | `layout` | `'flex' \| 'withSide'` | `'flex'` | レイアウトプリミティブ |
 | `flow` | `string` | `'s'` | コンテンツを囲む要素のフロー余白 |
 
@@ -150,7 +151,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 | --- | --- | --- | --- |
 | `type` | `'alert' \| 'point' \| 'tip' \| 'warning' \| 'check' \| 'help' \| 'info' \| 'note'` | `'note'` | コールアウトタイプ |
 | `keycolor` | `string` | — | キーカラー |
-| `icon` | `ReactNode \| string` | — | カスタムアイコン |
+| `icon` | `Icon`の`icon`と同じ | — | カスタムアイコン。コンポーネント・SVG文字列・`{as, ...exProps}` |
 | `title` | `string` | — | タイトルテキスト |
 | `flow` | `string` | `'s'` | コンテンツ部分のフロー余白 |
 
@@ -255,7 +256,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `side` | Popup | `'top' \| 'bottom' \| 'start' \| 'end'` | `'bottom'` | 表示位置。`data-side` として出力。`start`/`end` は横方向で、書字方向に追従する inline 軸の論理方向（LTR では `start`=左）。viewport 端で自動反転 |
 | `align` | Popup | `'start' \| 'center' \| 'end'` | `'center'` | トリガーに対する揃え。`data-align` として出力。`side` が `top`/`bottom` のとき書字方向、横方向のとき `start`=上・`end`=下 |
 | `type` | Popup | `'auto' \| 'manual'` | `'auto'` | `popover` 属性の値。`manual` は light dismiss と Esc が無効になるので `Close` を必ず置く |
-| `icon` / `srText` | Close | `string` | `'x'` / `'Close'` | 子要素が無いときのアイコンとスクリーンリーダー向けテキスト |
+| `icon` | Close | `Icon`の`icon`と同じ | 閉じるアイコンのSVG | 子要素が無いときのアイコン |
+| `srText` | Close | `string` | `'Close'` | スクリーンリーダー向けテキスト |
 
 - CSS 変数（`--popover-offset`・`--popover-duration`）は Root（`.b--popover`）で受け取る。Root かその祖先に指定する。Popup に書いても効かない。
 - Trigger / Close は `button` 要素でなければ `popovertarget` が効かない。

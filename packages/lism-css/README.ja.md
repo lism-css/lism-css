@@ -30,7 +30,7 @@ React / Astro向けのコンポーネントも提供しており、propsを通�
 ### CDN（ビルド不要）
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.28.2/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.29.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm
@@ -241,10 +241,6 @@ claude mcp add lism-css -- npx -y @lism-css/mcp
 ## コミュニティ
 
 フィードバックや質問は、[Lism CSS Discordサーバー](https://discord.gg/6PMcFHvc4h)までお気軽にどうぞ。
-
-## クレジット
-
-- [Phosphor Icons](https://phosphoricons.com/) — MIT License ([source](https://github.com/phosphor-icons))
 
 ## ライセンス
 
