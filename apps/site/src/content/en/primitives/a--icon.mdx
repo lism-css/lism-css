@@ -5,8 +5,7 @@ description: 'a--icon is a class for displaying icon elements.'
 ---
 
 import { Home, Info, Lightbulb, Warning } from '@lism-css/icons/astro';
-import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
-import { Cat, SmileyIcon } from "@phosphor-icons/react";
+import { Flex, Cluster, Icon } from 'lism-css/astro';
 
 
 `a--icon` is a class for displaying icon elements.
@@ -51,96 +50,11 @@ svg.a--icon[aria-label="..."][role="img"]
 ## Usage
 
 
-### Using an external package
-
-Use the standard Lism component props `as` and `exProps`.
-
-This lets you render icons from third-party packages like `react-icons` and `@phosphor-icons/react` through `<Icon>`.
-
-:::warning
-Note that when using a React-based icon package in Astro, you need to enable React separately on the Astro side.
-:::
-
-<Spacer h="10"/>
-
-<Preview>
-  <PreviewTitle>Specifying an external component via `as`</PreviewTitle>
-  <PreviewArea p="20">
-    <Icon as={SmileyIcon} size="2em" />
-    {/* <Icon as={Home} size="2em" /> */}
-  </PreviewArea>
-  <PreviewCode>
-```jsx "as={SmileyIcon}"
-import { SmileyIcon } from '@phosphor-icons/react';
-import { Icon } from 'lism-css/react';
-
-<Icon as={SmileyIcon} size="2em" />
-```
-  </PreviewCode>
-</Preview>
-
-
-To pass props specific to the external component (such as `SmileyIcon`), use `exProps`.
-
-<Preview>
-  <PreviewTitle>Specifying props for `SmileyIcon`</PreviewTitle>
-  <PreviewArea p="20">
-    <Icon as={SmileyIcon} exProps={{ weight: 'fill', size: '3em' }} c="blue" />
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx "as=" "exProps="
-    <Icon as={SmileyIcon} exProps={{ weight: 'fill', size: '3em' }} c="blue" />
-    ```
-  </PreviewCode>
-</Preview>
-
-
-#### Combining `as` and `exProps` into `icon`
-
-:::info
-In `<Icon>`, you can also pass `as` and `exProps` together in the following format:
-
-```jsx
-<Icon icon={{as:Component, exProps1, exProps2, ...}} />
-```
-:::
-
-
-<Preview>
-  <PreviewTitle>Example of specifying `as` and `exProps` together via `icon`</PreviewTitle>
-  <PreviewArea p="20">
-    <Icon icon={{ as: SmileyIcon, weight: 'fill', size: '3em' }} c="blue" />
-  </PreviewArea>
-    <PreviewCode slot="tab" label="Combined">
-    ```jsx "weight:'fill', size:'3em'" "as:SmileyIcon"
-    <Icon icon={{ as: SmileyIcon, weight: 'fill', size: '3em' }} c="blue" />
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="Separate">
-    ```jsx "as=" "exProps="
-    <Icon as={SmileyIcon} exProps={{ weight: 'fill', size: '3em' }} c="blue" />
-    ```
-  </PreviewCode>
-
-</Preview>
-
-{/* ※ `weight="thin"` is a property available on the `@phosphor-icons` side. */}
-
-{/* <Preview>
-  <PreviewTitle>Passing an icon as `children`</PreviewTitle>
-  <PreviewArea p="20">
-    <Cat className="a--icon" weight="thin" size="3em" />
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Cat className="a--icon" weight="thin" size="3em" />
-    ```
-  </PreviewCode>
-</Preview> */}
-
 ### Using `@lism-css/icons`
 
-`lism-css` does not include icon SVG data. Install `@lism-css/icons` and pass the components you need to `icon`.
+`@lism-css/icons` is a collection of SVG icons for React and Astro from the creators of Lism CSS. Since `lism-css` itself does not include icon SVG data, install the package separately and pass the components you need to `icon`.
+
+See the [`@lism-css/icons` page](/en/docs/packages/icons/) for installation instructions and the [icon list](/en/docs/packages/icons/#icon-list).
 
 Import from `@lism-css/icons/react` for React or `@lism-css/icons/astro` for Astro.
 
@@ -152,9 +66,23 @@ Import from `@lism-css/icons/react` for React or `@lism-css/icons/astro` for Ast
       <Icon icon={Warning} fz="2xl" c="blue" />
     </Cluster>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="React">
     ```jsx
+    import { Cluster, Icon } from 'lism-css/react';
     import { Lightbulb, Warning } from '@lism-css/icons/react';
+
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Astro">
+    ```astro
+    ---
+    import { Cluster, Icon } from 'lism-css/astro';
+    import { Lightbulb, Warning } from '@lism-css/icons/astro';
+    ---
 
     <Cluster g="15">
       <Icon icon={Lightbulb} size="40px" />
@@ -191,9 +119,76 @@ Stroke icons in `@lism-css/icons` use a 24-unit grid. Use `weight` to change the
   </PreviewCode>
 </Preview>
 
-An explicit `strokeWidth` (or `stroke-width` in Astro) overrides `weight`. You can also pass `weight` to external stroke icons. When omitted, the external icon retains its own stroke width. Pass a package-specific `weight` through `exProps` or the `icon` object as shown above.
+An explicit `strokeWidth` (or `stroke-width` in Astro) overrides `weight`. You can also pass `weight` to external stroke icons. When omitted, the external icon retains its own stroke width. Pass a package-specific `weight` through `exProps` or the `icon` object as shown below.
 
 `@lism-css/icons` also provides fill icons and icons that combine fills and strokes.
+
+
+### Using `as` and `exProps`
+
+You can also use the standard Lism component prop `as` instead of `icon={Home}`.
+
+<Preview>
+  <PreviewTitle>Specifying an icon component via `as`</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} size="2em" />
+  </PreviewArea>
+  <PreviewCode>
+```jsx "as={Home}"
+import { Home } from '@lism-css/icons/react';
+import { Icon } from 'lism-css/react';
+
+<Icon as={Home} size="2em" />
+```
+  </PreviewCode>
+</Preview>
+
+
+Use `exProps` to group props passed to the imported icon component. The following example sets its stroke width and size.
+
+<Preview>
+  <PreviewTitle>Specifying props for `Home`</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+</Preview>
+
+
+#### Combining `as` and `exProps` into `icon`
+
+:::info
+In `<Icon>`, you can also pass `as` and `exProps` together in the following format:
+
+```jsx
+<Icon icon={{as:Component, exProps1, exProps2, ...}} />
+```
+:::
+
+
+<Preview>
+  <PreviewTitle>Example of specifying `as` and `exProps` together via `icon`</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+    <PreviewCode slot="tab" label="Combined">
+    ```jsx "strokeWidth:2, size:'3em'" "as:Home"
+    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Separate">
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+
+</Preview>
+
+You can use icons from third-party packages such as `react-icons` and `@phosphor-icons/react` through `icon` or `as` in the same way. To use React icons in Astro, enable the React integration in Astro.
 
 
 ### Passing an SVG string

@@ -5,8 +5,7 @@ description: 'a--icon は、アイコン要素を表示するためのクラス�
 ---
 
 import { Home, Info, Lightbulb, Warning } from '@lism-css/icons/astro';
-import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
-import { Cat, SmileyIcon } from "@phosphor-icons/react";
+import { Flex, Cluster, Icon } from 'lism-css/astro';
 
 
 `a--icon`は、アイコン要素を表示するためのクラスです。
@@ -51,95 +50,11 @@ svg.a--icon[aria-label="..."][role="img"]
 ## Usage
 
 
-### 外部のパッケージを利用する方法
-
-Lismコンポーネントの共通プロパティ、`as`&`exProps`を使用します。
-
-これにより、`react-icons`,`@phosphor-icons/react`などのサードパーティパッケージを`<Icon>`を通して展開することができます。
-
-:::warning
-AstroでReact製のアイコンパッケージを利用する場合は、別途Astro側でReactを有効化する必要があることに注意してください。
-:::
-
-<Spacer h="10"/>
-
-<Preview>
-  <PreviewTitle>外部コンポーネントを`as`に指定する</PreviewTitle>
-  <PreviewArea p="20">
-    <Icon as={SmileyIcon} size="2em" />
-    {/* <Icon as={Home} size="2em" /> */}
-  </PreviewArea>
-  <PreviewCode>
-```jsx "as={SmileyIcon}"
-import { SmileyIcon } from '@phosphor-icons/react';
-import { Icon } from 'lism-css/react';
-
-<Icon as={SmileyIcon} size="2em" />
-```
-  </PreviewCode>
-</Preview>
-
-
-この時、外部コンポーネントである`SmileyIcon`で使えるプロパティを明示的に外部用のプロパティとして指定する場合は、`exProps`を利用します。
-
-<Preview>
-  <PreviewTitle>`SmileyIcon`用のプロパティを指定する</PreviewTitle>
-  <PreviewArea p="20">
-    <Icon as={SmileyIcon} exProps={{ weight: 'fill', size: '3em' }} c="blue" />
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx "as=" "exProps="
-    <Icon as={SmileyIcon} exProps={{ weight: 'fill', size: '3em' }} c="blue" />
-    ```
-  </PreviewCode>
-</Preview>
-
-### as, exProps を icon にまとめて指定する方法
-
-:::info
-`<Icon>`では、以下のような形式で`as`, `exProps`を一括指定することもできます。
-
-```jsx
-<Icon icon={{as:Component, exProps1, exProps2, ...}} />
-```
-:::
-
-
-<Preview>
-  <PreviewTitle>`icon`に`as`, `exProps`を一括指定する例</PreviewTitle>
-  <PreviewArea p="20">
-    <Icon icon={{ as: SmileyIcon, weight: 'fill', size: '3em' }} c="blue" />
-  </PreviewArea>
-    <PreviewCode slot="tab" label="一括">
-    ```jsx "weight:'fill', size:'3em'" "as:SmileyIcon"
-    <Icon icon={{as:SmileyIcon, weight:'fill', size:'3em'}} c="blue" />
-    ``` 
-  </PreviewCode>
-  <PreviewCode slot="tab" label="分割">
-    ```jsx "as=" "exProps="
-    <Icon as={SmileyIcon} exProps={{weight:'fill', size:'3em'}} c="blue" />
-    ``` 
-  </PreviewCode>
-
-</Preview>
-
-{/* ※ `weight="thin"`は、`@phosphor-icons`側で利用できるプロパティです。 */}
-
-{/* <Preview>
-  <PreviewTitle>アイコンを`children`に渡す</PreviewTitle>
-  <PreviewArea p="20">
-    <Cat className="a--icon" weight="thin" size="3em" />
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Cat className="a--icon" weight="thin" size="3em" />
-    ```
-  </PreviewCode>
-</Preview> */}
-
 ### `@lism-css/icons`を利用する方法
 
-`lism-css`はアイコンのSVGデータを内包しません。`@lism-css/icons`をインストールし、必要なコンポーネントを`icon`に渡します。
+`@lism-css/icons`は、Lism CSSと同じ開発元が提供する、React・Astro向けのSVGアイコン集です。`lism-css`本体にはアイコンのSVGデータを含まないため、別途インストールして必要なコンポーネントを`icon`に渡します。
+
+インストール方法と[収録アイコン一覧](/docs/packages/icons/#収録アイコン一覧)は、[`@lism-css/icons`の解説ページ](/docs/packages/icons/)をご覧ください。
 
 Reactでは`@lism-css/icons/react`、Astroでは`@lism-css/icons/astro`からimportします。
 
@@ -151,9 +66,23 @@ Reactでは`@lism-css/icons/react`、Astroでは`@lism-css/icons/astro`からimp
       <Icon icon={Warning} fz="2xl" c="blue" />
     </Cluster>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="React">
     ```jsx
+    import { Cluster, Icon } from 'lism-css/react';
     import { Lightbulb, Warning } from '@lism-css/icons/react';
+
+    <Cluster g="15">
+      <Icon icon={Lightbulb} size="40px" />
+      <Icon icon={Warning} fz="2xl" c="blue" />
+    </Cluster>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Astro">
+    ```astro
+    ---
+    import { Cluster, Icon } from 'lism-css/astro';
+    import { Lightbulb, Warning } from '@lism-css/icons/astro';
+    ---
 
     <Cluster g="15">
       <Icon icon={Lightbulb} size="40px" />
@@ -190,9 +119,75 @@ Reactでは`@lism-css/icons/react`、Astroでは`@lism-css/icons/astro`からimp
   </PreviewCode>
 </Preview>
 
-`strokeWidth`（Astroでは`stroke-width`も可）を指定すると、`weight`より優先します。外部の線アイコンにも`weight`を渡せます。指定しなければ、外部アイコン自身の線幅を維持します。外部パッケージ独自の`weight`は、前述の`exProps`または`icon`オブジェクトで指定してください。
+`strokeWidth`（Astroでは`stroke-width`も可）を指定すると、`weight`より優先します。外部の線アイコンにも`weight`を渡せます。指定しなければ、外部アイコン自身の線幅を維持します。外部パッケージ独自の`weight`は、後述の`exProps`または`icon`オブジェクトで指定してください。
 
 `@lism-css/icons`には線アイコンのほか、塗りアイコンや塗りと線を組み合わせたアイコンもあります。
+
+
+### `as`・`exProps`で指定する方法
+
+`icon={Home}`の代わりに、Lismコンポーネントの共通プロパティ`as`でも指定できます。
+
+<Preview>
+  <PreviewTitle>アイコンコンポーネントを`as`に指定する</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} size="2em" />
+  </PreviewArea>
+  <PreviewCode>
+```jsx "as={Home}"
+import { Home } from '@lism-css/icons/react';
+import { Icon } from 'lism-css/react';
+
+<Icon as={Home} size="2em" />
+```
+  </PreviewCode>
+</Preview>
+
+
+`exProps`には、読み込んだアイコンコンポーネントへ渡すプロパティをまとめて指定できます。次の例では、線幅とサイズを指定しています。
+
+<Preview>
+  <PreviewTitle>`Home`用のプロパティを指定する</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{ strokeWidth: 2, size: '3em' }} c="blue" />
+    ```
+  </PreviewCode>
+</Preview>
+
+#### `as`・`exProps`を`icon`にまとめて指定する方法
+
+:::info
+`<Icon>`では、以下のような形式で`as`, `exProps`を一括指定することもできます。
+
+```jsx
+<Icon icon={{as:Component, exProps1, exProps2, ...}} />
+```
+:::
+
+
+<Preview>
+  <PreviewTitle>`icon`に`as`, `exProps`を一括指定する例</PreviewTitle>
+  <PreviewArea p="20">
+    <Icon icon={{ as: Home, strokeWidth: 2, size: '3em' }} c="blue" />
+  </PreviewArea>
+    <PreviewCode slot="tab" label="一括">
+    ```jsx "strokeWidth:2, size:'3em'" "as:Home"
+    <Icon icon={{as:Home, strokeWidth:2, size:'3em'}} c="blue" />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="分割">
+    ```jsx "as=" "exProps="
+    <Icon as={Home} exProps={{strokeWidth:2, size:'3em'}} c="blue" />
+    ```
+  </PreviewCode>
+
+</Preview>
+
+`react-icons`や`@phosphor-icons/react`などのサードパーティ製アイコンも、同じように`icon`や`as`で指定できます。AstroでReact製のアイコンを使う場合は、Astro側でReactインテグレーションを有効にしてください。
 
 
 ### SVG文字列を渡す方法
