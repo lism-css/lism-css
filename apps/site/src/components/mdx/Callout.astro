@@ -1,12 +1,18 @@
 ---
 import { Flow, Center, Icon } from 'lism-css/astro';
+import { Lightbulb } from '@lism-css/icons/astro';
 
-const PRESETS = {
+type Preset = {
+  color: string;
+  icon?: typeof Lightbulb;
+  viewBox?: string;
+  path?: string;
+};
+
+const PRESETS: Record<string, Preset> = {
   point: {
+    icon: Lightbulb,
     color: 'orange',
-
-    viewBox: '0 0 256 256',
-    path: 'M180,232a12,12,0,0,1-12,12H88a12,12,0,0,1,0-24h80A12,12,0,0,1,180,232Zm40-128a91.51,91.51,0,0,1-35.17,72.35A12.26,12.26,0,0,0,180,186v2a20,20,0,0,1-20,20H96a20,20,0,0,1-20-20v-2a12,12,0,0,0-4.7-9.51A91.57,91.57,0,0,1,36,104.52C35.73,54.69,76,13.2,125.79,12A92,92,0,0,1,220,104Zm-24,0a68,68,0,0,0-69.65-68C89.56,36.88,59.8,67.55,60,104.38a67.71,67.71,0,0,0,26.1,53.19A35.87,35.87,0,0,1,100,184h56.1A36.13,36.13,0,0,1,170,157.49,67.68,67.68,0,0,0,196,104Zm-20.07-5.32a48.5,48.5,0,0,0-31.91-40,12,12,0,0,0-8,22.62,24.31,24.31,0,0,1,16.09,20,12,12,0,0,0,23.86-2.64Z',
   },
   alert: {
     color: 'red',
@@ -50,7 +56,7 @@ const _color = keycolor || presetData?.color || 'currentColor';
 
 <Flow class="c--docsNote u--cbox" pos="relative" ov="clip" flow="s" set="bxsh" bxsh="10" keycolor={_color} ai="center" my="40" bd {...props}>
   <Center class="c--docsNote_icon" isSkipFlow hl="0" pos="absolute" i="0">
-    <Icon viewBox={presetData?.viewBox} style={{ scale: '1' }}>
+    <Icon icon={presetData?.icon} viewBox={presetData?.viewBox} style={{ scale: '1' }}>
       {presetData?.path && <path d={presetData?.path} />}
     </Icon>
   </Center>

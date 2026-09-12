@@ -76,9 +76,9 @@
       "weight",
       "塗りアイコン",
       "aria-label",
-      "Phosphor Icons"
+      "オリジナル"
     ],
-    "snippet": "@lism-css/iconsはReact・Astro向けの全47種類のSVGアイコン集で、Lism CSSを導入していないプロジェクトでも利用可能。/react・/astroから読み込み、大きさの既定は1em、色は周囲の文字色を継承し、線アイコンの線幅はstrokeWidth・stroke-widthで変更できる。Lism CSSのIconへ渡すとLism Propsやweightを使え、意味を持つアイコンにはaria-labelを指定する。"
+    "snippet": "@lism-css/iconsはLism CSS用に設計されたReact・Astro向けのオリジナルSVGアイコン集で、Lism CSSを導入していないプロジェクトでも利用可能。/react・/astroから読み込み、大きさの既定は1em、色は周囲の文字色を継承し、線アイコンの線幅はstrokeWidth・stroke-widthで変更できる。Lism CSSのIconへ渡すとLism Propsやweightを使え、意味を持つアイコンにはaria-labelを指定する。"
   },
   {
     "sourcePath": "css-methodology.mdx",
@@ -1271,14 +1271,29 @@
       "専用Props",
       "Usage",
       "外部のパッケージを利用する方法",
-      "as, exProps のを icon にまとめて指定する",
-      "プリセットアイコンを呼び出す方法",
+      "as, exProps を icon にまとめて指定する方法",
+      "`@lism-css/icons`を利用する方法",
       "線の太さを変える",
+      "SVG文字列を渡す方法",
       "svgを直接記述する方法",
       "src でimgを指定する方法"
     ],
-    "keywords": ["Icon", "アイコン", "SVG", "a--icon", "phosphor-icons", "weight", "strokeWidth"],
-    "snippet": "線描画のプリセットを内蔵するアイコン。weightとstrokeWidthで線幅を指定。外部コンポーネント、SVG直接記述、img指定にも対応。"
+    "keywords": [
+      "Icon",
+      "アイコン",
+      "SVG",
+      "a--icon",
+      "phosphor-icons",
+      "weight",
+      "strokeWidth",
+      "@lism-css/icons",
+      "SVG文字列",
+      "stroke-width",
+      "線幅",
+      "viewBox",
+      "aria-label"
+    ],
+    "snippet": "アイコンコンポーネント・SVG文字列・SVG子要素・imgを描画し、labelに応じてアクセシビリティ属性を付与するIcon。lism-cssはSVGデータを内包せず、@lism-css/icons/react・@lism-css/icons/astroなどから読み込んだコンポーネントをiconに渡す。weightとstrokeWidthで線幅を指定できる。"
   },
   {
     "sourcePath": "primitives/a--divider.mdx",
@@ -1419,7 +1434,7 @@
   {
     "sourcePath": "ui/Alert.mdx",
     "title": "Alert",
-    "description": "@lism-css/ui で提供する Alert コンポーネントについて解説します。",
+    "description": "短いメッセージを目立たせて表示するUIコンポーネントです。",
     "category": "ui",
     "headings": [
       "Overview",
@@ -1435,12 +1450,12 @@
       "Without @lism-css/ui"
     ],
     "keywords": ["Alert", "アラート", "注意", "notice", "warning", "info", "お知らせ", "通知", "type", "keycolor", "icon", "withSide", "layout"],
-    "snippet": "短めの文言を目立たせて強調表示したい時に使えるコンポーネント。type prop（alert/point/warning/check/info/help/note/tip）でアイコンとキーカラーをまとめて設定。layout=\"withSide\" でコンテナ幅が狭い時に縦並び対応。@lism-css/uiパッケージで提供。"
+    "snippet": "短めの文言を強調表示し、type prop（alert/point/warning/check/info/help/note/tip）でアイコンとキーカラーをまとめて設定するコンポーネント。既定アイコンは@lism-css/uiに同梱され、iconでアイコンコンポーネントやSVG文字列へ変更可能。layout=\"withSide\"でコンテナ幅が狭い時に縦並び対応。"
   },
   {
     "sourcePath": "ui/Callout.mdx",
     "title": "Callout",
-    "description": "@lism-css/ui で提供する Callout コンポーネントについて解説します。",
+    "description": "記事内の重要なポイントを強調表示するUIコンポーネントです。",
     "category": "ui",
     "headings": [
       "Overview",
@@ -1455,7 +1470,7 @@
       "Without @lism-css/ui"
     ],
     "keywords": ["Callout", "コールアウト", "補足", "note", "注意書き", "強調ボックス", "highlight", "type", "keycolor", "icon", "title"],
-    "snippet": "記事の中で重要なポイントを示すためのコンポーネント。type prop（info/alert/warning/point/check/help/note/tip）でアイコンとキーカラーをまとめて設定。title でタイトルテキストを表示。@lism-css/uiパッケージで提供。"
+    "snippet": "記事中の重要ポイントを示し、type prop（info/alert/warning/point/check/help/note/tip）でアイコンとキーカラーをまとめて設定するコンポーネント。既定アイコンは@lism-css/uiに同梱され、iconでアイコンコンポーネントやSVG文字列へ変更可能。titleでタイトルテキストを表示し、titleの指定がある時のみアイコンも表示する。"
   },
   {
     "sourcePath": "ui/Button.mdx",
