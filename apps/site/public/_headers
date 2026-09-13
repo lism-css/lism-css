@@ -1,0 +1,20 @@
+# Cloudflare Workers 静的アセットのレスポンスヘッダー
+
+# OG 画像のキャッシュ。1 パターンに splat（*）は 1 つまでのため、出力ディレクトリごとに書く
+/docs/og/*
+  Cache-Control: public, s-maxage=31536000, max-age=86400, must-revalidate
+/ui/og/*
+  Cache-Control: public, s-maxage=31536000, max-age=86400, must-revalidate
+/en/docs/og/*
+  Cache-Control: public, s-maxage=31536000, max-age=86400, must-revalidate
+/en/ui/og/*
+  Cache-Control: public, s-maxage=31536000, max-age=86400, must-revalidate
+
+# .md は LLM 向けの配信物なので検索結果に出さない
+# Content-Type はここに書かない（パスパターン式のため存在しない .md の 404 にも付いてしまう。#506）
+/*.md
+  X-Robots-Tag: noindex
+
+# workers.dev ホスト（プレビュー URL 含む）は本番と重複するため全ページ noindex にする。カスタムドメインには影響しない
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex
