@@ -200,7 +200,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [ ] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-site.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）（2026-09-14: 初回は25/30。失敗5件はすべて`.md`のcharset不足。フォールバックWorker反映後に再実施する）
 - [ ] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-site.<サブドメイン>.workers.dev`）が発行されることを確認
 - [ ] プレビューURLで**HTMLと`.md`の両方**に`X-Robots-Tag: noindex`が付くことを確認（`_headers`のworkers.devホスト付きルールによる。フォールバックWorker導入時の`.md`はWorker側の付与で担保される）
-- [ ] 初回ビルドの所要時間を確認（`.cache/og/`が永続化されない可能性が高いため。許容範囲かを判断）
+- [x] 初回ビルドの所要時間を確認（`.cache/og/`が永続化されない可能性が高いため。許容範囲かを判断）（2026-09-14: 合計約9分。内訳はインストール13秒・ビルド8分20秒・デプロイ30秒。OG画像キャッシュ無しでも許容範囲と判断）
 
 ### Phase 4: DNSゾーンをCloudflareへ移管（配信元は変えない・ダッシュボード作業）
 
