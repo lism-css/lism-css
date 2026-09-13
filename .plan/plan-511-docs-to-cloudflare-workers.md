@@ -60,7 +60,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [x] www の扱い：Vercelのドメイン設定でapexへ307リダイレクト
 - [x] 他のVercelプロジェクトによる`lism-css.com`サブドメインの利用：無し（接続プロジェクトは`lism-css-docs`のみ）
 - [x] 現行DNSレコードの記録（digとVercel管理画面の全件）：「背景・前提」参照。DKIM等の追加レコードは無し
-- [ ] Vercel管理画面の残りの棚卸し：環境変数の有無 / Node.jsバージョン / Git連携の本番ブランチとプレビューの挙動
+- [x] Vercel管理画面の残りの棚卸し：環境変数の有無 / Node.jsバージョン / Git連携の本番ブランチとプレビューの挙動（2026-09-14: Vercel CLIで確認。環境変数なし・Node.js 22.x・Root Directory `apps/site`。Git連携の本番ブランチとプレビュー挙動は未確認だがCloudflare側の設定には影響しない）
 - [x] Google管理コンソールでの`lism-css.com`の状態：Google Workspaceのセカンダリドメインとして登録済み・Gmail有効。受信箱にはテストメールしか無く実質未使用だが、用途不明のため「使っている」扱いでMXをコピーする
 - [ ] Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作であり、DNSレコードが後者にひもづくことを管理画面で確認する（Phase 7の手順とロールバックの前提）
 
@@ -296,7 +296,7 @@ Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更
 
 ## 未決事項・要確認・事前準備
 
-- Vercel管理画面の環境変数 / Node.jsバージョン / プレビューの挙動（未確認）
+- 解決済み: Vercelの環境変数は無し、Node.jsは22.x（Phase 0で確認）
 - `lism-css.com`のメール利用有無（Google管理コンソールで確認。不明ならMXをコピーする）
 - Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作でDNSゾーンが後者にひもづくこと（管理画面で確認）
 - 解決済み: Cloudflareが`.md`に付けるデフォルトContent-TypeはPhase 2で`text/markdown; charset=utf-8`を実測。フォールバックWorkerは不要
