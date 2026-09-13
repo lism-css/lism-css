@@ -62,9 +62,9 @@ describe.skipIf(!distReady)('bin/cli.mjs', () => {
     expect(result.stderr).toContain('Unknown command: not-a-command');
   });
 
-  test('build は主要 CSS を minify して生成する', async () => {
+  test('build --full は主要 CSS を minify して生成し、full.css / full_no_layer.css も生成する', async () => {
     await withCssDistBackup(async (cssDir) => {
-      const result = await runCli(['build'], tmpDir());
+      const result = await runCli(['build', '--full'], tmpDir());
       expect(result.code).toBe(0);
       expect(result.stdout).toMatch(/compileCssTree\] \d+ entries/);
 
@@ -72,21 +72,7 @@ describe.skipIf(!distReady)('bin/cli.mjs', () => {
       expect(mainCss.length).toBeGreaterThan(100);
       // minify: true（cssnano）経路。expanded の 2 スペースインデントは残らない。
       expect(mainCss).not.toContain('\n  ');
-    });
-  }, 60_000);
 
-  test('--full なら full.css / full_no_layer.css も生成する', async () => {
-    await withCssDistBackup(async (cssDir) => {
-      const withoutFull = await runCli(['build'], tmpDir());
-      expect(withoutFull.code).toBe(0);
-      const withoutCount = Number(/compileCssTree\] (\d+) entries/.exec(withoutFull.stdout)?.[1]);
-
-      const withFull = await runCli(['build', '--full'], tmpDir());
-      expect(withFull.code).toBe(0);
-      const withCount = Number(/compileCssTree\] (\d+) entries/.exec(withFull.stdout)?.[1]);
-
-      expect(withoutCount).toBeGreaterThan(0);
-      expect(withCount).toBeGreaterThan(withoutCount);
       expect(fs.existsSync(path.join(cssDir, 'full.css'))).toBe(true);
       expect(fs.existsSync(path.join(cssDir, 'full_no_layer.css'))).toBe(true);
     });

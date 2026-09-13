@@ -145,22 +145,16 @@ describe('lismConfigAlias', () => {
 });
 
 describe('lismCss (integrated / astro)', () => {
-  test('purge なし: integration 1つ（name: lism-css）', () => {
-    const ints = lismCssForAstro();
-    expect(ints).toHaveLength(1);
-    expect(ints[0].name).toBe('lism-css');
-  });
-
-  test('purge:true: lism-css + purge integration', () => {
-    expect(lismCssForAstro({ purge: true }).map((i) => i.name)).toEqual(['lism-css', 'lism-css:purge']);
-  });
-
-  test('astro:config:setup は root を解決し Vite プラグイン 3 つを渡す', async () => {
+  test('purge なしは integration 1つで、astro:config:setup は root を解決し Vite プラグイン 3 つを渡す', async () => {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-astro-'));
     writeUserConfig(tmp);
     const updateConfig = vi.fn();
     try {
-      const setup = lismCssForAstro()[0];
+      const ints = lismCssForAstro();
+      expect(ints.map((i) => i.name)).toEqual(['lism-css']);
+      expect(lismCssForAstro({ purge: true }).map((i) => i.name)).toEqual(['lism-css', 'lism-css:purge']);
+
+      const setup = ints[0];
       await setup.hooks['astro:config:setup']?.({
         config: { root: pathToFileURL(tmp) },
         updateConfig,

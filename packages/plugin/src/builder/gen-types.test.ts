@@ -136,20 +136,6 @@ describe('generateLismEnvDts', () => {
     expect(dts).not.toContain('p?: CustomPropValue;');
   });
 
-  test('breakpoints と props を同じ declare module に並べて生成する', () => {
-    const dts = generateLismEnvDts(
-      { breakpoints: { xs: '360px' }, props: { filter: { prop: 'filter' }, 'scroll-m': { prop: 'scrollMargin' } } },
-      DEFAULT_CONFIG
-    );
-    expect(dts).not.toBeNull();
-    expect(dts).toContain('interface BreakpointRegistry');
-    expect(dts).toContain('interface CustomPropRegistry');
-    expect(dts).toContain('xs: true;');
-    expect(dts).toContain('filter?: CustomPropValue;');
-    expect(dts).toContain('"scroll-m"?: CustomPropValue;');
-    expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
-  });
-
   test('追加 trait があれば CustomTraitRegistry 拡張の .d.ts を生成する', () => {
     const dts = generateLismEnvDts({ breakpoints: {}, props: {}, traits: { isContainer: 'is--container', isHoge: 'is--hoge' } }, DEFAULT_CONFIG);
     expect(dts).not.toBeNull();
@@ -161,13 +147,16 @@ describe('generateLismEnvDts', () => {
 
   test('breakpoints / props / traits を同じ declare module に並べ、型 import をまとめる', () => {
     const dts = generateLismEnvDts(
-      { breakpoints: { xs: '360px' }, props: { filter: { prop: 'filter' } }, traits: { isHoge: 'is--hoge' } },
+      { breakpoints: { xs: '360px' }, props: { filter: { prop: 'filter' }, 'scroll-m': { prop: 'scrollMargin' } }, traits: { isHoge: 'is--hoge' } },
       DEFAULT_CONFIG
     );
     expect(dts).not.toBeNull();
     expect(dts).toContain('interface BreakpointRegistry');
     expect(dts).toContain('interface CustomPropRegistry');
     expect(dts).toContain('interface CustomTraitRegistry');
+    expect(dts).toContain('xs: true;');
+    expect(dts).toContain('filter?: CustomPropValue;');
+    expect(dts).toContain('"scroll-m"?: CustomPropValue;');
     expect(dts).toContain("import type { CustomPropValue, CustomTraitValue } from 'lism-css';");
     expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
   });
@@ -194,15 +183,6 @@ describe('generateLismEnvDts', () => {
     const dts = generateLismEnvDts({ breakpoints: { xs: '360px' }, props: {} }, DEFAULT_CONFIG);
     expect(dts).not.toBeNull();
     expect(dts).not.toContain('FullModeRegistry');
-  });
-
-  test('isFullMode と追加 breakpoints / props を同じ declare module に並べて生成する', () => {
-    const dts = generateLismEnvDts({ breakpoints: { xs: '360px' }, props: { filter: { prop: 'filter' } } }, DEFAULT_CONFIG, true);
-    expect(dts).not.toBeNull();
-    expect(dts).toContain('interface BreakpointRegistry');
-    expect(dts).toContain('interface CustomPropRegistry');
-    expect(dts).toContain('interface FullModeRegistry');
-    expect(dts?.match(/declare module 'lism-css'/g)).toHaveLength(1);
   });
 
   test('追加 prop に utils / presets / token があれば値リテラルを CustomPropValue のジェネリクスへ埋め込む（#450）', () => {

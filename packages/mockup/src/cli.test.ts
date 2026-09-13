@@ -5,16 +5,14 @@ import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import { afterAll, describe, expect, test } from 'vitest';
 
-import { resolveGeneratedConfigDir, resolveViteCacheDir } from './core/runtime.js';
 import { cleanupTempDirs, createDataDir, MOCKUP_CONFIG, PLAIN_PAGE } from './test-helpers/fixtures.js';
+import { cleanupSharedDirs, trackCheckedDir } from './test-helpers/shared-dirs.js';
 
 const execFileAsync = promisify(execFile);
 const cliPath = fileURLToPath(new URL('../bin/lism-mockup.mjs', import.meta.url));
 const distEntry = fileURLToPath(new URL('../dist/index.js', import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(fileURLToPath(new URL('../package.json', import.meta.url)), 'utf8')) as { version: string };
 const distReady = fs.existsSync(distEntry);
-
-const checkedDirs: string[] = [];
 
 type CliResult = { code: number; stdout: string; stderr: string };
 
@@ -37,13 +35,7 @@ function stripAnsi(text: string): string {
 }
 
 afterAll(() => {
-  for (const dir of checkedDirs) {
-    if (!fs.existsSync(dir)) continue;
-    const real = fs.realpathSync(dir);
-    for (const shared of [resolveViteCacheDir(real), resolveGeneratedConfigDir(real)]) {
-      fs.rmSync(shared, { recursive: true, force: true });
-    }
-  }
+  cleanupSharedDirs();
   cleanupTempDirs();
 });
 
@@ -71,11 +63,12 @@ describe.skipIf(!distReady)('bin/lism-mockup.mjs', () => {
   });
 
   test('正しいデータディレクトリへの check は終了コード 0', async () => {
-    const dir = createDataDir({
-      'mockup.config.json': MOCKUP_CONFIG,
-      'pages/home.jsx': PLAIN_PAGE,
-    });
-    checkedDirs.push(dir);
+    const dir = trackCheckedDir(
+      createDataDir({
+        'mockup.config.json': MOCKUP_CONFIG,
+        'pages/home.jsx': PLAIN_PAGE,
+      })
+    );
 
     const result = await runCli(['check', dir]);
     expect(result.code).toBe(0);

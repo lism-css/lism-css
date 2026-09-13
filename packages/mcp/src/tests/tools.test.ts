@@ -68,15 +68,6 @@ describe('MCP Tools (integration)', () => {
     expect(text).not.toContain('lism-cli skill');
   });
 
-  it('get_tokens が Markdown を返す', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_tokens', arguments: {} });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    expect(text).toContain('デザイントークン');
-  });
-
   it('get_props_system（引数なし）が property-class.md の Markdown を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_props_system', arguments: {} });
@@ -224,15 +215,6 @@ describe('MCP Tools (integration)', () => {
     expect(data.message).toContain('not found');
   });
 
-  it('get_guide で tokens トピックが Markdown を返す', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'tokens' } });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    expect(text).toContain('デザイントークン');
-  });
-
   it('get_guide で responsive トピックがブレークポイント情報を含む Markdown を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'responsive' } });
@@ -278,55 +260,24 @@ describe('MCP Tools (integration)', () => {
     expect(result.isError).toBeTruthy();
   });
 
-  it('get_guide で antipatterns トピックが NG/OK カタログの Markdown を返す', async () => {
+  // トピックごとの内容確認と、GUIDE_TOPICS のファイル名 typo 検知を兼ねる
+  it.each([
+    { tool: 'get_tokens', topic: undefined, expected: ['デザイントークン'] },
+    { tool: 'get_guide', topic: 'tokens', expected: ['デザイントークン'] },
+    { tool: 'get_guide', topic: 'antipatterns', expected: ['アンチパターン', 'NG', 'OK'] },
+    { tool: 'get_guide', topic: 'antipatterns-layout', expected: ['アンチパターン', 'レスポンシブ', 'NG', 'OK'] },
+    { tool: 'get_guide', topic: 'trait-class', expected: ['Trait クラス', 'is--'] },
+    { tool: 'get_guide', topic: 'naming', expected: ['命名規則'] },
+    { tool: 'get_guide', topic: 'customize', expected: ['カスタマイズ'] },
+  ])('$tool（$topic）が期待する文字列を含む Markdown を返す', async ({ tool, topic, expected }) => {
     const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'antipatterns' } });
+    const result = await client.callTool({ name: tool, arguments: topic ? { topic } : {} });
     expect(result.isError).toBeFalsy();
 
     const text = getText(result);
-    expect(text).toContain('アンチパターン');
-    expect(text).toContain('NG');
-    expect(text).toContain('OK');
-  });
-
-  it('get_guide で antipatterns-layout トピックが構造・レイアウト系カタログの Markdown を返す', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'antipatterns-layout' } });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    expect(text).toContain('アンチパターン');
-    expect(text).toContain('レスポンシブ');
-    expect(text).toContain('NG');
-    expect(text).toContain('OK');
-  });
-
-  it('get_guide で trait-class トピックが Markdown を返す', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'trait-class' } });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    expect(text).toContain('Trait クラス');
-    expect(text).toContain('is--');
-  });
-
-  it('get_guide で naming トピックが Markdown を返す', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'naming' } });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    expect(text).toContain('命名規則');
-  });
-
-  it('get_guide で customize トピックが Markdown を返す', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'customize' } });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    expect(text).toContain('カスタマイズ');
+    for (const str of expected) {
+      expect(text).toContain(str);
+    }
   });
 
   it('search_docs が正常にデータを返す', async () => {

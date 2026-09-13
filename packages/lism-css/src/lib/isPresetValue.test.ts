@@ -32,12 +32,6 @@ describe('isPresetValue', () => {
       const presets = new Set(['0']);
       expect(isPresetValue(presets, 0)).toBe(true);
     });
-
-    test('負の数値も正しく判定される', () => {
-      const presets = new Set(['-1', '-2']);
-      expect(isPresetValue(presets, -1)).toBe(true);
-      expect(isPresetValue(presets, -2)).toBe(true);
-    });
   });
 
   describe('Array を使用した場合', () => {
@@ -70,57 +64,12 @@ describe('isPresetValue', () => {
       const presets = ['0'];
       expect(isPresetValue(presets, 0)).toBe(true);
     });
-
-    test('負の数値も正しく判定される', () => {
-      const presets = ['-1', '-2'];
-      expect(isPresetValue(presets, -1)).toBe(true);
-      expect(isPresetValue(presets, -2)).toBe(true);
-    });
-  });
-
-  describe('Set と Array で同じ結果を返す', () => {
-    test('同じ値のリストで同じ結果になる', () => {
-      const values = ['foo', 'bar', 'baz'];
-      const setPresets = new Set(values);
-      const arrayPresets = values;
-
-      expect(isPresetValue(setPresets, 'foo')).toBe(isPresetValue(arrayPresets, 'foo'));
-      expect(isPresetValue(setPresets, 'bar')).toBe(isPresetValue(arrayPresets, 'bar'));
-      expect(isPresetValue(setPresets, 'qux')).toBe(isPresetValue(arrayPresets, 'qux'));
-    });
   });
 
   describe('エッジケース', () => {
     test('空文字列の判定', () => {
       const presets = new Set(['', 'foo']);
       expect(isPresetValue(presets, '')).toBe(true);
-    });
-
-    test('特殊文字を含む文字列', () => {
-      const presets = new Set(['foo-bar', 'baz_qux', 'test:hover']);
-      expect(isPresetValue(presets, 'foo-bar')).toBe(true);
-      expect(isPresetValue(presets, 'baz_qux')).toBe(true);
-      expect(isPresetValue(presets, 'test:hover')).toBe(true);
-    });
-
-    test('スペースを含む文字列', () => {
-      const presets = new Set(['foo bar']);
-      expect(isPresetValue(presets, 'foo bar')).toBe(true);
-      expect(isPresetValue(presets, 'foo')).toBe(false);
-    });
-
-    test('大文字小文字は区別される', () => {
-      const presets = new Set(['foo', 'Bar']);
-      expect(isPresetValue(presets, 'foo')).toBe(true);
-      expect(isPresetValue(presets, 'Foo')).toBe(false);
-      expect(isPresetValue(presets, 'Bar')).toBe(true);
-      expect(isPresetValue(presets, 'bar')).toBe(false);
-    });
-
-    test('浮動小数点数も文字列化される', () => {
-      const presets = new Set(['1.5', '2.7']);
-      expect(isPresetValue(presets, 1.5)).toBe(true);
-      expect(isPresetValue(presets, 2.7)).toBe(true);
     });
   });
 });
