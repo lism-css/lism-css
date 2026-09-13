@@ -198,8 +198,8 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [x] Node.jsバージョンを環境変数で指定（Phase 0で確認した値に合わせる）（2026-09-14: `NODE_VERSION=22`）
 - [x] `PNPM_VERSION`も環境変数で指定し、ルート`package.json`の`packageManager`（現在は`pnpm@10.33.0`）と合わせる（ビルドの再現性のため。`packageManager`を更新したらこの環境変数も追従させる）（2026-09-14: 設定済み）
 - [ ] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-site.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）（2026-09-14: 初回は25/30。失敗5件はすべて`.md`のcharset不足。フォールバックWorker反映後に再実施する）
-- [ ] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-site.<サブドメイン>.workers.dev`）が発行されることを確認
-- [ ] プレビューURLで**HTMLと`.md`の両方**に`X-Robots-Tag: noindex`が付くことを確認（`_headers`のworkers.devホスト付きルールによる。フォールバックWorker導入時の`.md`はWorker側の付与で担保される）
+- [x] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-site.<サブドメイン>.workers.dev`）が発行されることを確認（2026-09-14: PR #622 のブランチpushで`<バージョン>-lism-site.loos.workers.dev`と`<ブランチ名>-lism-site.loos.workers.dev`の2種類が発行され、GitHubのチェックとPRコメントにURLが載る）
+- [x] プレビューURLで**HTMLと`.md`の両方**に`X-Robots-Tag: noindex`が付くことを確認（`_headers`のworkers.devホスト付きルールによる。フォールバックWorker導入時の`.md`はWorker側の付与で担保される）（2026-09-14: 両方に付くことを確認。フォールバックWorker込みでスモークテスト30件合格）
 - [x] 初回ビルドの所要時間を確認（`.cache/og/`が永続化されない可能性が高いため。許容範囲かを判断）（2026-09-14: 合計約9分。内訳はインストール13秒・ビルド8分20秒・デプロイ30秒。OG画像キャッシュ無しでも許容範囲と判断）
 
 ### Phase 4: DNSゾーンをCloudflareへ移管（配信元は変えない・ダッシュボード作業）
