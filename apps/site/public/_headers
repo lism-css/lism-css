@@ -11,7 +11,8 @@
   Cache-Control: public, s-maxage=31536000, max-age=86400, must-revalidate
 
 # .md は LLM 向けの配信物なので検索結果に出さない
-# Content-Type はここに書かない（パスパターン式のため存在しない .md の 404 にも付いてしまう。#506）
+# 実際の .md は run_worker_first で worker/index.ts が配信し、_headers は Worker のレスポンスには効かないため
+# X-Robots-Tag と Content-Type（charset 付き）は Worker 側で付けている。このルールは設定の意図を残すために置いてある
 /*.md
   X-Robots-Tag: noindex
 
