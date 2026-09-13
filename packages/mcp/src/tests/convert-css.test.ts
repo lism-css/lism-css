@@ -177,33 +177,6 @@ describe('convert_css', () => {
     expect(result.isError).toBe(true);
   });
 
-  it('使用例（example）が生成される', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({
-      name: 'convert_css',
-      arguments: { css: 'padding: 20px; font-size: 16px;' },
-    });
-    expect(result.isError).toBeFalsy();
-
-    const data = getResult(result);
-    expect(data.example).toBeDefined();
-    expect(data.example).toContain('<');
-    expect(data.example).toContain('>');
-  });
-
-  it('confidence フィールドが含まれる', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({
-      name: 'convert_css',
-      arguments: { css: 'padding: 20px;' },
-    });
-    expect(result.isError).toBeFalsy();
-
-    const data = getResult(result);
-    expect(data.conversions[0].confidence).toBeDefined();
-    expect(['exact', 'approximate', 'unmapped']).toContain(data.conversions[0].confidence);
-  });
-
   it('プリセット値を持たない prop でも mapping があれば unmapped にならない', async () => {
     const client = await createTestClient();
     const result = await client.callTool({

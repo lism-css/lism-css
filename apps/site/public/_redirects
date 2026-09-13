@@ -1,0 +1,14 @@
+# Cloudflare Workers 静的アセットのサーバー側リダイレクト（301）
+# ここ以外の旧 URL は src/config/redirects.ts の astroRedirects（Astro が出力する meta refresh ページ）で扱う
+
+# /docs/ は Astro 側だと meta refresh の中間ページが 200 で返り一瞬見えるため、サーバー側で 301 させる
+/docs/ /docs/overview/ 301
+/en/docs/ /en/docs/overview/ 301
+
+# camelCase の旧 primitive URL は、小文字版（astroRedirects）と出力先が衝突して Astro 側で扱えないためここで扱う
+/docs/primitives/l--fluidCols/ /docs/primitives/l--autoColumns/ 301
+/docs/primitives/l--sideMain/ /docs/primitives/l--withSide/ 301
+/docs/primitives/l--switchCols/ /docs/primitives/l--switchColumns/ 301
+/en/docs/primitives/l--fluidCols/ /en/docs/primitives/l--autoColumns/ 301
+/en/docs/primitives/l--sideMain/ /en/docs/primitives/l--withSide/ 301
+/en/docs/primitives/l--switchCols/ /en/docs/primitives/l--switchColumns/ 301

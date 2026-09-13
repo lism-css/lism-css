@@ -14,8 +14,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "test": "pnpm vitest",
-    "vitest": "vitest run",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit && astro check --tsconfig packages/astro/tsconfig.json",
     "build": "pnpm build:js && pnpm build:css:only",
     "build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",

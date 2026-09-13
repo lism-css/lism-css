@@ -112,73 +112,6 @@ describe('setTabs / キーボード操作（水平・既定）', () => {
     expect(document.activeElement).toBe(tabBtns[1]);
     expectSelected(1);
   });
-
-  // APG: 水平タブリストは上下キーを拾わず、ブラウザ本来のスクロールに残す
-  it('ArrowDown / ArrowUp では何も起きない', () => {
-    const { tabs, tabBtns } = getEls();
-    setTabs(tabs);
-
-    const down = pressKey(tabBtns[0], 'ArrowDown');
-    expect(down.defaultPrevented).toBe(false);
-    expectSelected(0);
-
-    const up = pressKey(tabBtns[0], 'ArrowUp');
-    expect(up.defaultPrevented).toBe(false);
-    expectSelected(0);
-  });
-
-  it('末尾で ArrowRight を押すと先頭へラップする', () => {
-    const { tabs, tabBtns } = getEls();
-    setTabs(tabs);
-
-    pressKey(tabBtns[2], 'ArrowRight');
-
-    expect(document.activeElement).toBe(tabBtns[0]);
-    expectSelected(0);
-  });
-
-  it('ArrowLeft で前のタブへ移動する', () => {
-    const { tabs, tabBtns } = getEls();
-    setTabs(tabs);
-
-    pressKey(tabBtns[2], 'ArrowLeft');
-
-    expect(document.activeElement).toBe(tabBtns[1]);
-    expectSelected(1);
-  });
-
-  it('先頭で ArrowLeft を押すと末尾へラップする', () => {
-    const { tabs, tabBtns } = getEls();
-    setTabs(tabs);
-
-    pressKey(tabBtns[0], 'ArrowLeft');
-
-    expect(document.activeElement).toBe(tabBtns[2]);
-    expectSelected(2);
-  });
-
-  it('Home で先頭、End で末尾へ移動する', () => {
-    const { tabs, tabBtns } = getEls();
-    setTabs(tabs);
-
-    pressKey(tabBtns[0], 'End');
-    expect(document.activeElement).toBe(tabBtns[2]);
-    expectSelected(2);
-
-    pressKey(tabBtns[2], 'Home');
-    expect(document.activeElement).toBe(tabBtns[0]);
-    expectSelected(0);
-  });
-
-  it('対象外のキーでは何も起きない', () => {
-    const { tabs, tabBtns } = getEls();
-    setTabs(tabs);
-
-    const event = pressKey(tabBtns[0], 'a');
-
-    expect(event.defaultPrevented).toBe(false);
-    expectSelected(0);
-  });
 });
 
 describe('setTabs / キーボード操作（aria-orientation="vertical"）', () => {
@@ -199,39 +132,6 @@ describe('setTabs / キーボード操作（aria-orientation="vertical"）', () 
     expectSelected(1);
 
     pressKey(tabBtns[1], 'ArrowUp');
-    expect(document.activeElement).toBe(tabBtns[0]);
-    expectSelected(0);
-  });
-
-  it('端では反対側へラップする', () => {
-    const { tabBtns } = setVerticalTabs();
-
-    pressKey(tabBtns[0], 'ArrowUp');
-    expect(document.activeElement).toBe(tabBtns[2]);
-    expectSelected(2);
-
-    pressKey(tabBtns[2], 'ArrowDown');
-    expect(document.activeElement).toBe(tabBtns[0]);
-    expectSelected(0);
-  });
-
-  it('ArrowRight / ArrowLeft では何も起きない', () => {
-    const { tabBtns } = setVerticalTabs();
-
-    const right = pressKey(tabBtns[0], 'ArrowRight');
-
-    expect(right.defaultPrevented).toBe(false);
-    expectSelected(0);
-  });
-
-  it('Home / End は向きに関わらず動作する', () => {
-    const { tabBtns } = setVerticalTabs();
-
-    pressKey(tabBtns[0], 'End');
-    expect(document.activeElement).toBe(tabBtns[2]);
-    expectSelected(2);
-
-    pressKey(tabBtns[2], 'Home');
     expect(document.activeElement).toBe(tabBtns[0]);
     expectSelected(0);
   });

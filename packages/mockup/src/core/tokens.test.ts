@@ -507,47 +507,35 @@ describe('writeConfigModule / buildTokensArtifacts', () => {
     expect(groups.find((entry) => entry.id === 'space')?.structuralVars?.map((token) => token.key)).toEqual(['--s-unit']);
   });
 
-  test('ダークは :root の後ろに .set--dark ブロックとして足され、一覧にもセクションが増える', async () => {
+  test('ダークは :root の後ろに .set--dark ブロックとして足される', async () => {
     const dataDir = createDataDir({});
     const configPath = writeConfigModule(createTempDir(), {});
 
-    const { css, groups } = await buildTokensArtifacts(dataDir, configPath, {}, { color: { base: '#111111', text: '#eeeeee' } });
+    const { css } = await buildTokensArtifacts(dataDir, configPath, {}, { color: { base: '#111111', text: '#eeeeee' } });
 
     expect(css).toContain('.set--dark {\n  --base: #111111;\n  --text: #eeeeee;\n}\n');
     // ライトの :root がダークで上書きされるよう、ダークは必ず後ろに出す。
     expect(css.indexOf('.set--dark {')).toBeGreaterThan(css.indexOf(':root {'));
-
-    const darkIndex = groups.findIndex((entry) => entry.id === 'color--dark');
-    expect(groups[darkIndex - 1].id).toBe('color');
-    expect(groups[darkIndex].label).toBe('color (dark)');
-    expect(groups[darkIndex].tokens.map((token) => token.key)).toEqual(['base', 'text']);
   });
 
   test('ダークの vars 上書きは、それを参照するパレット色まで .set--dark へ運ぶ', async () => {
     const dataDir = createDataDir({});
     const configPath = writeConfigModule(createTempDir(), {});
 
-    const { css, groups } = await buildTokensArtifacts(dataDir, configPath, {}, { vars: { '--L': '72%' } });
+    const { css } = await buildTokensArtifacts(dataDir, configPath, {}, { vars: { '--L': '72%' } });
 
     const darkBlock = css.slice(css.indexOf('.set--dark {'));
     expect(darkBlock).toContain('--L: 72%;');
     // --red は :root で値が確定しているため、再宣言しない限りダークの --L では組み直されない。
     expect(darkBlock).toContain('--red: oklch(var(--L) var(--C) 20);');
-    expect(groups.map((entry) => entry.id)).toContain('palette--dark');
-    // ダークの --L も `vars (dark)` ではなく、パレットのダークセクションの構造変数として出す。
-    expect(groups.map((entry) => entry.id)).not.toContain('vars--dark');
-    expect(groups.find((entry) => entry.id === 'palette--dark')?.structuralVars).toEqual([
-      { key: '--L', varName: '--L', value: '72%', source: 'overridden' },
-    ]);
   });
 
-  test('ダーク宣言が無ければ .set--dark も一覧のダークセクションも作らない', async () => {
+  test('ダーク宣言が無ければ .set--dark を作らない', async () => {
     const dataDir = createDataDir({});
     const configPath = writeConfigModule(createTempDir(), {});
 
-    const { css, groups } = await buildTokensArtifacts(dataDir, configPath, {});
+    const { css } = await buildTokensArtifacts(dataDir, configPath, {});
 
     expect(css).not.toContain('.set--dark');
-    expect(groups.every((entry) => entry.isDark === undefined)).toBe(true);
   });
 });

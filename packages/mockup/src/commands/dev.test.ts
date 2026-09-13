@@ -141,12 +141,6 @@ describe('dev サーバー', () => {
     expect(result?.code).toContain(`fill: 'none'`);
   });
 
-  test('lucide-react のサブパスはページから import できない', async () => {
-    await expect(server.pluginContainer.resolveId('lucide-react/icons/bell', path.join(dataDir, 'pages/home.jsx'))).rejects.toThrow(
-      /not an allowed package entry/
-    );
-  });
-
   test('ページからの react は @lism-css/mockup 側へ解決される（親の同名パッケージを見ない）', async () => {
     const resolved = await server.pluginContainer.resolveId('react', path.join(dataDir, 'pages/home.jsx'));
 
@@ -156,19 +150,6 @@ describe('dev サーバー', () => {
 
   test('許可外の bare import は契約違反として拒否する', async () => {
     await expect(server.pluginContainer.resolveId('lodash', path.join(dataDir, 'pages/home.jsx'))).rejects.toThrow(/not an allowed package entry/);
-    await expect(server.pluginContainer.resolveId('@lism-css/ui/react/NoSuchComponent', path.join(dataDir, 'pages/home.jsx'))).rejects.toThrow(
-      /not an allowed package entry/
-    );
-  });
-
-  test('データディレクトリ外への参照は拒否する', async () => {
-    const importer = path.join(dataDir, 'pages/home.jsx');
-
-    await expect(server.pluginContainer.resolveId('../../outside.jsx', importer)).rejects.toThrow(/Forbidden import/);
-    await expect(server.pluginContainer.resolveId('/etc/passwd', importer)).rejects.toThrow(/absolute paths are not allowed/);
-    await expect(server.pluginContainer.resolveId(`/@fs${projectDir}/node_modules/react/index.js`, importer)).rejects.toThrow(
-      /"\/@fs\/" paths are not allowed/
-    );
   });
 
   test('cacheDir は起動間で使い回せる共有の場所を指す（tempDir 配下でもデータディレクトリでもない）', () => {

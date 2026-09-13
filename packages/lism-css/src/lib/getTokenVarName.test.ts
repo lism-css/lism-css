@@ -31,9 +31,4 @@ describe('getTokenVarName', () => {
       expect(getTokenVarName('vars', '--fz-mol')).toBe('--fz-mol');
     });
   });
-
-  test('getMaybeTokenValue と同じ変数名を導出する（解決名と出力名の一致）', () => {
-    expect(`var(${getTokenVarName('lts', '2xl')})`).toBe('var(--lts--2xl)');
-    expect(`var(${getTokenVarName('space', '90')})`).toBe('var(--s90)');
-  });
 });

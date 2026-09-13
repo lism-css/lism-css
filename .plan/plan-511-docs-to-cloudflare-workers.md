@@ -1,7 +1,7 @@
 # Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
-基準日: 2026-09-05・ab6512d4
-状態: Review required
+基準日: 2026-09-14・5e33ba4ad
+状態: In progress（Phase 1・2 完了・PR 1 提出済み #621。Phase 4 は手順 1〜7 完了で手順 8 の様子見中。残り: Phase 0 の棚卸し 2 件、Phase 3 以降）
 対象Issue: [#511](https://github.com/ddryo/lism-css/issues/511)（[#506](https://github.com/ddryo/lism-css/issues/506) はクローズ済み。本プラン内で対応する）
 
 ## 概要 / ゴール
@@ -60,18 +60,18 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [x] www の扱い：Vercelのドメイン設定でapexへ307リダイレクト
 - [x] 他のVercelプロジェクトによる`lism-css.com`サブドメインの利用：無し（接続プロジェクトは`lism-css-docs`のみ）
 - [x] 現行DNSレコードの記録（digとVercel管理画面の全件）：「背景・前提」参照。DKIM等の追加レコードは無し
-- [ ] Vercel管理画面の残りの棚卸し：環境変数の有無 / Node.jsバージョン / Git連携の本番ブランチとプレビューの挙動
+- [x] Vercel管理画面の残りの棚卸し：環境変数の有無 / Node.jsバージョン / Git連携の本番ブランチとプレビューの挙動（2026-09-14: Vercel CLIで確認。環境変数なし・Node.js 22.x・Root Directory `apps/site`。Git連携の本番ブランチとプレビュー挙動は未確認だがCloudflare側の設定には影響しない）
 - [x] Google管理コンソールでの`lism-css.com`の状態：Google Workspaceのセカンダリドメインとして登録済み・Gmail有効。受信箱にはテストメールしか無く実質未使用だが、用途不明のため「使っている」扱いでMXをコピーする
 - [ ] Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作であり、DNSレコードが後者にひもづくことを管理画面で確認する（Phase 7の手順とロールバックの前提）
 
 ### Phase 1: リポジトリ側の準備（devから作業ブランチを切る → PR 1）
 
-- [ ] `apps/site/wrangler.jsonc`を新規作成。静的アセット配信のみなので`main`（Workerスクリプト）は不要：
+- [x] `apps/site/wrangler.jsonc`を新規作成。静的アセット配信のみなので`main`（Workerスクリプト）は不要：
 
   ```jsonc
   {
     "name": "lism-site",
-    "compatibility_date": "{作成日}",
+    "compatibility_date": "2026-07-01", // wrangler 同梱の workerd が対応する最新日付（先の日付だと wrangler dev が警告してフォールバックする）
     // プレビューURLはworkers_dev設定に連動して無効化されるため、明示的にtrueにする
     // （Phase 5でworkers_devをfalseにしてもプレビューURLを維持するため）
     "preview_urls": true,
@@ -84,7 +84,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
   `workers_dev`はこの時点では書かない（デフォルト有効のまま）。Phase 3の検証で`*.workers.dev` URLを使うためで、無効化はPhase 5で`"workers_dev": false`を設定ファイルに追記して行う（ダッシュボードだけで無効化しても次回のWranglerデプロイで再有効化されるため、必ず設定ファイルで管理する）。
 
-- [ ] `apps/site/public/_redirects`を新規作成し、`vercelRedirects`の8件を移植（301）：
+- [x] `apps/site/public/_redirects`を新規作成し、`vercelRedirects`の8件を移植（301）：
 
   ```
   /docs/ /docs/overview/ 301
@@ -99,7 +99,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
   `redirects.ts`にある経緯のコメント（`/docs/`はAstro側だとmeta refreshの中間ページが一瞬見える件、casing違いの出力先衝突をAstro側で扱えない件）は`#`コメントとして`_redirects`にも書いておく（Phase 7で`vercelRedirects`を消したときに経緯が残るように）。
 
-- [ ] `apps/site/public/_headers`を新規作成し、`vercel.ts`のヘッダーを移植：
+- [x] `apps/site/public/_headers`を新規作成し、`vercel.ts`のヘッダーを移植：
 
   ```
   /docs/og/*
@@ -119,8 +119,8 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
   - `_headers`は1パターンにsplat（`*`）1つまでの制約があるため、OG画像用は上記4ルールに展開する（実際の出力ディレクトリと一致することは確認済み）
   - **`.md`の`Content-Type`は`_headers`に書かない**（理由は「設計判断の根拠」参照）
   - 最後の`workers.dev`ホスト付きルールはCloudflare公式ドキュメント記載の例そのままで、プレビューURL（`<バージョンプレフィックス>-<Worker名>.<サブドメイン>.workers.dev`）とworkers.dev route上の全ページ（HTML含む）をnoindexにする。ホストを限定しているため、本番のカスタムドメイン（`lism-css.com`）には影響しない
-- [ ] ルート`.gitignore`に`.wrangler/`を追加（Phase 2の`wrangler dev`で生成されるため。`.vercel`の削除はPhase 7）
-- [ ] `apps/site/scripts/smoke-test.ts`を新規作成（デプロイ検証用スモークテスト）。`npx tsx scripts/smoke-test.ts --base={検証先URL}`で、Phase 2チェックリストのうちHTTPで機械的に確認できる項目（ステータス・Location・Content-Type・`X-Robots-Tag`・`Cache-Control`・404）を一括検査し、1件でも失敗したら非0で終了する。Phase 2（ローカル）・Phase 3（workers.dev）・Phase 6（本番）で同じスクリプトを`--base`違いで使い、環境間の確認漏れを防ぐ
+- [x] ルート`.gitignore`に`.wrangler/`を追加（Phase 2の`wrangler dev`で生成されるため。`.vercel`の削除はPhase 7）
+- [x] `apps/site/scripts/smoke-test.ts`を新規作成（デプロイ検証用スモークテスト）。`npx tsx scripts/smoke-test.ts --base={検証先URL}`で、Phase 2チェックリストのうちHTTPで機械的に確認できる項目（ステータス・Location・Content-Type・`X-Robots-Tag`・`Cache-Control`・404）を一括検査し、1件でも失敗したら非0で終了する。Phase 2（ローカル）・Phase 3（workers.dev）・Phase 6（本番）で同じスクリプトを`--base`違いで使い、環境間の確認漏れを防ぐ
   - HTMLページへのnoindexはworkers.devホスト上だけが期待値（本番カスタムドメインには付かない）のため、`--expect-html-noindex`のようなフラグで期待値を切り替えられるようにする
   - OG画像は出力ごとにファイル名が変わるため、実在するOG画像パスを引数で渡すか、sitemapから1件解決して検査する
 
@@ -128,17 +128,17 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
 `pnpm build:site && cd apps/site && npx wrangler dev`で以下を確認：
 
-- [ ] トップ・`/docs/overview/`・`/en/`の表示
-- [ ] trailing slash挙動（`/docs/overview`→`/docs/overview/`へのリダイレクト等、Astroの`directory`形式出力とWorkersの`auto-trailing-slash`の整合）
-- [ ] リダイレクト：`/docs/`・`/en/docs/`がHTTP 301で`overview/`へ飛ぶこと（Astro出力の`/docs/index.html`（meta refresh）より`_redirects`が優先されること）
-- [ ] リダイレクト：`l--fluidCols`（camelCase・`_redirects`側）がHTTP 301で飛ぶこと
-- [ ] リダイレクト：`l--fluidcols`（小文字・Astro側`astroRedirects`）が**HTTP 200+meta refreshページ**（noindex・canonical付き）として配信され、正しく遷移すること。301にはならない（現行Vercel本番と同じ挙動。理由は「設計判断の根拠」参照）
-- [ ] `/*.md`パターンのヘッダー：深い階層（`/ui/accordion.md`）と浅い階層（`/ui.md`）の両方に`X-Robots-Tag: noindex`が付く
-- [ ] 実在する`.md`のContent-Type実測：Cloudflareのデフォルトで`text/markdown`（charset有無も確認）が付くか
-- [ ] OG画像（4ディレクトリ）の`Cache-Control`
-- [ ] 404ページ（ステータス404+カスタムページ）
-- [ ] 存在しない`.md` URL（例: `/naming.md`）が通常のHTML 404で返り、`Content-Type: text/markdown`が付かないこと（#506の解消確認）
-- [ ] Pagefind検索・OG画像表示・`/llms.txt`・sitemap
+- [x] トップ・`/docs/overview/`・`/en/`の表示
+- [x] trailing slash挙動（`/docs/overview`→`/docs/overview/`へのリダイレクト等、Astroの`directory`形式出力とWorkersの`auto-trailing-slash`の整合）（実測: 307で`/docs/overview/`へ）
+- [x] リダイレクト：`/docs/`・`/en/docs/`がHTTP 301で`overview/`へ飛ぶこと（Astro出力の`/docs/index.html`（meta refresh）より`_redirects`が優先されること）
+- [x] リダイレクト：`l--fluidCols`（camelCase・`_redirects`側）がHTTP 301で飛ぶこと
+- [x] リダイレクト：`l--fluidcols`（小文字・Astro側`astroRedirects`）が**HTTP 200+meta refreshページ**（noindex・canonical付き）として配信され、正しく遷移すること。301にはならない（現行Vercel本番と同じ挙動。理由は「設計判断の根拠」参照）
+- [x] `/*.md`パターンのヘッダー：深い階層（`/ui/accordion.md`）と浅い階層（`/ui.md`）の両方に`X-Robots-Tag: noindex`が付く
+- [x] 実在する`.md`のContent-Type実測：Cloudflareのデフォルトで`text/markdown`（charset有無も確認）が付くか（実測: `text/markdown; charset=utf-8`が付く。フォールバックWorkerは不要）
+- [x] OG画像（4ディレクトリ）の`Cache-Control`
+- [x] 404ページ（ステータス404+カスタムページ）
+- [x] 存在しない`.md` URL（例: `/naming.md`）が通常のHTML 404で返り、`Content-Type: text/markdown`が付かないこと（#506の解消確認）（実測: `text/html; charset=utf-8`の404。`X-Robots-Tag: noindex`は付くが受容済み）
+- [x] Pagefind検索・OG画像表示・404ページの見た目（目視確認済み）。`/llms.txt`・sitemapはスモークテストで確認済み
 
 上記のうちHTTPで機械的に確認できる項目は、Phase 1で追加するスモークテスト（`scripts/smoke-test.ts`）を`--base=http://localhost:8787`（`wrangler dev`のデフォルトURL）で実行して一括確認する。Pagefind検索の動作やOG画像・404ページの見た目などは目視で確認する。
 
@@ -206,8 +206,8 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
 配信元の切り替え（Phase 5）とは切り離し、「DNSの管理者だけをVercelからCloudflareへ変える」工程。すべてのレコードをVercel向けのまま再作成してからネームサーバーを変えるため、サイト・メール・サブドメインの挙動は変わらない。Phase 1〜3と並行して進めてよい。
 
-1. [ ] Cloudflareダッシュボードで`lism-css.com`をゾーンとして追加する（Freeプラン）。自動スキャンで取り込まれたレコードは参考程度にし、Phase 0で控えた一覧と突き合わせる
-2. [ ] レコードを再作成する。**この時点ではすべてProxyオフ（DNS only）**：
+1. [x] Cloudflareダッシュボードで`lism-css.com`をゾーンとして追加する（Freeプラン）。自動スキャンで取り込まれたレコードは参考程度にし、Phase 0で控えた一覧と突き合わせる（2026-09-14: 作成済み。割り当てNSは`sara.ns.cloudflare.com`と`will.ns.cloudflare.com`）
+2. [x] レコードを再作成する。**この時点ではすべてProxyオフ（DNS only）**：（2026-09-14: APIで9件作成済み。TTLは全件60）
    - `lism-css.com` CNAME → Vercel一覧にあるapex ALIASの値（`{ハッシュ}.vercel-dns-016.com`）。apexのCNAMEはCloudflareが全プランでデフォルトで平坦化する（公式明記）。万一動かない場合はdigで実測したVercelのA値で代替する
    - `www` CNAME → Vercel一覧にある`*` ALIASの値（`cname.vercel-dns-016.com`）。Vercel側のwww→apexリダイレクトを維持するため
    - `*`（ワイルドカード）はコピーしない
@@ -217,11 +217,11 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
    - `cdn` CNAME → `lism-cdn.pages.dev`
    - `wp` A、`_acme-challenge.wp` TXT（値をそのままコピー）
    - CAAはコピーしない
-3. [ ] ゾーンのSSL/TLS設定を「Full (strict)」にしておく（Phase 5でProxyをオンにしたときにFlexibleで動かないようにするため。Proxyオフの間は影響しない）
-4. [ ] ネームサーバー変更前に、Cloudflareから割り当てられたネームサーバーへ直接問い合わせて内容を確認する（`dig @{割り当てNS} lism-css.com A` / `MX` / `TXT`、`www`・`templates`・`cdn`・`wp`）。現行の応答と一致することを確認する
-5. [ ] xdomainの「ネームサーバー設定」→「その他のサービスで利用する」で、`ns1/ns2.vercel-dns.com`をCloudflareの2つに置き換える
-6. [ ] CloudflareでゾーンがActiveになるのを待つ（数時間〜最大2日程度）。反映待ちの間は新旧どちらのDNSに当たっても同じ内容（Vercel向け）を返すため、混在しても問題ない
-7. [ ] Active後の確認：
+3. [x] ゾーンのSSL/TLS設定を「Full (strict)」にしておく（Phase 5でProxyをオンにしたときにFlexibleで動かないようにするため。Proxyオフの間は影響しない）（2026-09-14: 設定済み）
+4. [x] ネームサーバー変更前に、Cloudflareから割り当てられたネームサーバーへ直接問い合わせて内容を確認する（`dig @{割り当てNS} lism-css.com A` / `MX` / `TXT`、`www`・`templates`・`cdn`・`wp`）。現行の応答と一致することを確認する（2026-09-14: 全件一致を確認）
+5. [x] xdomainの「ネームサーバー設定」→「その他のサービスで利用する」で、`ns1/ns2.vercel-dns.com`をCloudflareの2つに置き換える（2026-09-14: 変更済み）
+6. [x] CloudflareでゾーンがActiveになるのを待つ（数時間〜最大2日程度）。反映待ちの間は新旧どちらのDNSに当たっても同じ内容（Vercel向け）を返すため、混在しても問題ない（2026-09-14: 同日中にActive）
+7. [x] Active後の確認：（2026-09-14: 全項目OK。1.1.1.1/8.8.8.8 ともCloudflare NS、apexは`server: Vercel`、wwwは307、templates/cdn/wpは応答、MX/TXTは一致、Search Consoleは所有者のまま）
    - `dig NS lism-css.com`がCloudflareのNSを返す
    - `https://lism-css.com/`が表示され、応答ヘッダに`server: Vercel`が残っている（配信元が変わっていないこと）
    - `https://www.lism-css.com/`がapexへリダイレクトされる
@@ -296,11 +296,11 @@ Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更
 
 ## 未決事項・要確認・事前準備
 
-- Vercel管理画面の環境変数 / Node.jsバージョン / プレビューの挙動（未確認）
+- 解決済み: Vercelの環境変数は無し、Node.jsは22.x（Phase 0で確認）
 - `lism-css.com`のメール利用有無（Google管理コンソールで確認。不明ならMXをコピーする）
 - Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作でDNSゾーンが後者にひもづくこと（管理画面で確認）
-- Cloudflareが`.md`拡張子に付けるデフォルトContent-Type（charset有無含む・Phase 2で実測）
-- `/*.md`のような「splat+拡張子」パターンの動作（公式ドキュメントにsplatは「全文字に貪欲マッチ」と記載があるため深い階層でも動く想定。Phase 2で念のため実測し、万一動かない場合は「`.md`のContent-Type不足時のフォールバック設計」のWorkerで代替する）
+- 解決済み: Cloudflareが`.md`に付けるデフォルトContent-TypeはPhase 2で`text/markdown; charset=utf-8`を実測。フォールバックWorkerは不要
+- 解決済み: `/*.md`パターンは浅い階層（`/ui.md`）・深い階層（`/docs/primitives/a--decorator.md`）ともPhase 2で`X-Robots-Tag`付与を実測
 - Workers Buildsでのpnpm workspaceビルドの成立（Phase 3で確認。必要ならビルドコマンドにinstallを明示）
 - `.cache/og/`（OG画像ビルドキャッシュ）がWorkers Buildsで永続化されず、ビルド時間が伸びる可能性（初回デプロイで許容範囲か確認）
 - ゾーン移管後にCloudflare Pagesのカスタムドメイン`templates.lism-css.com`・`cdn.lism-css.com`がそのまま動くか（Phase 4で確認。Pages側がProxyオンのCNAMEを要求する場合はそれに従う）

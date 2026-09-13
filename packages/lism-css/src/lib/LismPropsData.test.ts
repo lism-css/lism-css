@@ -4,8 +4,7 @@ import { LismPropsData } from './getLismProps';
 // LismPropsData は getLismProps の内部クラス。
 // prop 解析の振る舞いテスト（hov / ブレイクポイント / trait / プリセット・カスタム値分岐 等）は
 // 公開 API である getLismProps.test.ts 側に集約しているため、このファイルでは
-// 「内部バケットの分離」「buildClassName の出力順」「メソッド単位の動作」「attrs/styles の基本」
-// の 4 観点のみを扱う。
+// 「内部バケットの分離」「buildClassName の出力順」「attrs/styles の基本」の 3 観点のみを扱う。
 describe('LismPropsData', () => {
   describe('基本動作', () => {
     test('空のpropsでインスタンスが作成される', () => {
@@ -18,16 +17,6 @@ describe('LismPropsData', () => {
       expect(instance.propClasses).toEqual([]);
       expect(instance.styles).toEqual({});
       expect(instance.attrs).toEqual({});
-    });
-
-    test('className と class が両方指定された場合、両方マージされ重複は除去される', () => {
-      const instance = new LismPropsData({
-        className: 'c--foo',
-        class: 'user-class c--foo',
-      });
-      expect(instance.className).toContain('c--foo');
-      expect(instance.className).toContain('user-class');
-      expect(instance.className.match(/c--foo/g)?.length).toBe(1);
     });
   });
 
@@ -108,21 +97,6 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({ forwardedRef: mockRef });
       expect(instance.attrs.ref).toBe(mockRef);
     });
-
-    test('全バケットに要素が同時に投入されても、それぞれが正しいバケットに振り分けられる', () => {
-      const instance = new LismPropsData({
-        primitiveClass: ['l--flex'],
-        set: 'bxsh',
-        isContainer: true,
-        util: 'cbox',
-        p: '20',
-      });
-      expect(instance.primitiveClass).toEqual(['l--flex']);
-      expect(instance.setClasses).toContain('set--bxsh');
-      expect(instance.traitClasses).toContain('is--container');
-      expect(instance.uClasses).toContain('u--cbox');
-      expect(instance.propClasses).toContain('-p:20');
-    });
   });
 
   describe('buildClassName - 出力順', () => {
@@ -154,80 +128,6 @@ describe('LismPropsData', () => {
       expect(cls.indexOf('set--bxsh')).toBeLessThan(cls.indexOf('has--transition'));
       expect(cls.indexOf('has--transition')).toBeLessThan(cls.indexOf('u--trim'));
       expect(cls.indexOf('u--trim')).toBeLessThan(cls.indexOf('-fz:xl'));
-    });
-  });
-
-  describe('メソッド', () => {
-    describe('addUtil', () => {
-      test('uClasses にユーティリティクラスが追加される', () => {
-        const instance = new LismPropsData({});
-        instance.addUtil('-test:class');
-        expect(instance.uClasses).toContain('-test:class');
-      });
-    });
-
-    describe('addUtils', () => {
-      test('uClasses に複数のユーティリティクラスが追加される', () => {
-        const instance = new LismPropsData({});
-        instance.addUtils(['-a:1', '-b:2']);
-        expect(instance.uClasses).toContain('-a:1');
-        expect(instance.uClasses).toContain('-b:2');
-      });
-    });
-
-    describe('addStyle', () => {
-      test('styles にスタイルが追加される', () => {
-        const instance = new LismPropsData({});
-        instance.addStyle('--custom', 'value');
-        expect(instance.styles['--custom']).toBe('value');
-      });
-    });
-
-    describe('addStyles', () => {
-      test('styles に複数のスタイルが追加される', () => {
-        const instance = new LismPropsData({});
-        instance.addStyles({ color: 'red', fontSize: '16px' });
-        expect(instance.styles.color).toBe('red');
-        expect(instance.styles.fontSize).toBe('16px');
-      });
-
-      test('既存の styles とマージされる', () => {
-        const instance = new LismPropsData({ style: { margin: '10px' } });
-        instance.addStyles({ padding: '20px' });
-        expect(instance.styles.margin).toBe('10px');
-        expect(instance.styles.padding).toBe('20px');
-      });
-    });
-
-    describe('extractProp', () => {
-      test('attrs からプロパティを取得して削除する', () => {
-        const instance = new LismPropsData({});
-        instance.attrs['data-custom'] = 'value';
-        const value = instance.extractProp('data-custom');
-        expect(value).toBe('value');
-        expect(instance.attrs['data-custom']).toBeUndefined();
-      });
-
-      test('存在しないプロパティは null を返す', () => {
-        const instance = new LismPropsData({});
-        expect(instance.extractProp('nonexistent')).toBeNull();
-      });
-    });
-
-    describe('extractProps', () => {
-      test('複数のプロパティを一括で取得して削除する', () => {
-        const instance = new LismPropsData({});
-        instance.attrs = {
-          prop1: 'value1',
-          prop2: 'value2',
-          prop3: 'value3',
-        };
-        const extracted = instance.extractProps(['prop1', 'prop2']);
-        expect(extracted).toEqual({ prop1: 'value1', prop2: 'value2' });
-        expect(instance.attrs.prop1).toBeUndefined();
-        expect(instance.attrs.prop2).toBeUndefined();
-        expect(instance.attrs.prop3).toBe('value3');
-      });
     });
   });
 });

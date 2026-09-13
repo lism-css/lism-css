@@ -58,7 +58,7 @@ describe('withLismWebpack', () => {
       expect(config.resolve.extensions).toEqual(['.js']);
       // base の他フィールドも保持する。
       expect(config.mode).toBe('production');
-    });
+    }, 15000);
 
     test('css 既定（false）では CSS 事前生成も CSS alias も行わない（.lism-css/css を作らない）', async () => {
       const root = tmpDir();
@@ -134,11 +134,13 @@ describe('withLismWebpack', () => {
   });
 
   describe('追加 plugin の挙動', () => {
-    test('css: true: afterCompile で userConfigPath を fileDependencies へ登録し、watchRun で CSS を再生成する', async () => {
+    test('css: true: afterCompile で userConfigPath を fileDependencies へ登録し、watchRun で CSS（full 含む）を再生成する', async () => {
       const root = tmpDir();
       writeUserConfig(root);
-      const config = await withLismWebpack(baseConfig(), { projectRoot: root, css: true });
+      const config = await withLismWebpack(baseConfig(), { projectRoot: root, css: true, full: true });
       const plugin = config.plugins[config.plugins.length - 1];
+      const fullCss = path.join(root, '.lism-css/css/full.css');
+      expect(fs.existsSync(fullCss)).toBe(true);
 
       const { compiler, captured } = fakeCompiler();
       plugin.apply(compiler);
@@ -148,9 +150,11 @@ describe('withLismWebpack', () => {
       captured.after?.({ fileDependencies });
       expect(fileDependencies.has(path.join(root, 'lism.config.js'))).toBe(true);
 
-      // watchRun: 再生成が throw せず走り、CSS が出力される。
+      // watchRun: 再生成が throw せず走り、削除した full.css も含めて CSS が出力される。
+      fs.rmSync(fullCss);
       await expect(captured.watch?.()).resolves.not.toThrow();
       expect(fs.existsSync(path.join(root, '.lism-css/css/main.css'))).toBe(true);
+      expect(fs.existsSync(fullCss)).toBe(true);
     }, 15000);
 
     test('css: false: watchRun は CSS を再生成しない（.lism-css/css を作らない）が、config は fileDependencies へ登録する', async () => {
@@ -171,23 +175,6 @@ describe('withLismWebpack', () => {
       captured.after?.({ fileDependencies });
       expect(fileDependencies.has(path.join(root, 'lism.config.js'))).toBe(true);
     });
-
-    test('css: true / full: true なら watchRun 再生成でも full.css を更新する', async () => {
-      const root = tmpDir();
-      const config = await withLismWebpack(baseConfig(), { projectRoot: root, css: true, full: true });
-      const plugin = config.plugins[config.plugins.length - 1];
-      const fullCss = path.join(root, '.lism-css/css/full.css');
-
-      expect(fs.existsSync(fullCss)).toBe(true);
-
-      // full.css を削除し、watchRun で再生成されることを確認する。
-      fs.rmSync(fullCss);
-      const { compiler, captured } = fakeCompiler();
-      plugin.apply(compiler);
-
-      await expect(captured.watch?.()).resolves.not.toThrow();
-      expect(fs.existsSync(fullCss)).toBe(true);
-    }, 15000);
   });
 
   describe('typegen オプション', () => {

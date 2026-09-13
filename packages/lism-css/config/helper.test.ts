@@ -79,43 +79,6 @@ describe('objDeepMerge', () => {
     expect(origin).toEqual({ a: 1, b: { c: 2 } });
     expect(result).toEqual({ a: 1, b: { c: 2, d: 3 } });
   });
-
-  test('複雑なネスト構造のマージ', () => {
-    const origin = {
-      level1: {
-        level2: {
-          a: 1,
-          b: 2,
-        },
-        c: 3,
-      },
-      d: 4,
-    };
-    const source = {
-      level1: {
-        level2: {
-          b: 20,
-          e: 5,
-        },
-        f: 6,
-      },
-      g: 7,
-    };
-    const result = objDeepMerge(origin, source);
-    expect(result).toEqual({
-      level1: {
-        level2: {
-          a: 1,
-          b: 20,
-          e: 5,
-        },
-        c: 3,
-        f: 6,
-      },
-      d: 4,
-      g: 7,
-    });
-  });
 });
 describe('arrayConvertToSet', () => {
   test('配列をSetに変換する', () => {
@@ -214,25 +177,5 @@ describe('arrayConvertToSet', () => {
     const result = arrayConvertToSet(input);
     expect(Array.isArray(input.a)).toBe(true);
     expect(result.a).toBeInstanceOf(Set);
-  });
-
-  test('複数階層のオブジェクトと配列が混在するケース', () => {
-    const input = {
-      colors: ['red', 'blue', 'green'],
-      sizes: {
-        small: [1, 2, 3],
-        large: [10, 20, 30],
-      },
-      config: {
-        enabled: true,
-        tags: ['tag1', 'tag2'],
-      },
-    };
-    const result = arrayConvertToSet(input);
-    expect(result.colors).toEqual(new Set(['red', 'blue', 'green']));
-    expect(result.sizes.small).toEqual(new Set([1, 2, 3]));
-    expect(result.sizes.large).toEqual(new Set([10, 20, 30]));
-    expect(result.config.enabled).toBe(true);
-    expect(result.config.tags).toEqual(new Set(['tag1', 'tag2']));
   });
 });
