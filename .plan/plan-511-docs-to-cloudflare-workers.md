@@ -1,7 +1,7 @@
 # Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
 基準日: 2026-09-14・5e33ba4ad
-状態: In progress（Phase 1・2完了、[PR #621](https://github.com/lism-css/lism-css/pull/621)提出済み。Phase 0の残り2件とPhase 3以降はダッシュボード作業）
+状態: In progress（Phase 1・2 完了・PR 1 提出済み #621。Phase 4 は手順 1〜7 完了で手順 8 の様子見中。残り: Phase 0 の棚卸し 2 件、Phase 3 以降）
 対象Issue: [#511](https://github.com/ddryo/lism-css/issues/511)（[#506](https://github.com/ddryo/lism-css/issues/506) はクローズ済み。本プラン内で対応する）
 
 ## 概要 / ゴール
@@ -206,8 +206,8 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
 配信元の切り替え（Phase 5）とは切り離し、「DNSの管理者だけをVercelからCloudflareへ変える」工程。すべてのレコードをVercel向けのまま再作成してからネームサーバーを変えるため、サイト・メール・サブドメインの挙動は変わらない。Phase 1〜3と並行して進めてよい。
 
-1. [ ] Cloudflareダッシュボードで`lism-css.com`をゾーンとして追加する（Freeプラン）。自動スキャンで取り込まれたレコードは参考程度にし、Phase 0で控えた一覧と突き合わせる
-2. [ ] レコードを再作成する。**この時点ではすべてProxyオフ（DNS only）**：
+1. [x] Cloudflareダッシュボードで`lism-css.com`をゾーンとして追加する（Freeプラン）。自動スキャンで取り込まれたレコードは参考程度にし、Phase 0で控えた一覧と突き合わせる（2026-09-14: 作成済み。割り当てNSは`sara.ns.cloudflare.com`と`will.ns.cloudflare.com`）
+2. [x] レコードを再作成する。**この時点ではすべてProxyオフ（DNS only）**：（2026-09-14: APIで9件作成済み。TTLは全件60）
    - `lism-css.com` CNAME → Vercel一覧にあるapex ALIASの値（`{ハッシュ}.vercel-dns-016.com`）。apexのCNAMEはCloudflareが全プランでデフォルトで平坦化する（公式明記）。万一動かない場合はdigで実測したVercelのA値で代替する
    - `www` CNAME → Vercel一覧にある`*` ALIASの値（`cname.vercel-dns-016.com`）。Vercel側のwww→apexリダイレクトを維持するため
    - `*`（ワイルドカード）はコピーしない
@@ -217,11 +217,11 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
    - `cdn` CNAME → `lism-cdn.pages.dev`
    - `wp` A、`_acme-challenge.wp` TXT（値をそのままコピー）
    - CAAはコピーしない
-3. [ ] ゾーンのSSL/TLS設定を「Full (strict)」にしておく（Phase 5でProxyをオンにしたときにFlexibleで動かないようにするため。Proxyオフの間は影響しない）
-4. [ ] ネームサーバー変更前に、Cloudflareから割り当てられたネームサーバーへ直接問い合わせて内容を確認する（`dig @{割り当てNS} lism-css.com A` / `MX` / `TXT`、`www`・`templates`・`cdn`・`wp`）。現行の応答と一致することを確認する
-5. [ ] xdomainの「ネームサーバー設定」→「その他のサービスで利用する」で、`ns1/ns2.vercel-dns.com`をCloudflareの2つに置き換える
-6. [ ] CloudflareでゾーンがActiveになるのを待つ（数時間〜最大2日程度）。反映待ちの間は新旧どちらのDNSに当たっても同じ内容（Vercel向け）を返すため、混在しても問題ない
-7. [ ] Active後の確認：
+3. [x] ゾーンのSSL/TLS設定を「Full (strict)」にしておく（Phase 5でProxyをオンにしたときにFlexibleで動かないようにするため。Proxyオフの間は影響しない）（2026-09-14: 設定済み）
+4. [x] ネームサーバー変更前に、Cloudflareから割り当てられたネームサーバーへ直接問い合わせて内容を確認する（`dig @{割り当てNS} lism-css.com A` / `MX` / `TXT`、`www`・`templates`・`cdn`・`wp`）。現行の応答と一致することを確認する（2026-09-14: 全件一致を確認）
+5. [x] xdomainの「ネームサーバー設定」→「その他のサービスで利用する」で、`ns1/ns2.vercel-dns.com`をCloudflareの2つに置き換える（2026-09-14: 変更済み）
+6. [x] CloudflareでゾーンがActiveになるのを待つ（数時間〜最大2日程度）。反映待ちの間は新旧どちらのDNSに当たっても同じ内容（Vercel向け）を返すため、混在しても問題ない（2026-09-14: 同日中にActive）
+7. [x] Active後の確認：（2026-09-14: 全項目OK。1.1.1.1/8.8.8.8 ともCloudflare NS、apexは`server: Vercel`、wwwは307、templates/cdn/wpは応答、MX/TXTは一致、Search Consoleは所有者のまま）
    - `dig NS lism-css.com`がCloudflareのNSを返す
    - `https://lism-css.com/`が表示され、応答ヘッダに`server: Vercel`が残っている（配信元が変わっていないこと）
    - `https://www.lism-css.com/`がapexへリダイレクトされる
