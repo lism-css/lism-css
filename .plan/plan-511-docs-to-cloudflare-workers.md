@@ -1,7 +1,7 @@
 # Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
 基準日: 2026-09-14・5e33ba4ad
-状態: In progress（Phase 1・2 完了、PR 1 未提出。Phase 0 の残り 2 件と Phase 3 以降はダッシュボード作業）
+状態: In progress（Phase 1・2完了、[PR #621](https://github.com/lism-css/lism-css/pull/621)提出済み。Phase 0の残り2件とPhase 3以降はダッシュボード作業）
 対象Issue: [#511](https://github.com/ddryo/lism-css/issues/511)（[#506](https://github.com/ddryo/lism-css/issues/506) はクローズ済み。本プラン内で対応する）
 
 ## 概要 / ゴール
@@ -138,7 +138,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [x] OG画像（4ディレクトリ）の`Cache-Control`
 - [x] 404ページ（ステータス404+カスタムページ）
 - [x] 存在しない`.md` URL（例: `/naming.md`）が通常のHTML 404で返り、`Content-Type: text/markdown`が付かないこと（#506の解消確認）（実測: `text/html; charset=utf-8`の404。`X-Robots-Tag: noindex`は付くが受容済み）
-- [ ] Pagefind検索・OG画像表示・404ページの見た目（目視待ち）。`/llms.txt`・sitemapはスモークテストで確認済み
+- [x] Pagefind検索・OG画像表示・404ページの見た目（目視確認済み）。`/llms.txt`・sitemapはスモークテストで確認済み
 
 上記のうちHTTPで機械的に確認できる項目は、Phase 1で追加するスモークテスト（`scripts/smoke-test.ts`）を`--base=http://localhost:8787`（`wrangler dev`のデフォルトURL）で実行して一括確認する。Pagefind検索の動作やOG画像・404ページの見た目などは目視で確認する。
 
