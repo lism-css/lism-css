@@ -165,28 +165,11 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
   }
   ```
 
-- `apps/site/worker/index.ts`を新規作成する。責務は「ASSETSが200を返した`.md`にだけヘッダーを付与する」ことに限定する：
-
-  ```ts
-  export default {
-    async fetch(request: Request, env: { ASSETS: { fetch: typeof fetch } }) {
-      const response = await env.ASSETS.fetch(request);
-      // 実在する.mdのみヘッダーを付け替える。
-      // 404はASSETSが返すHTML 404（text/html）をそのまま返す（#506の不整合を再発させない）
-      if (response.ok) {
-        const headers = new Headers(response.headers);
-        headers.set('Content-Type', 'text/markdown; charset=utf-8');
-        headers.set('X-Robots-Tag', 'noindex');
-        return new Response(response.body, { status: response.status, headers });
-      }
-      return response;
-    },
-  };
-  ```
+- [Worker](../apps/site/worker/index.ts)でASSETSの成功応答と304にヘッダーを付与する。304も対象にし、キャッシュ再検証でcharsetが失われるのを防ぐ。HTML 404などのエラー応答はそのまま返す。スモークテストで通常のGETとETag付き再取得の両方を検査する。
 
 設計上の注意（Cloudflare公式ドキュメントで確認済み）：
 
-- `_headers`・`_redirects`は**Workerコードが生成したレスポンスには適用されない**（URLがルールに一致していても適用されない、と公式に明記）。そのため`run_worker_first`対象の`/*.md`では、`X-Robots-Tag: noindex`を上記のとおりWorker側で自前付与する。`_headers`の`/*.md`ルールは効かなくなるが削除はせず、Worker側で付与している旨のコメントを`_headers`に書く
+- `_headers`は`ASSETS.fetch()`の応答にも適用される。Workerはそのヘッダーを引き継ぎ、`X-Robots-Tag: noindex`とcharset付きContent-Typeの最終値を明示する。Workerが独自生成する応答には`_headers`が自動適用されないため、この経路と区別する
 - `_redirects`への影響はない：`_redirects`の8件はすべてHTML URLで、`run_worker_first: ["/*.md"]`の対象外のため従来どおり適用される
 - `run_worker_first`のパターンはglob形式（`*`は貪欲マッチ、`!`で除外パターン）。`/ui.md`（浅い階層）と`/ui/accordion.md`（深い階層）の両方がWorkerへ来ることをPhase 2で確認する
 - pathnameの`.md`判定はWorker内では行わない（`run_worker_first`で`/*.md`のみがWorkerへ来るため）。将来`run_worker_first`のパターンを広げる場合は`url.pathname.endsWith('.md')`のガードを追加すること

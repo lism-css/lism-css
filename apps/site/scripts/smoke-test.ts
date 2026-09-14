@@ -73,8 +73,8 @@ function loadRedirects(): Redirect[] {
     });
 }
 
-function get(path: string): Promise<Response> {
-  return fetch(BASE + path, { redirect: 'manual' });
+function get(path: string, headers?: HeadersInit): Promise<Response> {
+  return fetch(BASE + path, { redirect: 'manual', headers });
 }
 
 function contentType(res: Response): string {
@@ -173,6 +173,16 @@ async function main(): Promise<void> {
     await check(`GET ${path} -> 200 text/markdown + noindex`, async () => {
       const res = await get(path);
       return [expectStatus(res, 200), expectContentTypeIs(res, 'text/markdown; charset=utf-8'), expectNoindex(res, true)];
+    });
+
+    await check(`GET ${path} with If-None-Match -> 304 text/markdown + noindex`, async () => {
+      const initial = await get(path, { 'Accept-Encoding': 'identity' });
+      const etag = initial.headers.get('etag');
+      await initial.body?.cancel();
+      if (!etag) return ['etag: header missing'];
+
+      const res = await get(path, { 'Accept-Encoding': 'identity', 'If-None-Match': etag });
+      return [expectStatus(res, 304), expectContentTypeIs(res, 'text/markdown; charset=utf-8'), expectNoindex(res, true)];
     });
   }
 
