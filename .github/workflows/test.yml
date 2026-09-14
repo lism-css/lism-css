@@ -1,10 +1,14 @@
 name: Test
 on:
-  push:
-    branches:
-      - main
-      - dev
   pull_request:
+    # ビルド・テストに影響しない文書だけの変更では走らせない
+    paths-ignore:
+      - "docs/**"
+      - "documents/**"
+      - ".plan/**"
+      - ".claude/**"
+      - ".github/copilot-instructions.md"
+      - "*.md"
 
 permissions:
   contents: read
