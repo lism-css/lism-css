@@ -1,7 +1,7 @@
 # Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
 基準日: 2026-09-14・5e33ba4ad
-状態: In progress（Phase 1・2 完了・PR 1 提出済み #621。Phase 4 は手順 1〜7 完了で手順 8 の様子見中。残り: Phase 0 の棚卸し 2 件、Phase 3 以降）
+状態: In progress（Phase 1・2・4 完了、PR 1 マージ済み #621。Phase 3 は接続済みで .md の charset 不足をフォールバック Worker で対応中（PR 未提出）。残り: Phase 3 の再検証・プレビュー確認・ビルド時間、Phase 4 手順 8 の様子見、Phase 5 以降）
 対象Issue: [#511](https://github.com/ddryo/lism-css/issues/511)（[#506](https://github.com/ddryo/lism-css/issues/506) はクローズ済み。本プラン内で対応する）
 
 ## 概要 / ゴール
@@ -134,7 +134,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [x] リダイレクト：`l--fluidCols`（camelCase・`_redirects`側）がHTTP 301で飛ぶこと
 - [x] リダイレクト：`l--fluidcols`（小文字・Astro側`astroRedirects`）が**HTTP 200+meta refreshページ**（noindex・canonical付き）として配信され、正しく遷移すること。301にはならない（現行Vercel本番と同じ挙動。理由は「設計判断の根拠」参照）
 - [x] `/*.md`パターンのヘッダー：深い階層（`/ui/accordion.md`）と浅い階層（`/ui.md`）の両方に`X-Robots-Tag: noindex`が付く
-- [x] 実在する`.md`のContent-Type実測：Cloudflareのデフォルトで`text/markdown`（charset有無も確認）が付くか（実測: `text/markdown; charset=utf-8`が付く。フォールバックWorkerは不要）
+- [x] 実在する`.md`のContent-Type実測：Cloudflareのデフォルトで`text/markdown`（charset有無も確認）が付くか（実測: ローカルの`wrangler dev`では`text/markdown; charset=utf-8`だが、本番（workers.dev）はcharset無しの`text/markdown`。2026-09-14にフォールバックWorkerを導入）
 - [x] OG画像（4ディレクトリ）の`Cache-Control`
 - [x] 404ページ（ステータス404+カスタムページ）
 - [x] 存在しない`.md` URL（例: `/naming.md`）が通常のHTML 404で返り、`Content-Type: text/markdown`が付かないこと（#506の解消確認）（実測: `text/html; charset=utf-8`の404。`X-Robots-Tag: noindex`は付くが受容済み）
@@ -144,9 +144,9 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 
 `.md`のデフォルトContent-Typeが不足していた場合は、下記のフォールバックを導入してPhase 2のチェックリストを再実施する（`_headers`にContent-Typeを書かない理由は「設計判断の根拠」参照）。
 
-#### `.md`のContent-Type不足時のフォールバック設計（Phase 2で不足と判明した場合のみ導入）
+#### `.md`のContent-Type不足時のフォールバック設計（2026-09-14: Phase 3の本番実測でcharset不足が判明し導入済み）
 
-実在する`.md`に適切な`Content-Type`が付かなかった場合のみ、以下をPR 1に含める。
+本番実測でcharsetが付かなかったため以下を導入した。PR 1マージ後の判明のため別PRで出す。ローカル（miniflare）はcharsetを付けるが本番は付けないので、この差はローカル検証では検出できない。
 
 - `wrangler.jsonc`にWorkerスクリプトと`run_worker_first`を追加する：
 
@@ -165,42 +165,25 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
   }
   ```
 
-- `apps/site/worker/index.ts`を新規作成する。責務は「ASSETSが200を返した`.md`にだけヘッダーを付与する」ことに限定する：
-
-  ```ts
-  export default {
-    async fetch(request: Request, env: { ASSETS: { fetch: typeof fetch } }) {
-      const response = await env.ASSETS.fetch(request);
-      // 実在する.mdのみヘッダーを付け替える。
-      // 404はASSETSが返すHTML 404（text/html）をそのまま返す（#506の不整合を再発させない）
-      if (response.ok) {
-        const headers = new Headers(response.headers);
-        headers.set('Content-Type', 'text/markdown; charset=utf-8');
-        headers.set('X-Robots-Tag', 'noindex');
-        return new Response(response.body, { status: response.status, headers });
-      }
-      return response;
-    },
-  };
-  ```
+- [Worker](../apps/site/worker/index.ts)でASSETSの成功応答と304にヘッダーを付与する。304も対象にし、キャッシュ再検証でcharsetが失われるのを防ぐ。HTML 404などのエラー応答はそのまま返す。スモークテストで通常のGETとETag付き再取得の両方を検査する。
 
 設計上の注意（Cloudflare公式ドキュメントで確認済み）：
 
-- `_headers`・`_redirects`は**Workerコードが生成したレスポンスには適用されない**（URLがルールに一致していても適用されない、と公式に明記）。そのため`run_worker_first`対象の`/*.md`では、`X-Robots-Tag: noindex`を上記のとおりWorker側で自前付与する。`_headers`の`/*.md`ルールは効かなくなるが削除はせず、Worker側で付与している旨のコメントを`_headers`に書く
+- `_headers`は`ASSETS.fetch()`の応答にも適用される。Workerはそのヘッダーを引き継ぎ、`X-Robots-Tag: noindex`とcharset付きContent-Typeの最終値を明示する。Workerが独自生成する応答には`_headers`が自動適用されないため、この経路と区別する
 - `_redirects`への影響はない：`_redirects`の8件はすべてHTML URLで、`run_worker_first: ["/*.md"]`の対象外のため従来どおり適用される
 - `run_worker_first`のパターンはglob形式（`*`は貪欲マッチ、`!`で除外パターン）。`/ui.md`（浅い階層）と`/ui/accordion.md`（深い階層）の両方がWorkerへ来ることをPhase 2で確認する
 - pathnameの`.md`判定はWorker内では行わない（`run_worker_first`で`/*.md`のみがWorkerへ来るため）。将来`run_worker_first`のパターンを広げる場合は`url.pathname.endsWith('.md')`のガードを追加すること
 
 ### Phase 3: Workers Buildsセットアップ（本番未切り替え・ダッシュボード作業）
 
-- [ ] リポジトリ接続：ルートディレクトリ`apps/site`、ビルドコマンド`cd ../.. && pnpm build:site`、デプロイコマンド`npx wrangler deploy`、本番ブランチ`main`
-- [ ] pnpm workspaceの依存解決がWorkers Builds環境で正しく行われるか確認（ルートでの`pnpm install`が必要。うまくいかない場合はビルドコマンドに`cd ../.. && pnpm install --frozen-lockfile && pnpm build:site`のように明示する）
-- [ ] Node.jsバージョンを環境変数で指定（Phase 0で確認した値に合わせる）
-- [ ] `PNPM_VERSION`も環境変数で指定し、ルート`package.json`の`packageManager`（現在は`pnpm@10.33.0`）と合わせる（ビルドの再現性のため。`packageManager`を更新したらこの環境変数も追従させる）
-- [ ] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-site.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）
-- [ ] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-site.<サブドメイン>.workers.dev`）が発行されることを確認
-- [ ] プレビューURLで**HTMLと`.md`の両方**に`X-Robots-Tag: noindex`が付くことを確認（`_headers`のworkers.devホスト付きルールによる。フォールバックWorker導入時の`.md`はWorker側の付与で担保される）
-- [ ] 初回ビルドの所要時間を確認（`.cache/og/`が永続化されない可能性が高いため。許容範囲かを判断）
+- [x] リポジトリ接続：ルートディレクトリ`apps/site`、ビルドコマンド`cd ../.. && pnpm build:site`、デプロイコマンド`npx wrangler deploy`、本番ブランチ`main`（2026-09-14: Worker名`lism-site`、本番URLは`lism-site.loos.workers.dev`）
+- [x] pnpm workspaceの依存解決がWorkers Builds環境で正しく行われるか確認（ルートでの`pnpm install`が必要。うまくいかない場合はビルドコマンドに`cd ../.. && pnpm install --frozen-lockfile && pnpm build:site`のように明示する）（2026-09-14: `SKIP_DEPENDENCY_INSTALL=1`にし、ビルドコマンドでルートの`pnpm install --frozen-lockfile`を明示した）
+- [x] Node.jsバージョンを環境変数で指定（Phase 0で確認した値に合わせる）（2026-09-14: `NODE_VERSION=22`）
+- [x] `PNPM_VERSION`も環境変数で指定し、ルート`package.json`の`packageManager`（現在は`pnpm@10.33.0`）と合わせる（ビルドの再現性のため。`packageManager`を更新したらこの環境変数も追従させる）（2026-09-14: 設定済み）
+- [ ] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-site.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）（2026-09-14: 初回は25/30。失敗5件はすべて`.md`のcharset不足。フォールバックWorker反映後に再実施する）
+- [x] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-site.<サブドメイン>.workers.dev`）が発行されることを確認（2026-09-14: PR #622 のブランチpushで`<バージョン>-lism-site.loos.workers.dev`と`<ブランチ名>-lism-site.loos.workers.dev`の2種類が発行され、GitHubのチェックとPRコメントにURLが載る）
+- [x] プレビューURLで**HTMLと`.md`の両方**に`X-Robots-Tag: noindex`が付くことを確認（`_headers`のworkers.devホスト付きルールによる。フォールバックWorker導入時の`.md`はWorker側の付与で担保される）（2026-09-14: 両方に付くことを確認。フォールバックWorker込みでスモークテスト30件合格）
+- [x] 初回ビルドの所要時間を確認（`.cache/og/`が永続化されない可能性が高いため。許容範囲かを判断）（2026-09-14: 合計約9分。内訳はインストール13秒・ビルド8分20秒・デプロイ30秒。OG画像キャッシュ無しでも許容範囲と判断）
 
 ### Phase 4: DNSゾーンをCloudflareへ移管（配信元は変えない・ダッシュボード作業）
 
@@ -299,7 +282,7 @@ Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更
 - 解決済み: Vercelの環境変数は無し、Node.jsは22.x（Phase 0で確認）
 - `lism-css.com`のメール利用有無（Google管理コンソールで確認。不明ならMXをコピーする）
 - Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作でDNSゾーンが後者にひもづくこと（管理画面で確認）
-- 解決済み: Cloudflareが`.md`に付けるデフォルトContent-TypeはPhase 2で`text/markdown; charset=utf-8`を実測。フォールバックWorkerは不要
+- 解決済み: `.md`のデフォルトContent-Typeはローカル（miniflare）ではcharset付き、本番ではcharset無し。フォールバックWorkerで`text/markdown; charset=utf-8`を付与する（2026-09-14）
 - 解決済み: `/*.md`パターンは浅い階層（`/ui.md`）・深い階層（`/docs/primitives/a--decorator.md`）ともPhase 2で`X-Robots-Tag`付与を実測
 - Workers Buildsでのpnpm workspaceビルドの成立（Phase 3で確認。必要ならビルドコマンドにinstallを明示）
 - `.cache/og/`（OG画像ビルドキャッシュ）がWorkers Buildsで永続化されず、ビルド時間が伸びる可能性（初回デプロイで許容範囲か確認）

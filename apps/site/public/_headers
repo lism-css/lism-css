@@ -11,7 +11,8 @@
   Cache-Control: public, s-maxage=31536000, max-age=86400, must-revalidate
 
 # .md は LLM 向けの配信物なので検索結果に出さない
-# Content-Type はここに書かない（パスパターン式のため存在しない .md の 404 にも付いてしまう。#506）
+# ASSETS.fetch()の応答にも適用され、Workerが引き継ぐ
+# .mdの成功応答と304はWorkerでもnoindexとcharset付きContent-Typeを明示する
 /*.md
   X-Robots-Tag: noindex
 
