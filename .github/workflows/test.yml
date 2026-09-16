@@ -1,10 +1,16 @@
 name: Test
 on:
-  push:
-    branches:
-      - main
-      - dev
+  # main・dev への push では走らせない。PR チェック後に別の PR が dev に入った場合の
+  # マージ後の組み合わせ確認は、一人で順番にマージする運用のため省いている（#623）
   pull_request:
+    # ビルド・テストに影響しない文書だけの変更では走らせない
+    paths-ignore:
+      - "docs/**"
+      - "documents/**"
+      - ".plan/**"
+      - ".claude/**"
+      - ".github/copilot-instructions.md"
+      - "*.md"
 
 permissions:
   contents: read

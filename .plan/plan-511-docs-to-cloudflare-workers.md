@@ -1,7 +1,7 @@
 # Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
-基準日: 2026-09-14・5e33ba4ad
-状態: In progress（Phase 1・2・4 完了、PR 1 マージ済み #621。Phase 3 は接続済みで .md の charset 不足をフォールバック Worker で対応中（PR 未提出）。残り: Phase 3 の再検証・プレビュー確認・ビルド時間、Phase 4 手順 8 の様子見、Phase 5 以降）
+基準日: 2026-09-14・bad1cb9c8
+状態: In progress（Phase 1〜4 完了。PR 1 #621・フォールバック Worker #622 マージ済み、Workers Builds 本番デプロイ済み、非本番ブランチのビルドはOFF（mainのpushだけビルド）。残り: Phase 4 手順 8 の様子見（2026-09-14 から数日）→ Phase 5 以降）
 対象Issue: [#511](https://github.com/ddryo/lism-css/issues/511)（[#506](https://github.com/ddryo/lism-css/issues/506) はクローズ済み。本プラン内で対応する）
 
 ## 概要 / ゴール
@@ -180,10 +180,11 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [x] pnpm workspaceの依存解決がWorkers Builds環境で正しく行われるか確認（ルートでの`pnpm install`が必要。うまくいかない場合はビルドコマンドに`cd ../.. && pnpm install --frozen-lockfile && pnpm build:site`のように明示する）（2026-09-14: `SKIP_DEPENDENCY_INSTALL=1`にし、ビルドコマンドでルートの`pnpm install --frozen-lockfile`を明示した）
 - [x] Node.jsバージョンを環境変数で指定（Phase 0で確認した値に合わせる）（2026-09-14: `NODE_VERSION=22`）
 - [x] `PNPM_VERSION`も環境変数で指定し、ルート`package.json`の`packageManager`（現在は`pnpm@10.33.0`）と合わせる（ビルドの再現性のため。`packageManager`を更新したらこの環境変数も追従させる）（2026-09-14: 設定済み）
-- [ ] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-site.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）（2026-09-14: 初回は25/30。失敗5件はすべて`.md`のcharset不足。フォールバックWorker反映後に再実施する）
+- [x] `*.workers.dev` URLでPhase 2と同じチェックリストを実施（スモークテストを`--base=https://lism-site.<サブドメイン>.workers.dev --expect-html-noindex`で実行＋目視確認）（2026-09-14: 初回は25/30で失敗5件はすべて`.md`のcharset不足。フォールバックWorker #622 反映後は304検査込みの35件すべて合格）
 - [x] devブランチpushでプレビューURL（`<バージョンプレフィックス>-lism-site.<サブドメイン>.workers.dev`）が発行されることを確認（2026-09-14: PR #622 のブランチpushで`<バージョン>-lism-site.loos.workers.dev`と`<ブランチ名>-lism-site.loos.workers.dev`の2種類が発行され、GitHubのチェックとPRコメントにURLが載る）
 - [x] プレビューURLで**HTMLと`.md`の両方**に`X-Robots-Tag: noindex`が付くことを確認（`_headers`のworkers.devホスト付きルールによる。フォールバックWorker導入時の`.md`はWorker側の付与で担保される）（2026-09-14: 両方に付くことを確認。フォールバックWorker込みでスモークテスト30件合格）
 - [x] 初回ビルドの所要時間を確認（`.cache/og/`が永続化されない可能性が高いため。許容範囲かを判断）（2026-09-14: 合計約9分。内訳はインストール13秒・ビルド8分20秒・デプロイ30秒。OG画像キャッシュ無しでも許容範囲と判断）
+- [x] ビルド時間対策としてWorkers Buildsの設定を絞る（2026-09-14: 「Builds for non-production branches」をOFF、監視パスの除外に`docs/*`・`documents/*`・`.plan/*`・`skills/*`・`.github/*`・`.claude/*`・`packages/mcp/*`・`packages/lism-cli/*`・`packages/create-lism/*`・`packages/mockup/*`・`apps/catalog/*`を設定。以後、ブランチpushでは上の2項目で確認したプレビューURLは発行されず、ビルドはmainへのpushでサイトに関係するパスが変わったときだけ走る。CI側も`test.yml`を`pull_request`のみにした（#623））
 
 ### Phase 4: DNSゾーンをCloudflareへ移管（配信元は変えない・ダッシュボード作業）
 
@@ -210,11 +211,17 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
    - `https://www.lism-css.com/`がapexへリダイレクトされる
    - `https://templates.lism-css.com/`がされる。Cloudflare Pagesのカスタムドメイン画面で`templates.lism-css.com`・`cdn.lism-css.com`がActiveのままであること
    - Search Consoleのプロパティが「確認済み」のまま
-8. [ ] 数日そのまま置き、問題が無ければPhase 5へ
+8. [ ] 数日そのまま置き、問題が無ければPhase 5へ（2026-09-14から様子見中。2026-09-17以降、時間が取れる日にPhase 5を行う）
 
 ### Phase 5: 本番切り替え（配信元をWorkerへ）
 
-前提：Phase 1の変更が通常のリリースフローでmainへマージ済みで、Workers Buildsの本番デプロイが`*.workers.dev`で正常なこと。Phase 4が完了していること。
+前提：Phase 1の変更が通常のリリースフローでmainへマージ済みで、Workers Buildsの本番デプロイが`*.workers.dev`で正常なこと。Phase 4が完了していること。（2026-09-14時点で両方とも満たしている）
+
+進め方の補足（Phase 4で確立した手順）：
+
+- DNSレコードの変更はAPIのスクリプトを用意し、ユーザーが実行する（エージェントからの直接実行は拒否されるため）。読み取り・検証はエージェントが行う
+- Cloudflare APIトークン（ゾーン`lism-css.com`限定のDNS編集・ゾーン読み取り）が有効であること。2026-09-14に作ったトークンは2026-09-18に失効するため、それ以降に行うなら同じ設定で作り直す
+- WorkerのCustom Domain追加とwwwのRedirect Ruleはダッシュボードで行う（トークンにWorkers・ルール編集の権限を足せばAPIでも可）
 
 - [ ] apex・wwwの切り替え前のTTLとVercel向けIPを控える（CNAMEと参照先A/AAAA、apexは平坦化後の応答も確認）。以下の各DNS切り替え時刻も記録し、Phase 7の開始判断に使う
 
@@ -227,7 +234,7 @@ WorkerのCustom Domainは「既存のCNAMEレコードがあるホスト名に�
 5. [ ] Vercelの`lism-css-docs`プロジェクトに`lism-css.com`と`www.lism-css.com`の割り当てを残し、チームのドメイン登録・DNSゾーンとともにPhase 7まで維持する。`curl --resolve`でホスト名を保ったまま控えたVercel向けIPへ接続し、apexがHTTPSで表示され、wwwが従来どおりapexへ307されることを確認する
 6. [ ] `wrangler.jsonc`に`"workers_dev": false`を追記する軽微PR（PR 2）をdevへマージし、リリースフローでmainへ反映してworkers.dev routeを無効化する（重複コンテンツのインデックス防止）
    - ダッシュボードだけで無効化すると次回のWranglerデプロイで再有効化されるため、必ず設定ファイルで行う
-   - プレビューURLはPhase 1で`"preview_urls": true`を明示済みのため無効化されない（`preview_urls`未指定だと`workers_dev`に連動して無効化される）
+   - プレビューURLはPhase 1で`"preview_urls": true`を明示済みのため無効化されない（`preview_urls`未指定だと`workers_dev`に連動して無効化される）。ただし非本番ブランチのビルドはPhase 3でOFFにしたため、ブランチpushでプレビューURLが発行されることはない
 
 ### Phase 6: 事後確認・監視（1〜2週間）
 
@@ -248,15 +255,18 @@ WorkerのCustom Domainは「既存のCNAMEレコードがあるホスト名に�
 - [ ] Vercelチームから`lism-css.com`を削除する（Vercel DNSのゾーンが消える。以後はNSをVercelへ戻すロールバックができなくなる）
 - [ ] Vercelプロジェクト`lism-css-docs`を削除する
 
+Phase 7が完了したら、デプロイ経路をWorkers BuildsからGitHub Actionsへ移す#624に着手する（本プランの対象外。Workers BuildsのGit連携解除はそちらで行う）。
+
 ### PR構成
 
 PRは3つ（いずれもdevターゲット・時系列順に番号を振る）：
 
-- **PR 1**: Phase 1のファイル追加（`wrangler.jsonc`・`_redirects`・`_headers`・`.gitignore`・`scripts/smoke-test.ts`）。Phase 2のローカル検証を済ませてから提出する。Phase 2で`.md`のContent-Type不足が判明した場合は、フォールバックWorker（`worker/index.ts`+`wrangler.jsonc`の`run_worker_first`）もこのPRに含める
+- **PR 1**（#621、マージ済み）: Phase 1のファイル追加（`wrangler.jsonc`・`_redirects`・`_headers`・`.gitignore`・`scripts/smoke-test.ts`）。Phase 2のローカル検証を済ませてから提出する。Phase 2で`.md`のContent-Type不足が判明した場合は、フォールバックWorker（`worker/index.ts`+`wrangler.jsonc`の`run_worker_first`）もこのPRに含める
+- **PR 1b**（#622、マージ済み）: フォールバックWorker（`worker/index.ts`・`worker/index.test.ts`・`wrangler.jsonc`の`main`と`run_worker_first`）。Phase 3の本番実測でcharset不足が判明したため、PR 1マージ後に分離して提出した
 - **PR 2**: `wrangler.jsonc`への`"workers_dev": false`追記（1行のみの軽微PR）。本番切り替え（Phase 5）のタイミングでmainへ反映する必要があるため、PR 1には含めず分離する
 - **PR 3**: Phase 7のクリーンアップ（Phase 6の安定確認後）
 
-Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更なし（Phase 5のPR 2を除く）。
+Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更なし（Phase 5のPR 2を除く）。Phase 0〜4は2026-09-14に完了した。
 
 ## 設計判断の根拠
 
@@ -319,6 +329,7 @@ Phase 7でVercelチームからドメインを削除したあとは、Bのロー
 - **`@astrojs/cloudflare`アダプターは導入しない**：静的サイトのため不要
 - **ドメイン変更（`lismcss.com`）・GitHub orgの移管・npmパッケージのリネームはしない**：「設計判断の根拠」参照。`lismcss.com`をブランド保護のために取得して`lism-css.com`へリダイレクトする件は本プランの対象外（任意・別件）
 - **テンプレートプレビュー（`templates.lism-css.com`、Cloudflare Pages）のWorkers移行はしない**：今回のスコープ外。別途判断する
+- **ビルド時間の改善（デプロイ経路のActions化・サイトのコンパイル最適化）はしない**：#624で別途扱う。Phase 7完了後に着手する
 - **`astroRedirects`（小文字URL等・76件）の`_redirects`移行（301化）はしない**：現行Vercel本番と同じmeta refresh挙動を維持する。移行とは独立した改善のためスコープ外（やるなら別Issue）
 - **www→apexのリダイレクトが307から301に変わることは受容**：恒久リダイレクトとして正しく、SEO上も有利なため
 - **Vercelの`*`（ワイルドカード）ALIASはコピーしない**：未定義のサブドメインは現在Vercelの404を返しているが、移管後は名前解決されなくなる。実害がなく、意図しないサブドメインが解決しない方が健全なため

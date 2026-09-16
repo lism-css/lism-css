@@ -8,11 +8,15 @@
  * Usage:
  *   npx tsx scripts/smoke-test.ts --base=http://localhost:8787
  *   npx tsx scripts/smoke-test.ts --base=https://lism-site.<subdomain>.workers.dev --expect-html-noindex
- *   npx tsx scripts/smoke-test.ts --base=https://lism-css.com
+ *   npx tsx scripts/smoke-test.ts --base=https://lism-css.com --expect-https-redirect
  *
  * --expect-html-noindex:
  *   workers.dev ホスト上では public/_headers のホスト付きルールで HTML にも X-Robots-Tag: noindex が付く。
  *   本番カスタムドメインには付かないため、期待値をこのフラグで切り替える。
+ *
+ * --expect-https-redirect:
+ *   本番カスタムドメインではゾーン設定の Always Use HTTPS で http:// が https:// へ 301 される。
+ *   workers.dev とローカルは対象外のため、この検査はフラグで有効にする。
  */
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -23,21 +27,25 @@ const { values } = parseArgs({
   options: {
     base: { type: 'string' },
     'expect-html-noindex': { type: 'boolean', default: false },
+    'expect-https-redirect': { type: 'boolean', default: false },
   },
 });
 
 if (!values.base) {
-  console.error('Usage: npx tsx scripts/smoke-test.ts --base=<URL> [--expect-html-noindex]');
+  console.error('Usage: npx tsx scripts/smoke-test.ts --base=<URL> [--expect-html-noindex] [--expect-https-redirect]');
   process.exit(2);
 }
 
 const BASE = values.base.replace(/\/+$/, '');
 const EXPECT_HTML_NOINDEX = values['expect-html-noindex'];
+const EXPECT_HTTPS_REDIRECT = values['expect-https-redirect'];
 const SITE_ORIGIN = 'https://lism-css.com';
 const REDIRECTS_FILE = resolve(dirname(fileURLToPath(import.meta.url)), '../public/_redirects');
 
 // public/_headers の OG 画像ルールと同じ値
 const OG_CACHE_CONTROL = 'public, s-maxage=31536000, max-age=86400, must-revalidate';
+// public/_headers の HSTS ルールと同じ値
+const HSTS = 'max-age=63072000';
 
 const HTML_PAGES = ['/', '/docs/overview/', '/en/', '/en/docs/overview/'];
 // 小文字 primitive URL は astroRedirects（Astro 出力の meta refresh ページ）で扱う。本番互換のため 301 ではなく 200 が期待値
@@ -115,6 +123,11 @@ function expectNoindex(res: Response, expected: boolean): string | null {
   return expected ? 'x-robots-tag: noindex expected but missing' : `x-robots-tag: noindex must not be set, got "${res.headers.get('x-robots-tag')}"`;
 }
 
+function expectHsts(res: Response): string | null {
+  const actual = res.headers.get('strict-transport-security');
+  return actual === HSTS ? null : `strict-transport-security: expected "${HSTS}", got "${actual}"`;
+}
+
 function compact(items: (string | null)[]): string[] {
   return items.filter((item): item is string => item !== null);
 }
@@ -133,12 +146,24 @@ async function check(name: string, fn: () => Promise<(string | null)[]>): Promis
 
 async function main(): Promise<void> {
   console.log(`base: ${BASE}`);
-  console.log(`expect HTML noindex: ${EXPECT_HTML_NOINDEX}\n`);
+  console.log(`expect HTML noindex: ${EXPECT_HTML_NOINDEX}`);
+  console.log(`expect HTTPS redirect: ${EXPECT_HTTPS_REDIRECT}\n`);
 
   for (const path of HTML_PAGES) {
     await check(`GET ${path} -> 200 HTML`, async () => {
       const res = await get(path);
-      return [expectStatus(res, 200), expectContentTypeIncludes(res, 'text/html'), expectNoindex(res, EXPECT_HTML_NOINDEX)];
+      return [expectStatus(res, 200), expectContentTypeIncludes(res, 'text/html'), expectNoindex(res, EXPECT_HTML_NOINDEX), expectHsts(res)];
+    });
+  }
+
+  // 本番はゾーン設定の Always Use HTTPS で http:// を https:// へ 301 する（クエリも保持される）
+  if (EXPECT_HTTPS_REDIRECT) {
+    await check('GET http://.../docs/overview/?x=1 -> 301 https', async () => {
+      if (!BASE.startsWith('https://')) return ['base: must be https:// to check the redirect'];
+      const path = '/docs/overview/?x=1';
+      const res = await fetch(BASE.replace(/^https:/, 'http:') + path, { redirect: 'manual' });
+      const location = res.headers.get('location');
+      return [expectStatus(res, 301), location === BASE + path ? null : `location: expected "${BASE + path}", got "${location}"`];
     });
   }
 
@@ -172,7 +197,7 @@ async function main(): Promise<void> {
   for (const path of MD_PAGES) {
     await check(`GET ${path} -> 200 text/markdown + noindex`, async () => {
       const res = await get(path);
-      return [expectStatus(res, 200), expectContentTypeIs(res, 'text/markdown; charset=utf-8'), expectNoindex(res, true)];
+      return [expectStatus(res, 200), expectContentTypeIs(res, 'text/markdown; charset=utf-8'), expectNoindex(res, true), expectHsts(res)];
     });
 
     await check(`GET ${path} with If-None-Match -> 304 text/markdown + noindex`, async () => {
