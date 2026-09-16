@@ -1,5 +1,9 @@
 # Cloudflare Workers 静的アセットのレスポンスヘッダー
 
+# HSTS（Vercel 時代と同じ 2 年）。Worker は ASSETS の応答ヘッダーを引き継ぐため .md にも付く
+/*
+  Strict-Transport-Security: max-age=63072000
+
 # OG 画像のキャッシュ。1 パターンに splat（*）は 1 つまでのため、出力ディレクトリごとに書く
 /docs/og/*
   Cache-Control: public, s-maxage=31536000, max-age=86400, must-revalidate
