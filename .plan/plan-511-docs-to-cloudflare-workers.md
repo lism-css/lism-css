@@ -1,7 +1,7 @@
 # Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
-基準日: 2026-09-14・bad1cb9c8
-状態: In progress（Phase 1〜4 完了。PR 1 #621・フォールバック Worker #622 マージ済み、Workers Builds 本番デプロイ済み、非本番ブランチのビルドはOFF（mainのpushだけビルド）。残り: Phase 4 手順 8 の様子見（2026-09-14 から数日）→ Phase 5 以降）
+基準日: 2026-09-16・9b64a30ca
+状態: In progress（Phase 1〜5 完了。2026-09-16 に `lism-css.com` の配信元を Worker へ切り替え、PR 2 #625 を main へ反映済み。残り: Phase 6 の監視（2026-09-16 から 1〜2 週間）→ Phase 7）
 対象Issue: [#511](https://github.com/ddryo/lism-css/issues/511)（[#506](https://github.com/ddryo/lism-css/issues/506) はクローズ済み。本プラン内で対応する）
 
 ## 概要 / ゴール
@@ -62,7 +62,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 - [x] 現行DNSレコードの記録（digとVercel管理画面の全件）：「背景・前提」参照。DKIM等の追加レコードは無し
 - [x] Vercel管理画面の残りの棚卸し：環境変数の有無 / Node.jsバージョン / Git連携の本番ブランチとプレビューの挙動（2026-09-14: Vercel CLIで確認。環境変数なし・Node.js 22.x・Root Directory `apps/site`。Git連携の本番ブランチとプレビュー挙動は未確認だがCloudflare側の設定には影響しない）
 - [x] Google管理コンソールでの`lism-css.com`の状態：Google Workspaceのセカンダリドメインとして登録済み・Gmail有効。受信箱にはテストメールしか無く実質未使用だが、用途不明のため「使っている」扱いでMXをコピーする
-- [ ] Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作であり、DNSレコードが後者にひもづくことを管理画面で確認する（Phase 7の手順とロールバックの前提）
+- [x] Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作であり、DNSレコードが後者にひもづくことを確認する（Phase 7の手順とロールバックの前提）（2026-09-16: Vercel CLIで確認。`vercel domains ls`のチーム配下ドメインに`vercel dns ls`のレコードがひもづき、プロジェクト割り当て（`vercel domains inspect`のProjects欄: `lism-css-docs`にapexとwww）は別管理。Phase 7では先にプロジェクトから外し、次にチームから削除する）
 
 ### Phase 1: リポジトリ側の準備（devから作業ブランチを切る → PR 1）
 
@@ -211,7 +211,7 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
    - `https://www.lism-css.com/`がapexへリダイレクトされる
    - `https://templates.lism-css.com/`がされる。Cloudflare Pagesのカスタムドメイン画面で`templates.lism-css.com`・`cdn.lism-css.com`がActiveのままであること
    - Search Consoleのプロパティが「確認済み」のまま
-8. [ ] 数日そのまま置き、問題が無ければPhase 5へ（2026-09-14から様子見中。2026-09-17以降、時間が取れる日にPhase 5を行う）
+8. [x] 数日そのまま置き、問題が無ければPhase 5へ（2026-09-16に再確認: NS・ゾーンActive・apex/www・templates/cdn/wp・MX/TXT・Search Consoleすべて問題なし）
 
 ### Phase 5: 本番切り替え（配信元をWorkerへ）
 
@@ -220,25 +220,27 @@ apps/site（公式ドキュメントサイト `lism-css.com`）のデプロイ�
 進め方の補足（Phase 4で確立した手順）：
 
 - DNSレコードの変更はAPIのスクリプトを用意し、ユーザーが実行する（エージェントからの直接実行は拒否されるため）。読み取り・検証はエージェントが行う
-- Cloudflare APIトークン（ゾーン`lism-css.com`限定のDNS編集・ゾーン読み取り）が有効であること。2026-09-14に作ったトークンは2026-09-18に失効するため、それ以降に行うなら同じ設定で作り直す
-- WorkerのCustom Domain追加とwwwのRedirect Ruleはダッシュボードで行う（トークンにWorkers・ルール編集の権限を足せばAPIでも可）
+- Cloudflare APIトークン（ゾーン`lism-css.com`限定のDNS編集・ゾーン読み取り）が有効であること。2026-09-14に作ったトークンは2026-09-18に失効する。Phase 6以降でDNSを触るなら同じ設定で作り直す
+- WorkerのCustom Domain追加・wwwのRedirect Rule・Always Use HTTPSはダッシュボードで行った
 
-- [ ] apex・wwwの切り替え前のTTLとVercel向けIPを控える（CNAMEと参照先A/AAAA、apexは平坦化後の応答も確認）。以下の各DNS切り替え時刻も記録し、Phase 7の開始判断に使う
+- [x] apex・wwwの切り替え前のTTLとVercel向けIPを控える（2026-09-16: apex CNAME `b51639e237d04ece.vercel-dns-016.com`、www CNAME `cname.vercel-dns-016.com`、いずれもTTL 60。平坦化後のA値は`216.150.1.65`/`216.150.16.65`。切り替え時刻はapex 06:38 UTC・www 06:44 UTC。TTLが60秒のため、Phase 7の開始条件（切り替え前TTLの経過）は切り替え直後に満たしている）
 
 WorkerのCustom Domainは「既存のCNAMEレコードがあるホスト名には作成できない」（公式明記）ため、以下の順序で行う：
 
-1. [ ] Cloudflare DNSでapex（`lism-css.com`）のVercel向けCNAMEレコードを削除する（Phase 4で作った値はロールバック用に控えてあること）
-2. [ ] WorkerにCustom Domain `lism-css.com`を追加する（Worker向けDNSレコードと証明書はCloudflareが自動作成する）
-3. [ ] `https://lism-css.com/`が証明書エラーなく表示され、`server: Vercel`が消えていることを確認する（証明書発行に時間がかかる場合がある）。スモークテストを`--base=https://lism-css.com`で実行する
-4. [ ] wwwを切り替える：`www`のVercel向けCNAMEレコードを削除し、Proxyオンのプレースホルダレコード（例：AAAA `100::`）を作成する。Redirect Ruleで`www.lism-css.com`宛のリクエストを`https://lism-css.com`＋同じパス・クエリへ301する。`curl -sI https://www.lism-css.com/docs/overview/`で301とLocationを確認する（Vercel時代は307だったが、恒久リダイレクトとして301に変える。「受容済みリスク」参照）
-5. [ ] Vercelの`lism-css-docs`プロジェクトに`lism-css.com`と`www.lism-css.com`の割り当てを残し、チームのドメイン登録・DNSゾーンとともにPhase 7まで維持する。`curl --resolve`でホスト名を保ったまま控えたVercel向けIPへ接続し、apexがHTTPSで表示され、wwwが従来どおりapexへ307されることを確認する
-6. [ ] `wrangler.jsonc`に`"workers_dev": false`を追記する軽微PR（PR 2）をdevへマージし、リリースフローでmainへ反映してworkers.dev routeを無効化する（重複コンテンツのインデックス防止）
+1. [x] Cloudflare DNSでapex（`lism-css.com`）のVercel向けCNAMEレコードを削除する（2026-09-16 06:38 UTC。レコードのバックアップはローカルに保存）
+2. [x] WorkerにCustom Domain `lism-css.com`を追加する（2026-09-16: Cloudflareが`AAAA 100::`（Proxyオン）のDNSレコードを自動作成。証明書はゾーン有効化時に発行済みのUniversal SSLがそのまま使われ、待ち時間なし）
+3. [x] `https://lism-css.com/`が証明書エラーなく表示され、`server: Vercel`が消えていることを確認する。スモークテストを`--base=https://lism-css.com`で実行する（2026-09-16: `server: cloudflare`、スモークテスト35件合格）
+4. [x] wwwを切り替える：`www`のVercel向けCNAMEレコードを削除し、Proxyオンのプレースホルダレコード（AAAA `100::`）を作成する。Redirect Ruleで`www.lism-css.com`宛のリクエストを`https://lism-css.com`＋同じパス・クエリへ301する（2026-09-16 06:44 UTC。Redirect Rule「www to apex」: 式`(http.host eq "www.lism-css.com")`、動的ターゲット`concat("https://lism-css.com", http.request.uri.path)`、301、クエリ保持ON。HTTP・HTTPSとも301でパス・クエリの保持を確認。Vercel時代は307だったが恒久リダイレクトとして301に変えた。「受容済みリスク」参照）
+5. [x] Vercelの`lism-css-docs`プロジェクトに`lism-css.com`と`www.lism-css.com`の割り当てを残し、チームのドメイン登録・DNSゾーンとともにPhase 7まで維持する。`curl --resolve`でホスト名を保ったまま控えたVercel向けIPへ接続し、apexがHTTPSで表示され、wwwが従来どおりapexへ307されることを確認する（2026-09-16: 控えたIPすべてでapex 200・www 307を確認）
+6. [x] ゾーン設定「Always Use HTTPS」（SSL/TLS → Edge Certificates）をONにする（2026-09-16に追加した手順。切り替え後の確認で`http://lism-css.com/`が200で素のHTTP配信になっていた。Vercelは308でHTTPSへ飛ばしていた。ON後は`http://`→`https://`が301でクエリも保持される。DNS onlyのtemplates/cdn/wpには影響しない）
+7. [x] `wrangler.jsonc`に`"workers_dev": false`を追記するPR（PR 2）をdevへマージし、リリースフローでmainへ反映してworkers.dev routeを無効化する（重複コンテンツのインデックス防止）（2026-09-16: #625。切り替え後の確認で見つかったHSTS欠落（Vercelは`max-age=63072000`を全応答に付けていた）への対応として、`_headers`の`/*`ルールと、スモークテストのHSTS検査・`--expect-https-redirect`検査も同じPRに含めた）
    - ダッシュボードだけで無効化すると次回のWranglerデプロイで再有効化されるため、必ず設定ファイルで行う
    - プレビューURLはPhase 1で`"preview_urls": true`を明示済みのため無効化されない（`preview_urls`未指定だと`workers_dev`に連動して無効化される）。ただし非本番ブランチのビルドはPhase 3でOFFにしたため、ブランチpushでプレビューURLが発行されることはない
+8. [x] mainデプロイ後、本番で`--expect-https-redirect`付きスモークテストを実行し、HSTSの付与と`lism-site.loos.workers.dev`が応答しなくなったことを確認する（2026-09-16 07:12 UTCにデプロイ完了。スモークテスト36件合格、`.md`にもHSTS付与、workers.devはCloudflareの`error code: 1042`（404）で無効化を確認）
 
-### Phase 6: 事後確認・監視（1〜2週間）
+### Phase 6: 事後確認・監視（1〜2週間。2026-09-16から）
 
-- [ ] 本番URLでPhase 2のチェックリストを再実施（スモークテストを`--base=https://lism-css.com`で実行＋目視確認）
+- [ ] 本番URLでPhase 2のチェックリストを再実施（スモークテストは`--base=https://lism-css.com --expect-https-redirect`でPhase 5に合格済み。Pagefind検索・OG画像・404ページの目視確認が残り）
 - [ ] Search Consoleでsitemap再取得・インデックスエラーを監視（ドメイン不変のためプロパティ再登録は不要）
 - [ ] メール・`templates.lism-css.com`・`cdn.lism-css.com`（docsの画像が表示されること）・`wp.lism-css.com`が引き続き動いていることを確認
 
@@ -263,10 +265,10 @@ PRは3つ（いずれもdevターゲット・時系列順に番号を振る）�
 
 - **PR 1**（#621、マージ済み）: Phase 1のファイル追加（`wrangler.jsonc`・`_redirects`・`_headers`・`.gitignore`・`scripts/smoke-test.ts`）。Phase 2のローカル検証を済ませてから提出する。Phase 2で`.md`のContent-Type不足が判明した場合は、フォールバックWorker（`worker/index.ts`+`wrangler.jsonc`の`run_worker_first`）もこのPRに含める
 - **PR 1b**（#622、マージ済み）: フォールバックWorker（`worker/index.ts`・`worker/index.test.ts`・`wrangler.jsonc`の`main`と`run_worker_first`）。Phase 3の本番実測でcharset不足が判明したため、PR 1マージ後に分離して提出した
-- **PR 2**: `wrangler.jsonc`への`"workers_dev": false`追記（1行のみの軽微PR）。本番切り替え（Phase 5）のタイミングでmainへ反映する必要があるため、PR 1には含めず分離する
+- **PR 2**（#625、マージ済み）: `wrangler.jsonc`への`"workers_dev": false`追記に加え、切り替え後の確認で見つかったHSTS欠落の対応（`_headers`の`/*`ルール）とスモークテストの検査追加。本番切り替え（Phase 5）のタイミングでmainへ反映する必要があるため、PR 1には含めず分離した
 - **PR 3**: Phase 7のクリーンアップ（Phase 6の安定確認後）
 
-Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更なし（Phase 5のPR 2を除く）。Phase 0〜4は2026-09-14に完了した。
+Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更なし（Phase 5のPR 2を除く）。Phase 0〜4は2026-09-14に、Phase 5は2026-09-16に完了した。
 
 ## 設計判断の根拠
 
@@ -285,13 +287,15 @@ Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更
 - **workers.dev無効化とプレビューURL維持は`wrangler.jsonc`で両立させる**：プレビューURLは`preview_urls`未指定だと`workers_dev`設定に連動して無効化される（公式明記）。また、workers.devをダッシュボードだけで無効化しても次回のWranglerデプロイで再有効化される（公式明記）。そのため`preview_urls: true`をPhase 1から明示し、`workers_dev: false`はPhase 5で設定ファイルに追記する
 - **プレビューURLのnoindexは`_headers`のホスト付きルールで付与する**：Vercelと違い、Cloudflareはプレビュー環境に自動でnoindexを付けない。公式ドキュメント記載の例（`https://:version.:subdomain.workers.dev/*`）をそのまま使い、workers.devホスト上のHTML・`.md`全体をnoindexにする
 - **小文字URLのリダイレクトは現行どおりmeta refreshのまま**：`astroRedirects`はAstroの静的ビルドで「HTTP 200+meta refreshページ（noindex・canonical付き）」として出力されており（`dist/docs/primitives/l--fluidcols/index.html`で確認済み）、現行Vercel本番でも301ではない。今回の移行は挙動維持が原則のため変えない。76件を`_redirects`へ移して本物の301にする改善は考えられるが、移行とは独立した変更のためスコープ外とする（やるなら別Issue）
+- **HTTP→HTTPSのリダイレクトはゾーン設定「Always Use HTTPS」で行う**：WorkerのCustom DomainはHTTPリクエストをそのままWorkerへ通すため、Vercelが自動でやっていたHTTPS化を明示的に用意する必要がある。ゾーン設定ならProxyオンの全ホスト（apex・www）に一括で効き、Redirect Ruleより前に処理される。Worker内で判定する案は、設定1つで済むものをコードにする理由がないため採らない
+- **HSTSは`_headers`の`/*`ルールで付与する（ゾーン設定のHSTSではなく）**：Vercelと同じ`max-age=63072000`（2年）をそのまま再現でき、設定がリポジトリに残ってスモークテストで検証できる。ダッシュボードのHSTS設定はmax-ageの上限が12か月。`_headers`はリダイレクト応答（`_redirects`・Redirect Rule）には付かないが、HTML・`.md`・静的ファイルの応答に付けば足りる
 - **PR分割は3つ（Phase 1 / Phase 5 / Phase 7）**：間のPhaseはダッシュボード作業のため。PR 2（`workers_dev: false`）を分けるのは本番切り替えのタイミングでmainへ反映する必要があるため、PR 3（クリーンアップ）を分けるのは安定確認（Phase 6）を挟んでからロールバック手段（`vercel.ts`・Vercel上のドメイン）を消すため
 
 ## 未決事項・要確認・事前準備
 
 - 解決済み: Vercelの環境変数は無し、Node.jsは22.x（Phase 0で確認）
 - `lism-css.com`のメール利用有無（Google管理コンソールで確認。不明ならMXをコピーする）
-- Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」が別操作でDNSゾーンが後者にひもづくこと（管理画面で確認）
+- 解決済み: Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」は別操作で、DNSゾーンは後者にひもづく（Phase 0で確認）
 - 解決済み: `.md`のデフォルトContent-Typeはローカル（miniflare）ではcharset付き、本番ではcharset無し。フォールバックWorkerで`text/markdown; charset=utf-8`を付与する（2026-09-14）
 - 解決済み: `/*.md`パターンは浅い階層（`/ui.md`）・深い階層（`/docs/primitives/a--decorator.md`）ともPhase 2で`X-Robots-Tag`付与を実測
 - Workers Buildsでのpnpm workspaceビルドの成立（Phase 3で確認。必要ならビルドコマンドにinstallを明示）
@@ -309,7 +313,7 @@ Vercelのプロジェクト・apex/wwwの割り当て・チーム上のドメイ
 1. Vercelプロジェクトにapex・wwwの割り当てが残っていることを確認し、Phase 5の手順5と同じ方法でVercel側のHTTPS配信・wwwリダイレクトを確認する。正常に応答しなければ、復旧するまでCloudflare側を変更しない
 2. WorkerからCustom Domain `lism-css.com`を削除する
 3. CloudflareのDNS設定を開き、Worker向けの管理レコードが残っていないか確認する。残っていれば手動で削除する（Custom Domain削除時にDNSレコードが自動削除されるかは公式ドキュメントに明記がないため、「外れている」前提で進めない）
-4. Phase 4で作ったとおりに、apex・wwwのVercel向けCNAMEレコード（Proxyオフ）を復元する。wwwのプレースホルダとRedirect Ruleは削除する
+4. Phase 4で作ったとおりに、apex・wwwのVercel向けCNAMEレコード（Proxyオフ）を復元する。wwwのプレースホルダとRedirect Ruleは削除する。Always Use HTTPSはDNS onlyのホストには効かないため、ONのままでよい
 5. `https://lism-css.com/`がVercel配信（`server: Vercel`）でHTTPSエラーなく表示され、`https://www.lism-css.com/`がapexへ307されることを確認する
 
 注意：Custom Domain削除時、自動発行されたAdvanced Certificateは**自動では削除されない**（公式明記）。残っていても動作上の実害はないが、恒久的にVercelへ戻す判断をした場合はダッシュボードから手動削除する。
@@ -335,6 +339,7 @@ Phase 7でVercelチームからドメインを削除したあとは、Bのロー
 - **Vercelの`*`（ワイルドカード）ALIASはコピーしない**：未定義のサブドメインは現在Vercelの404を返しているが、移管後は名前解決されなくなる。実害がなく、意図しないサブドメインが解決しない方が健全なため
 - **ネームサーバー反映待ちの間に新旧DNSが混在することは受容**：どちらもVercel向けの同じ内容を返すため実害がない
 - **存在しないURLの404に`X-Robots-Tag: noindex`が付くことは受容**：実害がないため
+- **リダイレクト応答（www→apex・`_redirects`・HTTP→HTTPS）にHSTSが付かないことは受容**：ブラウザはHTTPSで受け取った最終ページの応答からHSTSを記憶するため、HTML・`.md`に付いていれば足りる
 - 作業中、環境変数の値・アカウント情報・シークレット類・DNSレコードの認証用トークン値をリポジトリやIssue/PRに記載しない（設定はCloudflare/Vercel/xdomainの管理画面上でのみ扱う）
 
 ## 完了条件
@@ -343,6 +348,7 @@ Phase 7でVercelチームからドメインを削除したあとは、Bのロー
 - `lism-css.com`のNSがCloudflareで、移管前のレコード（MX・TXT・`templates`・`cdn`・`wp`）がすべて再現され、メール・Search Console・各サブドメインが移管前どおり動いている
 - 本番URL（`lism-css.com`）で：表示・検索・リダイレクト（camelCase=301 / 小文字=現行同等のmeta refresh / `/docs/`=301）・404・`.md`ヘッダー・OG画像キャッシュがVercel時代と同等以上
 - `www.lism-css.com`がapexへ301される
+- `http://lism-css.com/`がHTTPSへ301され、HTML・`.md`の応答にVercel時代と同じHSTS（`max-age=63072000`）が付いている
 - workers.devホスト上のURL（プレビューURL含む）のHTML・`.md`に`X-Robots-Tag: noindex`が付いている
 - `/naming.md`等の存在しない`.md` URLがHTML 404で返り`text/markdown`が付かない（#506の対応完了）
 - Search Consoleで1〜2週間インデックスエラーが増えていない
