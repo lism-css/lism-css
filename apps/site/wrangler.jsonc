@@ -3,7 +3,10 @@
   "name": "lism-site",
   // wrangler 同梱の workerd が対応する最新日付に合わせる（先の日付を書くと wrangler dev が警告してこの日付へフォールバックする）
   "compatibility_date": "2026-07-01",
-  // プレビュー URL は未指定だと workers_dev に連動して無効化されるため明示する（本番切り替え後に workers_dev を false にしても維持するため）
+  // 本番はカスタムドメイン（lism-css.com）で配信するため workers.dev route は無効化する（重複コンテンツのインデックス防止）
+  // ダッシュボードだけで無効化すると次回の wrangler deploy で再有効化されるため、必ずここで管理する
+  "workers_dev": false,
+  // プレビュー URL は未指定だと workers_dev に連動して無効化されるため明示する
   "preview_urls": true,
   // .md の Content-Type に charset を付けるためだけの Worker。それ以外のパスは静的アセットを直接配信する
   "main": "./worker/index.ts",
