@@ -240,9 +240,9 @@ WorkerのCustom Domainは「既存のCNAMEレコードがあるホスト名に�
 
 ### Phase 6: 事後確認・監視（1〜2週間。2026-09-16から）
 
-- [ ] 本番URLでPhase 2のチェックリストを再実施（スモークテストは`--base=https://lism-css.com --expect-https-redirect`でPhase 5に合格済み。Pagefind検索・OG画像・404ページの目視確認が残り）
-- [ ] Search Consoleでsitemap再取得・インデックスエラーを監視（ドメイン不変のためプロパティ再登録は不要）
-- [ ] メール・`templates.lism-css.com`・`cdn.lism-css.com`（docsの画像が表示されること）・`wp.lism-css.com`が引き続き動いていることを確認
+- [x] 本番URLでPhase 2のチェックリストを再実施（スモークテストは`--base=https://lism-css.com --expect-https-redirect`でPhase 5に合格済み。2026-09-16: Pagefind検索（ja/en）・OG画像4ディレクトリ・カスタム404・cdn画像の目視確認OK）
+- [ ] Search Consoleでsitemap再取得・インデックスエラーを監視（ドメイン不変のためプロパティ再登録は不要）（2026-09-16 07:19 UTCに`sitemap-index.xml`を再送信。切り替え前の最終取得は2026-09-09で218 URL・エラー0・警告0。数日後に取得日時と件数・エラー数を確認し、以後1〜2週間監視する）
+- [ ] メール・`templates.lism-css.com`・`cdn.lism-css.com`（docsの画像が表示されること）・`wp.lism-css.com`が引き続き動いていることを確認（2026-09-16: 3つのサブドメインは応答を確認済み。メール受信はPhase 7前に一度確認する）
 
 ### Phase 7: クリーンアップ（安定確認後 → PR 3）
 
