@@ -2,9 +2,15 @@
 
 # Astro 7 へアップグレードし、dev の FOUC を根本対応する（#580）
 
-状態: Ready
+状態: PR1 実装済み（ブランチ `fix/580-upgrade-astro-7`）。PR2 は未着手
 
 ユーザー判断が要る未決事項は無い。PR2 の Callout 変換方式だけは着手時の spike で確定する。
+
+PR1 からの引き継ぎ（2026-09-18）:
+
+- `dist` 比較は `apps/site/scripts/compare-dist.mjs` を使う（`node scripts/compare-dist.mjs <baseDist> <newDist>`）。PR2 の比較基準は PR1 マージ後の `dev` のビルド。
+- Astro 7 由来で受容済みの差分（`docs/decisions.md` 2026-09-18 参照）: スコープ属性のハッシュ、タグ間の空白の有無、CSS 関数引数の空白、インライン JS の minify 結果、生成アセットのハッシュ名、`index.*.css` → `astro.*.css` のチャンク名。
+- `disableServerTreeshake` は削除済み。Rolldown では有無で時間が変わらなかった。
 
 ## ゴールと対象範囲
 
