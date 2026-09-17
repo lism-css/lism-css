@@ -15,6 +15,11 @@ on:
 permissions:
   contents: read
 
+# 同じ PR に push が重なったら、実行中の古い run はキャンセルして最新の 1 件だけ走らせる
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 # ジョブ構成:
 # - 各ジョブは独立して並列に走る。typecheck / test は turbo の ^build 依存で必要な依存パッケージを自前でビルドするため、
 #   build ジョブの成果物を受け渡す必要がない（受け渡してもキャッシュが無い turbo は再ビルドしていた）
