@@ -1,0 +1,70 @@
+name: Deploy site
+on:
+  push:
+    branches:
+      - main
+    # Workers Builds 時代の監視パス除外と同じ。apps/site のビルドに影響しないパスでは走らせない
+    # .github/ は丸ごと除外せず個別に列挙する（このファイル自体の変更で動作確認できるようにするため）
+    paths-ignore:
+      - "docs/**"
+      - "documents/**"
+      - ".plan/**"
+      - "skills/**"
+      - ".claude/**"
+      - ".github/workflows/test.yml"
+      - ".github/copilot-instructions.md"
+      - "packages/mcp/**"
+      - "packages/lism-cli/**"
+      - "packages/create-lism/**"
+      - "packages/mockup/**"
+      - "apps/catalog/**"
+
+permissions:
+  contents: read
+
+# 連続 push は順番に処理する（キャンセルしない）。最後の push が最後にデプロイされる
+concurrency:
+  group: deploy-site
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: ".node-version"
+          cache: "pnpm"
+
+      # turbo のローカルキャッシュ（.turbo/cache）を run 間で引き継ぎ、変更のない依存パッケージのビルドを省く
+      - name: Restore Turborepo cache
+        uses: actions/cache@v6
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build site
+        run: pnpm build:site
+
+      # wrangler はルートの devDependency を使う（wranglerVersion 未指定なら pnpm exec で見つかる既存インストールを優先する）
+      # packageManager は apps/site に lockfile が無く自動検出できないため明示する
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/site
+          packageManager: pnpm
