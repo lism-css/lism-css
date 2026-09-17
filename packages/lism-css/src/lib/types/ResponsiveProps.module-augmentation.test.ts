@@ -48,5 +48,6 @@ describe('lism-css module augmentation fixture', () => {
     const diagnostics = ts.getPreEmitDiagnostics(program);
 
     expect(diagnostics, getDiagnosticsText(diagnostics)).toHaveLength(0);
-  });
+    // パッケージ全体の ts.Program を作るため、CI で他パッケージのテストと並走すると vitest 既定の 5 秒を超える
+  }, 30000);
 });
