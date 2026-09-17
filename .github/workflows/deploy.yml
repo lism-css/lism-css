@@ -22,7 +22,8 @@ on:
 permissions:
   contents: read
 
-# 連続 push は順番に処理する（キャンセルしない）。最後の push が最後にデプロイされる
+# デプロイを同時に走らせない。実行中の run は完走させ、待機中の run は新しい push が来るとキャンセルされて最新の 1 件だけが残る
+# （中間コミットのデプロイは飛ばされる。実行順の保証は無い: GitHub の concurrency 仕様）
 concurrency:
   group: deploy-site
   cancel-in-progress: false
