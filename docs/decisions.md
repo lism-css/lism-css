@@ -1,6 +1,16 @@
-基準日: 2026-09-17・コミット684f5fd4a
+基準日: 2026-09-17・コミット684f5fd4a（作業ツリーを含む）
 
 # 意思決定の記録
+
+## 2026-09-17: apps/siteのデプロイをWorkers BuildsからGitHub Actionsへ移す
+
+#511ではWorkers Builds（Git連携）を採用したが、本番ビルドが約9分とVercel時代の約4分より長くなった。同じコミットをGitHub Actionsのランナーでビルドすると約5.5分で、公開リポジトリのActionsは無料・無制限。Workers Buildsのビルドキャッシュはpnpmストアと`node_modules/.astro`だけでturboのキャッシュが残らず、依存3パッケージを毎回ビルドしていた（#624）。
+
+- 決定: mainへのpushで`.github/workflows/deploy.yml`が`pnpm build:site`と`wrangler deploy`を実行する。`.turbo`を`actions/cache`で保存・復元する。除外パスはWorkers Buildsの監視パス除外と同じにする。
+- 決定: Cloudflareの認証はGitHub secrets（APIトークンとアカウントID）で行う。トリガーはmainのpush限定なのでforkからのPRには露出しない。
+- 決定: Workers BuildsのGit連携は最初のActionsデプロイが成功した後に解除する（二重デプロイの防止）。プレビューURLとPRコメントは無くなるが、非本番ビルドは既にOFFで実質の変化はない。
+- 却下: VercelのリモートキャッシュをWorkers Buildsに足す案（Vercel依存が残る）。turboの`cacheDir`を`node_modules/.astro`配下に向けてWorkers Buildsのキャッシュに載せる案（7日で失効・パス基準未確認の仕様に依存する）。
+- 対象外: apps/siteのコンパイル自体の軽量化は#624の2として別途扱う。
 
 ## 2026-09-17: 公式サイトの配信を Vercel から Cloudflare Workers へ移し、DNS ゾーンも Cloudflare に置く
 
