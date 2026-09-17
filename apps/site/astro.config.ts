@@ -67,22 +67,11 @@ function watchLismCoreDistCss() {
   };
 }
 
-// 静的ページのサーバーバンドルは描画にだけ使って捨てるので、Rollup の tree-shaking を切る。
-// 469 ページ分のモジュールグラフを繰り返し走査する tree-shaking が SSR コンパイル時間の約 6 割を占めていた（#624）。
-// 環境名は Astro の内部命名（静的ページは prerender、オンデマンドは ssr）に依存する。Astro のメジャー更新時は名前と rollupOptions の互換を再確認する。
-// クライアントビルドには影響しない。
-function disableServerTreeshake() {
-  const off = { build: { rollupOptions: { treeshake: false } } };
-  return {
-    name: 'docs:disable-server-treeshake',
-    apply: 'build' as const,
-    config: () => ({ environments: { prerender: off, ssr: off } }),
-  };
-}
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lism-css.com/',
+  // Astro 7 の既定 'jsx' はインライン要素間の空白を JSX 規則で除去し、v6 と出力が変わる。v6 と同じ空白処理を維持する。
+  compressHTML: true,
   image: {
     // domains: ['cdn.lism-css.com'],
     remotePatterns: [
@@ -118,7 +107,6 @@ export default defineConfig({
     },
     plugins: [
       watchLismCoreDistCss(),
-      disableServerTreeshake(),
       {
         // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
         name: 'ignore-underscore-prefix',
