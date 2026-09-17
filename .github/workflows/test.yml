@@ -15,120 +15,178 @@ on:
 permissions:
   contents: read
 
+# ジョブ構成:
+# - 各ジョブは独立して並列に走る。typecheck / test は turbo の ^build 依存で必要な依存パッケージを自前でビルドするため、
+#   build ジョブの成果物を受け渡す必要がない（受け渡してもキャッシュが無い turbo は再ビルドしていた）
+# - apps/site のビルドは 4 分前後かかり他の全パッケージより長いので、別ジョブに分けて他のチェックを待たせない
+# - turbo のローカルキャッシュ（.turbo/cache）を actions/cache で run 間に引き継ぐ。deploy.yml と同じ restore-keys の接頭辞にして、
+#   main の deploy が残したキャッシュも PR から読めるようにする。キャッシュは同じ PR の前回 run と default branch（main）からしか読めない
+# - .turbo/cache は turbo 側で削除されず増え続けるので、保存前に 7 日以上前のエントリを消して肥大化を抑える（deploy.yml と同じ）
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version-file: ".node-version"
           cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm build
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Restore Turborepo cache
+        uses: actions/cache@v6
         with:
-          name: dist
-          path: |
-            packages/*/dist
-            packages/*/.astro
-            apps/*/.astro
+          path: .turbo
+          key: ${{ runner.os }}-turbo-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Prune stale Turborepo cache entries
+        run: find .turbo/cache -type f -mtime +7 -delete 2>/dev/null || true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # apps/site は build-site ジョブで別にビルドする
+      - name: Build
+        run: pnpm build --filter='!lism-site'
+
+  build-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: ".node-version"
+          cache: "pnpm"
+
+      # 読み取りのみ。apps/site の dist（約 80MB）は PR ごとに変わりほぼ再利用されないので、キャッシュに積まない
+      - name: Restore Turborepo cache
+        uses: actions/cache/restore@v6
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-build-site-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build site
+        run: pnpm build:site
 
   typecheck:
-    needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version-file: ".node-version"
           cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Restore Turborepo cache
+        uses: actions/cache@v6
         with:
-          name: dist
-          path: .
+          path: .turbo
+          key: ${{ runner.os }}-turbo-typecheck-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Prune stale Turborepo cache entries
+        run: find .turbo/cache -type f -mtime +7 -delete 2>/dev/null || true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run typecheck
         run: pnpm typecheck
 
   lint:
-    needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version-file: ".node-version"
           cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Restore Turborepo cache
+        uses: actions/cache@v6
         with:
-          name: dist
-          path: .
+          path: .turbo
+          key: ${{ runner.os }}-turbo-lint-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Prune stale Turborepo cache entries
+        run: find .turbo/cache -type f -mtime +7 -delete 2>/dev/null || true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run lint
         run: pnpm lint
 
   test:
-    needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version-file: ".node-version"
           cache: "pnpm"
 
+      - name: Restore Turborepo cache
+        uses: actions/cache@v6
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-test-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Prune stale Turborepo cache entries
+        run: find .turbo/cache -type f -mtime +7 -delete 2>/dev/null || true
+
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
         run: pnpm --filter @lism-css/catalog exec playwright install chromium --with-deps
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: .
 
       - name: Run tests
         run: pnpm test
@@ -137,6 +195,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Check templates are private
         run: node scripts/check-templates-private.mjs
