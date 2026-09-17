@@ -108,14 +108,15 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
         // purge差分もsourcemap参照も無ければ、末尾空白だけでrenameやhash再計算が走らないよう素通しする。
         if (purged === source && !hasCssSourceMappingUrl(source)) continue;
         const output = stripCssSourceMappingUrl(purged);
-        asset.source = output;
         staleCssMaps.add(`${asset.fileName}.map`);
         const rename = getRenamedCssFileName(asset.fileName, output);
         if (rename) {
-          asset.fileName = rename.newName;
+          // bundle への新キー代入は Rolldown（Vite 8）では無視されるため、元アセットを捨てて emitFile で出し直す。
           delete bundle[key];
-          bundle[rename.newName] = asset;
+          this.emitFile({ type: 'asset', fileName: rename.newName, source: output });
           renames.push(rename);
+        } else {
+          asset.source = output;
         }
         beforeBytes += Buffer.byteLength(source);
         afterBytes += Buffer.byteLength(output);

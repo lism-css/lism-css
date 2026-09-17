@@ -4,10 +4,23 @@ import { describe, test, expect, vi } from 'vitest';
 import { mkdir, mkdtemp, readFile, readdir, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { build } from 'vite';
+import { build as buildVite7 } from 'vite';
+import { build as buildVite8 } from 'vite8';
 import { lismPurge } from './vite';
 
-type AnyPluginCtx = Record<string, unknown>;
+type EmittedAssetLike = { type: 'asset'; fileName: string; source: string | Uint8Array };
+
+// Rollup / Rolldown と同じく、generateBundle 中の emitFile を bundle に反映する
+function createCtx(bundle: Record<string, unknown>) {
+  return {
+    info: vi.fn(),
+    warn: vi.fn(),
+    emitFile: vi.fn((file: EmittedAssetLike) => {
+      bundle[file.fileName] = { type: 'asset', fileName: file.fileName, source: file.source };
+      return file.fileName;
+    }),
+  };
+}
 
 function getGenerateBundle(plugin: ReturnType<typeof lismPurge>) {
   const hook = plugin.generateBundle;
@@ -15,6 +28,13 @@ function getGenerateBundle(plugin: ReturnType<typeof lismPurge>) {
   if (hook && typeof hook === 'object' && 'handler' in hook) return hook.handler;
   throw new Error('generateBundle hook not found');
 }
+
+type BuildFn = (config: { root: string; configFile: false; logLevel: 'silent'; plugins: unknown[] }) => Promise<unknown>;
+// Rollup（Vite 7）と Rolldown（Vite 8）で generateBundle の bundle 操作の扱いが違うため、両方で確認する
+const bundlers: [string, BuildFn][] = [
+  ['Vite 7 (Rollup)', buildVite7 as unknown as BuildFn],
+  ['Vite 8 (Rolldown)', buildVite8 as unknown as BuildFn],
+];
 
 const known = {
   classes: new Set(['-p:20', '-m:10']),
@@ -54,7 +74,7 @@ describe('lismPurge (Vite)', () => {
         source: original,
       },
     };
-    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    const ctx = createCtx(bundle);
     await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
     expect((bundle['assets/styles.css'] as { source: string }).source).toBe(original);
   });
@@ -73,7 +93,7 @@ describe('lismPurge (Vite)', () => {
         code: 'const cls = "-p:20";',
       },
     };
-    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    const ctx = createCtx(bundle);
     await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
     const source = (bundle['assets/main.css'] as { source: string }).source;
     expect(source).toContain('-p\\:20');
@@ -99,12 +119,13 @@ describe('lismPurge (Vite)', () => {
         code: 'const href = "/assets/main-AAAA1111.css";',
       },
     };
-    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    const ctx = createCtx(bundle);
     await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
 
     expect(bundle['assets/main-AAAA1111.css']).toBeUndefined();
     const cssKey = Object.keys(bundle).find((key) => key.endsWith('.css'));
     expect(cssKey).toMatch(/^assets\/main-[a-f0-9]{8}\.css$/);
+    expect(ctx.emitFile).toHaveBeenCalledWith(expect.objectContaining({ type: 'asset', fileName: cssKey }));
     const cssAsset = bundle[cssKey as string] as { fileName: string; source: string };
     expect(cssAsset.fileName).toBe(cssKey);
     expect(cssAsset.source).toContain('-p\\:20');
@@ -126,7 +147,7 @@ describe('lismPurge (Vite)', () => {
         source: '.-p\\:20{padding:var(--s20)}.-m\\:10{margin:var(--s10)}',
       },
     };
-    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    const ctx = createCtx(bundle);
     await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
 
     expect(bundle['assets/my-styles.css']).toBeDefined();
@@ -155,7 +176,7 @@ describe('lismPurge (Vite)', () => {
         source: JSON.stringify({ 'index.html': { file: 'assets/app.js', css: ['assets/main-AAAA1111.css'] } }),
       },
     };
-    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    const ctx = createCtx(bundle);
     await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
 
     const cssKey = Object.keys(bundle).find((key) => key.endsWith('.css')) as string;
@@ -189,7 +210,7 @@ describe('lismPurge (Vite)', () => {
         source: '<link rel="stylesheet" href="/assets/main-AAAA1111.css"><div class="-p:20"></div>',
       },
     };
-    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    const ctx = createCtx(bundle);
     await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
 
     expect(bundle['assets/main-AAAA1111.css']).toBeUndefined();
@@ -201,7 +222,7 @@ describe('lismPurge (Vite)', () => {
     expect(cssAsset.source).not.toContain('sourceMappingURL');
   });
 
-  test('Vite build でも purge 後の CSS 内容に応じて hash 付きファイル名が変わる', async () => {
+  test.each(bundlers)('%s の build でも purge 後の CSS 内容に応じて hash 付きファイル名が変わる', async (_name, build) => {
     const dirP = await setupViteProject('-p:20');
     const dirM = await setupViteProject('-m:10');
     try {
@@ -241,7 +262,7 @@ describe('lismPurge (Vite)', () => {
         code: 'const cls = "-p:20 -m:10";',
       },
     };
-    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    const ctx = createCtx(bundle);
     await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
 
     // リネームされず、内容も trimEnd されず原文のまま
