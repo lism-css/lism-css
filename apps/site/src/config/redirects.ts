@@ -1,11 +1,5 @@
 export type AstroRedirects = Record<string, string>;
 
-export type VercelRedirect = {
-  source: string;
-  destination: string;
-  statusCode: 301;
-};
-
 export const astroRedirects: AstroRedirects = {
   // /docs/ -> /docs/overview/
   '/docs/': '/docs/overview/',
@@ -154,49 +148,3 @@ export const astroRedirects: AstroRedirects = {
   '/en/page-layouts/sections/fullwide-sections/': '/en/docs/layout-demos/sections/fullwide-sections/',
   '/en/page-layouts/others/404/': '/en/docs/layout-demos/others/404/',
 };
-
-// Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。
-// Vercel の redirects はデフォルトで case-sensitive にマッチする。
-export const vercelRedirects: VercelRedirect[] = [
-  // /docs/ は Astro 側だと meta refresh の中間ページが 200 で返り一瞬見えるため、本番はサーバー側で 301 させる
-  {
-    source: '/docs/',
-    destination: '/docs/overview/',
-    statusCode: 301,
-  },
-  {
-    source: '/en/docs/',
-    destination: '/en/docs/overview/',
-    statusCode: 301,
-  },
-  {
-    source: '/docs/primitives/l--fluidCols/',
-    destination: '/docs/primitives/l--autoColumns/',
-    statusCode: 301,
-  },
-  {
-    source: '/docs/primitives/l--sideMain/',
-    destination: '/docs/primitives/l--withSide/',
-    statusCode: 301,
-  },
-  {
-    source: '/docs/primitives/l--switchCols/',
-    destination: '/docs/primitives/l--switchColumns/',
-    statusCode: 301,
-  },
-  {
-    source: '/en/docs/primitives/l--fluidCols/',
-    destination: '/en/docs/primitives/l--autoColumns/',
-    statusCode: 301,
-  },
-  {
-    source: '/en/docs/primitives/l--sideMain/',
-    destination: '/en/docs/primitives/l--withSide/',
-    statusCode: 301,
-  },
-  {
-    source: '/en/docs/primitives/l--switchCols/',
-    destination: '/en/docs/primitives/l--switchColumns/',
-    statusCode: 301,
-  },
-];
