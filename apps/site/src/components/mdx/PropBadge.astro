@@ -19,7 +19,8 @@ if (type === 'attr') {
     white-space: nowrap;
     --bdc: color-mix(in srgb, var(--base), var(--keycolor) 25%);
 
-    > code {
+    /* slot 由来の code はスコープ属性を持たないので :global で除外する */
+    > :global(code) {
       font: inherit !important;
       padding: 0 !important;
       background-color: transparent;
