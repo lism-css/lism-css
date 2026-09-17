@@ -1,4 +1,4 @@
-基準日: 2026-09-10・コミットb6b5a4fc
+基準日: 2026-09-17・コミット6c8b2a1c
 
 # docs-md integration 処理フロー
 
@@ -67,12 +67,12 @@
 - リンク先: 各ページの`.md`（`convert-html-to-md.ts`の生成物）。
 
 
-## `vercel.ts`
+## `.md`の応答ヘッダー
 
-`apps/site/vercel.ts`で`*.md`に2つのヘッダーを付ける。
+`apps/site/public/_headers`の`/*.md`ルールと、`wrangler.jsonc`の`run_worker_first: ["/*.md"]`で`.md`だけに挟まる`apps/site/worker/index.ts`で付ける。
 
-- `X-Robots-Tag: noindex`: 検索結果には載せない（AI向けクロールは許容）。
-- `Content-Type: text/markdown; charset=utf-8`
+- `X-Robots-Tag: noindex`: 検索結果には載せない（AI向けクロールは許容）。`_headers`で付け、Workerも成功応答と304に明示する。
+- `Content-Type: text/markdown; charset=utf-8`: 静的アセット配信はcharsetを付けないため、Workerが成功応答と304に付ける。存在しない`.md`の404はHTMLのまま返し、`text/markdown`を付けない（`_headers`に書くとパスパターン式のため404にも付いてしまう）。
 
 
 ## 出力の確認

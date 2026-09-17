@@ -1,7 +1,7 @@
 # Plan: apps/site のデプロイ先を Vercel から Cloudflare Workers へ移行する（#511）
 
-基準日: 2026-09-16・9b64a30ca
-状態: In progress（Phase 1〜5 完了。2026-09-16 に `lism-css.com` の配信元を Worker へ切り替え、PR 2 #625 を main へ反映済み。残り: Phase 6 の監視（2026-09-16 から 1〜2 週間）→ Phase 7）
+基準日: 2026-09-17・6c8b2a1cf
+状態: In progress（Phase 1〜6 完了。Phase 7 のリポジトリ側クリーンアップは PR 3 で対応中。残り: Vercel 側のドメイン解除・削除 → プラン削除）
 対象Issue: [#511](https://github.com/ddryo/lism-css/issues/511)（[#506](https://github.com/ddryo/lism-css/issues/506) はクローズ済み。本プラン内で対応する）
 
 ## 概要 / ゴール
@@ -238,21 +238,21 @@ WorkerのCustom Domainは「既存のCNAMEレコードがあるホスト名に�
    - プレビューURLはPhase 1で`"preview_urls": true`を明示済みのため無効化されない（`preview_urls`未指定だと`workers_dev`に連動して無効化される）。ただし非本番ブランチのビルドはPhase 3でOFFにしたため、ブランチpushでプレビューURLが発行されることはない
 8. [x] mainデプロイ後、本番で`--expect-https-redirect`付きスモークテストを実行し、HSTSの付与と`lism-site.loos.workers.dev`が応答しなくなったことを確認する（2026-09-16 07:12 UTCにデプロイ完了。スモークテスト36件合格、`.md`にもHSTS付与、workers.devはCloudflareの`error code: 1042`（404）で無効化を確認）
 
-### Phase 6: 事後確認・監視（1〜2週間。2026-09-16から）
+### Phase 6: 事後確認・監視（2026-09-16〜17。切り替え後のGooglebotクロール成功を確認できたため、1〜2週間の監視は不要と判断して短縮）
 
 - [x] 本番URLでPhase 2のチェックリストを再実施（スモークテストは`--base=https://lism-css.com --expect-https-redirect`でPhase 5に合格済み。2026-09-16: Pagefind検索（ja/en）・OG画像4ディレクトリ・カスタム404・cdn画像の目視確認OK）
-- [ ] Search Consoleでsitemap再取得・インデックスエラーを監視（ドメイン不変のためプロパティ再登録は不要）（2026-09-16 07:19 UTCに`sitemap-index.xml`を再送信。切り替え前の最終取得は2026-09-09で218 URL・エラー0・警告0。数日後に取得日時と件数・エラー数を確認し、以後1〜2週間監視する）
-- [ ] メール・`templates.lism-css.com`・`cdn.lism-css.com`（docsの画像が表示されること）・`wp.lism-css.com`が引き続き動いていることを確認（2026-09-16: 3つのサブドメインは応答を確認済み。メール受信はPhase 7前に一度確認する）
+- [x] Search Consoleでsitemap再取得・インデックスエラーを監視（ドメイン不変のためプロパティ再登録は不要）（2026-09-16 07:19 UTCに`sitemap-index.xml`を再送信し、同時刻に再取得済み。218 URL・エラー0・警告0で切り替え前（2026-09-09）と同じ。2026-09-17のURL検査で、トップと`/en/`が切り替え後にクロールされPage Fetch成功・インデックス済み・正規URL不変であることを確認）
+- [x] `templates.lism-css.com`・`cdn.lism-css.com`（docsの画像が表示されること）・`wp.lism-css.com`が引き続き動いていることを確認（2026-09-16: 3つとも応答を確認済み。`lism-css.com`のメールは未使用のため受信確認はしない。MXは残す）
 
 ### Phase 7: クリーンアップ（安定確認後 → PR 3）
 
 前提：Phase 6の安定確認が完了し、Phase 5で記録したapex・wwwそれぞれの切り替え時刻から、切り替え前のTTLがすべて経過していること。Phase 4のNS移管後の待機時間で代替しない。
 
-- [ ] `apps/site/vercel.ts`を削除
-- [ ] `apps/site/src/config/redirects.ts`の`vercelRedirects`/`VercelRedirect`型を削除（`_redirects`に一本化）
-- [ ] `documents/docs-md.md`の`vercel.json`セクション（「## 5.」）を`_headers`ベースの記述に更新
-- [ ] `apps/site/scripts/generate-lastmod-map.ts`冒頭コメントの「Vercel等のCI環境では〜」の文言を更新
-- [ ] ルート`.gitignore`の`.vercel`を削除
+- [x] `apps/site/vercel.ts`を削除
+- [x] `apps/site/src/config/redirects.ts`の`vercelRedirects`/`VercelRedirect`型を削除（`_redirects`に一本化）
+- [x] `documents/docs-md.md`の`vercel.ts`セクションを`_headers`+Workerベースの記述に更新
+- [x] `apps/site/scripts/generate-lastmod-map.ts`冒頭コメントの「Vercel等のCI環境では〜」の文言を更新
+- [x] ルート`.gitignore`の`.vercel`を削除
 - [ ] Vercelの`lism-css-docs`プロジェクトから`lism-css.com`と`www.lism-css.com`の割り当てを外す
 - [ ] Vercelチームから`lism-css.com`を削除する（Vercel DNSのゾーンが消える。以後はNSをVercelへ戻すロールバックができなくなる）
 - [ ] Vercelプロジェクト`lism-css-docs`を削除する
@@ -294,7 +294,7 @@ Phase 0・3・4・5・6はダッシュボード・確認作業でコード変更
 ## 未決事項・要確認・事前準備
 
 - 解決済み: Vercelの環境変数は無し、Node.jsは22.x（Phase 0で確認）
-- `lism-css.com`のメール利用有無（Google管理コンソールで確認。不明ならMXをコピーする）
+- 解決済み: `lism-css.com`のメールは未使用（Google Workspaceのセカンダリドメインとして登録はあり）。MXはコピー済みで残す
 - 解決済み: Vercelで「プロジェクトからドメインを外す」と「チームからドメインを削除する」は別操作で、DNSゾーンは後者にひもづく（Phase 0で確認）
 - 解決済み: `.md`のデフォルトContent-Typeはローカル（miniflare）ではcharset付き、本番ではcharset無し。フォールバックWorkerで`text/markdown; charset=utf-8`を付与する（2026-09-14）
 - 解決済み: `/*.md`パターンは浅い階層（`/ui.md`）・深い階層（`/docs/primitives/a--decorator.md`）ともPhase 2で`X-Robots-Tag`付与を実測
@@ -351,6 +351,6 @@ Phase 7でVercelチームからドメインを削除したあとは、Bのロー
 - `http://lism-css.com/`がHTTPSへ301され、HTML・`.md`の応答にVercel時代と同じHSTS（`max-age=63072000`）が付いている
 - workers.devホスト上のURL（プレビューURL含む）のHTML・`.md`に`X-Robots-Tag: noindex`が付いている
 - `/naming.md`等の存在しない`.md` URLがHTML 404で返り`text/markdown`が付かない（#506の対応完了）
-- Search Consoleで1〜2週間インデックスエラーが増えていない
+- Search Consoleでsitemapが再取得され（エラー0）、切り替え後のGooglebotクロールがPage Fetch成功している
 - Phase 5の切り替え後も旧Vercel向けIPでHTTPS配信・wwwリダイレクトを確認でき、Phase 7の開始条件を満たすまでドメイン割り当てを維持している
 - Phase 7完了時点でリポジトリからVercel痕跡（`vercel.ts`・`vercelRedirects`・`.gitignore`の`.vercel`）が消え、Vercel上のプロジェクトとドメイン登録も消えている
