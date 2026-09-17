@@ -188,8 +188,10 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm --filter @lism-css/catalog exec playwright install chromium --with-deps
 
+      # 依存パッケージのビルドがキャッシュに乗ると全パッケージのテストが同時に走り出し、4 vCPU のランナーでは
+      # 実ビルドを伴う plugin のテストが 5 秒のタイムアウトを超える（#512 と同じ症状）。turbo 既定の 10 並列を絞る
       - name: Run tests
-        run: pnpm test
+        run: pnpm test --concurrency=3
 
   templates-private-check:
     runs-on: ubuntu-latest
