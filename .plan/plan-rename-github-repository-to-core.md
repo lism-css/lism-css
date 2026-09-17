@@ -1,4 +1,4 @@
-基準日: 2026-09-05・e2b7ac10
+基準日: 2026-09-17・684f5fd4a
 
 # GitHubリポジトリをlism-css/coreへリネームする
 
@@ -21,15 +21,15 @@
 - `packages/create-lism/tsup.config.ts`は`lism-cli`を依存ごとbundleへ内包する。CLI本体だけを公開しても、既存の`create-lism`の取得先は変わらない。
 - npm公開はルート`package.json`の公開スクリプトを使う運用。[CLIガイド](../documents/cli-guide.md)が公開手順と事前チェックを管理している。
 - `.github/workflows/test.yml`に旧名の固定参照やnpm公開処理はない。現時点でリネームのためのCI定義変更は不要。
-- 公式サイトはVercel連携中で、`main`のコミットステータスでもVercelの成功を確認した。テンプレートプレビューはGitHubリポジトリ名ではなくCloudflare Pagesのプロジェクト名を指定して直接デプロイする構成。
+- 公式サイトはCloudflare Workers Builds（Git連携、Worker名`lism-site`、本番ブランチ`main`）でデプロイしている（#511で2026-09-17に移行完了。Vercelは削除済み）。#624でGitHub Actionsへ移す予定があるため、実施時点の経路を確認する。テンプレートプレビューはGitHubリポジトリ名ではなくCloudflare Pagesのプロジェクト名を指定して直接デプロイする構成。
 
 GitHubはリネーム時に既存のWeb参照とGit操作を転送する。旧名を再利用すると転送が失われる。GitHub PagesのプロジェクトURLと、旧名で参照されるActionは転送の例外。[GitHub公式仕様](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository)
 
 ### 別プランとの関係
 
-- [Cloudflare Workers移行プラン](./plan-511-docs-to-cloudflare-workers.md)も別作業。GitHubのリネームを先に終える場合は新名でGit連携を登録する。Workers移行が先なら、確認対象をVercelから実際に稼働しているWorkers Buildsへ変更する。
-- Workers移行プランの却下案に「ドメイン・GitHub・npmすべて`lism-css`のまま維持する」とあるが、これは`lismcss`表記への変更を退けた判断であり、本プランと矛盾しない。本プランはOrganization名`lism-css`を維持し、リポジトリ名だけを`core`へ変える。あの記述を改名を戻す根拠にしない。
-- GitHubの改名とホスティング・DNSの切り替えを同時に行わない。どちらかの配信確認を終えてから次に進む。先後に機能上の必須依存はない。
+- Cloudflare Workers移行（#511）は完了済み。現在のGit連携はWorkers Buildsで、Cloudflare側にリポジトリ`lism-css/lism-css`を接続している。改名後にこの接続先が新名へ追従するかはコードから確定できないため、実施時に確認する。#624（デプロイのGitHub Actions化）が先に終わっていれば、Git連携はリポジトリ内のワークフローとsecretsだけになり、改名への追従はGitHub側で完結する。
+- 本プランはOrganization名`lism-css`を維持し、リポジトリ名だけを`core`へ変える。ドメイン・npm名は変えない。
+- GitHubの改名と#624のデプロイ経路変更を同時に行わない。どちらかの配信確認を終えてから次に進む。先後に機能上の必須依存はない。
 
 ## 不変条件
 
@@ -153,7 +153,7 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 ## 未確認事項・実施前に決めること
 
 - 実施日時と、別プランに対する先後関係。
-- 実施時点のVercelまたはWorkers Buildsが改名へ自動追従するか。コードだけでは接続設定を確定できない。
+- 実施時点のデプロイ経路（Workers Builds、または#624後のGitHub Actions）が改名へ自動追従するか。Workers Buildsの接続設定はコードだけでは確定できない。
 - skills.shの集計・掲載URLの引継ぎ方法。リネーム後に旧sourceが残る[未解決報告](https://github.com/vercel-labs/skills/issues/703)があり、自動移行を保証できない。引継ぎ保証が得られない場合に受容するかは未決。
 - npm側にリポジトリ名を固定したTrusted Publishing設定が存在するか。現行のCIは使用していないが、導入されていた場合は新名で接続を作り直す必要がある。[npm公式仕様](https://docs.npmjs.com/trusted-publishers/)
 - Organization外の利用者やサービスが持つ参照は網羅できない。調査時の検索結果を全件保証として扱わない。

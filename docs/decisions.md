@@ -1,6 +1,16 @@
-基準日: 2026-09-13・コミットd43519543（作業ツリーを含む）
+基準日: 2026-09-17・コミット684f5fd4a
 
 # 意思決定の記録
+
+## 2026-09-17: 公式サイトの配信を Vercel から Cloudflare Workers へ移し、DNS ゾーンも Cloudflare に置く
+
+apps/site は完全な静的サイトで、Vercel でのデプロイは昔の名残だった。Vercel の`headers`設定はパスパターン式のため、存在しない`.md`の404にも`text/markdown`が付く不整合（#506）を直せなかった。Worker の Custom Domain に必要なため、Vercel DNS にあった`lism-css.com`のゾーンも Cloudflare へ移管した（#511。2026-09-17完了、Vercel 側のプロジェクト・ドメイン・DNSゾーンは削除済みでロールバック手段は無い）。
+
+- 決定: 配信は Cloudflare Workers の静的アセット配信＋Workers Builds の Git 連携（`main`への push で本番デプロイ）。`@astrojs/cloudflare`アダプターは使わない。設定は`apps/site/wrangler.jsonc`・`public/_headers`・`public/_redirects`で管理し、`workers_dev: false`もダッシュボードではなく`wrangler.jsonc`で持つ（ダッシュボードだけの変更はデプロイで戻る）。
+- 決定: `.md`の`Content-Type`（charset付き）は`_headers`に書かず、`run_worker_first`の小さな Worker（`apps/site/worker/index.ts`）で成功応答と304にだけ付ける。`_headers`だと404にも付いて #506 が再発する。
+- 決定: HSTS（Vercel と同じ2年）は`_headers`の`/*`ルールで付ける。ダッシュボードの HSTS 設定は max-age の上限が12か月で再現できない。www→apex は Redirect Rule で301（Vercel 時代は307）、HTTP→HTTPS はゾーン設定 Always Use HTTPS。
+- 却下: Cloudflare Pages（新規は Workers が公式推奨）。小文字 URL の meta refresh リダイレクト76件を`_redirects`で301化する案（移行と独立した変更のためスコープ外）。
+- 受容: リダイレクト応答に HSTS が付かない、存在しない URL の404に`X-Robots-Tag: noindex`が付く、`.cache/og/`が Workers Builds で永続化されずビルドが約9分かかる（#624で扱う）。
 
 ## 2026-09-13: weightの解釈をアイコンパッケージへ委ねる
 
