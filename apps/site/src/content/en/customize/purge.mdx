@@ -5,6 +5,10 @@ description: 'Set up CSS Purge to strip unused Lism CSS classes at build time an
 
 CSS Purge scans your build output and **keeps only the Lism CSS classes you actually use**. Plugins for Vite and Astro are available from the `@lism-css/plugin` package.
 
+:::warning
+CSS Purge can only detect complete class names that appear as literal strings in the generated HTML / JS. Classes generated from props on the client, such as in SPAs or Astro `client:only` islands, **cannot be detected automatically, even with static prop values**. Read [Scope and limitations](#scope-and-limitations) before enabling it.
+:::
+
 ```bash frame="none"
 pnpm add -D @lism-css/plugin
 ```
@@ -60,6 +64,29 @@ At build time, the plugin scans the generated HTML / JS for class names that fol
 - Attribute selectors such as `[class*="-p:"]` that match used classes or the safelist are kept
 
 
+## Scope and limitations
+
+React / Astro components convert props into class names at runtime. For example, `<Box p="20">` produces `-p:20`, but the client JS may only contain `p: "20"`. **Even a static prop value does not protect its CSS from removal if the complete class name is absent from the build output.**
+
+| Setup or case | What can be detected |
+| --- | --- |
+| Astro SSG (prerender) | Classes rendered in the final HTML |
+| SPAs (such as Vite + React) | Classes generated from props in CSR regions cannot be detected automatically |
+| Astro `client:only` | Classes generated from props cannot be detected automatically because the initial HTML has no rendered component output |
+| Prop values that change after hydration | Classes absent from both the initial HTML and literal strings in JS cannot be detected |
+| On-demand SSR pages | Only complete class names in server chunks; classes assembled from props at request time cannot be detected |
+| Next.js | No CSS Purge plugin is provided (the integrated plugin only supports CSS building) |
+
+For example, if `<Box p={isOpen ? 20 : 40}>` only renders the 20 branch into HTML at build time, `-p:40` for the other branch is not retained unless that complete string appears elsewhere in the build output. Keep all classes needed by these regions using [`safelist`](#safelist). If listing the classes or matching their families is impractical, disable purge by omitting the integrated plugin's `purge` option, setting it to `false`, or removing the standalone purge plugin.
+
+Build warnings are emitted under these conditions:
+
+- Astro: output HTML contains a `client:only` island.
+- Vite: client JS chunks include the Lism runtime and no Lism classes are detected in HTML.
+
+Warnings are emitted even when `safelist` is configured, because its presence does not prove that all required classes are protected. These checks do not detect every missing class: **the absence of a warning does not guarantee that classes generated from props are retained.**
+
+
 ## Using the standalone plugin directly
 
 You can also add the standalone plugin to your Vite or Astro config without the integrated plugin.
@@ -89,7 +116,7 @@ export default defineConfig({
 
 The Vite plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens during `vite dev`. Unused selectors are stripped only when you run `vite build`. The Astro integration hooks into `astro:build:done`, scans HTML / JS under the build output, and rewrites the CSS files in place.
 
-In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender = false`), the server output (`dist/server/`) is also scanned and reference-rewritten in addition to the client output (`dist/client/`). This ensures that classes used only on on-demand rendered pages are also kept.
+In SSR / hybrid setups (`output: 'server'`, or when some routes have `prerender = false`), the server output (`dist/server/`) is also scanned and reference-rewritten in addition to the client output (`dist/client/`). Classes used only on on-demand pages are retained if they appear as complete literal strings in server chunks. Classes assembled from props at runtime still require the measures described in [Scope and limitations](#scope-and-limitations).
 
 
 ## Pairing with full.css
@@ -155,7 +182,7 @@ The set of classes CSS Purge treats as "Lism classes." When not specified, it's 
 
 ## Caveats
 
-- When you build class names dynamically, make sure the complete class name remains in your source (write it as `` `-p:${size}` ``; do not concatenate `'p-'` and `size` separately). If that is not practical, add the class to `safelist`.
+- When switching class names, write complete literal strings, such as `size === 'l' ? '-p:40' : '-p:30'`. Neither template literals like `` `-p:${size}` `` nor concatenation like `'-p:' + size` expose a complete class name for detection. If complete strings are impractical, add the classes to `safelist`.
 - CSS Purge keeps **every class used anywhere in the entire build output** (not per page). A class is retained as long as it is used on any page, even if it is unused on a given page. This is intentional so that a single CSS shared across multiple pages is never broken.
 - CSS Purge only targets CSS emitted by Lism CSS. Your own CSS and styles from other libraries are not changed.
 - CSS Purge runs independently of the unused-class removal features of other frameworks such as Tailwind CSS.
