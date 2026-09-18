@@ -1,6 +1,7 @@
 // vite.config.js
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
 import ts from 'typescript';
 import dts from 'unplugin-dts/vite';
 // import { nodePolyfills } from 'vite-plugin-node-polyfills';
@@ -72,6 +73,11 @@ export default defineConfig({
       enabled: true,
       exclude: ['**/node_modules/**', '**/.git/**', '**/ResponsiveProps.module-augmentation.spec-d.ts'],
     },
+    projects: [
+      // 上の設定を継承する既存テスト（jsdom）。Astroコンポーネントのテストは astro プロジェクト側で実行する
+      { extends: true, test: { name: 'react', exclude: [...configDefaults.exclude, 'packages/astro/**'] } },
+      './vitest.astro.config.js',
+    ],
   },
   build: {
     // target: 'es2015',

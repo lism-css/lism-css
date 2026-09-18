@@ -5,7 +5,7 @@ import { Lism } from '../../Lism';
 
 type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
-const { as, exProps, ...props } = Astro.props;
+const { as, ...props } = Astro.props;
 
 const hasHref = !!props.href;
 // BoxLinkは基本的にリンク要素（aタグ）として機能するため、
@@ -13,4 +13,4 @@ const hasHref = !!props.href;
 const tag: HTMLTag = !hasHref && (as ?? 'a') === 'a' ? 'div' : (as ?? 'a');
 ---
 
-<Lism isBoxLink as={tag} {...props} {...exProps}><slot /></Lism>
+<Lism isBoxLink as={tag} {...props}><slot /></Lism>

@@ -6,7 +6,7 @@ import { Lism } from '../../Lism';
 
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & DecoratorOwnProps;
 
-const { as: Tag = 'div', exProps, ...props } = Astro.props;
+const props = Astro.props;
 ---
 
-<Lism as={Tag} atomic="decorator" aria-hidden="true" {...props} {...exProps}><slot /></Lism>
+<Lism atomic="decorator" aria-hidden="true" {...props}><slot /></Lism>
