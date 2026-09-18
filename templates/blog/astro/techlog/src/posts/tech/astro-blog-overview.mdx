@@ -15,10 +15,11 @@ AstroとLism CSS/`@lism-css/ui`に加え、以下を入れている。
 - `@astrojs/mdx` — 記事は `.mdx` で書く
 - `@astrojs/sitemap` — sitemap生成
 - `astro-expressive-code` — コードハイライト
-- `remark-directive` — `:::` 記法
+- `@astrojs/markdown-satteri` / `satteri` — Astro 7 既定の Markdown プロセッサ Sätteri と、そのプラグイン API
+- `github-slugger` — 見出し ID の生成
 - `pagefind` / `@pagefind/default-ui` — 全文検索
 
-`astro.config.mjs`で`expressiveCode`を`mdx`より前に並べ、`markdown.processor`（`@astrojs/markdown-remark`の`unified()`）に`remark-directive`（`:::`記法の解析）と自前の変換プラグイン3つ（ラベルありをCallout・なしをAlertへ変換、URL/`[[slug]]`段落のリンクカード化、文中`[[slug]]`のWikiLink化）を登録している。さらにsitemap integrationで、記事ごとの`lastmod`も補完する。
+`astro.config.mjs`で`expressiveCode`を`mdx`より前に並べ、`markdown.processor`（`@astrojs/markdown-satteri`の`satteri()`）で`features.directive: true`（`:::`記法の解析）を有効にし、自前の変換プラグイン4つ（ラベルありをCallout・なしをAlertへ変換、URL/`[[slug]]`段落のリンクカード化、文中`[[slug]]`のWikiLink化、見出しへのID付与とh2/h3へのアンカーリンク追加）を登録している。MDXも同じ`markdown.processor`で処理される。さらにsitemap integrationで、記事ごとの`lastmod`も補完する。
 
 ## ディレクトリ構成
 
@@ -28,7 +29,7 @@ src/
 ├── config/          # サイト設定 + カテゴリ定義
 ├── content.config.ts
 ├── layouts/         # Layout / ArchiveLayout / PageLayout
-├── lib/             # TOC生成・年月アーカイブ・OG画像・sitemapのlastmod・remarkプラグイン等
+├── lib/             # TOC生成・年月アーカイブ・OG画像・sitemapのlastmod・Sätteriプラグイン（`satteri/`）等
 ├── pages/           # ルーティング
 ├── posts/           # 記事 MDX（カテゴリごとにディレクトリ）
 │   ├── tech/
@@ -80,7 +81,7 @@ updated: '2026-05-25'
 
 ## MDX と Callout / Alert
 
-`:::` 記法で `@lism-css/ui` の `Callout` / `Alert` を呼べるよう、`src/lib/remark-directive.mjs` で変換している。
+`:::` 記法で `@lism-css/ui` の `Callout` / `Alert` を呼べるよう、`src/lib/satteri/directive.mjs`（MDAST プラグイン）で変換している。対応外の type や `::name` のような leaf directive はビルドエラーになる（Sätteri は未処理の directive を黙って捨てるため、typo に気付けるようにしている）。本文中の `1:2` のような `:name` はそのままテキストとして残る。
 
 - `:::type[タイトル]` → `<Callout type="..." title="...">`
 - `:::type` → `<Alert type="...">`
@@ -99,7 +100,7 @@ updated: '2026-05-25'
 
 `Callout` / `Alert` / `LinkCard` / `WikiLink` は `posts/[...slug].astro` で `<Content components={{ ... }} />` に渡しているので、記事ファイル側で import する必要はない。
 
-> `remark-directive` 自体は `.md` でも動くが、このプラグインは `:::` を JSX ノードに変換するため `.md` のレンダーパイプラインでは機能しない。`content.config.ts` も `**/*.mdx` に絞ってあるので `.md` は収集対象外。
+> Sätteri の directive 解析自体は `.md` でも動くが、このプラグインは `:::` を JSX ノード（Astro コンポーネント）に変換するため `.md` のレンダーパイプラインでは機能しない。`content.config.ts` も `**/*.mdx` に絞ってあるので `.md` は収集対象外。
 
 ## リンクカード / WikiLink（自動展開）
 

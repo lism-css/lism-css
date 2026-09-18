@@ -2,13 +2,12 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
-import remarkDirective from 'remark-directive';
-import { unified, rehypeHeadingIds } from '@astrojs/markdown-remark';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { satteri } from '@astrojs/markdown-satteri';
 import { lismCss } from '@lism-css/plugin/astro';
-import { remarkDirectiveHandler } from './src/lib/remark-directive.mjs';
-import { remarkLinkCard } from './src/lib/remark-link-card.mjs';
-import { remarkWikiLink } from './src/lib/remark-wiki-link.mjs';
+import { directive } from './src/lib/satteri/directive.mjs';
+import { linkCard } from './src/lib/satteri/link-card.mjs';
+import { wikiLink } from './src/lib/satteri/wiki-link.mjs';
+import { headingAnchor } from './src/lib/satteri/heading-anchor.mjs';
 import { loadPostLastmodMap } from './src/lib/sitemap-lastmod.mjs';
 
 const postLastmodMap = loadPostLastmodMap({
@@ -47,31 +46,17 @@ export default defineConfig({
     lismCss({ purge: { report: true } }),
   ],
   markdown: {
-    // remark/rehype パイプライン（unified）をプロセッサとして明示指定
-    processor: unified({
-      // remark-directive: :::記法をASTへ解析
-      // remarkDirectiveHandler: ラベルあり → Callout、ラベルなし → Alert
-      // URL単独段落/[[slug]]単独段落 → <LinkCard />、文中の[[slug]] → <WikiLink />
-      remarkPlugins: [remarkDirective, remarkDirectiveHandler, remarkLinkCard, remarkWikiLink],
-      // h2/h3 見出しに #アンカーリンクを追加
-      // MDX integration の rehypeHeadingIds はユーザープラグインより後に走るため、明示的に先に追加
-      rehypePlugins: [
-        rehypeHeadingIds,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'append',
-            properties: {
-              class: 'c--headingAnchor',
-              ariaLabel: 'Link to this section',
-            },
-            // "#" は CSS の ::after で描画する。アンカー本体にテキストを入れないことで、
-            // MDX integration が後段で再実行する rehypeHeadingIds の text 抽出に "#" が混入するのを防ぐ
-            content: [],
-            test: (node) => ['h2', 'h3'].includes(node.tagName),
-          },
-        ],
-      ],
+    processor: satteri({
+      features: {
+        // :::type 記法を directive で解析する
+        directive: true,
+        // 本文中の `--`（b-- / c-- などのクラス名）をダッシュに変換しない。引用符と省略記号の変換は既定のまま
+        smartPunctuation: { dashes: false },
+      },
+      // :::type[ラベル] → Callout / :::type → Alert、URL 単独段落 → LinkCard、[[slug]] → LinkCard / WikiLink
+      mdastPlugins: [directive, linkCard, wikiLink],
+      // 見出し ID と h2 / h3 の #アンカーリンク
+      hastPlugins: [headingAnchor],
     }),
   },
   vite: {

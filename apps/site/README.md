@@ -4,7 +4,7 @@ Astro + TypeScript + MDX で構築された、Lism CSS (`packages/lism-css`) & L
 
 | 機能 | 技術 |
 |------|------|
-| フレームワーク | Astro 6.x |
+| フレームワーク | Astro 7.x |
 | コンテンツ | MDX（コンテンツコレクション） |
 | CSS | lism-css |
 | 検索 | Pagefind（静的検索ライブラリ） |

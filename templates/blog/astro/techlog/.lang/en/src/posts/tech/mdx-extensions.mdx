@@ -198,12 +198,13 @@ pnpm dev
 
 ## Where the specs live
 
-The remark plugins that implement each piece of syntax are gathered under `src/lib/`.
+The Sätteri plugins that implement each piece of syntax are gathered under `src/lib/satteri/`.
 
 | File | Role |
 | --- | --- |
-| `remark-directive.mjs` | Converts `:::type[label]` / `:::type` into `<Callout>` / `<Alert>` |
-| `remark-link-card.mjs` | Converts a URL-only paragraph into `<LinkCard type="external">` |
-| `remark-wiki-link.mjs` | Converts `[[slug]]` / `[[slug\|alias]]` into `<LinkCard type="internal">` / `<WikiLink>` |
+| `directive.mjs` | Converts `:::type[label]` / `:::type` into `<Callout>` / `<Alert>` (MDAST) |
+| `link-card.mjs` | Converts a URL-only paragraph into `<LinkCard type="external">` (MDAST) |
+| `wiki-link.mjs` | Converts `[[slug]]` / `[[slug\|alias]]` into `<LinkCard type="internal">` / `<WikiLink>` (MDAST) |
+| `heading-anchor.mjs` | Adds IDs to headings with `github-slugger` and appends anchor links to h2/h3 (HAST) |
 
 For details, see the template walkthrough in [[astro-blog-overview]].
