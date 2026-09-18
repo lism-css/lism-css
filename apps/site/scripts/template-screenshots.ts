@@ -181,25 +181,25 @@ function buildTemplateLang(pkgName: string, lang: string): boolean {
   return r.status === 0;
 }
 
-async function isPortInUse(port: number): Promise<boolean> {
-  // Astro 7 の preview は IPv6（::1）側で listen するため、127.0.0.1 への bind 試行だけでは検出できない。
-  // まず HTTP で応答の有無を見る（応答があれば使用中）
-  try {
-    await fetch(`http://localhost:${port}/`, { signal: AbortSignal.timeout(500) });
-    return true;
-  } catch {
-    /* 応答なし → bind 試行で判定 */
-  }
+/** host:port へ TCP 接続できるか（listen 中のプロセスがあるか） */
+function canConnect(host: string, port: number, timeoutMs = 500): Promise<boolean> {
   return new Promise((resolve) => {
-    const tester = net.createServer();
-    tester.once('error', (err: NodeJS.ErrnoException) => {
-      resolve(err.code === 'EADDRINUSE');
-    });
-    tester.once('listening', () => {
-      tester.close(() => resolve(false));
-    });
-    tester.listen(port, '127.0.0.1');
+    const socket = net.connect({ host, port });
+    const done = (result: boolean) => {
+      socket.destroy();
+      resolve(result);
+    };
+    socket.setTimeout(timeoutMs, () => done(false));
+    socket.once('connect', () => done(true));
+    socket.once('error', () => done(false));
   });
+}
+
+async function isPortInUse(port: number): Promise<boolean> {
+  // Astro 7 の preview は IPv6（::1）側で listen するため、127.0.0.1 だけ見ると使用中を見逃す。
+  // HTTP 応答の有無ではなく TCP 接続の可否で判定する（応答が遅いサーバーを未使用と誤判定しないため）
+  const [v4, v6] = await Promise.all([canConnect('127.0.0.1', port), canConnect('::1', port)]);
+  return v4 || v6;
 }
 
 /** ポートが解放されるまで待機（前テンプレの preview server が完全終了するまで） */
@@ -272,6 +272,11 @@ function startPreviewServer(entry: TemplateEntry): Promise<ChildProcess> {
       resolved = true;
       reject(new Error(`server 起動エラー: ${err.message}`));
     });
+    server.on('exit', (code, sig) => {
+      if (resolved) return;
+      resolved = true;
+      reject(new Error(`server が起動前に終了しました (${sig ?? `exit ${code}`})`));
+    });
 
     // フォールバック: 一定時間後に強制チェック
     setTimeout(() => {
@@ -308,29 +313,27 @@ async function waitForServer(url: string, maxRetries = 60, interval = 500): Prom
   return false;
 }
 
-function stopServer(server: ChildProcess | null) {
+function stopServer(server: ChildProcess | null, signal: NodeJS.Signals = 'SIGTERM') {
   if (!server) return;
   try {
-    if (server.pid) process.kill(-server.pid, 'SIGTERM');
-    else server.kill();
+    if (server.pid) process.kill(-server.pid, signal);
+    else server.kill(signal);
   } catch {
     /* noop */
   }
 }
 
 /**
- * ポートを listen しているプロセスを直接止める（stopServer のグループ宛 SIGTERM で止まらなかったときの保険）。
- * サーバーが残ったまま次のパスへ進むと、前のサーバーのページを撮ってしまう。
+ * 自分が起動した server を止め、ポートが解放されるまで待つ。
+ * 停止対象は自分のプロセスグループに限定する（ポートを使う他のプロセスを止めない）。
+ * 解放されなければ次のパスで別サーバーを撮ってしまうので、警告ではなくエラーで中止する。
  */
-function killPortListeners(port: number) {
-  const r = spawnSync('lsof', [`-tiTCP:${port}`, '-sTCP:LISTEN'], { encoding: 'utf-8' });
-  for (const pid of (r.stdout ?? '').split('\n').filter(Boolean)) {
-    try {
-      process.kill(Number(pid), 'SIGTERM');
-    } catch {
-      /* noop */
-    }
-  }
+async function stopServerAndFreePort(server: ChildProcess | null, port: number): Promise<void> {
+  stopServer(server, 'SIGTERM');
+  if (await waitForPortFree(port, 3_000)) return;
+  stopServer(server, 'SIGKILL');
+  if (await waitForPortFree(port)) return;
+  throw new Error(`ポート ${port} が解放されませんでした。占有中のプロセスを確認して停止してください`);
 }
 
 // ───────────────────────────────────────────
@@ -519,17 +522,7 @@ async function runPass(entry: TemplateEntry, pass: Pass, browser: Browser, stats
     await realPage.close();
     if (grayPage) await grayPage.close();
   } finally {
-    stopServer(server);
-    // 次のパス/テンプレに進む前にポートが解放されるまで待つ（重要：前 server が残ると
-    // 次の撮影で前のページを撮ってしまう）
-    let freed = await waitForPortFree(entry.config.port, 3_000);
-    if (!freed) {
-      killPortListeners(entry.config.port);
-      freed = await waitForPortFree(entry.config.port);
-    }
-    if (!freed) {
-      console.warn(`⚠️  ポート ${entry.config.port} の解放が確認できませんでした`);
-    }
+    await stopServerAndFreePort(server, entry.config.port);
   }
 }
 
