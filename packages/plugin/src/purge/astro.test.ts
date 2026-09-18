@@ -37,6 +37,47 @@ async function fileExists(path: string): Promise<boolean> {
 }
 
 describe('lismPurgeAstro (Astro)', () => {
+  test.each([undefined, ['-p:20']])('client:onlyはsafelist=%jでもビルドごとに1回警告する', async (safelist) => {
+    const dir = await setupDist({
+      'main.css': '.-p\\:20{padding:20px}.-m\\:10{margin:10px}',
+      'index.html': '<astro-island component-url="/app.js" client="only"></astro-island>',
+      'nested/index.htm': "<astro-island client = 'only' props='{}'></astro-island>",
+    });
+    try {
+      const integration = lismPurgeAstro({
+        safelist,
+        known: { classes: new Set(['-p:20', '-m:10']), attrs: new Set() },
+      });
+      const logger = { info: vi.fn(), warn: vi.fn() };
+      const hook = getBuildDoneHook(integration);
+      await hook({ dir: pathToFileURL(dir + '/'), logger } as never);
+      expect(logger.warn).toHaveBeenCalledTimes(1);
+      expect(logger.warn).toHaveBeenCalledWith(expect.stringMatching(/client:only.*static prop values.*safelist.*disable purge/));
+      const css = await readFile(join(dir, 'main.css'), 'utf8');
+      expect(css.includes('-p\\:20')).toBe(!!safelist);
+      expect(css).not.toContain('-m\\:10');
+      await hook({ dir: pathToFileURL(dir + '/'), logger } as never);
+      expect(logger.warn).toHaveBeenCalledTimes(2);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  test('SSG・通常のhydration・JS内の文字列はclient:only警告の対象外', async () => {
+    const dir = await setupDist({
+      'index.html': '<div class="-p:20"></div><astro-island client="load"></astro-island>',
+      'other.html': '<astro-island data-client="only" props="client=\'only\'"></astro-island><div client="only"></div>',
+      'app.js': 'const html = \'<astro-island client="only"></astro-island>\';',
+    });
+    try {
+      const logger = { info: vi.fn(), warn: vi.fn() };
+      await getBuildDoneHook(lismPurgeAstro())({ dir: pathToFileURL(dir + '/'), logger } as never);
+      expect(logger.warn).not.toHaveBeenCalled();
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
   test('lism signature を含まない CSS は書き換えられない', async () => {
     const original = '.button--primary{color:red}';
     const dir = await setupDist({

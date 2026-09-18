@@ -4,7 +4,8 @@ import { describe, test, expect, vi } from 'vitest';
 import { mkdir, mkdtemp, readFile, readdir, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { build as buildVite7 } from 'vite';
+import { fileURLToPath } from 'node:url';
+import { build as buildVite7, createLogger } from 'vite';
 import { build as buildVite8 } from 'vite8';
 import { lismPurge } from './vite';
 
@@ -29,7 +30,13 @@ function getGenerateBundle(plugin: ReturnType<typeof lismPurge>) {
   throw new Error('generateBundle hook not found');
 }
 
-type BuildFn = (config: { root: string; configFile: false; logLevel: 'silent'; plugins: unknown[] }) => Promise<unknown>;
+type BuildFn = (config: {
+  root: string;
+  configFile: false;
+  logLevel: 'silent';
+  plugins: unknown[];
+  customLogger?: ReturnType<typeof createLogger>;
+}) => Promise<unknown>;
 // Rollup（Vite 7）と Rolldown（Vite 8）で generateBundle の bundle 操作の扱いが違うため、両方で確認する
 const bundlers: [string, BuildFn][] = [
   ['Vite 7 (Rollup)', buildVite7 as unknown as BuildFn],
@@ -64,6 +71,99 @@ async function readBuildOutput(dir: string): Promise<{ cssName: string; css: str
 }
 
 describe('lismPurge (Vite)', () => {
+  test.each(bundlers)('%sの実ビルドで静的propsのCSR警告とsafelistの効果を確認する', async (_name, build) => {
+    for (const { htmlClass, safelist } of [
+      { htmlClass: '', safelist: undefined },
+      { htmlClass: '', safelist: ['-p:20'] },
+      { htmlClass: '-p:20', safelist: undefined },
+    ]) {
+      const dir = await setupViteProject(htmlClass);
+      try {
+        const runtime = fileURLToPath(import.meta.resolve('lism-css/lib/getLismProps'));
+        await writeFile(
+          join(dir, 'src/main.js'),
+          `import './style.css'; import getLismProps from ${JSON.stringify(runtime)}; document.body.className = getLismProps({ p: '20' }).className;`
+        );
+        const logger = createLogger();
+        const warn = vi.spyOn(logger, 'warn').mockImplementation(() => {});
+        await build({ root: dir, configFile: false, logLevel: 'silent', customLogger: logger, plugins: [lismPurge({ known, safelist })] });
+        const csrWarnings = warn.mock.calls.filter(([message]) => message.includes('possible CSR'));
+        expect(csrWarnings).toHaveLength(htmlClass ? 0 : 1);
+        const out = await readBuildOutput(dir);
+        expect(out.css.includes('-p\\:20')).toBe(!!htmlClass || !!safelist);
+        expect(out.css).not.toContain('-m\\:10');
+      } finally {
+        await rm(dir, { recursive: true, force: true });
+      }
+    }
+  });
+
+  test.each([
+    '/app/node_modules/lism-css/dist/components/Box.js',
+    '/app/node_modules/.pnpm/lism-css@0.29.1/node_modules/lism-css/dist/lib/getLismProps.js',
+    '/repo/packages/lism-css/src/lib/getLismProps.ts',
+    'C:\\app\\node_modules\\lism-css\\dist\\index.js?commonjs-proxy',
+  ])('HTMLにLismクラスがない場合にランタイム%sを検出して警告する', async (id) => {
+    const bundle = {
+      'index.html': { type: 'asset', source: '<div id="root"></div>' },
+      'app.js': { type: 'chunk', code: 'const cls = "l--box";', modules: { [id]: {} } },
+      'lazy.js': { type: 'chunk', code: '', modules: { [id]: {} } },
+    };
+    const ctx = createCtx(bundle);
+    await getGenerateBundle(lismPurge({ known })).call(ctx as never, {} as never, bundle as never, false);
+    expect(ctx.warn).toHaveBeenCalledTimes(1);
+    expect(ctx.warn).toHaveBeenCalledWith(expect.stringMatching(/possible CSR.*static prop values.*safelist.*disable purge/));
+  });
+
+  test.each([
+    '/app/node_modules/lism-css/dist/css/main.css',
+    '/app/node_modules/lism-css/src/scss/main.scss',
+    '/app/node_modules/@lism-css/plugin/dist/index.js',
+    '/app/node_modules/not-lism-css/dist/index.js',
+  ])('ランタイムではない%sでは警告しない', async (id) => {
+    const bundle = { 'app.js': { type: 'chunk', code: '', modules: { [id]: {} } } };
+    const ctx = createCtx(bundle);
+    await getGenerateBundle(lismPurge({ known })).call(ctx as never, {} as never, bundle as never, false);
+    expect(ctx.warn).not.toHaveBeenCalled();
+  });
+
+  test('別ページのHTMLにLismクラスがあれば警告せず、HTMLのクラスも保持する', async () => {
+    const bundle = {
+      'index.html': { type: 'asset', source: '<div id="root"></div>' },
+      'nested/index.htm': { type: 'asset', source: new TextEncoder().encode('<div class="-p:20"></div>') },
+      'app.js': { type: 'chunk', code: '', modules: { '/app/node_modules/lism-css/dist/index.js': {} } },
+      'main.css': { type: 'asset', fileName: 'main.css', source: '.-p\\:20{padding:20px}.-m\\:10{margin:10px}' },
+    };
+    const ctx = createCtx(bundle);
+    await getGenerateBundle(lismPurge({ known })).call(ctx as never, {} as never, bundle as never, false);
+    expect(ctx.warn).not.toHaveBeenCalled();
+    expect(bundle['main.css'].source).toContain('-p\\:20');
+    expect(bundle['main.css'].source).not.toContain('-m\\:10');
+  });
+
+  test('safelist設定済みでも警告し、指定したクラスを保持する', async () => {
+    const bundle = {
+      'app.js': { type: 'chunk', code: '', modules: { '/app/node_modules/lism-css/dist/index.js': {} } },
+      'main.css': { type: 'asset', fileName: 'main.css', source: '.-p\\:20{padding:20px}.-m\\:10{margin:10px}' },
+    };
+    const ctx = createCtx(bundle);
+    await getGenerateBundle(lismPurge({ known, safelist: ['-p:20'] })).call(ctx as never, {} as never, bundle as never, false);
+    expect(ctx.warn).toHaveBeenCalledTimes(1);
+    expect(bundle['main.css'].source).toContain('-p\\:20');
+    expect(bundle['main.css'].source).not.toContain('-m\\:10');
+  });
+
+  test('SSRビルドをCSRと判定しない', async () => {
+    const plugin = lismPurge({ known });
+    const configHook = plugin.configResolved;
+    if (typeof configHook !== 'function') throw new Error('configResolved hook not found');
+    await configHook.call({} as never, { build: { ssr: true } } as never);
+    const bundle = { 'entry.js': { type: 'chunk', code: '', modules: { '/app/node_modules/lism-css/dist/index.js': {} } } };
+    const ctx = createCtx(bundle);
+    await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
+    expect(ctx.warn).not.toHaveBeenCalled();
+  });
+
   test('lism signature を含まない CSS asset は書き換えられない', async () => {
     const plugin = lismPurge();
     const original = '.button--primary{color:red}.card{padding:8px}';
