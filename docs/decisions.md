@@ -1,6 +1,16 @@
-基準日: 2026-09-18・コミットe008a77d1（作業ツリーを含む）
+基準日: 2026-09-18・コミット3cf3f4cfa（作業ツリーを含む）
 
 # 意思決定の記録
+
+## 2026-09-18: Markdown / MDX の処理を Sätteri へ移行し、`--` のダッシュ変換を止める
+
+Astro 7 の既定プロセッサである Sätteri へ `apps/site` の Markdown / MDX パイプラインを切り替えた（#580）。`@astrojs/mdx` 8 は MDX も `markdown.processor` へ委譲するため、`## 見出し {#id}` の見出し ID 指定が MDX でも使え、`hov.mdx` のリンク用空要素（`c--scrollTarget`）によるアンカー位置のずれを解消できる。remark / rehype プラグイン 3 つは `src/lib/satteri/` に Sätteri プラグインとして移植し、Astro 7 化直後のビルド成果物と全件比較して差分を分類した。
+
+- 決定: `:::type` は MDAST プラグインで `<Callout type>` の `mdxJsxFlowElement` に変換し、`Callout.astro` をそのまま使う。HAST 側でコンポーネント相当の要素を組み立てる案は、プリセット（色・アイコン）の二重管理になるので採らない。
+- 決定: 未対応の `:::type` / `::name` はコンパイルエラーにする。Sätteri は未処理の directive を黙って捨てるため、typo が本文の欠落として出る。旧パイプラインで素の `<div>` として出ていた `:::caution`（`is--wrapper.mdx`）は `:::warning` に直した。
+- 決定: `smartPunctuation: { dashes: false }` にする。本文中のクラス名（`u--cbox`、`set--bxsh` 等）の `--` が em ダッシュに変換されていた（11 ページ）。プロース中に `--` / `---` をダッシュとして使っている箇所は無い。引用符と省略記号の変換は残す。
+- 受容: Sätteri は表のセル・行の間に改行を入れる。HTML の表では表示に影響しない。ブロック要素間の改行数の差も同様。`en/css-methodology` の先頭の引用符が閉じ記号から開き記号（`“`）に変わる差は、正しい方向への修正として受け入れる。
+- 対象外: `docs-md` 統合の HTML → Markdown 変換は引き続き unified（`rehype-parse` / `rehype-remark` / `remark-stringify`）を使う。`@astrojs/markdown-remark` と `unified()` プロセッサは `apps/site` から外した。
 
 ## 2026-09-18: Astro 7 へ更新し、compressHTML は true で v6 の空白処理を維持する
 
