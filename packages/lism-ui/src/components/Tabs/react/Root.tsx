@@ -1,5 +1,5 @@
 'use client';
-import { useState, useId, useEffect, Children, isValidElement } from 'react';
+import { useState, useId, useEffect, useRef, useCallback, Children, isValidElement } from 'react';
 import type { ElementType, KeyboardEvent, ReactElement, ReactNode } from 'react';
 import { Grid, type LayoutComponentProps, type LismComponentProps } from 'lism-css/react';
 import type { GridLayoutProps } from 'lism-css/lib/types/LayoutProps';
@@ -94,6 +94,30 @@ export default function Tabs<T extends ElementType = 'div'>({
     setSelectedIndex(index);
   }, []);
 
+  // アンマウント時のハンドラから読むため、直前の選択indexを保持する
+  const activeIndexRef = useRef(activeIndex);
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  // 選択中のTabが取り除かれると、残るTabはすべて tabIndex=-1 ・Panelはすべて hidden になり、キーボードでタブ群へ戻れなくなる。
+  // DOMから実際に消えた時だけ（StrictMode等の擬似アンマウントは要素が残る）、DOM順で先頭のTabへ選択を移す
+  const handleTabUnmount = useCallback(
+    (index: number, wasFocused: boolean) => {
+      if (activeIndexRef.current !== index || document.getElementById(`${theTabId}-${index}-tab`)) return;
+
+      for (const btn of Array.from(document.querySelectorAll<HTMLElement>('[role="tab"]'))) {
+        const nextIndex = parsePanelIndex(btn.getAttribute('aria-controls'), theTabId);
+        if (null === nextIndex) continue;
+
+        setSelectedIndex(nextIndex);
+        if (wasFocused) btn.focus();
+        return;
+      }
+    },
+    [theTabId]
+  );
+
   // 矢印 / Home / End でのタブ移動。手動構成でも動くよう、同じ tablist 内のタブをDOM順にたどる（setTabs と同じ規約）
   const handleTabKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     const tabList = e.currentTarget.closest('[role="tablist"]');
@@ -117,7 +141,9 @@ export default function Tabs<T extends ElementType = 'div'>({
   };
 
   return (
-    <TabsContext.Provider value={{ tabId: theTabId, activeIndex, selectTab: setSelectedIndex, onTabKeyDown: handleTabKeyDown }}>
+    <TabsContext.Provider
+      value={{ tabId: theTabId, activeIndex, selectTab: setSelectedIndex, onTabKeyDown: handleTabKeyDown, onTabUnmount: handleTabUnmount }}
+    >
       <Grid className={atts(className, buildModifierClass('b--tabs', { variant }))} {...(props as object)}>
         {hasItems ? (
           <>

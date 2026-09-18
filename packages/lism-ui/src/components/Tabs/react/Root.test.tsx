@@ -499,14 +499,52 @@ describe('Tabs (React) 手動構成: ライフサイクル', () => {
     expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
   });
 
-  // 手動構成は範囲外フォールバックをしない
-  it('選択中の Tab / Panel が取り除かれるとどのタブも非選択になり、残りのタブをクリックすれば選択できる', () => {
+  it('StrictMode の擬似アンマウントでは選択が移らない', () => {
+    render(<StrictMode>{manualTabs({ defaultIndex: 2 })}</StrictMode>);
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+
+  it('選択中の Tab / Panel が取り除かれると、残るタブのDOM順の先頭へ選択が移り、キーボード操作を続けられる', () => {
+    renderManual({ defaultIndex: 2, indexes: [3, 1, 2] });
+
+    renderManual({ indexes: [3, 1] });
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-3-tab'], panels: ['sample-tabs-3'] });
+    expect([getTab(3).getAttribute('tabindex'), getTab(1).getAttribute('tabindex')]).toEqual(['0', '-1']);
+
+    pressKey(getTab(3), 'ArrowRight');
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-1-tab'], panels: ['sample-tabs-1'] });
+    expect(document.activeElement).toBe(getTab(1));
+  });
+
+  it('取り除かれた Tab にフォーカスがあれば移動先へフォーカスも移る', () => {
+    renderManual({ defaultIndex: 2 });
+    act(() => getTab(2).focus());
+
+    renderManual({ indexes: [1] });
+    expect(getState()).toEqual({ selected: ['true'], hidden: [false] });
+    expect(document.activeElement).toBe(getTab(1));
+  });
+
+  it('取り除かれた Tab にフォーカスが無ければフォーカスは移らない', () => {
     renderManual({ defaultIndex: 2 });
 
-    renderManual({ defaultIndex: 2, indexes: [1] });
-    expect(getState()).toEqual({ selected: ['false'], hidden: [true] });
-
-    click(getTab(1));
+    renderManual({ indexes: [1] });
     expect(getState()).toEqual({ selected: ['true'], hidden: [false] });
+    expect(document.activeElement).toBe(document.body);
+  });
+
+  it('選択中でない Tab が取り除かれても選択は変わらない', () => {
+    renderManual({ defaultIndex: 2, indexes: [1, 2] });
+
+    renderManual({ indexes: [2] });
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-2-tab'], panels: ['sample-tabs-2'] });
+  });
+
+  // 手動構成は範囲外フォールバックをしない。補正はマウント済みの Tab が外れた時だけ
+  it('一度も存在しない index を初期選択に指定してもどのタブも選択されない', () => {
+    renderManual({ defaultIndex: 9 });
+
+    expect(getActiveIds()).toEqual({ tabs: [], panels: [] });
   });
 });

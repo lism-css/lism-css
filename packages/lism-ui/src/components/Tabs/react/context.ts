@@ -7,6 +7,7 @@ export type TabsContextType = {
   activeIndex: number;
   selectTab: (index: number) => void;
   onTabKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
+  onTabUnmount: (index: number, wasFocused: boolean) => void;
 } | null;
 
 // Context: Tabs.Root → Tab / Panel へ tabId と選択状態を共有（Tabs.Item を使わない手動構成でも届く）

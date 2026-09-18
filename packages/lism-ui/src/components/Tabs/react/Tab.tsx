@@ -1,6 +1,6 @@
 'use client';
-import { useContext } from 'react';
-import type { KeyboardEvent, MouseEvent } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import type { FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
 import { TabsContext } from './context';
@@ -25,12 +25,19 @@ export default function Tab({
   className,
   onClick,
   onKeyDown,
+  onFocus,
+  onBlur,
   ...props
 }: TabProps) {
   const ctx = useContext(TabsContext);
   const tabId = ctx?.tabId || _tabId;
   const isActive = ctx ? ctx.activeIndex === index : _isActive;
   const controlId = `${tabId}-${index}`;
+
+  // 自分にフォーカスがあるかを保持し、アンマウント時に Root へ渡す（要素が削除されても blur は起きないため、ここでしか判定できない）
+  const hasFocusRef = useRef(false);
+  const onTabUnmount = ctx?.onTabUnmount;
+  useEffect(() => () => onTabUnmount?.(index, hasFocusRef.current), [onTabUnmount, index]);
 
   // 利用者のハンドラは上書きせず合成する（利用者側を先に呼び、preventDefault されたら内部処理を行わない）
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -42,6 +49,14 @@ export default function Tab({
     onKeyDown?.(e);
     if (!ctx || e.defaultPrevented) return;
     ctx.onTabKeyDown(e);
+  };
+  const handleFocus = (e: FocusEvent<HTMLButtonElement>) => {
+    onFocus?.(e);
+    hasFocusRef.current = true;
+  };
+  const handleBlur = (e: FocusEvent<HTMLButtonElement>) => {
+    onBlur?.(e);
+    hasFocusRef.current = false;
   };
 
   // as はスプレッドより後ろに置く（型を通らず as が渡されても button 固定にするため）
@@ -58,6 +73,8 @@ export default function Tab({
       {...props}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       as="button"
     />
   );
