@@ -11,7 +11,7 @@ effort: xhigh
 
 ## 対象
 
-- 収録対象: `ja/` 配下の `.mdx`。`_` 始まりのファイル・ディレクトリと `test.mdx`（この名前だけ）は除外。定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正
+- 収録対象: `ja/` 配下の `.mdx`。`_` 始まりのファイル・ディレクトリ、`test.mdx`（この名前だけ）、frontmatter が `draft: true` のページは除外。定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正
 - 親エージェントが範囲を絞って渡した場合はその範囲だけ扱う
 - 情報源は `ja/` の MDX。title・description・headings は MDX をそのまま写す。snippet・keywords に書く技術的な記述は、MDX が疑わしいときだけ `packages/lism-css/`・`packages/lism-ui/` のソースで確認し、食い違えばソースに合わせて報告に含める
 
