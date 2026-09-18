@@ -3,14 +3,14 @@ import { defineConfig } from 'vite';
 import dts from 'unplugin-dts/vite';
 
 const entries = {
-  index: resolve(__dirname, 'src/index.ts'),
-  'builder/index': resolve(__dirname, 'src/builder/index.ts'),
-  'builder/vite': resolve(__dirname, 'src/builder/vite.ts'),
-  'builder/astro': resolve(__dirname, 'src/builder/astro.ts'),
-  'builder/next': resolve(__dirname, 'src/builder/next.ts'),
-  'builder/webpack': resolve(__dirname, 'src/builder/webpack.ts'),
-  'purge/vite': resolve(__dirname, 'src/purge/vite.ts'),
-  'purge/astro': resolve(__dirname, 'src/purge/astro.ts'),
+  index: resolve(import.meta.dirname, 'src/index.ts'),
+  'builder/index': resolve(import.meta.dirname, 'src/builder/index.ts'),
+  'builder/vite': resolve(import.meta.dirname, 'src/builder/vite.ts'),
+  'builder/astro': resolve(import.meta.dirname, 'src/builder/astro.ts'),
+  'builder/next': resolve(import.meta.dirname, 'src/builder/next.ts'),
+  'builder/webpack': resolve(import.meta.dirname, 'src/builder/webpack.ts'),
+  'purge/vite': resolve(import.meta.dirname, 'src/purge/vite.ts'),
+  'purge/astro': resolve(import.meta.dirname, 'src/purge/astro.ts'),
 };
 
 export default defineConfig({
