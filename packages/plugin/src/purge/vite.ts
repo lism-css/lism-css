@@ -15,6 +15,8 @@ function decodeAssetSource(source: string | Uint8Array): string {
 }
 
 const REF_EXT = /\.(html?|js|mjs|cjs|json|txt|xml|map)$/;
+// 公開パッケージとworkspaceのJS/TSだけを拾い、CSSのみの利用を除外する。
+const LISM_RUNTIME_MODULE = /(?:^|\/)lism-css\/(?:dist|src|packages)\/.*\.[cm]?[jt]sx?(?:\?.*)?$/;
 // `<name>[.-]<hash>.css` 形式のハッシュ部を判定する。Vite 既定・本プラグインの shortContentHash はいずれも
 // 8 文字英数字なので 8 文字ちょうどに限定する。緩い判定だと `my-styles.css` の `-styles` 等を誤ってハッシュ扱いしてしまう（#496）。
 const HASHED_CSS_NAME = /^(.+)([.-])([A-Za-z0-9_-]{8})\.css$/;
@@ -70,14 +72,20 @@ function updateImportedCss(importedCss: Set<string> | undefined, renames: Rename
 }
 
 export function lismPurge(options: LismPurgeOptions = {}): Plugin {
+  let isSsrBuild = false;
   return {
     name: 'lism-css:purge',
     apply: 'build',
     enforce: 'post',
+    configResolved(config) {
+      isSsrBuild = !!config.build.ssr;
+    },
     generateBundle(_outputOptions, bundle) {
       // known は build 実行時に解決する（関数形式の遅延解決にも対応）。
       const known = resolveKnownSelectors(options.known);
       const used = new Set<string>();
+      const htmlClasses = new Set<string>();
+      let hasLismRuntime = false;
       const cssTargets: string[] = [];
 
       for (const [key, asset] of Object.entries(bundle)) {
@@ -87,11 +95,22 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
             continue;
           }
           if (/\.(html?|js|mjs|cjs)$/.test(key)) {
-            extractLismClasses(decodeAssetSource(asset.source), used);
+            const source = decodeAssetSource(asset.source);
+            extractLismClasses(source, used);
+            if (/\.html?$/.test(key)) extractLismClasses(source, htmlClasses);
           }
         } else if (asset.type === 'chunk') {
           extractLismClasses(asset.code, used);
+          if (Object.keys(asset.modules ?? {}).some((id) => LISM_RUNTIME_MODULE.test(id.replaceAll('\\', '/')))) {
+            hasLismRuntime = true;
+          }
         }
+      }
+
+      if (!isSsrBuild && hasLismRuntime && htmlClasses.size === 0) {
+        this.warn(
+          'CSS Purge detected the Lism runtime in client JS without Lism classes in HTML (possible CSR). Classes generated from Lism props at runtime cannot be detected, even with static prop values. Keep all required classes with safelist or disable purge. See https://lism-css.com/en/docs/customize/purge/'
+        );
       }
 
       let beforeBytes = 0;

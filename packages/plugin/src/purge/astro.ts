@@ -13,6 +13,7 @@ export type { LismPurgeOptions } from './options';
 export type { KnownSelectorSet } from './core';
 
 const SCAN_EXT = /\.(html?|js|mjs|cjs)$/;
+const CLIENT_ONLY_ISLAND = /<astro-island(?=[\s>])(?:[^"'<>]|"[^"]*"|'[^']*')*?\sclient\s*=\s*(?:"only"|'only'|only(?=[\s>]))/i;
 const CSS_EXT = /\.css$/;
 // 参照更新の対象拡張子: HTML / JS / JSON manifest / sourcemap / RSS など、文字列で参照を持ち得るもの
 const REF_EXT = /\.(html?|js|mjs|cjs|json|txt|xml|map)$/;
@@ -146,15 +147,24 @@ export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegration
         }
         const used = new Set<string>();
         const cssFiles: string[] = [];
+        let hasClientOnly = false;
 
         for (const distPath of distPaths) {
           for await (const file of walk(distPath)) {
             if (SCAN_EXT.test(file)) {
-              extractLismClasses(await readFile(file, 'utf8'), used);
+              const source = await readFile(file, 'utf8');
+              extractLismClasses(source, used);
+              if (/\.html?$/.test(file) && CLIENT_ONLY_ISLAND.test(source)) hasClientOnly = true;
             } else if (CSS_EXT.test(file)) {
               cssFiles.push(file);
             }
           }
+        }
+
+        if (hasClientOnly) {
+          logger.warn(
+            'CSS Purge detected client:only islands. Classes generated from Lism props at runtime cannot be detected, even with static prop values. Keep all required classes with safelist or disable purge. See https://lism-css.com/en/docs/customize/purge/'
+          );
         }
 
         const { renames, beforeBytes, afterBytes } = await purgeCssFiles(cssFiles, used, safelist, known);

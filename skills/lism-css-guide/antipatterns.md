@@ -10,6 +10,7 @@ AI が Lism CSS のコードを生成する際に間違いやすい記法と、�
 
 - [px / 固定値の直書き](#px--固定値の直書き)
 - [Property Class で書けるのに CSS で書く](#property-class-で書けるのに-css-で書く)
+- [クラス名を部分文字列から組み立てる](#クラス名を部分文字列から組み立てる)
 - [Token typo（存在しない値）](#token-typo存在しない値)
 - [独自クラスの CSS を所定の `@layer` に入れない](#独自クラスの-css-を所定の-layer-に入れない)
 - [hover を component CSS に書いて負ける](#hover-を-component-css-に書いて負ける)
@@ -97,12 +98,19 @@ CSS に残すのは、基本的には　`::before` / `> li` などの「Primitiv
 
 ---
 
+## クラス名を部分文字列から組み立てる
+
+クラス名は必ず完全な文字列で書き、切り替えは完全なクラス名同士で分岐する。部分的な連結は検出・検索できないクラスを作る。
+
+| NG | OK |
+| --- | --- |
+| `` `-mt:${size}` `` / `'-mt:' + size` | `size === 'l' ? '-mt:40' : '-mt:30'` |
+
+CSS Purge の詳細は[customize.mdの公式ドキュメントリンク](./customize.md#toc)を参照。
+
 ## Token typo（存在しない値）
 
-Lism CSS側が用意しているトークン値と異なるものを書かないように注意する。  
-正確な一覧は [tokens.md](./tokens.md) を参照すること。
-
-ただし、ユーザーが独自に追加定義することは可能。あくまでデフォルトで用意されていないもので間違えやすいものを紹介しておく。
+既定トークンの正確な一覧は[tokens.md](./tokens.md)を参照。独自追加は可能だが、以下の未定義値と混同しない。
 
 ### カラー
 
@@ -201,16 +209,9 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 
 `--keycolor` は要素単位で「軸となる色」を切り替えるための**ローカル変数**。サイト全体のブランドカラーやリンクカラーには使わない。
 
-### `:root` でのグローバル上書き
-
 | NG | OK | 理由 |
 | --- | --- | --- |
 | `:root { --keycolor: #c8553d; }` | `:root { --brand: #c8553d; }`（または `--accent` / `--link`） | サイト共通の色は `--brand` / `--accent` / `--link` などのセマンティックカラーで定義する |
-
-### アクセントカラーとしての `keycolor` 参照
-
-| NG | OK | 理由 |
-| --- | --- | --- |
 | `<Link c="keycolor">` | `<Link c="brand">` または `<Link c="link">` | リンク・hover などの恒常的なアクセントは `brand` / `link` を使う |
 | `hov={{ c: 'keycolor' }}` | `hov={{ c: 'brand' }}` | 同上 |
 | `border-inline-start: 3px solid var(--keycolor)`（CSS 直書き） | `border-inline-start: 3px solid var(--brand)` | 同上 |
@@ -218,13 +219,6 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 ### `--keycolor` を使うべき場面
 
 「**そのボックス／コンポーネント自身の軸色**」を切り替えたい時のみ：
-
-```html
-<!-- u--cbox や c--callout など、ボックス全体の色味を局所的に切り替える -->
-<div class="u--cbox" style="--keycolor: var(--red)">
-  <p class="-c:keycolor">danger 用カラーリング</p>
-</div>
-```
 
 ```jsx
 <Lism class="u--cbox" keycolor="var(--red)">
@@ -258,4 +252,3 @@ Lism CSSのreset/base styleで既に初期化されている値を、念のた�
 | NG | OK | 理由 |
 | --- | --- | --- |
 | `<Box ta={['start', null, 'center']}>` | `<Box ta="center">` | `ta` / `fw` / `ov` などは BP 非対応。レスポンシブが必要なら SCSS 側で `bp: 1` を有効にするか、単一値にする |
-
