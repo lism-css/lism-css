@@ -17,7 +17,13 @@ type IndexEntry = { sourcePath: string };
 
 const entries: IndexEntry[] = JSON.parse(readFileSync(docsIndexPath, 'utf-8'));
 
-/** インデックス収録対象の MDX ファイル一覧（`_` 始まりのファイル/ディレクトリと test.mdx は対象外） */
+/** frontmatter が `draft: true` か。draft ページは本番ビルドで生成されず、公開 URL が 404 になる */
+function isDraft(file: string): boolean {
+  const frontmatter = readFileSync(file, 'utf-8').match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+  return /^draft:\s*true\s*$/m.test(frontmatter);
+}
+
+/** インデックス収録対象の MDX ファイル一覧（`_` 始まりのファイル/ディレクトリ・test.mdx・draft ページは対象外） */
 function listIndexableMdxFiles(dir: string, baseDir: string = dir): string[] {
   const results: string[] = [];
   for (const entry of readdirSync(dir)) {
@@ -25,7 +31,7 @@ function listIndexableMdxFiles(dir: string, baseDir: string = dir): string[] {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) {
       results.push(...listIndexableMdxFiles(full, baseDir));
-    } else if (entry.endsWith('.mdx') && entry !== 'test.mdx') {
+    } else if (entry.endsWith('.mdx') && entry !== 'test.mdx' && !isDraft(full)) {
       results.push(relative(baseDir, full).split('\\').join('/'));
     }
   }
@@ -45,6 +51,16 @@ describe.skipIf(!existsSync(docsContentDir))('docs-index.json の構造検証', 
     const indexed = new Set(entries.map((e) => e.sourcePath));
     const notIndexed = listIndexableMdxFiles(docsContentDir).filter((p) => !indexed.has(p));
     expect(notIndexed).toEqual([]);
+  });
+
+  it('draft ページがインデックスに含まれていない', () => {
+    const drafts = entries
+      .map((e) => e.sourcePath)
+      .filter((p) => {
+        const file = resolve(docsContentDir, p);
+        return existsSync(file) && isDraft(file);
+      });
+    expect(drafts).toEqual([]);
   });
 
   // sourcePathToUrlSlug は apps/site 側の toContentSlug と手動同期の複製実装のため、

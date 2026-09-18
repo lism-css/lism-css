@@ -12,7 +12,7 @@ description: MCP の docs-index.json をファイル構成の差分（移動・�
 ## 手順
 
 1. `git rev-parse --short HEAD` でコミットハッシュを取る
-2. 実在ファイル集合を作る: `apps/site/src/content/ja/**/*.mdx` を Glob し、`_` 始まりのファイル・ディレクトリと `test.mdx`（この名前だけ）を除く（定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正）。パスは `ja/` からの相対
+2. 実在ファイル集合を作る: `apps/site/src/content/ja/**/*.mdx` を Glob し、`_` 始まりのファイル・ディレクトリ、`test.mdx`（この名前だけ）、frontmatter が `draft: true` のページを除く（定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正）。パスは `ja/` からの相対
 3. `docs-index.json` の各エントリを分類する
    - 一致: 実ファイルあり。同一 `sourcePath` の分割エントリは 1 つでもあれば全て一致
    - 不一致: 実ファイルなし → 手順 4
