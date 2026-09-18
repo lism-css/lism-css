@@ -29,6 +29,10 @@ const TOKENS_GEN_PARTIAL = 'base/tokens/_tokens.gen.scss';
 const TOKENS_GEN_HEADER =
   '// このファイルは自動生成されます。直接編集しないでください（次回ビルド時に上書きされます）。\n' +
   '// 生成元: コア → config/defaults/tokens.ts / 利用側 → defaults + lism.config.js の tokens\n';
+// prop-config（main / full 共通）にも同じく付ける。
+const PROP_CONFIG_GEN_HEADER =
+  '// このファイルは自動生成されます。直接編集しないでください（次回ビルド時に上書きされます）。\n' +
+  '// 生成元: コア → config/defaults の props / breakpoints（full は config/presets/props-full.ts も） / 利用側 → defaults + lism.config.js\n';
 
 function resolvePostcssPlugins(minify: boolean): AcceptedPlugin[] {
   // minify=true: autoprefixer + cssnano（dist/css 出力相当）。
@@ -50,9 +54,9 @@ export interface WritePropConfigOptions {
  * パッケージ自身のビルドで同梱デフォルトを更新する用途と、一時ディレクトリへの注入の双方で使う。
  */
 export function writePropConfigFiles({ scssDir, mainConfig, fullConfig }: WritePropConfigOptions): void {
-  fs.writeFileSync(path.join(scssDir, MAIN_PROP_CONFIG), serializeConfigScss(mainConfig), 'utf8');
+  fs.writeFileSync(path.join(scssDir, MAIN_PROP_CONFIG), PROP_CONFIG_GEN_HEADER + serializeConfigScss(mainConfig), 'utf8');
   if (fullConfig) {
-    fs.writeFileSync(path.join(scssDir, FULL_PROP_CONFIG), serializeConfigScss(fullConfig), 'utf8');
+    fs.writeFileSync(path.join(scssDir, FULL_PROP_CONFIG), PROP_CONFIG_GEN_HEADER + serializeConfigScss(fullConfig), 'utf8');
   }
   // tokens のインライン値は main/full 共通のため、main 系から 1 ファイルだけ生成する。
   fs.writeFileSync(path.join(scssDir, TOKENS_GEN_PARTIAL), TOKENS_GEN_HEADER + serializeTokens(mainConfig), 'utf8');
