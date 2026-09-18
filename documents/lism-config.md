@@ -1,4 +1,4 @@
-基準日: 2026-09-04・コミット5331445f
+基準日: 2026-09-19・コミット9feef9fa0
 
 # lism.config.js メモ（運営者向け）
 
@@ -36,7 +36,7 @@
 - Vite / AstroのCSS importでconfig反映済みCSSをその場で出すにも必要。素の`import 'lism-css/main.css'`はパッケージ同梱のCSSを読む。
 - `lism-css build`で事前生成するだけならプラグイン登録は不要。ただしコマンド提供元として`@lism-css/plugin`は必要。
 
-統合入口は`@lism-css/plugin/vite` / `@lism-css/plugin/astro`の`lismCss()`（`lismCss({ purge: true })`でpurgeも行う）。purge単体の入口は`@lism-css/plugin/purge/vite`の`lismPurge()`と`@lism-css/plugin/purge/astro`の`lismPurgeAstro()`（オプションは`packages/plugin/src/purge/options.ts`の`LismPurgeOptions`）。
+統合入口は`@lism-css/plugin/vite` / `@lism-css/plugin/astro`の`lismCss()`（`lismCss({ purge: true })`でpurgeも行う。`typegen`等のオプションは`packages/plugin/src/builder/shared.ts`の`LismCssOptions`を参照）。purge単体の入口は`@lism-css/plugin/purge/vite`の`lismPurge()`と`@lism-css/plugin/purge/astro`の`lismPurgeAstro()`（オプションは`packages/plugin/src/purge/options.ts`の`LismPurgeOptions`）。
 
 
 ## `lism-css build`の出力先
@@ -52,19 +52,21 @@
 
 ## 他バンドラ / SCSS-source構成
 
-- `@lism-css/plugin/webpack`の`withLismWebpack(config, opts)`: webpack主導バンドラ（`@wordpress/scripts`等）向けの汎用プリミティブ。`{ css, config, typegen, watch }`で切り替える（`css:false`でCSS事前生成とCSS aliasをno-op、`config:true`で`lism-css/config.js`をユーザー設定へalias、`watch:true`で`lism.config.js`を`fileDependencies`へ登録）。WP / テーマ固有のロジックは持たず、消費側の責務とする。
+- `@lism-css/plugin/webpack`の`withLismWebpack(config, opts)`: webpack主導バンドラ（`@wordpress/scripts`等）向けの汎用プリミティブ。オプションは`packages/plugin/src/builder/webpack.ts`の`WithLismWebpackOptions`を参照（`css:false`でCSS事前生成とCSS aliasをno-op、`config:true`で`lism-css/config.js`をユーザー設定へalias、`watch:true`で`lism.config.js`を`fileDependencies`へ登録）。WP / テーマ固有のロジックは持たず、消費側の責務とする。
 - `@lism-css/plugin/next`の`withLism(nextConfig, opts)`: Next.js 16以降向け。Next.jsにはbare CSS importを横取りする口が無いので、config反映済みCSSを`<projectRoot>/.lism-css/css/*`へ事前生成し、`lism-css/<entry>.css`をaliasで差し替える。Turbopackが主経路（`turbopack.resolveAlias`にproject-relativeパス）で、`--webpack`用に`resolve.alias`へも絶対パスで同じaliasを入れる。`lism-css/config.js`のaliasと`lism-env.d.ts`生成（`opts.typegen`、既定true）も行う。返り値は`(phase, ctx) => config`の非同期関数で、`export default withLism(nextConfig, opts)`として渡す。devでは`lism.config.js`を`fs.watch`で監視し、変更時にCSS / 型を再生成する。
-- `@lism-css/plugin/builder`の`generateLismScss({ projectRoot, outDir? })`: 自前SCSSビルド向けに、config適用済みsettingのbridgeを`_lism-config.gen.scss`・`lism-setting.scss`（既定outDir=`<projectRoot>/.lism-css/scss`）へ生成する。消費側は`loadPaths:['.lism-css/scss']`+`NodePackageImporter`で、`@use 'lism-setting'`→`@use 'pkg:lism-css/scss/main_no_layer'`の順に読む（settingをconfig付きで先にロードする必要があるため順序依存）。
+- `@lism-css/plugin/builder`の`generateLismScss(opts)`: 自前SCSSビルド向けに、config適用済みsettingのbridgeを`_lism-config.gen.scss`・`lism-setting.scss`（既定outDir=`<projectRoot>/.lism-css/scss`）へ生成する。消費側は`loadPaths:['.lism-css/scss']`+`NodePackageImporter`で、`@use 'lism-setting'`→`@use 'pkg:lism-css/scss/main_no_layer'`の順に読む（settingをconfig付きで先にロードする必要があるため順序依存）。
+
+`withLism`のオプションは`packages/plugin/src/builder/next.ts`の`WithLismOptions`、`generateLismScss`は`packages/plugin/src/builder/scss-source.ts`の`GenerateLismScssOptions`を参照する。webpack / Next.jsでpurge用の`full.css`も生成するには`full: true`を指定する（webpackでは`css: true`も必要）。
 
 
 ## 処理フロー（Vite / Astro）
 
 1. 起動時に設定ファイルを探す。`configPath`指定時はそのファイルだけを見る。
 2. `lism-css/config.js`をユーザーの`lism.config.js`へaliasする。React / Astroコンポーネントの`CONFIG`もユーザー設定を読む。
-3. CSSビルドも同じ設定を読む。マージ順は`defaultConfig`→`lism.config.js`。`full.css`用は`defaultConfig`→`full preset`→`lism.config.js`。
-4. `isFullMode:true`なら、`main.css`系で使う設定もfull preset適用済みに寄せる。
-5. `import 'lism-css/main.css'`等をViteプラグインが捕捉し、設定反映済みCSSをその場でコンパイルして返す。`node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して生成SCSS（`_prop-config.gen.scss` / `_tokens.gen.scss`）だけ差し替える。
-6. `breakpoints`の追加BP、`props` / `traits`の追加キー、`isFullMode`、既定propが参照するtokensへの追加キーのいずれかがあれば、`lism-env.d.ts`を生成する（`generateLismEnvDts`）。反映対象はこの5種類。最後の1つは、`tokens.space`にキーを足すと`p`など`space`を参照するpropの値の型にそのキーが加わる形で効く。`tokens`だけ変えても`.d.ts`が更新されるのはこのため。
+3. CSSビルドも同じ設定を読む。マージ順は`defaultConfig`→`lism.config.js`。`full.css`用は`defaultConfig`→`full preset`→`FULL_CSS_DEFAULTS`（`breakpoints.xs: '360px'`）→`lism.config.js`。`FULL_CSS_DEFAULTS`は`packages/plugin/src/builder/load-config.ts`で定義し、purge併用を前提に`xs`を有効化する。ユーザー設定で上書きできる。
+4. `isFullMode:true`なら、`main.css`系で使う設定も手順3のfull用設定と同じになり、`xs`の既定有効化も含む。
+5. `import 'lism-css/main.css'`等をViteプラグインが捕捉し、設定反映済みCSSをその場でコンパイルして返す。`node_modules`内は書き換えず、一時ディレクトリへSCSSを複製して生成SCSS（`_prop-config.gen.scss` / `_prop-config-full.gen.scss` / `_tokens.gen.scss`）だけ差し替える。
+6. 型生成が有効なら、`breakpoints`の追加BP、`props` / `traits`の追加キー、`isFullMode`、既定propへの追加値を`lism-env.d.ts`へ反映する（`generateLismEnvDts`）。追加値は`presets` / `utils`と参照するtokensから抽出し、`CustomPropValueRegistry`を拡張する。たとえば`tokens.space`にキーを足すと、`p`など`space`を参照するpropの値の型・補完に加わる。
 7. `purge:true`時は、設定反映済みの`full.css`からknown selectorを作る。configで追加したクラスもpurge対象になる。
 
 

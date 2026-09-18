@@ -1,4 +1,4 @@
-基準日: 2026-09-03・コミット105422df
+基準日: 2026-09-19・コミット9feef9fa0
 
 # テンプレート スクリーンショット
 
@@ -90,7 +90,7 @@ templates/blog/astro/minimal/
 
 1. テンプレを変更した: `compare`で意図しない崩れがないか確認する。
 2. 差分が意図どおり: `update`でbaselineと公開用を更新してコミットする。
-3. テンプレを追加した: 直下に`screenshots.config.json`を作り、`pnpm screenshot:templates`で撮影してコミットする。
+3. テンプレを追加した: サイト一覧とCLIの配信対象になるよう、[CLIガイド](./cli-guide.md#テンプレ運用)に従って`templates/manifest.ts`へ登録する。直下に`screenshots.config.json`を作り、`pnpm screenshot:templates`で撮影してコミットする。
 4. 全部撮り直す: `force`。
 5. en版を用意する: LPは`shots`に`en/*`、blogは`langShots.en`を追加し、`pnpm screenshot:templates`で`screenshots/en/`を撮影してコミットする。
 

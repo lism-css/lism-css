@@ -1,4 +1,4 @@
-基準日: 2026-09-17・684f5fd4a
+基準日: 2026-09-19・コミット9feef9fa0
 
 # GitHubリポジトリをlism-css/coreへリネームする
 
@@ -6,7 +6,7 @@
 
 ## ゴールと対象範囲
 
-既存のGitHubリポジトリ`lism-css/lism-css`を、同じOrganization内の`lism-css/core`へリネームする。コード・履歴・Issue・PRを維持し、CLIの取得先、公開情報、サイトのGit連携を新名へ揃える。
+既存のGitHubリポジトリ`lism-css/lism-css`を、同じOrganization内の`lism-css/core`へリネームする。コード・履歴・Issue・PRを維持し、CLIの取得先、公開情報、サイトのデプロイ経路を新名へ揃える。
 
 今回の依頼はプランの保存まで。リネーム、コード変更、npm公開、デプロイは実行しない。
 
@@ -15,21 +15,21 @@
 ## 背景・確認済みの前提
 
 - 移行先の`lism-css/core`はユーザー指定。リポジトリを分割する依頼ではなく、モノレポ全体のリネームである。
-- 基準日時点のGitHub APIでは`full_name`は`lism-css/lism-css`、リポジトリIDは`994630274`、既定ブランチは`main`、GitHub Pagesは未使用。参照できるOrganizationの一覧に`core`はない。実施直前にも空きを確認する。
+- 2026-09-17のGitHub API確認では`full_name`は`lism-css/lism-css`、リポジトリIDは`994630274`、既定ブランチは`main`、GitHub Pagesは未使用。参照できるOrganizationの一覧に`core`はない。実施直前にも空きを確認する。
 - 管理対象のソース・設定・文書に旧名を含む参照は83ファイル・140行。生成物と本プランは集計対象外。数は実施時に再確認する。
 - CLIの取得元は`packages/lism-cli/src/constants.ts`の`SOURCE_REPO`に集約されている。使用中のgigetはロックファイル上で3.3.0。
 - `packages/create-lism/tsup.config.ts`は`lism-cli`を依存ごとbundleへ内包する。CLI本体だけを公開しても、既存の`create-lism`の取得先は変わらない。
 - npm公開はルート`package.json`の公開スクリプトを使う運用。[CLIガイド](../documents/cli-guide.md)が公開手順と事前チェックを管理している。
-- `.github/workflows/test.yml`に旧名の固定参照やnpm公開処理はない。現時点でリネームのためのCI定義変更は不要。
-- 公式サイトはCloudflare Workers Builds（Git連携、Worker名`lism-site`、本番ブランチ`main`）でデプロイしている（#511で2026-09-17に移行完了。Vercelは削除済み）。#624でGitHub Actionsへ移す予定があるため、実施時点の経路を確認する。テンプレートプレビューはGitHubリポジトリ名ではなくCloudflare Pagesのプロジェクト名を指定して直接デプロイする構成。
+- `.github/workflows/test.yml`と`deploy.yml`に旧名の固定参照やnpm公開処理はない。現時点でリネームのためのCI定義変更は不要。
+- 公式サイトはGitHub Actionsの`deploy.yml`からCloudflare Workersへデプロイする構成。現行の公開手順・認証・起動条件は[サイト更新手順](../documents/docs-update.md#公開する)を参照する。テンプレートプレビューはGitHubリポジトリ名ではなくCloudflare Pagesのプロジェクト名を指定して直接デプロイする構成。
 
 GitHubはリネーム時に既存のWeb参照とGit操作を転送する。旧名を再利用すると転送が失われる。GitHub PagesのプロジェクトURLと、旧名で参照されるActionは転送の例外。[GitHub公式仕様](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository)
 
 ### 別プランとの関係
 
-- Cloudflare Workers移行（#511）は完了済み。現在のGit連携はWorkers Buildsで、Cloudflare側にリポジトリ`lism-css/lism-css`を接続している。改名後にこの接続先が新名へ追従するかはコードから確定できないため、実施時に確認する。#624（デプロイのGitHub Actions化）が先に終わっていれば、Git連携はリポジトリ内のワークフローとsecretsだけになり、改名への追従はGitHub側で完結する。
+- Cloudflare Workers移行（#511）後、#624でデプロイ用のGitHub Actionsワークフローが追加済み。Cloudflare側のWorkers BuildsのGit連携が解除済みかはコードから確定できないため、実施前に確認し、二重デプロイを避ける。
 - 本プランはOrganization名`lism-css`を維持し、リポジトリ名だけを`core`へ変える。ドメイン・npm名は変えない。
-- GitHubの改名と#624のデプロイ経路変更を同時に行わない。どちらかの配信確認を終えてから次に進む。先後に機能上の必須依存はない。
+- GitHubの改名はActionsからの正常な本番配信とWorkers BuildsのGit連携解除を確認してから行う。
 
 ## 不変条件
 
@@ -48,7 +48,7 @@ GitHubはリネーム時に既存のWeb参照とGit操作を転送する。旧�
 | npmの公開バージョンと配布物 | `lism-cli`・`create-lism`のビルドと公開 | `lism-cli create`、`create-lism`、`ui list/add`、`skill add/check/update`。`skill update`は既存の追加処理を再利用する |
 | npmのリポジトリ・問い合わせ先 | 7パッケージの`package.json` | npmのパッケージページ。公開済みバージョンの情報はソース編集だけでは更新されない |
 | 配布するリンク・導入例 | README、サイト、スキル、テンプレート、運用文書 | Web閲覧、サイトの`llms.txt`、導入済みスキル、生成済みプロジェクト、MCPに同梱される文書 |
-| サイトのGit連携 | 実施時のホスティングサービスの接続設定 | ブランチ更新によるプレビュー・本番デプロイ |
+| サイトのデプロイ | `deploy.yml`・GitHub secrets、Cloudflare側の旧Git連携 | main更新による本番デプロイ、旧Git連携が残っていた場合の二重デプロイ |
 | skills.shのsourceと集計、利用側のlockfile | skills.sh側の登録状態、利用側の`skills-lock.json` | skills経由のインストール・更新、掲載ページ、インストール数 |
 
 gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`fetchCatalog`がraw URLから直接取得する。両経路を確認する必要がある。[giget 3.3.0の実装](https://github.com/unjs/giget/blob/v3.3.0/src/providers.ts)
@@ -60,8 +60,8 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 ### 1. 事前確認
 
 - 既存の未コミット変更・並行作業を確認し、この作業へ混ぜない。
-- GitHubの改名権限、新名の空き、稼働中のホスティング接続先を確認する。名前を予約するために`core`リポジトリを作らない。
-- 現在のリポジトリID、ブランチ・タグ一覧、`origin`、ホスティングのGit接続と直近の正常デプロイを記録する。秘密情報は記録しない。
+- GitHubの改名権限、新名の空き、Actionsの稼働状況とWorkers BuildsのGit連携解除を確認する。名前を予約するために`core`リポジトリを作らない。
+- 現在のリポジトリID、ブランチ・タグ一覧、`origin`、ActionsとCloudflareの直近の正常デプロイ、Workers BuildsのGit連携解除状況を記録する。秘密情報は記録しない。
 - npm上の`lism-cli`と`create-lism`の最新バージョンを確認して控える。旧版の確認にはこの固定バージョンを使い、公開後の`latest`を旧版として扱わない。
 - `skills.sh/lism-css/lism-css`の掲載状態と集計を確認する。引継ぎ方法が不明のまま集計を失ってよいとは判断しない。必要なら運営への確認結果かユーザーの受容判断を実施条件として残す。
 - 切り替えの間は別のCLI公開やホスティング移行を重ねない。進行中の公開・デプロイがある場合は完了を確認してから改名する。
@@ -111,8 +111,8 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 ### 5. 変更を反映し、公開する
 
 1. 準備したPRを`dev`へ反映する。ビルドした更新版CLIでも実取得確認を行う。既定refを変更せず、dev側の配布物確認が必要な場合だけ既存の`--ref`オプションを使う。
-2. 実施時のホスティングで接続先が`lism-css/core`になっていることを確認する。自動追従しない場合は、既存プロジェクトのGit接続を新名へ変更する。ドメインやホスティングプロジェクトを作り直さない。
-3. 通常のデプロイ手順で変更をmainへ反映し、本番サイトと生成される`llms.txt`のリンク、JSON-LDの`codeRepository`を確認する。プレビューを利用中ならその自動デプロイも確認する。
+2. 新名のリポジトリで`deploy.yml`と必要なsecretsが引き続き利用でき、Workers BuildsのGit連携が解除済みであることを確認する。ドメインやWorkerを作り直さない。
+3. [サイト更新手順](../documents/docs-update.md#公開する)で変更をmainへ反映し、Actionsのデプロイ成功後、本番サイトと生成される`llms.txt`のリンク、JSON-LDの`codeRepository`を確認する。
 4. 新URLのmainから必要な配布物が取得できることを確認してから、[CLIガイドのbuild / publish](../documents/cli-guide.md#build--publish)に従って`lism-cli`と`create-lism`を公開する。
 5. npmから更新版を取得し、両パッケージのバージョンと実取得を確認する。ビルド済みのローカル版だけで完了判定しない。
 
@@ -132,12 +132,12 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 | 別の公開・移行と競合 | 先行作業を終え、mainの内容と公開対象を揃えてから再開 | リリース担当、PR、mainのSHA、進行中の公開・デプロイを照合 |
 | リネーム後に手順が中断 | 現在の名前・ID・main・npmの公開状態から再開地点を決める | GitHub API、npmのバージョン、ホスティングの履歴を確認。改名を盲目的に再実行しない |
 | CLIの片方だけ公開成功 | 成功済みの同一バージョンを再公開しない。未公開側の失敗を直す | npm上の両パッケージのバージョンを照合。不具合があれば新しいpatchで是正する |
-| 改名後にGit連携が止まる、改名前に始まったデプロイが遅れて完了する | 最後に配信されたSHAを確認し、新名に接続した状態で対象mainをデプロイする | ホスティングの接続先・対象SHA・本番結果を照合。既存サイトを削除しない |
+| 改名後にActionsのデプロイが失敗する、改名前に始まったデプロイが遅れて完了する | 最後に配信されたSHAを確認し、新名のリポジトリから対象mainをデプロイする | Actionsのログ・認証設定・Cloudflareの対象SHA・本番結果を照合。既存サイトを削除しない |
 | skills.shの新ページが404、旧sourceや集計が残る | CLIの取得成功と区別し、事前に決めた引継ぎ・受容方針に従う | 新名での導入、掲載ページ、source、移行前後の集計を個別確認 |
 
 ### 復旧方針
 
-- 新CLI公開前に新旧の取得互換性を確保できない場合は、変更のmain反映・公開を保留する。リネーム直後の一時障害かを確認し、改名を戻す必要がある場合は同じリポジトリを旧名へ戻す。元の名前の空きとIDを先に確認し、別リポジトリは作らない。Git remoteとGit連携も実際の名前に揃え、旧版の取得成功を再確認する。
+- 新CLI公開前に新旧の取得互換性を確保できない場合は、変更のmain反映・公開を保留する。リネーム直後の一時障害かを確認し、改名を戻す必要がある場合は同じリポジトリを旧名へ戻す。元の名前の空きとIDを先に確認し、別リポジトリは作らない。Git remoteとActionsの稼働状態も実際の名前で確認し、旧版の取得成功を再確認する。
 - 新CLIの公開後は`core`を前提にする利用者も発生するため、安易に名前を戻さず、新名を保った修正と次のpatch公開を優先する。npmの公開済みバージョンの削除・上書きは復旧策にしない。
 - 旧CLIの失敗を受容して移行を続ける判断は、このプランでは行わない。
 
@@ -153,7 +153,7 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 ## 未確認事項・実施前に決めること
 
 - 実施日時と、別プランに対する先後関係。
-- 実施時点のデプロイ経路（Workers Builds、または#624後のGitHub Actions）が改名へ自動追従するか。Workers Buildsの接続設定はコードだけでは確定できない。
+- CloudflareのWorkers BuildsのGit連携が解除済みか。Actionsの正常デプロイと合わせて実環境で確認する。
 - skills.shの集計・掲載URLの引継ぎ方法。リネーム後に旧sourceが残る[未解決報告](https://github.com/vercel-labs/skills/issues/703)があり、自動移行を保証できない。引継ぎ保証が得られない場合に受容するかは未決。
 - npm側にリポジトリ名を固定したTrusted Publishing設定が存在するか。現行のCIは使用していないが、導入されていた場合は新名で接続を作り直す必要がある。[npm公式仕様](https://docs.npmjs.com/trusted-publishers/)
 - Organization外の利用者やサービスが持つ参照は網羅できない。調査時の検索結果を全件保証として扱わない。
@@ -167,13 +167,13 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 
 | 経路 | 確認内容 |
 | --- | --- |
-| `lism-cli create`と`create-lism` | 通常テンプレートを取得できる。base/overlay型と言語overlay型も代表例で確認し、必要なファイルが揃う |
+| `lism-cli create`と`create-lism` | 通常テンプレートと言語overlayのあるテンプレートを代表例で取得し、必要なファイルが揃う。base/overlay型は実施時の`TEMPLATES`に登録がある場合だけ実取得の対象にする |
 | `ui list` | raw経由のカタログを取得し、一覧を表示できる |
 | `ui add` | UI本体と、その依存helperを取得・配置できる。helperを持つ代表コンポーネントを選ぶ |
 | `skill add/check/update` | スキルを取得・配置し、同じrefへの差分確認と更新ができる |
 | `--ref dev` | 代表的な取得経路でdevを取得でき、既定のmain取得も維持される |
 
 - 公開したCLI2パッケージのバージョンが揃い、新名を参照している。
-- 本番サイトのGit連携が動作し、対象mainのデプロイが成功する。サイトと`llms.txt`のGitHubリンク、および`apps/site/src/lib/jsonLd.ts`が`siteConfig.author.github`から出力するJSON-LDの`codeRepository`が新名で、サイトURLは変わっていない。デザイン変更はないため、ブラウザによるUI確認は検証に含めない。
+- 新名のリポジトリでActionsが動作し、対象mainのデプロイが成功する。Workers Buildsによる二重デプロイがない。サイトと`llms.txt`のGitHubリンク、および`apps/site/src/lib/jsonLd.ts`が`siteConfig.author.github`から出力するJSON-LDの`codeRepository`が新名で、サイトURLは変わっていない。デザイン変更はないため、ブラウザによるUI確認は検証に含めない。
 - スキルの新しい導入例が動作し、skills.shの掲載・集計が事前に決めた条件を満たす。別リポジトリの既知のlockfile参照も対応を終えている。
 - 実装前に`plan-review`でこのプランをレビューし、合格後に状態を`Ready`へ変更する。

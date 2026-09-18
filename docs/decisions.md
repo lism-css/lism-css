@@ -1,4 +1,4 @@
-基準日: 2026-09-19・コミットce7ca0807（作業ツリーを含む）
+基準日: 2026-09-19・コミット9feef9fa0
 
 # 意思決定の記録
 
@@ -63,7 +63,7 @@ apps/site は完全な静的サイトで、Vercel でのデプロイは昔の名
 - 決定: `.md`の`Content-Type`（charset付き）は`_headers`に書かず、`run_worker_first`の小さな Worker（`apps/site/worker/index.ts`）で成功応答と304にだけ付ける。`_headers`だと404にも付いて #506 が再発する。
 - 決定: HSTS（Vercel と同じ2年）は`_headers`の`/*`ルールで付ける。ダッシュボードの HSTS 設定は max-age の上限が12か月で再現できない。www→apex は Redirect Rule で301（Vercel 時代は307）、HTTP→HTTPS はゾーン設定 Always Use HTTPS。
 - 却下: Cloudflare Pages（新規は Workers が公式推奨）。小文字 URL の meta refresh リダイレクト76件を`_redirects`で301化する案（移行と独立した変更のためスコープ外）。
-- 受容: リダイレクト応答に HSTS が付かない、存在しない URL の404に`X-Robots-Tag: noindex`が付く、`.cache/og/`が Workers Builds で永続化されずビルドが約9分かかる（#624で扱う）。
+- 受容: リダイレクト応答に HSTS が付かない、存在しない URL の404に`X-Robots-Tag: noindex`が付く。
 
 ## 2026-09-13: weightの解釈をアイコンパッケージへ委ねる
 

@@ -148,7 +148,7 @@ If you're using the integrated plugin, the CSS and type definitions for these cl
 
 ## Enabling xs / xl breakpoints
 
-The default breakpoints are `xs: 0` (disabled) / `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0` (disabled). A value of `0` means "disabled — no CSS query is output".
+In `main.css`, the default breakpoints are `xs: 0` (disabled) / `sm: 480px` / `md: 800px` / `lg: 1120px` / `xl: 0` (disabled). A value of `0` means "disabled — no CSS query is output".
 
 To enable `xs` or `xl`, specify only the sizes you want to enable in the `breakpoints` key of `lism.config.js`:
 
@@ -171,7 +171,7 @@ You can then also use `xs` / `xl` in object notation on the component side:
 ```
 
 :::info
-Even when you load `full.css`, `xs` / `xl` are disabled by default (only `sm` / `md` / `lg` are emitted). To use them, enable them by specifying sizes in `breakpoints`, just as above.
+In `full.css`, `xs` is enabled at `360px`, while `xl` is disabled. The same defaults apply to `main.css` generated with `isFullMode: true`. Values specified in `breakpoints` take precedence. To use `xs` in components, use the configuration above or `isFullMode: true` with type generation through the integrated plugin.
 :::
 
 :::warning
@@ -250,7 +250,7 @@ When you use the integrated plugin, the contents of `lism.config.js` are automat
 - `xs` / `xl` breakpoints enabled via `breakpoints` are also reflected in the types and completion for object and array notation. For the hand-written equivalent, see the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion).
 - With `isFullMode: true`, breakpoint values (array / object notation) for props like `ta` no longer cause type errors either.
 
-Note that adding values to an existing prop (such as `ta="justify"`) never causes a type error to begin with, since these accept arbitrary strings already (they just won't appear in completion candidates).
+Note that adding values to an existing prop (such as `ta="justify"`) also reflects only the added values in the types, as `CustomPropValueRegistry` augmentations, and adds them to the completion candidates. Existing props already accept arbitrary strings, though, so they never raise a type error even without adding the value.
 
 If you're not using the integrated plugin and only want to switch the `isFullMode` type, extend the type definition file at your project root (e.g. `src/lism-env.d.ts`) like this:
 
