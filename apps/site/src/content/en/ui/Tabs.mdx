@@ -115,6 +115,9 @@ Provided as `Tabs` from the `@lism-css/ui` package.
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`| A string ID used to generate each tab button's id (`{tabId}-{index}-tab`), each panel's id (`{tabId}-{index}`), and the value of `aria-controls`. If omitted, an ID is generated automatically. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`| Specifies which tab to open initially. Values out of range (e.g. a number greater than the number of tabs) fall back to `1`. |
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`b--tabs_list`) wrapping the tab buttons. |
+|<PropBadge>`<Tabs.Tab>`</PropBadge> <PropBadge>`<Tabs.Panel>`</PropBadge><br/>`index`| A tab number starting from `1`. Specify the same number on the corresponding `<Tabs.Tab>` and `<Tabs.Panel>`. In a normal `<Tabs.Item>` composition this is set automatically, so you don't need to specify it. It's required when [composing without `<Tabs.Item>`](#compose-without-tabsitem). |
+|<PropBadge>`<Tabs.Tab>`</PropBadge> <PropBadge>`<Tabs.Panel>`</PropBadge><br/>`tabId`| The ID used to generate the id (`{tabId}-{index}-tab` / `{tabId}-{index}`). In a normal `<Tabs.Item>` composition, the value from `<Tabs.Root>` is set automatically, so you don't need to specify it. When composing without `<Tabs.Item>`, this is only required in the Astro version. |
+|<PropBadge>`<Tabs.Tab>`</PropBadge> <PropBadge>`<Tabs.Panel>`</PropBadge><br/>`isActive`| Specifies whether this tab should be open initially. In a normal `<Tabs.Item>` composition, this is set automatically based on `defaultIndex`, so you don't need to specify it. When composing without `<Tabs.Item>` in the Astro version, set this on the pair of `<Tabs.Tab>` and `<Tabs.Panel>` that should be open initially. |
 {/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | Specifies the tab label text. | */}
 
 {/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`| Outputs `[data-tabs-height="keep"]`, fixing the overall height of the tabs to the tallest content panel. | */}
@@ -309,6 +312,108 @@ To use this feature, explicitly set `tabId` on `<Tabs.Root>`.
 ```
 
 Visiting a page with the tabs above using `?lism-tab=sample-tabs-2` displays the second tab as selected.
+
+
+### Compose without Tabs.Item
+
+You can also place `<Tabs.List>` (a list with `role="tablist"`), `<Tabs.Tab>`, and `<Tabs.Panel>` directly inside `<Tabs.Root>` instead of using `<Tabs.Item>`.  
+Use this when you want to control the output structure yourself — for example, to wrap tab buttons in `<li>` elements, or to insert another element between the list and the panels.
+
+In this composition, matching `<Tabs.Tab>` and `<Tabs.Panel>` pairs are linked by `index` (a number starting from `1`). Tab switching on click or keyboard interaction, focus movement, and ARIA attribute updates are all handled by the component, so you don't need to write any state management or event handling yourself.
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="30">
+    <Tabs.Root>
+      <Tabs.List>
+        <Tabs.Tab tabId="manual-tabs" index={1}>Tab 1</Tabs.Tab>
+        <Tabs.Tab tabId="manual-tabs" index={2} isActive>Tab 2</Tabs.Tab>
+        <Tabs.Tab tabId="manual-tabs" index={3}>Tab 3</Tabs.Tab>
+      </Tabs.List>
+      <Tabs.Panel tabId="manual-tabs" index={1}>
+        <DummyText pre="Tab 01: " />
+      </Tabs.Panel>
+      <Tabs.Panel tabId="manual-tabs" index={2} isActive>
+        <DummyText length="l" offset={1} pre="Tab 02: " />
+      </Tabs.Panel>
+      <Tabs.Panel tabId="manual-tabs" index={3}>
+        <DummyText length="l" offset={2} pre="Tab 03: " />
+      </Tabs.Panel>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="React">
+    ```jsx
+    <Tabs.Root tabId="manual-tabs" defaultIndex={2}>
+      <Tabs.List>
+        <Tabs.Tab index={1}>Tab 1</Tabs.Tab>
+        <Tabs.Tab index={2}>Tab 2</Tabs.Tab>
+        <Tabs.Tab index={3}>Tab 3</Tabs.Tab>
+      </Tabs.List>
+      <Tabs.Panel index={1}>
+        <DummyText pre="Tab 01: " />
+      </Tabs.Panel>
+      <Tabs.Panel index={2}>
+        <DummyText length="l" offset={1} pre="Tab 02: " />
+      </Tabs.Panel>
+      <Tabs.Panel index={3}>
+        <DummyText length="l" offset={2} pre="Tab 03: " />
+      </Tabs.Panel>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Astro">
+    ```astro
+    <Tabs.Root>
+      <Tabs.List>
+        <Tabs.Tab tabId="manual-tabs" index={1}>Tab 1</Tabs.Tab>
+        <Tabs.Tab tabId="manual-tabs" index={2} isActive>Tab 2</Tabs.Tab>
+        <Tabs.Tab tabId="manual-tabs" index={3}>Tab 3</Tabs.Tab>
+      </Tabs.List>
+      <Tabs.Panel tabId="manual-tabs" index={1}>
+        <DummyText pre="Tab 01: " />
+      </Tabs.Panel>
+      <Tabs.Panel tabId="manual-tabs" index={2} isActive>
+        <DummyText length="l" offset={1} pre="Tab 02: " />
+      </Tabs.Panel>
+      <Tabs.Panel tabId="manual-tabs" index={3}>
+        <DummyText length="l" offset={2} pre="Tab 03: " />
+      </Tabs.Panel>
+    </Tabs.Root>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html
+<div class="b--tabs b--tabs--default l--grid">
+  <div class="b--tabs_list" role="tablist">
+    <button class="b--tabs_tab set--plain" type="button" id="manual-tabs-1-tab" role="tab" aria-controls="manual-tabs-1" aria-selected="false" tabindex="-1">Tab 1</button>
+    <button class="b--tabs_tab set--plain" type="button" id="manual-tabs-2-tab" role="tab" aria-controls="manual-tabs-2" aria-selected="true" tabindex="0">Tab 2</button>
+    <button class="b--tabs_tab set--plain" type="button" id="manual-tabs-3-tab" role="tab" aria-controls="manual-tabs-3" aria-selected="false" tabindex="-1">Tab 3</button>
+  </div>
+  <div class="b--tabs_panel" id="manual-tabs-1" role="tabpanel" aria-labelledby="manual-tabs-1-tab" tabindex="0" hidden>...Contents...</div>
+  <div class="b--tabs_panel" id="manual-tabs-2" role="tabpanel" aria-labelledby="manual-tabs-2-tab" tabindex="0">...Contents...</div>
+  <div class="b--tabs_panel" id="manual-tabs-3" role="tabpanel" aria-labelledby="manual-tabs-3-tab" tabindex="0" hidden>...Contents...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+The required props differ between the React and Astro versions.
+
+| | React | Astro |
+|---|---|---|
+|`index`| Required on every `<Tabs.Tab>` and `<Tabs.Panel>`. | Required on every `<Tabs.Tab>` and `<Tabs.Panel>`. |
+|`tabId`| Not needed — the value from `<Tabs.Root>` (or its auto-generated ID, if omitted) is shared automatically. Even if you set it individually, `<Tabs.Root>` takes priority. | Specify the same value on each `<Tabs.Tab>` and `<Tabs.Panel>`. |
+|Initial selection| Set via `defaultIndex` (default `1`) on `<Tabs.Root>`. | Set `isActive` on both the `<Tabs.Tab>` and `<Tabs.Panel>` that should be open initially. |
+
+- In the React version, `<Tabs.Tab>` with `isActive` becomes the initial selection only when `defaultIndex` is omitted. This compatibility feature lets you reuse the same markup as the Astro version, but using `defaultIndex` is recommended for React. `isActive` on `<Tabs.Panel>` isn't needed in the React version.
+- `onClick` and `onKeyDown` handlers passed to `<Tabs.Tab>` in the React version are called before the component's internal handling. Calling `e.preventDefault()` inside them prevents the tab switch (the same applies to the `<Tabs.Item>` composition).
+- The Astro version can't share values from parent to child, so `tabId`, `defaultIndex`, and `listProps` on `<Tabs.Root>` have no effect in this composition. Pass any props you want on the list element directly to `<Tabs.List>` instead.
+- [Specifying the initial tab via a URL parameter](#specify-the-initial-tab-via-url-parameter) also works with this composition. When using it in the React version, explicitly set `tabId` on `<Tabs.Root>`.
+
+:::warning
+- Always place `<Tabs.Tab>` inside `<Tabs.List>`. Keyboard navigation follows the tabs within the same `role="tablist"` element in DOM order.
+- This composition doesn't fall back to `1` for out-of-range numbers. If you set the initial selection to a number that doesn't exist, the tabs render with none selected (you can still select one by clicking).
+:::
 
 
 ### Vertical tabs

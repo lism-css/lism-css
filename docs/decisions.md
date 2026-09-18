@@ -1,6 +1,16 @@
-基準日: 2026-09-18・コミットb74ec4629（作業ツリーを含む）
+基準日: 2026-09-19・コミットaba87064f（作業ツリーを含む）
 
 # 意思決定の記録
+
+## 2026-09-19: React版Tabsの手動構成はContextで状態を配り、`setTabs`は使わない
+
+#87の問題12。React版は`Tabs.Item`内のTab・Panelにだけ状態とイベントを設定しており、`Tabs.Root`へList・Tab・Panelを直接置く手動構成は表示されるだけで動かなかった。Astro版は同じ構成が`setTabs`（DOMスクリプト）で動くため、React版も利用者に状態管理を書かせずに動かす。
+
+- 決定: Rootが`TabsContext`で`tabId`・選択中のindex・選択関数・キー操作を配り、TabとPanelがContextを見て属性とイベントを決める。Item構成は「indexを自動採番して並べ替えるだけ」にし、両構成を同じイベント経路に通す。
+- 却下: `useEffect`から`setTabs`を呼ぶ方式。DOM属性を直接書き換えるためReactのstateとずれ、リスナーを解除できずStrictMode・再マウントで重複する。
+- 決定: 手動構成で利用者が指定するのは`index`だけ。`tabId`はContextの値をpropsより優先する（Accordionと同じ規約）。初期選択は`defaultIndex`→`isActive`付きのTab→`1`の順。`isActive`はAstro版の書き方をそのまま移せるようにするための互換。
+- 決定: キー移動はtablist内のタブをDOM順にたどり、移動先のindexは`aria-controls`から復元する。ディープリンクは対象タブがDOMに実在するかで判定する。タブの登録・解除の仕組みを持たないので、アンマウント時に残るものがない。
+- 受容: 手動構成はタブ数を描画時に知れないため、範囲外のindexを`1`へ戻すフォールバックは行わない（Astro版の手動構成と同じ）。
 
 ## 2026-09-18: templates の Astro テンプレートを Astro 7 へ更新し、techlog の Markdown 処理も Sätteri へ移行する
 
