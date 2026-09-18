@@ -1,4 +1,5 @@
 import getTokenVarName, { type TokensConfig } from './getTokenVarName';
+import isMemberOf from './helper/isMemberOf';
 
 type TokenValue = string | number;
 
@@ -7,19 +8,7 @@ type TokenValue = string | number;
  * 変数名の導出は getTokenVarName に集約し、ここは membership 判定だけを担う。
  */
 function resolveTokenVar(tokenKey: string, stringValue: string, TOKENS: TokensConfig): string | null {
-  const tokenValues = TOKENS[tokenKey];
-  if (!tokenValues) return null;
-
-  let isMember = false;
-  if (tokenValues instanceof Set) {
-    isMember = tokenValues.has(stringValue);
-  } else if (Array.isArray(tokenValues)) {
-    isMember = tokenValues.includes(stringValue);
-  } else if (typeof tokenValues === 'object') {
-    isMember = Object.hasOwn(tokenValues, stringValue);
-  }
-
-  return isMember ? `var(${getTokenVarName(tokenKey, stringValue)})` : null;
+  return isMemberOf(TOKENS[tokenKey], stringValue) ? `var(${getTokenVarName(tokenKey, stringValue)})` : null;
 }
 
 /**

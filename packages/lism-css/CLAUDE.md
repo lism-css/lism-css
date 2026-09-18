@@ -43,8 +43,7 @@ pnpm lint:style  # SCSS/CSS リント
 components/ComponentName/
 ├── ComponentName.jsx  # メインコンポーネント
 ├── getProps.js        # Props 処理ロジック（一部コンポーネントのみ）
-├── index.js           # エクスポート
-└── script.js          # クライアントJS（BoxLink のみ）
+└── index.js           # エクスポート
 ```
 
 - `layout/` サブディレクトリに Box, Flow, Flex, Cluster, Stack, Grid, AutoColumns, SwitchColumns, WithSide, Center, Columns, Frame がある

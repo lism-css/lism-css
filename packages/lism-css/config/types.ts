@@ -7,7 +7,7 @@
  *
  * - `lism-env.d.ts`（ビルド時生成物）や副作用付きの `config/index.ts` には依存しない。
  * - typo 検出が目的なので index signature は付けない（object literal の excess property check を効かせる）。
- * - ランタイム側の `PropConfig`（`src/lib/getLismProps.ts` の Set 化後の形）とは別物。
+ * - ランタイム側の `PropConfig`（`src/lib/types/PropConfig.ts` の Set 化後の形）とは別物。
  */
 
 // BreakpointKey は breakpoints.ts に一本化した定義を re-export する（二重定義を避ける）。

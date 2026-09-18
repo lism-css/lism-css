@@ -1,15 +1,10 @@
 import getBpData from './getBpData';
 import getMaybeCssVar from './getMaybeCssVar';
-import { type StyleWithCustomProps } from './types';
+import { pushPrimitive, type PrimitiveBaseProps } from './primitiveProps';
 import { type AtomicType } from './types/AtomicProps';
 import { type CssValue } from './types/LayoutProps';
 
 export type { AtomicType };
-
-interface PropConfig {
-  isVar?: number;
-  [key: string]: unknown;
-}
 
 // Atomic 固有 props（消費して除去される）
 interface AtomicOwnProps {
@@ -19,10 +14,7 @@ interface AtomicOwnProps {
 
 type AtomicSpecificKeys = keyof AtomicOwnProps;
 
-export interface BaseProps {
-  primitiveClass?: string[];
-  style?: StyleWithCustomProps;
-  _propConfig?: Record<string, PropConfig>;
+export interface BaseProps extends PrimitiveBaseProps {
   // spacer が触る w/h（後段の analyzeLismProp に委ねる）
   w?: unknown;
   h?: unknown;
@@ -32,10 +24,6 @@ export interface BaseProps {
 
 interface InputProps extends BaseProps, AtomicOwnProps {
   [key: string]: unknown;
-}
-
-function pushPrimitive(existing: string[] | undefined, ...classes: string[]): string[] {
-  return [...(existing ?? []), ...classes];
 }
 
 // スペーストークンへの一括変換（w / h 用）
