@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { act } from 'react';
-import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from 'react';
+import { act, StrictMode } from 'react';
+import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent, ReactElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import Tabs from './Root';
 import TabItem from './Item';
-import Tab from './Tab';
+import TabList from './List';
+import Tab, { type TabProps } from './Tab';
 import TabPanel from './Panel';
 
 // act() を testing-library なしで使うためのフラグ
@@ -14,10 +15,10 @@ let container: HTMLDivElement;
 let reactRoot: Root;
 
 // tabId 明示ありの2タブ構成をレンダリングする
-const renderTabs = () => {
+const renderTabs = (defaultIndex?: number) => {
   act(() => {
     reactRoot.render(
-      <Tabs tabId="sample-tabs">
+      <Tabs tabId="sample-tabs" defaultIndex={defaultIndex}>
         <TabItem>
           <Tab>Tab 1</Tab>
           <TabPanel>Content 1</TabPanel>
@@ -71,6 +72,13 @@ describe('Tabs (React) ディープリンク', () => {
     renderTabs();
 
     expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+  });
+
+  it('範囲外のインデックスは無視され、defaultIndex の選択が保たれる', () => {
+    history.replaceState({}, '', '/?lism-tab=sample-tabs-9');
+    renderTabs(2);
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
   });
 
   it('tabId が一致しないパラメータは無視される', () => {
@@ -204,5 +212,339 @@ describe('Tabs (React) Tab のタグ固定', () => {
     });
 
     expect(container.querySelector('[role="tab"]')?.tagName).toBe('BUTTON');
+  });
+});
+
+// ---- 手動構成（Tabs.Item を使わず List / Tab / Panel を直接配置） ----
+
+type ManualOptions = {
+  tabId?: string; // '' で未指定扱い（自動生成ID）
+  defaultIndex?: number;
+  indexes?: number[]; // DOM順に並べる index
+  listProps?: { 'aria-orientation'?: 'vertical' };
+  tabs?: Record<number, TabProps>;
+  panels?: Record<number, { tabId?: string }>;
+  panelContent?: Record<number, ReactElement>;
+};
+
+const manualTabs = ({ tabId = 'sample-tabs', defaultIndex, indexes = [1, 2], listProps, tabs, panels, panelContent }: ManualOptions = {}) => (
+  <Tabs tabId={tabId} defaultIndex={defaultIndex}>
+    <TabList {...listProps}>
+      {indexes.map((i) => (
+        <Tab key={i} index={i} {...tabs?.[i]}>
+          Tab {i}
+        </Tab>
+      ))}
+    </TabList>
+    {indexes.map((i) => (
+      <TabPanel key={i} index={i} {...panels?.[i]}>
+        {panelContent?.[i] ?? `Content ${i}`}
+      </TabPanel>
+    ))}
+  </Tabs>
+);
+
+const render = (element: ReactElement) => act(() => reactRoot.render(element));
+const renderManual = (options?: ManualOptions) => render(manualTabs(options));
+
+// アンマウントして新しい root を作り直す（afterEach は新しい root を片付ける）
+const remount = () => {
+  act(() => reactRoot.unmount());
+  reactRoot = createRoot(container);
+};
+
+const getTab = (index: number, tabId = 'sample-tabs') => document.getElementById(`${tabId}-${index}-tab`)!;
+const click = (el: HTMLElement) => act(() => void el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })));
+const pressKey = (el: HTMLElement, key: string) =>
+  act(() => void el.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true })));
+
+// 選択中のタブと表示中のパネルをidで返す（DOM順と index がずれるケース・入れ子のケース用）
+const getActiveIds = () => ({
+  tabs: [...container.querySelectorAll('[role="tab"][aria-selected="true"]')].map((el) => el.id),
+  panels: [...container.querySelectorAll('[role="tabpanel"]:not([hidden])')].map((el) => el.id),
+});
+
+// Tab と Panel が DOM 順で対になっている前提で、相互参照が噛み合っていることを確認する
+const expectLinkedIds = () => {
+  const btns = [...container.querySelectorAll('[role="tab"]')];
+  const panelEls = [...container.querySelectorAll('[role="tabpanel"]')];
+  expect(btns).toHaveLength(panelEls.length);
+  btns.forEach((btn, i) => {
+    expect(btn.id).not.toBe('');
+    expect(btn.getAttribute('aria-controls')).toBe(panelEls[i].id);
+    expect(panelEls[i].getAttribute('aria-labelledby')).toBe(btn.id);
+  });
+};
+
+describe('Tabs (React) 手動構成: 初期状態とARIA', () => {
+  it('index だけ指定すると1番目が選択され、id と ARIA 属性が {tabId}-{index} 規則で紐付く', () => {
+    renderManual();
+
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+    expect([...container.querySelectorAll('[role="tab"]')].map((b) => [b.id, b.getAttribute('aria-controls'), b.getAttribute('tabindex')])).toEqual([
+      ['sample-tabs-1-tab', 'sample-tabs-1', '0'],
+      ['sample-tabs-2-tab', 'sample-tabs-2', '-1'],
+    ]);
+    expectLinkedIds();
+  });
+
+  it('tabId 未指定なら自動生成IDで Tab と Panel が紐付く', () => {
+    renderManual({ tabId: '' });
+
+    expectLinkedIds();
+    expect(container.querySelector('[role="tab"]')!.id).not.toContain('__LISM_TAB_ID__');
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+  });
+
+  it('Tab / Panel に個別の tabId を渡しても Root の tabId が使われる', () => {
+    renderManual({ tabs: { 1: { tabId: 'other-tabs' } }, panels: { 2: { tabId: 'other-tabs' } } });
+
+    expect([...container.querySelectorAll('[role="tab"], [role="tabpanel"]')].map((el) => el.id)).toEqual([
+      'sample-tabs-1-tab',
+      'sample-tabs-2-tab',
+      'sample-tabs-1',
+      'sample-tabs-2',
+    ]);
+  });
+
+  it('defaultIndex で初期選択を指定できる', () => {
+    renderManual({ defaultIndex: 2 });
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+
+  it('defaultIndex 未指定なら isActive 付きの Tab が初期選択され、defaultIndex があればそちらが優先される', () => {
+    renderManual({ tabs: { 2: { isActive: true } } });
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+
+    remount();
+    renderManual({ defaultIndex: 1, tabs: { 2: { isActive: true } } });
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+  });
+
+  it('Panel 内の入れ子 Tabs の isActive と選択状態は、外側と互いに影響しない', () => {
+    renderManual({ panelContent: { 1: manualTabs({ tabId: 'inner-tabs', tabs: { 2: { isActive: true } } }) } });
+
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-1-tab', 'inner-tabs-2-tab'], panels: ['sample-tabs-1', 'inner-tabs-2'] });
+
+    click(getTab(2));
+
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-2-tab', 'inner-tabs-2-tab'], panels: ['inner-tabs-2', 'sample-tabs-2'] });
+  });
+});
+
+describe('Tabs (React) 手動構成: 操作', () => {
+  it('クリックで選択が切り替わる', () => {
+    renderManual();
+
+    click(getTab(2));
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+    expect([getTab(1).getAttribute('tabindex'), getTab(2).getAttribute('tabindex')]).toEqual(['-1', '0']);
+  });
+
+  it('矢印 / Home / End で選択とフォーカスが移り、端では循環する', () => {
+    renderManual({ indexes: [1, 2, 3] });
+
+    // [押すタブ, キー, 移動先]
+    const steps: [number, string, number][] = [
+      [1, 'ArrowRight', 2],
+      [2, 'End', 3],
+      [3, 'ArrowRight', 1],
+      [1, 'ArrowLeft', 3],
+      [3, 'Home', 1],
+    ];
+    for (const [from, key, to] of steps) {
+      pressKey(getTab(from), key);
+
+      expect(getActiveIds()).toEqual({ tabs: [`sample-tabs-${to}-tab`], panels: [`sample-tabs-${to}`] });
+      expect(document.activeElement).toBe(getTab(to));
+    }
+  });
+
+  it('List が aria-orientation="vertical" なら上下キーで移動し、左右キーでは動かない', () => {
+    renderManual({ listProps: { 'aria-orientation': 'vertical' } });
+
+    pressKey(getTab(1), 'ArrowRight');
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+
+    pressKey(getTab(1), 'ArrowDown');
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+    expect(document.activeElement).toBe(getTab(2));
+  });
+
+  it('Tab を li やラッパーコンポーネントで包み、List と Panel の間に別要素を挟んでも操作できる', () => {
+    const MyTab = (props: TabProps) => <Tab {...props} />;
+    render(
+      <Tabs tabId="sample-tabs">
+        <TabList as="ul">
+          <li>
+            <MyTab index={1}>Tab 1</MyTab>
+          </li>
+          <li>
+            <MyTab index={2}>Tab 2</MyTab>
+          </li>
+        </TabList>
+        <p>間の要素</p>
+        <div>
+          <TabPanel index={1}>Content 1</TabPanel>
+          <TabPanel index={2}>Content 2</TabPanel>
+        </div>
+      </Tabs>
+    );
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+
+    click(getTab(2));
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+
+    pressKey(getTab(2), 'ArrowLeft');
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+    expect(document.activeElement).toBe(getTab(1));
+  });
+
+  it('index の並びがDOM順と違っても、キー移動はDOM順に進み、移動先 Tab の index の Panel が選択される', () => {
+    renderManual({ indexes: [3, 1, 2] });
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-1-tab'], panels: ['sample-tabs-1'] });
+
+    pressKey(getTab(1), 'ArrowRight');
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-2-tab'], panels: ['sample-tabs-2'] });
+
+    // DOM末尾（index 2）からは先頭（index 3）へ循環する
+    pressKey(getTab(2), 'ArrowRight');
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-3-tab'], panels: ['sample-tabs-3'] });
+    expect(document.activeElement).toBe(getTab(3));
+  });
+
+  it('利用者の onClick が先に呼ばれ、preventDefault されなければ選択される', () => {
+    let clicked = 0;
+    renderManual({
+      tabs: {
+        2: { onClick: () => clicked++ },
+        3: { onClick: (e) => e.preventDefault() },
+      },
+      indexes: [1, 2, 3],
+    });
+
+    click(getTab(2));
+    expect(clicked).toBe(1);
+    expect(getActiveIds().tabs).toEqual(['sample-tabs-2-tab']);
+
+    click(getTab(3));
+    expect(getActiveIds().tabs).toEqual(['sample-tabs-2-tab']);
+  });
+
+  it('利用者の onKeyDown が先に呼ばれ、preventDefault されなければタブ移動する', () => {
+    const pressedKeys: string[] = [];
+    renderManual({
+      tabs: {
+        1: { onKeyDown: (e) => pressedKeys.push(e.key) },
+        2: { onKeyDown: (e) => e.preventDefault() },
+      },
+    });
+
+    pressKey(getTab(1), 'ArrowRight');
+    expect(pressedKeys).toEqual(['ArrowRight']);
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+
+    pressKey(getTab(2), 'ArrowRight');
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+});
+
+describe('Tabs (React) 手動構成: ディープリンク', () => {
+  it('?lism-tab={tabId}-2 で2番目のタブが選択される', () => {
+    history.replaceState({}, '', '/?lism-tab=sample-tabs-2');
+    renderManual();
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+
+  it('存在しない番号は無視され、defaultIndex の選択が保たれる', () => {
+    history.replaceState({}, '', '/?lism-tab=sample-tabs-9');
+    renderManual({ defaultIndex: 2 });
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+});
+
+describe('Tabs (React) 手動構成: ライフサイクル', () => {
+  it('StrictMode でも1回のクリックで onClick は1回だけ呼ばれ、選択が切り替わる', () => {
+    let clicked = 0;
+    render(<StrictMode>{manualTabs({ tabs: { 2: { onClick: () => clicked++ } } })}</StrictMode>);
+
+    click(getTab(2));
+
+    expect(clicked).toBe(1);
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+
+  it('再描画で Tab / Panel を足しても選択は維持され、追加したタブも選択できる', () => {
+    renderManual();
+    click(getTab(2));
+
+    renderManual({ indexes: [1, 2, 3] });
+    expect(getState()).toEqual({ selected: ['false', 'true', 'false'], hidden: [true, false, true] });
+
+    click(getTab(3));
+    expect(getState()).toEqual({ selected: ['false', 'false', 'true'], hidden: [true, true, false] });
+  });
+
+  it('再マウントすると選択状態は defaultIndex へ戻る', () => {
+    renderManual({ defaultIndex: 2 });
+    click(getTab(1));
+    expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
+
+    remount();
+    renderManual({ defaultIndex: 2 });
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+
+  it('StrictMode の擬似アンマウントでは選択が移らない', () => {
+    render(<StrictMode>{manualTabs({ defaultIndex: 2 })}</StrictMode>);
+
+    expect(getState()).toEqual({ selected: ['false', 'true'], hidden: [true, false] });
+  });
+
+  it('選択中の Tab / Panel が取り除かれると、残るタブのDOM順の先頭へ選択が移り、キーボード操作を続けられる', () => {
+    renderManual({ defaultIndex: 2, indexes: [3, 1, 2] });
+
+    renderManual({ indexes: [3, 1] });
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-3-tab'], panels: ['sample-tabs-3'] });
+    expect([getTab(3).getAttribute('tabindex'), getTab(1).getAttribute('tabindex')]).toEqual(['0', '-1']);
+
+    pressKey(getTab(3), 'ArrowRight');
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-1-tab'], panels: ['sample-tabs-1'] });
+    expect(document.activeElement).toBe(getTab(1));
+  });
+
+  it('取り除かれた Tab にフォーカスがあれば移動先へフォーカスも移る', () => {
+    renderManual({ defaultIndex: 2 });
+    act(() => getTab(2).focus());
+
+    renderManual({ indexes: [1] });
+    expect(getState()).toEqual({ selected: ['true'], hidden: [false] });
+    expect(document.activeElement).toBe(getTab(1));
+  });
+
+  it('取り除かれた Tab にフォーカスが無ければフォーカスは移らない', () => {
+    renderManual({ defaultIndex: 2 });
+
+    renderManual({ indexes: [1] });
+    expect(getState()).toEqual({ selected: ['true'], hidden: [false] });
+    expect(document.activeElement).toBe(document.body);
+  });
+
+  it('選択中でない Tab が取り除かれても選択は変わらない', () => {
+    renderManual({ defaultIndex: 2, indexes: [1, 2] });
+
+    renderManual({ indexes: [2] });
+    expect(getActiveIds()).toEqual({ tabs: ['sample-tabs-2-tab'], panels: ['sample-tabs-2'] });
+  });
+
+  // 手動構成は範囲外フォールバックをしない。補正はマウント済みの Tab が外れた時だけ
+  it('一度も存在しない index を初期選択に指定してもどのタブも選択されない', () => {
+    renderManual({ defaultIndex: 9 });
+
+    expect(getActiveIds()).toEqual({ tabs: [], panels: [] });
   });
 });
