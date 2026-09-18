@@ -54,6 +54,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
 
+      # .turbo/cache は turbo 側で削除されず増え続けるので、7 日以上前のエントリを消して肥大化を抑える（test.yml と同じ）
+      - name: Prune stale Turborepo cache entries
+        run: find .turbo/cache -type f -mtime +7 -delete 2>/dev/null || true
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

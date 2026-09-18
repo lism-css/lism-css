@@ -46,17 +46,19 @@ export function rehypeAbsoluteUrls(opts: { siteUrl: string }) {
     visit(tree, 'element', (node: Element) => {
       const attrs = URL_ATTRS[node.tagName];
       if (!attrs || !node.properties) return;
+      // @types/hast 3.0.5 は srcSet を string に限定するが、rehype-parse は commaSeparated として配列で渡す
+      const props = node.properties as Record<string, unknown>;
       for (const attr of attrs) {
-        const v = node.properties[attr];
+        const v = props[attr];
         if (v == null) continue;
         if (attr === 'srcSet') {
           if (Array.isArray(v)) {
-            node.properties[attr] = v.map((part) => absolutizeSrcsetPart(String(part), base));
+            props[attr] = v.map((part) => absolutizeSrcsetPart(String(part), base));
           } else if (typeof v === 'string' && v !== '') {
-            node.properties[attr] = absolutizeSrcset(v, base);
+            props[attr] = absolutizeSrcset(v, base);
           }
         } else if (typeof v === 'string' && v !== '') {
-          node.properties[attr] = absolutize(v, base);
+          props[attr] = absolutize(v, base);
         }
       }
     });

@@ -4,7 +4,7 @@ Astro + TypeScript + MDX で構築された、Lism CSS (`packages/lism-css`) & L
 
 | 機能 | 技術 |
 |------|------|
-| フレームワーク | Astro 6.x |
+| フレームワーク | Astro 7.x |
 | コンテンツ | MDX（コンテンツコレクション） |
 | CSS | lism-css |
 | 検索 | Pagefind（静的検索ライブラリ） |
@@ -84,8 +84,7 @@ src/
 │   ├── patterns.ts           # パターン取得
 │   ├── layout-demos.ts       # レイアウトデモ取得
 │   ├── templates.ts          # テンプレート取得
-│   ├── remark-directive.ts   # :::記法変換（remark）
-│   ├── rehype-blockquote-cite.ts # blockquote 拡張（rehype）
+│   ├── satteri/              # Markdown / MDX 用の Sätteri プラグイン（Callout 変換・外部リンク・blockquote 出典・table ラップ）
 │   └── expressive-code.config.ts
 ├── pages/                # ルーティング
 │   ├── index.astro

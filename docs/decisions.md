@@ -1,6 +1,38 @@
-基準日: 2026-09-17・コミット684f5fd4a（作業ツリーを含む）
+基準日: 2026-09-18・コミットb74ec4629（作業ツリーを含む）
 
 # 意思決定の記録
+
+## 2026-09-18: templates の Astro テンプレートを Astro 7 へ更新し、techlog の Markdown 処理も Sätteri へ移行する
+
+`apps/site` の Astro 7 化（#580 PR1 / PR2）に続いて、`templates/*` の Astro テンプレート 5 つを astro 7.3 へ更新した。`lism-cli create` の生成物とプレビューサイトが変わるため、Astro 6 のビルド成果物と撮影画像を退避して比較したうえで採用した。
+
+- 決定: techlog の Markdown / MDX 処理は `unified()` を維持せず Sätteri へ移行する。Astro 7 の既定であり、`unified()` は「まだ移植できない場合」の代替として残る位置付けのため、テンプレートの出発点としては既定に合わせる。remark プラグイン 3 つと `rehype-autolink-headings` は `src/lib/satteri/` の MDAST / HAST プラグインに移植し、記事の書き方は変えない。
+- 決定: 見出しアンカーは HAST プラグインで `github-slugger` により先に `id` を付けてから `<a>` を追加する。Astro の見出し ID プラグインはユーザープラグインより後に走り、既存の `id` があればそれを採用するため、この順序で `render()` の `headings.slug` と一致する。
+- 決定: techlog は `apps/site` と同じく `smartPunctuation: { dashes: false }` にする。見出し中の `b-- / c--` のようなクラス接頭辞がダッシュに変換されていた。他の 4 テンプレートは Markdown 設定を持たない。
+- 決定: `compressHTML` は Astro 7 の既定（`'jsx'`）のままにする。5 テンプレートの全撮影ページで Astro 6 のビルドとピクセル一致した（差分は写真の再エンコードと記事本文の更新だけ）。`apps/site` が `true` にしたのはドキュメントの出力差分を抑えるためで、テンプレートには当てはまらない。
+- 受容: `@lism-css/icons` 0.3.0 の peer `astro` が `^5 || ^6` のため、astro 7 では unmet peer の警告が出る。icons リポジトリ側で peer を広げるまで警告のみで動作に影響はない。
+- 受容: Astro 7 は 4KB 未満の CSS を `<style>` へインライン化するため、lp の `_animations.css` は外部ファイルではなくページ内に出力される。
+
+## 2026-09-18: Markdown / MDX の処理を Sätteri へ移行し、`--` のダッシュ変換を止める
+
+Astro 7 の既定プロセッサである Sätteri へ `apps/site` の Markdown / MDX パイプラインを切り替えた（#580）。`@astrojs/mdx` 8 は MDX も `markdown.processor` へ委譲するため、`## 見出し {#id}` の見出し ID 指定が MDX でも使え、`hov.mdx` のリンク用空要素（`c--scrollTarget`）によるアンカー位置のずれを解消できる。remark / rehype プラグイン 3 つは `src/lib/satteri/` に Sätteri プラグインとして移植し、Astro 7 化直後のビルド成果物と全件比較して差分を分類した。
+
+- 決定: `:::type` は MDAST プラグインで `<Callout type>` の `mdxJsxFlowElement` に変換し、`Callout.astro` をそのまま使う。HAST 側でコンポーネント相当の要素を組み立てる案は、プリセット（色・アイコン）の二重管理になるので採らない。
+- 決定: 未対応の `:::type` / `::name` はコンパイルエラーにする。Sätteri は未処理の directive を黙って捨てるため、typo が本文の欠落として出る。旧パイプラインで素の `<div>` として出ていた `:::caution`（`is--wrapper.mdx`）は `:::warning` に直した。
+- 決定: `smartPunctuation: { dashes: false }` にする。本文中のクラス名（`u--cbox`、`set--bxsh` 等）の `--` が em ダッシュに変換されていた（11 ページ）。プロース中に `--` / `---` をダッシュとして使っている箇所は無い。引用符と省略記号の変換は残す。
+- 受容: Sätteri は表のセル・行の間に改行を入れる。HTML の表では表示に影響しない。ブロック要素間の改行数の差も同様。`en/css-methodology` の先頭の引用符が閉じ記号から開き記号（`“`）に変わる差は、正しい方向への修正として受け入れる。
+- 対象外: `docs-md` 統合の HTML → Markdown 変換は引き続き unified（`rehype-parse` / `rehype-remark` / `remark-stringify`）を使う。`@astrojs/markdown-remark` と `unified()` プロセッサは `apps/site` から外した。
+
+## 2026-09-18: Astro 7 へ更新し、compressHTML は true で v6 の空白処理を維持する
+
+dev サーバーのコールドスタートでページ用 CSS が `<head>` に出ず、大きな FOUC が起きていた（#580）。原因は Astro 6 の dev サーバー内部の不具合 2 件の組み合わせで 6.x にバックポートは無く、head メタデータの機構が再設計された Astro 7 へ上げて根本対応した。Vite 8（Rolldown）と Rust コンパイラに切り替わるため、`dev` ブランチのビルド成果物と全件比較して差分を分類したうえで採用した。
+
+- 決定: `compressHTML: true` を明示し、v6 の空白処理を維持する。Astro 7 の既定 `'jsx'` はインライン要素間の空白まで落とし、全ページの出力が変わる。`'jsx'` の採用は効果と差分を別途見てから決める。
+- 決定: `disableServerTreeshake`（#624）は削除する。Rolldown では tree-shaking の有無で SSR コンパイル（約 6.1 秒）も全体（約 19 秒）も変わらなかった（各 2 回計測）。
+- 決定: `@lism-css/plugin` の purge は、リネーム後の CSS を `this.emitFile` で出し直す。Rolldown は `generateBundle` の `bundle` への新キー代入を無視するため、キーを付け替える旧方式では CSS が出力されない。 plugin の devDependencies の vite は 7 のままにし（monorepo 内の Vite 7 利用者である mockup と型を揃えるため）、Rolldown の検証は `vite8`（`npm:vite@8`）エイリアスのテストで行う。
+- 決定: `lism-css` の `lint` と `typecheck` は turbo で自身の `build` にも依存させる。この 2 つは自パッケージの `dist` の型定義（`lism-css/lib/*` の自己参照 exports）で型を解決するため、`^build` だけだと `build` と同時に走り、dist の再生成と競合して型解決が壊れる。`dev` では turbo キャッシュで dist が残っていたため表面化せず、lockfile の変化でキャッシュが切れた本 PR の CI で lint が落ちた。
+- 受容: Rust コンパイラは入れ子 CSS の子セレクタ（`> code` 等）にもスコープ属性を付ける。スロット由来の要素を指す箇所（`PropBadge.astro`）だけ `:global()` で除外し、同一コンポーネント内の要素を指す入れ子は触らない。スコープ属性のハッシュ値、タグ間の空白の有無、CSS 関数引数の空白、インライン JS の minify 結果、生成アセットのハッシュ名の差は同値として受け入れる。
+- 対象外: `templates/*` の Astro テンプレート 5 つは別 issue で追従する。
 
 ## 2026-09-17: apps/siteのデプロイをWorkers BuildsからGitHub Actionsへ移す
 

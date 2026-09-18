@@ -17,6 +17,7 @@
  *   npx tsx apps/site/scripts/template-screenshots.ts --target=blog/astro/minimal
  *   npx tsx apps/site/scripts/template-screenshots.ts --no-build         # 既存 dist を使う（ビルドをスキップ）
  *   npx tsx apps/site/scripts/template-screenshots.ts --threshold=0.5    # compare のしきい値（%）
+ *   npx tsx apps/site/scripts/template-screenshots.ts --port=4331        # 全テンプレの preview ポートを上書き（既定ポートが使用中のとき）
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -87,6 +88,8 @@ const MODE: 'new' | 'force' | 'compare' | 'update' = flag('update') ? 'update' :
 const SKIP_BUILD = flag('no-build');
 const TARGET = arg('target');
 const THRESHOLD = arg('threshold') ? parseFloat(arg('threshold')!) : 0.01;
+// 全テンプレの preview ポートを上書きする。config の既定ポート（4321 等）を別プロセスが占有しているときに使う
+const PORT_OVERRIDE = arg('port') ? parseInt(arg('port')!, 10) : undefined;
 
 const VIEWPORT = { width: 1600, height: 900 } as const;
 const SERVER_READY_TIMEOUT_MS = 60_000;
@@ -117,6 +120,7 @@ function collectTemplates(): TemplateEntry[] {
         return;
       }
       const config = JSON.parse(readFileSync(configPath, 'utf-8')) as TemplateConfig;
+      if (PORT_OVERRIDE) config.port = PORT_OVERRIDE;
       const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8')) as { name?: string };
       if (!pkg.name) {
         console.warn(`⚠️  package.json に name がありません: ${relative(REPO_ROOT, dir)}`);
@@ -177,17 +181,25 @@ function buildTemplateLang(pkgName: string, lang: string): boolean {
   return r.status === 0;
 }
 
-function isPortInUse(port: number): Promise<boolean> {
+/** host:port へ TCP 接続できるか（listen 中のプロセスがあるか） */
+function canConnect(host: string, port: number, timeoutMs = 500): Promise<boolean> {
   return new Promise((resolve) => {
-    const tester = net.createServer();
-    tester.once('error', (err: NodeJS.ErrnoException) => {
-      resolve(err.code === 'EADDRINUSE');
-    });
-    tester.once('listening', () => {
-      tester.close(() => resolve(false));
-    });
-    tester.listen(port, '127.0.0.1');
+    const socket = net.connect({ host, port });
+    const done = (result: boolean) => {
+      socket.destroy();
+      resolve(result);
+    };
+    socket.setTimeout(timeoutMs, () => done(false));
+    socket.once('connect', () => done(true));
+    socket.once('error', () => done(false));
   });
+}
+
+async function isPortInUse(port: number): Promise<boolean> {
+  // Astro 7 の preview は IPv6（::1）側で listen するため、127.0.0.1 だけ見ると使用中を見逃す。
+  // HTTP 応答の有無ではなく TCP 接続の可否で判定する（応答が遅いサーバーを未使用と誤判定しないため）
+  const [v4, v6] = await Promise.all([canConnect('127.0.0.1', port), canConnect('::1', port)]);
+  return v4 || v6;
 }
 
 /** ポートが解放されるまで待機（前テンプレの preview server が完全終了するまで） */
@@ -207,15 +219,20 @@ function startPreviewServer(entry: TemplateEntry): Promise<ChildProcess> {
     console.log(`📡 ${command} server 起動中 (${entry.pkgName} :${port})`);
 
     // 各 dev/preview にポートを渡して固定する。portViaEnv のテンプレは PORT 環境変数で渡し（next 等 `--` 後引数 NG 対策）、
-    // それ以外は従来どおり `-- --port <port>` を渡す。
+    // それ以外は `--port <port>` を渡す。`--` を挟むと pnpm がそのまま script へ渡し、astro は `--` 以降を無視する。
     const usePortEnv = entry.config.portViaEnv ?? false;
-    const serverArgs = usePortEnv ? ['--filter', entry.pkgName, command] : ['--filter', entry.pkgName, command, '--', '--port', String(port)];
+    const serverArgs = usePortEnv ? ['--filter', entry.pkgName, command] : ['--filter', entry.pkgName, command, '--port', String(port)];
+    // Astro 7 の dev / preview は AI エージェント環境（am-i-vibing の判定）を検出するとバックグラウンドのデーモンとして起動し、
+    // ロックファイルで管理する。このスクリプトは自分で止められる前面のサーバーが要るので、判定に使われる環境変数を外す
+    const env: NodeJS.ProcessEnv = { ...process.env };
+    for (const key of ['CLAUDECODE', 'CODEX_THREAD_ID', 'CURSOR_TRACE_ID', 'AGENT', 'AI_AGENT']) delete env[key];
+    if (usePortEnv) env.PORT = String(port);
     const server = spawn('pnpm', serverArgs, {
       cwd: REPO_ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],
       shell: false,
       detached: true,
-      env: usePortEnv ? { ...process.env, PORT: String(port) } : process.env,
+      env,
     });
 
     let resolved = false;
@@ -255,6 +272,11 @@ function startPreviewServer(entry: TemplateEntry): Promise<ChildProcess> {
       resolved = true;
       reject(new Error(`server 起動エラー: ${err.message}`));
     });
+    server.on('exit', (code, sig) => {
+      if (resolved) return;
+      resolved = true;
+      reject(new Error(`server が起動前に終了しました (${sig ?? `exit ${code}`})`));
+    });
 
     // フォールバック: 一定時間後に強制チェック
     setTimeout(() => {
@@ -291,14 +313,27 @@ async function waitForServer(url: string, maxRetries = 60, interval = 500): Prom
   return false;
 }
 
-function stopServer(server: ChildProcess | null) {
+function stopServer(server: ChildProcess | null, signal: NodeJS.Signals = 'SIGTERM') {
   if (!server) return;
   try {
-    if (server.pid) process.kill(-server.pid, 'SIGTERM');
-    else server.kill();
+    if (server.pid) process.kill(-server.pid, signal);
+    else server.kill(signal);
   } catch {
     /* noop */
   }
+}
+
+/**
+ * 自分が起動した server を止め、ポートが解放されるまで待つ。
+ * 停止対象は自分のプロセスグループに限定する（ポートを使う他のプロセスを止めない）。
+ * 解放されなければ次のパスで別サーバーを撮ってしまうので、警告ではなくエラーで中止する。
+ */
+async function stopServerAndFreePort(server: ChildProcess | null, port: number): Promise<void> {
+  stopServer(server, 'SIGTERM');
+  if (await waitForPortFree(port, 3_000)) return;
+  stopServer(server, 'SIGKILL');
+  if (await waitForPortFree(port)) return;
+  throw new Error(`ポート ${port} が解放されませんでした。占有中のプロセスを確認して停止してください`);
 }
 
 // ───────────────────────────────────────────
@@ -487,13 +522,7 @@ async function runPass(entry: TemplateEntry, pass: Pass, browser: Browser, stats
     await realPage.close();
     if (grayPage) await grayPage.close();
   } finally {
-    stopServer(server);
-    // 次のパス/テンプレに進む前にポートが解放されるまで待つ（重要：前 server が残ると
-    // 次の撮影で前のページを撮ってしまう）
-    const freed = await waitForPortFree(entry.config.port);
-    if (!freed) {
-      console.warn(`⚠️  ポート ${entry.config.port} の解放が確認できませんでした`);
-    }
+    await stopServerAndFreePort(server, entry.config.port);
   }
 }
 

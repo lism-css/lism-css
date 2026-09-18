@@ -15,10 +15,11 @@ On top of Astro and Lism CSS/`@lism-css/ui`, it adds the following.
 - `@astrojs/mdx` — posts are written in `.mdx`
 - `@astrojs/sitemap` — sitemap generation
 - `astro-expressive-code` — code highlighting
-- `remark-directive` — `:::` syntax
+- `@astrojs/markdown-satteri` / `satteri` — Sätteri, Astro 7's default Markdown processor, and its plugin API
+- `github-slugger` — heading ID generation
 - `pagefind` / `@pagefind/default-ui` — full-text search
 
-In `astro.config.mjs`, `expressiveCode` is placed before `mdx`, and `markdown.remarkPlugins` registers three custom transform plugins (the `:::` transform from `remark-directive`, turning URL/`[[slug]]` paragraphs into link cards, and turning inline `[[slug]]` into WikiLinks). The sitemap integration also fills in each post's `lastmod`.
+In `astro.config.mjs`, `expressiveCode` is placed before `mdx`, and `markdown.processor` (`satteri()` from `@astrojs/markdown-satteri`) enables `features.directive: true` (parsing the `:::` syntax) and registers four custom transform plugins (converting labeled blocks into Callout and unlabeled ones into Alert, turning URL/`[[slug]]` paragraphs into link cards, turning inline `[[slug]]` into WikiLinks, and adding IDs to headings and anchor links to h2/h3). MDX is processed by the same `markdown.processor`. The sitemap integration also fills in each post's `lastmod`.
 
 ## Directory structure
 
@@ -28,7 +29,7 @@ src/
 ├── config/          # Site config + category definitions
 ├── content.config.ts
 ├── layouts/         # Layout / ArchiveLayout / PageLayout
-├── lib/             # TOC generation, year/month archives, OG images, sitemap lastmod, remark plugins, etc.
+├── lib/             # TOC generation, year/month archives, OG images, sitemap lastmod, Sätteri plugins (`satteri/`), etc.
 ├── pages/           # Routing
 ├── posts/           # Post MDX (one directory per category)
 │   ├── tech/
@@ -80,7 +81,7 @@ Since the post detail URL doesn't include the category (`/posts/{slug}/`), chang
 
 ## MDX and Callout / Alert
 
-`src/lib/remark-directive.mjs` transforms the `:::` syntax so you can call `@lism-css/ui`'s `Callout` / `Alert`.
+`src/lib/satteri/directive.mjs` (an MDAST plugin) transforms the `:::` syntax so you can call `@lism-css/ui`'s `Callout` / `Alert`. Unsupported types and leaf directives like `::name` cause a build error (Sätteri silently drops unhandled directives, so this makes typos visible). Inline `:name` in body text, such as `1:2`, is left as plain text.
 
 - `:::type[title]` → `<Callout type="..." title="...">`
 - `:::type` → `<Alert type="...">`
@@ -99,7 +100,7 @@ Omit the label and you get an Alert with no title area.
 
 `Callout` / `Alert` / `LinkCard` / `WikiLink` are passed to `<Content components={{ ... }} />` in `posts/[...slug].astro`, so you don't need to import them in the post files.
 
-> `remark-directive` itself also works with `.md`, but because this plugin converts `:::` into JSX nodes, it doesn't work in the `.md` render pipeline. `content.config.ts` is also scoped to `**/*.mdx`, so `.md` files aren't collected.
+> Sätteri's directive parsing itself also works with `.md`, but because this plugin converts `:::` into JSX nodes (Astro components), it doesn't work in the `.md` render pipeline. `content.config.ts` is also scoped to `**/*.mdx`, so `.md` files aren't collected.
 
 ## Link cards / WikiLinks (auto-expanded)
 

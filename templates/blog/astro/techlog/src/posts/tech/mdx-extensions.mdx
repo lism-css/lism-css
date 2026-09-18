@@ -198,12 +198,13 @@ pnpm dev
 
 ## 仕様の所在
 
-各記法を実装している remark プラグインは `src/lib/` 配下にまとまっています。
+各記法を実装している Sätteri プラグインは `src/lib/satteri/` 配下にまとまっています。
 
 | ファイル | 役割 |
 | --- | --- |
-| `remark-directive.mjs` | `:::type[label]` / `:::type` を `<Callout>` / `<Alert>` に変換 |
-| `remark-link-card.mjs` | URL単独段落を`<LinkCard type="external">`に変換 |
-| `remark-wiki-link.mjs` | `[[slug]]`/`[[slug\|alias]]`を`<LinkCard type="internal">`/`<WikiLink>`に変換 |
+| `directive.mjs` | `:::type[label]` / `:::type` を `<Callout>` / `<Alert>` に変換（MDAST） |
+| `link-card.mjs` | URL単独段落を`<LinkCard type="external">`に変換（MDAST） |
+| `wiki-link.mjs` | `[[slug]]`/`[[slug\|alias]]`を`<LinkCard type="internal">`/`<WikiLink>`に変換（MDAST） |
+| `heading-anchor.mjs` | 見出しに`github-slugger`でIDを付け、h2/h3にアンカーリンクを追加（HAST） |
 
 詳細は [[astro-blog-overview]] のテンプレート解説を参照。

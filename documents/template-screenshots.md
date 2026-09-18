@@ -16,7 +16,9 @@
 | `pnpm screenshot:templates:compare` | baselineと比較（初回はbaseline生成） |
 | `pnpm screenshot:templates:update` | 差分テンプレのbaselineと公開用画像を更新 |
 
-対象の絞り込みは`--target=<slug|相対パス>`、既存`dist/`を使うなら`--no-build`。
+対象の絞り込みは`--target=<slug|相対パス>`、既存`dist/`を使うなら`--no-build`。`screenshots.config.json`の`port`を別プロセスが占有しているときは`--port=<port>`で全テンプレのpreviewポートを上書きできる。
+
+Astro 7の`astro preview`はAIエージェント環境を検出するとバックグラウンドのデーモンとして起動し、`astro preview stop`で止める方式になる。スクリプトは判定に使われる環境変数を外して前面で起動するので、エージェントから実行しても撮影後にサーバーが残らない。残った場合は各テンプレのディレクトリで`pnpm exec astro preview stop`を実行する。
 
 ```bash
 pnpm --filter lism-site screenshot:templates -- --target=minimal-astro
@@ -96,7 +98,7 @@ templates/blog/astro/minimal/
 ## スクリプト（`apps/site/scripts/template-screenshots.ts`）
 
 - `templates/`以下を再帰走査し、`screenshots.config.json`を持つディレクトリを収集する。
-- 各テンプレを`pnpm --filter <name> build`→`pnpm --filter <name> preview`で起動する。ポートは`-- --port <port>`、`portViaEnv: true`なら`PORT`環境変数で渡す。
+- 各テンプレを`pnpm --filter <name> build`→`pnpm --filter <name> preview`で起動する。ポートは`--port <port>`、`portViaEnv: true`なら`PORT`環境変数で渡す。起動前にIPv4・IPv6両方のTCP接続でポートの空きを確認し、停止は自分が起動したプロセスグループにだけシグナルを送る。停止後にポートが解放されなければエラーで中止する。
 - Playwright（headless chromium）で`shots`を順に撮影する。`langShots`があれば上記のoverlay再build→撮影を続けて行い、`screenshots/<lang>/`へ保存する。
 - compareはpixelmatchで比較し、しきい値（既定0.01%）以下なら変更なしとみなす。
 - CDNランダム画像（`cdn.lism-css.com/random/img*`と`cdn.lism-css.com/img/random*`）は、baseline用の撮影（`force` / `compare` / `update`のbaseline）では1x1グレーに差し替える（比較を安定させるため）。公開用の撮影（`new` / `force` / `update`のpublic）は本物のまま。

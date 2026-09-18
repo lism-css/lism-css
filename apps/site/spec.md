@@ -18,9 +18,12 @@
 
 ## Markdown 拡張記法
 
-- `astro.config.ts` - プラグイン登録
-- `src/lib/remark-callout.ts` - `:::type ... :::` → `<Callout>` 変換
-- `src/lib/rehype-blockquote-cite.ts` - blockquote の cite 属性変換
+- `astro.config.ts` - Sätteri（`@astrojs/markdown-satteri`）をプロセッサに指定し、`directive` / `headingAttributes` を有効化。`smartPunctuation` はダッシュ変換だけ無効（本文中の `u--cbox` 等を守るため）
+- `src/lib/satteri/directive-callout.ts` - `:::type ... :::` → `<Callout>` 変換、`::title[...]` → `.c--docsNote_title`、未使用の `:name` を元テキストへ復元。未対応の type はビルドエラー
+- `src/lib/satteri/external-links.ts` - 外部リンクに `rel` / `target="_blank"`
+- `src/lib/satteri/blockquote-cite.ts` - blockquote の `-- 出典` 行を `figure` + `figcaption` に変換
+- `src/lib/satteri/wrap-table.ts` - `table` を横スクロール用の `div.-ov-x:auto` で包む
+- 見出し ID は `## 見出し {#id}` で指定できる（例: `hov.mdx` の `#set--hov`）。MDX では `{...}` が JS 式として成立しない場合だけ属性として解釈される
 - Callout type: `alert`（赤）, `point`/`tip`（橙）, `warning`（黄）, `check`（緑）, `help`（紫）, `info`（青）, `note`（灰）
 
 
