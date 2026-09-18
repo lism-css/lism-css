@@ -2,6 +2,7 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import { configDefaults } from 'vitest/config';
+import ts from 'typescript';
 import dts from 'unplugin-dts/vite';
 // import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
@@ -26,6 +27,10 @@ function deleteDuplicateDir(filePath) {
   // 一致しない場合、元のパスをそのまま返す
   return filePath;
 }
+
+// dtsプラグインの exclude は tsconfig.json の exclude を上書きするため、引き継いだうえで公開不要なファイルを足す
+const tsconfigExclude = ts.readConfigFile(resolve(__dirname, 'tsconfig.json'), ts.sys.readFile).config.exclude ?? [];
+const dtsExclude = [...tsconfigExclude, '**/*.test.{ts,tsx}', '**/*.spec-d.ts', '**/*.stories.tsx', '**/__*.*', '**/__*/**'];
 
 // front用のスクリプトファイルのビルドは要検討
 
@@ -58,6 +63,7 @@ export default defineConfig({
       tsconfigPath: './tsconfig.json',
       outDir: 'dist',
       entryRoot: 'src',
+      exclude: dtsExclude,
     }),
   ],
   test: {

@@ -25,7 +25,7 @@ describe('generateCssToDir', () => {
     expect(result.aliasMap['lism-css/main.css']).toBe(path.join(outDir, 'main.css'));
     expect(fs.existsSync(result.aliasMap['lism-css/main.css'])).toBe(true);
     // 入れ子エントリも posix キーで解決する。
-    expect(result.aliasMap['lism-css/base/set.css']).toBe(path.join(outDir, 'base/set.css'));
+    expect(result.aliasMap['lism-css/primitives/layout.css']).toBe(path.join(outDir, 'primitives/layout.css'));
     expect(result.outDir).toBe(outDir);
     // user config が無い場合は null。
     expect(result.userConfigPath).toBeNull();
