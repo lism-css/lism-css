@@ -1,24 +1,23 @@
 ---
-import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { HTMLAttributes } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-export type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+export type Props = HTMLAttributes<'button'> &
   AstroLismBaseProps & {
     tabId?: string;
     index?: number;
     isActive?: boolean;
   };
 
-// memo: Astro版は Root の transformTabitems が <button> 前提で解析するため、asの変更には対応できない
+// Root の transformTabitems が <button> 前提で解析するため button 固定。型を通らず as が渡されても上書きされないよう、as はスプレッドより後ろに置く
 // tabId / index は Root 側の transformTabitems が置換するため、既定値はその目印となるプレースホルダー
-const { tabId = '__LISM_TAB_ID__', index = 0, isActive = false, class: className, as = 'button', ...props } = Astro.props;
+const { tabId = '__LISM_TAB_ID__', index = 0, isActive = false, class: className, ...props } = Astro.props;
 const controlId = `${tabId}-${index}`;
 ---
 
 <Lism
-  as={as}
   type="button"
   set="plain"
   class={atts(className, 'b--tabs_tab')}
@@ -27,5 +26,6 @@ const controlId = `${tabId}-${index}`;
   aria-controls={controlId}
   aria-selected={isActive ? 'true' : 'false'}
   tabindex={isActive ? '0' : '-1'}
-  {...props}><slot /></Lism
+  {...props}
+  as="button"><slot /></Lism
 >

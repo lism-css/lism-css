@@ -175,3 +175,34 @@ describe('Tabs (React) Tab を持たない Item の扱い', () => {
     expect(getState()).toEqual({ selected: ['true', 'false'], hidden: [false, true] });
   });
 });
+
+describe('Tabs (React) Tab のタグ固定', () => {
+  it('as は型で受け付けない', () => {
+    // @ts-expect-error Tab は button 固定
+    void (<Tab as="a">Tab</Tab>);
+  });
+
+  it('型を通らず as が渡されても button で出力される', () => {
+    const spreadProps = { as: 'a', href: '#' } as object;
+
+    act(() => {
+      reactRoot.render(
+        <Tabs tabId="sample-tabs">
+          <TabItem>
+            <Tab {...spreadProps}>Tab 1</Tab>
+            <TabPanel>Content 1</TabPanel>
+          </TabItem>
+        </Tabs>
+      );
+    });
+
+    expect(container.querySelector('[role="tab"]')?.tagName).toBe('BUTTON');
+
+    // 単体利用（手動構成）でも同様
+    act(() => {
+      reactRoot.render(<Tab {...spreadProps}>Tab</Tab>);
+    });
+
+    expect(container.querySelector('[role="tab"]')?.tagName).toBe('BUTTON');
+  });
+});
