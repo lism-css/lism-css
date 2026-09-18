@@ -16,7 +16,7 @@ export default getViteConfig(
       name: 'astro',
       root: __dirname,
       environment: 'node',
-      include: ['packages/astro/**/*.test.ts'],
+      include: ['astro/**/*.test.ts'],
     },
   },
   { logLevel: 'error' }

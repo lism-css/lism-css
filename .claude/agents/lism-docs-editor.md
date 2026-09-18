@@ -23,7 +23,7 @@ effort: xhigh
 | Props 定義・デフォルト値 | `packages/lism-css/config/defaults/**` |
 | CSS（クラス名・変数・トークン） | `packages/lism-css/src/scss/` |
 | React コンポーネント | `packages/lism-css/src/components/**/*.tsx` |
-| Astro コンポーネント | `packages/lism-css/packages/astro/**/*.astro` |
+| Astro コンポーネント | `packages/lism-css/astro/**/*.astro` |
 | lism-ui コンポーネント | `packages/lism-ui/src/components/` |
 
 
