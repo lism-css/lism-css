@@ -5,7 +5,8 @@
 // - `_astro/` のハッシュ付きファイル名、Preview の demo-ID、Tabs の UUID、Astro の generator meta
 // - スコープ属性 `data-astro-cid-*` / `astro-*` のハッシュ（ページ内の出現順で旧→新を対応付ける）
 // - インライン <style> / <script> の中身（差分のあるペア数だけ数える。minify 差を拾わないため）
-// `_astro/` のアセットはファイル名の stem ごとにサイズを並べるだけで、中身は比較しない。
+// `_astro/` のアセットはハッシュを除いた stem で 1 対 1 に対応付け、サイズと中身の両方を比べる。
+// 同じ stem が複数あると対応付けできないため、その分は未比較として報告する。
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, relative, extname, basename } from 'node:path';
 
@@ -165,16 +166,40 @@ for (const [rel, bp] of baseFiles) {
   }
 }
 
-// _astro: stem ごとのサイズ
+// _astro: stem で対応付けてサイズと中身を比較する
 const stem = (r) =>
   basename(r)
     .replace(/\.[\w-]{8}\.(js|css)$/, '.$1')
     .replace(/_[A-Za-z0-9]{5,8}\.webp$/, '.webp');
 const assets = new Map();
-for (const r of baseFiles.keys()) if (r.startsWith('_astro/')) assets.set(stem(r), { a: readFileSync(baseFiles.get(r)).length });
-for (const r of nextFiles.keys())
-  if (r.startsWith('_astro/')) assets.set(stem(r), { ...(assets.get(stem(r)) ?? {}), b: readFileSync(nextFiles.get(r)).length });
-const assetChanged = [...assets].filter(([, v]) => v.a !== v.b);
+const collectAssets = (files, side) => {
+  for (const r of files.keys()) {
+    if (!r.startsWith('_astro/')) continue;
+    const v = assets.get(stem(r)) ?? { a: [], b: [] };
+    v[side].push(r);
+    assets.set(stem(r), v);
+  }
+};
+collectAssets(baseFiles, 'a');
+collectAssets(nextFiles, 'b');
+const assetChanged = [];
+const assetContentChanged = [];
+const assetAmbiguous = [];
+for (const [k, v] of assets) {
+  // stem が重複すると新旧のどれ同士を比べるべきか決められないので、比較せずに残す
+  if (v.a.length > 1 || v.b.length > 1) {
+    assetAmbiguous.push(`${k} (${v.a.length} -> ${v.b.length} files)`);
+    continue;
+  }
+  const a = v.a.length ? readFileSync(baseFiles.get(v.a[0])) : null;
+  const b = v.b.length ? readFileSync(nextFiles.get(v.b[0])) : null;
+  if (!a || !b || a.length !== b.length) {
+    assetChanged.push(`${k} (${a?.length ?? '-'} -> ${b?.length ?? '-'})`);
+    continue;
+  }
+  const same = TEXT_EXT.has(extname(k)) ? normCommon(a.toString('utf8')) === normCommon(b.toString('utf8')) : a.equals(b);
+  if (!same) assetContentChanged.push(`${k} (${a.length} bytes)`);
+}
 
 console.log(`pages: ${pages.length} (identical ${identical}, whitespace only ${wsOnly}, structural ${structural.length})`);
 console.log(`inline style pairs differing: ${styleDiff}, inline script pairs differing: ${scriptDiff}`);
@@ -183,9 +208,9 @@ console.log(`only in base: ${onlyBase.length ? onlyBase.join(', ') : 'none'}`);
 console.log(`only in new: ${onlyNext.length ? onlyNext.join(', ') : 'none'}`);
 console.log(`non-HTML text differing: ${textDiffer.length ? textDiffer.join(', ') : 'none'}`);
 console.log(`binary differing: ${binaryDiffer.length ? binaryDiffer.join(', ') : 'none'}`);
-console.log(
-  `_astro assets with changed size or presence: ${assetChanged.length ? assetChanged.map(([k, v]) => `${k} (${v.a ?? '-'} -> ${v.b ?? '-'})`).join(', ') : 'none'}`
-);
+console.log(`_astro assets with changed size or presence: ${assetChanged.length ? assetChanged.join(', ') : 'none'}`);
+console.log(`_astro assets with same size but different content: ${assetContentChanged.length ? assetContentChanged.join(', ') : 'none'}`);
+console.log(`_astro assets not compared (duplicate stem): ${assetAmbiguous.length ? assetAmbiguous.join(', ') : 'none'}`);
 const dump = (title, map, limit) => {
   if (!map.size) return;
   console.log(`\n${title}`);
