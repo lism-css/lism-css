@@ -4,8 +4,9 @@ import { absolutize, normalizePathCasing, rehypeAbsoluteUrls } from './rehype-ab
 
 const BASE = 'https://lism-css.com';
 
-function runPlugin(properties: Properties, tagName = 'img'): Element {
-  const el: Element = { type: 'element', tagName, properties, children: [] };
+// srcSet は @types/hast 3.0.5 では string だが、rehype-parse の実出力（配列）も再現する
+function runPlugin(properties: Record<string, unknown>, tagName = 'img'): Element {
+  const el: Element = { type: 'element', tagName, properties: properties as Properties, children: [] };
   const tree: Root = { type: 'root', children: [el] };
   rehypeAbsoluteUrls({ siteUrl: BASE })(tree);
   return el;

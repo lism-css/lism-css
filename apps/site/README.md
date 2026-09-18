@@ -84,8 +84,7 @@ src/
 │   ├── patterns.ts           # パターン取得
 │   ├── layout-demos.ts       # レイアウトデモ取得
 │   ├── templates.ts          # テンプレート取得
-│   ├── remark-directive.ts   # :::記法変換（remark）
-│   ├── rehype-blockquote-cite.ts # blockquote 拡張（rehype）
+│   ├── satteri/              # Markdown / MDX 用の Sätteri プラグイン（Callout 変換・外部リンク・blockquote 出典・table ラップ）
 │   └── expressive-code.config.ts
 ├── pages/                # ルーティング
 │   ├── index.astro

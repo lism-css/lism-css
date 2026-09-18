@@ -7,7 +7,8 @@ import type { Element } from 'hast';
  * properties.className は string[] / string / undefined のいずれかを取りうる。
  */
 export function hasClass(node: Element, cls: string): boolean {
-  const c = node.properties?.className;
+  // @types/hast 3.0.5 は className を string[] に限定するが、実行時の揺れに備えて string も受ける
+  const c: unknown = node.properties?.className;
   if (Array.isArray(c)) return c.includes(cls);
   if (typeof c === 'string') return c.split(/\s+/).includes(cls);
   return false;

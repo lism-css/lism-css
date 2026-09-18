@@ -1,15 +1,14 @@
 import { defineConfig } from 'astro/config';
-import { unified } from '@astrojs/markdown-remark';
+import { satteri } from '@astrojs/markdown-satteri';
 import { fileURLToPath } from 'node:url';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import expressiveCode from 'astro-expressive-code';
-import rehypeExternalLinks from 'rehype-external-links';
-import remarkDirective from 'remark-directive';
-import { remarkDirectiveHandler } from './src/lib/remark-directive';
-import { rehypeBlockquoteCite } from './src/lib/rehype-blockquote-cite';
-import { rehypeWrapTable } from './src/lib/rehype-wrap-table';
+import { directiveCallout } from './src/lib/satteri/directive-callout';
+import { blockquoteCite } from './src/lib/satteri/blockquote-cite';
+import { wrapTable } from './src/lib/satteri/wrap-table';
+import { externalLinks } from './src/lib/satteri/external-links';
 import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 import { loadLastmodMap } from './src/lib/sitemap-lastmod';
 import docsMd from './src/integrations/docs-md';
@@ -145,17 +144,20 @@ export default defineConfig({
     }),
     docsMd(),
   ],
-  // CodeFileコンポーネント用のシンタックスハイライト設定
+  // Markdown / MDX の処理。@astrojs/mdx は extendMarkdownConfig（既定 true）で同じプロセッサを使う
   markdown: {
-    // remark/rehype パイプライン（unified）をプロセッサとして明示指定
-    processor: unified({
-      // remarkプラグイン: :::記法のパースと変換
-      remarkPlugins: [
-        remarkDirective, // :::記法をパース（最初に実行）
-        remarkDirectiveHandler, // directive を変換（Callout変換 & 不要な :text 記法を復元）
-      ],
-      // 外部リンクを別タブで開く設定 & blockquoteのcite変換 & tableの横スクロール対応
-      rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }], rehypeBlockquoteCite, rehypeWrapTable],
+    processor: satteri({
+      features: {
+        // :::type の Callout 記法（directiveCallout で変換する）
+        directive: true,
+        // `## 見出し {#id}` で見出し ID を指定できるようにする（hov.mdx のアンカー）
+        headingAttributes: true,
+        // 本文中の `--`（u--cbox 等のクラス名）をダッシュに変換しない。引用符と省略記号の変換は既定のまま
+        smartPunctuation: { dashes: false },
+      },
+      mdastPlugins: [directiveCallout],
+      // 外部リンクを別タブで開く → blockquote の出典変換 → table の横スクロール対応
+      hastPlugins: [externalLinks, blockquoteCite, wrapTable],
     }),
   },
 });
