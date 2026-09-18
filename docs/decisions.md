@@ -1,6 +1,17 @@
-基準日: 2026-09-18・コミット3cf3f4cfa（作業ツリーを含む）
+基準日: 2026-09-18・コミットb74ec4629（作業ツリーを含む）
 
 # 意思決定の記録
+
+## 2026-09-18: templates の Astro テンプレートを Astro 7 へ更新し、techlog の Markdown 処理も Sätteri へ移行する
+
+`apps/site` の Astro 7 化（#580 PR1 / PR2）に続いて、`templates/*` の Astro テンプレート 5 つを astro 7.3 へ更新した。`lism-cli create` の生成物とプレビューサイトが変わるため、Astro 6 のビルド成果物と撮影画像を退避して比較したうえで採用した。
+
+- 決定: techlog の Markdown / MDX 処理は `unified()` を維持せず Sätteri へ移行する。Astro 7 の既定であり、`unified()` は「まだ移植できない場合」の代替として残る位置付けのため、テンプレートの出発点としては既定に合わせる。remark プラグイン 3 つと `rehype-autolink-headings` は `src/lib/satteri/` の MDAST / HAST プラグインに移植し、記事の書き方は変えない。
+- 決定: 見出しアンカーは HAST プラグインで `github-slugger` により先に `id` を付けてから `<a>` を追加する。Astro の見出し ID プラグインはユーザープラグインより後に走り、既存の `id` があればそれを採用するため、この順序で `render()` の `headings.slug` と一致する。
+- 決定: techlog は `apps/site` と同じく `smartPunctuation: { dashes: false }` にする。見出し中の `b-- / c--` のようなクラス接頭辞がダッシュに変換されていた。他の 4 テンプレートは Markdown 設定を持たない。
+- 決定: `compressHTML` は Astro 7 の既定（`'jsx'`）のままにする。5 テンプレートの全撮影ページで Astro 6 のビルドとピクセル一致した（差分は写真の再エンコードと記事本文の更新だけ）。`apps/site` が `true` にしたのはドキュメントの出力差分を抑えるためで、テンプレートには当てはまらない。
+- 受容: `@lism-css/icons` 0.3.0 の peer `astro` が `^5 || ^6` のため、astro 7 では unmet peer の警告が出る。icons リポジトリ側で peer を広げるまで警告のみで動作に影響はない。
+- 受容: Astro 7 は 4KB 未満の CSS を `<style>` へインライン化するため、lp の `_animations.css` は外部ファイルではなくページ内に出力される。
 
 ## 2026-09-18: Markdown / MDX の処理を Sätteri へ移行し、`--` のダッシュ変換を止める
 
