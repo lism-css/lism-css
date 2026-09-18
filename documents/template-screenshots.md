@@ -16,7 +16,9 @@
 | `pnpm screenshot:templates:compare` | baselineと比較（初回はbaseline生成） |
 | `pnpm screenshot:templates:update` | 差分テンプレのbaselineと公開用画像を更新 |
 
-対象の絞り込みは`--target=<slug|相対パス>`、既存`dist/`を使うなら`--no-build`。
+対象の絞り込みは`--target=<slug|相対パス>`、既存`dist/`を使うなら`--no-build`。`screenshots.config.json`の`port`を別プロセスが占有しているときは`--port=<port>`で全テンプレのpreviewポートを上書きできる。
+
+Astro 7の`astro preview`はAIエージェント環境を検出するとバックグラウンドのデーモンとして起動し、`astro preview stop`で止める方式になる。スクリプトは判定に使われる環境変数を外して前面で起動するので、エージェントから実行しても撮影後にサーバーが残らない。残った場合は各テンプレのディレクトリで`pnpm exec astro preview stop`を実行する。
 
 ```bash
 pnpm --filter lism-site screenshot:templates -- --target=minimal-astro

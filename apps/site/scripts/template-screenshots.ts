@@ -17,6 +17,7 @@
  *   npx tsx apps/site/scripts/template-screenshots.ts --target=blog/astro/minimal
  *   npx tsx apps/site/scripts/template-screenshots.ts --no-build         # 既存 dist を使う（ビルドをスキップ）
  *   npx tsx apps/site/scripts/template-screenshots.ts --threshold=0.5    # compare のしきい値（%）
+ *   npx tsx apps/site/scripts/template-screenshots.ts --port=4331        # 全テンプレの preview ポートを上書き（既定ポートが使用中のとき）
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -87,6 +88,8 @@ const MODE: 'new' | 'force' | 'compare' | 'update' = flag('update') ? 'update' :
 const SKIP_BUILD = flag('no-build');
 const TARGET = arg('target');
 const THRESHOLD = arg('threshold') ? parseFloat(arg('threshold')!) : 0.01;
+// 全テンプレの preview ポートを上書きする。config の既定ポート（4321 等）を別プロセスが占有しているときに使う
+const PORT_OVERRIDE = arg('port') ? parseInt(arg('port')!, 10) : undefined;
 
 const VIEWPORT = { width: 1600, height: 900 } as const;
 const SERVER_READY_TIMEOUT_MS = 60_000;
@@ -117,6 +120,7 @@ function collectTemplates(): TemplateEntry[] {
         return;
       }
       const config = JSON.parse(readFileSync(configPath, 'utf-8')) as TemplateConfig;
+      if (PORT_OVERRIDE) config.port = PORT_OVERRIDE;
       const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8')) as { name?: string };
       if (!pkg.name) {
         console.warn(`⚠️  package.json に name がありません: ${relative(REPO_ROOT, dir)}`);
@@ -177,7 +181,15 @@ function buildTemplateLang(pkgName: string, lang: string): boolean {
   return r.status === 0;
 }
 
-function isPortInUse(port: number): Promise<boolean> {
+async function isPortInUse(port: number): Promise<boolean> {
+  // Astro 7 の preview は IPv6（::1）側で listen するため、127.0.0.1 への bind 試行だけでは検出できない。
+  // まず HTTP で応答の有無を見る（応答があれば使用中）
+  try {
+    await fetch(`http://localhost:${port}/`, { signal: AbortSignal.timeout(500) });
+    return true;
+  } catch {
+    /* 応答なし → bind 試行で判定 */
+  }
   return new Promise((resolve) => {
     const tester = net.createServer();
     tester.once('error', (err: NodeJS.ErrnoException) => {
@@ -207,15 +219,20 @@ function startPreviewServer(entry: TemplateEntry): Promise<ChildProcess> {
     console.log(`📡 ${command} server 起動中 (${entry.pkgName} :${port})`);
 
     // 各 dev/preview にポートを渡して固定する。portViaEnv のテンプレは PORT 環境変数で渡し（next 等 `--` 後引数 NG 対策）、
-    // それ以外は従来どおり `-- --port <port>` を渡す。
+    // それ以外は `--port <port>` を渡す。`--` を挟むと pnpm がそのまま script へ渡し、astro は `--` 以降を無視する。
     const usePortEnv = entry.config.portViaEnv ?? false;
-    const serverArgs = usePortEnv ? ['--filter', entry.pkgName, command] : ['--filter', entry.pkgName, command, '--', '--port', String(port)];
+    const serverArgs = usePortEnv ? ['--filter', entry.pkgName, command] : ['--filter', entry.pkgName, command, '--port', String(port)];
+    // Astro 7 の dev / preview は AI エージェント環境（am-i-vibing の判定）を検出するとバックグラウンドのデーモンとして起動し、
+    // ロックファイルで管理する。このスクリプトは自分で止められる前面のサーバーが要るので、判定に使われる環境変数を外す
+    const env: NodeJS.ProcessEnv = { ...process.env };
+    for (const key of ['CLAUDECODE', 'CODEX_THREAD_ID', 'CURSOR_TRACE_ID', 'AGENT', 'AI_AGENT']) delete env[key];
+    if (usePortEnv) env.PORT = String(port);
     const server = spawn('pnpm', serverArgs, {
       cwd: REPO_ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],
       shell: false,
       detached: true,
-      env: usePortEnv ? { ...process.env, PORT: String(port) } : process.env,
+      env,
     });
 
     let resolved = false;
@@ -298,6 +315,21 @@ function stopServer(server: ChildProcess | null) {
     else server.kill();
   } catch {
     /* noop */
+  }
+}
+
+/**
+ * ポートを listen しているプロセスを直接止める（stopServer のグループ宛 SIGTERM で止まらなかったときの保険）。
+ * サーバーが残ったまま次のパスへ進むと、前のサーバーのページを撮ってしまう。
+ */
+function killPortListeners(port: number) {
+  const r = spawnSync('lsof', [`-tiTCP:${port}`, '-sTCP:LISTEN'], { encoding: 'utf-8' });
+  for (const pid of (r.stdout ?? '').split('\n').filter(Boolean)) {
+    try {
+      process.kill(Number(pid), 'SIGTERM');
+    } catch {
+      /* noop */
+    }
   }
 }
 
@@ -490,7 +522,11 @@ async function runPass(entry: TemplateEntry, pass: Pass, browser: Browser, stats
     stopServer(server);
     // 次のパス/テンプレに進む前にポートが解放されるまで待つ（重要：前 server が残ると
     // 次の撮影で前のページを撮ってしまう）
-    const freed = await waitForPortFree(entry.config.port);
+    let freed = await waitForPortFree(entry.config.port, 3_000);
+    if (!freed) {
+      killPortListeners(entry.config.port);
+      freed = await waitForPortFree(entry.config.port);
+    }
     if (!freed) {
       console.warn(`⚠️  ポート ${entry.config.port} の解放が確認できませんでした`);
     }
