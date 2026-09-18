@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit && astro check --tsconfig packages/astro/tsconfig.json",
+    "typecheck": "tsc --noEmit && astro check --tsconfig astro/tsconfig.json",
     "build": "pnpm build:js && pnpm build:css:only",
     "build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",
     "build:css": "pnpm build:js && pnpm build:css:only",
@@ -32,8 +32,8 @@
     "dist",
     "config.js",
     "config.d.ts",
-    "packages",
-    "!packages/astro/**/*.test.ts",
+    "astro",
+    "!astro/**/*.test.ts",
     "src/scss"
   ],
   "type": "module",
@@ -82,9 +82,9 @@
       "types": "./dist/components/*.d.ts"
     },
     "./astro": {
-      "import": "./packages/astro/index.ts"
+      "import": "./astro/index.ts"
     },
-    "./astro/*": "./packages/astro/*",
+    "./astro/*": "./astro/*",
     "./scss/*": "./src/scss/*",
     "./*.css": "./dist/css/*.css"
   },

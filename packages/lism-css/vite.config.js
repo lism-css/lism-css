@@ -75,7 +75,7 @@ export default defineConfig({
     },
     projects: [
       // 上の設定を継承する既存テスト（jsdom）。Astroコンポーネントのテストは astro プロジェクト側で実行する
-      { extends: true, test: { name: 'react', exclude: [...configDefaults.exclude, 'packages/astro/**'] } },
+      { extends: true, test: { name: 'react', exclude: [...configDefaults.exclude, 'astro/**'] } },
       './vitest.astro.config.js',
     ],
   },

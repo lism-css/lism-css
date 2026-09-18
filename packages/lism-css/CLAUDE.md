@@ -30,6 +30,7 @@ pnpm lint:style  # SCSS/CSS リント
 | パス | 説明 |
 |------|------|
 | `src/components/` | React コンポーネント |
+| `astro/` | Astro コンポーネント（ビルドせずそのまま配布。パッケージルート直下） |
 | `src/scss/` | SCSS ソース |
 | `config/` | 設定・トークン定義（パッケージルート直下） |
 | `src/lib/` | ユーティリティ関数 |
@@ -98,7 +99,7 @@ lism-base → lism-block → lism-trait → lism-primitive → lism-custom → l
 
 ## Astro コンポーネントの注意点
 
-`packages/astro/` 配下の `.astro` ファイルでは、タグと `<slot />` の間に改行やスペースを入れないこと。Astro はテンプレート内のホワイトスペースをそのまま HTML に出力するため、`<span>` 等のインライン要素で不要なスペースが挿入されてしまう。
+`astro/` 配下の `.astro` ファイルでは、タグと `<slot />` の間に改行やスペースを入れないこと。Astro はテンプレート内のホワイトスペースをそのまま HTML に出力するため、`<span>` 等のインライン要素で不要なスペースが挿入されてしまう。
 
 ```astro
 <!-- NG: スペースが入る -->
