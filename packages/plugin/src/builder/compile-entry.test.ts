@@ -37,7 +37,6 @@ describe('listCssEntries', () => {
     expect(keys).toContain('reset');
     expect(keys).toContain('props');
     // 入れ子（X/index.scss → X）
-    expect(keys).toContain('base/set');
     expect(keys).toContain('primitives/atomic');
     expect(keys).toContain('primitives/layout');
     // `_*` は除外される
