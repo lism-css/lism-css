@@ -14,10 +14,10 @@ description: MCP の docs-index.json をファイル構成の差分（移動・�
 1. `git rev-parse --short HEAD` でコミットハッシュを取る
 2. 実在ファイル集合を作る: `apps/site/src/content/ja/**/*.mdx` を Glob し、`_` 始まりのファイル・ディレクトリ、`test.mdx`（この名前だけ）、frontmatter が `draft: true` のページを除く（定義は `packages/mcp/src/tests/docs-index.test.ts` の `listIndexableMdxFiles` が正）。パスは `ja/` からの相対
 3. `docs-index.json` の各エントリを分類する
-   - 一致: 実ファイルあり。同一 `sourcePath` の分割エントリは 1 つでもあれば全て一致
-   - 不一致: 実ファイルなし → 手順 4
+   - 一致: `sourcePath` が実在ファイル集合にある。同一 `sourcePath` の分割エントリは 1 つでもあれば全て一致
+   - 不一致: `sourcePath` が実在ファイル集合に無い（ファイルが無い、または draft 化等で収録対象外になった）→ 手順 4
    - 未登録: 実在ファイル集合にあるが `sourcePath` に無い → 手順 5
-4. 不一致エントリごとに basename で `apps/site/src/content/ja/**/{basename}` を Glob する
+4. 不一致エントリごとに、実在ファイル集合（手順 2）から basename が一致するパスを探す。`sourcePath` のファイルが残っていて収録対象外になっただけのもの（draft 化等）は探さず削除候補にする
    - 単一マッチ: 移動候補。そのパスを新 `sourcePath` にする
    - 複数マッチ: 保留。手順 6 でユーザーに選んでもらう
    - マッチなし: 未登録ファイルの frontmatter（`title`・`description`）とエントリの `title` 等を突き合わせ、同一ページならリネーム候補（そのパスを新 `sourcePath` にし、その未登録ファイルは手順 5 から外す）。対応が無いものだけ削除候補
@@ -30,5 +30,5 @@ description: MCP の docs-index.json をファイル構成の差分（移動・�
    - 保留: 複数マッチ
 7. 承認後に `docs-index.json` を更新する。移動・リネームは `sourcePath` と、新パスから手順 5 のルールで導いた `category` だけ置換。追加は手順 5 の位置に挿入、削除は配列から除去。要素順は可能な限り維持
 8. `packages/mcp/src/data/meta.ts` の `generatedAt` を今日（`YYYY-MM-DD`）、`sourceCommit` を手順 1 のハッシュにする。`docsVersion` は触らない
-9. `nr -C packages/mcp test` を実行し、`docs-index.test.ts`（sourcePath の実在・収録漏れ・URL スラッグ）を通す。失敗したら原因を直してから進む
+9. `nr -C packages/mcp test` を実行し、`docs-index.test.ts`（sourcePath の実在・収録漏れ・draft の混入・URL スラッグ）を通す。失敗したら原因を直してから進む
 10. 報告する: 移動・リネーム件数と旧 → 新、追加件数と `sourcePath`・`title`、削除件数と `sourcePath`・`title`、保留があれば明記
