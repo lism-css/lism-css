@@ -9,6 +9,7 @@ dev サーバーのコールドスタートでページ用 CSS が `<head>` に�
 - 決定: `compressHTML: true` を明示し、v6 の空白処理を維持する。Astro 7 の既定 `'jsx'` はインライン要素間の空白まで落とし、全ページの出力が変わる。`'jsx'` の採用は効果と差分を別途見てから決める。
 - 決定: `disableServerTreeshake`（#624）は削除する。Rolldown では tree-shaking の有無で SSR コンパイル（約 6.1 秒）も全体（約 19 秒）も変わらなかった（各 2 回計測）。
 - 決定: `@lism-css/plugin` の purge は、リネーム後の CSS を `this.emitFile` で出し直す。Rolldown は `generateBundle` の `bundle` への新キー代入を無視するため、キーを付け替える旧方式では CSS が出力されない。 plugin の devDependencies の vite は 7 のままにし（monorepo 内の Vite 7 利用者である mockup と型を揃えるため）、Rolldown の検証は `vite8`（`npm:vite@8`）エイリアスのテストで行う。
+- 決定: `lism-css` の `lint` と `typecheck` は turbo で自身の `build` にも依存させる。この 2 つは自パッケージの `dist` の型定義（`lism-css/lib/*` の自己参照 exports）で型を解決するため、`^build` だけだと `build` と同時に走り、dist の再生成と競合して型解決が壊れる。`dev` では turbo キャッシュで dist が残っていたため表面化せず、lockfile の変化でキャッシュが切れた本 PR の CI で lint が落ちた。
 - 受容: Rust コンパイラは入れ子 CSS の子セレクタ（`> code` 等）にもスコープ属性を付ける。スロット由来の要素を指す箇所（`PropBadge.astro`）だけ `:global()` で除外し、同一コンポーネント内の要素を指す入れ子は触らない。スコープ属性のハッシュ値、タグ間の空白の有無、CSS 関数引数の空白、インライン JS の minify 結果、生成アセットのハッシュ名の差は同値として受け入れる。
 - 対象外: `templates/*` の Astro テンプレート 5 つは別 issue で追従する。
 
