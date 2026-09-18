@@ -10,6 +10,8 @@ const CONTENT_DIR = fileURLToPath(new URL('../content', import.meta.url));
 const LANG_NEUTRAL_PREFIXES = ['/demo/'];
 
 const LINK_PATTERN = /(?:\]\(|href=")(\/[^)"\s#]*)/g;
+// 画像は言語プレフィックスを持たない共有アセット
+const IMAGE_PATTERN = /!\[[^\]]*\]\([^)]*\)/g;
 
 function findUnlocalizedLinks(lang: string): string[] {
   const langDir = join(CONTENT_DIR, lang);
@@ -31,7 +33,8 @@ function findUnlocalizedLinks(lang: string): string[] {
         // コードフェンス内はサンプルコードなので対象外
         if (inCodeFence) return;
 
-        for (const [, href] of line.matchAll(LINK_PATTERN)) {
+        // 画像だけを取り除き、画像を包むリンクは検査対象に残す
+        for (const [, href] of line.replace(IMAGE_PATTERN, '').matchAll(LINK_PATTERN)) {
           if (href.startsWith(prefix) || href === `/${lang}`) continue;
           if (LANG_NEUTRAL_PREFIXES.some((neutral) => href.startsWith(neutral))) continue;
           violations.push(`${relative(CONTENT_DIR, filePath)}:${index + 1} ${href}`);
