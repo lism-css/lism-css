@@ -12,10 +12,6 @@ type Props<Tag extends HTMLTag = 'svg'> = Omit<Polymorphic<{ as: Tag }>, 'as'> &
 } & AstroLismBaseProps &
   Omit<IconOwnProps, 'as' | keyof AstroLismBaseProps>;
 
-// const hasChildren = Astro.slots.has('default');
-// let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
-// if (IconTag === '_SVG_') IconTag = SVG;
-
 let { Component, lismProps, exProps = {}, content } = getProps(Astro.props as unknown as IconProps, { svgAttributes: true });
 
 if (Component === '_SVG_') {
