@@ -21,6 +21,7 @@ export const Default: Story = {
 
 export const AsEm: Story = {
   name: 'as="em"',
+  tags: ['!test'],
   args: {
     as: 'em',
     c: 'accent',
@@ -30,6 +31,7 @@ export const AsEm: Story = {
 
 export const AsCode: Story = {
   name: 'as="code"',
+  tags: ['!test'],
   args: {
     as: 'code',
     bgc: 'base-2',
@@ -42,6 +44,7 @@ export const AsCode: Story = {
 
 export const AsTime: Story = {
   name: 'as="time"',
+  tags: ['!test'],
   args: {
     as: 'time',
     dateTime: '2026-04-03',

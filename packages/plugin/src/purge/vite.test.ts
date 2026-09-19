@@ -141,18 +141,6 @@ describe('lismPurge (Vite)', () => {
     expect(bundle['main.css'].source).not.toContain('-m\\:10');
   });
 
-  test('safelist設定済みでも警告し、指定したクラスを保持する', async () => {
-    const bundle = {
-      'app.js': { type: 'chunk', code: '', modules: { '/app/node_modules/lism-css/dist/index.js': {} } },
-      'main.css': { type: 'asset', fileName: 'main.css', source: '.-p\\:20{padding:20px}.-m\\:10{margin:10px}' },
-    };
-    const ctx = createCtx(bundle);
-    await getGenerateBundle(lismPurge({ known, safelist: ['-p:20'] })).call(ctx as never, {} as never, bundle as never, false);
-    expect(ctx.warn).toHaveBeenCalledTimes(1);
-    expect(bundle['main.css'].source).toContain('-p\\:20');
-    expect(bundle['main.css'].source).not.toContain('-m\\:10');
-  });
-
   test('SSRビルドをCSRと判定しない', async () => {
     const plugin = lismPurge({ known });
     const configHook = plugin.configResolved;

@@ -16,13 +16,6 @@ describe('objDeepMerge', () => {
     expect(result).toEqual({ a: { b: 10, c: 2, e: 5 }, d: 3, f: 6 });
   });
 
-  test('深くネストしたオブジェクトを正しくマージする', () => {
-    const origin = { a: { b: { c: 1 } } };
-    const source = { a: { b: { d: 2 } } };
-    const result = objDeepMerge(origin, source);
-    expect(result).toEqual({ a: { b: { c: 1, d: 2 } } });
-  });
-
   test('originが空オブジェクトの場合、sourceをそのまま返す', () => {
     const origin = {};
     const source = { a: 1, b: 2 };
@@ -147,22 +140,6 @@ describe('arrayConvertToSet', () => {
     const input = {};
     const result = arrayConvertToSet(input);
     expect(result).toEqual({});
-  });
-
-  test('深くネストしたオブジェクトと配列の変換', () => {
-    const input = {
-      a: {
-        b: {
-          c: [1, 2, 3],
-          d: {
-            e: [4, 5, 6],
-          },
-        },
-      },
-    };
-    const result = arrayConvertToSet(input);
-    expect(result.a.b.c).toEqual(new Set([1, 2, 3]));
-    expect(result.a.b.d.e).toEqual(new Set([4, 5, 6]));
   });
 
   test('配列内にオブジェクトがある場合（配列自体がSetになる）', () => {

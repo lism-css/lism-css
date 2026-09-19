@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "test": "vitest run",
+    "test": "vitest run && pnpm test:icon:astro",
     "typecheck": "tsc --noEmit && astro check --tsconfig astro/tsconfig.json",
     "build": "pnpm build:js && pnpm build:css:only",
     "build:js": "vite build && pnpm exec tsc -p config/tsconfig.json && node bin/verify-dts-imports.mjs",

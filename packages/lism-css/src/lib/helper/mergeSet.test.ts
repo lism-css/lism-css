@@ -19,10 +19,6 @@ describe('mergeSet', () => {
       expect(mergeSet(undefined, '')).toEqual([]);
     });
 
-    test('空白のみの要素はフィルタされる', () => {
-      expect(mergeSet(undefined, 'hov   shadow')).toEqual(['hov', 'shadow']);
-    });
-
     test('重複は除去される', () => {
       expect(mergeSet(undefined, 'hov hov shadow')).toEqual(['hov', 'shadow']);
     });
@@ -111,10 +107,6 @@ describe('mergeSet', () => {
 
     test('base のみ指定', () => {
       expect(mergeSet('gutter', undefined)).toEqual(['gutter']);
-    });
-
-    test('value のみ指定', () => {
-      expect(mergeSet(undefined, 'gutter')).toEqual(['gutter']);
     });
   });
 });

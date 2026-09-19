@@ -227,24 +227,22 @@ describe('describeMissingLucideExport', () => {
     return { code: 'MISSING_EXPORT', binding, exporter, message: `"${binding}" is not exported by "${exporter}"` };
   }
 
+  /** どの分岐にも添える対応範囲の案内。 */
+  const SCOPE_NOTE = 'the icon components plus "Icon" and "createLucideIcon"';
+
   test('`icons` は理由と代替を説明する', () => {
     const message = describeMissingLucideExport(missingExport('icons'));
     expect(message).toContain('Cannot import "icons" from lucide-react');
     expect(message).toContain('pulls every lucide icon into the bundle');
     expect(message).toContain("import { Bell } from 'lucide-react'");
+    expect(message).toContain(SCOPE_NOTE);
   });
 
   test('アイコン名の間違いは索引と同じ候補付きの案内にする', () => {
     expect(describeMissingLucideExport(missingExport('bell'))).toContain('"bell" is not an icon of lucide-react. Did you mean "Bell"?');
-    expect(describeMissingLucideExport(missingExport('Belll'))).toContain(
-      '"Belll" is not an icon of lucide-react. See https://lucide.dev/icons/ for the available icons.'
-    );
-  });
-
-  test('どの場合も対応範囲を添える', () => {
-    for (const binding of ['icons', 'Belll']) {
-      expect(describeMissingLucideExport(missingExport(binding)), binding).toContain('the icon components plus "Icon" and "createLucideIcon"');
-    }
+    const message = describeMissingLucideExport(missingExport('Belll'));
+    expect(message).toContain('"Belll" is not an icon of lucide-react. See https://lucide.dev/icons/ for the available icons.');
+    expect(message).toContain(SCOPE_NOTE);
   });
 
   test('仮想モジュール以外のエラーには関与しない', () => {

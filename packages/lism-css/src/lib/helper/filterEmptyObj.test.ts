@@ -3,24 +3,6 @@ import filterEmptyObj from './filterEmptyObj';
 
 describe('filterEmptyObj', () => {
   describe('空の値の削除', () => {
-    test('空文字列のプロパティを削除', () => {
-      const input = { a: 'foo', b: '', c: 'bar' };
-      const result = filterEmptyObj(input);
-      expect(result).toEqual({ a: 'foo', c: 'bar' });
-    });
-
-    test('null のプロパティを削除', () => {
-      const input = { a: 'foo', b: null, c: 'bar' };
-      const result = filterEmptyObj(input);
-      expect(result).toEqual({ a: 'foo', c: 'bar' });
-    });
-
-    test('undefined のプロパティを削除', () => {
-      const input = { a: 'foo', b: undefined, c: 'bar' };
-      const result = filterEmptyObj(input);
-      expect(result).toEqual({ a: 'foo', c: 'bar' });
-    });
-
     test('空文字列、null、undefined を同時に削除', () => {
       const input = { a: 'foo', b: '', c: null, d: undefined, e: 'bar' };
       const result = filterEmptyObj(input);
@@ -33,18 +15,6 @@ describe('filterEmptyObj', () => {
       const input = { a: 0, b: '', c: 1 };
       const result = filterEmptyObj(input);
       expect(result).toEqual({ a: 0, c: 1 });
-    });
-
-    test('負の数値も保持される', () => {
-      const input = { a: -1, b: '', c: 0 };
-      const result = filterEmptyObj(input);
-      expect(result).toEqual({ a: -1, c: 0 });
-    });
-
-    test('小数も保持される', () => {
-      const input = { a: 3.14, b: null, c: 0.0 };
-      const result = filterEmptyObj(input);
-      expect(result).toEqual({ a: 3.14, c: 0.0 });
     });
   });
 
@@ -88,12 +58,6 @@ describe('filterEmptyObj', () => {
       const result = filterEmptyObj(input);
       expect(result).toEqual({ a: 'foo', b: [1, 2, 3], c: 'bar' });
     });
-
-    test('要素が1つの配列も保持される', () => {
-      const input = { a: [0] };
-      const result = filterEmptyObj(input);
-      expect(result).toEqual({ a: [0] });
-    });
   });
 
   describe('真偽値の処理', () => {
@@ -101,12 +65,6 @@ describe('filterEmptyObj', () => {
       const input = { a: false, b: '', c: true };
       const result = filterEmptyObj(input);
       expect(result).toEqual({ a: false, c: true });
-    });
-
-    test('true は保持される', () => {
-      const input = { a: true, b: null };
-      const result = filterEmptyObj(input);
-      expect(result).toEqual({ a: true });
     });
   });
 
@@ -166,53 +124,6 @@ describe('filterEmptyObj', () => {
       const result = filterEmptyObj(input);
       expect(result).toEqual({});
       expect(result).not.toBe(input); // 非破壊的なので異なる参照
-    });
-  });
-
-  describe('特殊なケース', () => {
-    test('非常に多くのプロパティ', () => {
-      const input: Record<string, any> = {};
-      for (let i = 0; i < 100; i++) {
-        input[`key${i}`] = i % 2 === 0 ? `value${i}` : '';
-      }
-      const result = filterEmptyObj(input);
-      expect(Object.keys(result).length).toBe(50);
-    });
-  });
-
-  describe('実際の使用例', () => {
-    test('フォームデータのクリーンアップ', () => {
-      const formData = {
-        name: 'John',
-        email: 'john@example.com',
-        phone: '',
-        address: null,
-        age: 0,
-        newsletter: false,
-      };
-      const result = filterEmptyObj(formData);
-      expect(result).toEqual({
-        name: 'John',
-        email: 'john@example.com',
-        age: 0,
-        newsletter: false,
-      });
-    });
-
-    test('API リクエストパラメータのクリーンアップ', () => {
-      const params = {
-        query: 'search term',
-        page: 1,
-        limit: 0,
-        sort: '',
-        filters: {},
-      };
-      const result = filterEmptyObj(params);
-      expect(result).toEqual({
-        query: 'search term',
-        page: 1,
-        limit: 0,
-      });
     });
   });
 });

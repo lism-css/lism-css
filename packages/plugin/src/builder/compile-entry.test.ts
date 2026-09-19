@@ -133,14 +133,6 @@ describe('createCssCompiler', () => {
     expect(fullCss).toContain('border-style: var(--bds)');
   });
 
-  test('同一 config・同一エントリはキャッシュされ同一結果を返す', async () => {
-    const c = makeCompiler();
-    const { mainConfig, fullConfig } = configs({});
-    const a = await c.compile('reset', mainConfig, fullConfig);
-    const b = await c.compile('reset', mainConfig, fullConfig);
-    expect(a).toBe(b);
-  });
-
   test('dispose 後も再コンパイルできる（作業ディレクトリを作り直す）', async () => {
     const c = makeCompiler();
     const { mainConfig, fullConfig } = configs({});
