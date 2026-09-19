@@ -41,6 +41,20 @@
       "dependsOn": ["^build"],
       "outputs": []
     },
+    "lism-css#test": {
+      "dependsOn": ["build", "^build"],
+      "outputs": []
+    },
+    "@lism-css/mcp#test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/skills/lism-css-guide/**",
+        "$TURBO_ROOT$/apps/site/src/content/ja/**/*.mdx",
+        "$TURBO_ROOT$/apps/site/src/lib/contentSlug.ts"
+      ],
+      "outputs": []
+    },
     "@lism-css/plugin#test": {
       "dependsOn": ["build", "^build"],
       "outputs": []

@@ -105,7 +105,7 @@ describe('convert_css', () => {
     expect(data.suggestedComponent.name).toBe('Flex');
   });
 
-  it('display: flex + flex-direction: column で Stack を提案する', async () => {
+  it('display: flex + flex-direction: column で Stack を提案し、例では暗黙の display / flex-direction を重複出力しない', async () => {
     const client = await createTestClient();
     const result = await client.callTool({
       name: 'convert_css',
@@ -115,6 +115,7 @@ describe('convert_css', () => {
 
     const data = getResult(result);
     expect(data.suggestedComponent.name).toBe('Stack');
+    expect(data.example).toBe("<Stack g='20px'>...</Stack>");
   });
 
   it('flex-direction: column-reverse は Stack にせず Flex + fxd で方向を保つ', async () => {
@@ -128,18 +129,6 @@ describe('convert_css', () => {
     const data = getResult(result);
     expect(data.suggestedComponent.name).toBe('Flex');
     expect(data.example).toContain("fxd='column-reverse'");
-  });
-
-  it('Stack の例では暗黙の display / flex-direction: column を重複出力しない', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({
-      name: 'convert_css',
-      arguments: { css: 'display: flex; flex-direction: column; gap: 20px;' },
-    });
-    expect(result.isError).toBeFalsy();
-
-    const data = getResult(result);
-    expect(data.example).toBe("<Stack g='20px'>...</Stack>");
   });
 
   it('display: grid + place-items: center で Center を提案する', async () => {

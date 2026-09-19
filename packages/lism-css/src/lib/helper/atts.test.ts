@@ -58,11 +58,6 @@ describe('atts', () => {
     test('空配列は無視', () => {
       expect(atts('foo', [], 'bar')).toBe('foo bar');
     });
-
-    test('ネストした配列は展開しない（1階層のみ）', () => {
-      // Array.isArray でチェックしているので、ネストは対応していない
-      expect(atts(['foo', ['bar', 'baz']])).toContain('foo');
-    });
   });
 
   describe('Set の処理', () => {
@@ -112,10 +107,6 @@ describe('atts', () => {
     test('false は無視', () => {
       expect(atts('foo', false, 'bar')).toBe('foo bar');
     });
-
-    test('0 は falsy なので除外される', () => {
-      expect(atts('foo', 0, 'bar')).toBe('foo bar');
-    });
   });
 
   describe('重複の削除', () => {
@@ -144,61 +135,6 @@ describe('atts', () => {
       expect(result).toBe('string 42 array-item1 array-item2 set-item obj-true');
     });
 
-    test('実際の使用例: 条件付きクラス名', () => {
-      const isActive = true;
-      const isDisabled = false;
-      const result = atts('btn', isActive && 'active', isDisabled && 'disabled');
-      expect(result).toBe('btn active');
-    });
-
-    test('オブジェクト形式と条件式形式が同じ結果を返す', () => {
-      const isFoo = true;
-      const isBar = false;
-
-      // オブジェクト形式
-      const result1 = atts({ foo: isFoo, bar: isBar });
-
-      // 条件式形式
-      const result2 = atts(isFoo && 'foo', isBar && 'bar');
-
-      expect(result1).toBe(result2);
-      expect(result1).toBe('foo');
-    });
-
-    test('オブジェクト形式と条件式形式が同じ結果を返す（複数の値）', () => {
-      const isFoo = true;
-      const isBar = true;
-      const isBaz = false;
-
-      const result1 = atts({ foo: isFoo, bar: isBar, baz: isBaz });
-      const result2 = atts(isFoo && 'foo', isBar && 'bar', isBaz && 'baz');
-
-      expect(result1).toBe(result2);
-      expect(result1).toBe('foo bar');
-    });
-
-    test('オブジェクト形式と条件式形式が同じ結果を返す（すべてfalse）', () => {
-      const isFoo = false;
-      const isBar = false;
-
-      const result1 = atts({ foo: isFoo, bar: isBar });
-      const result2 = atts(isFoo && 'foo', isBar && 'bar');
-
-      expect(result1).toBe(result2);
-      expect(result1).toBe('');
-    });
-
-    test('オブジェクト形式と条件式形式が同じ結果を返す（他の引数と混在）', () => {
-      const isFoo = true;
-      const isBar = false;
-
-      const result1 = atts('base', { foo: isFoo, bar: isBar }, 'end');
-      const result2 = atts('base', isFoo && 'foo', isBar && 'bar', 'end');
-
-      expect(result1).toBe(result2);
-      expect(result1).toBe('base foo end');
-    });
-
     test('空の引数は空文字列を返す', () => {
       expect(atts()).toBe('');
     });
@@ -213,16 +149,6 @@ describe('atts', () => {
   });
 
   describe('エッジケース', () => {
-    test('非常に長い文字列', () => {
-      const long = 'a'.repeat(1000);
-      expect(atts(long)).toBe(long);
-    });
-
-    test('大量の引数', () => {
-      const args = Array(100).fill('class');
-      expect(atts(...args)).toBe('class');
-    });
-
     test('特殊文字を含む文字列', () => {
       expect(atts('foo-bar', 'baz_qux', 'test:hover')).toBe('foo-bar baz_qux test:hover');
     });

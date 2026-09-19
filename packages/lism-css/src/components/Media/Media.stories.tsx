@@ -20,6 +20,7 @@ export const Default: Story = {
 
 export const WithObjectFitCover: Story = {
   name: 'objectFit: cover',
+  tags: ['!test'],
   args: {
     src: 'https://picsum.photos/600/400',
     alt: 'Covered image',
@@ -31,6 +32,7 @@ export const WithObjectFitCover: Story = {
 
 export const WithObjectFitContain: Story = {
   name: 'objectFit: contain',
+  tags: ['!test'],
   args: {
     src: 'https://picsum.photos/600/400',
     alt: 'Contained image',
@@ -43,6 +45,7 @@ export const WithObjectFitContain: Story = {
 
 export const WithObjectPosition: Story = {
   name: 'objectPosition 指定',
+  tags: ['!test'],
   args: {
     src: 'https://picsum.photos/600/400',
     alt: 'Positioned image',

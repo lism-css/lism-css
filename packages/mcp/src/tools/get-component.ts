@@ -68,7 +68,7 @@ export function registerGetComponent(server: McpServer): void {
     {
       description:
         'Get detailed information about a specific lism-css component: purpose, props, and usage examples.\n' +
-        'Use this when you need documentation for a known component by name (e.g. "Box", "Flex", "Accordion", "Lism", "HTML").\n' +
+        'Use this when you need documentation for a known component by name (e.g. "Box", "Flex", "Accordion", "Lism").\n' +
         'Accepts multiple notations: "Flex", "<Flex>", "l--flex", "flex" all resolve to the same entry.\n' +
         'Do NOT use this for broad topic guides (use get_guide with "components-core" or "components-ui") or keyword search across all docs (use search_docs).\n' +
         'If the component is not found, suggestions will be provided — follow up with search_docs for a broader query.\n' +
@@ -108,7 +108,7 @@ export function registerGetComponent(server: McpServer): void {
         if (!pkg || pkg === 'lism-css') {
           const coreMd = loadMarkdown('components-core.md');
 
-          // 見出しにコンポーネント名を含むセクションを検索（Lism, HTML 等）
+          // 見出しにコンポーネント名を含むセクションを検索（Lism 等）
           const coreLines = coreMd.split('\n');
           const headingLine = coreLines.find((l) => /^#{2,3}\s/.test(l) && l.toLowerCase().includes(`<${rawLower}>`));
           if (headingLine) {

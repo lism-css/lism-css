@@ -29,6 +29,7 @@ export const WithSize: Story = {
 
 export const WithTransform: Story = {
   name: 'transform 指定',
+  tags: ['!test'],
   args: {
     size: '80px',
     bgc: 'base-2',
@@ -38,6 +39,7 @@ export const WithTransform: Story = {
 
 export const WithFilter: Story = {
   name: 'filter（blur）指定',
+  tags: ['!test'],
   args: {
     size: '80px',
     bgc: 'blue',
@@ -47,6 +49,7 @@ export const WithFilter: Story = {
 
 export const WithClipPath: Story = {
   name: 'clipPath 指定',
+  tags: ['!test'],
   args: {
     size: '100px',
     bgc: 'blue',

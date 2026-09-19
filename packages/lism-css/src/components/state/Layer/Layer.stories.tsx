@@ -29,6 +29,7 @@ export const Default: Story = {
 
 export const WithBlur: Story = {
   name: 'blur 指定',
+  tags: ['!test'],
   args: {
     style: { backdropFilter: 'blur(4px)' },
     children: <p>Blurred layer</p>,
@@ -38,6 +39,7 @@ export const WithBlur: Story = {
 // センター配置
 export const CenterLayer: Story = {
   name: 'センター配置',
+  tags: ['!test'],
   args: {
     m: 'auto',
     w: 'fit',

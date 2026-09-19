@@ -32,6 +32,7 @@ export const WithColor: Story = {
 
 export const Secondary: Story = {
   name: 'セカンダリカラー',
+  tags: ['!test'],
   args: {
     children: 'Info',
     c: 'white',

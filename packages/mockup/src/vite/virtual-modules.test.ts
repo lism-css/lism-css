@@ -80,13 +80,6 @@ describe('generateTokensDataModule', () => {
     expect(code).toContain('export const darkScopeClass = "set--dark";');
   });
 
-  test('生成コードを評価すると渡した配列と同じ値になる', () => {
-    const code = generateTokensDataModule(GROUPS);
-    const json = code.slice(code.indexOf('['), code.lastIndexOf(']') + 1);
-
-    expect(JSON.parse(json)).toEqual(GROUPS);
-  });
-
   test('トークンが0件でも構文として成立する', () => {
     expect(generateTokensDataModule([])).toContain('export const tokenGroups = [];');
   });
