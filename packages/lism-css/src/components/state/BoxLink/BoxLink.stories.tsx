@@ -14,11 +14,22 @@ const meta: Meta<typeof BoxLink> = {
 export default meta;
 type Story = StoryObj<typeof BoxLink>;
 
+// lism-cssはstorybook本体に依存しないため、storybook/testのexpectを使わずに検証する。
+function assertTagName(canvasElement: HTMLElement, expected: string) {
+  const tagName = canvasElement.querySelector('.is--boxLink')?.tagName;
+  if (tagName !== expected) {
+    throw new Error(`BoxLinkのタグが${expected}ではない: ${String(tagName)}`);
+  }
+}
+
 export const Default: Story = {
   args: {
     href: '#',
     p: '20',
     children: <p>BoxLink content</p>,
+  },
+  play: ({ canvasElement }) => {
+    assertTagName(canvasElement, 'A');
   },
 };
 
@@ -27,5 +38,8 @@ export const WithoutHref: Story = {
   args: {
     p: '20',
     children: <p>BoxLink without href renders as div</p>,
+  },
+  play: ({ canvasElement }) => {
+    assertTagName(canvasElement, 'DIV');
   },
 };

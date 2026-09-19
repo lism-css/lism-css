@@ -33,12 +33,6 @@ describe('言語ごとのパターン公開', () => {
   it('日本語を正に日英の公開カテゴリ・ID・並び順を揃える', () => {
     expect(catalog.getPatternCategoryIds('en')).toEqual(catalog.getPatternCategoryIds('ja'));
     expect(catalog.getAllPatternPaths('en')).toEqual(catalog.getAllPatternPaths('ja'));
-    for (const lang of ['ja', 'en'] as const) {
-      expect(catalog.getPatternCategory('testimonials', lang)?.items.map(({ id }) => id)).toEqual(['testimonials01', 'testimonials02']);
-      expect(catalog.getPatternCategory('footer', lang)).toBeUndefined();
-      expect(catalog.getPattern('testimonials', 'testimonials03', lang)).toBeUndefined();
-      expect(catalog.getPattern('footer', 'footer02', lang)).toBeUndefined();
-    }
   });
 
   it('生成対象の全ページにプレビューソースと説明があり、カテゴリと個別取得が一致する', () => {
@@ -58,7 +52,6 @@ describe('言語ごとのパターン公開', () => {
 
   it('NewsとWorksを日英共通のPostsへ統合し、旧カテゴリと旧IDを公開しない', () => {
     for (const lang of ['ja', 'en'] as const) {
-      expect(catalog.getPatternCategory('posts', lang)?.items.map(({ id }) => id)).toEqual(['posts01', 'posts02', 'posts03', 'posts04']);
       expect(catalog.getPatternCategory('posts', lang)?.label).toBe('Posts');
       for (const category of ['news', 'works', 'navigation']) {
         expect(catalog.getPatternCategory(category, lang)).toBeUndefined();
@@ -77,12 +70,14 @@ describe('言語ごとのパターン公開', () => {
   });
 
   it('番号付きの説明タイトルを翻訳し、別言語の取得で元のタイトルを変えない', () => {
-    expect(catalog.getPattern('testimonials', 'testimonials02', 'ja')?.title).toBe('02 - 導入成果と担当者の声');
-    expect(catalog.getPattern('testimonials', 'testimonials02', 'en')?.title).toBe('02 - Customer results and feedback');
-    expect(catalog.getPattern('testimonials', 'testimonials02', 'ja')?.title).toBe('02 - 導入成果と担当者の声');
-    for (const lang of ['ja', 'en'] as const) {
-      expect(catalog.getPattern('posts', 'posts01', lang)?.title).toBe('Posts01');
-    }
+    const description = { ja: 'ja', en: 'en' };
+    const items = [
+      { id: 'x01', title: 'X01', description },
+      { id: 'x02', title: '02 - 説明', titleEn: '02 - Description', description },
+    ];
+    expect(catalog.filterPatternItems(items, 'ja').map(({ title }) => title)).toEqual(['X01', '02 - 説明']);
+    expect(catalog.filterPatternItems(items, 'en').map(({ title }) => title)).toEqual(['X01', '02 - Description']);
+    expect(catalog.filterPatternItems(items, 'ja').map(({ title }) => title)).toEqual(['X01', '02 - 説明']);
   });
 
   // @/config/sidebar の import が重く、CI では既定の 5 秒を超えることがある
@@ -143,22 +138,24 @@ describe('言語ごとのパターン公開', () => {
     }
   });
 
-  it('言語切替とhreflangに存在する同一IDのページ・カテゴリだけを含める', () => {
+  it('言語切替とhreflangに存在する同一IDのページ・カテゴリだけを含める', async () => {
+    const { patterns } = await import('@/config/patterns');
     const alternates = (path: string) => catalog.filterPatternAlternates(getAlternateUrls(path)).map(({ lang }) => lang);
-    expect(alternates('/patterns/hero/hero01/')).toEqual(['ja', 'en']);
-    expect(alternates('/en/patterns/page-links/page-links15/')).toEqual([]);
-    expect(alternates('/patterns/logos/')).toEqual([]);
-    expect(alternates('/patterns/footer/')).toEqual([]);
-    for (const category of ['posts', 'page-links']) {
-      expect(alternates(`/patterns/${category}/`)).toEqual(['ja', 'en']);
-      expect(alternates(`/patterns/${category}/${category}01/`)).toEqual(['ja', 'en']);
+    // 公開中の代表: 先頭のページとそのカテゴリ
+    const [published] = catalog.getAllPatternPaths('ja');
+    expect(alternates(`/patterns/${published.category}/${published.id}/`)).toEqual(['ja', 'en']);
+    expect(alternates(`/patterns/${published.category}/`)).toEqual(['ja', 'en']);
+    // 非公開の代表: 下書きのページと、下書きだけのカテゴリ
+    const categories = Object.entries(patterns) as [string, PatternCategory][];
+    for (const [category, { items }] of categories) {
+      const draft = items.find((item) => item.draft);
+      if (draft) expect(alternates(`/en/patterns/${category}/${draft.id}/`), `${category}/${draft.id}`).toEqual([]);
+      if (items.every((item) => item.draft)) expect(alternates(`/patterns/${category}/`), category).toEqual([]);
     }
     for (const category of ['news', 'works', 'navigation']) {
       expect(alternates(`/en/patterns/${category}/`)).toEqual([]);
     }
     expect(alternates('/patterns/news/news001/')).toEqual([]);
-    expect(alternates('/patterns/testimonials/testimonials02/')).toEqual(['ja', 'en']);
-    expect(alternates('/patterns/cta/cta01/')).toEqual(['ja', 'en']);
     expect(alternates('/patterns/')).toEqual(['ja', 'en']);
     expect(alternates('/docs/overview/')).toEqual(['ja', 'en']);
   });

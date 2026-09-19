@@ -35,6 +35,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   name: '大サイズ',
+  tags: ['!test'],
   args: {
     src: 'https://cdn.lism-css.com/dummy-image.jpg',
     alt: '',

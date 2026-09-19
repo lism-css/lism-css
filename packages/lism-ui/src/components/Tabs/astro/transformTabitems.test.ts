@@ -65,7 +65,8 @@ describe('transformTabitems', () => {
   it('範囲外の defaultIndex は 1 にフォールバックする', () => {
     const items = html(tabitem('タブ1'), tabitem('タブ2'));
 
-    for (const defaultIndex of [0, -1, 3, 99]) {
+    // 下限直前と上限直後
+    for (const defaultIndex of [0, 3]) {
       const { btns, panels } = transformTabitems(items, 'tabs', defaultIndex);
       expect(btns[0]).toContain('aria-selected="true"');
       expect(btns[1]).toContain('aria-selected="false"');

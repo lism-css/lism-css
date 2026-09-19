@@ -1,31 +1,18 @@
 import { assertType, describe, it } from 'vitest';
 import type { TraitProps } from './TraitProps';
 import type { LismPropsBase } from '../getLismProps';
-import type { TRAITS } from '../../../config/index';
 
 describe('TraitProps', () => {
   describe('config/index.ts からの型生成が動作する', () => {
-    it('TRAITS が正しく型推論される', () => {
-      // TRAITS の型チェック
-      type TraitsType = typeof TRAITS;
-      const _test: TraitsType = {} as TraitsType;
-      assertType<TraitsType>(_test);
-    });
-
     it('TraitProps が TRAITS から生成されている', () => {
       // TraitProps の型は TRAITS から生成される
       type IsWrapperType = TraitProps['isWrapper'];
       // isWrapper は現行仕様として contentSize 相当の文字列値も受け入れる
-      const wrapper1: IsWrapperType = 's';
-      const wrapper2: IsWrapperType = 'm';
-      const wrapper3: IsWrapperType = 'l';
-      const wrapper4: IsWrapperType = 'xl';
-      const wrapper5: IsWrapperType = undefined;
-      assertType<IsWrapperType>(wrapper1);
-      assertType<IsWrapperType>(wrapper2);
-      assertType<IsWrapperType>(wrapper3);
-      assertType<IsWrapperType>(wrapper4);
-      assertType<IsWrapperType>(wrapper5);
+      const _wrapper1: IsWrapperType = 's';
+      const _wrapper2: IsWrapperType = 'm';
+      const _wrapper3: IsWrapperType = 'l';
+      const _wrapper4: IsWrapperType = 'xl';
+      const _wrapper5: IsWrapperType = undefined;
     });
   });
 

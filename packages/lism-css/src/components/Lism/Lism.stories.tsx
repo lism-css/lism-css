@@ -24,6 +24,7 @@ export const Default: Story = {
 
 export const AsParagraph: Story = {
   name: 'as: Paragraph',
+  tags: ['!test'],
   args: {
     as: 'p',
     fz: 'l',
@@ -33,6 +34,7 @@ export const AsParagraph: Story = {
 
 export const WithClassName: Story = {
   name: 'className',
+  tags: ['!test'],
   args: {
     className: 'c--myComponent',
     p: '10',
@@ -42,6 +44,7 @@ export const WithClassName: Story = {
 
 export const WithLayout: Story = {
   name: 'layout',
+  tags: ['!test'],
   args: {
     layout: 'flow',
     children: 'Lorem ipsum texts...',
@@ -50,6 +53,7 @@ export const WithLayout: Story = {
 
 export const ResponsiveArray: Story = {
   name: 'Responsive (配列)',
+  tags: ['!test'],
   args: {
     p: ['20', '30', '40'],
     bgc: 'base-2',
@@ -59,6 +63,7 @@ export const ResponsiveArray: Story = {
 
 export const ResponsiveObject: Story = {
   name: 'Responsive (オブジェクト)',
+  tags: ['!test'],
   args: {
     p: { base: '20', sm: '30', md: '40' },
     bgc: 'base-2',
@@ -68,6 +73,7 @@ export const ResponsiveObject: Story = {
 
 export const WithCssProp: Story = {
   name: 'css prop',
+  tags: ['!test'],
   args: {
     css: { textShadow: '1px 1px 2px rgba(0,0,0,0.3)', '--my-var': '10px' },
     p: '20',

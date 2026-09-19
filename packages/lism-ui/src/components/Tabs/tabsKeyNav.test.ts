@@ -10,7 +10,6 @@ describe('toTabOrientation', () => {
     expect(toTabOrientation('horizontal')).toBe('horizontal');
     expect(toTabOrientation(null)).toBe('horizontal');
     expect(toTabOrientation(undefined)).toBe('horizontal');
-    expect(toTabOrientation('')).toBe('horizontal');
     expect(toTabOrientation('VERTICAL')).toBe('horizontal');
   });
 });

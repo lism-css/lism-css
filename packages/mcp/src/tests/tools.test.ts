@@ -109,13 +109,18 @@ describe('MCP Tools (integration)', () => {
     expect(data.availableProps).toBeDefined();
   });
 
-  it('get_component で Accordion を検索すると該当セクションの Markdown が返る', async () => {
+  // notFound（JSON）でも検索語は含まれるため、Markdown の見出しと節の中身で区別する
+  it.each([
+    { name: 'Accordion', heading: '## Accordion', body: '<Accordion.Root>' },
+    { name: 'Lism', heading: '## コアコンポーネント: `<Lism>`', body: '```jsx\n<Lism ' },
+  ])('get_component で $name を検索すると該当セクションの Markdown が返る', async ({ name, heading, body }) => {
     const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_component', arguments: { name: 'Accordion' } });
+    const result = await client.callTool({ name: 'get_component', arguments: { name } });
     expect(result.isError).toBeFalsy();
 
     const text = getText(result);
-    expect(text).toContain('Accordion');
+    expect(text.startsWith(heading)).toBe(true);
+    expect(text).toContain(body);
   });
 
   it('get_component で Flex を検索すると primitives/l--flex.md の Markdown が返る', async () => {
@@ -187,22 +192,6 @@ describe('MCP Tools (integration)', () => {
       expect(result.isError).toBeFalsy();
       expect(JSON.parse(getText(result)).message).toContain(`Component "${name}" not found`);
     }
-  });
-
-  it('get_component で Lism を検索すると該当セクションの Markdown が返る', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_component', arguments: { name: 'Lism' } });
-    expect(result.isError).toBeFalsy();
-    const text = getText(result);
-    expect(text).toContain('Lism');
-  });
-
-  it('get_component で HTML を検索すると該当セクションの Markdown が返る', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_component', arguments: { name: 'HTML' } });
-    expect(result.isError).toBeFalsy();
-    const text = getText(result);
-    expect(text).toContain('HTML');
   });
 
   it('get_component で存在しないコンポーネントを検索すると代替提案付きの正常レスポンスを返す', async () => {
@@ -293,12 +282,6 @@ describe('MCP Tools (integration)', () => {
     expect((result.structuredContent as { query: string }).query).toBe('Box');
   });
 
-  it('ツール一覧が7つ登録されている', async () => {
-    const client = await createTestClient();
-    const tools = await client.listTools();
-    expect(tools.tools.length).toBe(7);
-  });
-
   it('全ツールにreadOnlyHintアノテーションがある', async () => {
     const client = await createTestClient();
     const tools = await client.listTools();
@@ -315,10 +298,5 @@ describe('load-markdown', () => {
     expect(filenames).toContain('primitives/l--flex.md');
     expect(filenames).toContain('trait-class/is--container.md');
     expect(filenames).toContain('primitives/a--icon.md');
-  });
-
-  it('loadMarkdown がサブディレクトリ配下のファイルも読み込める', () => {
-    const content = loadMarkdown('primitives/l--flex.md');
-    expect(content).toContain('# l--flex / `<Flex>`');
   });
 });

@@ -3,7 +3,7 @@ import getLismProps, { type LismProps } from './getLismProps';
 
 describe('getLismProps', () => {
   describe('基本動作', () => {
-    test('空のpropsを渡すとclassNameのみ返す', () => {
+    test('空のpropsを渡すと空オブジェクトを返す', () => {
       const result = getLismProps({});
       expect(result).toEqual({});
     });

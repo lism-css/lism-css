@@ -572,6 +572,9 @@ describe('runCreate', () => {
     const remaining = fs.readdirSync(path.join(outDir, 'src/pages')).sort();
     expect(remaining).toEqual(['_style.css', 'index.astro']);
 
+    // テンプレートに無い components ディレクトリを勝手に作らない
+    expect(fs.existsSync(path.join(outDir, 'src/components'))).toBe(false);
+
     // package.json の name が packageName に書き換わる
     const pkg = JSON.parse(fs.readFileSync(path.join(outDir, 'package.json'), 'utf-8')) as {
       name: string;
@@ -662,37 +665,6 @@ describe('runCreate', () => {
 
     // lib: variant 規約のディレクトリではないので既存ファイルはそのまま
     expect(fs.readFileSync(path.join(outDir, 'src/lib/util.ts'), 'utf-8')).toBe('export const x = 1;');
-  });
-
-  it('single-project-variant型でcomponents等のvariantディレクトリが存在しなくてもエラーにならない', async () => {
-    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
-      {
-        slug: 'lp-astro-ryokan',
-        kind: 'single-project-variant',
-        category: 'lp',
-        stack: 'astro',
-        variant: 'ryokan',
-        sourcePath: 'lp/astro',
-        packageName: 'lp-astro-ryokan',
-        title: { ja: 'LP Ryokan', en: 'LP Ryokan' },
-        description: { ja: 'Ryokan LP', en: 'Ryokan landing page' },
-      },
-    ];
-
-    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
-      const dir = (options as { dir: string }).dir;
-      fs.mkdirSync(dir, { recursive: true });
-      writePackageJson(dir, { name: 'lp-astro', dependencies: {} });
-      // pages のみ variant 構造、components ディレクトリ自体が無い
-      writeFile(path.join(dir, 'src/pages/ryokan/index.astro'), 'ryokan');
-      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
-    });
-
-    await runCreateWithTemplates({ template: 'lp-astro-ryokan', targetDir: 'lp-ryokan', force: true }, templates);
-
-    const outDir = path.join(tmpDir, 'lp-ryokan');
-    expect(fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8')).toBe('ryokan');
-    expect(fs.existsSync(path.join(outDir, 'src/components'))).toBe(false);
   });
 
   it('single-project-variant型でvariantディレクトリが空でもエラーにならず、他variantを掃除する', async () => {

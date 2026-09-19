@@ -54,9 +54,8 @@ describe('directiveCallout', () => {
     expect(html).toBe('<div class="c--docsNote" data-type="tip"><p>本文</p></div>');
   });
 
-  it.each(CALLOUT_TYPES)(':::%s に対応する', async (type) => {
-    const html = await renderMdx(`:::${type}\n本文\n:::\n`);
-    expect(html).toContain(`data-type="${type}"`);
+  it('対応する type の一覧を固定する', () => {
+    expect([...CALLOUT_TYPES].sort()).toEqual(['alert', 'check', 'help', 'info', 'note', 'point', 'tip', 'warning']);
   });
 
   it('::title[...] を段落で包まずに c--docsNote_title にする', async () => {
