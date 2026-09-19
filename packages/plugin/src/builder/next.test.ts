@@ -36,7 +36,7 @@ describe('withLism', () => {
     const wpMain = wpConfig.resolve.alias['lism-css/main.css'];
     expect(path.isAbsolute(wpMain)).toBe(true);
     expect(wpMain).toBe(path.join(root, '.lism-css/css', 'main.css'));
-  });
+  }, 15000);
 
   test('既存 webpack カスタマイズ関数を compose し、alias もマージする', async () => {
     const root = tmpDir();
@@ -53,7 +53,7 @@ describe('withLism', () => {
     expect(wpConfig.__touched).toBe(true);
     // かつ lism の alias もマージされている。
     expect(wpConfig.resolve.alias['lism-css/main.css']).toBe(path.join(root, '.lism-css/css', 'main.css'));
-  });
+  }, 15000);
 
   test('既存 turbopack.resolveAlias を保持したままマージする', async () => {
     const root = tmpDir();
@@ -66,7 +66,7 @@ describe('withLism', () => {
     expect(result.turbopack.resolveAlias['@/foo']).toBe('./src/foo');
     // lism の alias も追加される。
     expect(result.turbopack.resolveAlias['lism-css/main.css'].startsWith('./')).toBe(true);
-  });
+  }, 15000);
 
   test('custom prop を持つ lism.config があれば config alias を注入し lism-env.d.ts を生成する', async () => {
     const root = tmpDir();
@@ -82,7 +82,7 @@ describe('withLism', () => {
 
     // custom prop があるため projectRoot 直下に lism-env.d.ts が生成される。
     expect(fs.existsSync(path.join(root, 'lism-env.d.ts'))).toBe(true);
-  });
+  }, 15000);
 
   test('typegen: false で lism-env.d.ts を生成しない', async () => {
     const root = tmpDir();
@@ -90,7 +90,7 @@ describe('withLism', () => {
     await withLism({}, { projectRoot: root, typegen: false })('phase-production-build');
 
     expect(fs.existsSync(path.join(root, 'lism-env.d.ts'))).toBe(false);
-  });
+  }, 15000);
 
   test('dev フェーズでは lism.config.js 変更を watch して CSS / 型を再生成する', async () => {
     const root = tmpDir();

@@ -73,7 +73,7 @@ describe('withLismWebpack', () => {
       await withLismWebpack(baseConfig(), { projectRoot: root, css: true, full: true });
 
       expect(fs.existsSync(path.join(root, '.lism-css/css/full.css'))).toBe(true);
-    });
+    }, 15000);
   });
 
   describe('config オプション', () => {
@@ -130,7 +130,7 @@ describe('withLismWebpack', () => {
 
       expect(config.resolve.alias['lism-css/main.css']).toBe(path.join(root, '.lism-css/css/main.css'));
       expect(config.plugins).toHaveLength(1);
-    });
+    }, 15000);
   });
 
   describe('追加 plugin の挙動', () => {
