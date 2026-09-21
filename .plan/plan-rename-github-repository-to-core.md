@@ -19,7 +19,7 @@
 - 管理対象のソース・設定・文書に旧名を含む参照は83ファイル・140行。生成物と本プランは集計対象外。数は実施時に再確認する。
 - CLIの取得元は`packages/lism-cli/src/constants.ts`の`SOURCE_REPO`に集約されている。使用中のgigetはロックファイル上で3.3.0。
 - `packages/create-lism/tsup.config.ts`は`lism-cli`を依存ごとbundleへ内包する。CLI本体だけを公開しても、既存の`create-lism`の取得先は変わらない。
-- npm公開はルート`package.json`の公開スクリプトを使う運用。[CLIガイド](../documents/cli-guide.md)が公開手順と事前チェックを管理している。
+- npm公開はルート`package.json`の公開スクリプトを使う運用。[CLIガイド](../documents/cli-guide.md)が公開手順と事前チェックを管理している。ローカルからの手動公開で、CI専用のTrusted Publisherは未設定（ユーザー確認）。改名に伴うnpm側の接続変更は不要。
 - `.github/workflows/test.yml`と`deploy.yml`に旧名の固定参照やnpm公開処理はない。現時点でリネームのためのCI定義変更は不要。
 - 公式サイトはGitHub Actionsの`deploy.yml`からCloudflare Workersへデプロイする構成。現行の公開手順・認証・起動条件は[サイト更新手順](../documents/docs-update.md#公開する)を参照する。テンプレートプレビューはGitHubリポジトリ名ではなくCloudflare Pagesのプロジェクト名を指定して直接デプロイする構成。
 
@@ -155,7 +155,6 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 - 実施日時と、別プランに対する先後関係。
 - CloudflareのWorkers BuildsのGit連携が解除済みか。Actionsの正常デプロイと合わせて実環境で確認する。
 - skills.shの集計・掲載URLの引継ぎ方法。リネーム後に旧sourceが残る[未解決報告](https://github.com/vercel-labs/skills/issues/703)があり、自動移行を保証できない。引継ぎ保証が得られない場合に受容するかは未決。
-- npm側にリポジトリ名を固定したTrusted Publishing設定が存在するか。現行のCIは使用していないが、導入されていた場合は新名で接続を作り直す必要がある。[npm公式仕様](https://docs.npmjs.com/trusted-publishers/)
 - Organization外の利用者やサービスが持つ参照は網羅できない。調査時の検索結果を全件保証として扱わない。
 
 ## 完了条件・検証方針
