@@ -30,7 +30,7 @@ set-- は目的別に 2 カテゴリに分かれます。
 
 ## 対応ソースコード
 
-ソース: https://github.com/lism-css/lism-css/tree/main/packages/lism-css/src/scss/base/set（`set--{name}` は `_{name}.scss` に対応。`set--bxsh` / `set--s` のみ `base/tokens/_tokens.gen.scss` で生成）
+ソース: https://github.com/lism-css/core/tree/main/packages/lism-css/src/scss/base/set（`set--{name}` は `_{name}.scss` に対応。`set--bxsh` / `set--s` のみ `base/tokens/_tokens.gen.scss` で生成）
 
 ---
 

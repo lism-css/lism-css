@@ -2,7 +2,7 @@
 
 [property-class.md](../property-class.md)の分冊。全Propのプリセット値クラス・BP対応の詳細表。
 
-ソース: [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts)
+ソース: [props.ts](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/config/defaults/props.ts)
 
 ## 表の読み方
 

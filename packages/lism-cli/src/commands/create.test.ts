@@ -141,7 +141,7 @@ describe('runCreate', () => {
     expect(select).not.toHaveBeenCalled();
     expect(input).not.toHaveBeenCalled();
     expect(confirm).not.toHaveBeenCalled();
-    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/minimal/astro#main', {
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/core/templates/minimal/astro#main', {
       dir: path.join(tmpDir, 'my-app'),
       force: true,
       forceClean: true,
@@ -156,7 +156,7 @@ describe('runCreate', () => {
   it('ref指定時はそのrefのテンプレートを取得する', async () => {
     await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true, ref: 'dev' });
 
-    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/minimal/astro#dev', {
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/core/templates/minimal/astro#dev', {
       dir: path.join(tmpDir, 'my-app'),
       force: true,
       forceClean: true,
@@ -249,7 +249,7 @@ describe('runCreate', () => {
 
     expect(select).toHaveBeenCalledTimes(1);
     expect(input).toHaveBeenCalledTimes(1);
-    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/minimal/astro#main', {
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/core/templates/minimal/astro#main', {
       dir: path.join(tmpDir, 'picked-app'),
       force: true,
       forceClean: true,
@@ -288,7 +288,7 @@ describe('runCreate', () => {
 
     expect(select).toHaveBeenCalledTimes(2);
     expect((vi.mocked(select).mock.calls[1][0] as { message: string }).message).toBe('Select a type (2 options):');
-    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/blog/astro/minimal#main', {
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/core/templates/blog/astro/minimal#main', {
       dir: path.join(tmpDir, 'blog-app'),
       force: true,
       forceClean: true,
@@ -327,12 +327,12 @@ describe('runCreate', () => {
 
     const outDir = path.join(tmpDir, 'lp-app');
     expect(downloadTemplate).toHaveBeenCalledTimes(2);
-    expect(downloadTemplate).toHaveBeenNthCalledWith(1, 'github:lism-css/lism-css/templates/lp/astro/_base#main', {
+    expect(downloadTemplate).toHaveBeenNthCalledWith(1, 'github:lism-css/core/templates/lp/astro/_base#main', {
       dir: outDir,
       force: true,
       forceClean: true,
     });
-    expect(downloadTemplate).toHaveBeenNthCalledWith(2, 'github:lism-css/lism-css/templates/lp/astro/_variants/saas#main', {
+    expect(downloadTemplate).toHaveBeenNthCalledWith(2, 'github:lism-css/core/templates/lp/astro/_variants/saas#main', {
       dir: expect.any(String),
       force: true,
       forceClean: true,
@@ -379,12 +379,12 @@ describe('runCreate', () => {
     const outDir = path.join(tmpDir, 'blog-app');
     // base + overlay の 2 回取得
     expect(downloadTemplate).toHaveBeenCalledTimes(2);
-    expect(downloadTemplate).toHaveBeenNthCalledWith(1, 'github:lism-css/lism-css/templates/blog/astro/minimal#main', {
+    expect(downloadTemplate).toHaveBeenNthCalledWith(1, 'github:lism-css/core/templates/blog/astro/minimal#main', {
       dir: outDir,
       force: true,
       forceClean: true,
     });
-    expect(downloadTemplate).toHaveBeenNthCalledWith(2, 'github:lism-css/lism-css/templates/blog/astro/minimal/.lang/en#main', {
+    expect(downloadTemplate).toHaveBeenNthCalledWith(2, 'github:lism-css/core/templates/blog/astro/minimal/.lang/en#main', {
       dir: expect.any(String),
       force: true,
       forceClean: true,
@@ -896,7 +896,7 @@ describe('runCreate', () => {
 
     expect(select).toHaveBeenCalledTimes(1);
     expect((vi.mocked(select).mock.calls[0][0] as { message: string }).message).toBe('Select a stack (2 options):');
-    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/minimal/vite#main', {
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/core/templates/minimal/vite#main', {
       dir: path.join(tmpDir, 'cat-app'),
       force: true,
       forceClean: true,

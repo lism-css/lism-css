@@ -10,9 +10,9 @@ There are three skills available:
 |---|---|
 | `lism-css-guide` | Design rules, Props, tokens, and naming conventions for new implementations (design/requirements → code) |
 | `lism-css-refactor` | Refactors existing Lism CSS code to follow Lism CSS design rules without changing its appearance or behavior |
-| `lism-mockup-guide` | Workflow and data hand-off format for building mockups with [`@lism-css/mockup`](https://github.com/lism-css/lism-css/tree/main/packages/mockup) (requires `lism-css-guide` alongside) |
+| `lism-mockup-guide` | Workflow and data hand-off format for building mockups with [`@lism-css/mockup`](https://github.com/lism-css/core/tree/main/packages/mockup) (requires `lism-css-guide` alongside) |
 
-GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor) / [lism-css/skills/lism-mockup-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-mockup-guide)
+GitHub: [core/skills/lism-css-guide/](https://github.com/lism-css/core/tree/main/skills/lism-css-guide) / [core/skills/lism-css-refactor/](https://github.com/lism-css/core/tree/main/skills/lism-css-refactor) / [core/skills/lism-mockup-guide/](https://github.com/lism-css/core/tree/main/skills/lism-mockup-guide)
 
 
 ## Setup
@@ -24,22 +24,22 @@ With [skills.sh](https://skills.sh), you can easily fetch a skill using the foll
 <Preview>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
-  npx skills add lism-css/lism-css
+  npx skills add lism-css/core
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="pnpm">
   ```bash frame="none"
-  pnpm dlx skills add lism-css/lism-css
+  pnpm dlx skills add lism-css/core
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="yarn">
   ```bash frame="none"
-  yarn dlx skills add lism-css/lism-css
+  yarn dlx skills add lism-css/core
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="bun">
   ```bash frame="none"
-  bunx skills add lism-css/lism-css
+  bunx skills add lism-css/core
   ```
   </PreviewCode>
 </Preview>
@@ -50,9 +50,9 @@ With [skills.sh](https://skills.sh), you can easily fetch a skill using the foll
 If you use the [GitHub CLI](https://cli.github.com/), you can also fetch a skill with `gh skill install`:
 
 ```bash frame="none"
-gh skill install lism-css/lism-css lism-css-guide@main
-gh skill install lism-css/lism-css lism-css-refactor@main
-gh skill install lism-css/lism-css lism-mockup-guide@main
+gh skill install lism-css/core lism-css-guide@main
+gh skill install lism-css/core lism-css-refactor@main
+gh skill install lism-css/core lism-mockup-guide@main
 ```
 
 
@@ -127,4 +127,4 @@ npx lism-cli skill check
 npx lism-cli skill update --claude
 ```
 
-`skill check` compares each installed file with the bundled one by sha256, then lists the changed / added / removed files. For upstream changes, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.
+`skill check` compares each installed file with the bundled one by sha256, then lists the changed / added / removed files. For upstream changes, see the [GitHub repository](https://github.com/lism-css/core/tree/main/skills/lism-css-guide) directly.

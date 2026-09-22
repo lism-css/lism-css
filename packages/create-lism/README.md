@@ -48,7 +48,7 @@ pnpm create lism --template blog-astro-minimal --lang en ./my-blog
 | `lp-astro-interior` | インテリア・暮らし系サービス向けの Astro ランディングページ |
 | `lp-astro-ryokan` | 旅館・宿泊業向けの Astro ランディングページ |
 
-テンプレートは [`templates/`](https://github.com/lism-css/lism-css/tree/main/templates) 配下のカテゴリ別ディレクトリに順次追加される予定です。
+テンプレートは [`templates/`](https://github.com/lism-css/core/tree/main/templates) 配下のカテゴリ別ディレクトリに順次追加される予定です。
 
 ## 補足
 

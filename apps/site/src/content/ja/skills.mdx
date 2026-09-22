@@ -10,9 +10,9 @@ description: 'プロジェクトにSKILL.mdファイルを配置して、AIエ�
 |---|---|
 | `lism-css-guide` | 新規実装（デザイン/要件→コード）向けの設計ルール・Props・トークン・命名規則 |
 | `lism-css-refactor` | 既存のLism CSSコードを、見た目や挙動を変えずにLism CSSの設計ルールに沿った書き方へ整理するリファクタ用 |
-| `lism-mockup-guide` | [`@lism-css/mockup`](https://github.com/lism-css/lism-css/tree/main/packages/mockup)で画面モックアップを組むためのワークフローとデータの受け渡し形式（`lism-css-guide`併用前提） |
+| `lism-mockup-guide` | [`@lism-css/mockup`](https://github.com/lism-css/core/tree/main/packages/mockup)で画面モックアップを組むためのワークフローとデータの受け渡し形式（`lism-css-guide`併用前提） |
 
-GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) / [lism-css/skills/lism-css-refactor/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-refactor) / [lism-css/skills/lism-mockup-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-mockup-guide)
+GitHub: [core/skills/lism-css-guide/](https://github.com/lism-css/core/tree/main/skills/lism-css-guide) / [core/skills/lism-css-refactor/](https://github.com/lism-css/core/tree/main/skills/lism-css-refactor) / [core/skills/lism-mockup-guide/](https://github.com/lism-css/core/tree/main/skills/lism-mockup-guide)
 
 
 ## セットアップ
@@ -24,22 +24,22 @@ GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/t
 <Preview>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
-  npx skills add lism-css/lism-css
+  npx skills add lism-css/core
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="pnpm">
   ```bash frame="none"
-  pnpm dlx skills add lism-css/lism-css
+  pnpm dlx skills add lism-css/core
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="yarn">
   ```bash frame="none"
-  yarn dlx skills add lism-css/lism-css
+  yarn dlx skills add lism-css/core
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="bun">
   ```bash frame="none"
-  bunx skills add lism-css/lism-css
+  bunx skills add lism-css/core
   ```
   </PreviewCode>
 </Preview>
@@ -50,9 +50,9 @@ GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/t
 [GitHub CLI](https://cli.github.com/) を使っている場合は、`gh skill install` でも取得できます。
 
 ```bash frame="none"
-gh skill install lism-css/lism-css lism-css-guide@main
-gh skill install lism-css/lism-css lism-css-refactor@main
-gh skill install lism-css/lism-css lism-mockup-guide@main
+gh skill install lism-css/core lism-css-guide@main
+gh skill install lism-css/core lism-css-refactor@main
+gh skill install lism-css/core lism-mockup-guide@main
 ```
 
 
@@ -127,4 +127,4 @@ npx lism-cli skill check
 npx lism-cli skill update --claude
 ```
 
-`skill check` は配置済みの各ファイルを sha256 で比較し、変更 / 追加 / 削除されたファイルをまとめて表示します。最新情報が気になる場合は [GitHub リポジトリ](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) を直接チェックしてください。
+`skill check` は配置済みの各ファイルを sha256 で比較し、変更 / 追加 / 削除されたファイルをまとめて表示します。最新情報が気になる場合は [GitHub リポジトリ](https://github.com/lism-css/core/tree/main/skills/lism-css-guide) を直接チェックしてください。

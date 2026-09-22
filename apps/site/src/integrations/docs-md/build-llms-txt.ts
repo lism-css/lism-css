@@ -30,7 +30,7 @@ const HEADER = `# Lism CSS
 
 > Lism CSS is a lightweight, layout-first CSS framework for rapidly building the structural skeleton of websites. No build step required — just import the CSS. It also provides dedicated React and Astro components via npm.
 
-- GitHub: https://github.com/lism-css/lism-css
+- GitHub: https://github.com/lism-css/core
 - npm: \`lism-css\` (core CSS + React components; Astro components via \`lism-css/astro\` subpath), \`@lism-css/ui\` (UI components)
 - License: MIT`;
 

@@ -129,5 +129,5 @@ React/Astro 側の Props 実装は `src/components/` の `layout/` / `state/` / 
 - ソースに存在しない情報を推測で追加しないこと
 - 説明文は簡潔なスタイルを維持する（「です・ます」調ではなく体言止め中心）
 - `詳細: URL` のリンクは変更しない（URL の有効性チェックは本コマンドの範囲外）
-- スキルファイル内のソースコードへのリンクは、必ず raw URL 形式（`https://raw.githubusercontent.com/lism-css/lism-css/main/{path}`）を使用すること。`https://github.com/lism-css/lism-css/blob/main/...` 形式は使わない。ディレクトリへのリンク（`tree/`）はそのまま GitHub URL で可
+- スキルファイル内のソースコードへのリンクは、必ず raw URL 形式（`https://raw.githubusercontent.com/lism-css/core/main/{path}`）を使用すること。`https://github.com/lism-css/core/blob/main/...` 形式は使わない。ディレクトリへのリンク（`tree/`）はそのまま GitHub URL で可
 - スキルファイル内の公式ドキュメント (`https://lism-css.com/...`) へのリンクは AI が直接読み込めるよう `.md` 版を使用する（例: `https://lism-css.com/docs/primitives/l--box.md`）。ただし `.md` 版が存在しない URL（`/demo/...`、`/ui/` トップ等）は対象外として現状の HTML URL のまま維持する

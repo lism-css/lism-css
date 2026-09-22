@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/lism-css"><img src="https://img.shields.io/npm/v/lism-css.svg" alt="Latest Release"></a>
-  <a href="https://github.com/lism-css/lism-css/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/lism-css.svg" alt="License"></a>
+  <a href="https://github.com/lism-css/core/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/lism-css.svg" alt="License"></a>
 </p>
 
 <p align="center">
@@ -159,7 +159,7 @@ This installs the bundled skills (`lism-css-guide`, `lism-css-refactor` and `lis
 You can also install the same three skills via [skills.sh](https://skills.sh), picking the ones you need:
 
 ```bash
-npx skills add lism-css/lism-css
+npx skills add lism-css/core
 ```
 
 See the [Skills documentation](https://lism-css.com/en/docs/skills/) for details.

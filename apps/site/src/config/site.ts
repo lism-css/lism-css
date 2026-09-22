@@ -22,7 +22,7 @@ export const siteConfig = {
 
   author: {
     name: 'ddryo',
-    github: 'https://github.com/lism-css/lism-css',
+    github: 'https://github.com/lism-css/core',
     twitter: 'https://x.com/lismcss',
     discord: 'https://discord.gg/6PMcFHvc4h',
   },

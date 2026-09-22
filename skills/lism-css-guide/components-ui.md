@@ -42,7 +42,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ## Accordion
 
-ソース: [Accordion/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion)
+ソース: [Accordion/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Accordion)
 
 アコーディオン UI。クリックでコンテンツの開閉を切り替える。JSで開閉アニメーションを制御。パネルに `hidden='until-found'` を使用しブラウザのページ内検索に対応。
 
@@ -69,7 +69,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ## Alert
 
-ソース: [Alert/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert)
+ソース: [Alert/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Alert)
 
 短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。`b--alert` クラスが付与される。
 既定アイコンは`@lism-css/ui`に同梱され、利用側でのアイコンimportは不要です。カスタムアイコンの指定方法は[Icon](./primitives/a--icon.md)を参照してください。
@@ -90,7 +90,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ## Avatar
 
-ソース: [Avatar/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar)
+ソース: [Avatar/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Avatar)
 
 アバター（プロフィール画像）コンポーネント。円形の画像表示で、`b--avatar` クラスが付与される。`src` ありは `l--frame`、`src` 未指定時は `l--center` に切り替わり、ルートに `b--avatar--initial`（背景色 `--base-2`）が付いて `name` の先頭1文字をイニシャルとして `span` で表示する（画像ロード失敗時の自動切替は無い）。
 
@@ -110,7 +110,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ## Badge
 
-ソース: [Badge/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge)
+ソース: [Badge/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Badge)
 
 バッジ（ラベル）コンポーネント。`span` 要素としてインライン表示。`b--badge` クラスが付与される。
 
@@ -126,7 +126,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ## Button
 
-ソース: [Button/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Button)
+ソース: [Button/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Button)
 
 ボタン型リンクコンポーネント。デフォルトで `a` 要素として出力。`b--button` クラスが付与される。
 
@@ -143,7 +143,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ## Callout
 
-ソース: [Callout/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout)
+ソース: [Callout/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Callout)
 
 記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される（プリセット内容は [Alert](#alert) と同一）。`b--callout` クラスが付与される。
 
@@ -162,7 +162,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 
 ## Details
 
-ソース: [Details/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Details)
+ソース: [Details/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Details)
 
 HTML の `details/summary` 要素をラップしたコンポーネント。Accordion とは違い JS を使わず CSS のみで実装。
 
@@ -187,7 +187,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ## Modal
 
-ソース: [Modal/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal)
+ソース: [Modal/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Modal)
 
 モーダルダイアログ UI。`dialog` 要素を使用。`data-modal-open` / `data-modal-close` 属性で開閉を制御。
 
@@ -214,7 +214,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ## NavMenu
 
-ソース: [NavMenu/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu)
+ソース: [NavMenu/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/NavMenu)
 
 ナビゲーションメニューコンポーネント。`b--navMenu` クラスが付与される。
 
@@ -242,7 +242,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ## Popover
 
-ソース: [Popover/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Popover)
+ソース: [Popover/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Popover)
 
 クリックで開くインタラクティブなパネル。ネイティブ Popover API（`popover` 属性）で開閉し、CSS Anchor Positioning でトリガーの隣に配置する。クライアント JS なし。開閉・外側クリック/Esc での light dismiss・フォーカス復帰・`aria-expanded` はブラウザに任せる。Anchor Positioning 非対応ブラウザでは画面中央のカードとして開く。ホバーで出す補足テキストは `Tooltip` を使う。
 
@@ -277,7 +277,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ## Tabs
 
-ソース: [Tabs/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs)
+ソース: [Tabs/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Tabs)
 
 タブ切り替え UI。タブクリックまたは左右キー・Home/End でコンテンツパネルを切り替える。縦並びにする場合は `listProps` で `aria-orientation="vertical"` を指定すると上下キーに切り替わる。スタイリングはほぼなく動きのみ提供。
 
@@ -337,7 +337,7 @@ Astro（親から子へ値を共有できないため、各 Tab・Panel に `tab
 
 ## Tooltip
 
-ソース: [Tooltip/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tooltip)
+ソース: [Tooltip/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/Tooltip)
 
 ホバー / キーボードフォーカスで出る補足テキスト。表示制御は CSS のみで、JS は「Esc で閉じる」だけ（`scripts/tooltip.js`）。CSS Anchor Positioning でトリガーの隣に配置し、非対応ブラウザではトリガー基準の絶対配置にフォールバックする。中にリンク・ボタンを置かない（それは `Popover`）。重要な情報をツールチップだけに入れない（タッチでは見えない）。
 
@@ -366,7 +366,7 @@ Astro（親から子へ値を共有できないため、各 Tab・Panel に `tab
 
 ## ShapeDivider
 
-ソース: [ShapeDivider/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider)
+ソース: [ShapeDivider/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/ShapeDivider)
 
 セクション間の波型などの装飾的な区切り要素。SVG ベースの形状で区切りを表現。
 
@@ -389,7 +389,7 @@ Astro（親から子へ値を共有できないため、各 Tab・Panel に `tab
 
 ## DummyText
 
-ソース: [DummyText/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/DummyText)
+ソース: [DummyText/](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components/DummyText)
 
 ダミーテキストを生成するコンポーネント。プレビューやテスト用。複数の言語とテキスト長に対応。
 

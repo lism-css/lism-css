@@ -149,7 +149,7 @@ Property Class の値名は基本的に CSS の実値と同じですが、以下
 }
 ```
 
-対象プロパティは、ソースの [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts) で `alwaysVar: 1` がセットされているものです。
+対象プロパティは、ソースの [props.ts](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/config/defaults/props.ts) で `alwaysVar: 1` がセットされているものです。
 
 
 ## Property Class の検索・一括修正

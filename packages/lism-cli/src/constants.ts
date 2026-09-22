@@ -10,7 +10,7 @@
  */
 
 /** 配信元の GitHub リポジトリ（owner/repo） */
-export const SOURCE_REPO = 'lism-css/lism-css';
+export const SOURCE_REPO = 'lism-css/core';
 
 /** raw GitHub の base URL（生ファイル fetch に使用） */
 export const RAW_GITHUB_BASE = 'https://raw.githubusercontent.com';

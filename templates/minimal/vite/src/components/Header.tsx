@@ -32,7 +32,7 @@ export default function Header() {
             X.com
           </Link>
           <Link
-            href="https://github.com/lism-css/lism-css"
+            href="https://github.com/lism-css/core"
             target="_blank"
             c="text"
             fz="s"
