@@ -55,7 +55,7 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 
 ## 実施手順
 
-本リポジトリのコード変更は1PRにまとめる。`dev`から`chore/rename-github-repository-to-core`を作り、PRのターゲットも`dev`にする。GitHubの改名と公開は、その変更を準備したうえで順に実施する。別リポジトリの修正は別差分として扱う。
+本リポジトリのコード変更は1ブランチにまとめる。`dev`から`chore/rename-github-repository-to-core`を作り、PRは作らずローカルで`dev`へマージする（手順中の「PR」はこのブランチを指す）。GitHubの改名と公開は、その変更を準備したうえで順に実施する。別リポジトリの修正は別差分として扱う。
 
 ### 1. 事前確認
 
@@ -153,8 +153,9 @@ gigetのGitHub providerはGitHub APIのtarballを取得し、UIカタログは`f
 ## 未確認事項・実施前に決めること
 
 - 実施日時と、別プランに対する先後関係。
-- CloudflareのWorkers BuildsのGit連携が解除済みか。Actionsの正常デプロイと合わせて実環境で確認する。
-- skills.shの集計・掲載URLの引継ぎ方法。リネーム後に旧sourceが残る[未解決報告](https://github.com/vercel-labs/skills/issues/703)があり、自動移行を保証できない。引継ぎ保証が得られない場合に受容するかは未決。
+- Workers BuildsのGit連携は使っていない（2026-09-23ユーザー確認）。二重デプロイの懸念はない。
+- skills.shの集計・掲載URLは、引き継がれなくても受容する（2026-09-23ユーザー判断）。リネーム後に旧sourceが残る[未解決報告](https://github.com/vercel-labs/skills/issues/703)がある。
+- コード変更はPRを作らず、作業ブランチをローカルで`dev`へマージする（2026-09-23ユーザー判断）。PRのCIと同じlint・typecheck・test・buildをローカルで通している。
 - Organization外の利用者やサービスが持つ参照は網羅できない。調査時の検索結果を全件保証として扱わない。
 
 ## 完了条件・検証方針
