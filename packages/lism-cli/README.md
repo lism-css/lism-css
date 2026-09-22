@@ -74,7 +74,7 @@ pnpm dlx lism-cli ui list
 pnpm dlx lism-cli ui add accordion --ref dev
 ```
 
-コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されるため、既存コンポーネントの実装を更新するだけでCLI側も自動で追従します。ただし、コンポーネントを追加・削除した場合は `lism-ui` 側で `registry-index.json` を再生成（ビルド時の `gen:registry`）してcommitする必要があります（`ui list` / `ui add --all` が参照するカタログのため）。
+コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/core/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されるため、既存コンポーネントの実装を更新するだけでCLI側も自動で追従します。ただし、コンポーネントを追加・削除した場合は `lism-ui` 側で `registry-index.json` を再生成（ビルド時の `gen:registry`）してcommitする必要があります（`ui list` / `ui add --all` が参照するカタログのため）。
 
 `ui` セクションの設定が見つからない状態で `ui add` を実行すると、対話式セットアップが走ります。
 

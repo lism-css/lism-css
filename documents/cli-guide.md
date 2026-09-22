@@ -15,7 +15,7 @@
 
 - `init`は`lism.config.js`のひな形を生成する。既存の`lism.config.*`があれば何もしない。`--ui-framework` / `--ui-dir`で`ui:`の値を先渡しでき、無ければ対話で聞く。
 - `mockup`は`@lism-css/mockup`の案内表示だけ。
-- 配信元はGitHubの`lism-css/lism-css`。コンポーネント・helper・skill・テンプレはgiget（`github:lism-css/lism-css/...`）で取得し、UIカタログ（`packages/lism-ui/registry-index.json`）だけはraw GitHubへ直接fetchする（`commands/ui/fetcher.ts`の`fetchCatalog`）。
+- 配信元はGitHubの`lism-css/core`。コンポーネント・helper・skill・テンプレはgiget（`github:lism-css/core/...`）で取得し、UIカタログ（`packages/lism-ui/registry-index.json`）だけはraw GitHubへ直接fetchする（`commands/ui/fetcher.ts`の`fetchCatalog`）。
 
 
 ## 🚨 既定ref（最重要）

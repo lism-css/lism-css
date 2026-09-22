@@ -40,7 +40,7 @@ import 'lism-css/main_no_layer.css';
 `lism-css/scss/_setting.scss` で定義された変数を `@use ... with (...)` で上書きできます。
 上書き定義をしてから `lism-css/scss/main.scss` を読み込むことでカスタマイズが反映されます。
 
-ソース: [`_setting.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/_setting.scss)
+ソース: [`_setting.scss`](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/src/scss/_setting.scss)
 
 ### 上書き可能な変数
 
@@ -206,9 +206,9 @@ export default {
 
 デフォルト値は以下を参照：
 
-- props: [`config/defaults/props.ts`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts)
-- tokens: [`config/defaults/tokens.ts`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/tokens.ts)
-- traits: [`config/defaults/traits.ts`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/traits.ts)
+- props: [`config/defaults/props.ts`](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/config/defaults/props.ts)
+- tokens: [`config/defaults/tokens.ts`](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/config/defaults/tokens.ts)
+- traits: [`config/defaults/traits.ts`](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/config/defaults/traits.ts)
 
 ### カスタマイズ例
 

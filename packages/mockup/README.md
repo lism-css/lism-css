@@ -44,7 +44,7 @@ npx lism-mockup dev ./mockup
 ### For AI agents
 
 1. Run `lism-mockup init <dir>` first, then read the generated `README.md`.
-2. Use the [`lism-css-guide`](https://github.com/lism-css/lism-css/tree/main/skills)
+2. Use the [`lism-css-guide`](https://github.com/lism-css/core/tree/main/skills)
    skill for the markup itself (`npx lism-cli skill add`). This package defines
    *what files exist*; the skill defines *how to write Lism CSS*.
 3. Verify your own work with `lism-mockup check`. Never report a mockup as finished

@@ -57,7 +57,7 @@ pnpm dlx lism-cli skill update --claude        # 配置済みskillを最新版�
 
 ### skills.sh経由
 
-`npx skills add lism-css/lism-css`でも導入できる（トップレベル`README.md`の案内）。配信元は`lism-cli skill add`と同じ`skills/`配下。詳細は[Skillsドキュメント](https://lism-css.com/docs/skills/)。
+`npx skills add lism-css/core`でも導入できる（トップレベル`README.md`の案内）。配信元は`lism-cli skill add`と同じ`skills/`配下。詳細は[Skillsドキュメント](https://lism-css.com/docs/skills/)。
 
 
 ## `lism-css-guide`の流れ
@@ -145,7 +145,7 @@ pnpm dlx lism-cli skill update --claude        # 配置済みskillを最新版�
 ```txt
 positional引数からskill対象を解決（未指定なら SKILL_NAMES 全件）
   → ツールフラグから導入先を解決（未指定ならマーカー自動検出 + 対話選択）
-  → skillごとに giget で github:lism-css/lism-css/skills/{name}#{ref} を一時ディレクトリへ取得（1回のみ）
+  → skillごとに giget で github:lism-css/core/skills/{name}#{ref} を一時ディレクトリへ取得（1回のみ）
   → 選択された各ツール配置先ごとに、既存ディレクトリとsha256で差分比較
   → 差分が無ければスキップ、あれば（--overwrite未指定時は）差分サマリ表示 → 上書き確認
   → コピー

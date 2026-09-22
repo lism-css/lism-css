@@ -15,7 +15,7 @@ Lism CSS は `@layer lism-base` レイヤーで、Reset CSS・HTML要素のベ�
 
 ## Reset CSS
 
-ソース: [`reset.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/reset.scss)
+ソース: [`reset.scss`](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/src/scss/reset.scss)
 
 `@layer lism-base.reset` として定義される最小限のリセットスタイルです。
 
@@ -30,7 +30,7 @@ Lism CSS は `@layer lism-base` レイヤーで、Reset CSS・HTML要素のベ�
 
 ## HTML 要素のベーススタイル
 
-ソース: [`_html.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/_html.scss)
+ソース: [`_html.scss`](https://raw.githubusercontent.com/lism-css/core/main/packages/lism-css/src/scss/base/_html.scss)
 
 Reset CSS に加え、`@layer lism-base` 内で HTML タグに基本スタイルを適用しています。
 その中で、専用のCSS変数を使って値を調整できるようにしている部分をここでは紹介します。具体的なスタイルの詳細は、githubのソースコードを読んでください。

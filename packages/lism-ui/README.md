@@ -3,7 +3,7 @@
 [English](./README.md) | [日本語](./README.ja.md)
 
 [![npm version](https://img.shields.io/npm/v/@lism-css/ui.svg)](https://www.npmjs.com/package/@lism-css/ui)
-[![License: MIT](https://img.shields.io/npm/l/@lism-css/ui.svg)](https://github.com/lism-css/lism-css/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/npm/l/@lism-css/ui.svg)](https://github.com/lism-css/core/blob/main/LICENSE)
 
 ## What is @lism-css/ui?
 

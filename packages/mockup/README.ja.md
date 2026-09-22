@@ -40,7 +40,7 @@ npx lism-mockup dev ./mockup
 ### AIエージェント向け
 
 1. まず`lism-mockup init <dir>`を実行し、生成された`README.md`を読んでください。
-2. マークアップの書き方自体は[`lism-css-guide`](https://github.com/lism-css/lism-css/tree/main/skills)スキル（`npx lism-cli skill add`で導入）に従ってください。このパッケージが定めるのは**どんなファイルを置けるか**で、**Lism CSSをどう書くか**はスキル側が定めます。
+2. マークアップの書き方自体は[`lism-css-guide`](https://github.com/lism-css/core/tree/main/skills)スキル（`npx lism-cli skill add`で導入）に従ってください。このパッケージが定めるのは**どんなファイルを置けるか**で、**Lism CSSをどう書くか**はスキル側が定めます。
 3. 自分の作業は`lism-mockup check`で検証してください。**`check`が失敗している間は、モックアップを完成と報告しないでください。**
 4. `lism-mockup dev`は終了しません。バックグラウンドで起動するか、ユーザーに起動してもらってください。ブラウザでの確認はユーザーの役割です（[`check`が保証する範囲](#checkが保証する範囲)を参照）。
 

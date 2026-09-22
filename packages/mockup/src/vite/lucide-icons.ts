@@ -238,7 +238,7 @@ export function generateLucideModule(iconSet: LucideIconSet): string {
   if (collision !== undefined) {
     throw new Error(
       `@lism-css/mockup cannot generate the ${LUCIDE_PACKAGE_NAME} module: "${collision}" is now both an icon name and part of the module's own API. ` +
-        'Please report this at https://github.com/lism-css/lism-css/issues.'
+        'Please report this at https://github.com/lism-css/core/issues.'
     );
   }
 

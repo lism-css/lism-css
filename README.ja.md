@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/lism-css"><img src="https://img.shields.io/npm/v/lism-css.svg" alt="Latest Release"></a>
-  <a href="https://github.com/lism-css/lism-css/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/lism-css.svg" alt="License"></a>
+  <a href="https://github.com/lism-css/core/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/lism-css.svg" alt="License"></a>
 </p>
 
 <p align="center">
@@ -159,7 +159,7 @@ npx lism-cli skill add
 [skills.sh](https://skills.sh) 経由でも、同じ3つのスキルから必要なものを選んで導入できます。
 
 ```bash
-npx skills add lism-css/lism-css
+npx skills add lism-css/core
 ```
 
 詳細は [Skillsドキュメント](https://lism-css.com/docs/skills/) を参照してください。
