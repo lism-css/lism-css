@@ -27,7 +27,7 @@ const packageRoot = normalizePath(packageRootRaw);
 const sourceConfigDir = `${packageRoot}/config`;
 const distConfigDir = `${distDir}/config`;
 
-// `lism-css/<entry>.css`（bare specifier）を捕捉する。<entry> は base/set のようなスラッシュ入りも許す。
+// `lism-css/<entry>.css`（bare specifier）を捕捉する。<entry> は primitives/layout のようなスラッシュ入りも許す。
 const BARE_CSS_RE = /^lism-css\/(.+)\.css$/;
 const CONFIG_FILE_RE = /\.(?:js|mjs|ts)$/;
 

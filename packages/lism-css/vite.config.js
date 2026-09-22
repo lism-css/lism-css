@@ -1,6 +1,8 @@
 // vite.config.js
-import { resolve } from 'path';
+import { dirname, relative, resolve } from 'path';
 import { defineConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
+import ts from 'typescript';
 import dts from 'unplugin-dts/vite';
 // import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
@@ -24,6 +26,25 @@ function deleteDuplicateDir(filePath) {
 
   // 一致しない場合、元のパスをそのまま返す
   return filePath;
+}
+
+// dtsプラグインの exclude は tsconfig.json の exclude を上書きするため、引き継いだうえで公開不要なファイルを足す
+const tsconfigExclude = ts.readConfigFile(resolve(__dirname, 'tsconfig.json'), ts.sys.readFile).config.exclude ?? [];
+const dtsExclude = [...tsconfigExclude, '**/*.test.{ts,tsx}', '**/*.spec-d.ts', '**/*.stories.tsx', '**/__*.*', '**/__*/**'];
+
+// d.ts は src 基準の相対パスのまま出力される。config は dist/config に入り階層が1つ浅くなるため、
+// 書き換えないと公開物（<pkg>/config が無い）で解決できず、PROPS 等の型が any に落ちる。
+const SRC_DIR = resolve(__dirname, 'src');
+const DIST_DIR = resolve(__dirname, 'dist');
+const CONFIG_DIR = resolve(__dirname, 'config');
+function rewriteConfigImports(filePath, content) {
+  const srcFileDir = dirname(resolve(SRC_DIR, relative(DIST_DIR, filePath)));
+  return content.replace(/(['"])((?:\.\.\/)+[^'"]+)\1/g, (match, quote, spec) => {
+    const target = resolve(srcFileDir, spec);
+    if (!target.startsWith(`${CONFIG_DIR}/`)) return match;
+    const newSpec = relative(dirname(filePath), resolve(DIST_DIR, 'config', relative(CONFIG_DIR, target)));
+    return `${quote}${newSpec.startsWith('.') ? newSpec : `./${newSpec}`}${quote}`;
+  });
 }
 
 // front用のスクリプトファイルのビルドは要検討
@@ -57,6 +78,8 @@ export default defineConfig({
       tsconfigPath: './tsconfig.json',
       outDir: 'dist',
       entryRoot: 'src',
+      exclude: dtsExclude,
+      beforeWriteFile: (filePath, content) => ({ content: rewriteConfigImports(filePath, content) }),
     }),
   ],
   test: {
@@ -66,6 +89,11 @@ export default defineConfig({
       enabled: true,
       exclude: ['**/node_modules/**', '**/.git/**', '**/ResponsiveProps.module-augmentation.spec-d.ts'],
     },
+    projects: [
+      // 上の設定を継承する既存テスト（jsdom）。Astroコンポーネントのテストは astro プロジェクト側で実行する
+      { extends: true, test: { name: 'react', exclude: [...configDefaults.exclude, 'astro/**'] } },
+      './vitest.astro.config.js',
+    ],
   },
   build: {
     // target: 'es2015',

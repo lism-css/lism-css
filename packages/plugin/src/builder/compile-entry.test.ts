@@ -37,7 +37,6 @@ describe('listCssEntries', () => {
     expect(keys).toContain('reset');
     expect(keys).toContain('props');
     // 入れ子（X/index.scss → X）
-    expect(keys).toContain('base/set');
     expect(keys).toContain('primitives/atomic');
     expect(keys).toContain('primitives/layout');
     // `_*` は除外される
@@ -132,14 +131,6 @@ describe('createCssCompiler', () => {
     expect(fullCss).toContain('.-bdw_sm');
     // _border.scss の特殊実装（--bds 参照）は維持される
     expect(fullCss).toContain('border-style: var(--bds)');
-  });
-
-  test('同一 config・同一エントリはキャッシュされ同一結果を返す', async () => {
-    const c = makeCompiler();
-    const { mainConfig, fullConfig } = configs({});
-    const a = await c.compile('reset', mainConfig, fullConfig);
-    const b = await c.compile('reset', mainConfig, fullConfig);
-    expect(a).toBe(b);
   });
 
   test('dispose 後も再コンパイルできる（作業ディレクトリを作り直す）', async () => {

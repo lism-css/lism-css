@@ -1,6 +1,6 @@
 {
   "name": "lism-css",
-  "version": "0.29.1",
+  "version": "0.30.0",
   "description": "Lism CSS is a layout-first CSS framework for websites.",
   "author": {
     "name": "ddryo",
@@ -14,10 +14,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "test": "vitest run",
-    "typecheck": "tsc --noEmit && astro check --tsconfig packages/astro/tsconfig.json",
+    "test": "vitest run && pnpm test:icon:astro",
+    "typecheck": "tsc --noEmit && astro check --tsconfig astro/tsconfig.json",
     "build": "pnpm build:js && pnpm build:css:only",
-    "build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",
+    "build:js": "vite build && pnpm exec tsc -p config/tsconfig.json && node bin/verify-dts-imports.mjs",
     "build:css": "pnpm build:js && pnpm build:css:only",
     "build:css:only": "tsx bin/script-build-css.js",
     "format": "prettier --write . --ignore-path ../../.prettierignore",
@@ -32,7 +32,8 @@
     "dist",
     "config.js",
     "config.d.ts",
-    "packages",
+    "astro",
+    "!astro/**/*.test.ts",
     "src/scss"
   ],
   "type": "module",
@@ -81,9 +82,9 @@
       "types": "./dist/components/*.d.ts"
     },
     "./astro": {
-      "import": "./packages/astro/index.ts"
+      "import": "./astro/index.ts"
     },
-    "./astro/*": "./packages/astro/*",
+    "./astro/*": "./astro/*",
     "./scss/*": "./src/scss/*",
     "./*.css": "./dist/css/*.css"
   },

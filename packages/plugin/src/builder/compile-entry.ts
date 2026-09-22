@@ -20,7 +20,7 @@ import { writePropConfigFiles } from './compile';
  * src/scss を glob して「エントリ名 → 相対 scss パス」のマップを作る。
  * `compileCssTree` と同じ規則（`_*` 除外・`X/index.scss` → `X`）でエントリ名を導出するため、
  * dist/css に出力される CSS（= `lism-css/<entry>.css` で import 可能なもの）と完全に対応する。
- * 入れ子（`base/set`, `primitives/atomic`, `primitives/layout` 等）も含む。
+ * 入れ子（`primitives/atomic`, `primitives/layout` 等）も含む。
  */
 export async function listCssEntries(scssDir: string): Promise<Map<string, string>> {
   const { globSync } = await import('glob');

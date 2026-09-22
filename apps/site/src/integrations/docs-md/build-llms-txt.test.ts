@@ -77,8 +77,9 @@ describe('classify', () => {
 });
 
 describe('toUrl', () => {
-  it('docs 系は /en/docs/ プレフィックスで .md を指す', () => {
+  it('docs 系は /en/docs/ プレフィックスで .md を指す（siteUrl 末尾のスラッシュは正規化される）', () => {
     expect(toUrl('overview.mdx', 'https://lism-css.com/')).toBe('https://lism-css.com/en/docs/overview.md');
+    expect(toUrl('overview.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/overview.md');
     expect(toUrl('layouts/stack.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/layouts/stack.md');
   });
 
@@ -95,10 +96,5 @@ describe('toUrl', () => {
   it('primitives/ と trait-class/ は casing を保持（CSS クラス名と URL を一致させる）', () => {
     expect(toUrl('primitives/l--autoColumns.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/primitives/l--autoColumns.md');
     expect(toUrl('trait-class/is--boxLink.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/trait-class/is--boxLink.md');
-  });
-
-  it('siteUrl 末尾のスラッシュは正規化される', () => {
-    expect(toUrl('overview.mdx', 'https://lism-css.com/')).toBe('https://lism-css.com/en/docs/overview.md');
-    expect(toUrl('overview.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/overview.md');
   });
 });

@@ -37,7 +37,7 @@ describe('lismDynamicCss resolveId', () => {
   test('入れ子エントリも解決する', async () => {
     const resolveId = getResolveId(lismDynamicCss());
     expect((await resolveId('lism-css/primitives/layout.css')) as string).toMatch(/\/dist\/css\/primitives\/layout\.css$/);
-    expect((await resolveId('lism-css/base/set.css')) as string).toMatch(/\/dist\/css\/base\/set\.css$/);
+    expect((await resolveId('lism-css/primitives/atomic.css')) as string).toMatch(/\/dist\/css\/primitives\/atomic\.css$/);
   });
 
   test('クエリを保持する', async () => {

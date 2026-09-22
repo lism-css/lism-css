@@ -8,6 +8,29 @@ Significant changes may continue until v1.0 is released, so all notable changes 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v0.30.0 (2026.09.22)
+
+- Fixed the published `.d.ts` files importing `config` via a relative path, which caused prop types to fall back to `any` in consuming projects (#494, #639).
+- Fixed `Box` / `Layer` / `BoxLink` / `Decorator` / `Spacer` / `Divider` in Astro processing properties passed via `exProps` as Lism Props. As in the other components and the React version, `exProps` now skip Lism Props processing and are output as plain attributes (#636).
+- Excluded internal files such as tests and stories from the published package. The standalone `lism-css/base/set.css` output has been removed (it is still included in `base.css` / `main.css`) (#637).
+
+### `@lism-css/plugin` v0.5.1 (2026.09.22)
+
+- Added support for Astro 7 and Vite 8 (Rolldown). `peerDependencies` now allow `astro: ^6 || ^7` and `vite: ^6 || ^7 || ^8` (#630).
+- CSS Purge now warns about possible missing styles when it detects `client:only` islands, or the Lism runtime in client JS without any Lism classes in HTML (a likely CSR setup). Classes generated from props at runtime cannot be detected, so keep them with `safelist` or disable purge (#634).
+
+### `@lism-css/ui` v0.30.0 (2026.09.22)
+
+This release contains **breaking changes**.
+
+**Tabs (#87, #642)**
+
+- **Breaking:** `Tabs.Tab` now always renders a `button` and no longer accepts `as` to change the tag.
+- The React `Tabs` now supports manual composition with `Tabs.List` / `Tabs.Tab` / `Tabs.Panel` without `Tabs.Item`.
+- In the React `Tabs`, when the selected `Tabs.Tab` is removed from the DOM, selection (and focus) now moves to the first remaining tab.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.29.1 (2026.09.13)
 
 - `Icon` no longer converts `weight` to a stroke width. You can use components such as `CheckIcon` from `@lism-css/icons@0.3.0`. For SVG strings or native elements, set the stroke width with `strokeWidth` (or `stroke-width` in Astro).

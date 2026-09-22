@@ -1,6 +1,17 @@
-基準日: 2026-09-18・コミットb74ec4629（作業ツリーを含む）
+基準日: 2026-09-19・コミット9feef9fa0
 
 # 意思決定の記録
+
+## 2026-09-19: React版Tabsの手動構成はContextで状態を配り、`setTabs`は使わない
+
+#87の問題12。React版は`Tabs.Item`内のTab・Panelにだけ状態とイベントを設定しており、`Tabs.Root`へList・Tab・Panelを直接置く手動構成は表示されるだけで動かなかった。Astro版は同じ構成が`setTabs`（DOMスクリプト）で動くため、React版も利用者に状態管理を書かせずに動かす。
+
+- 決定: Rootが`TabsContext`で`tabId`・選択中のindex・選択関数・キー操作を配り、TabとPanelがContextを見て属性とイベントを決める。Item構成は「indexを自動採番して並べ替えるだけ」にし、両構成を同じイベント経路に通す。
+- 却下: `useEffect`から`setTabs`を呼ぶ方式。DOM属性を直接書き換えるためReactのstateとずれ、リスナーを解除できずStrictMode・再マウントで重複する。
+- 決定: 手動構成で利用者が指定するのは`index`だけ。`tabId`はContextの値をpropsより優先する（Accordionと同じ規約）。初期選択は`defaultIndex`→`isActive`付きのTab→`1`の順。`isActive`はAstro版の書き方をそのまま移せるようにするための互換。
+- 決定: キー移動はtablist内のタブをDOM順にたどり、移動先のindexは`aria-controls`から復元する。ディープリンクは対象タブがDOMに実在するかで判定する。
+- 決定: 選択中のTabがアンマウントされたら、DOM順で先頭のTabへ選択を移す（そのTabにフォーカスがあった場合はフォーカスも移す）。選択が外れたままだと残るTabがすべて`tabIndex=-1`・Panelがすべて`hidden`になり、キーボードでタブ群へ戻れなくなるため。TabはContextの`onTabUnmount`で自分の消滅を伝えるだけにし、DOMに要素が残っている擬似アンマウント（StrictMode等）は補正しない。
+- 受容: 手動構成はタブ数を描画時に知れないため、範囲外のindexを`1`へ戻すフォールバックは行わない（Astro版の手動構成と同じ）。補正は一度マウントされたTabが外れた場合だけで、一度も存在しないindexの指定は選択なしのまま残す。後から対象のTabが増えた場合に、利用者の指定を勝手に別のタブへ移さないため。
 
 ## 2026-09-18: templates の Astro テンプレートを Astro 7 へ更新し、techlog の Markdown 処理も Sätteri へ移行する
 
@@ -52,7 +63,7 @@ apps/site は完全な静的サイトで、Vercel でのデプロイは昔の名
 - 決定: `.md`の`Content-Type`（charset付き）は`_headers`に書かず、`run_worker_first`の小さな Worker（`apps/site/worker/index.ts`）で成功応答と304にだけ付ける。`_headers`だと404にも付いて #506 が再発する。
 - 決定: HSTS（Vercel と同じ2年）は`_headers`の`/*`ルールで付ける。ダッシュボードの HSTS 設定は max-age の上限が12か月で再現できない。www→apex は Redirect Rule で301（Vercel 時代は307）、HTTP→HTTPS はゾーン設定 Always Use HTTPS。
 - 却下: Cloudflare Pages（新規は Workers が公式推奨）。小文字 URL の meta refresh リダイレクト76件を`_redirects`で301化する案（移行と独立した変更のためスコープ外）。
-- 受容: リダイレクト応答に HSTS が付かない、存在しない URL の404に`X-Robots-Tag: noindex`が付く、`.cache/og/`が Workers Builds で永続化されずビルドが約9分かかる（#624で扱う）。
+- 受容: リダイレクト応答に HSTS が付かない、存在しない URL の404に`X-Robots-Tag: noindex`が付く。
 
 ## 2026-09-13: weightの解釈をアイコンパッケージへ委ねる
 

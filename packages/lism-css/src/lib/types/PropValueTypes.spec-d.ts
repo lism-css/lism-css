@@ -157,39 +157,35 @@ describe('PropValueTypes', () => {
   });
 
   it('プリセット値を設定できる', () => {
-    const props: PropValueTypes = {
+    const _props: PropValueTypes = {
       fs: 'italic',
       mx: 'auto',
       d: 'none',
     };
-    expectTypeOf(props).toExtend<PropValueTypes>();
   });
 
   it('boolean 値（true）を設定できる（ユーティリティクラスのみ付与）', () => {
-    const props: PropValueTypes = {
+    const _props: PropValueTypes = {
       bg: true,
       fs: true,
       d: true,
     };
-    expectTypeOf(props).toExtend<PropValueTypes>();
   });
 
   it('トークン値を設定できる', () => {
-    const props: PropValueTypes = {
+    const _props: PropValueTypes = {
       fz: 'xl',
       mx: '20',
       bdrs: '10',
     };
-    expectTypeOf(props).toExtend<PropValueTypes>();
   });
 
   it('任意の文字列値を設定できる', () => {
-    const props: PropValueTypes = {
+    const _props: PropValueTypes = {
       fs: 'oblique',
       mx: '20px',
       d: 'grid',
     };
-    expectTypeOf(props).toExtend<PropValueTypes>();
   });
 });
 

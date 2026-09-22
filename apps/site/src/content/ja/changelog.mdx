@@ -8,6 +8,29 @@ v1.0のリリースまでは大きな変更が続く可能性があるため、�
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v0.30.0 (2026.09.22)
+
+- 公開パッケージの`.d.ts`が`config`を相対パスでimportしていたため、利用側でpropsの型が`any`に落ちる不具合を修正しました（#494, #639）。
+- Astroの`Box` / `Layer` / `BoxLink` / `Decorator` / `Spacer` / `Divider`で、`exProps`に指定したプロパティがLism Propsとして処理されていた問題を修正しました。他のコンポーネントやReact版と同じく、`exProps`はLism Propsの処理をスキップしてそのまま属性に渡されます（#636）。
+- 公開物からテスト・stories等の内部ファイルを除外しました。`lism-css/base/set.css`の単体出力は廃止しました（`base.css` / `main.css`には引き続き含まれます）（#637）。
+
+### `@lism-css/plugin` v0.5.1 (2026.09.22)
+
+- Astro 7とVite 8（Rolldown）に対応しました（`peerDependencies`を`astro: ^6 || ^7`、`vite: ^6 || ^7 || ^8`へ拡張）（#630）。
+- CSS Purgeで`client:only`のislandや、HTMLにLismクラスが無いままクライアントJSにLismランタイムが含まれる構成（CSRの可能性）を検出したとき、スタイル欠落の可能性を警告するようにしました。実行時にpropsから生成されるクラスは検出できないため、`safelist`で残すかpurgeを無効にしてください（#634）。
+
+### `@lism-css/ui` v0.30.0 (2026.09.22)
+
+**破壊的変更**を含むリリースです。
+
+**Tabs (#87, #642)**
+
+- **破壊的変更:** `Tabs.Tab`は`button`固定になり、`as`によるタグ変更を受け付けなくなりました。
+- React版で`Tabs.Item`を使わず`Tabs.List` / `Tabs.Tab` / `Tabs.Panel`を直接組み合わせる手動構成に対応しました。
+- React版で、選択中の`Tabs.Tab`がDOMから取り除かれた場合に、残っている先頭のタブへ選択（とフォーカス）を移すようにしました。
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v0.29.1 (2026.09.13)
 
 - `Icon`による`weight`から線幅への変換を廃止しました。`@lism-css/icons@0.3.0`の`CheckIcon`などを利用できます。SVG文字列やネイティブ要素の線幅は`strokeWidth`（Astroでは`stroke-width`も可）で指定してください。

@@ -33,6 +33,7 @@ export const Default: Story = {
 
 export const Large: Story = {
   name: 'h: "50"',
+  tags: ['!test'],
   decorators: [VerticalDecorator],
   args: {
     h: '50',

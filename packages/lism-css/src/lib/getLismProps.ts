@@ -19,30 +19,8 @@ import { type CustomPropRegistry } from './types/CustomPropRegistry';
 import { type CustomTraitRegistry } from './types/CustomTraitRegistry';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
 import { type AtomicType, type AtomicProps } from './types/AtomicProps';
-import { type BreakpointKey } from '../../config/defaults/breakpoints';
+import { type PropConfig } from './types/PropConfig';
 export { type LayoutType, type AtomicType };
-
-// PropConfig interface based on config/defaults/props.ts
-interface PropConfig {
-  prop?: string;
-  token?: string | null | undefined | false;
-  tokenClass?: 0 | 1;
-  presets?: Set<string> | string[] | readonly string[];
-  presetClass?: string;
-  utils?: Record<string, string>;
-  shorthands?: Record<string, string>;
-  isVar?: number;
-  // 0 / 1（有効BPすべて）/ ['sm','md'] 等（出力する BP の明示リスト）
-  bp?: 0 | 1 | readonly BreakpointKey[];
-  alwaysVar?: number;
-  important?: number;
-  exUtility?: Record<string, unknown>;
-  customVar?: string;
-  setStyles?: (val: unknown) => Record<string, string | number | undefined>;
-  className?: string;
-  utilKey?: string;
-  [key: string]: unknown;
-}
 
 // LismPropsData が受け取る型（layout / atomic 処理済み）
 export interface LismPropsBase extends TraitProps, PropValueTypes, CustomPropRegistry, CustomTraitRegistry {
@@ -193,9 +171,6 @@ export class LismPropsData {
   addUtil(util: string): void {
     this.uClasses.push(util);
   }
-  addUtils(utils: string[]): void {
-    this.uClasses.push(...utils);
-  }
   addProp(prop: string): void {
     this.propClasses.push(prop);
   }
@@ -205,10 +180,6 @@ export class LismPropsData {
   addStyles(styles: Record<string, string | number | undefined>): void {
     this.styles = { ...this.styles, ...styles };
   }
-  addAttrs(data: { styles?: Record<string, string | number | undefined>; utils?: string[] }): void {
-    this.addStyles(data.styles || {});
-    this.addUtils(data.utils || []);
-  }
   extractProp(propName: string): unknown {
     const data = this.attrs[propName];
     if (undefined === this.attrs[propName]) {
@@ -216,16 +187,6 @@ export class LismPropsData {
     }
 
     delete this.attrs[propName];
-    return data;
-  }
-  extractProps(propNames: string[]): Record<string, unknown> {
-    const data: Record<string, unknown> = {};
-    propNames.forEach((propName) => {
-      if (undefined !== this.attrs[propName]) {
-        data[propName] = this.attrs[propName];
-        delete this.attrs[propName];
-      }
-    });
     return data;
   }
 

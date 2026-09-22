@@ -1,14 +1,10 @@
 import isTokenValue from '../lib/isTokenValue';
 import getMaybeCssVar from '../lib/getMaybeCssVar';
+import { pushPrimitive, type PrimitiveBaseProps } from './primitiveProps';
 import { type StyleWithCustomProps } from './types';
 import { type LayoutType, type CssValue } from './types/LayoutProps';
 
 export type { LayoutType };
-
-interface PropConfig {
-  isVar?: number;
-  [key: string]: unknown;
-}
 
 // Layout固有 props（消費して除去される）
 interface LayoutOwnProps {
@@ -21,18 +17,9 @@ interface LayoutOwnProps {
 
 type LayoutSpecificKeys = keyof LayoutOwnProps;
 
-export interface BaseProps {
-  primitiveClass?: string[];
-  style?: StyleWithCustomProps;
-  _propConfig?: Record<string, PropConfig>;
-}
+export type BaseProps = PrimitiveBaseProps;
 
 interface InputProps extends BaseProps, LayoutOwnProps {}
-
-// primitiveClass への安全な push（常に新しい配列を返して非破壊に扱う）
-function pushPrimitive(existing: string[] | undefined, ...classes: string[]): string[] {
-  return [...(existing ?? []), ...classes];
-}
 
 export default function getLayoutProps<P extends InputProps>(layout: LayoutType | undefined, props: P): Omit<P, LayoutSpecificKeys> & BaseProps {
   if (!layout) return props;

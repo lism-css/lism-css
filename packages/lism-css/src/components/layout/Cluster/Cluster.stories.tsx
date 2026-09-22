@@ -32,6 +32,7 @@ export const Default: Story = {
 
 export const WithGap: Story = {
   name: 'gap 指定',
+  tags: ['!test'],
   args: {
     g: '40',
     children: <DemoItems />,

@@ -1,4 +1,4 @@
-基準日: 2026-09-17・コミット6c8b2a1c
+基準日: 2026-09-19・コミット9feef9fa0
 
 # docs-md integration 処理フロー
 
@@ -30,7 +30,7 @@
 6. `rehype-docs-link`: `<a class="c--docsLink">`の中身をタイトル文字列だけにする（タイトル＋説明文の二重出力を防ぐ）
 7. `rehype-code-language`: `<pre data-language="X">`の言語名を`<code class="language-X">`へ転記
 8. `rehype-callouts`: `c--docsNote`をGFM Alert（`> [!NOTE]`等）に変換。`keycolor`と種別の対応表はこのファイルにある
-9. `rehype-absolute-urls`: `a` / `img` / `source` / `iframe`のルート相対URL（`/foo`）を`{siteUrl}/foo`に展開。`#anchor` / `mailto:` / 絶対URL / プロトコル相対（`//host`）は触らない
+9. `rehype-absolute-urls`: `a` / `area` / `link` / `img` / `source` / `video` / `audio` / `iframe`のURL属性（`srcset`・`poster`を含む）のルート相対URL（`/foo`）を`{siteUrl}/foo`に展開。パスは小文字化するが、`primitives` / `trait-class`セグメントとそれ以降は大文字小文字を維持する。`#anchor` / `mailto:` / 絶対URL / プロトコル相対（`//host`）は触らない
 10. `rehype-remark`→`remark-gfm`→`remark-stringify`（`bullet: '-'`、`rule: '-'`、`fences: true`、`incrementListMarker: false`）
 
 後処理:

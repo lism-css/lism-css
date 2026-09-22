@@ -281,14 +281,17 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 タブ切り替え UI。タブクリックまたは左右キー・Home/End でコンテンツパネルを切り替える。縦並びにする場合は `listProps` で `aria-orientation="vertical"` を指定すると上下キーに切り替わる。スタイリングはほぼなく動きのみ提供。
 
-**構造:** `Tabs.Root > Tabs.Item > (Tabs.Tab + Tabs.Panel)`（`Tabs.List` も利用可能）
+**構造:** `Tabs.Root > Tabs.Item > (Tabs.Tab + Tabs.Panel)`。手動構成は `Tabs.Root > (Tabs.List > Tabs.Tab) + Tabs.Panel`（`Tabs.Item` を使わず出力構造を自分で組む場合）
 
 | Prop | 対象 | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- | --- |
-| `tabId` | Root | `string` | — | タブを特定するための ID 文字列 |
+| `tabId` | Root | `string` | 自動生成 | タブを特定するための ID 文字列。タブの id（`{tabId}-{index}-tab`）とパネルの id（`{tabId}-{index}`）に使う |
 | `defaultIndex` | Root | `number` | `1` | 初期アクティブタブ（1始まり） |
 | `listProps` | Root | `object` | — | タブボタンリスト要素へ渡す props |
 | `variant` | Root | `string` | `'default'` | バリエーション。`b--tabs--{variant}` クラスが出力。`'default'` のほか `'line'` を標準提供。独自 variant 指定時は既定バリアント（`b--tabs--default`）の装飾が適用されない |
+| `index` | Tab / Panel | `number` | — | 1始まりの番号。対応する Tab と Panel で同じ値にする。手動構成で必須（Item 構成では自動設定） |
+| `tabId` | Tab / Panel | `string` | — | Astro の手動構成で必須。React は Root の値が自動で共有され、個別指定しても Root が優先 |
+| `isActive` | Tab / Panel | `boolean` | `false` | Astro の手動構成で初期選択の組の Tab と Panel に指定。React は `defaultIndex` を推奨（未指定時のみ Tab の `isActive` が初期選択になる） |
 
 ```jsx
 <Tabs.Root>
@@ -300,6 +303,34 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
     <Tabs.Tab>Tab 2</Tabs.Tab>
     <Tabs.Panel>Content 2</Tabs.Panel>
   </Tabs.Item>
+</Tabs.Root>
+```
+
+手動構成では Tab と Panel を `index` で対応させる。切り替え・キーボード操作・ARIA 属性の更新はライブラリ側が行うので、状態管理やイベント処理は書かない。`Tabs.Tab` は `button` 固定で、必ず `Tabs.List` の中に置く（キーボード操作は同じ `role="tablist"` 内のタブを DOM 順にたどる）。範囲外の番号を `1` に戻すフォールバックは行われない。
+
+React（`index` だけ必須。`tabId` と初期選択は Root で指定）:
+
+```jsx
+<Tabs.Root tabId="my-tabs" defaultIndex={2}>
+  <Tabs.List>
+    <Tabs.Tab index={1}>Tab 1</Tabs.Tab>
+    <Tabs.Tab index={2}>Tab 2</Tabs.Tab>
+  </Tabs.List>
+  <Tabs.Panel index={1}>Content 1</Tabs.Panel>
+  <Tabs.Panel index={2}>Content 2</Tabs.Panel>
+</Tabs.Root>
+```
+
+Astro（親から子へ値を共有できないため、各 Tab・Panel に `tabId` と `index` を指定し、初期選択の組の両方へ `isActive` を付ける。Root の `tabId`・`defaultIndex`・`listProps` は反映されないので、リストへの props は `Tabs.List` に直接渡す）:
+
+```astro
+<Tabs.Root>
+  <Tabs.List>
+    <Tabs.Tab tabId="my-tabs" index={1}>Tab 1</Tabs.Tab>
+    <Tabs.Tab tabId="my-tabs" index={2} isActive>Tab 2</Tabs.Tab>
+  </Tabs.List>
+  <Tabs.Panel tabId="my-tabs" index={1}>Content 1</Tabs.Panel>
+  <Tabs.Panel tabId="my-tabs" index={2} isActive>Content 2</Tabs.Panel>
 </Tabs.Root>
 ```
 

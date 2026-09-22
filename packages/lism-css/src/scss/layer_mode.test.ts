@@ -14,8 +14,15 @@ function compileString(source: string): string {
   }).css;
 }
 
+// 同じエントリは1回だけコンパイルして共有する
+const entryCache = new Map<string, string>();
 function compileEntry(entry: string): string {
-  return sass.compile(resolve(currentDir, entry), { logger: silentLogger }).css;
+  let css = entryCache.get(entry);
+  if (css === undefined) {
+    css = sass.compile(resolve(currentDir, entry), { logger: silentLogger }).css;
+    entryCache.set(entry, css);
+  }
+  return css;
 }
 
 const testProp = `
